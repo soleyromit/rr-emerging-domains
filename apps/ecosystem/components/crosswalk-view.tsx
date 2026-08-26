@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import { Stack } from "@astryxdesign/core/Stack";
 import { Text } from "@astryxdesign/core/Text";
-import { Divider } from "@astryxdesign/core/Divider";
 import { Toolbar } from "@astryxdesign/core/Toolbar";
 import { TextInput } from "@astryxdesign/core/TextInput";
 import { SegmentedControl, SegmentedControlItem } from "@astryxdesign/core/SegmentedControl";
@@ -29,6 +28,10 @@ export function CrosswalkView({
     () => domains.map((d) => matchDisciplineMeta(d.domain)?.slug ?? d.domain),
     [domains]
   );
+  // Open by default, not closed-by-default per UI-DENSITY-PATTERNS.md's usual rule —
+  // this page's only job is showing the crosswalk grid (Wilson's "I don't see it"
+  // feedback), so nothing should be hidden from view on load. The toolbar's
+  // Expand/Collapse buttons exist for the user's own control, not as a gate.
   const [openSlugs, setOpenSlugs] = useState<string[]>(slugs);
 
   const visible = domains.filter((d) => {
@@ -49,13 +52,14 @@ export function CrosswalkView({
             onChange={setQuery}
             placeholder="Filter by domain name…"
             width={240}
+            hasClear
           />
         }
         endContent={
           <Stack direction="horizontal" gap={3} vAlign="center">
             <SegmentedControl label="Domain scope" value={scope} onChange={(v) => setScope(v as "priority" | "all")}>
               <SegmentedControlItem value="priority" label="Priority domains" />
-              <SegmentedControlItem value="all" label="All 12" />
+              <SegmentedControlItem value="all" label={`All ${domains.length}`} />
             </SegmentedControl>
             <ButtonGroup label="Expand or collapse all domains">
               <Button label="Expand all" variant="secondary" size="sm" onClick={() => setOpenSlugs(slugs)} />
@@ -89,7 +93,6 @@ export function CrosswalkView({
               >
                 <Stack gap={3}>
                   <StandardsCrosswalkTable standardsCrosswalk={d} />
-                  <Divider />
                 </Stack>
               </Collapsible>
             );

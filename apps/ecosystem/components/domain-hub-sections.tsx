@@ -44,12 +44,15 @@ interface FeatureRow extends Record<string, unknown> {
   cells: FeatureComparisonCell[];
 }
 
-// The shared building block behind both /domains/[slug] (one page per domain) and
-// /lenses (every domain as a collapsible section on one page) — see the 2026-08-26
-// "not impressed with the architecture" feedback: everything about one domain now
-// renders as plain stacked sections with inline expand, not a tab+rail+cross-link
-// chain. No "use client" here — Collapsible/FieldBlock are themselves client
-// components and compose fine into a server tree.
+// The shared building block behind /domains/[slug] — one full-depth page per domain
+// (accreditor structure, competitor landscape, feature comparison, standards
+// crosswalk). /lenses is now a lightweight landing page that links out to this and to
+// /crosswalk; the flat list of domains lives on /domains, and the collapsible
+// per-domain sections live on /crosswalk instead. See the 2026-08-26 "not impressed
+// with the architecture" feedback: everything about one domain now renders as plain
+// stacked sections with inline expand, not a tab+rail+cross-link chain. No
+// "use client" here — Collapsible/FieldBlock are themselves client components and
+// compose fine into a server tree.
 export function DomainHubSections({ domain, data }: { domain: string; data: DomainHubData }) {
   const { tierEntry, landscapeEntry, featureComparison, standardsCrosswalk } = data;
 

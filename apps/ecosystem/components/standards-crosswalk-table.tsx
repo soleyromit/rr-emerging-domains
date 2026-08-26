@@ -16,9 +16,9 @@ interface StandardRow extends Record<string, unknown> {
 
 // Wilson's own crosswalk-grid ask (2026-08-26 call), extracted so it's reusable both
 // nested inside a domain's full hub (domain-hub-sections.tsx) and as its own always-
-// visible matrix on /lenses — the standalone, scannable "rows are standards, columns
-// are competitors" artifact he asked for, not something buried behind a click to
-// expand a domain first.
+// visible matrix on /crosswalk — the standalone, scannable "rows are standards,
+// columns are competitors" artifact he asked for, not something buried behind a click
+// to expand a domain first.
 export function StandardsCrosswalkTable({ standardsCrosswalk }: { standardsCrosswalk: StandardsCrosswalkForDomain | null }) {
   if (!standardsCrosswalk) {
     return (

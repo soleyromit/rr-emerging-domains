@@ -753,9 +753,9 @@ export interface DomainHubData {
 
 // Bundles the 4 lens lookups for one domain into a single fs-backed call — the fetch
 // side of DomainHubSections (a client component, for Table's renderCell closures,
-// which can't itself call these fs-based loaders). Server components (the /domains/
-// [slug] page and the /lenses overview) call this and pass the plain-data result down
-// as props.
+// which can't itself call these fs-based loaders). The /domains/[slug] server
+// component (its only current caller) calls this and passes the plain-data result
+// down as props.
 export function getDomainHubData(domain: string): DomainHubData {
   return {
     tierEntry: getAccreditorTiers()?.domains.find((d) => d.domain === domain) ?? null,

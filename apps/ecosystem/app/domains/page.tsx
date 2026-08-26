@@ -1,7 +1,7 @@
 import { Section } from "@astryxdesign/core/Section";
 import { Stack } from "@astryxdesign/core/Stack";
 import { Badge } from "@astryxdesign/core/Badge";
-import { TreeList, type TreeListItemData } from "@astryxdesign/core/TreeList";
+import { List, ListItem } from "@astryxdesign/core/List";
 import { PageHeader } from "@/components/page-header";
 import { DisciplineChip } from "@/components/discipline-chip";
 import {
@@ -16,8 +16,17 @@ export default function DomainsIndexPage() {
   const tierDomains = sortDomainsByPriority(getAccreditorTiers()?.domains ?? [], (d) => d.domain);
   const landscape = getCompetitorLandscape();
 
-  const items: TreeListItemData[] = tierDomains.map((d) => {
-    const slug = matchDisciplineMeta(d.domain)?.slug ?? d.domain;
+  // Only domains that resolve to real discipline metadata get a route — Counseling
+  // has no accreditation data (see DOMAIN_TO_ACCREDITATION_SLUG in lib/content.ts) and
+  // matchDisciplineMeta returns null for it, so generateStaticParams on
+  // /domains/[slug] never builds a page for it. Filter it out here too, or it renders
+  // as a dead link.
+  const domainsWithMeta = tierDomains
+    .map((d) => ({ entry: d, meta: matchDisciplineMeta(d.domain) }))
+    .filter((x): x is { entry: typeof x.entry; meta: NonNullable<typeof x.meta> } => x.meta !== null);
+
+  const items = domainsWithMeta.map(({ entry: d, meta }) => {
+    const slug = meta.slug;
     const competitorCount = landscape?.domains.find((l) => l.domain === d.domain)?.competitors.length ?? 0;
     const standardsCount = getStandardsCrosswalkForDomain(d.domain)?.rows.length ?? 0;
     return {
@@ -27,8 +36,8 @@ export default function DomainsIndexPage() {
       startContent: <DisciplineChip subject={d.domain} />,
       endContent: (
         <Stack direction="horizontal" gap={1.5}>
-          <Badge variant="neutral" label={`${competitorCount} competitors`} />
-          <Badge variant="neutral" label={`${standardsCount} standards`} />
+          <Badge variant="neutral" label={`${competitorCount} ${competitorCount === 1 ? "competitor" : "competitors"}`} />
+          <Badge variant="neutral" label={`${standardsCount} ${standardsCount === 1 ? "standard" : "standards"}`} />
         </Stack>
       ),
       href: `/domains/${slug}`,
@@ -45,7 +54,18 @@ export default function DomainsIndexPage() {
         />
       </Section>
       <Section padding={6}>
-        <TreeList items={items} density="balanced" header={<span>Domains</span>} />
+        <List hasDividers>
+          {items.map((item) => (
+            <ListItem
+              key={item.id}
+              label={item.label}
+              description={item.description}
+              startContent={item.startContent}
+              endContent={item.endContent}
+              href={item.href}
+            />
+          ))}
+        </List>
       </Section>
     </Stack>
   );

@@ -20,10 +20,14 @@ export default function LensesPage() {
   const highThreatCount =
     landscape?.domains.reduce((sum, d) => sum + d.competitors.filter((c) => c.threat === "high").length, 0) ?? 0;
 
-  const jumpItems = domains.map((d) => ({
-    name: d.domain,
-    slug: matchDisciplineMeta(d.domain)?.slug ?? d.domain,
-  }));
+  // Only domains that resolve to real discipline metadata get a route — Counseling
+  // has no accreditation data and matchDisciplineMeta returns null for it, so
+  // /domains/[slug] never builds a page for it. Filter it out before it can appear
+  // as a jump-search result that leads to a 404.
+  const jumpItems = domains
+    .map((d) => ({ name: d.domain, meta: matchDisciplineMeta(d.domain) }))
+    .filter((d): d is { name: string; meta: NonNullable<typeof d.meta> } => d.meta !== null)
+    .map((d) => ({ name: d.name, slug: d.meta.slug }));
 
   return (
     <Stack gap={0}>
@@ -54,8 +58,8 @@ export default function LensesPage() {
           <ClickableCard href="/crosswalk" label="Standards × Competitor Crosswalk" padding={4}>
             <Stack gap={3}>
               <Stack direction="horizontal" gap={2} vAlign="center">
-                <Icon icon="success" size="md" color="secondary" />
-                <Heading level={3}>Standards × Competitor Crosswalk</Heading>
+                <Icon icon="funnel" size="md" color="secondary" />
+                <Heading level={2}>Standards × Competitor Crosswalk</Heading>
               </Stack>
               <Text type="body" color="secondary" maxLines={3}>
                 Wilson's own ask: every accreditation standard, Prism's real fit, and
@@ -67,7 +71,7 @@ export default function LensesPage() {
             <Stack gap={3}>
               <Stack direction="horizontal" gap={2} vAlign="center">
                 <Icon icon="viewColumns" size="md" color="secondary" />
-                <Heading level={3}>Domains</Heading>
+                <Heading level={2}>Domains</Heading>
               </Stack>
               <Text type="body" color="secondary" maxLines={3}>
                 One page per domain — accreditor structure, competitor landscape,

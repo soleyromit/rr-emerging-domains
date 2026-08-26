@@ -26,6 +26,7 @@ export default async function DomainPage({ params }: { params: Promise<{ slug: s
         <Stack gap={5}>
           <Breadcrumbs>
             <BreadcrumbItem href="/lenses">Lenses</BreadcrumbItem>
+            <BreadcrumbItem href="/domains">Domains</BreadcrumbItem>
             <BreadcrumbItem isCurrent>{entry.domain}</BreadcrumbItem>
           </Breadcrumbs>
           <PageHeader
