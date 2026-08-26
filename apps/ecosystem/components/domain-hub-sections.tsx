@@ -11,6 +11,7 @@ import { Tooltip } from "@astryxdesign/core/Tooltip";
 import { Link } from "@astryxdesign/core/Link";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList";
+import { List, ListItem } from "@astryxdesign/core/List";
 import { DisciplineChip } from "@/components/discipline-chip";
 import { SentenceList } from "@/components/sentence-list";
 import { FieldBlock } from "@/components/field-block";
@@ -153,36 +154,30 @@ export function DomainHubSections({ domain, data }: { domain: string; data: Doma
           />
         ) : (
           <Stack gap={3}>
-            {visibleCompetitors.map((c) => (
-              <Stack key={c.slug} gap={1.5} paddingBlock={2} style={{ borderBottom: "1px solid var(--color-border)" }}>
-                <Stack direction="horizontal" hAlign="between" vAlign="center" gap={2} wrap="wrap">
-                  <Link href={`/competitors/${c.slug}`} type="body" weight="semibold" size="sm" color="accent" hasUnderline>
-                    {c.competitor}
-                  </Link>
-                  <ThreatBadge threat={c.threat} />
-                </Stack>
-                <Text type="supporting" size="sm" maxLines={2}>
-                  {c.rationale}
-                </Text>
-              </Stack>
-            ))}
+            <List hasDividers>
+              {visibleCompetitors.map((c) => (
+                <ListItem
+                  key={c.slug}
+                  href={`/competitors/${c.slug}`}
+                  label={c.competitor}
+                  description={<Text type="supporting" size="sm" maxLines={2}>{c.rationale}</Text>}
+                  endContent={<ThreatBadge threat={c.threat} />}
+                />
+              ))}
+            </List>
             {overflowCompetitors.length ? (
               <Collapsible trigger={`Show ${overflowCompetitors.length} more competitors`} defaultIsOpen={false}>
-                <Stack gap={3}>
+                <List hasDividers>
                   {overflowCompetitors.map((c) => (
-                    <Stack key={c.slug} gap={1.5} paddingBlock={2} style={{ borderBottom: "1px solid var(--color-border)" }}>
-                      <Stack direction="horizontal" hAlign="between" vAlign="center" gap={2} wrap="wrap">
-                        <Link href={`/competitors/${c.slug}`} type="body" weight="semibold" size="sm" color="accent" hasUnderline>
-                          {c.competitor}
-                        </Link>
-                        <ThreatBadge threat={c.threat} />
-                      </Stack>
-                      <Text type="supporting" size="sm">
-                        {c.rationale}
-                      </Text>
-                    </Stack>
+                    <ListItem
+                      key={c.slug}
+                      href={`/competitors/${c.slug}`}
+                      label={c.competitor}
+                      description={<Text type="supporting" size="sm" maxLines={2}>{c.rationale}</Text>}
+                      endContent={<ThreatBadge threat={c.threat} />}
+                    />
                   ))}
-                </Stack>
+                </List>
               </Collapsible>
             ) : null}
             {landscapeEntry.sources?.length ? (
