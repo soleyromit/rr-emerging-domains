@@ -34,7 +34,14 @@ const SECTIONS = [
       { href: "/repo-comparison", label: "Enterprise repo" },
     ],
   },
-  { title: "Lenses", items: [{ href: "/lenses", label: "Lenses" }] },
+  {
+    title: "Lenses",
+    items: [
+      { href: "/lenses", label: "Lenses" },
+      { href: "/crosswalk", label: "Crosswalk" },
+      { href: "/domains", label: "Domains" },
+    ],
+  },
 ];
 
 export function AppNav({ children }: { children: React.ReactNode }) {
