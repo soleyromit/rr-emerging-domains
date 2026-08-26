@@ -1,0 +1,197 @@
+# Researched per _TEMPLATE.yaml shape. Every non-trivial factual claim carries a source URL.
+# Unverifiable items are marked "not publicly disclosed" or "unable to verify".
+competitor: "axiUm (Exan / Henry Schein One)"
+slug: "axium"
+domains_served: ["Dentistry"]
+category: "Academic dental EHR + practice management (dental school clinical/education suite)"
+company:
+  founded: "Exan Software founded 1989; axiUm product launched 1995 (per search-engine-summarized secondary sources, not independently confirmed on a primary Exan/Henry Schein page — treat founding year as best-available, not fully verified)"
+  hq: "Originally Port Coquitlam, British Columbia, Canada (Exan Group headquarters at time of 2012 acquisition); now operated as Exan Software, a Henry Schein One company"
+  ownership: "Henry Schein acquired a majority interest in The Exan Group in September 2012; axiUm is now marketed as part of Henry Schein One's dental software portfolio, sold both directly (henryscheinone.com) and under the Exan/axiUm Academic brand (exansoftware.com, axiumacademic.com)"
+
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: >
+      Practice Management module supports multi-mode scheduling (Chair, Book, Availability views)
+      with drag-and-drop and operatory monitor views, student-patient matching against graduation
+      requirements, and appointment coordination across undergraduate, graduate, and faculty
+      clinics. This is a chair-side/patient-encounter model rather than an explicit
+      rotation/placement engine — axiUm's "clinical education" is built around one dental school's
+      own teaching clinic (patients coming to the school), not students being placed out at
+      external clinical sites the way Prism's placement/rotation model works.
+    depth_vs_prism: "unknown"
+    evidence: >
+      "Multi-mode scheduling (Chair, Book, Availability) with drag-and-drop interface and
+      operatory monitor views... Student-patient matching based on graduation requirements...
+      Appointment coordination across undergraduate, graduate, and faculty clinics."
+    source: "https://www.axiumacademic.com/platform/practice-management/"
+  - pillar: "Compliance Management"
+    competitor_capability: >
+      Role-based access control, full audit trails on "every transaction, form, and clinical
+      entry," time-stamped/user-tagged entries, and stated support for HIPAA, PIPEDA, FERPA and
+      CODA requirements. This reads as security/data-governance compliance (who can see/edit what,
+      audit logging) rather than a student-facing compliance-item tracker (immunizations,
+      background checks, certifications gating placement start) — no public page describes a
+      discrete "compliance items" module comparable to Prism's.
+    depth_vs_prism: "unknown"
+    evidence: >
+      "Every transaction, form, and clinical entry includes a full audit trail... Support for
+      HIPAA, PIPEDA, and accreditation requirements... Role-based access control limiting user
+      visibility." Also: "axiUm's built-in security features—such as role-based access, audit
+      trails, and encryption—help schools meet HIPAA, FERPA and CODA requirements."
+    source: "https://www.axiumacademic.com/platform/practice-management/"
+  - pillar: "Curriculum Mapping"
+    competitor_capability: >
+      No dedicated "curriculum mapping" module is publicly documented. Marketing copy states axiUm
+      is "customized to meet your program's unique academic requirements, curriculum, and
+      workflows," and Analytics & Reporting claims to "support curriculum planning," but this
+      appears to be reporting/analytics over grading and competency data rather than a structured
+      curriculum-to-competency mapping tool.
+    depth_vs_prism: "unknown"
+    evidence: >
+      "axiUm is a flexible, long-term solution that can be customized to meet your program's
+      unique academic requirements, curriculum, and workflows." / "Academic Insights: Track
+      student progress, unapproved treatments, and grading trends. Support curriculum planning
+      and accreditation readiness."
+    source: "https://www.axiumacademic.com/solutions/"
+  - pillar: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    competitor_capability: >
+      Not publicly disclosed as a standalone module. axiUm has a "Self-Assessment Support" feature
+      where students complete self-evaluations that auto-populate into the system, and faculty use
+      an "Evaluations Module" to record student assessments with customizable grading schemes —
+      but this is competency/clinical grading, not a general course-evaluation or survey
+      instrument comparable to Prism's planned Q1 2027 pillar.
+    depth_vs_prism: "prism-only"
+    evidence: >
+      "Self-Assessment Support: Students complete self-evaluations that auto-populate into the
+      system for reflective learning." / "Evaluations Module: Record student assessments using
+      customizable grading schemes."
+    source: "https://www.axiumacademic.com/platform/education-evaluation/"
+  - pillar: "Exam Management (Prism roadmap Q2 2027)"
+    competitor_capability: >
+      No public evidence of a dedicated exam-management/testing module (e.g., item banks, exam
+      delivery/proctoring). axiUm's assessment tooling is centered on clinical
+      competency/procedure grading and faculty sign-off, not written/practical exam
+      administration.
+    depth_vs_prism: "unable to verify"
+    evidence: "No exam-management feature found on any public axiUm/Exan/Henry Schein One page reviewed."
+    source: "unable to verify"
+  - pillar: "Accreditation Management (Prism roadmap Q3 2027)"
+    competitor_capability: >
+      axiUm markets "CODA-Ready Reporting" and accreditation report generation as an established,
+      shipped capability today — ahead of where Prism's roadmap places this pillar (Q3 2027).
+      Analytics & Reporting explicitly claims to "generate detailed reports to meet accreditation
+      standards" and to reduce "manual work for accreditation reporting," and axiUm is positioned
+      site-wide as built for CODA (Commission on Dental Accreditation) compliance specifically,
+      not just generic reporting. It is not clear from public material whether this extends to
+      structured standard-by-standard evidence mapping or is closer to ad hoc/custom reporting
+      pulled from existing grading and clinical data (the site describes a "Custom Query Engine"
+      and "Info Manager" for building ad hoc reports, which suggests the latter).
+    depth_vs_prism: "ahead"
+    evidence: >
+      "CODA-Ready Reporting: Maintain auditable records for accreditation compliance." /
+      "Accreditation Reporting: Generate detailed reports to meet accreditation standards and
+      ensure compliance with institutional and regulatory requirements... reduce manual work for
+      accreditation reporting."
+    source: "https://www.axiumacademic.com/platform/analytics-reporting/"
+
+strengths:
+  - claim: >
+      Extremely high, entrenched market share in U.S. and Canadian dental education: axiUm is
+      reported in use at approximately 90% of U.S. dental schools, and axiUm/Henry Schein
+      academic software is stated to reach 85% of U.S. dental schools, 70% of Canadian dental
+      schools, and roughly 30,000 students.
+    source: "https://www.axiumacademic.com/ (site copy aggregated via search); https://www.exansoftware.com/why-dental-education-programs-trust-axium-ascend-software/"
+  - claim: >
+      Named institutional client list includes major, brand-name dental schools: Harvard,
+      University of Toronto, UBC, University of Pennsylvania, UCLA, USC, NYU, Tufts, Stony Brook,
+      Ohio State, University of Florida, University of Minnesota, University of Maryland — a
+      breadth of flagship reference customers Prism does not yet have in dentistry.
+    source: "https://www.axiumacademic.com/platform/practice-management/ (client list); https://www.exansoftware.com/axium/"
+  - claim: >
+      Backed by Henry Schein One's distribution, sales, and support infrastructure since a 2012
+      majority-interest acquisition — gives axiUm resources and channel reach that an independent
+      point-solution vendor would lack.
+    source: "https://www.newswire.ca/news-releases/henry-schein-acquires-majority-interest-in-dental-software-company-the-exan-group-510834151.html"
+  - claim: >
+      Deep, unified data model spanning patient EHR, billing/revenue-cycle management, and student
+      competency grading in one system — faculty "review and approve student treatments within
+      the system," tying clinical financial data directly to academic sign-off, which is a
+      genuinely dentistry-specific integration Prism (a cross-discipline placement/compliance
+      platform) does not replicate.
+    source: "https://www.axiumacademic.com/platform/education-evaluation/"
+
+weaknesses:
+  - claim: >
+      Consistently criticized user interface and usability across independent review platforms.
+      Capterra reviewers rate axiUm 3.1/5 (12 verified reviews) and describe it as "clunky,"
+      "outdated like a program created in the early 90s," with a steep learning curve, frequent
+      crashes/freezing, and counterintuitive navigation requiring many screens to complete tasks.
+    source: "https://www.capterra.com/p/130811/axiUm/reviews/"
+  - claim: >
+      G2 lists axiUm Dental at roughly 3.9/5, with reviewer complaints echoing an aging,
+      non-modernized interface, though G2's review page itself could not be directly fetched for
+      full verification (blocked by the site) — rating figure sourced from a search-engine summary
+      of the G2 page, not a direct read.
+    source: "https://www.g2.com/products/axium-dental/reviews"
+  - claim: >
+      Explicitly positioned/accepted as impractical for private, non-institutional dental
+      practices — reviewers say it is "not practical for private dental practices; better suited
+      for schools/hospitals" — meaning its usability tradeoffs are tolerated specifically because
+      institutional/school customers have few switching options, not because the product experience
+      is good.
+    source: "https://www.capterra.com/p/130811/axiUm/reviews/"
+  - claim: >
+      No public evidence of a dedicated rotation/external-placement engine, discrete student
+      compliance-item tracker (immunizations, background checks, certifications), general
+      course-evaluation/survey tool, or exam-management module — axiUm's academic tooling is built
+      around one institution's own in-house teaching clinic rather than a multi-site clinical
+      placement network, which is the core of Prism's Clinical & Experiential Education pillar.
+    source: "https://www.axiumacademic.com/platform/practice-management/"
+
+retention_anchor: >
+  Extremely high data lock-in and sunk institutional cost: axiUm is the combined
+  EHR-plus-billing-plus-academic-grading system of record for a dental school's teaching clinic,
+  meaning patient financial/clinical records, revenue-cycle processes, and years of student
+  competency/grading history all live in one database. Switching costs include HIPAA-regulated
+  patient record migration, retraining faculty on chairside approval workflows, and re-establishing
+  CODA-aligned reporting — on top of axiUm's near-total market saturation (90% of U.S. dental
+  schools) meaning most faculty and incoming students already know the system from other
+  institutions, reinforcing inertia even where usability is disliked.
+
+exxat_opportunity: >
+  axiUm's own reviewers openly describe it as a clunky, dated, early-90s-feeling interface that
+  institutional users tolerate rather than like — a clear wedge for Prism's modern UX, especially
+  among newer or growing dental programs not already fully locked into axiUm's combined EHR/billing
+  database. More structurally, axiUm is built around a single institution's own teaching clinic
+  (patients come to the school) rather than a true multi-site external placement/rotation model,
+  and shows no public evidence of a discrete compliance-item tracker, curriculum-to-competency
+  mapping tool, course-evaluation/survey system, or exam-management module — all areas where Prism
+  either already ships (Clinical & Experiential Education, Compliance Management, Curriculum
+  Mapping) or has a named 2027 roadmap answer. Prism's practical opening in Dentistry is less about
+  displacing axiUm's EHR/billing core at entrenched CODA-accredited schools (a very high switching
+  cost, unlikely near-term) and more about programs that need genuine multi-site clinical placement
+  and compliance tracking axiUm was not built for — dental hygiene, dental assisting, and other
+  dental-adjacent allied-health programs that route students through external clinical sites rather
+  than treating patients in-house.
+
+pricing_signal: "not publicly disclosed"
+
+last_researched: "2026-08-24"
+
+sources:
+  - "https://www.axiumacademic.com/"
+  - "https://www.axiumacademic.com/platform/practice-management/"
+  - "https://www.axiumacademic.com/platform/education-evaluation/"
+  - "https://www.axiumacademic.com/platform/analytics-reporting/"
+  - "https://www.axiumacademic.com/solutions/"
+  - "https://www.exansoftware.com/why-dental-education-programs-trust-axium-ascend-software/"
+  - "https://www.exansoftware.com/axium/"
+  - "https://www.henryscheinone.com/products/axium/"
+  - "https://www.capterra.com/p/130811/axiUm/"
+  - "https://www.capterra.com/p/130811/axiUm/reviews/"
+  - "https://www.g2.com/products/axium-dental/reviews"
+  - "https://www.newswire.ca/news-releases/henry-schein-acquires-majority-interest-in-dental-software-company-the-exan-group-510834151.html"
+  - "https://investor.henryschein.com/news-releases/news-release-details/2021/Henry-Schein-One-Announces-Enhancement-of-Its-axiUm-Dental-Software-by-Integrating-Dental-and-Medical-Patient-Records-05-11-2021/default.aspx"
+  - "https://www.prnewswire.com/news-releases/henry-schein-introduces-axium-ascend-300621611.html"
+  - "https://www.dentalproductsreport.com/view/henry-schein-introduces-axium-ascend"

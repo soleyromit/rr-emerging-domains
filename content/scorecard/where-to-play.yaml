@@ -1,0 +1,95 @@
+# Real Where-to-Play scorecard (replaces the tracker's placeholder 3s).
+# Scores 1-5, weights must sum to 1.0. Scored 2026-08-24 as a full synthesis over
+# content/domains/, content/accreditation/, content/competitors/, content/personas/,
+# and content/prism/capability-map.yaml.
+criteria:
+  - name: "Market size & growth (programs x budget)"
+    weight: 0.20
+    scores: { DO: 4, Pharmacy: 3, Dentistry: 3, Medicine: 5 }
+    rationale:
+      DO: "Only 48 COMs but 75 teaching locations and the steepest growth curve of the four — 40,905 students in 2025-26 (all-time high, +2.9% YoY, +59% over the decade), first-year enrollment +62% over ten years, and 2026-27 applications +12.8% to 26,506 -> growing budgets chasing capacity = 4."
+      Pharmacy: "Largest program count (142 ACPE schools, up from 78 in 2000) but the only shrinking domain — applicants fell >60% from 106,815 (2011) to 40,552 (2021), enrollment slid 44,403 -> 42,312, and University of Charleston closed in Dec 2024; +6% application rebound into fall 2025 is stabilization, not growth -> many programs, compressed budgets = 3."
+      Dentistry: "Mid-size and genuinely growing — 77 CODA predoctoral programs (up from 55 in 2000), 28,925 students in 2025-26, and 25% of the 7,013 first-year enrollees in 2024 sat at newly opened schools — but the absolute base is the second smallest and per-program ed-tech spend is already absorbed by axiUm's EHR/billing/grading suite = 3."
+      Medicine: "Largest domain on every axis — ~159-161 LCME schools, 100,723 students (first time past 100,000 in 2025-26, +1.3% YoY), 23,440 matriculants, applicants +5.3% reversing three years of decline, and academic-health-center budgets behind it = 5."
+
+  - name: "Accreditation pressure (pain intensity)"
+    weight: 0.20
+    scores: { DO: 5, Pharmacy: 5, Dentistry: 4, Medicine: 4 }
+    rationale:
+      DO: "Brand-new COCA 2026 standards (effective July 1 2026, governing reviews after Feb 1 2027) demand computed evidence, not documents — 6.9's 3-year rolling capacity average plus an executed agreement per site, 6.10's explicitly 'system-generated' per-student DO-supervision/GME-resident/inpatient proof, 6.11's cross-site statistical comparability — layered on 11.4/11.5 bright-line public thresholds (COMLEX within 30 days of NBOME's update; 95% PGY-1 floor) that auto-escalate to out-of-compliance after three years, and 11.9's annual + mid-cycle report cadence = 5."
+      Pharmacy: "ACPE Standards 2025 superseded Standards 2016 for evaluations from fall 2025 AND ACPE retired AAMS for its own PHARMS platform in the same cycle, so programs re-map evidence and re-learn submission simultaneously; the asks are graduation-gating arithmetic — 300 IPPE hours with 75/75 community/hospital sub-minimums and simulation excluded, 1,440 APPE hours at >=160 each across four named settings, a live 2:1 preceptor ratio cap (3.3.e), and an executed affiliation agreement per facility (3.5.b) = 5."
+      Dentistry: "CODA pressure is severe but structurally different — 2-9 adequate patient experiences and 2-24's ~15 competency categories are existential for a young program (patient-sourcing shortfalls are a documented cause of delayed graduation), and 1-2 continuous institutional effectiveness is the self-study backbone — yet there are no automatic public-threshold triggers like COCA's, and the Aug 8 2025 Commission action suspending Standards 1-4 and 4-4 signals a moving rather than tightening target = 4."
+      Medicine: "LCME status is existential (gates federal funding, ACGME residency eligibility, licensure) and 8.6's centrally-overseen required-experience monitoring plus 8.7 comparability, 5.5 per-site case mix, 1.4 agreements, and 9.7/9.8's date-anchored feedback and six-week grading SLAs create constant friction — but the standards are stable and annually republished rather than newly replaced, and there is no 30-day publication clock or auto-escalating numeric floor = 4."
+
+  - name: "Incumbent weakness / switching openness"
+    weight: 0.20
+    scores: { DO: 5, Pharmacy: 3, Dentistry: 2, Medicine: 3 }
+    rationale:
+      DO: "The most disrupted incumbent field of the four — New Innovations acquired by QGenda (Jul 2025), Leo/DaVinci merged into Elentra under Achieve Partners with Elentra now publicly marketing migration paths OFF Leo, MedHub/E*Value under Ascend Learning — while the two strongest curriculum/accreditation players (Elentra, Leo) ship NO compliance module at all, and every incumbent's shipped accreditation automation is ACGME/LCME-shaped (MedHub's COCA commitment is a marketing page, not a workflow) -> forced-migration windows plus a provable COCA coverage gap = 5."
+      Pharmacy: "CORE ELMS claims 90% of U.S. pharmacy programs, rates 4.7/5 with 4.9/5 customer service, and already ships ACPE-aligned CompMS gap analysis and a survey module — a hard incumbency — but its own reviewers say the 'reporting suite lacks depth and consistency,' modules 'seem disjointed,' setup has a steep learning curve, and a preceptor changing employer requires a new account; the Standards 2025 + PHARMS re-mapping is the one moment switching cost looks smallest = 3."
+      Dentistry: "axiUm sits at ~90% of U.S. dental schools as the combined patient EHR + billing + competency gradebook in one database, and reviewers say plainly it is tolerated (3.1/5, 'clunky,' 'outdated like a program created in the early 90s') because institutional customers have few options; the repo's own read is compete alongside it, not displace it -> deep dissatisfaction but near-absolute retention anchor = 2."
+      Medicine: "All six MD incumbents (one45, Elentra, Leo, eMedley, MedHub/E*Value, New Innovations) already ship surveys, exams, and standard-aligned accreditation reporting Prism does not until 2027, with Leo AAMC-CI-authorized since 2013 and one45 credited in a full 8-year LCME outcome; the real openings are narrow — no compliance-gating module at one45/Elentra/Leo, documented mobile/logging UX complaints, and the same Leo->Elentra and QGenda forced-migration windows = 3."
+
+  - name: "Prism pillar fit (transfer vs build)"
+    weight: 0.25
+    scores: { DO: 4, Pharmacy: 5, Dentistry: 2, Medicine: 4 }
+    rationale:
+      DO: "Zero outright Transfers across the 12 COCA elements assessed but 5 clean Configures on shipped pillars — 6.9/6.10 are the rotation/placement engine with added metadata fields, 6.4's seven osteopathic competencies (OMM included) is a Curriculum Mapping taxonomy, 5.4 policy attestation is a Compliance Management item type — and 4-week core clerkship blocks across individually-recruited sites are structurally Prism's home turf; the 7 Gaps (6.11 statistics, 11.x surveys/exams/reports) are the same roadmap pillars every domain hits = 4."
+      Pharmacy: "Highest transfer ratio of any accreditor file — 4 Transfer / 5 Configure / 3 Gap across 12 ACPE elements — with 3.1.a IPPE sequencing, 3.3.e's 2:1 ratio check ('a query against existing assignment data, not new architecture'), 2.2.d curriculum mapping, and 7.3.c's Setup -> Forms/Evaluations reuse all landing on shipped pillars; the one-to-one licensed-pharmacist preceptor model maps directly onto Prism's existing student-preceptor-placement data model, and preceptor gating (3.3.a/3.3.c) is the shipped student-compliance gating pattern pointed at a second entity = 5."
+      Dentistry: "Structural mismatch at the core — dental clinical education is a longitudinal in-house patient panel with per-procedure chairside sign-off, not block rotations, so the confirmed anchor-relative scheduling primitive has little to anchor to; CODA 2-24 needs CDT-coded, tooth/surface-level procedure logging across ~15 competency categories, called out as 'likely the single largest dentistry-specific build,' and 5-3 needs chart-audit sampling and deficiency coding that no pillar approaches = 2."
+      Medicine: "3 Transfer / 7 Configure / 3 Gap across 13 LCME elements, including the two strongest single fits in the entire corpus — 8.6 central required-experience monitoring is 'squarely the Clinical & Experiential Education pillar's core job' and 9.7 midpoint formative feedback 'maps almost one-to-one' onto the confirmed anchor-relative primitive — but multi-tiered attending/resident/intern supervision, VSLO away rotations at institutions with no school relationship, and USMLE/Match ingestion are all genuine model extensions = 4."
+
+  - name: "Reachability (existing campus relationships)"
+    weight: 0.15
+    scores: { DO: 4, Pharmacy: 4, Dentistry: 3, Medicine: 3 }
+    rationale:
+      DO: "39 of 48 COMs are private and a large share sit inside health-sciences universities that already run the PA/PT/OT programs Prism serves today (Touro, NSU, PCOM-type institutions), the buying center is the clinical education office and accreditation liaison rather than a hospital GME office, and AACOM's annual meeting is a named, single-channel route to essentially the whole field of 48 = 4."
+      Pharmacy: "PharmD sits in the same 'advanced practice health sciences' bucket Prism's allied-health base already occupies — E*Value explicitly bundles pharmacy alongside PT/OT/PA — and 142 colleges are overwhelmingly at regional publics and privates with nursing and allied-health programs on the same campus, so the warm-intro path is short even where CORE holds the contract = 4."
+      Dentistry: "The DDS/DMD buyer sits behind axiUm inside a self-contained teaching clinic with its own EHR, billing and governance — the furthest buying center from Prism's current base — but the adjacency is real and named: dental hygiene and dental assisting programs route students through external clinical sites and are already allied-health shaped, giving a side door into dental schools = 3."
+      Medicine: "Nursing and allied health usually sit on the same academic health center campus, but the MD program's clinical-ed stack is frequently inherited from the affiliated health system's GME office (MedHub/E*Value at 80 of 119 U.S. academic health centers, New Innovations at 740 enterprise customers), so the decision often lives outside the campus relationship Prism already has, and Prism has no MD reference customers = 3."
+
+recommended_beachhead: "DO"
+rationale: >
+  DO wins on 4.40 weighted, ahead of Pharmacy (4.05), Medicine (3.85) and
+  Dentistry (2.75), and it wins for a coherent reason rather than by averaging.
+  It is the only domain that scores 5 on both accreditation pressure and
+  incumbent weakness at the same time. COCA's 2026 standards take effect July 1
+  2026 and govern reviews after February 1 2027, and they demand exactly the
+  evidence the distributive clinical model makes hardest to produce — a 3-year
+  rolling capacity average per site (6.9), explicitly "system-generated"
+  per-student proof of DO-supervised, resident-present and inpatient rotations
+  before fourth year (6.10), and an executed affiliation agreement for every one
+  of the hundreds of individually-recruited sites a COM contracts. That is the
+  Clinical & Experiential Education pillar's job description with COCA metadata
+  fields added, and it lands on a market growing faster than any other (40,905
+  students, +2.9% in one year, +59% over the decade, applications +12.8%) whose
+  binding constraint is clinical capacity, not classroom seats.
+  The competitive terrain is the decisive factor. Four of the plausible DO
+  incumbents have changed hands or merged since 2023 — New Innovations to QGenda
+  in July 2025, Leo/DaVinci into Elentra under Achieve Partners with Elentra now
+  publicly courting Leo customers to migrate, MedHub/E*Value under Ascend — so a
+  large share of COMs face a platform conversation they did not initiate. And the
+  two strongest curriculum/accreditation players in the segment, Elentra and Leo,
+  ship no compliance module at all, while every incumbent's shipped accreditation
+  automation is ACGME/LCME-shaped (MedHub's COCA commitment is an advocacy page,
+  not a documented workflow). That means Prism can lead with a pillar it already
+  ships against a documented absence, and scope the Q3 2027 Accreditation
+  Management pillar standard-by-standard against COCA's own report field taxonomy
+  (Element 11.9) — a genuine white-space claim rather than a race to parity.
+  Pharmacy is the close second and the natural fast-follow: it has the highest
+  pillar fit of all four (4 Transfer / 5 Configure / 3 Gap against ACPE) and an
+  equally acute accreditation moment in the Standards 2025 + PHARMS transition,
+  but CORE ELMS holds 90% of the market with 4.9/5 service scores while
+  enrollment and budgets are still recovering from a 60% applicant collapse.
+  Medicine is the largest prize and a strong pillar fit, but every incumbent
+  already ships the three pillars Prism does not — Prism would be racing to close
+  a gap rather than opening one. Dentistry should be deferred: axiUm's combined
+  EHR/billing/gradebook lock-in makes displacement impractical, and CODA 2-24's
+  CDT-coded, tooth-level procedure logging is the single largest domain-specific
+  build in the set. Enter it later, and through dental hygiene and dental
+  assisting programs that route students to external sites, not through DDS.
+  One scoping caveat to carry forward: the COCA standards PDF prohibits
+  submitting COCA-owned content into AI platforms without written permission
+  (see the header of ../accreditation/coca.yaml) — clear this with Legal before
+  any COCA standards content goes customer-facing.
+last_updated: "2026-08-24"

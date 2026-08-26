@@ -1,0 +1,29 @@
+# TEMPLATE — one file per accreditor (coca.yaml, lcme.yaml, acpe.yaml, coda.yaml,
+# licensure-gme.yaml). Go to the actual numbered standard/element where the
+# public standards document supports it — not just the standard AREA.
+accreditor: "Example Accreditor (full name)"
+slug: "example-accreditor"
+domain: "DO"                          # DO | Pharmacy | Dentistry | Medicine
+governs: "what programs/institutions it accredits"
+standards_document:
+  title: ""
+  version_or_year: ""
+  url: ""
+
+standards:
+  - element_id: "e.g. 'Standard 5, Element 5.1'"
+    element_title: ""
+    evidence_programs_must_produce: ""
+    required_software_behavior: "what a system must DO to help generate this evidence"
+    prism_fit: "Transfer | Configure | Build | Gap"
+    prism_fit_rationale: "why — reference ../prism/capability-map.yaml pillars by name"
+    gap_notes: "if Gap or partial — what's missing"
+    source: "https://... (deep link or page/section in the standards PDF)"
+
+licensure_or_gme_layer:
+  - body: "e.g. 'NBOME / COMLEX-USA'"
+    what_it_governs: ""
+    relevance_to_product: ""
+    source: ""
+
+last_researched: "2026-08-24"

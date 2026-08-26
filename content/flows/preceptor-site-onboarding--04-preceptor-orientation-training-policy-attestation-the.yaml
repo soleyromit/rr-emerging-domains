@@ -1,0 +1,312 @@
+# Element-level ground truth underneath preceptor-site-onboarding.yaml, stage 4
+# ("4. Preceptor orientation, training & policy attestation (the pre-assignment gate)").
+# This flow deliberately does not re-derive rotation-lifecycle--02's preceptor-credentialing
+# steps; it traces the two SPECIFIC hedges stage 4 carries: (a) whether Compliance Management
+# supports a document-ACKNOWLEDGMENT/attestation item type at all, and (b) whether any such
+# gate can be hung on the preceptor-to-placement assignment (per course, before acceptance) the
+# way it is hung on student-to-placement assignment today. Every confirmed_by citation is a
+# real file in the help-center mirror or a discipline playbook — never re-derived from the
+# journey's own narrative.
+#
+# SCHEMA v2 (2026-08-24): analysis fields (accreditation_citation / competitor_equivalent /
+# gap_severity / gap_note) now live on each ELEMENT rather than on the step. Where the original
+# research did not distinguish between sibling elements, the same verdict is stated identically
+# on each rather than inventing artificial precision.
+flow_name: "Preceptor Orientation & Attestation Gate"
+maps_to_journey: "preceptor-site-onboarding.yaml, stage 4"
+persona: >
+  Clinical/Experiential Education Coordinator (role-clinical-coordinator.yaml) as the Prism
+  Program Administrator configuring and monitoring the gate; the Preceptor (role-preceptor.yaml)
+  as the person who must clear it before accepting a student, using either the pre-onboarding
+  Experiential Supervisor Intake Form or the ongoing instructor.exxat.com Preceptor Module
+  portal — the flow below traces both surfaces because they turn out NOT to be the same thing.
+steps:
+  - screen: "Sites > Setup > Form Setup > Experiential Supervisor Intake Form Builder — Custom Section question types"
+    navigation_path: "Sites > Setup > Form Setup > Experiential Supervisor Intake > Edit"
+    action: >
+      Coordinator adds an Attestation or Attestation-with-signature question to the Custom
+      Section — e.g., "I have reviewed the program's mission and the syllabus expectations for
+      this experience" — and sends the form to a preceptor as part of one-time onboarding.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Experiential Supervisor Intake Form.md"
+    elements:
+      - element: "Question type dropdown in the Custom Section"
+        type: "form builder (11-item list)"
+        data_shown: "Single/multi choice, short/long answer, dropdown, date picker/range, toggle, title/divider, text editor, Attestation, E-signature, Attestation with signature, file upload."
+        gates_on: []
+        accreditation_citation: "No standard's evidence lives in the type list itself — it is the authoring affordance; ACPE 3.3.c / COCA 5.4 evidence lives in the Attestation question types it exposes (next element)."
+        competitor_equivalent: "No competitor teardown in content/competitors documents a preceptor-facing form builder at all, let alone its question-type inventory — New Innovations, MedHub and CORE ELMS describe credential *monitoring* only at marketing-page granularity, so no element-for-element comparison is possible from available sources."
+        gap_severity: "none"
+        gap_note: >
+          Ships as documented: an 11-type list including both attestation variants, available to
+          the coordinator with no configuration or enablement step. Nothing is missing at this
+          element; the open questions attach to the elements below.
+      - element: "Attestation / Attestation with signature elements specifically"
+        type: "question type"
+        data_shown: "'Attestation' = statement requiring acknowledgement; 'Attestation with signature' = combined attestation and e-signature capture, in the same builder used for handbook-acknowledgement file uploads."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.c (orientation to mission and syllabus expectations); COCA Standard 5, Element 5.4 (supervision-policy distribution and attestation by faculty) — this element is where acknowledgment evidence is actually captured."
+        competitor_equivalent: "Not comparable at element level — no competitor's public documentation reaches attestation/e-signature question-type granularity for a preceptor-facing form."
+        gap_severity: "configure-needed"
+        gap_note: >
+          RESOLVES the stage's hedge (a) — whether Compliance Management supports a document-
+          ACKNOWLEDGMENT/attestation item type at all, as opposed to only checklist-and-expiry items.
+          Attestation and Attestation-with-signature are real, shipped question types, attachable to a
+          form that writes directly into the preceptor's own Personnel profile. The Configure work is
+          per program: the mission/syllabus wording must be authored by hand for each of the four new
+          domains. Structural limit, not a configuration one: this form is a one-time onboarding
+          instrument, not a per-course, recurring gate (see step 4).
+      - element: "Standard Section (locked; feeds the Sites > Personnel profile directly)"
+        type: "input field set"
+        data_shown: "Pre-configured, non-editable sections (basic info, professional summary, work-site details, CV/licensure/certification, domain-specific fields, student supervision/capacity, documents/notes) — does NOT include a mission-orientation or syllabus-acknowledgment field among the standard fields."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.c; COCA Standard 5, Element 5.4 — cited here as the standards this element would satisfy out of the box if it carried an orientation-acknowledgment field, which it does not."
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents the field inventory of a preceptor intake profile."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The less-complete sibling on this screen: the section is locked and non-editable, and a
+          mission/syllabus-orientation acknowledgment is not among its pre-built fields for any of the
+          four new domains. Because it cannot be extended in place, the acknowledgment must instead be
+          authored as a Custom Section question per program — a Configure task routed around this
+          element rather than performed on it.
+
+  - screen: "Faculty Compliance > Setup > Requirements — requirement edit drawer"
+    navigation_path: "Faculty Compliance > Setup tab > Requirements > Edit icon"
+    action: >
+      A Faculty Compliance Administrator defines a requirement (e.g., "Calibration/Orientation
+      Training Completion"), configures it as mandatory, WITHOUT a document upload, WITH an
+      expiration date, groups it, and bulk-assigns the group to a set of faculty.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/Setup Faculty Compliance.md"
+    elements:
+      - element: "Enable requirement / Make mandatory toggles"
+        type: "toggle set"
+        data_shown: "Whether the requirement is active and required."
+        gates_on: ["Whether the requirement counts as outstanding in a faculty member's compliance summary"]
+        accreditation_citation: "CODA Standard 2, Element 2-6 (calibration training as a required, not optional, item) — this element is where 'mandatory' is asserted."
+        competitor_equivalent: "Neither Elentra nor one45's public materials document a compliance module distinct from student/general tracking at all (per ../competitors/elentra.yaml and ../competitors/one45.yaml), so no element-for-element comparison is possible in either direction."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Shipped and sufficient for its own job; the Configure work is authoring the requirement
+          (e.g. "Calibration/Orientation Training Completion") per program. The population question —
+          whether the faculty member being made compliant is the right entity for an off-site
+          preceptor — attaches to the Faculty Associations grid below, not to this toggle.
+      - element: "Select if the requirement requires documents to be uploaded"
+        type: "toggle"
+        data_shown: "When OFF, the requirement functions as a pure completion/acknowledgment item with no document review step — the closest confirmed analog to a one-time orientation checkbox."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.c (per-preceptor completion tracking without a document artifact) — this toggle is what makes a document-free acknowledgment item possible."
+        competitor_equivalent: "Not comparable at element level — see the toggle-set element above; competitor documentation does not distinguish document-backed from document-free compliance items."
+        gap_severity: "configure-needed"
+        gap_note: >
+          MEANINGFULLY NARROWS the CODA 2-6 hedge in the journey file ("Compliance Management's item
+          taxonomy is confirmed for students only") at exactly this element: a document-optional
+          completion item for a non-student population ships today. Configure work is per-program
+          authoring only.
+      - element: "Select if the requirement has an expiration date"
+        type: "toggle + date config"
+        data_shown: "Turns a one-time completion item into a recurring, expiry-driven one."
+        gates_on: ["Whether the requirement re-opens as outstanding after expiration"]
+        accreditation_citation: "CODA Standard 2, Element 2-6 (ongoing calibration training with PERIODIC monitoring) — the recurrence half of that standard is evidenced by this element specifically."
+        competitor_equivalent: "Not comparable at element level — competitors document expiration alerting only for already-held credentials at marketing-page granularity, not as a configurable per-requirement toggle."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The strongest element on this screen against CODA 2-6: recurrence is a shipped toggle, not
+          scaffolding, so "periodic" is satisfiable by configuration alone. Note the contrast with
+          step 6 — recurrence exists here, but nothing surfaces the re-opened item inside the
+          preceptor's own portal.
+      - element: "Requirement Group builder + Faculty Associations grid"
+        type: "multi-step drawer + bulk-assign grid"
+        data_shown: "Bundles requirements into a group and assigns/overrides that group for one or more faculty at once."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-6 (per-person monitoring across the supervising population) — this element determines WHO the standard is tracked against, and is therefore where the entity-fit question bites."
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents a bulk requirement-to-person association grid; Prism's dedicated Faculty Compliance module is a positive point of contrast but cannot be compared feature-for-feature."
+        gap_severity: "configure-needed"
+        gap_note: >
+          This grid is where the module's population limit concentrates. "Understanding User Roles in
+          Exxat Prism.md" documents "Faculty" as a role category distinct from Sites > Personnel
+          (where preceptors/Clinical Instructors live per rotation-lifecycle--02's step 1), with no
+          documented merge between the two populations — so this grid is a strong fit for Dentistry's
+          chairside "clinical practice unit" faculty (who log into Prism as Faculty users per
+          ../domains/dentistry.yaml) but an open question for an off-site Pharmacy/DO/Medicine
+          community preceptor, who is a Personnel record, not a Faculty user and therefore may not be
+          selectable here at all.
+
+  - screen: "Faculty dashboard > Compliance tile — Mandatory Requirements grid"
+    navigation_path: "Faculty dashboard > Compliance tile > Compliance Requirement Status"
+    action: >
+      A faculty member opens the Compliance tile, sees which requirements need their attestation
+      and by when, and completes them (per step 2's configuration).
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Faculty/Step-by-Step Guides (How-tos)/Compliance/Uploading Compliance Documents - Faculty.md"
+    elements:
+      - element: "Mandatory Requirements column"
+        type: "read-only label"
+        data_shown: "\"Displays the compliance requirements that require your attestation\" — the product's own literal language for this item type, confirmed verbatim in the help article."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-6; COCA Standard 5, Element 5.4 — this column is the product's own confirmation that the item type these standards require ('attestation') exists for a non-student persona."
+        competitor_equivalent: "Not comparable at element level — see step 2; competitor compliance documentation does not reach column granularity."
+        gap_severity: "none"
+        gap_note: >
+          The word "attestation" is the product's own field label here, not an inference — this
+          element independently corroborates step 1 and step 2 from the opposite (end-user) side.
+      - element: "Status column"
+        type: "read-only status (7-state)"
+        data_shown: "Get Started / In Progress / Pending Review / Approved / Not Approved / Expiring / Expired."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-6 — the Expiring/Expired states are the monitoring evidence the standard's 'periodic' language requires."
+        competitor_equivalent: "Not comparable at element level — see step 2."
+        gap_severity: "none"
+        gap_note: >
+          A seven-state read-only rollup covering both completion and expiry; nothing is missing at
+          this element for this persona.
+      - element: "Due Date column"
+        type: "read-only date"
+        data_shown: "\"Displays the date by which the attestation must be completed.\""
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-6; COCA Standard 5, Element 5.4 (both require attestation completion to be DATED) — this column is where the dating evidence lives."
+        competitor_equivalent: "Not comparable at element level — see step 2."
+        gap_severity: "none"
+        gap_note: >
+          Binds the attestation item to a due date, so a due-dated attestation item type is confirmed
+          beyond doubt for this persona. The unresolved question is not about this element but the one
+          carried by step 2's Faculty Associations grid: whether "Faculty" is the right entity for an
+          off-site preceptor.
+
+  - screen: "Placements > Course > Placement Clearance Dashboard — Preceptor CV / License / Certification columns"
+    navigation_path: "Placements > [Course or Placement Group] > Placement Clearance"
+    action: >
+      Coordinator monitors this dashboard 6-8 weeks before rotations begin (Exxat's documented
+      best practice) and follows up with preceptors showing Missing before the rotation starts.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md; corroborated by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md ('Placement Clearance Dashboard ... also flags whether orientation-completion certificates are present' and 'Personnel module/Certification section for orientation-completion certificates')"
+    elements:
+      - element: "Preceptor CV / Preceptor License / Preceptor Certification columns"
+        type: "read-only rollup (three-state)"
+        data_shown: "Missing / Exists / NA, scoped to the currently selected COURSE — matching ACPE 3.3.c's per-preceptor-per-course granularity requirement exactly."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.c (per-preceptor, per-course orientation gate) — this is the only element in the flow already at that exact granularity."
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents an equivalent course-scoped preceptor-readiness column set."
+        gap_severity: "configure-needed"
+        gap_note: >
+          PARTIALLY RESOLVES hedge (b) at the architectural level: these columns already exist at
+          exactly the right granularity (per course) and already key off the preceptor as a
+          first-class tracked entity — not hypothetical scaffolding. What is NOT resolved: the
+          official help article documents only three default columns (CV, License, Certification) —
+          "orientation completion" is not one of them out of the box for any discipline. The Social
+          Work playbook is the only source confirming this column set can be extended to flag an
+          orientation-completion CERTIFICATE (a document uploaded to the Personnel/Certification
+          section, not an in-app training-completion action) — i.e., the pattern is proven extensible
+          in one already-shipped discipline, but is a Configure task per new domain, not a shipped
+          default for DO/Pharmacy/Dentistry/Medicine.
+      - element: "Filter panel"
+        type: "report filter"
+        data_shown: "Filterable by Preceptor CV, Preceptor License, and Preceptor Certification status, among student-side fields."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.c — supports the monitoring workflow, but the evidence itself lives in the columns above, not in the filter."
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents the filter inventory of a preceptor-readiness view."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Downstream of the column element and limited by it: the filter reaches only the same three
+          default preceptor fields, so an orientation-completion status is not filterable until that
+          column is added per domain. Once it is, no separate filter work is documented as needed.
+
+  - screen: "Placements > Course > Place Student drawer — Preceptor / Clinical Instructor selector"
+    navigation_path: "Placements > [Course] > Placements page > By Location or By Student > place a slot"
+    action: "Coordinator selects a preceptor from the dropdown and commits the placement, independently of that preceptor's status on the Clearance Dashboard two screens away."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placing and Publishing Placements to Students.md"
+    elements:
+      - element: "Preceptor / Clinical Instructor dropdown"
+        type: "dropdown"
+        data_shown: "List of Personnel records associated with the selected location, filterable by name — no visible credential, compliance, or clearance-status indicator anywhere in the documented drawer."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.c ('completed before accepting a student' is a pre-assignment gate requirement by definition, so this is the exact element the status would need to surface on)."
+        competitor_equivalent: "Not verifiable at element level — no competitor teardown documents whether their own assignment selector displays a credential/orientation status at the point of selection, so no comparison can be made either way."
+        gap_severity: "gap"
+        gap_note: >
+          The coordinator picks a preceptor here completely blind to that preceptor's Placement
+          Clearance status two screens away: the documented dropdown shows name and location
+          association only, no Missing/Exists indicator. This is the visibility half of hedge (b)'s
+          negative answer.
+      - element: "Place / Place and Publish buttons"
+        type: "button"
+        data_shown: "Both commit the assignment; neither is documented as being disabled or warned by a preceptor's Placement Clearance status."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.c (orientation must be complete BEFORE a student is accepted — this button is the commit point that definition binds to)."
+        competitor_equivalent: "Not verifiable at element level — no competitor teardown documents whether their assignment commit action enforces a credential/orientation check, so no comparison can be made either way."
+        gap_severity: "gap"
+        gap_note: >
+          The sharpest finding in this flow, and it CLOSES hedge (b) in the negative rather than
+          confirming it open-ended: per the officially documented UI, nothing in the commit action
+          itself reads or enforces Placement Clearance status. The Clearance Dashboard (step 4) is a
+          separate monitoring view a human must check by hand; nothing stops a coordinator from
+          placing a student with a preceptor whose license, certification, or (where configured)
+          orientation certificate shows "Missing." A true implementation of ACPE 3.3.c needs this
+          specific button to consult step 4's status, and as documented today it does not.
+
+  - screen: "instructor.exxat.com Preceptor Module portal — Resources section (contrasted with student-side Attestations)"
+    navigation_path: "instructor.exxat.com dashboard > Resources; contrast: Student dashboard > Complete Profile Attestations"
+    action: >
+      A preceptor logging into their own portal today has no in-portal action item, checkbox, or
+      status indicator for orientation/attestation — only passive reference material. A student in
+      the equivalent position sees a pending-item count, a due date, and produces a timestamped
+      audit record on completion.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md; /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module User Guide for Preceptors.md; contrast case: /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Profile/Acknowledging to Attestations.md"
+    elements:
+      - element: "Preceptor Module 'Resources' section"
+        type: "static content list"
+        data_shown: "Training materials — videos, documents, links, FAQs — provided by Exxat for system understanding, plus a separate school-added 'site resources' page. No completion checkbox, acknowledgment button, or status tracking documented anywhere in this section."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.c; COCA Standard 5, Element 5.4 (both require the attestation to be completed AND its completion to be evidenced) — this element delivers the material but produces no completion evidence."
+        competitor_equivalent: "Leo (DaVinci)'s no-login, on-demand evaluation-link pattern (../competitors/leo-davinci.yaml) is the closest public analog for pushing an actionable item to an external, non-portal preceptor, but Leo's own materials document that pattern for evaluations specifically, not for orientation/attestation — a structural parallel, not a verified feature match."
+        gap_severity: "gap"
+        gap_note: >
+          Distribution without acknowledgment: the preceptor can read the training material here but
+          cannot mark it complete, and the program gets no dated record — precisely the half of
+          3.3.c/5.4 that requires evidence, missing at the element that would produce it.
+      - element: "Preceptor Module feature list (Profile, Associated Schools, Student Placements, Emails, Resources, Help, Announcements)"
+        type: "navigation menu"
+        data_shown: "The complete, documented set of sections in the preceptor-facing portal — no Attestations, Compliance, or Training-Completion menu item appears anywhere in it."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.c; COCA Standard 5, Element 5.4 — cited as absence: there is no menu destination in this portal where per-preceptor attestation evidence could live."
+        competitor_equivalent: "Not comparable at element level — no competitor teardown enumerates the navigation inventory of a preceptor-facing portal; Leo's model sidesteps the portal question entirely (see the Resources element)."
+        gap_severity: "gap"
+        gap_note: >
+          SHARPENS hedge (a) rather than closing it: the attestation item TYPE is confirmed to exist
+          in the product (steps 1-3), but this documented menu shows it is not exposed anywhere inside
+          the actual self-service surface a preceptor logs into once they are active. The only
+          documented path to get an attestation in front of a preceptor remains the one-time,
+          pre-onboarding Experiential Supervisor Intake Form (step 1). This matters specifically for
+          CODA 2-6's recurring calibration requirement and ACPE 3.3.c's per-course requirement, both
+          of which imply a preceptor must see and clear a fresh attestation more than once.
+      - element: "Student dashboard 'Complete Profile Attestations' text + I Agree button (contrast case)"
+        type: "action list + button"
+        data_shown: "Pending attestation count, due date per attestation, an 'I Agree' button, and an 'Agreed Attestations' audit section with signed date/time — the confirmed, shipped version of the exact UX this stage needs, but built for students, not preceptors."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.c; COCA Standard 5, Element 5.4 — this element fully satisfies both (completion plus dated, audited evidence), for the wrong persona."
+        competitor_equivalent: "Not applicable — this is an internal contrast case, not a competitor comparison; no competitor teardown documents an equivalent self-service attestation-with-audit surface for any persona."
+        gap_severity: "none"
+        gap_note: >
+          Complete as built: pending count, due date, I Agree, and a timestamped audit trail all ship
+          today. It is recorded here only as proof that the required UX exists in the product and is
+          not a build-from-scratch problem — the gap is its absence for the preceptor persona (the two
+          elements above), not any deficiency in this element.
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Experiential Supervisor Intake Form.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/Setup Faculty Compliance.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Faculty/Step-by-Step Guides (How-tos)/Compliance/Uploading Compliance Documents - Faculty.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placing and Publishing Placements to Students.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module User Guide for Preceptors.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Profile/Acknowledging to Attestations.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Understanding User Roles in Exxat Prism.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/dentistry.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/flows/rotation-lifecycle--02-preceptor-site-faculty-credentialing-orientation-calibration.yaml (sibling flow — preceptor-as-entity and credentialing steps; this file scopes narrowly to the attestation/orientation-gate question specifically)"
+last_verified: "2026-08-24"

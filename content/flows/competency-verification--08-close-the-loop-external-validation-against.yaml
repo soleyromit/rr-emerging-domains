@@ -1,0 +1,238 @@
+# Element-level ground truth underneath competency-verification.yaml, stage 8
+# ("Close the loop — external validation against licensure exams and the
+# CQI/self-study record"). See _TEMPLATE.yaml for field meanings. Every
+# accreditation_citation and competitor_equivalent claim below traces to a
+# real source file in confirmed_by — never to this journey's own narrative.
+# This flow overlaps heavily in subject matter with
+# accreditation-self-study--05-external-outcome-data-ingestion-board-exams.yaml
+# (the exam-ingestion half) and accreditation-self-study--07-closing-the-cqi-
+# loop-finding-to.yaml (the loop-closing half), which trace the same two
+# roadmap gaps through a different journey's lens. Citations below were
+# independently re-opened and re-read against current source material rather
+# than copied from those files; three screens here (Program Details >
+# Accreditation record, the PT/PTA Annual Accreditation Report data-pull
+# runbook, and the Student Status terminal-state check tied specifically to
+# COCA 11.4/11.5 and LCME 8.4) were not covered by either earlier flow.
+#
+# MIGRATED TO SCHEMA v2 (2026-08-24): the analysis fields
+# (accreditation_citation / competitor_equivalent / gap_severity / gap_note)
+# were moved from the step level down onto each element. No new research was
+# performed in the migration; where the original research did not distinguish
+# between sibling elements, the same verdict is stated identically on each
+# rather than inventing a distinction the sources do not support. The last two
+# steps below are roadmap pillars with NO shipped screen and therefore no
+# elements at all — their analysis fields necessarily remain at step level,
+# since there is no element to carry them and fabricating a placeholder
+# element would invent a screen that does not exist.
+flow_name: "Close the Loop — External Validation & CQI/Self-Study Record"
+maps_to_journey: "competency-verification.yaml, stage 8"
+persona: >
+  Primary: Compliance / Accreditation Liaison
+  (../personas/role-compliance-accreditation-liaison.yaml) — owns the
+  standards library, the annual/mid-cycle report assembly, and would own any
+  future finding-to-action loop. Secondary: Program Administrator
+  (../personas/role-program-admin.yaml) — maintains the program-level
+  accreditation record and runs surveys/reports feeding the self-study.
+
+steps:
+  - screen: "Program Details — Setup — School Profile — Accreditation"
+    navigation_path: "Program Details > Setup > School Profile > Accreditation"
+    elements:
+      - element: "Name of accrediting body"
+        type: "input field, set inside a drawer"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "CODA Standard 1, Element 1-2 (background context for the self-study — this field supplies the front-matter identification of the accreditor, not the continuous-evidence rollup the element asks for); COCA Standard 11, Element 11.9 (partial, in the same front-matter sense)"
+        competitor_equivalent: "axiUm markets 'CODA-Ready Reporting' as an established capability (axium.yaml), but its public product pages describe outcomes, not a field-level accreditation-status record screen — not comparable at element level."
+        gap_severity: "configure-needed"
+        gap_note: "Identifies which accreditor the record belongs to and nothing more. Useful for the self-study's front matter; carries no evidence, no finding linkage, and no report-field mapping."
+      - element: "Accreditation status / Type of accreditation / Accreditation details"
+        type: "input fields (status, type dropdown/free text, free-text details)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.9 (partial — this is literally the 'top-level status only' surface, not the standard-mapped report itself); CODA Standard 1, Element 1-2 (background context for the self-study, not the continuous-evidence rollup the element asks for)"
+        competitor_equivalent: "axiUm markets 'CODA-Ready Reporting' as an established capability (axium.yaml), but its public product pages describe outcomes, not a field-level accreditation-status record screen — not comparable at element level."
+        gap_severity: "configure-needed"
+        gap_note: "The free-text 'details' field is the nearest thing on this screen to an evidence surface, and it is unstructured, unmapped to any report field, and overwritten in place when edited. A static status record, not COCA 11.9's 'structured, standard-aligned evidence repository.'"
+      - element: "Next accreditation date / Most recent accreditation date"
+        type: "date fields"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.9 (partial — cycle dates only, not the standard-mapped report itself); CODA Standard 1, Element 1-2 (background context for the self-study, not the continuous-evidence rollup the element asks for)"
+        competitor_equivalent: "axiUm markets 'CODA-Ready Reporting' as an established capability (axium.yaml), but its public product pages describe outcomes, not a field-level accreditation-status record screen — not comparable at element level."
+        gap_severity: "configure-needed"
+        gap_note: "Two point-in-time dates on a record that is overwritten in place with no revision history, so prior cycles are not retained — the date fields cannot themselves reconstruct an accreditation history for the self-study."
+    action: "Admin adds or edits one repeatable accreditation-status record per accrediting body; editing overwrites the entry in place (no revision history)."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Details via Setup.md"
+
+  - screen: "Program Details — Standards (Accreditation Standards + Program-Specific Standards)"
+    navigation_path: "Program Details > Standards"
+    elements:
+      - element: "Pre-populated accreditation standards, by domain"
+        type: "read-only library, per-standard Activate/Deactivate control"
+        data_shown: "Standards pre-loaded for the program's discipline; deactivating one that is already mapped to a course also deletes those mappings"
+        gates_on: ["curriculum-mapping report inclusion"]
+        accreditation_citation: "LCME Standard 1, Element 1.1 (partial — a place to represent standards, not a CQI monitoring dashboard); ACPE Standard 7, Key Element 7.5.b (partial — the standard taxonomy a repository would need, not the repository itself); COCA Standard 11, Element 11.1 (partial)"
+        competitor_equivalent: "CORE ELMS's CompMS 'explicitly markets accreditation-standards mapping and reporting' at comparable marketing-page detail (core-elms.yaml), but its public materials don't document an activate/deactivate mechanic at this granularity — not a fair element-level comparison in either direction."
+        gap_severity: "gap"
+        gap_note: "Confirmed on this exact screen by accreditation-self-study--07's flow file: no revision history, version log, or link field connects a standard to the review finding or the programmatic change made because of it. Re-verified here specifically against LCME 1.1 and ACPE 7.5.b — same missing link field, different accreditor citations. Deactivation is additionally destructive: it deletes existing course mappings rather than versioning them, so the library cannot show what coverage looked like before a change."
+      - element: "Standard code / Standard description / Annotations"
+        type: "input fields, set inside a drawer, at the standard or sub-standard level"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "LCME Standard 1, Element 1.1 (partial — a place to represent standards, not a CQI monitoring dashboard); ACPE Standard 7, Key Element 7.5.b (partial — the standard taxonomy a repository would need, not the repository itself); COCA Standard 11, Element 11.1 (partial)"
+        competitor_equivalent: "CORE ELMS's CompMS 'explicitly markets accreditation-standards mapping and reporting' at comparable marketing-page detail (core-elms.yaml), but its public materials don't document a standard-code/description/annotation field set at this granularity — not a fair element-level comparison in either direction."
+        gap_severity: "gap"
+        gap_note: "The free-text annotation field is the closest surface on this screen to where a review finding could be recorded, and it is exactly that — free text, at standard or sub-standard level, with no revision history, version log, or link field to the programmatic change made because of the finding. Same missing link identified by accreditation-self-study--07's flow file, re-verified here against LCME 1.1 and ACPE 7.5.b."
+      - element: "Program-Specific Standards + Tags"
+        type: "input fields + configurable tag picker"
+        data_shown: "Program-defined goals/outcomes, separate from accreditor standards, taggable for committee tracking"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 7, Key Element 7.5.b (partial — the taxonomy a repository would need, not the repository itself); LCME Standard 1, Element 1.1 (partial — a place to represent program goals, not a CQI monitoring dashboard); COCA Standard 11, Element 11.1 (partial)"
+        competitor_equivalent: "CORE ELMS's CompMS 'explicitly markets accreditation-standards mapping and reporting' at comparable marketing-page detail (core-elms.yaml), but its public materials don't document a program-specific-standard field set or tag taxonomy at this granularity — not a fair element-level comparison in either direction."
+        gap_severity: "gap"
+        gap_note: "Tags are explicitly described as supporting committee tracking, which makes this the nearest analog to CQI bookkeeping on the screen — but a tag is a label, not a link: nothing connects a tagged goal to the review finding or to the programmatic change made because of it, and there is no revision history behind the tag."
+    action: "Admin activates the pre-loaded standards for their accreditor, adds sub-standards/codes/descriptions where needed, and separately defines program-specific goals — all of which then become mappable to courses and course measures in Curriculum Mapping."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Standards.md and Managing Accreditation Standards for Curriculum Mapping.md"
+
+  - screen: "Curriculum Mapping — Mapping Reports — Heatmap Report"
+    navigation_path: "Curriculum Mapping > [Curriculum] > Mapping Reports > [standard] > Other Reports > Heatmap Report"
+    elements:
+      - element: "Heatmap grid"
+        type: "read-only visualization (X = accreditation standards, Y = course offerings)"
+        data_shown: "Count of mapped course measures per course-offering/standard cell, hover detail (standard code, course, total measures), color legend by mapping density"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.1 (partial — coverage evidence only, not the 'concrete examples of changes made as a direct result of review' the element also requires)"
+        competitor_equivalent: "Not comparable — CORE's 'continuous improvement tools' (core-elms.yaml) is named at marketing-page granularity only; no competitor source documents an equivalent coverage-heatmap screen at field level."
+        gap_severity: "gap"
+        gap_note: "Shows WHAT the curriculum currently covers, not evidence that a finding produced a CHANGE — no run history, diff, or prior-version comparison surfaced anywhere in the documentation."
+    action: "Admin generates a point-in-time snapshot of curriculum-to-standard coverage for accreditation readiness review."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Heatmap Report.md"
+
+  - screen: "Exxat Surveys — Create Survey / Distribute / View Analysis"
+    navigation_path: "Program (hamburger menu) > Surveys > Create Survey; then [survey card] > View Analysis"
+    elements:
+      - element: "Create Survey entry tiles"
+        type: "action tiles"
+        data_shown: "Start from Scratch / Copy an existing survey / Use a template / Upload Document (auto-converts Word/PDF into survey questions)"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 7, Key Element 7.5.a (the instrument-authoring half of 'collected assessment and stakeholder-feedback data')"
+        competitor_equivalent: "Comparable at marketing-page level to CORE ELMS's survey module, eMedley's eValuate+, MedHub/E*Value's eValue, and one45 Assessment (per accreditation-self-study--05's flow file, which cross-checked all four) — all shipped, general-purpose survey/evaluation engines; none of those competitor pages document question-type counts precisely enough to call Prism ahead of or behind parity."
+        gap_severity: "configure-needed"
+        gap_note: "Instrument authoring is shipped and general-purpose — not blocked on the Accreditation Management roadmap item, per this help-center article and already extended to at least PT and SLP per capability-map.yaml. What is absent here is any way to bind a survey or its questions to a specific accreditor standard, so the resulting data arrives untagged."
+      - element: "Distribution channel tiles"
+        type: "action tiles"
+        data_shown: "Via Exxat Prism (student/faculty/personnel, filtered), Additional Email (manual or CSV), Anonymous Link (public URL + QR)"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 7, Key Element 7.5.a (the stakeholder-reach half of 'collected assessment and stakeholder-feedback data')"
+        competitor_equivalent: "Comparable at marketing-page level to CORE ELMS's survey module, eMedley's eValuate+, MedHub/E*Value's eValue, and one45 Assessment (per accreditation-self-study--05's flow file, which cross-checked all four) — all shipped, general-purpose survey/evaluation engines; none of those competitor pages document distribution-channel sets precisely enough to call Prism ahead of or behind parity."
+        gap_severity: "configure-needed"
+        gap_note: "These channels push the instrument OUT to stakeholders and are shipped today. They do not carry findings BACK: the 'communication of major findings/actions to key stakeholders' artifact 7.5.a also requires has no home on this screen or anywhere else inspected in this flow — that piece still depends on the roadmap Accreditation Management pillar."
+      - element: "Export Raw Report / Export Aggregate Report"
+        type: "report export buttons"
+        data_shown: "Raw = every respondent-level answer; Aggregate = totals/averages/trends per question"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 7, Key Element 7.5.a (the 'collected assessment and stakeholder-feedback data' half of the requirement)"
+        competitor_equivalent: "Comparable at marketing-page level to CORE ELMS's survey module, eMedley's eValuate+, MedHub/E*Value's eValue, and one45 Assessment (per accreditation-self-study--05's flow file, which cross-checked all four) — all shipped, general-purpose survey/evaluation engines; none of those competitor pages document export granularity precisely enough to call Prism ahead of or behind parity."
+        gap_severity: "configure-needed"
+        gap_note: "This is the element that nuances, without overturning, the stage's Gap verdict: raw and aggregate export are live today, so evidentiary data collection is not blocked on the Accreditation Management roadmap item. What acpe.yaml's own gap_notes call out as still missing is narrower than a blanket survey-tooling gap — the export lands in a spreadsheet, untagged by standard, and the standard-tagged findings-to-action synthesis that would consume it has no home in the product."
+    action: "Admin builds and distributes a stakeholder-feedback instrument, then exports raw or aggregate results as the evidentiary basis for a CQI finding."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Surveys/Exxat Surveys.md"
+
+  - screen: "PT/PTA Annual Accreditation Report (AAR) data-pull runbook"
+    navigation_path: "Sites > Contracts (Sites With Contracts view); Learning Activity > [group] > Reports > Total Qualifications of CIs; Students > Reports > Race, Gender, Age & Ethnicity; Placements > Reports > Comprehensive Placement Report"
+    elements:
+      - element: "Contract Status filter"
+        type: "report filter"
+        data_shown: "Sites/locations with Active contracts"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.9 (partial — one input to 'a structured evidence repository mapping individual data points... directly to [the accreditor's] specific report fields,' though this precedent is built for CAPTE, not COCA)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in this research documents an equivalent per-field annual-report data-pull runbook at this granularity."
+        gap_severity: "gap"
+        gap_note: "A generic operational filter with no awareness that its output is an annual-report answer; the admin, not the product, knows which report field this number belongs to."
+      - element: "Total Qualifications of CIs (Standard 4O) report"
+        type: "read-only rollup, scoped to a Learning Activity Group"
+        data_shown: "Clinical-instructor credentialing percentage for the selected cohort/rotations"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.9 (closest existing behavioral analog to 'a structured evidence repository mapping individual data points... directly to [the accreditor's] specific report fields' — this report is the one element in the runbook actually named after an accreditor's standard number, though that accreditor is CAPTE, not COCA)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in this research documents an equivalent per-field annual-report data-pull runbook at this granularity."
+        gap_severity: "gap"
+        gap_note: "The strongest existing precedent on the screen, and still a Gap: the report is labelled to CAPTE Standard 4O, which is the shape COCA 11.9 wants, but it remains one figure copied into a spreadsheet rather than a live, standing repository queryable by academic year, and it is bound to one accreditor's taxonomy rather than a generalized report-field mapping. Directly corroborates coca.yaml's own recommendation to scope Accreditation Management around COCA's exact report structure rather than a generic evidence binder."
+      - element: "Race, Gender, Age & Ethnicity report"
+        type: "read-only rollup"
+        data_shown: "Age-group distribution and demographic breakdowns for a selected cohort"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.9 (partial — one input to 'a structured evidence repository mapping individual data points... directly to [the accreditor's] specific report fields,' though this precedent is built for CAPTE, not COCA)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in this research documents an equivalent per-field annual-report data-pull runbook at this granularity."
+        gap_severity: "gap"
+        gap_note: "A general-purpose demographic rollup with no report-field binding; the mapping from these breakdowns to the accreditor's question lives in the admin's spreadsheet, not the product."
+      - element: "Comprehensive Placement Report [live]"
+        type: "read-only rollup, exportable"
+        data_shown: "All placements for selected course offerings; manually de-duplicated by Location Name to count unique clinical sites"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.9 (partial — one input to 'a structured evidence repository mapping individual data points... directly to [the accreditor's] specific report fields,' though this precedent is built for CAPTE, not COCA)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in this research documents an equivalent per-field annual-report data-pull runbook at this granularity."
+        gap_severity: "gap"
+        gap_note: "The least complete element in the runbook: it is the only one whose documented procedure requires the admin to transform the output by hand — de-duplicating by Location Name in a spreadsheet — before the number answers the accreditor's question at all. The unique-site count exists nowhere in the product."
+    action: "Admin manually pulls and stitches together data from five separate reports across four different modules to answer one accreditor's (CAPTE's) annual-report questions in a spreadsheet, outside the product."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/How to Gather Data for AAR Report Using Exxat Prism.md"
+
+  - screen: "Student profile — Status field"
+    navigation_path: "Dashboard > Students > [student] > Status section"
+    elements:
+      - element: "Student Status field"
+        type: "input field / dropdown"
+        data_shown: "Active, Inactive, Graduate — no post-graduation state or outcome field beyond 'Graduate'"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.4 (COMLEX-USA pass rates) and Element 11.5 (GME placement rates); LCME Standard 8, Element 8.4 (outcome data gathered 'during AND after program completion')"
+        competitor_equivalent: "Not applicable — this element documents an absence in Prism, not a comparable competitor screen."
+        gap_severity: "gap"
+        gap_note: "Confirms at the field level that the student record has no home for a licensure-exam result, national-norm score, or post-graduation Match outcome; 'Graduate' is a terminal status with nothing captured after it. Corroborates, rather than merely re-asserts, the exam-ingestion half of the stage's dependency."
+    action: "Admin marks a student Graduate; this is the terminal state Prism tracks for that student record."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md"
+
+  # No shipped screen and therefore no elements: the analysis below necessarily
+  # stays at step level under SCHEMA v2, since there is no element to carry it.
+  - screen: "Exam Management (roadmap pillar) — no shipped screen exists"
+    navigation_path: "n/a — not reachable in the product; no navigation path exists"
+    elements: []
+    action: "n/a"
+    confirmed_by: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (line 702-704: 'Exam Management, status: roadmap, target: Q2 2027' — a single line with no shipped-feature notes, unlike every other pillar in the file); corroborated by an exhaustive keyword search across all 322 files in the Exxat-Help-Guides mirror and all files in the Playbooks directory for 'NBOME', 'COMLEX', 'NAPLEX', 'USMLE', 'exam management', 'licensure exam', 'board exam' — zero matches for any exam-ingestion or licensure-outcome feature in either corpus"
+    accreditation_citation: "COCA Standard 11, Element 11.4 (COMLEX-USA pass rates); LCME Standard 8, Element 8.4 (USMLE/national norms); ACPE Standard 7 generally (NAPLEX/MPJE outcomes — referenced generally in acpe.yaml, not tied to a single named element); CODA Standard 1, Element 1-2 (INBDE/DLOSCE/regional clinical-exam pass rates)"
+    competitor_equivalent: "one45's closest analog pulls NBME CBSE/CCSE exam data (via ExamSoft integration) into a 'Gateway exams' performance dashboard (one45.yaml) — the correct SHAPE (ingestion, not authoring) but documented for a different exam series than any of the four target domains require. eMedley's ExamN (emedley.yaml) is an authoring/delivery engine, the wrong shape for this element. MedHub/E*Value's BoardVitals partnership (medhub.yaml, e-value.yaml) is exam-readiness practice content, not score ingestion. CORE ELMS has no publicly verifiable exam-related module of any kind (core-elms.yaml)."
+    gap_severity: "gap"
+    gap_note: "No change from the journey's existing framing — this is the half of stage 8 the newly available source material does not resolve. Nothing in the help-center mirror, the discipline playbooks, or the capability map documents any board-exam-result ingestion mechanism, confirming (not merely re-asserting) that this remains an unqualified gap with a Q2 2027 roadmap date and no further shipped detail."
+
+  # No shipped screen and therefore no elements: the analysis below necessarily
+  # stays at step level under SCHEMA v2, since there is no element to carry it.
+  - screen: "Accreditation Management (roadmap pillar) — finding-to-action-to-evidence loop, no shipped screen exists"
+    navigation_path: "n/a — not reachable in the product; no navigation path exists"
+    elements: []
+    action: "n/a"
+    confirmed_by: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (Accreditation Management pillar, roadmap Q3 2027 — 'not starting from zero' notes documenting six accreditor-specific precedents: ARC-PA, CAPTE, ACEN, CCNE, COA, CSWE, plus a KASA/ASHA certification-template precedent and a CAPTE 2016/2024 edition-crosswalk precedent); /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml (Element 11.1 gap_notes); /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml (Elements 1.1 and 8.4 gap_notes); /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml (Key Element 7.5.b gap_notes); /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml (Element 1-2 gap_notes)"
+    accreditation_citation: "COCA Standard 11, Elements 11.1 and 11.9; LCME Standard 1, Element 1.1 and Standard 8, Element 8.4; ACPE Standard 7, Key Elements 7.5.a and 7.5.b; CODA Standard 1, Element 1-2 — every accreditor citation in this stage converges on this one missing object type"
+    competitor_equivalent: "MedHub claims 'seamless accreditation management' at marketing-page level (medhub.yaml); New Innovations names APE with citation/concern tracking plus CLER visit management (new-innovations.yaml); axiUm markets 'CODA-Ready Reporting' (axium.yaml); CORE's CompMS claims to 'meet and exceed ACPE Pharmacy Standards and CAPE Outcomes' (core-elms.yaml); one45 has the strongest single proof point on file — a customer-attributed full eight-year LCME accreditation (one45.yaml). None of these vendor pages documents a finding-to-action-to-evidence object schema, field set, or workflow at a level granular enough to compare screen-for-screen against Prism's (nonexistent) equivalent — every comparison in this space is marketing-claim-to-roadmap-target, not element-to-element, for every vendor including Prism."
+    gap_severity: "gap"
+    gap_note: "No change to the Gap verdict, but this flow's element-level pass through the four prior shipped screens (accreditation record, standards library, Heatmap Report, and the manual AAR runbook) grounds capability-map.yaml's 'generalize an existing pattern' argument in actually-inspected screens rather than only its own summary claim. The specific missing piece, confirmed absent on every element inspected: a link field or object connecting a logged finding/evaluation-result to the programmatic action taken and the evidence that the action occurred."
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Details via Setup.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Standards.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Heatmap Report.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Surveys/Exxat Surveys.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/How to Gather Data for AAR Report Using Exxat Prism.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/new-innovations.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
+last_verified: "2026-08-24"

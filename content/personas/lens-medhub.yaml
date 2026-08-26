@@ -1,0 +1,133 @@
+# COMPETITOR LENS — reframes ../competitors/medhub.yaml (and the merged
+# ../competitors/e-value.yaml product line) around roles, not features.
+# Synthesis pass over existing teardowns; no fresh research.
+competitor: "MedHub (with E*Value, Ascend Learning)"
+
+how_they_implicitly_serve_roles:
+  - role: "Program Admin"
+    read: >
+      Best-served role by a wide margin — MedHub is effectively a GME program-office
+      product that grew UME capability by acquisition. The admin gets rotation/call/clinic
+      scheduling, duty-hour timesheets with auto-alerts, moonlighting approval, conference
+      attendance, resident onboarding, UME course enrollment with waitlists and schedule
+      lottery, and API integrations to QGenda/Amion/Symplr so the program office is not
+      re-keying the clinical schedule. The catch is that the admin's daily surface is split
+      across two visibly separate systems under one brand: UME/GME workflows live on
+      medhub.com and the advanced-practice/eValue workflows on a distinct eValue product
+      page, which the teardown reads as a 2015 merger that never fully unified into a
+      single system of record. So the role is well-served on capability and poorly served
+      on cohesion — an admin running both UME and GME likely learns and reconciles two tools.
+  - role: "Clinical Coordinator"
+    read: >
+      Served, but as a secondary consumer of the Program Admin's system rather than as a
+      first-class role. The scheduling, site-eligibility verification, affiliate-site
+      rotation scheduling, and lottery tooling all exist and are the coordinator's real
+      day, but nothing in the public material describes a coordinator-specific workspace,
+      a placement-readiness queue, or exception-handling views. The coordinator's biggest
+      documented friction is execution quality, not absent features: the mobile app draws
+      complaints of freezing, being "atrociously slow," and evaluations that "constantly
+      glitch and skip fields," and weekly-hours submissions that "often do not register the
+      times entered" — every one of those is a defect the coordinator absorbs as chase-work
+      when a resident's hours or evaluation does not land.
+  - role: "Preceptor"
+    read: >
+      Weakest-served role, and the one where MedHub's documented complaints concentrate.
+      The preceptor's entire contract with the system is short and mobile: complete an
+      evaluation, sign off on hours or a procedure log, occasionally see a learner's
+      goals. MedHub does ship mobile evaluation completion with talk-to-text — a real
+      acknowledgment of the role — but the same mobile surface is where users report
+      glitches, skipped fields, and failed submissions, and the E*Value teardown adds that
+      procedure/patient logging "needs some major reworking... so it is not so cumbersome
+      and time consuming." Note the evidence is genuinely mixed: the App Store rating is
+      4.7/5 across ~5,000 ratings while third-party review aggregation is harsh, so the
+      honest read is a widely-used but unevenly-reliable preceptor experience, not a
+      uniformly bad one. Nothing public describes preceptor onboarding, no-login
+      evaluation links, or preceptor-side workload visibility.
+  - role: "Compliance/Accreditation Liaison"
+    read: >
+      Strongly served, and the sharpest edge MedHub has over Prism today. Accreditation is
+      a named, shipped product surface, not a report you assemble by hand: program
+      dashboards and scorecards, visit and response-action tracking, direct import of
+      survey, case-log, and milestone data, formatted report generation, and automated
+      alerts on accreditation tasks and policy expirations, plus UME-side support on the
+      eValue product. Credentialing is equally real for this role: automated monitoring of
+      state, DEA, and controlled-substances licenses with third-party identity verification
+      and immunization/certification tracking. The structural limit is accreditor scope:
+      this is an ACGME/LCME-shaped accreditation model. MedHub publishes a DO-advocacy page
+      committing to track COCA policy and osteopathic terminology, but the shipped
+      accreditation automation described in the teardowns is ACGME-specific — COCA is a
+      positioning claim, not a documented workflow.
+    related_flows:
+      - flow: accreditation-self-study--08-self-study-assembly-submission-site-visit.yaml
+        step: "Program Details > Setup > School Profile > Accreditation"
+        element: "Accreditation entry drawer (+ icon to add / pencil icon to edit)"
+      - flow: admin-onboarding--05-sites-locations-personnel-management.yaml
+        step: "Personnel profile (About / Associations / Slots / Placements / Communications / Interventions)"
+        element: "Licensure card (+ icon) and Certification card (+ icon), each with edit and delete"
+  - role: "Dean"
+    read: >
+      Served indirectly, through institutional scale and reporting rather than a
+      dean-facing product. The dean's assurance comes from the vendor's footprint — 600+
+      client organizations, 80 of 119 U.S. academic health centers, 85,000+ UME/GME
+      learners — plus "Institutional Oversight" framing, cross-program accreditation
+      dashboards, non-linear curriculum-exposure reporting, and a credible security posture
+      (SOC 2, FERPA, MFA, SAML/Shibboleth, 99.95% uptime). What is missing for the role is
+      independent proof: the teardown notes effectively zero third-party review coverage
+      (G2 seller page with 0 reviews, Slashdot with none), so a dean vetting the platform
+      has vendor-curated testimonials and a FeaturedCustomers score, with no neutral
+      signal — and no published pricing, with one federal-procurement thread suggesting
+      MedHub "costs significantly more than competing vendors."
+
+gaps_prism_can_exploit:
+  - claim: "Preceptor reliability, not preceptor features, is the winnable claim."
+    detail: >
+      MedHub already has the mobile evaluation surface, so the contrast is that a
+      preceptor's evaluation and hours submission actually completes on the first try —
+      the exact failure users describe (skipped fields, unregistered hours) is
+      demo-able, not a feature-count argument.
+  - claim: "MedHub and eValue still read as two products, not one system of record."
+    detail: >
+      An admin who spans UME and GME learns and reconciles two separate tools even
+      after the 2015 merger, so the Program Admin persona pays a daily cohesion tax
+      Prism can attack without needing feature parity.
+  - claim: "MedHub's accreditation strength is ACGME/LCME-shaped, not COCA-native."
+    detail: >
+      MedHub's shipped accreditation automation covers ACGME/LCME while its DO
+      commitment lives on a marketing page. Prism's Q3 2027 pillar, built
+      standard-by-standard for COCA from day one, turns MedHub's strongest role into a
+      scoped-coverage argument rather than a head-on feature fight.
+    related_flows:
+      - flow: accreditation-self-study--08-self-study-assembly-submission-site-visit.yaml
+        step: "Program Details > Setup > School Profile > Accreditation"
+        element: "Accreditation entry drawer (+ icon to add / pencil icon to edit)"
+  - claim: "The Dean has nothing neutral to evaluate MedHub against."
+    detail: >
+      No independent review presence and no published pricing leave this role with
+      only vendor material. Transparent references, published outcomes, and
+      reference-ability are role-level wedges here, unrelated to product depth.
+  - claim: "Do NOT lead with Exam Management or Accreditation Management against MedHub — but Surveys/Evaluations needs a fresh comparison, not the old roadmap excuse."
+    detail: >
+      Both ship today via the MedHub+eValue suite against Prism's still-roadmap
+      pillars. CORRECTED 2026-08-26 (per Exxat PM confirmation): Prism's Surveys
+      & Course Evaluations pillar is shipped, not Q1/Q2/Q3 2027 roadmap — see
+      ../prism/capability-map.yaml. MedHub's survey/evaluation lead, if any, is
+      now about depth, not Prism's absence, and hasn't been re-verified since
+      this correction. Lead with role experience (Preceptor, Coordinator) and
+      platform cohesion (Program Admin) regardless.
+
+sources:
+  - "../competitors/medhub.yaml"
+  - "../competitors/e-value.yaml"
+  - "MedHub's named accreditation feature set (relocated from how_they_implicitly_serve_roles[].read, Compliance/Accreditation Liaison): ACGME Next Accreditation System (NAS) dashboards and scorecards, CLER visit/letter/response-action tracking, ACGME survey/case-log/milestone import, ADS-formatted report generation, PubMed-sourced scholarly-activity import, Annual Program Evaluation (APE) with customizable questionnaires, LCME support, CIR integration, and NPDB/NPPES-verified license monitoring."
+  - "https://www.medhub.com/software/"
+  - "https://www.medhub.com/software/residency-management-software/"
+  - "https://medhub.com/software-solutions/gme/?pageid=12"
+  - "https://www.medhub.com/software/evalue/"
+  - "https://www.medhub.com/accreditation-automation/"
+  - "https://www.medhub.com/a-committed-advocate-for-osteopathic-institutions/"
+  - "https://www.medhub.com/leading-healthcare-education-management-providers-medhub-and-evalue-have-merged/"
+  - "https://www.featuredcustomers.com/vendor/medhub"
+  - "https://www.g2.com/sellers/medhub-ai"
+  - "https://justuseapp.com/en/app/1126919433/medhub/reviews"
+  - "https://apps.apple.com/us/app/medhub/id1126919433"
+  - "https://govtribe.com/opportunity/federal-contract-opportunity/medhub-gme-one-1-year-subscription-fee-hu000119qt013"

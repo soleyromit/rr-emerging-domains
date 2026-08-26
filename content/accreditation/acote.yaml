@@ -1,0 +1,680 @@
+# ACOTE (Accreditation Council for Occupational Therapy Education) — OT / OTA
+#
+# NOTE ON `domain`: every other file in this directory sets `domain` to one of
+# the four expansion markets (DO / Pharmacy / Dentistry / Medicine). ACOTE is
+# NOT one of those four — it accredits an EXISTING Exxat discipline (OT/OTA is
+# a served, mature discipline with its own Prism playbook, pre-loaded standard
+# sets, and shipped AOTA FWPE form family). This file is therefore included as
+# a BASELINE/CONTROL: it shows what "an accreditor Prism already serves well"
+# looks like against the same rubric the four expansion accreditors are scored
+# on. Using the discipline name "OT / OTA" in `domain` is intentional, not a
+# schema violation.
+#
+# NOTE ON SOURCE HANDLING: unlike the COCA 2026 standards PDF (see coca.yaml
+# lines 1-17), the 2023 ACOTE Standards and Interpretive Guide was checked
+# page-by-page (all 55 pages, including the title page, the definitions
+# section, and the final references/citation page) and carries NO copyright
+# page, NO "all rights reserved" notice, and NO restriction on submitting the
+# standards to an artificial-intelligence platform. The only usage instruction
+# in the document is a citation format on p. 55: "How to cite the 2023 ACOTE
+# Standards: Accreditation Council for Occupational Therapy Education. (2023).
+# 2023 Accreditation Council for Occupational Therapy Education (ACOTE)
+# Standards and Interpretive Guide.
+# https://acoteonline.org/accreditation-explained/standards/". No AI-usage
+# disclaimer block is warranted here, and none is asserted — inventing one
+# would misstate the record. This file was nonetheless built by fetching that
+# PDF through AI-mediated tooling and PARAPHRASES element requirements for
+# internal product planning; it does not reproduce the standards verbatim.
+# ACOTE/AOTA still hold ordinary copyright in the document, so Legal/Compliance
+# should review before any ACOTE standards text is excerpted into
+# customer-facing materials, exactly as for the other accreditors in this
+# workstream — the difference is that there is no AI-specific prohibition to
+# clear, only the normal copyright question.
+
+accreditor: "ACOTE (Accreditation Council for Occupational Therapy Education)"
+slug: "acote"
+domain: "OT / OTA"
+governs: "Entry-level occupational therapy and occupational therapy assistant educational programs in the United States, across four separate degree levels held to four parallel standard columns in one document: doctoral-degree-level (OTD) and master's-degree-level (MOT/MSOT) programs for the occupational therapist, and baccalaureate-degree-level and associate-degree-level programs for the occupational therapy assistant; ACOTE is the programmatic accreditor associated with the American Occupational Therapy Association (AOTA) and recognized by CHEA, and ACOTE accreditation is the gating prerequisite for NBCOT certification-exam eligibility"
+standards_document:
+  title: "2023 Accreditation Council for Occupational Therapy Education (ACOTE) Standards and Interpretive Guide"
+  version_or_year: "2023 Standards, effective July 31, 2025; document masthead reads 'April 2026 Version' (the standards are revised on a 5-year review cycle, and ACOTE reissues dated versions of the same 2023 standards between cycles — the Exxat OT help guides in this project's vault reference the April 2025 version, which is now superseded)"
+  url: "https://acoteonline.org/accreditation-explained/standards/"
+
+standards:
+  - element_id: "Standard A.3.5"
+    element_title: "Student Advising by Faculty"
+    evidence_programs_must_produce: >
+      A documented process for student advisement delivered by faculty who are
+      occupational therapy practitioners in the program, plus documentation
+      that advisement actually occurred on a regular basis in each named area:
+      conduct and responsibilities to enter the profession, student progress
+      and academic standing, fieldwork education, and — for OTD programs only —
+      doctoral capstone (the associate/baccalaureate columns substitute their
+      own degree-level fourth bullet).
+    required_software_behavior: >
+      Bind a named faculty advisor to each student, log every advisement
+      session as a dated, attributable record tagged to the required
+      advisement areas, attach meeting notes/progress reports/signed forms to
+      that record, escalate a concern into a tracked action plan with
+      follow-up dates, and produce a per-student and per-cohort advisement
+      history report a site visitor can inspect. Advisement content is
+      sensitive, so visibility must be restricted to the assigned advisor.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Shipped and in production for OT today. Compliance Management's
+      Communications vs. Interventions record types (Communications = neutral
+      advising conversations; Interventions = documented concerns with a formal
+      Open/Closed status and structured planned-vs-actual Follow-Ups) are
+      exactly this workflow, gated by the same pillar's Role-Based Access
+      Control so only the assigned advisor sees the record. The faculty-advisor
+      binding is Clinical & Experiential Education's three-tier faculty
+      association model at the STUDENT level (view access to that student's
+      Academics, Profile, Compliance, Communications, Interventions,
+      Coursework, and Learning Activities). Exxat's own ACOTE support guide
+      names A.3.5 against this feature set.
+    gap_notes: "One real reporting hole carried over from the capability map: there is currently no dedicated Interventions report — open follow-ups surface only via the Sites/Locations Dashboard (24-hour refresh, bucketed More than 7 days / Next 7 days / Past Due) or via an Ask Leo natural-language query. For an A.3.5 evidence pull a program wants a per-student advisement history export, not a dashboard bucket."
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 13, Standard A.3.5)"
+
+  - element_id: "Standard A.5.1"
+    element_title: "Curriculum — Preparation to Practice as a Generalist"
+    evidence_programs_must_produce: >
+      Evidence the curriculum prepares students for generalist practice with
+      broad exposure to practice settings (school, hospital, community,
+      long-term care are the named examples) and practice areas including new
+      and emerging areas as the program defines them, and that it prepares
+      students to work with a variety of populations — explicitly infants,
+      children, adolescents, adults, and older adults — in both physical and
+      mental health areas.
+    required_software_behavior: >
+      A curriculum map with a per-discipline attribute taxonomy that tags
+      course objectives and learning activities by lifespan population and by
+      practice setting/area, plus a coverage report that inverts the map to
+      show which populations or settings have thin or zero coverage — the "what
+      haven't we covered" view, not just "what did we cover."
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Curriculum Mapping already ships ACOTE's standard tree pre-loaded and
+      split by degree level (Doctoral 2023 + legacy 2018, Master's 2023,
+      Baccalaureate 2023, Associate 2023, plus an NBCOT set for OTR), and the
+      pillar's configurable course/mapping attribute system already carries
+      OT-specific taxonomies — Lifespan/population tags and ACOTE Instructional
+      Methods — as one of only two disciplines (with PA's PANCE Topics /
+      Bloom's / SCPE settings) where that taxonomy is confirmed loaded. The
+      Measure Attributes Usage report is the coverage view; the Unmapped Report
+      is the gap view. Program clinical settings (the ~25-value OT setting list
+      plus the AOTA Recommended Practice & Fieldwork Settings groupings) supply
+      the practice-setting dimension from the Clinical & Experiential Education
+      side.
+    gap_notes: "Attribute-usage coverage is descriptive, not evaluative — nothing asserts a threshold ('every student must see at least one pediatric and one older-adult experience') and alerts on a cohort falling short. That threshold check is closer to the Intelligence layer's Competency Tracking model than to the mapping reports, and is not wired to lifespan attributes today."
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 16, Standard A.5.1)"
+
+  - element_id: "Standard A.5.5"
+    element_title: "Written Syllabi and Assessment Strategies"
+    evidence_programs_must_produce: >
+      A written syllabus for every course containing course objectives and
+      learning activities that in total reflect all course content required by
+      the Standards; documented instructional methods (presentations,
+      demonstrations, discussion are the named examples) used to accomplish
+      each objective; assessment strategies that complement the instructional
+      design methods; and a demonstrated consistency between the course
+      syllabi and the program's curriculum design.
+    required_software_behavior: >
+      Generate a syllabus directly from the mapped curriculum record — so the
+      syllabus and the map cannot drift apart — with instructional method and
+      assessment method as first-class, reportable attributes on each course
+      measure rather than free text buried in a document.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Curriculum Mapping's Generate Syllabus feature builds the syllabus from
+      course objectives, learning activities, and instructional methods with a
+      configurable, reorderable section picker (logo, prerequisites, textbooks,
+      faculty, attributes, evaluation criteria, grading scheme, event
+      schedule). Instructional Methods and Assessment Methods are both shipped
+      Measure Level Attributes for OT (Curriculum Mapping > Course Mapping >
+      Course Objectives > Measure Level Attributes), and the Measure Attributes
+      Usage > Assessment Method report renders assessment-strategy distribution
+      as a bar graph. Because the syllabus is generated FROM the map, the
+      "consistency between syllabi and curriculum design" clause is satisfied
+      structurally rather than by manual reconciliation — the strongest
+      single argument in this file for the generated-syllabus pattern.
+    gap_notes: ""
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 18, Standard A.5.5)"
+
+  - element_id: "Standard A.6.3"
+    element_title: "Program Evaluation"
+    evidence_programs_must_produce: >
+      Routinely secured and documented formative and summative data proving
+      the program meets its stated goals, plus a demonstration of how data
+      analysis informed program growth and strategic changes EACH ACADEMIC
+      YEAR. The required data set is enumerated: student retention rates and
+      academic/fieldwork performance; faculty effectiveness in assigned
+      teaching responsibilities; and program data covering student
+      satisfaction with the program, student evaluation of the fieldwork
+      experience, student evaluation of the doctoral capstone, evaluation of
+      doctoral capstone outcomes, graduates' NBCOT certification exam
+      performance, graduates' job placement, employer satisfaction with
+      graduates' performance, and graduates' scholarly activity. An annual
+      report summarizing the analysis and the planned action responses must be
+      maintained, and the results must be reflected back into the strategic
+      plan and curriculum.
+    required_software_behavior: >
+      A closed-loop "finding -> planned action -> evidence of change" object
+      that aggregates the eleven enumerated data streams by academic year,
+      links each finding to the specific curricular or programmatic change
+      made in response, and emits the annual summary report — including data
+      that originates OUTSIDE the platform entirely (employer satisfaction,
+      job placement, alumni scholarly activity, NBCOT results).
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      Prism holds several of the inputs — student fieldwork performance via
+      the AOTA FWPE report family, student evaluation of the fieldwork
+      experience via the SEFWE forms, retention via student academic status —
+      and the Surveys & Course Evaluations pillar, including the Exxat Surveys
+      builder, can collect student satisfaction and employer satisfaction.
+      CORRECTED 2026-08-26, per Exxat PM confirmation (see
+      content/prism/capability-map.yaml, Surveys & Course Evaluations pillar):
+      this pillar is shipped, not roadmap as previously stated here. But that
+      correction does not close the gap: nothing closes the loop — no shipped
+      pillar links an annual finding to the programmatic change made in
+      response — and graduate job placement, employer satisfaction, and alumni
+      scholarly activity are all post-graduation data no pillar models. This is
+      the Accreditation Management pillar's job (still roadmap, Q3 2027).
+    gap_notes: "Identical closed-loop CQI pattern to COCA Element 11.1, ACPE 7.x, and CODA 1-2 — it recurs in every accreditor file in this directory and should be a first-class object type in Accreditation Management rather than bolted onto Curriculum Mapping. The OT-specific twist worth carrying into scoping: A.6.3's list is ENUMERATED and fixed (eleven named data streams), so an ACOTE build can be a fixed report template rather than a generic evidence binder. Rating (Gap) is driven by the missing closed-loop object and post-graduation data, both still unshipped — the Surveys-roadmap framing above was corrected but was never the sole reason for the rating, so no rating change was made here; the element still deserves a fresh read given the corrected input fact."
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 20, Standard A.6.3)"
+
+  - element_id: "Standard A.6.4"
+    element_title: "Certification Exam Pass Rate"
+    evidence_programs_must_produce: >
+      A rolling average pass rate of 80% or higher over the 3 most recent
+      calendar years for graduates attempting the NBCOT national certification
+      exam within 12 months of graduation, regardless of the number of
+      attempts. Small programs (fewer than 25 test takers across 3 years) may
+      extend the window year by year up to 5 calendar years to reach 25 test
+      takers; programs without candidates in each of the 3 most recent years
+      must hit 80% every single year until 3 years of data exist.
+    required_software_behavior: >
+      Ingest or manually record NBCOT per-cohort pass-rate data, compute the
+      3-most-recent-calendar-years rolling average against the 80% threshold,
+      implement the small-cohort extension rule (widen the window until n>=25
+      or 5 years, whichever comes first), and flag the program when the
+      computed average approaches or crosses the threshold.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      Depends entirely on exam outcome data owned by an external body (NBCOT
+      publishes it on its School Performance page) — the intended job of the
+      roadmap Exam Management pillar (Q2 2027). No shipped pillar ingests,
+      stores, or trends licensure/certification exam results. The nearest
+      shipped analogue is Curriculum Mapping's pre-loaded NBCOT standard set
+      for OTR, but that is a CONTENT taxonomy for mapping coursework, not an
+      outcomes feed.
+    gap_notes: "Scope this as an NBCOT data-import and threshold-computation feature, not exam delivery — Prism does not and cannot administer the NBCOT exam. The conditional small-cohort window rule is real logic, not a footnote: a naive 3-year average would misreport compliance for the many small OTA programs, so the rule has to be implemented, not approximated."
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 21, Standard A.6.4)"
+
+  - element_id: "Standard A.4.2"
+    element_title: "Publication of Program Outcomes"
+    evidence_programs_must_produce: >
+      Accurate, current student and program outcomes available to the public,
+      with the data (or a link to it) posted on the program's HOME PAGE. At
+      minimum, program graduates and graduation rates must be reported
+      separately as well as totaled for each of the previous 3 years, with
+      calendar-year vs. academic-year basis clearly delineated. The program
+      must also provide an active direct link to NBCOT program data results on
+      its home page. Graduation rate is defined by an explicit formula in the
+      companion Standard A.6.5: on-time graduates (G1) divided by students
+      admitted to the cohort (G2) minus students who left for non-academic,
+      non-clinical-performance reasons (G3) — with an 80% floor over the 3
+      most recent calendar years.
+    required_software_behavior: >
+      Compute the G1 / (G2 - G3) graduation-rate formula from enrollment and
+      completion records — which requires recording each departure with a
+      classified REASON, because whether a withdrawal lands in G3 changes the
+      published rate — then publish the three-year table to a public page and
+      keep it current as new cohorts complete.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      Prism holds the raw inputs: the Students module tracks cohort, enrolled
+      term, graduation term, and academic status (including the "decelerated"
+      flag used in the PT Annual Accreditation Report pull to keep headcounts
+      accurate), and the Student Information / Race, Gender, Age & Ethnicity
+      report returns per-cohort enrollment counts. What is missing is the
+      classified-departure taxonomy the G3 exclusion depends on, the formula
+      itself, and any public-page publishing surface — none of the three
+      shipped pillars publishes anything outward to a program website. Natural
+      home is Accreditation Management (Q3 2027).
+    gap_notes: "The G3 exclusion is the interesting product requirement, not the arithmetic: a withdrawal for health/family/death is excluded from the denominator while a withdrawal for academic or clinical-performance reasons is not. Prism's Interventions records already capture the academic/professionalism side of that distinction — the two data models should be reconciled rather than a parallel departure-reason field being invented."
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 13-14, Standard A.4.2; graduation-rate formula and 80% threshold at p. 21, Standard A.6.5)"
+
+  - element_id: "Standard C.1.2"
+    element_title: "Student Access to Fieldwork Site Information"
+    evidence_programs_must_produce: >
+      A documented process ensuring ALL students have access to site
+      information and requirements, objectives, and performance expectations
+      PRIOR TO the start of the fieldwork experience.
+    required_software_behavior: >
+      A student-facing catalog of contracted fieldwork sites exposing each
+      site's details, its site-specific requirements, and prior cohorts'
+      evaluations of that site, plus a distribution surface for fieldwork
+      objectives — all gated to open before placement rather than at
+      placement.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Clinical & Experiential Education's Explore Locations feature is exactly
+      this: an interactive map/list of clinical sites students browse with site
+      details, requirements, and shared documents, ON BY DEFAULT per location
+      (programs toggle it off if they choose). Published SEFWE I site
+      evaluations land on the student-side Explore Clinical Locations &
+      Wishlist view so future cohorts see aggregated prior-student feedback,
+      and fieldwork objectives are distributed via Students > School Resources
+      > Student Resources or as a location document marked "Share with
+      Students." Exxat's ACOTE support guide names C.1.2 against this exact
+      configuration.
+    gap_notes: ""
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 36, Standard C.1.2)"
+
+  - element_id: "Standard C.1.3"
+    element_title: "Fieldwork Objectives"
+    evidence_programs_must_produce: >
+      Documentation that academic and fieldwork educators AGREED on the
+      fieldwork objectives prior to the start of the fieldwork experience, and
+      documentation that every fieldwork experience includes at least one
+      objective focused on the occupational therapy practitioner's role in
+      addressing the psychosocial aspects of the client's engagement in
+      occupation.
+    required_software_behavior: >
+      A per-placement objectives-agreement artifact the fieldwork educator
+      signs electronically before the placement start date, with the
+      psychosocial objective present as a structured, checkable element rather
+      than prose a reviewer has to read for — so a program can report
+      "psychosocial objective present: yes/no" across every placement in a
+      cohort.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The Forms/Evaluations engine inside Clinical & Experiential Education
+      supports a Custom form archetype with e-signature and attestation
+      element types, and OT programs already run this as a named custom form
+      ("Fieldwork Level I Learning Objectives Acceptance," workflow Educator >
+      Student Review > School Review; "Level II Fieldwork Objectives &
+      Acknowledgment," workflow Educator > School Review). The NEOTEC-
+      recommended Level II objectives form is available in Prism as a
+      standardized starting point. This is form configuration on a shipped
+      engine, not new capability.
+    gap_notes: "Two frictions. (1) Custom form creation is support-gated, not admin self-service — per the confirmed cross-cutting configuration boundary, a program cannot build this form itself. (2) The 'agreed PRIOR TO start' clause needs a date assertion: nothing today blocks or flags a placement whose objectives form was signed after the placement start date, so timeliness evidence is manual. Anchor-relative auto-distribution (N days before placement start) mitigates but does not enforce it."
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 36, Standard C.1.3)"
+
+  - element_id: "Standard C.1.5"
+    element_title: "Level I and II Fieldwork Selection Process and Written Agreements"
+    evidence_programs_must_produce: >
+      Written agreements clearly documenting the responsibilities of the
+      sponsoring institution and each fieldwork site (electronic agreements and
+      signatures are explicitly acceptable), plus documentation of the process
+      and criteria for selecting fieldwork sites AND for ensuring valid written
+      agreements are signed by both parties and IN EFFECT prior to the onset
+      and through the duration of both Level I (including field trips,
+      observation, and service-learning activities) and Level II fieldwork,
+      for every entity outside the academic program.
+    required_software_behavior: >
+      Contract records carrying start/expiration dates and executed-agreement
+      documents, linked to sites and locations, evaluated automatically against
+      each placement's own start and end dates — so an agreement expiring
+      mid-placement is caught as a distinct failure state from a missing
+      agreement — with the result blocking or flagging the placement before it
+      begins.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Compliance Management's Contracts feature plus the Placement Clearance
+      Dashboard is a direct hit, and is materially stronger than the standard
+      requires: the automated Contract Status check evaluates each location's
+      contract(s) against the placement dates and distinguishes "Valid
+      Contract" from "Needs Attention" (contract expires before placement end)
+      from "Missing Contracts," handling multiple contracts per location. One
+      contract can be chain-linked across many sites, contract templates
+      auto-generate the agreement document, and auto-notifications fire on
+      configurable expiry windows (the OT playbook's documented default: 2
+      months before contract end, repeating weekly). The dashboard can be run
+      across multiple courses at once, combining Level I and Level II cohorts —
+      precisely how ACOTE reads C.1.5 across both levels. Exxat's ACOTE guide
+      names C.1.5 against this dashboard.
+    gap_notes: "One confirmed OT-specific pain point from the playbook: Prism assumes a contract is REQUIRED for every site, so sites that legitimately need none (some Level I observation/field-trip arrangements) are perpetually flagged as missing a contract. Programs have asked for a 'contract not required' site flag; without it, the C.1.5 clearance view carries permanent false positives that erode trust in the dashboard."
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 37, Standard C.1.5; companion sufficiency requirement at p. 37, Standard C.1.4)"
+
+  - element_id: "Standard C.1.7"
+    element_title: "Ratio of Fieldwork Educators to Students"
+    evidence_programs_must_produce: >
+      Evidence that the fieldwork-educator-to-student ratio enables proper
+      supervision, protects consumers, provides opportunities for appropriate
+      role modeling of occupational therapy practice, and permits frequent
+      assessment of student progress against the stated fieldwork objectives.
+    required_software_behavior: >
+      Capture the supervision ratio as a structured attribute at the point a
+      slot is created (not as a note), then report actual realized ratios by
+      rolling up how many students each named educator actually supervised
+      across a term — so the planned ratio and the delivered ratio can be
+      compared.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Clinical & Experiential Education models this natively: Supervision Type
+      is a slot-level field (Sites > Location > Slots > Supervision Type) with
+      a fixed OT value set already in production — 1 Student:1 CI, 1 Student:2
+      CIs, 2 Students:1 CI, 2 Students:2 CIs — and the Placements by Educator
+      report renders the realized student-per-educator picture across
+      locations and rotations. Exxat's ACOTE guide names C.1.7 against exactly
+      this pair.
+    gap_notes: "The Placements by Educator report explicitly EXCLUDES placements with no assigned educator, so a program with incomplete educator assignment silently under-reports its own ratios — the denominator quietly shrinks. Also, planned Supervision Type and realized ratio live in two different views with no reconciliation, so nothing flags a slot set up as 1:1 that actually ran 2:1."
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 38, Standard C.1.7)"
+
+  - element_id: "Standard C.1.8"
+    element_title: "Evaluating the Effectiveness of Supervision"
+    evidence_programs_must_produce: >
+      A documented MECHANISM for evaluating the effectiveness of supervision
+      across both Level I and Level II fieldwork, plus demonstrated support for
+      enhancing supervision — the standard names materials on supervisory
+      skills, continuing education opportunities, student well-being, cultural
+      humility, and articles on theory and practice as examples.
+    required_software_behavior: >
+      Three convergent evidence streams tied to the same site and educator
+      records — student evaluations of the educator, educator-completed student
+      performance evaluations (strong consistent outcomes as an indirect
+      supervision-quality signal), and program-conducted site assessments —
+      aggregated and groupable BY EDUCATOR and BY SITE, not only by student.
+      Separately, a durable resource-distribution surface aimed at educators.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      All three streams ship. Student evaluation of the educator runs as the
+      SEFWE form family and OT custom forms (e.g. "Level I Fieldwork Student
+      Evaluation of Educator"); educator evaluation of the student is the AOTA
+      FWPE family; program site assessment runs through the Custom Site
+      Assessment form builder (Sites > Setup > Form Setup, 11 question types)
+      rolling into the Comprehensive Site Assessment report. The
+      Comprehensive Report for Placement-Based Forms supports the Group By
+      pivots the standard actually needs — Site > Location > Student, and
+      Preceptor > Student. The Comprehensive Assessment Report returns a
+      per-location Yes/No rollup on Preceptor Is Qualified / Holds a Valid
+      License / Holds Valid Certification / Is Oriented / Is Aware of program
+      expectations. The resource-distribution half is the Site Resources page,
+      which the OT playbook names specifically as the C.1.8 mechanism.
+    gap_notes: "The OT playbook flags Site Resources as under-adopted — CSS is told to proactively promote it — so the C.1.8 'demonstrate support for enhancing supervision' half is a configuration/adoption gap rather than a capability gap. Site assessments also cannot be logged offline; a faculty member visiting a site without connectivity takes paper notes and re-keys them later."
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 38, Standard C.1.8)"
+
+  - element_id: "Standard C.1.11"
+    element_title: "Level I Fieldwork"
+    evidence_programs_must_produce: >
+      Demonstration that Level I fieldwork is provided and is NOT substituted
+      for any part of Level II fieldwork; documented mechanisms for formal
+      evaluation of student performance in Level I; documentation of which of
+      the six permitted instructional methods each Level I experience used
+      (virtual environments, simulated environments, standardized patients,
+      faculty practice, faculty-led site visits, or supervision by a fieldwork
+      educator in a practice environment); and documentation that ALL students
+      had SIMILAR Level I experiences across learning activities, objectives,
+      assignments, and outcome measures.
+    required_software_behavior: >
+      Model Level I and Level II as structurally distinct course/placement
+      types that cannot be interchanged; tag each Level I experience with its
+      instructional method from a fixed six-value list and report the
+      distribution; and prove comparability across a cohort by showing every
+      student in a course mapped to the same rotation, objectives, and
+      evaluation instrument.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Clinical & Experiential Education's course model already separates Level
+      I sites, Level II sites, and Capstone sites as distinct Site/Location
+      Categories, and OT programs run Level I as its own set of course
+      offerings (Level I FW-Pediatrics, Level I FW-Adults, Level I Fieldwork
+      TIDE, etc.) with their own learning activities. The six permitted
+      instructional methods are captured through Curriculum Mapping's
+      Instructional Methods measure attribute and reported via the Measure
+      Attributes Usage report — the confirmed mechanism Exxat's ACOTE guide
+      cites for C.1.11. Comparability follows structurally: all students in a
+      course offering mapped to the same rotation inherit the same objectives,
+      hours, and evaluation form.
+    gap_notes: "Comparability here is asserted by construction ('same course offering, therefore same experience'), not measured. Nothing compares realized Level I outcomes across sites or delivery methods to show that a simulated cohort and a practice-environment cohort actually performed comparably — the same cross-site statistical comparability gap logged against COCA 6.11 and rotation-lifecycle--08 in this repo."
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 39, Standard C.1.11)"
+
+  - element_id: "Standard C.1.12"
+    element_title: "Length of Level II Fieldwork"
+    evidence_programs_must_produce: >
+      Documentation of a required minimum of 24 weeks' full-time Level II
+      fieldwork for occupational therapist (doctoral and master's degree
+      level) programs — and a required minimum of 16 weeks' full-time for
+      occupational therapy assistant (baccalaureate and associate degree
+      level) programs — plus documentation specifying whether part-time
+      completion is available as agreed by the site and program, with the
+      part-time path equivalent in length to the applicable full-time minimum.
+    required_software_behavior: >
+      Accumulate verified, educator-approved student hours per placement and
+      per student across an entire Level II sequence, roll them up against a
+      DEGREE-LEVEL-CONDITIONAL threshold (24 weeks vs. 16 weeks), and produce
+      an audit-ready per-student total a site visitor can trace back to
+      individual approved entries.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Clinical & Experiential Education's Timesheet module is the confirmed
+      mechanism in Exxat's own ACOTE guide: students log daily or weekly hours
+      and tag the educators they worked with, educators approve
+      electronically, and the approved record captures start/end dates, hours,
+      and supervising educator. The Timesheet Hours Summary by Week report is
+      the direct 24-week evidence artifact, and the Raw Data Timesheet report
+      is the underlying audit trail. Verified hours also feed the thank-you
+      certificate and CEU generation OT programs use to sustain site
+      relationships.
+    gap_notes: "The 24-vs-16-week split is degree-level-conditional inside ONE standard number, which matters because a single university often runs an OTD/MSOT and an OTA program in the same Prism tenant under a shared site-sharing model. Nothing in Timesheet enforces a per-program threshold — the rollup is a report the admin reads, not a rule the system checks, so a short Level II sequence is caught by human review or not at all. Some OT programs also skip daily entry entirely and record hours by week or by placement duration, which weakens the audit trail the standard's 'mechanism to document' language expects."
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 39, Standard C.1.12 — 24 weeks in the doctoral and master's columns, 16 weeks in the baccalaureate and associate columns)"
+
+  - element_id: "Standard C.1.13"
+    element_title: "Qualified Level II Fieldwork Educators"
+    evidence_programs_must_produce: >
+      Documentation and verification, PRIOR TO the start of Level II
+      fieldwork, that each student's supervisor is adequately prepared to
+      serve as a fieldwork educator, is currently licensed or otherwise
+      regulated as an occupational therapist, and has a minimum of 1 year
+      full-time (or equivalent) practice experience as a licensed OT prior to
+      the onset of the fieldwork. For students placed outside the United
+      States, equivalent verification that the supervising occupational
+      therapist (regardless of local title) graduated from an ACOTE-accredited,
+      WFOT-approved, or host-country-regulated program and has at least 1 year
+      of practice experience.
+    required_software_behavior: >
+      Store educator credentials — designation, license number and expiry,
+      certifications, years of practice experience, qualifying program and its
+      accreditation basis — as structured, queryable personnel fields; gate the
+      placement on those fields being present and valid as of the placement
+      START date; and let the educator self-attest electronically to the
+      preparation and experience claims the program cannot verify from a
+      license lookup alone.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Compliance Management already gates on preceptor credentials as a
+      first-class entity, not just the student: the Placement Clearance
+      Dashboard runs a three-state Missing/Exists/NA tracker specifically for
+      Preceptor CV, License, and Certification alongside the student-compliance
+      and contract checks. Personnel records carry designation, license number,
+      and certification, surfaced in the Comprehensive Personnel Report, with
+      dedicated Licensure Entered and Licensure Missing reports on the OT side.
+      The self-attestation half runs as an Educator Verification Form built on
+      the Forms/Evaluations engine, and the Experiential Supervisor Intake Form
+      (PIF) offers a stronger path — an encrypted no-login delegator link with
+      Delivered/Opened/Clicked tracking whose responses sync into the personnel
+      profile with a timestamped history explicitly marketed for closing
+      accreditation audit gaps.
+    gap_notes: "The confirmed OT-specific limitation is the sharp edge here: per the OT playbook, CV and credential details collected via the Fieldwork Educator Details Form DO NOT sync automatically into the personnel record — school staff re-key them by hand, which is exactly the failure mode C.1.13's 'document and verify prior to' language punishes. The PIF's one-way irreversible sync is the shipped fix but is not what OT programs are documented as actually using. Separately, '1 year full-time practice experience' and 'adequately prepared' are not structured personnel fields at all — they live inside a form response, so they cannot be gated on or reported without reading forms one by one."
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 40, Standard C.1.13)"
+
+  - element_id: "Standard C.1.15"
+    element_title: "Evaluation of Student Performance on Level II Fieldwork"
+    evidence_programs_must_produce: >
+      A documented mechanism REQUIRING formal evaluation of student
+      performance on Level II fieldwork — in practice, completed AOTA
+      Fieldwork Performance Evaluation instruments for every Level II
+      placement, submitted by the qualified fieldwork educator, aligned to
+      program objectives, and returned to the academic program in a timely
+      manner.
+    required_software_behavior: >
+      Distribute the correct standardized instrument to the correct evaluator
+      per placement without requiring that evaluator to hold a platform
+      account; schedule distribution relative to the placement timeline rather
+      than to fixed calendar dates; track submission status so the program can
+      chase stragglers; handle a mid-placement change of evaluator; and
+      escalate a failing or unsafe performance rating to the program
+      immediately rather than at term end.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      This is the single deepest OT-specific capability in the product. The
+      AOTA FWPE ships as a Standard (pre-built, non-editable) form archetype in
+      the Clinical & Experiential Education Forms/Evaluations engine, and is a
+      FAMILY OF FIVE: Student Self-Assessment for OT, Student Self-Assessment
+      for OTA, Fieldwork Educator Evaluation for OT, Fieldwork Educator
+      Evaluation for OTA, and a Supplement form used when an educator leaves
+      mid-session and a new educator takes over — a real evaluator-handoff
+      case. Fieldwork educators complete it with NO Prism login via an emailed
+      link (Save / Clear All / Submit, with a required "student was informed of
+      this review" attestation), midterm responses stay visible while
+      completing the final, and distribution is scheduled anchor-relative to
+      the placement Beginning/Mid/End. Admin Review screens expose Pending
+      School Review with Review vs. Un-submit actions, and four report shapes
+      ship: Raw Data, Aggregate, Graphical, and Comprehensive (groupable by
+      student, course, educator, site, location, or setting).
+    gap_notes: "Escalation is real but support-gated and manually maintained. The response-based alert fires by default on any rating of 1, and on a 1 or 2 on the three Fundamentals of Practice safety/ethics items (AOTA Code of Ethics and federal/state/facility regulation adherence, safety-regulation compliance and incident reporting, hazard anticipation) — instrument-aware severity tiering, not a flat threshold. Low-score cutoffs carry published recommended values of 111-or-below for OT and 91-or-below for OTA students. But BOTH require a support ticket naming each recipient's first name, last name, and email, so the escalation recipient list is a hand-maintained artifact that goes stale; and because only the Final FWPE counts toward scoring, Exxat's own best practice is to leave the low-score cutoff OFF until all midterms are reviewed — meaning the alert is deliberately disabled during the window when early intervention would matter most. Legacy risk: some schools still run FWPE II through a Formstack integration being phased out, where a lapsed Formstack subscription renders previously-pulled data inaccessible inside Prism (no Exxat-side copy retained)."
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 41, Standard C.1.15; supervision-decrease requirement at p. 41, Standard C.1.14)"
+
+  - element_id: "Standard D.1.5 (with D.1.4)"
+    element_title: "Length of Doctoral Capstone Experience, and Experiential Plan and Written Agreements"
+    evidence_programs_must_produce: >
+      For OTD programs only: documentation that each doctoral capstone
+      experience runs a minimum of 14 weeks full-time at a minimum of 32 hours
+      per week (part-time permitted by agreement with the organization but must
+      be equivalent in length), with a stated MECHANISM to document that
+      students meet the length requirement and an explicit prohibition on
+      substituting prior fieldwork or work experience. Plus valid written
+      agreements between the organization and the program in effect prior to
+      and throughout the experience, and an individualized capstone plan —
+      signed by all parties — containing specific capstone objectives, plans
+      for evaluation/supervision/mentoring, and the responsibilities of all
+      parties. The capstone must begin only after all coursework and Level II
+      fieldwork are complete.
+    required_software_behavior: >
+      Model the capstone as a placement type structurally distinct from Level I
+      and Level II (different supervisor role, different agreement, different
+      evaluation instruments, different length rule), accumulate hours against
+      a 14-week/32-hour-per-week floor, enforce a prerequisite that all Level
+      II placements are complete before the capstone starts, and route a
+      multi-party signed agreement through student, site mentor, faculty, and
+      administrator.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Every piece exists in Clinical & Experiential Education and is documented
+      as a real OT configuration sequence rather than a theory: a dedicated
+      "Capstone" Site/Location Category with Site Mentors added as Personnel
+      against it; a "CAPSTONE" Student Category applied in bulk; a
+      placement-related course with "Capstone" added as both a Term and a
+      Professional Year value; direct placement (rather than Placement Assist)
+      as the documented capstone placement mode, with a questionnaire-based or
+      MyRequest wishlist when students propose their own site; the Timesheet
+      module for the hours floor; and Time Off, which OT programs otherwise
+      skip, used specifically for capstone where schedule flexibility is
+      allowed. Multi-party signed agreements run as custom forms with real
+      documented workflows (OTD Capstone Memorandum of Understanding: Student >
+      Site Mentor Review > Faculty Review > Admin Review).
+    gap_notes: "Two genuine gaps. (1) The 'must be started after completion of all coursework and Level II fieldwork' prerequisite is not enforceable — Placement Clearance gates on compliance, contracts, and preceptor credentials, not on prior-placement completion, so a capstone starting before Level II finishes is caught by a human or not at all. (2) The 14-week/32-hour-per-week floor is a two-part rule (duration AND weekly intensity) that no report evaluates; the Timesheet Hours Summary by Week gives an admin the raw material but no pass/fail against either half. Also note the OT playbook in this project's vault records the capstone length as '14-week (560-hour minimum)' under D.1.3 — the current standards text puts the length rule at D.1.5 and states 14 weeks at a minimum of 32 hours per week (i.e. a 448-hour floor, not 560). Cite the standard, not the playbook."
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 43-44, Standards D.1.4 and D.1.5; capstone project and evaluation at p. 44, Standards D.1.6 and D.1.7; capstone scope at p. 42, Standard D.1.0)"
+
+licensure_or_gme_layer:
+  - body: "NBCOT (National Board for Certification in Occupational Therapy)"
+    what_it_governs: >
+      The independent certification body that develops and administers the two
+      national certification examinations in U.S. occupational therapy: the
+      OTR (Occupational Therapist Registered) exam and the COTA (Certified
+      Occupational Therapy Assistant) exam. Graduation from an
+      ACOTE-accredited OT program is the eligibility prerequisite for the OTR
+      exam and from an ACOTE-accredited OTA program for the COTA exam;
+      foreign-educated therapists must first clear NBCOT's separate
+      Occupational Therapist Eligibility Determination (OTED) process. NBCOT
+      also publishes per-program School Performance data, calculated on new
+      graduates who passed regardless of number of attempts within one year of
+      graduation — the definition written to match ACOTE's own reporting rule.
+    relevance_to_product: >
+      NBCOT is the hard dependency behind two separate ACOTE standards, and
+      they need different product responses. A.6.4 needs NBCOT pass-rate data
+      ingested and computed against a 3-year 80% rolling threshold with a
+      small-cohort window extension — that is an Exam Management (roadmap Q2
+      2027) data-import and reporting job, NOT exam delivery; Prism cannot and
+      will not administer the NBCOT exam. A.4.2 separately requires an active
+      direct link to NBCOT program data results on the program's public home
+      page, which is a publishing requirement no shipped pillar addresses.
+      Note the one place NBCOT already appears in the product: Curriculum
+      Mapping ships an NBCOT standard set for OTR alongside the four ACOTE
+      degree-level sets, so programs can map coursework to exam content
+      domains today — content mapping is solved, outcomes reporting is not.
+    source: "https://www.nbcot.org/get-certified/eligibility and https://www.nbcot.org/educators-folder/schoolperformance"
+
+  - body: "State occupational therapy licensure boards"
+    what_it_governs: >
+      Licensure to practice as an OT or OTA is issued state by state, not
+      nationally. Most states require NBCOT certification (or a passing NBCOT
+      score transferred directly to the board) plus state-specific
+      jurisprudence, background-check, and continuing-competence requirements;
+      states also independently regulate OT/OTA supervision ratios and scope
+      of practice inside the facilities where fieldwork occurs. ACOTE itself
+      leans on this layer rather than replacing it — C.1.13 requires the Level
+      II fieldwork educator be "currently licensed or otherwise regulated as an
+      occupational therapist," which is a state-issued credential the program
+      must verify, and B.4.5 requires the curriculum itself cover the
+      requirements for credentialing and licensure.
+    relevance_to_product: >
+      Two concrete product implications. First, educator credential
+      verification is inherently per-state: a Level II placement that crosses
+      a state line needs the supervising OT's license validated in the state
+      where the placement occurs, and Prism's personnel license fields are not
+      documented as carrying a jurisdiction dimension — a real gap for programs
+      placing students regionally or nationally. Second, CEU practice for
+      thanking fieldwork educators varies by state, which is why the OT
+      playbook records that many programs deliberately do NOT define a CEU
+      total in rotation setup, instead reporting supervision hours and letting
+      the educator or their state IACET chapter do the conversion — any
+      CEU-generation feature should keep that hours-not-credits default rather
+      than assuming a national CEU value.
+    source: "https://www.nbcot.org/get-certified/eligibility (NBCOT's own statement that candidates must independently meet all requirements of the jurisdiction in which they intend to practice)"
+
+  - body: "AOTA (American Occupational Therapy Association)"
+    what_it_governs: >
+      The national professional association. ACOTE operates as AOTA's
+      associated accrediting agency (ACOTE's contact address is c/o AOTA, per
+      the sample accreditation-status wording ACOTE requires programs to
+      publish under Standard A.4.3), and AOTA owns the profession's practice
+      framework, Code of Ethics, and — critically for this file — the
+      Fieldwork Performance Evaluation (FWPE) instruments and the Fieldwork
+      Data Form that OT programs use as their standard fieldwork assessment
+      tools.
+    relevance_to_product: >
+      AOTA is not a regulator but it owns the INSTRUMENTS, and that is what
+      makes OT/OTA the strongest existing-discipline precedent for the four
+      expansion domains: because AOTA publishes a single national evaluation
+      instrument, Exxat could ship it as a pre-built, non-editable "Standard"
+      form archetype and build the whole notification, reporting, and
+      no-login-educator-access layer around it. The four expansion accreditors
+      should be assessed on whether an equivalent nationally-standardized
+      instrument exists — where one does, the FWPE pattern transfers almost
+      directly; where none does, the program lands in the Custom form archetype
+      with its support-gated build cost.
+    source: "https://www.aota.org/education/accreditation"
+
+  - body: "WFOT (World Federation of Occupational Therapists)"
+    what_it_governs: >
+      The international body whose program-approval status ACOTE accepts as an
+      equivalence basis for supervision provided outside the United States:
+      Standard C.1.13 permits a student's international Level II fieldwork
+      supervisor to have graduated from a program accredited by ACOTE,
+      approved by WFOT, or otherwise regulated in the host country, with at
+      least 1 year of practice experience.
+    relevance_to_product: >
+      A small but concrete data-model requirement that generalizes: the
+      educator qualification record needs a QUALIFYING-BASIS field
+      (ACOTE-accredited / WFOT-approved / host-country-regulated), not just a
+      boolean "qualified" flag, because international placements are verified
+      against a different rule than domestic ones. Prism's Comprehensive
+      Assessment Report currently returns a flat Yes/No "Preceptor Is
+      Qualified" rollup, which cannot represent which of the three bases was
+      used — worth scoping before any accreditor with international clinical
+      sites is onboarded.
+    source: "https://acoteonline.org/download/5856/ (2023 ACOTE Standards and Interpretive Guide, April 2026 Version, p. 40, Standard C.1.13)"
+
+last_researched: "2026-08-25"

@@ -1,0 +1,606 @@
+# CAPTE (Commission on Accreditation in Physical Therapy Education) — PT / PTA
+#
+# NOTE ON `domain`: every other file in this directory uses `domain` for one of
+# the four expansion markets (DO | Pharmacy | Dentistry | Medicine). CAPTE is
+# NOT one of those four — PT/PTA is an EXISTING Exxat discipline with live
+# customers, shipped CAPTE-named reports, and a mature internal playbook. It is
+# researched here as the reference "what good looks like" case: the one
+# accreditor where Prism already ships standard-numbered exports, so the four
+# new domains can be scoped against a proven pattern rather than a blank page.
+# Using the discipline name "PT / PTA" in `domain` is deliberate.
+#
+# NOTE ON SOURCE HANDLING: unlike COCA (see coca.yaml lines 1-17), NEITHER the
+# 2024 CAPTE PT nor the 2024 CAPTE PTA Standards and Required Elements PDF
+# carries any artificial-intelligence usage restriction — the full text of both
+# documents was searched for "artificial intelligence," "AI platform,"
+# "copyright," "reproduce," and "permission of" and no such notice exists in
+# either file. What DOES apply is ordinary copyright: capteonline.org states
+# "All contents © American Physical Therapy Association. All rights reserved."
+# and its footer conditions use of the site on APTA's Terms & Conditions. This
+# file was built by fetching both PDFs and paraphrasing element requirements for
+# internal product planning; it does not reproduce the standards documents
+# verbatim. Flag to Legal/Compliance before this content (or any CAPTE/APTA
+# standards excerpting) is used in customer-facing materials — the absence of an
+# AI clause is not the same as an affirmative license to redistribute.
+#
+# NOTE ON STANDARD 2B: CAPTE has voted to place a STAY on Standard 2B (JEDI,
+# belonging, and anti-racism) in the 2024 Standards, effective immediately, and
+# instructs programs not to respond to 2B or its elements because that
+# information will not be considered in an accreditation review or decision.
+# CAPTE has also said it is reviewing OTHER related requirements in the 2024
+# standards and will communicate additional stays later. 2B is therefore
+# deliberately excluded from the elements below, and any JEDI-adjacent language
+# appearing inside other elements (2D3, 4L, 5A, 6D) should be treated as
+# unstable pending that follow-up communication.
+# Source: https://www.capteonline.org/globalassets/capte-docs/capte-announcement-on-standards-and-required-elements.pdf
+
+accreditor: "CAPTE (Commission on Accreditation in Physical Therapy Education)"
+slug: "capte"
+domain: "PT / PTA"
+governs: "Entry-level physical therapist (professional DPT) education programs and physical therapist assistant (PTA) education programs in the United States, plus CAPTE-accredited programs outside the U.S.; a programmatic accreditor housed at the American Physical Therapy Association (APTA) and recognized by the U.S. Department of Education. CAPTE publishes two SEPARATE standards documents — one for PT programs, one for PTA programs — that share Standards 1-7 structure but differ materially in thresholds (e.g. graduation rate 80% PT vs. 60% PTA) and in required-element lettering inside Standards 4, 6, and 7."
+standards_document:
+  title: "Standards and Required Elements for Accreditation of Physical Therapist Education Programs (PT) — with the parallel Standards and Required Elements for Accreditation of Physical Therapist Assistant Education Programs (PTA)"
+  version_or_year: "2024 edition, adopted 10/31/2023; CAPTE expects all programs to meet the 2024 Standards and Required Elements as of Jan. 1, 2026. The PTA PDF footer records the revision chain as 'Adopted Oct. 2023; Updated Dec. 20, 2024; Updated June 18, 2025; Stay Language June 23, 2025; Updated Sept. 16 2025'; both PDFs currently posted were regenerated 2026-07-29. Standard 2B is under an active stay (see header note). The superseded 2016 editions remain archived on CAPTE's Accreditation Handbook page alongside official 2016-2024 crosswalks."
+  url: "https://www.capteonline.org/globalassets/capte-docs/2024-capte-pt-standards-required-elements.pdf"
+
+standards:
+  - element_id: "Standard 1, Element 1C2"
+    element_title: "Ultimate Licensure Pass Rates"
+    evidence_programs_must_produce: >
+      Ultimate licensure pass rates of at least 85% averaged over two years —
+      the figure FSBPT labels the "weighted average ultimate pass rate" —
+      sourced from the Federation of State Boards of Physical Therapy. Programs
+      must report first-time pass rates for every cohort graduating in the past
+      two academic years, plus the two-year ultimate rate derived from the
+      number of graduates who took the NPTE at least once and the number who
+      passed after all attempts. Where two years of data do not yet exist, the
+      one-year rate must be sufficient to project an 85% two-year rate. Any
+      shortfall must be assessed under Standard 2, and the same 85% threshold
+      applies identically to PTA programs.
+    required_software_behavior: >
+      Ingest (or accept structured manual entry of) FSBPT-reported NPTE results
+      per graduating cohort, compute both the first-time and the
+      all-attempts "ultimate" rate on FSBPT's own weighted two-year definition,
+      hold the result against the 85% threshold, and fire a
+      finding-to-improvement-plan workflow the moment a cohort trends below it
+      — because 1C2 is the trigger condition explicitly cross-referenced from
+      2D1, 2D2, 2D3, 2D4, 2D5, 2D6, 2D7, and 2E.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      Nothing shipped ingests or reports external licensure-exam outcomes. This
+      is the intended job of the Exam Management pillar (roadmap Q2 2027), with
+      the threshold-breach workflow belonging to Accreditation Management
+      (roadmap Q3 2027). The Clinical & Experiential Education and Compliance
+      Management pillars stop at graduation and have no post-graduation outcome
+      object.
+    gap_notes: "Scope this as an FSBPT data-import and threshold-monitoring integration, not exam delivery — FSBPT administers the NPTE and Prism cannot. Note the cohort model already exists (PT programs are always lock-step, cohort = graduation year, per the PT playbook) and the 'decelerated' student flag Exxat documents for AAR headcount accuracy is exactly the kind of denominator control an ultimate-pass-rate calculation needs. The sibling achievement measures 1C1 (graduation rate: 80% PT / 60% PTA over two years) and 1C3 (employment rate: 90% over two years) are the same Gap with the same shape and should be scoped in one pass."
+    source: "https://www.capteonline.org/globalassets/capte-docs/2024-capte-pt-standards-required-elements.pdf (p. 2-3, Element 1C2); PTA equivalent at https://www.capteonline.org/globalassets/capte-docs/2024-capte-pta-standards-required-elements.pdf (p. 2, Element 1C2)"
+
+  - element_id: "Standard 2, Element 2C"
+    element_title: "Ongoing, Formal, Comprehensive Program Assessment"
+    evidence_programs_must_produce: >
+      A documented and implemented ongoing assessment process covering
+      everything in Elements 2D1-2D9 and 2E, summarized in a Program Assessment
+      Matrix; a description of how that process aligns to mission, goals, and
+      contemporary practice; the cumulative opportunities and challenges the
+      data surfaced, each tied to its source of evidence; and TWO worked
+      examples of change resulting from assessment within the last four years —
+      each with rationale, process, timeline, and the reassessment result
+      showing whether the change actually improved the program.
+    required_software_behavior: >
+      A closed-loop "finding -> change -> reassessment -> result" object that
+      carries its own date so a four-year lookback window can be queried
+      directly, with each finding linked back to the specific evidence record
+      (evaluation results, placement counts, site data) that produced it, and
+      each change linked forward to the reassessment that tested it.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      No shipped pillar closes the finding-to-action-to-reassessment loop. The
+      closest existing surfaces are Compliance Management's Interventions
+      records (Open/Closed status with structured Follow-Ups) and Curriculum
+      Mapping's colored review Tags ("Needs Review" / "Reviewed"), but both are
+      scoped to a single student or a single mapping — neither is a
+      program-level CQI cycle, and Interventions has no dedicated report at all.
+      Accreditation Management (roadmap Q3 2027) is the natural home.
+    gap_notes: "The Program Assessment Matrix is a named CAPTE artifact, not a generic binder — the same observation coca.yaml makes about COCA's report structure. CAPTE's 'two examples within the last four years' phrasing recurs verbatim in 2E, which means the CQI object needs a queryable timestamp and an example/exemplar flag, not just a free-text narrative field."
+    source: "https://www.capteonline.org/globalassets/capte-docs/2024-capte-pt-standards-required-elements.pdf (p. 5-6, Element 2C)"
+
+  - element_id: "Standard 2, Element 2D4"
+    element_title: "Students Demonstrate Entry-Level Clinical Performance"
+    evidence_programs_must_produce: >
+      A description of the mechanisms used to determine entry-level performance
+      during clinical education; positive evidence that EACH student who
+      completed the program within the last year demonstrated entry-level
+      clinical performance by the end of their last clinical education
+      experience; and, where CI assessment suggested less than entry-level
+      performance, a description of the mechanism used and how the program
+      managed each individual case.
+    required_software_behavior: >
+      Per-student, per-placement summative performance records from a
+      recognized instrument, rolled into a cohort-wide completion view that can
+      prove 100% coverage for the graduating year, with a distinct exception
+      path capturing what happened for every student flagged below entry level.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      This is the single best-served element in the whole document. The
+      Clinical & Experiential Education pillar plus the Forms/Evaluations engine
+      already run the validated instruments PT/PTA programs use for exactly
+      this: CIET v2.0 (concurrent/blinded student-and-CI completion, per-course
+      school-specific benchmarks injected into the instructions, and an explicit
+      hard-stop escalation directing the CI to contact the school when
+      performance is unsatisfactory for the student's level of education),
+      PTMACS/PTAMACS (CI evaluation on a distinct 1-10 scale), SCIPAI, and PTA
+      CIET. Reporting comes off the Forms/Evaluations Raw Data Report and the
+      Graphical Report for Placement Forms. The Intelligence layer's Competency
+      Management engine adds the per-student proficiency roll-up.
+    gap_notes: "The exception path is the soft spot. CIET's escalation is a message to the CI, not a tracked object — the program's management of a below-entry-level student would land in Compliance Management's Interventions log, which has no dedicated report (only the Sites/Locations Dashboard on a 24-hour refresh). Proving 'each student, last year, by end of last experience' is currently an admin stitching the Raw Data Report against the placement roster, not one query."
+    source: "https://www.capteonline.org/globalassets/capte-docs/2024-capte-pt-standards-required-elements.pdf (p. 9-10, Element 2D4); PTA equivalent at .../2024-capte-pta-standards-required-elements.pdf (p. 8, Element 2D4)"
+
+  - element_id: "Standard 2, Element 2D8"
+    element_title: "Sufficiency, Quality, Quantity, and Variety of Clinical Sites"
+    evidence_programs_must_produce: >
+      A description of the process used to determine that clinical education
+      sites are consistent with the goals of the clinical education curriculum
+      and the objectives of each individual clinical education course, and of
+      how the program ensures a sufficient NUMBER and VARIETY of sites to meet
+      those objectives. Developing programs additionally must confirm fully
+      executed written agreements and site-specific Letters of Intent covering
+      clinical placements for 150% of the charter class size (e.g. 60
+      experiences for a charter class of 40) appropriate to the first full-time
+      experience and any part-time experiences preceding it, plus a summary of
+      the number and array of experiences expected per clinical education
+      course at full implementation and a plan for obtaining more.
+    required_software_behavior: >
+      Report the count and the categorical variety (setting, geography,
+      population) of contracted sites and available slots, scoped to a specific
+      rotation or clinical education course, and compare offered capacity
+      against required capacity — including a forward-looking 150%-of-class-size
+      view for developing programs.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Prism already ships two reports named directly after CAPTE citations for
+      this: "Number and Variety of Clinical Sites" and "Number and Variety of
+      Clinical Slots," both under Clinical & Experiential Education at
+      Placements > Placements for Group > Reports, scoped by Rotation, with an
+      optional include-cancelled-slots toggle on the slots report. The Slot
+      Request / M1M workflow and Exxat One availability feed the underlying
+      capacity data.
+    gap_notes: "IMPORTANT VERSION HAZARD: those two shipped reports are labelled 'Standard 2C' and 'Standard 8F' — 2016 numbering. There IS no Standard 8 in the 2024 PT or PTA documents (they stop at Standard 7), and 2024's 2C is program assessment, not sites. The sites/slots content now lives at 2D8. Prism's other five CAPTE reports already carry dual '2024 X / 2016 Y' labels; these two have not been renumbered. Fix before a 2024-cycle self-study, and treat it as the concrete argument for making the edition crosswalk a first-class field in Accreditation Management. Separately, the 150%-of-charter-class capacity projection for developing programs has no shipped equivalent — Placement Assist allocates against actual slots, it does not model required-versus-contracted capacity ahead of a cohort existing."
+    source: "https://www.capteonline.org/globalassets/capte-docs/2024-capte-pt-standards-required-elements.pdf (p. 15, Element 2D8); PTA equivalent at .../2024-capte-pta-standards-required-elements.pdf (p. 10-11, Element 2D8)"
+
+  - element_id: "Standard 2, Element 2D9"
+    element_title: "Effective, Current Written Agreements with Clinical Education Sites"
+    evidence_programs_must_produce: >
+      Written agreements between the institution and every clinical education
+      site that are CURRENT and describe the rights and responsibilities of
+      both parties — at minimum the purpose of the agreement, each party's
+      objectives, the rights and responsibilities of both (including
+      responsibility for patient and client care and for supervision and
+      evaluation of students), and the procedures for reviewing, revising, and
+      terminating the agreement. Plus a description of how the program
+      maintains currency and the process used to ensure agreements exist.
+    required_software_behavior: >
+      A contract repository keyed to each site/location, evaluating each
+      agreement's validity window against actual placement dates rather than
+      just today's date, surfacing expiring and missing agreements before
+      students are assigned, and exporting the active-contract roster.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Compliance Management's Contracts object does exactly this today: an
+      automated Contract Status check on the Placement Clearance Dashboard
+      evaluates each location's contracts against placement dates and returns
+      Valid Contract / Needs Attention (contract expires before placement end) /
+      Missing Contracts, handling multiple contracts per location. One contract
+      can be chain-linked across many sites, and a "common contract sharing"
+      toggle lets one agreement cover several discipline programs at the same
+      university — directly relevant to schools running PT alongside OT or PA.
+      Exxat's own documented PT Annual Accreditation Report procedure pulls this
+      via Sites > Contracts filtered to Site Status = Active, exported to Excel
+      and sorted by Start Date.
+    gap_notes: "The gate is on dates and existence, not on CONTENT. CAPTE 2D9 enumerates five clauses every agreement must address; Prism stores the document but does not assert or track clause-level completeness. A 'required clauses present' checklist on the contract object would convert this from a document library into actual 2D9 evidence, and would generalize to every accreditor in this workstream."
+    source: "https://www.capteonline.org/globalassets/capte-docs/2024-capte-pt-standards-required-elements.pdf (p. 16, Element 2D9); PTA equivalent at .../2024-capte-pta-standards-required-elements.pdf (p. 11, Element 2D9)"
+
+  - element_id: "Standard 2, Element 2E"
+    element_title: "Curriculum Assessment Plan (including Clinical Education Assessment)"
+    evidence_programs_must_produce: >
+      A written curriculum assessment plan addressing the curriculum as a
+      whole, individual courses, and clinical education. Assessment data must
+      be collected from, at minimum, program faculty, current students,
+      graduates, and at least one further parties-of-interest group (employers
+      of graduates, consumers of PT services, peers, or other health
+      professionals). The narrative must identify each party, the collection
+      method, and the timing; show that achievement measures 1C1/1C2 and
+      graduate outcomes 1C3 were used to assess the curriculum; show that the
+      review covered Elements 6A through 6H; assess clinical education on
+      quality, quantity, variety of sites, and appropriate length and placement
+      within the curriculum; and describe TWO curricular changes made in
+      response within the last four years.
+    required_software_behavior: >
+      Multi-audience survey distribution (students, graduates/alumni, faculty,
+      employers) with response-rate tracking, results aggregated per parties-of-
+      interest group and per collection cycle, joined against curriculum-map
+      coverage of 6A-6H and against clinical-education volume and variety data,
+      and linked forward to the resulting curricular change.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Most of the machinery is already shipped. CORRECTED 2026-08-26, per
+      Exxat PM confirmation (see content/prism/capability-map.yaml, Surveys &
+      Course Evaluations pillar): the Surveys & Course Evaluations pillar is
+      shipped, not a Q1 2027 roadmap item as this entry previously stated.
+      Exxat Surveys is a first-party builder with 14 question types, three
+      distribution channels (in-Prism by persona, external email/CSV upload,
+      and an anonymous public link/QR code — the CSV and public-link paths are
+      how you reach employers and alumni who have no Prism login), plus status
+      overview, weekly response rates, per-channel breakdown, and Raw/Aggregate
+      exports. PTSE 1 covers the student view of the site. Curriculum Mapping's
+      Unmapped Report and Heatmap Report answer the 6A-6H coverage review. What
+      is missing is configuration: a standing parties-of-interest survey set on
+      a defined cadence.
+    gap_notes: "Two real gaps behind the configuration work. (1) Prism has no alumni or employer entity — graduates fall out of the student model at conferral, so the graduate and employer survey audiences are maintained as external CSV lists with no durable record. (2) The 'two curricular changes in the last four years' evidence is the same CQI-loop object 2C needs and does not exist. Note also that the PT and PTA documents differ here: the PTA version says 'stakeholders' where the PT version says 'parties of interest,' with otherwise identical requirements. (CORRECTED 2026-08-26: the 'Q1 2027 roadmap badge' framing above is retired — see content/prism/capability-map.yaml.)"
+    source: "https://www.capteonline.org/globalassets/capte-docs/2024-capte-pt-standards-required-elements.pdf (p. 16-17, Element 2E); PTA equivalent at .../2024-capte-pta-standards-required-elements.pdf (p. 11, Element 2E)"
+
+  - element_id: "Standard 4, Element 4L"
+    element_title: "Effectiveness of the Director(s) of Clinical Education"
+    evidence_programs_must_produce: >
+      Evidence of the DCE's effectiveness in planning, developing,
+      coordinating, and facilitating the clinical education program —
+      specifically organizational, interpersonal, problem-solving, and
+      counseling skills, and the ability to work with SCCEs and CIs to address
+      students' varied learning needs. Plus a description of the process used
+      to inform students and clinical faculty of nondiscrimination policies and
+      to MONITOR adherence during clinical education experiences, and of the
+      mechanisms and TIMING used to communicate clinical education information
+      to core faculty, sites, SCCEs, CIs, and students, including how clinical
+      education faculty are informed of their responsibilities.
+    required_software_behavior: >
+      Multi-rater (360-style) evaluation of the DCE drawing from faculty,
+      students, CIs/SCCEs, and self, aggregated into one composite read; plus a
+      timestamped, auditable record of every clinical-education communication
+      sent to each audience, so "mechanisms and timing" can be evidenced rather
+      than asserted.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Exxat Surveys ships FOUR built-in APTA-standards-aligned DCE performance
+      survey templates covering precisely the four rater groups CAPTE names —
+      faculty assessment of ACCE/DCE, student assessment, self-assessment and
+      academic administrator assessment, and CI/CCCE assessment — built on a 1-5
+      competency-based scale with qualitative comments across communication,
+      organization, feedback/mentoring, and professional engagement, explicitly
+      designed to be combined into one composite. On the communication side,
+      Clinical & Experiential Education's Email Dashboard tracks every
+      distributed message through In Progress / Delivered / Opened / Link
+      Clicked / Bounced and exports the grid.
+    gap_notes: "Composite scoring across the four rater groups is currently the admin's job — Exxat Surveys reports per-survey, not as one blended DCE scorecard, so 'combined into one composite read' is a stated intent rather than a shipped rollup. The nondiscrimination-policy monitoring bullet has no home: Compliance Management can attest a policy to students, but per capability-map.yaml document-acknowledgment item types are still an open question, and there is no site-side attestation object for SCCEs and CIs."
+    source: "https://www.capteonline.org/globalassets/capte-docs/2024-capte-pt-standards-required-elements.pdf (p. 37-38, Element 4L)"
+
+  - element_id: "Standard 4, Element 4O"
+    element_title: "Students Professional, Competent, Safe, and Ready to Progress to Clinical Education"
+    evidence_programs_must_produce: >
+      The processes and criteria the core faculty use to determine that
+      students are professional, competent, and safe in faculty-identified
+      skills and ready to engage in clinical education; how CRITICAL SAFETY
+      ELEMENTS are identified within the competency testing process; what
+      happens when a student is found not safe and ready to progress; and the
+      mechanisms used to communicate to students AND clinical education faculty
+      which specific skills students must be competent and safe in.
+    required_software_behavior: >
+      A pre-clinical competency gate: a defined skill set with per-skill
+      pass/fail results, a severity flag distinguishing critical-safety skills
+      from ordinary ones, a hard block preventing progression to placement
+      until the gate clears, a remediation record for students who fail, and
+      publication of the skill expectations to both students and site-side
+      clinical faculty.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The Intelligence layer's Competency Management engine already maps
+      competencies to didactic course grades or to assessment questions,
+      normalizes onto a 1-5 (or custom) scale with a configurable pass
+      threshold defaulting to 70%, renders a Student Proficiency Distribution
+      splitting "Meeting Threshold" from "Below Threshold" (below = at least one
+      domain under threshold), and can be selectively published to students.
+      Compliance Management's Placement Clearance already blocks a placement on
+      unmet prerequisites. Wiring competency status into the clearance gate and
+      adding a critical-safety severity flag is configuration on two shipped
+      pillars.
+    gap_notes: "Two concrete missing pieces. (1) Placement Clearance's gate evaluates compliance documents, contracts, and preceptor credentials — competency-framework results are not one of its inputs, so 'ready to progress' is currently a human judgment outside the block. (2) Critical-safety severity has no representation; capability-map.yaml notes the COA (Nursing) guide uses an asterisk convention for critical standards, which is the nearest precedent and is not generalized. Course Type 'Didactic' scoring from final grades additionally requires grading schemes enabled first."
+    source: "https://www.capteonline.org/globalassets/capte-docs/2024-capte-pt-standards-required-elements.pdf (p. 40, Element 4O); PTA equivalent at .../2024-capte-pta-standards-required-elements.pdf (p. 27, Element 4M)"
+
+  - element_id: "Standard 4, Element 4P"
+    element_title: "Clinical Education Faculty Qualifications and Effectiveness"
+    evidence_programs_must_produce: >
+      Evidence that clinical education faculty are licensed physical
+      therapists with a minimum of one year of full-time (or equivalent)
+      post-licensure clinical experience and are effective role models and
+      clinical teachers — specifically the program's expectations for CI
+      clinical competence and for clinical teaching effectiveness, how clinical
+      education sites are informed of those expectations, and how they are
+      MONITORED. Plus identification of the assessment tool(s) used during
+      clinical education, how CIs are trained in their appropriate use, and how
+      the program determines the tool was completed correctly.
+    required_software_behavior: >
+      A CI credential record carrying licensure, licensure currency, and years
+      of post-licensure experience, aggregated to a percentage-qualified figure
+      per cohort or academic year; distribution of expectations to sites with
+      delivery tracking; a trainable, auditable record of CI instrument
+      training; and an aggregate teaching-effectiveness score sourced from
+      student ratings.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Fully served today and the strongest existing proof point in the file.
+      Two shipped reports are named after this exact citation: "Total
+      Qualifications of CIs (CAPTE 2024 4P / 2016 4O)," sourced from the CI
+      Details form's education, clinical experience, teaching experience, and
+      evaluation-skills fields, and "Average CI Teaching Effectiveness (CAPTE
+      2024 4P / 2016 4O)," aggregating student ratings of CI knowledge,
+      communication, and mentorship. Compliance Management tracks preceptor
+      license and certification on the personnel record with a three-state
+      Missing/Exists/NA tracker for Preceptor CV, License, and Certification on
+      the Placement Clearance Dashboard. CI instrument training is covered by
+      the CIET v2.0 training quiz — a once-ever gate per person at a 15/20 (75%)
+      threshold with unlimited retakes, a wrong-answer review loop, an
+      attest-and-bypass path for externally trained CIs, and a live CIET
+      training-quiz report.
+    gap_notes: "PTA programs need a variant, not a copy: PTA Element 4N permits clinical education faculty to be licensed physical therapist ASSISTANTS 'if permitted by the state practice act,' so eligibility becomes jurisdiction-conditional. Prism's preceptor credential model stores license and certification but has no state-practice-act rule layer, so a PTA program's CI-eligibility check is manual. Also note the PT playbook flags 'programs want to customize standard forms/evals (CI Details, CIET, etc.)' as a live pain point — the field source for the qualifications report is not program-editable."
+    source: "https://www.capteonline.org/globalassets/capte-docs/2024-capte-pt-standards-required-elements.pdf (p. 40-41, Element 4P); PTA equivalent at .../2024-capte-pta-standards-required-elements.pdf (p. 28, Element 4N)"
+
+  - element_id: "Standard 5, Element 5B"
+    element_title: "Information Provided to Prospective and Enrolled Students"
+    evidence_programs_must_produce: >
+      A description of how and when a long enumerated list of information is
+      provided to prospective and enrolled students, and confirmation that
+      materials are accurate, comprehensive, current, and timely. The list
+      includes STUDENT OUTCOMES — at minimum the most current two-year data
+      available for graduation rates, employment rates, and first-time AND
+      ultimate licensure examination pass rates — plus the process for filing a
+      complaint with CAPTE, clinical education program requirements including
+      travel expectations to clinical sites, required health information,
+      potential drug testing and criminal background check requirements, health
+      and professional liability insurance requirements, and access to and
+      responsibility for the cost of emergency services during off-campus
+      experiences.
+    required_software_behavior: >
+      Publish current outcome figures to a student-facing and public-facing
+      surface, versioned so "most current two-year data" is provably current,
+      alongside a distributed, acknowledgment-tracked policy and requirements
+      set covering the clinical-education-specific disclosures.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      The outcomes half has no home — graduation, employment, and licensure
+      pass rates are the same external-outcome data the 1C2 Gap describes, and
+      no shipped pillar publishes anything to a public webpage. The disclosure
+      half is closer: Compliance Management's two-tier attestations (general
+      profile level and course-specific, each retained with a timestamp in the
+      student's Profile > Academics tab) and the PT playbook's documented
+      convention of sharing Handbooks, Policies, and Evaluation & Grading as
+      cohort Resources cover distribution and proof of acknowledgment. Prism is
+      also already the system of record for several enumerated items — required
+      health information and background-check/drug-screening requirements run
+      through Compliance Management's Universal Background Screening and Cisive
+      integrations.
+    gap_notes: "Split this element when scoping: the disclosure/attestation side is a Configure on Compliance Management today; the outcomes-publication side is a hard Gap dependent on Exam Management (Q2 2027) plus a public-page capability nothing on the roadmap names. Travel expectations to clinical sites is an interesting near-miss — Placement Assist already computes distance-based scoring from school-to-location or student-address-to-location, so the data to substantiate a travel-expectations disclosure exists but is never surfaced as a published expectation."
+    source: "https://www.capteonline.org/globalassets/capte-docs/2024-capte-pt-standards-required-elements.pdf (p. 42-43, Element 5B)"
+
+  - element_id: "Standard 6, Element 6A"
+    element_title: "Comprehensive Curriculum Plan and Minimum Clinical Education Weeks"
+    evidence_programs_must_produce: >
+      A comprehensive curriculum plan covering didactic and clinical
+      components, grounded in contemporary practice, standards of practice, and
+      current literature, and tied to the program's mission. The narrative must
+      state the program length in semesters (or equivalent) and semester credit
+      hours, IDENTIFY THE NUMBER OF WEEKS OF FULL-TIME CLINICAL EDUCATION, and
+      state the degree conferred. The curriculum must total a minimum of 96
+      weeks of instruction over a minimum of six semesters or equivalent, with
+      the clinical education portion comprising a minimum of 30 weeks of
+      full-time clinical education experiences based on a minimum of 32
+      hours/week, culminating in the DPT as the entry-level degree.
+    required_software_behavior: >
+      Compute total full-time clinical education weeks per student from actual
+      placement records, validate each experience against the 32-hours/week
+      full-time definition, and report the cohort against the 30-week floor —
+      distinguishing integrated (part-time) from full-time terminal experiences,
+      since only the latter counts toward the minimum.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Clinical & Experiential Education models rotations with start/end dates,
+      minimum recommended duration, and time segments, and the PT playbook
+      confirms programs already distinguish Integrated Clinical Experience (ICE,
+      part-time, early, often one day a week) from full-time terminal
+      experiences and Directed Practice Experience (DPE). The Timesheet learning
+      activity captures actual supervised hours — the PT playbook notes programs
+      list supervision hours rather than pre-defining CEU totals precisely
+      because hours are the durable unit. Summing weeks by experience type and
+      testing them against a 30-week/32-hour rule is a report on existing data.
+    gap_notes: "No shipped report computes cumulative full-time clinical weeks per student against a threshold — this is assembled by hand from the Comprehensive Placement Report today. Rotation setup has no 'counts toward CAPTE full-time minimum' flag distinguishing ICE from terminal experiences, so the integrated/full-time split relies on naming convention. Worth noting the PTA document sets a different curricular floor and is a separate configuration, not a shared rule."
+    source: "https://www.capteonline.org/globalassets/capte-docs/2024-capte-pt-standards-required-elements.pdf (p. 46, Element 6A)"
+
+  - element_id: "Standard 6, Element 6E"
+    element_title: "Comprehensive Course Syllabi"
+    evidence_programs_must_produce: >
+      Course syllabi comprehensive and inclusive of all CAPTE expectations. The
+      narrative response is only a pointer to the syllabi themselves — CAPTE
+      then requires each syllabus to include at least: title and number,
+      description, department offering the course, credit hours, instructor(s),
+      contact hours split lecture and laboratory, prerequisites, course
+      objectives, a schedule/content outline with assigned instructor per class
+      and lab session, description of learning activities, mode of delivery
+      (in person, hybrid, synchronous, asynchronous), a description of the
+      substantive and regular interaction occurring within each mode of
+      delivery, methods of student evaluation/grading, and learning resources.
+      Where an institution mandates a syllabus format missing any of these, the
+      required syllabus plus an addendum is acceptable.
+    required_software_behavior: >
+      Generate a syllabus from structured curriculum data with a configurable
+      section set, so the CAPTE-required fields can be produced as a native
+      export or as the addendum CAPTE explicitly permits when the institution's
+      own template falls short.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Curriculum Mapping's Generate Syllabus feature auto-builds a syllabus
+      from mapped curriculum data with a configurable, reorderable section
+      picker (logo, prerequisites, textbooks, faculty, attributes, evaluation
+      criteria, grading scheme, event schedule) and downloads it — and the
+      reorderable picker is exactly what makes the addendum path viable. Course
+      Offering data supplies title/number, credit hours, instructor, and
+      objectives; the Grading Scheme module supplies the grading section.
+    gap_notes: "Confirm two CAPTE-specific fields exist in the generator before claiming full coverage: contact hours split between lecture and laboratory, and mode of delivery with the accompanying 'substantive and regular interaction' description — the latter is USDE distance-education language mirrored in 6G and is unlikely to be a native curriculum field. Also note Curriculum Mapping's cascade hazard: deleting a course measure silently deletes every mapping and attribute tied to it with no separate confirmation, which matters when syllabi are the accreditation artifact."
+    source: "https://www.capteonline.org/globalassets/capte-docs/2024-capte-pt-standards-required-elements.pdf (p. 48-49, Element 6E); PTA equivalent at .../2024-capte-pta-standards-required-elements.pdf (p. 36, Element 6D)"
+
+  - element_id: "Standard 6, Element 6F"
+    element_title: "Intra-professional (PT/PTA) and Interprofessional Learning Activities"
+    evidence_programs_must_produce: >
+      Intentional learning activities across both the didactic and clinical
+      curriculum. For INTRA-professional education: activities involving
+      students, faculty, and/or PT/PTA clinicians; how effectively they prepare
+      students and graduates for team-based PT/PTA collaborative care; and
+      coverage of the responsibilities and legal aspects of the DIRECTION AND
+      SUPERVISION OF PHYSICAL THERAPIST ASSISTANTS. For INTERprofessional
+      education: activities addressing values and ethics, communication,
+      professional roles and responsibilities, and teamwork.
+    required_software_behavior: >
+      Tag curriculum items and clinical experiences against an intra- and
+      interprofessional competency taxonomy so coverage is mappable, and
+      capture from the clinical side whether each student actually encountered
+      interprofessional practice and PTA supervision during placement.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Both halves are covered. On the clinical-evidence side Prism ships
+      "Involvement in Interprofessional Practice and Supervision of PTAs (CAPTE
+      2024 6F / 2016 6L3, 6L4)" under Learning Activities > Reports, sourced
+      from PTSE 1 Question 14 on professional teamwork and PTA supervision. On
+      the curriculum side, Curriculum Mapping's configurable per-discipline
+      attribute taxonomies are the same mechanism already carrying ACOTE
+      Instructional Methods for OT and PANCE Topics for PA, and the Nursing
+      pipeline proves IPEC core competencies can run as a mapping framework
+      alongside a primary accreditor's. The institution-level Comprehensive
+      Placement Report additionally shows which locations host students from
+      multiple disciplines at once — genuine IPE evidence a program-level view
+      cannot produce.
+    gap_notes: "That institution-level cross-program report is not standard program-level access and requires an Account Manager or CSS grant, so the strongest IPE evidence is gated behind a services request. The PT playbook records mapping competencies to the CAPTE 7 (2024) Standards as still 'in progress,' so the curriculum-side taxonomy is not confirmed shipped at 2024 numbering."
+    source: "https://www.capteonline.org/globalassets/capte-docs/2024-capte-pt-standards-required-elements.pdf (p. 49-50, Element 6F); PTA equivalent at .../2024-capte-pta-standards-required-elements.pdf (p. 37, Element 6E)"
+
+  - element_id: "Standard 6, Element 6H"
+    element_title: "Clinical Education Experiences Across Conditions, Life Span, Continuum of Care, and Practice Settings"
+    evidence_programs_must_produce: >
+      Clinical education experiences FOR EACH STUDENT encompassing health and
+      wellness, prevention, and management of patients/clients with diseases
+      and conditions representative of those commonly seen in practice across
+      the life span and the continuum of care, in practice settings
+      representative of those where physical therapy is practiced. The
+      narrative must describe the required practice settings, HOW THE PROGRAM
+      MONITORS that each student has the required experiences, and the
+      expectations for management of all aspects of patient and client
+      services appropriate to each experience.
+    required_software_behavior: >
+      Per-student coverage tracking across two independent dimensions —
+      practice setting, and patient condition/life-stage/continuum-of-care
+      exposure — with a gap view surfacing which students still lack a required
+      category BEFORE their final experience, not after.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Prism ships two reports named after this exact citation: "Patient Disease
+      and Condition, Practice Across Lifespan and Continuum of Care (CAPTE 2024
+      6H / 2016 6L1)" from PTSE 1 Question 7, and "Practice Settings (CAPTE 2024
+      6H / 2016 6L2)" from PTSE 1 Question 3, both run by selecting Group &
+      Rotation and clicking Download Report. The PT playbook's configured
+      settings taxonomy (Acute, SNF, TCU, Neuro IP/OP, OP Mix, OP Peds, EDS,
+      Wound Care, and the rest) is the tag set those reports read, and
+      Compliance Management's per-setting Program Requirements already track
+      completion of setting-specific categories such as Rural, Underserved,
+      School-based, and Integrated Clinical Experience-Acute per student.
+    gap_notes: "The evidence is retrospective and self-reported: both reports derive from the student's PTSE 1 answers AFTER an experience ends, so a program cannot see mid-curriculum that a given student has not yet encountered a required setting or population. The forward-looking gap view lives in Program Requirements, which is a separate object with a separate taxonomy — reconciling the two is manual. PTA programs need the same reports repointed at PTA Element 6G, which carries identical wording under different lettering."
+    source: "https://www.capteonline.org/globalassets/capte-docs/2024-capte-pt-standards-required-elements.pdf (p. 51, Element 6H); PTA equivalent at .../2024-capte-pta-standards-required-elements.pdf (p. 38, Element 6G)"
+
+licensure_or_gme_layer:
+  - body: "FSBPT / NPTE (Federation of State Boards of Physical Therapy — National Physical Therapy Examination)"
+    what_it_governs: >
+      Develops and administers the NPTE in two separate forms — one for
+      physical therapists, one for physical therapist assistants — which is the
+      licensure examination required by U.S. jurisdictional boards. FSBPT is
+      also the sole authoritative source of the pass-rate data CAPTE Element
+      1C2 requires: it publishes Two-Year First-Time Pass Rates by School and
+      Two-Year Ultimate Pass Rates by School for CAPTE-accredited PT and PTA
+      programs, updated quarterly roughly four weeks after each fixed test
+      date, and runs a password-protected educator portal where program
+      directors run school pass-rate reports, manage cohorts, and edit school
+      profile data. CAPTE Element 1C2 explicitly adopts FSBPT's own terminology,
+      noting that FSBPT labels the required figure the "weighted average
+      ultimate pass rate."
+    relevance_to_product: >
+      Any Exam Management capability serving PT/PTA is an ingestion and
+      threshold-monitoring layer over FSBPT-published data, not an exam
+      delivery or authoring tool — the same conclusion coca.yaml reaches about
+      NBOME/COMLEX-USA, which strengthens the case that "ingest an external
+      board's cohort outcome data and test it against an accreditor threshold"
+      is one reusable capability across every domain in this workstream rather
+      than four separate builds. FSBPT's cohort-by-graduation-year model lines
+      up cleanly with Prism's existing PT cohort convention (cohort =
+      graduation year, always lock-step), and the "decelerated" student flag
+      Exxat already documents for CAPTE annual-report headcount accuracy is
+      precisely the denominator control an ultimate-pass-rate calculation needs.
+    source: "https://www.fsbpt.org/Free-Resources/NPTE-Pass-Rate-Reports"
+  - body: "ABPTS (American Board of Physical Therapy Specialties)"
+    what_it_governs: >
+      The APTA-governed board that awards post-licensure specialist
+      certification to physical therapists across specialty areas including
+      cardiovascular and pulmonary, clinical electrophysiology, geriatrics,
+      neurology, oncology, orthopaedics, pediatrics, pelvic and women's health,
+      sports, and wound management. Certification generally requires
+      substantial specialty practice hours plus a specialty examination, or
+      completion of an accredited residency.
+    relevance_to_product: >
+      Not an accreditor of entry-level programs, but directly load-bearing for
+      CAPTE Element 4P evidence: Prism's "Total Qualifications of CIs" report is
+      the source Exxat's own documented Annual Accreditation Report procedure
+      uses to answer "% of CIs with advanced certification." That means ABPTS
+      board certification is already a tracked attribute on the personnel
+      record feeding a CAPTE-numbered export — the clearest existing example of
+      a specialty-certification body's credential flowing straight into
+      accreditation evidence, and a pattern the four new domains should copy
+      rather than reinvent.
+    source: "https://specialization.apta.org/about-abpts"
+  - body: "ABPTRFE (American Board of Physical Therapy Residency and Fellowship Education)"
+    what_it_governs: >
+      Accredits post-professional physical therapist clinical and nonclinical
+      residency and fellowship programs — residencies in areas including acute
+      care, cardiovascular and pulmonary, clinical electrophysiology, faculty,
+      geriatrics, neurology, oncology, orthopaedics, pediatrics, sports,
+      women's health, and wound management, and fellowships including critical
+      care, hand therapy, higher education leadership, neonatology, neurologic
+      movement disorders, orthopaedic manual physical therapy, performing arts,
+      spine, sports, and upper extremity athlete. Where ABPTS board
+      certification exists for a specialty, the residency is designed to
+      prepare the therapist to sit that certification exam. RF-PTCAS is the
+      centralized application service for these programs.
+    relevance_to_product: >
+      This is PT's structural analogue to the GME layer coca.yaml documents for
+      the DO domain, and unlike GME it is already a live product conversation:
+      the PT playbook records Exxat piloting with Mercer University's Residency
+      & Fellowship Programs — analyzing forms, workflows, and placement
+      requirements. Residencies and fellowships sit past degree conferral,
+      which the Clinical & Experiential Education pillar's student model does
+      not currently reach, so this is the same post-graduation entity gap that
+      blocks CAPTE 1C3 employment-rate tracking and COCA's GME placement
+      elements. One post-graduation outcome object would unblock all three.
+    source: "https://abptrfe.apta.org/about-abptrfe"
+  - body: "APTA (American Physical Therapy Association)"
+    what_it_governs: >
+      The professional association that houses CAPTE, ABPTS, and ABPTRFE, owns
+      the copyright on the standards documents cited throughout this file,
+      publishes the Guide to Physical Therapist Practice (named alongside the
+      FSBPT Content Analysis as a reference document for Standard 7) and the
+      APTA Code of Ethics and Standards of Ethical Conduct that Elements 7B1
+      require programs to teach, and owns the validated PTSE 1 and PTSE 2
+      instruments.
+    relevance_to_product: >
+      Two direct product consequences. First, PTSE 1 and PTSE 2 are free APTA
+      instruments already running natively in Prism, and four of the seven
+      CAPTE-mapped reports read their question-level data — the accreditation
+      evidence chain for 6F, 6H, and 4P runs through APTA-owned forms, which is
+      worth understanding before assuming equivalent instruments exist for the
+      new domains. Second, APTA is the copyright holder to clear with Legal
+      before any CAPTE standards text reaches customer-facing material, and it
+      is the body whose ACAPT and education-section meetings are the primary
+      go-to-market channel for reaching DCE buyers.
+    source: "https://www.capteonline.org/faculty-and-program-resources/resource_documents/accreditation-handbook"
+
+last_researched: "2026-08-25"

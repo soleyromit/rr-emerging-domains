@@ -1,0 +1,1953 @@
+# Element-level ground truth underneath rotation-lifecycle.yaml, stage 3
+# ("3. Student readiness & compliance clearance (pre-rotation gate)").
+# Every accreditation_citation and competitor_equivalent claim below traces to
+# a real source file in confirmed_by — see per-step citations, not the
+# journey's own narrative.
+#
+# SCHEMA v2 (2026-08-24): analysis fields (accreditation_citation /
+# competitor_equivalent / gap_severity / gap_note) now live on each ELEMENT
+# rather than on the step. Where the underlying research did not distinguish
+# between sibling elements, the same verdict is stated identically on each
+# rather than inventing false precision.
+#
+# SCOPE EXTENSION (2026-08-25): this file was originally built covering only
+# the four EXPANSION domains (DO, Pharmacy, Dentistry, Medicine) via COCA,
+# ACPE, CODA and LCME. It now also covers the eight disciplines Exxat/Prism
+# ALREADY serves — PT/PTA, OT/OTA, PA, SLP, Nursing, Social Work, Teacher
+# Education, and CRNA — against CAPTE, ACOTE, ARC-PA, CAA-ASHA, CCNE/ACEN,
+# CSWE, CAEP and COA respectively. Added material is marked either with an
+# "EXISTING-DISCIPLINE EXTENSION" comment above a new element/step or with an
+# "EXISTING-DISCIPLINE CLAUSE (<discipline>, added 2026-08-25)" paragraph
+# inside an existing element's gap_note, so the original four-domain analysis
+# stays separable from the extension.
+#
+# SCOPE BOUNDARY vs. admin-onboarding--04-compliance-template-setup.yaml: that
+# file documents DAY-ONE SETUP of the compliance scaffolding (the pencil
+# drawer, the two-question cap, publish irreversibility, auto-notification
+# one-way switches, Faculty Compliance). This file documents the ONGOING
+# PER-STUDENT GATE — what each discipline must put in the shells, how an
+# individual student clears it, and what actually blocks a placement. Facts
+# established there (CISIVE/Universal/ComplianceJunction integrations,
+# Reset-as-versioning, the exemption taxonomy, the Included-in-Profile-Link
+# privacy toggle, HIPAA training via ComplianceJunction) are re-used here from
+# the student's side and deliberately not contradicted.
+#
+# THREE FINDINGS THAT CUT ACROSS THE EIGHT DISCIPLINES, stated once here so
+# they are not buried in element notes:
+#   1. PT/PTA's readiness gate is structurally NOT a document gate. CAPTE 4O
+#      defines readiness as a competency-and-safety verdict, and competency
+#      results are not an input to Placement Clearance. See step 7's Compliance
+#      Status clause and step 10's threshold element.
+#   2. CRNA's gate is the only one with an absolute, non-exemptible
+#      precondition (COA C.5 ACLS/PALS), and Prism's shipped exemption
+#      sub-status taxonomy can silently satisfy it. See step 3.
+#   3. Teacher Education's compliance content comes from state statute and
+#      partner districts, not from CAEP — a requirements-modeling problem, not
+#      an accreditation-mapping one, and the TE playbook's own compliance
+#      section is explicitly unpopulated. See step 1's per-setting element.
+flow_name: "Placement Clearance Gate"
+maps_to_journey: "rotation-lifecycle.yaml, stage 3"
+persona: >
+  Primary: Compliance / Accreditation Liaison
+  (../personas/role-compliance-accreditation-liaison.yaml) and Program
+  Administrator (../personas/role-program-admin.yaml), who configure and
+  monitor the gate. Secondary actor per step: the Student, who is the one
+  actually clearing items (uploading documents, agreeing to attestations),
+  and the Clinical Coordinator / Site, who supplies the site- and
+  preceptor-side half of the gate.
+steps:
+  - screen: "Student Compliance – Setup tab (requirement configuration)"
+    navigation_path: "Dashboard > Student Compliance > Setup tab > select Cohort"
+    elements:
+      - element: "Select Template dropdown"
+        type: "input field"
+        data_shown: "Existing cohort compliance configurations available to copy, or None to start from scratch"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not evaluated — eMedley's Student Documents module
+          (content/competitors/emedley.yaml) documents a fixed document
+          taxonomy but its public pages describe no copy-a-configuration
+          template concept at all, so there is nothing to compare this
+          control against.
+        gap_severity: "none"
+        gap_note: >
+          Shipped mechanism. Templating is part of the configuration
+          machinery the step's gap_note describes as "fully shipped"; it
+          carries no per-domain content burden of its own.
+      - element: "Requirement Categories (Health & Immunization, Certifications & Training, Verification/Identity Documents, Insurance & Liability, Memberships & Licensure, Attestations, Additional Documents)"
+        type: "configurable list"
+        data_shown: "Category groupings a program can add/edit requirements under"
+        gates_on: []
+        accreditation_citation: >
+          COCA Standard 5, Element 5.4 (supervision-policy distribution) — the
+          "Attestations" category confirmed here is the item type that element
+          needs; COCA Standard 6, Element 6.10 (per-student completion checklist
+          before clerkships) — the category/requirement model is the mechanism
+          that checklist would be built on.
+        competitor_equivalent: >
+          eMedley's "Student Documents" module (eMedley playbook,
+          content/competitors/emedley.yaml) publicly documents a comparable fixed
+          document taxonomy (MMR, Hepatitis, flu, PPD, Varicella, BLS/CPR/HIPAA,
+          licenses), but its public pages do not describe a configurable,
+          admin-defined category system with a structured Attestations category
+          the way Prism's Setup tab does — not granular enough on eMedley's side
+          to call this element-for-element, only category-for-category.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is the element that carries the step's per-domain work: the
+          category shells exist and are configurable, but populating the item
+          taxonomy inside them — which immunizations, which certifications,
+          and critically which Attestations (e.g. a COCA 5.4-style
+          supervision-policy attestation) a DO/Pharmacy/Dentistry/Medicine
+          program needs — comes pre-loaded for none of these four domains the
+          way ARC-PA/ACOTE curriculum attributes do elsewhere.
+      - element: "Per-requirement edit (pencil) settings: Enable/Disable, Mandatory/Optional, Requires review by Approve team, Due Date, Guidelines/sample documents"
+        type: "input field / toggle"
+        data_shown: "Whether a given requirement is active for this cohort and whether it blocks placement (Mandatory) vs. is informational (Optional)"
+        gates_on: ["Compliance Status column on the Placement Clearance Dashboard (see step 7)"]
+        accreditation_citation: >
+          COCA Standard 6, Element 6.10 (per-student completion checklist
+          before clerkships) — the Mandatory/Optional flag is the specific
+          control that makes an item gating rather than informational, i.e.
+          what turns the requirement list into a completion checklist.
+        competitor_equivalent: >
+          eMedley's Student Documents module (content/competitors/emedley.yaml)
+          publicly documents manual vs. auto-approval on its document items,
+          the nearest analog to the "Requires review by Approve team" setting,
+          but its public pages do not describe a per-item mandatory/optional
+          gating flag or per-item due dates — not granular enough on eMedley's
+          side for an element-for-element comparison.
+        gap_severity: "none"
+        gap_note: >
+          Shipped mechanism. Per the step's own finding, the mandatory/optional
+          flag, due dates and review routing are fully built; the per-domain
+          work sits in the requirement taxonomy above, not in these controls.
+      # ---------------------------------------------------------------------
+      # EXISTING-DISCIPLINE EXTENSION (2026-08-25): the 8 disciplines Exxat
+      # already serves (PT/PTA, OT/OTA, PA, SLP, Nursing, Social Work, Teacher
+      # Education, CRNA). Elements below document where a discipline's
+      # PER-STUDENT readiness taxonomy genuinely differs from the four
+      # expansion domains' baseline. Setup-time mechanics (the pencil drawer,
+      # publish irreversibility, auto-notifications) are deliberately NOT
+      # re-modeled here — they belong to
+      # admin-onboarding--04-compliance-template-setup.yaml. What is modeled
+      # here is WHAT each discipline must put in the shells and how the gate
+      # then behaves per student.
+      - element: "OT/OTA and PT/PTA seeded requirement taxonomy inside the shipped categories (Health & Immunization: COVID-19 Test, COVID-19 Vaccination, Flu, HepA, HepB, TB, CPR, Physical Exam, CBC; Verification/Identity: Background check, Drug screening; Insurance & Liability: Health Insurance, Professional liability insurance)"
+        type: "configurable list"
+        data_shown: "The specific per-student items an OT/OTA (and, less fully enumerated, a PT/PTA) program actually populates the category shells with"
+        gates_on: ["Compliance Status column on the Placement Clearance Dashboard (step 7)", "Whether a student is placement-eligible at all"]
+        accreditation_citation: >
+          CAPTE Standard 5, Element 5B (content/accreditation/capte.yaml,
+          element_id "Standard 5, Element 5B") — 5B enumerates, as information
+          the program must provide to prospective and enrolled students,
+          "required health information, potential drug testing and criminal
+          background check requirements, health and professional liability
+          insurance requirements." That list is almost exactly the OT
+          playbook's three-category taxonomy, so for PT/PTA and OT/OTA the
+          taxonomy is not an internal convention — it is the accreditor's own
+          enumerated disclosure set. capte.yaml rates 5B "Gap" overall, but
+          splits it: the disclosure/health-requirements half is a Configure on
+          Compliance Management today; only the outcomes-publication half is
+          the Gap. No ACOTE element in content/accreditation/acote.yaml
+          imposes a student health/immunization requirement — for OT the
+          taxonomy is institutional and site-driven, not ACOTE-driven, which is
+          a real structural difference worth stating rather than assuming
+          symmetry with CAPTE.
+        competitor_equivalent: >
+          This is the ONE place in this stage where a competitor teardown is
+          genuinely granular enough for an item-for-item comparison, and it is
+          not favorable. CORE ELMS (content/competitors/core-elms.yaml,
+          "Compliance Management," rated at-parity) publicly claims tracking of
+          "immunizations, CPR certification, background checks, drug checks,
+          HIPAA training, and licensing requirements, with automated expiration
+          reminders" — the same taxonomy, named on a public page. eMedley
+          (content/competitors/emedley.yaml) enumerates a comparable fixed list
+          (MMR, Hepatitis, flu, PPD, Varicella, BLS/CPR/HIPAA, licenses) and
+          New Innovations (content/competitors/new-innovations.yaml,
+          "Credentialling Module," rated ahead) claims "licenses,
+          certifications, visas, and immunizations with expiration alerts." At
+          the level of WHICH ITEMS ARE TRACKED, PT/OT compliance is a
+          commoditized, at-parity capability. The differentiation is in the
+          gating behavior (step 7), which none of the three states publicly.
+        gap_severity: "none"
+        gap_note: >
+          Shipped and in production, and the asymmetry with the four expansion
+          domains is the finding: OT/OTA is the only discipline in the corpus
+          with a written, enumerable starter taxonomy
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+          Therapy (OT) Playbook.md, section "6. Student Compliance"), and the
+          PT playbook records only the health/immunization half plus the
+          onboarding instruction "Ask the school where they are tracking
+          compliance if they don't track it on Prism" — i.e. even for PT, Prism
+          is not assumed to be the system of record. Consistent with
+          admin-onboarding--04-compliance-template-setup.yaml's finding that
+          the mechanism ships and the content does not; this element names the
+          content that DOES exist, for two disciplines only.
+      - element: "CRNA ACLS and PALS certification requirement rows (Certifications & Training category), with issue and expiry dates"
+        type: "configurable list"
+        data_shown: "Per-student ACLS and PALS certification records with validity windows, required before any clinical activity begins"
+        gates_on: ["Requirement Upload Status and Compliance Status on the Placement Clearance Dashboard (step 7)", "Per COA C.5 this must be a HARD BLOCK on placement start, not an advisory flag"]
+        accreditation_citation: >
+          COA Standard C.5 (Student Standards), with Standard D.12
+          (content/accreditation/coa.yaml, element_id "Standard C.5 (Student
+          Standards), with Standard D.12" — "ACLS and PALS Certification Before
+          Beginning Clinical Activities"). C.5 requires proof every student
+          holds ACLS and PALS certification BEFORE beginning clinical
+          activities; D.12 is a critical-flagged graduate competency requiring
+          the graduate to MAINTAIN current certification. coa.yaml rates the
+          pair "Transfer" and states the required behavior precisely:
+          certification items with issue and expiry dates that hard-block the
+          start of a placement "rather than merely flagging non-compliance,
+          since C.5 is a precondition and not a target," expiry alerting on a
+          cycle short enough to catch a two-year ACLS card lapsing mid-program,
+          and re-validation at EACH new placement rather than a one-time
+          admission check.
+        competitor_equivalent: >
+          eMedley (content/competitors/emedley.yaml) publicly lists BLS and CPR
+          as tracked certification item types, and CORE ELMS
+          (content/competitors/core-elms.yaml) lists "CPR certification" — but
+          neither names ACLS or PALS, and neither states that a certification
+          item blocks placement start; emedley.yaml records explicitly that
+          whether its items "actually GATE placement start/continuation... is
+          not stated on eMedley's public pages." So the item type is at parity
+          and the two-checkpoint precondition behavior is not documented at
+          this granularity by any competitor teardown in this research.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Genuinely distinctive to CRNA and the sharpest per-student
+          precondition in the whole 12-discipline set: two named certifications
+          that must be valid at two separate checkpoints (placement start and
+          graduation), where every other discipline's health/immunization items
+          are renewal-cycle items rather than absolute preconditions. Two
+          concrete configure-items follow. (1) Re-validation must happen at each
+          new placement, not once at admission — the Requirement Upload Status
+          column evaluates current document state, so a card that lapses
+          between rotation 3 and rotation 4 is caught only if the expiry model
+          and the 6-8-week monitoring cadence are both configured. (2) Per
+          coa.yaml's own gap_notes, the exemption taxonomy is a live hazard here
+          — see the dedicated element in step 3. Source note: the Nursing
+          Playbook
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
+          Playbook.md, "Compliance" and "Clinical Sites, Contracts &
+          Placements") names ACLS/PALS explicitly as the CRNA-specific
+          certifications verified at the Placement Clearance gate. The CRNA
+          video transcripts at /Users/romitsoley/Downloads/CRNAVideosTranscripts.md
+          do NOT corroborate this — the only compliance-adjacent line in that
+          file is line 49 (the CCE log keeping students "compliant with
+          accreditation and certification standards"), and the transcripts
+          contain no ACLS, PALS, background-check, immunization or readiness-gate
+          narration at all. Stated here rather than implied.
+      - element: "Nursing/CRNA pre-clinical licensure verification requirement (Memberships & Licensure category)"
+        type: "configurable list"
+        data_shown: "Student's own RN/APRN licensure record verified before clinical rotations begin — distinct from the FACULTY licensure tracked in Faculty Compliance"
+        gates_on: ["Compliance Status column on the Placement Clearance Dashboard (step 7)"]
+        accreditation_citation: >
+          None available at element granularity, stated rather than invented.
+          Neither content/accreditation/nursing.yaml (CCNE/ACEN) nor
+          content/accreditation/coa.yaml carries an element_id imposing a
+          STUDENT licensure prerequisite — nursing.yaml's licensure elements
+          are CCNE Standard IV, Key Element IV-C (NCLEX-RN pass rates, an
+          outcome measure) and CCNE Standard II, Key Element II-F / II-G
+          (faculty and preceptor qualification). The requirement is documented
+          only in the Nursing Playbook's Compliance section, which maps COA
+          Standard A (conducting institution) and Standard C (students) onto
+          Student Compliance without naming a sub-standard. Do not cite a COA
+          element for this until one is verified.
+        competitor_equivalent: >
+          CORE ELMS (content/competitors/core-elms.yaml) names "licensing
+          requirements" in its public compliance list and MedHub
+          (content/competitors/medhub.yaml) claims "automated credentials
+          monitoring for state, DEA, and Controlled Substances licenses" —
+          but MedHub's is registry-verification of PRACTITIONER licenses in a
+          GME context, not a student pre-clinical licensure item, so it is not
+          a like-for-like comparison. At student-licensure granularity this is
+          not documented by any competitor teardown in this research.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Structurally distinctive: Nursing and CRNA are the only disciplines in
+          the set where the STUDENT already holds a professional license that
+          must itself be verified before clinical work — for PT/OT/PA/SLP/SW/TE
+          the licence is the outcome of the program, not a prerequisite to it.
+          That inverts the usual mental model of the Memberships & Licensure
+          category, which everywhere else in this corpus is a preceptor-side
+          concern. Note the same inversion means the licensure item shares the
+          two-checkpoint problem described for ACLS/PALS above: an RN licence
+          renewing mid-program must re-clear at the next placement.
+      - element: "Vendor-backed requirement types (Universal Background Screening, Cisive, ComplianceJunction HIPAA training) added as requirements alongside upload-based items"
+        type: "configurable list"
+        data_shown: "Requirements satisfied by a third-party transaction and a synced status rather than a student-uploaded document"
+        gates_on: ["Requirement Upload Status and Compliance Status on the Placement Clearance Dashboard (step 7)", "Student's ability to start the vendor transaction at all (see step 4)"]
+        accreditation_citation: >
+          CSWE Accreditation Standard 3.3, AS 3.3.5 (content/accreditation/cswe.yaml,
+          element_id "Accreditation Standard 3.3, AS 3.3.5" — "Orienting,
+          Placing, Monitoring, Safety Protocols, and Evaluating Students in
+          Field"). cswe.yaml states the required behavior as "a pre-placement
+          readiness gate covering background checks, drug screening, and
+          required trainings (the operational form 'safety protocols' takes in
+          practice)" and rates the element "Transfer," naming Social Work as
+          "the ONE discipline with named third-party integrations behind it."
+          Also CAPTE Standard 5, Element 5B for PT/PTA, which enumerates
+          "potential drug testing and criminal background check requirements"
+          as a required student disclosure.
+        competitor_equivalent: >
+          CORE ELMS (content/competitors/core-elms.yaml, rated at-parity)
+          publicly claims tracking of "background checks, drug checks... HIPAA
+          training," so the ITEM TYPES are at parity — but no competitor file in
+          content/competitors/ describes an embedded vendor integration where
+          the platform initiates the order and receives a synced status. A
+          second, more important competitor finding sits outside
+          content/competitors/ entirely: the PT Playbook
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
+          Therapy (PT) Playbook.md) names myClinicalExchange (mCE), Clinician
+          Nexus, ACEMAPP and CastleBranch Bridges as "third-party vendors that
+          require student account registration and payments for slot requests or
+          onboarding — direct competitors of Exxat/Exxat One" that "will not
+          integrate with us." Those four are the real competitive set for THIS
+          element and none of them has a teardown file in content/competitors/ —
+          a documented research gap, stated here rather than papered over.
+        gap_severity: "configure-needed"
+        gap_note: >
+          The named vendor set is documented for Social Work only. Per
+          admin-onboarding--04-compliance-template-setup.yaml (External
+          Trainings step), whether these integrations are offered outside
+          SW/health-professions is unconfirmed anywhere in the corpus — and
+          content/accreditation/cswe.yaml logs the same open question as "a live
+          commercial question." For Teacher Education this matters more than for
+          any other discipline: per content/accreditation/caep.yaml's
+          licensure_or_gme_layer entry "State background-check, fingerprinting
+          and school-district clearance requirements," fingerprint-based state
+          and FBI criminal-history checks are absolute placement blockers for TE
+          candidates, and Universal Background Screening is specifically named
+          in content/prism/capability-map.yaml as the FINGERPRINT background-check
+          vendor — so the mechanism TE needs already exists, but nothing in the
+          corpus confirms it is offered to TE programs.
+      - element: "Per-setting Program Requirements (a requirement that applies only to certain placement settings/sites, tracked per student as completed/pending/overdue/outstanding)"
+        type: "configurable list"
+        data_shown: "Differential requirement sets — e.g. an item required only for Acute Care placements, or only at a particular district/agency"
+        gates_on: ["Whether a student is clear for a SPECIFIC placement rather than clear in general"]
+        accreditation_citation: >
+          CAEP Standard R3, Component R3.2 (content/accreditation/caep.yaml,
+          element_id "Standard R3, Component R3.2" — "Monitoring and Supporting
+          Candidate Progression"), which requires a per-candidate gate model
+          where advancement is blocked until named criteria are satisfied and
+          asks pointedly "how does the EPP ensure there are no loopholes to work
+          around the system?"; caep.yaml rates R3.2 "Configure" and names
+          Placement Clearance as the supported gate. The requirement CONTENT for
+          TE, though, comes from outside CAEP entirely — see caep.yaml's
+          licensure_or_gme_layer entry "State background-check, fingerprinting
+          and school-district clearance requirements," which states flatly that
+          "no component of the 2022 Initial-Licensure standards imposes a
+          background-check requirement on candidates" while those requirements
+          are nonetheless "absolute placement blockers."
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this
+          research. CORE ELMS, eMedley and New Innovations all describe a flat,
+          program-wide item list; none of their public sources describes
+          requirements scoped to a setting, site, or partner district.
+        gap_severity: "gap"
+        gap_note: >
+          Real and Teacher-Education-specific. caep.yaml states the structural
+          pattern outright: "for Teacher Education the COMPLIANCE burden is
+          state/district-driven while the EVIDENCE burden is accreditor-driven,
+          whereas in the health disciplines both flow largely from the same
+          accreditor... the requirement SETS have to be modeled per state and
+          per district partner rather than once per program." Per-setting
+          Program Requirements is the closest shipped mechanism, but the
+          scoping unit documented in the corpus is the SETTING (e.g. Acute
+          Care), not the partner district, and the Setup tab confirmed in this
+          step scopes configuration to a COHORT. A TE program placing candidates
+          across twenty districts with twenty different clearance packets has no
+          documented modeling path. Compounding it: the TE playbook
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher
+          Education (TE) Playbook.md, "Open Gaps") lists "Compliance —
+          background-check/fingerprinting and other TE-specific compliance
+          document patterns" as EXPLICITLY UNPOPULATED, so there is no
+          discipline source to configure against either. This is an evidence gap
+          on top of a product gap, and both should be stated to a TE prospect.
+      - element: "Universal-precautions / infection-control training requirement (Certifications & Training category) — SLP"
+        type: "configurable list"
+        data_shown: "Completion record for the infection-control training that must precede student contact with clients"
+        gates_on: ["Compliance Status column on the Placement Clearance Dashboard (step 7)"]
+        accreditation_citation: >
+          CAA Standard 3.0B, Standard 3.8B (content/accreditation/caa-asha.yaml,
+          element_id "Standard 3.0B, Standard 3.8B" — "Clinical education
+          protects the welfare of each person served by the student and clinical
+          educator team"). Among its required behaviors caa-asha.yaml lists "gate
+          the student's presence at the site on completed universal-precautions /
+          infection-control training," and its prism_fit_rationale states
+          Placement Clearance "separately gates the placement on student
+          compliance items, so infection-control/universal-precautions training
+          is an existing item type." Rated "Configure."
+        competitor_equivalent: >
+          CORE ELMS (content/competitors/core-elms.yaml) and eMedley
+          (content/competitors/emedley.yaml) both name HIPAA training as a
+          tracked item type, which is the nearest analog to a mandated
+          pre-placement training, but neither names infection control or
+          universal precautions specifically. Not documented at this
+          granularity by any competitor teardown in this research.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Worth flagging precisely because SLP's compliance story is
+          under-documented rather than absent: the SLP playbook
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language
+          Pathology (SLP) Playbook.md, read in full 2026-08-25) contains NO
+          compliance section at all — its own gap list at lines 142-149 is
+          explicit that thin coverage is "a documentation gap, not necessarily a
+          product gap," and its data-quality caveat at line 12 explains why
+          (the note is synthesized from eight thin feature-specific artifacts —
+          an FAQ, four report/feature how-tos, a release note and one video
+          transcript — rather than from a CSS playbook). So
+          the accreditor requirement (3.8B) is verified and the item type is
+          verified from caa-asha.yaml, but no SLP-side source confirms how SLP
+          programs actually configure it. Note separately that the 3.8B GAP
+          caa-asha.yaml identifies is not the training item — it is the computed
+          direct-supervision PERCENTAGE (CFCC V-E's 25% floor), which is a
+          rotation-lifecycle stage 5 concern, not this gate.
+      - element: "Additional Profile Details as a PARALLEL readiness-capture surface outside Compliance Management (Social Work)"
+        type: "configurable list (student-profile section, not a compliance requirement)"
+        data_shown: >
+          Placement-readiness information collected on the student PROFILE rather than as compliance
+          requirements — the SW playbook names accommodations, vaccination records, and
+          background-check details specifically, and records that the section is "fully customizable
+          and is commonly used IN PLACE OF a traditional field application form"
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+          Work (SW) Playbook.md line 77).
+        gates_on:
+          - "Nothing — and that is the finding. Data captured here does NOT feed the Requirement Upload Status or Compliance Status columns on the Placement Clearance Dashboard (step 7), because those columns evaluate compliance REQUIREMENTS, not profile fields."
+        accreditation_citation: >
+          CSWE Accreditation Standard 3.3, AS 3.3.5 (content/accreditation/cswe.yaml, element_id
+          "Accreditation Standard 3.3, AS 3.3.5") — the pre-placement readiness gate covering
+          background checks, drug screening and required trainings. cswe.yaml rates AS 3.3.5
+          "Transfer" on the strength of Compliance Management's named vendor integrations; this
+          element is the caveat on that rating, because a program that collects the same facts on
+          the profile instead gets none of the gating.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research. CORE ELMS,
+          eMedley and New Innovations all describe a single compliance record per student
+          (content/competitors/core-elms.yaml, emedley.yaml, new-innovations.yaml); none describes a
+          second, ungated profile surface capable of holding the same data, so it cannot be said
+          whether the same split exists in their products.
+        gap_severity: "gap"
+        gap_note: >
+          ADDED 2026-08-25 from a full read of the SW playbook. This is the sharpest
+          Social-Work-specific finding in this step and it cuts against the discipline's otherwise
+          strong rating: the SW playbook documents, as COMMON PRACTICE, collecting vaccination
+          records and background-check details in a profile section rather than as compliance
+          requirements. Three consequences, none of them hypothetical. (1) Those items have no
+          status model, no expiry, no review routing, and no exemption taxonomy — the entire
+          machinery documented in steps 1-4 simply does not apply to them. (2) They do not reach the
+          Placement Clearance gate, so a student can be "All Docs Approved" on the step 7 rollup
+          while their background-check detail sits unreviewed in a profile field. (3) The
+          "Included in Profile Link" privacy control documented in step 2 governs COMPLIANCE items;
+          nothing in the sources states what governs external exposure of Additional Profile Details,
+          which matters because SW's Share Profile is student-initiated (line 81).
+          Worth stating plainly to a Social Work program: the playbook is describing a workaround
+          for the absence of a first-class field-application intake, and the cost of that workaround
+          is the readiness gate. Distinct from the vendor-integration step below, which documents
+          the well-modelled path.
+      - element: "Publish and confirm button"
+        type: "button"
+        data_shown: ""
+        gates_on: ["Requirement visibility to students — nothing configured here is visible or actionable by students until this is clicked"]
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not evaluated — no reviewed competitor teardown
+          (content/competitors/) documents an explicit publish step gating
+          student visibility of compliance requirements, so there is no
+          equivalent to compare against at this granularity.
+        gap_severity: "none"
+        gap_note: >
+          Shipped mechanism, but operationally load-bearing: an otherwise
+          complete configuration is invisible to students until this is
+          clicked.
+    action: >
+      Admin defines, per cohort, which compliance items exist, which category
+      they fall under, whether each is mandatory (gating) or optional, and
+      publishes the configuration so students can begin clearing it.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Student
+      Compliance/Setup Student Compliance Section.md
+
+  - screen: "Student Dashboard – Compliance tile and requirement list"
+    navigation_path: "Student Dashboard > Compliance tile > View All"
+    elements:
+      - element: "Compliance tile counts (Required / Uploaded / Pending / Needs Attention)"
+        type: "read-only rollup"
+        data_shown: "Aggregate counts across all published requirements for the logged-in student"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: "Not evaluated — no competitor's public docs show the student-facing dashboard at this granularity."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Status column"
+        type: "read-only rollup"
+        data_shown: "Get Started | In Progress | Pending Review | Approved | Not Approved | Expiring | Expired, per requirement"
+        gates_on: ["Compliance Status column on the Placement Clearance Dashboard (step 7)"]
+        accreditation_citation: ""
+        competitor_equivalent: "Not evaluated — no competitor's public docs show the student-facing dashboard at this granularity."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Due Date / Follow-up Date / Expiration Date columns"
+        type: "read-only rollup"
+        data_shown: "Per-requirement dates driving auto-notifications"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: "Not evaluated — no competitor's public docs show the student-facing dashboard at this granularity."
+        gap_severity: "none"
+        gap_note: ""
+      # --- EXISTING-DISCIPLINE EXTENSION (2026-08-25) ---
+      - element: "Included in Profile Link column"
+        type: "read-only rollup"
+        data_shown: "Per-requirement, whether this compliance item is exposed when the student shares their profile with an agency/site"
+        gates_on: ["What a site contact actually sees when the student self-serves a Profile Share (see step 8's FAQ #13 gap)"]
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this
+          research — no competitor file in content/competitors/ describes a
+          per-document external-sharing switch, let alone one surfaced to the
+          STUDENT in their own compliance list.
+        gap_severity: "none"
+        gap_note: >
+          Social Work is the discipline that surfaces this: the SW playbook
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+          Work (SW) Playbook.md line 149) enumerates the student-facing
+          table columns as Mandatory Requirement, Categories, Status, Due Date,
+          Follow-up Date, Expiration Date, Reason, Comment, Included in Profile
+          Link, Action, and line 153 flags this column as "a privacy control worth
+          flagging to admins configuring compliance categories." It matters more
+          in SW than elsewhere because SW's Share Profile is student-initiated
+          (the same playbook, line 81: students share Professional Summary,
+          Interests, resume, education/work history and — where permitted —
+          contact info with a prospective agency by email, 25MB max, PDF
+          recommended) rather than school-initiated as in PT/OT. So in SW the
+          student is the one exposing their own health/background-check records,
+          under a toggle an admin set for them in step 1. Consistent with the
+          same field documented as an ADMIN toggle in
+          admin-onboarding--04-compliance-template-setup.yaml; this is the
+          student-side read of it.
+      - element: "Student mobile app view of the compliance list"
+        type: "read-only rollup"
+        data_shown: "Same requirement statuses and document submission, on a phone"
+        gates_on: []
+        accreditation_citation: >
+          None at element granularity. Named as a supporting mechanism in the
+          Nursing Playbook's COA mapping (see gap_note) but not tied to a
+          specific element_id in content/accreditation/coa.yaml, so no citation
+          is asserted here.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file describes a student mobile app for compliance submission."
+        gap_severity: "none"
+        gap_note: >
+          Small but genuinely discipline-flagged: the Nursing Playbook
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
+          Playbook.md, "Compliance") records that "a student mobile app is
+          called out specifically in the COA guide for completing learning
+          activities, submitting documentation, and tracking compliance on the
+          go" — i.e. Exxat's own COA-facing material treats mobile compliance
+          submission as an accreditation-support talking point for CRNA
+          programs, where it does not for the other disciplines. Corroborated as
+          a shipped capability in the PA Playbook's FAQ section ("Mobile app: a
+          student-facing mobile app is available") and in
+          content/prism/capability-map.yaml.
+    action: "Student reviews outstanding compliance items and opens one to act on it."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Students/Step-by-Step Guides (How-tos)/Compliance/Uploading
+      Compliance Documents.md
+
+  - screen: "Compliance document upload drawer"
+    navigation_path: "Student Dashboard > Compliance > [Requirement] > + (upload drawer)"
+    elements:
+      - element: "Start Date / Expiration Date fields"
+        type: "input field"
+        data_shown: "Document validity window; expiration date entry can be made mandatory per-school"
+        gates_on: ["Expiring/Expired status shown in step 2"]
+        accreditation_citation: ""
+        competitor_equivalent: "Not evaluated — no competitor's public docs describe this drawer at element level."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Vaccination / Titer Details / Declination Details sub-type selector"
+        type: "input field"
+        data_shown: "Lets a health item be satisfied by vaccination record, titer result, or a formal declination instead of a single fixed document type"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: "Not evaluated — no competitor's public docs describe this drawer at element level."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "File upload control"
+        type: "input field"
+        data_shown: "Accepts pdf/doc/jpg/png/heic/docx/xlsx/etc. up to 25MB, from local drive or the shared Document Library"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: "Not evaluated — no competitor's public docs describe this drawer at element level."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Submit for Review button"
+        type: "button"
+        data_shown: ""
+        gates_on: ["Status flips from In Progress to Pending Review"]
+        accreditation_citation: ""
+        competitor_equivalent: "Not evaluated — no competitor's public docs describe this drawer at element level."
+        gap_severity: "none"
+        gap_note: ""
+      # --- EXISTING-DISCIPLINE EXTENSION (2026-08-25) ---
+      - element: "Exemption sub-statuses on an approval: Approved with Declination (D) / Approved with Exception (E) / Approved with Medical Exemption (M) / Approved with Religious Exemption (R)"
+        type: "read-only rollup"
+        data_shown: "A four-code exception taxonomy layered on top of Approved, so a requirement can be satisfied without the underlying document"
+        gates_on: ["Compliance Status column on the Placement Clearance Dashboard (step 7) — an exempted item counts as satisfied"]
+        accreditation_citation: >
+          COA Standard C.5 (Student Standards), with Standard D.12
+          (content/accreditation/coa.yaml, element_id "Standard C.5 (Student
+          Standards), with Standard D.12"). This is the element's own named
+          hazard, quoted from coa.yaml's gap_notes: "Compliance Management
+          supports Approved with Declination / Exception / Medical Exemption /
+          Religious Exemption sub-statuses, which are appropriate for
+          immunization mandates but would silently satisfy a hard
+          clinical-competency precondition like ACLS if applied here. Confirm
+          exemption sub-statuses can be disabled per item type before
+          configuring ACLS/PALS."
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this
+          research. CORE ELMS, eMedley and New Innovations all describe binary
+          submitted/missing or approved/expired states; none of their public
+          sources describes an exemption taxonomy at all, which makes this a
+          genuine Prism differentiator on the immunization side and a genuine
+          risk surface on the certification side.
+        gap_severity: "gap"
+        gap_note: >
+          The single highest-consequence discipline-specific finding in this
+          stage, and it is CRNA's. The exemption codes are correct and valuable
+          for the immunization mandates that dominate PT/OT/PA/SLP/Nursing/SW
+          compliance — a religious or medical exemption from a flu shot is a
+          legitimate satisfied state. Applied to a COA C.5 ACLS or PALS
+          certification they are not: C.5 is a clinical-safety precondition with
+          no exemption path, and an "Approved with Exception" on ACLS would show
+          the student as fully clear on the step 7 rollup while they hold no
+          valid card. Nothing in the reviewed sources confirms the taxonomy can
+          be disabled per item type, and
+          content/prism/capability-map.yaml ("Compliance document status &
+          exemption taxonomy") describes it as a status property of an approval
+          generally, not a per-requirement configuration. Verify before a CRNA
+          program configures ACLS/PALS. Contrast Teacher Education, where a
+          state fingerprint clearance is likewise non-exemptible per
+          content/accreditation/caep.yaml's licensure_or_gme_layer entry — the
+          same hazard, different regulator.
+      - element: "Reset action (archives the prior document into Archived Documents AND resets the requirement to Get Started for re-upload)"
+        type: "button"
+        data_shown: "Prior submission retained as a dated archived version rather than overwritten"
+        gates_on: ["Whether a renewed item re-enters the student's action list", "Whether the historical record of the superseded document survives"]
+        accreditation_citation: >
+          COA Standard C.5, with Standard D.12 (content/accreditation/coa.yaml)
+          — the pairing requires the certification to be provably valid at TWO
+          distinct checkpoints (start of clinical work, and graduation), which
+          means the program needs the superseded card retained, not overwritten,
+          to evidence continuous currency across a renewal. The Reset behavior
+          is the mechanism that produces that trail.
+        competitor_equivalent: >
+          CORE ELMS ("automated expiration reminders"), eMedley ("automated
+          expiration notifications") and New Innovations ("expiration alerts")
+          all publicly claim expiry alerting — content/competitors/core-elms.yaml,
+          emedley.yaml, new-innovations.yaml — but none of their public sources
+          describes what happens to the SUPERSEDED document on renewal.
+          Renewal-as-versioning versus renewal-as-overwrite is not documented at
+          this granularity by any competitor teardown in this research.
+        gap_severity: "none"
+        gap_note: >
+          Shipped, and per content/prism/capability-map.yaml ("Exxat Approve"
+          feature detail) the Reset-as-versioning pattern "applies to both
+          student and faculty compliance." It is the load-bearing mechanic for
+          every annually or biennially renewed item across the existing
+          disciplines — the annual TB test capability-map.yaml names, the
+          seasonal flu documentation the OT playbook records as a standing
+          announcement topic, and the two-year ACLS cycle coa.yaml flags. Worth
+          naming explicitly in this stage because it is easy to assume a
+          re-upload simply replaces the file; it does not, and the archived
+          version is what a site visitor asks for.
+      - element: "Student self-removal constraint (a student can delete their own uploaded file only while it is Pending Review or Not Approved; once Approved, only the school team can remove it)"
+        type: "read-only rollup"
+        data_shown: "Whether the delete control is available to the student on a given item"
+        gates_on: ["Integrity of an approved compliance record"]
+        accreditation_citation: >
+          CSWE Accreditation Standard 3.3, AS 3.3.5
+          (content/accreditation/cswe.yaml) — indirectly. AS 3.3.5 requires
+          documented "student safety protocols" and an auditable placement
+          pipeline; an approved clearance record a student could unilaterally
+          remove would not be auditable. Stated as indirect rather than as a
+          named required_software_behavior, which cswe.yaml does not assert.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file describes who may delete an approved compliance document."
+        gap_severity: "none"
+        gap_note: >
+          Confirmed in content/prism/capability-map.yaml, "Compliance document
+          status & exemption taxonomy." Included here because it is one of the
+          few places the student-side drawer has an integrity property rather
+          than a convenience property, and because it mirrors the locked-record
+          pattern the Nursing Playbook flags on approved CCE/patient logs
+          ("Once Approved, a log is locked and becomes part of the permanent
+          academic record") — the same trust mechanic applied to compliance.
+    action: "Student uploads the actual evidence document and submits it for admin/Approve-team review."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Students/Step-by-Step Guides (How-tos)/Compliance/Uploading
+      Compliance Documents.md
+
+  # =======================================================================
+  # NEW STEP (EXISTING-DISCIPLINE EXTENSION, 2026-08-25). Added because the
+  # gate mechanic here is STRUCTURALLY different from the upload drawer above,
+  # not a variation on it: the student does not produce a document at all.
+  # They initiate an off-platform transaction with a third-party vendor, wait
+  # on that vendor's own processing chain, and the requirement is satisfied by
+  # a status sync rather than by an artifact. Documented for Social Work
+  # (the one discipline with named integrations) and relevant to PT/PTA,
+  # OT/OTA and — pending confirmation — Teacher Education.
+  # =======================================================================
+  - screen: "Vendor-backed compliance requirement — student ordering and status sync"
+    navigation_path: >
+      Student Dashboard > Compliance > [background check / drug screening /
+      HIPAA Training requirement] > vendor launch — OR — Student Compliance >
+      Setup tab > [cohort] > External Trainings (admin side, configured in
+      admin-onboarding stage 4, not re-modeled here)
+    elements:
+      - element: "Vendor order/launch control (Universal Background Screening — fingerprint background checks and drug screening; Cisive — separate onboarding flow)"
+        type: "button"
+        data_shown: "Entry point into the vendor's own flow; the requirement's Prism status is driven by what comes back, not by a student upload"
+        gates_on: ["Requirement Upload Status and Compliance Status on the Placement Clearance Dashboard (step 7)"]
+        accreditation_citation: >
+          CSWE Accreditation Standard 3.3, AS 3.3.5
+          (content/accreditation/cswe.yaml, element_id "Accreditation Standard
+          3.3, AS 3.3.5"), whose required_software_behavior is "a pre-placement
+          readiness gate covering background checks, drug screening, and
+          required trainings (the operational form 'safety protocols' takes in
+          practice)"; rated "Transfer," with cswe.yaml naming CISIVE and
+          Universal Background Screening explicitly. Also CAPTE Standard 5,
+          Element 5B (content/accreditation/capte.yaml) for PT/PTA, which
+          enumerates "potential drug testing and criminal background check
+          requirements" among the clinical-education requirements a program must
+          disclose to students — capte.yaml's own rationale notes Prism "is
+          already the system of record for several enumerated items... through
+          Compliance Management's Universal Background Screening and Cisive
+          integrations."
+        competitor_equivalent: >
+          Item-type parity, mechanism gap, in Prism's favour. CORE ELMS
+          (content/competitors/core-elms.yaml, rated at-parity) publicly claims
+          to "monitor compliance data such as immunizations, background checks,
+          drug checks, and licensing requirements" — tracking, not ordering. No
+          competitor file in content/competitors/ describes initiating a vendor
+          transaction from inside the platform. The real competitive set is
+          undocumented in this repo: the PT Playbook names myClinicalExchange
+          (mCE), Clinician Nexus, ACEMAPP and CastleBranch Bridges as "direct
+          competitors of Exxat/Exxat One" that "require student account
+          registration and payments for... onboarding" and "will not integrate
+          with us" — i.e. four products whose entire business is this element,
+          none of which has a teardown in content/competitors/. Flagged as a
+          research gap rather than compared against.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Confirmed as a shipped, named integration pair in
+          content/prism/capability-map.yaml ("Third-party background check &
+          drug screening integrations") and in the SW playbook
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+          Work (SW) Playbook.md line 151 — CISIVE and Universal named explicitly
+          for SW). Configure-needed rather than
+          shipped because the vendor relationship is a commercial prerequisite
+          the program must hold, not a toggle — and per
+          content/accreditation/cswe.yaml, "whether the CISIVE/Universal/
+          ComplianceJunction integrations extend beyond SW and the health
+          professions to the four expansion domains is unconfirmed anywhere in
+          this corpus and is a live commercial question."
+      - element: "Order-dependency enforcement between background check and drug screening"
+        type: "read-only rollup"
+        data_shown: "Drug screening can only be requested once the background check reaches 'In Process,' and vice versa for an additional background check"
+        gates_on: ["The sequence and therefore the total elapsed time before a student can be clear"]
+        accreditation_citation: >
+          CSWE Accreditation Standard 3.3, AS 3.3.5
+          (content/accreditation/cswe.yaml) — the sequencing is part of what
+          makes the readiness gate a real lead-time problem rather than a
+          checklist, which is the operational form AS 3.3.5's "safety protocols"
+          take.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file describes ordering constraints between compliance items."
+        gap_severity: "none"
+        gap_note: >
+          Shipped and confirmed in content/prism/capability-map.yaml. Worth
+          surfacing to Social Work programs specifically because the SW
+          playbook's own best-practice section makes the same point from the
+          other end: "Complete profiles and Field Application Forms early — SW
+          programs commonly begin placement/profile review months ahead of field
+          education start, and background checks/drug screenings/HIPAA training
+          all carry provider processing lead time." A serialized dependency on
+          top of vendor lead time is exactly why the documented 6-8-week
+          Clearance Dashboard monitoring window (step 7) can already be too late
+          for a student who has not started.
+      - element: "Cisive status taxonomy including 'Complete – Under MRO Review'"
+        type: "read-only rollup"
+        data_shown: "Vendor-side intermediate states, including a Medical Review Officer review stage on a drug screen"
+        gates_on: ["Whether the requirement reads as satisfied on the step 7 rollup while a real-world review is still open"]
+        accreditation_citation: ""
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file describes vendor-specific intermediate statuses."
+        gap_severity: "cosmetic"
+        gap_note: >
+          Confirmed in content/prism/capability-map.yaml. Named here because it
+          is the one place in this stage where a status word can mislead: a
+          state literally beginning "Complete" that still has an open DOT-style
+          Medical Review Officer chain behind it. An admin scanning the step 7
+          dashboard for anything short of clear will read "Complete" and move
+          on. No source confirms how this maps into the three-state Requirement
+          Upload Status column, which is the specific thing to verify.
+      - element: "ComplianceJunction HIPAA training account (one-time setup tied to the student's university email, which cannot be changed; training auto-saves and resumes; completion syncs back as Approved with a downloadable certificate in both systems)"
+        type: "input field"
+        data_shown: "Vendor course launch and completion state, plus the certificate"
+        gates_on: ["Compliance Status column on the Placement Clearance Dashboard (step 7)"]
+        accreditation_citation: >
+          CSWE Accreditation Standard 3.3, AS 3.3.5
+          (content/accreditation/cswe.yaml), which names ComplianceJunction
+          HIPAA training as part of the readiness gate. Note also CAA Standard
+          3.1B, sub-elements 3.1.1B-3.1.6B (content/accreditation/caa-asha.yaml)
+          folds "accountability incl. HIPAA/FERPA compliance" into SLP's
+          professional practice competencies — so for SLP the HIPAA obligation
+          sits in the COMPETENCY framework rather than in a pre-rotation
+          document item, a genuinely different placement of the same
+          requirement.
+        competitor_equivalent: >
+          eMedley (content/competitors/emedley.yaml) lists "HIPAA training" as a
+          tracked document type and CORE ELMS
+          (content/competitors/core-elms.yaml) lists "HIPAA training" in its
+          compliance monitoring list — but both describe tracking a completion
+          record, not an embedded, launchable vendor course with sync-back. Not
+          documented at integration granularity by any competitor teardown in
+          this research.
+        gap_severity: "cosmetic"
+        gap_note: >
+          The immutable university-email binding is the operational trap, and it
+          is documented in the SW playbook
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+          Work (SW) Playbook.md line 152): the ComplianceJunction account
+          is "a one-time account setup tied to the student's university email
+          (cannot be changed)." A student who sets it up under a personal
+          address, or a program that changes its email domain, has no documented
+          remediation path. Small, but it lands on an individual student at the
+          worst possible moment.
+      - element: "School Pay vs. Student Pay configuration"
+        type: "toggle"
+        data_shown: "Which party funds the vendor transaction, set per institution"
+        gates_on: ["Whether the student can start the transaction at all without a personal payment"]
+        accreditation_citation: >
+          CAPTE Standard 5, Element 5B (content/accreditation/capte.yaml) — 5B
+          requires disclosure of clinical-education requirements including "access
+          to and responsibility for the cost of emergency services during
+          off-campus experiences," i.e. cost-responsibility disclosure is
+          explicitly part of what a PT/PTA program must tell students. Who pays
+          for a required background check is the same class of disclosure, though
+          5B does not name it verbatim — stated as adjacent rather than direct.
+        competitor_equivalent: >
+          Directly comparable and NOT in Prism's favour as a differentiator: the
+          PT Playbook records that mCE, Clinician Nexus, ACEMAPP and CastleBranch
+          Bridges are built on student registration AND PAYMENTS, so
+          student-funded compliance is the competing model's default. None of
+          those four has a teardown file in content/competitors/, so this is a
+          named finding from a discipline playbook rather than a competitor
+          teardown comparison.
+        gap_severity: "none"
+        gap_note: >
+          Confirmed in the SW playbook's Compliance section ("Payment can be
+          School Pay or Student Pay depending on institution configuration").
+          Included because it is the one element in this stage with a direct
+          student-cost consequence, and because the choice determines whether
+          the readiness gate is blocked on institutional procurement or on an
+          individual student's card.
+    action: >
+      Student initiates a vendor-mediated compliance requirement (background
+      check, drug screening, or HIPAA training), completes it in the vendor's
+      own environment, and the resulting status syncs back into Prism as the
+      requirement's status — no document upload occurs.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+      Work (SW) Playbook.md lines 147-153 (line 149 the centralized Compliance
+      module and its full student-facing column list with the Approved / Pending
+      Review / Needs Attention summary; line 150 the status ladder In Progress ->
+      Pending Review -> Approved / Not Approved / Needs Attention; line 151 CISIVE
+      and Universal for background checks and drug screenings, ComplianceJunction
+      for HIPAA training, and School Pay vs. Student Pay; line 152 the one-time
+      ComplianceJunction account binding to the university email, auto-save/resume,
+      and the certificate downloadable from both systems; line 153 the
+      Included-in-Profile-Link privacy control) plus line 77 (Additional Profile
+      Details used in place of a field application form) and line 196 (the
+      complete-early best practice and provider lead times).
+      Integration-level detail — the Universal/Cisive split, the fingerprint
+      scope, the "Complete – Under MRO Review" state, and the background-check-
+      before-drug-screening order dependency — from
+      content/prism/capability-map.yaml, "Third-party background check & drug
+      screening integrations." Admin-side configuration of these items is
+      modeled in
+      content/flows/admin-onboarding--04-compliance-template-setup.yaml
+      ("External Trainings" step) and deliberately not duplicated here.
+
+  - screen: "Profile Attestations drawer"
+    navigation_path: >
+      Student Dashboard > "Complete Profile Attestations" (badge shows
+      pending count) — OR — Coursework > View Details > (course-level
+      attestations only acknowledgeable from within a course's Coursework
+      section)
+    elements:
+      - element: "Attestation statement text + due date"
+        type: "read-only rollup"
+        data_shown: "The written statement the student must sign off on, and the date by which it must be agreed to"
+        gates_on: []
+        accreditation_citation: >
+          COCA Standard 5, Element 5.4 (published supervision policy, including
+          telemedicine, distributed to students and faculty) — this element is
+          the "distribution" half of that requirement: the place the policy
+          text is actually put in front of the student.
+        competitor_equivalent: >
+          Not evaluated — none of the reviewed competitor teardowns
+          (content/competitors/) document a distinct checkbox-attestation item
+          type as opposed to a document-upload item; not granular enough on
+          their side to compare.
+        gap_severity: "none"
+        gap_note: >
+          Shipped. Confirms that attestation statement text is carried in-app
+          rather than distributed out-of-band, which is what the 5.4
+          distribution half needs. Note the faculty half of 5.4 is covered by
+          the parallel Faculty Compliance module (capability-map.yaml, "Exxat
+          Approve" feature note), not this student-facing element.
+      - element: "I Agree button"
+        type: "button"
+        data_shown: ""
+        gates_on: ["Attestation disappears from the pending dashboard list once agreed; a durable signed record is written (see step 6)"]
+        accreditation_citation: >
+          COCA Standard 5, Element 5.4 (published supervision policy
+          acknowledged by students and faculty) — this control is the literal
+          mechanism for the "acknowledgment" half of that element; the faculty
+          half is covered by the parallel Faculty Compliance module
+          (capability-map.yaml, "Exxat Approve" feature note), not this
+          student-facing screen.
+        competitor_equivalent: >
+          Not evaluated — none of the reviewed competitor teardowns
+          (content/competitors/) document a distinct checkbox-attestation item
+          type as opposed to a document-upload item; not granular enough on
+          their side to compare.
+        gap_severity: "none"
+        gap_note: >
+          This is the element that resolves what the journey stage previously
+          flagged as "support for [policy attestation] is unconfirmed."
+          Attestations are a shipped, checkbox-based item type, distinct from
+          document upload, available at both a general-profile and a
+          course-specific level.
+      # --- EXISTING-DISCIPLINE EXTENSION (2026-08-25) ---
+      - element: "Attestation as a hard prerequisite for unlocking field-education activity or external profile sharing (Social Work)"
+        type: "read-only rollup"
+        data_shown: "Which downstream capability the un-agreed attestation is currently blocking"
+        gates_on: ["Whether the student can share their profile externally with a prospective agency at all", "Whether field-education activities unlock for the student"]
+        accreditation_citation: >
+          CSWE Accreditation Standard 3.3, AS 3.3.5
+          (content/accreditation/cswe.yaml, element_id "Accreditation Standard
+          3.3, AS 3.3.5"), which requires documented processes for "orienting
+          students, placing students... implementing student SAFETY PROTOCOLS"
+          and "how they are articulated to students and field personnel." An
+          attestation that must clear before the student can approach an agency
+          is the articulation half, enforced rather than asserted.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this
+          research — none of the reviewed teardowns in content/competitors/
+          documents a checkbox-attestation item type at all, let alone one whose
+          un-agreed state gates a different feature.
+        gap_severity: "none"
+        gap_note: >
+          Structurally distinctive to Social Work and worth naming because it is
+          the only place in this stage where an attestation gates something other
+          than the compliance rollup itself. Per the SW playbook
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+          Work (SW) Playbook.md line 82),
+          attestations are "commonly required before a profile can be shared
+          externally (e.g., consent to share profile with agencies) or before
+          field-education activities unlock." That is a consequence of SW's
+          student-initiated placement model — the student, not the school, is the
+          one contacting agencies via the Multi-Location Field Application Form,
+          so consent-to-share has to be captured before they can act. PT/OT, where
+          the school drives Share Profile, have no equivalent dependency.
+      - element: "Academic and clinical integrity attestation (SLP), profile-level and course-level"
+        type: "read-only rollup"
+        data_shown: "Program expectations for academic and clinical conduct, and the process used to address violations, put in front of the student for acknowledgment"
+        gates_on: []
+        accreditation_citation: >
+          CAA Standard 3.0B, Standard 3.10B (content/accreditation/caa-asha.yaml,
+          element_id "Standard 3.0B, Standard 3.10B" — "Students know program
+          expectations for academic and clinical integrity"), whose required
+          behavior is "a policy library students must actively acknowledge, with
+          the acknowledgment retained as a timestamped, per-student record; plus
+          a structured, retrievable log of conduct violations." caa-asha.yaml
+          rates this "Configure" and names the two-tier attestation model
+          explicitly — profile-level via Students > Set-up > Attestations,
+          course-level via Courses > Course Offering > Attestation > Set-up —
+          with the timestamped record retained in Profile > Academics (step 6).
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no reviewed teardown documents a checkbox-attestation item type as distinct from a document upload."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The mechanism is shipped and is a clean fit; what is configure-work is
+          the pairing. 3.10B is a two-part standard — the acknowledgment AND "a
+          structured, retrievable log of conduct violations and the process steps
+          taken in response" — and per caa-asha.yaml's own gap_notes the second
+          half lands on Interventions (step 11), which "has NO dedicated
+          Interventions report... For a self-study exhibit proving 'policies are
+          applied consistently,' a program needs a queryable intervention
+          register, not a dashboard bucket." So an SLP program can prove
+          distribution cleanly and cannot prove consistent enforcement cleanly.
+      - element: "Clinical-education requirements disclosure attestation (PT/PTA): travel expectations to clinical sites, required health information, drug testing and criminal background check requirements, health and professional liability insurance requirements, and responsibility for the cost of emergency services during off-campus experiences"
+        type: "read-only rollup"
+        data_shown: "The enumerated CAPTE 5B disclosure set, distributed as acknowledged policy rather than as a handbook PDF"
+        gates_on: []
+        accreditation_citation: >
+          CAPTE Standard 5, Element 5B (content/accreditation/capte.yaml,
+          element_id "Standard 5, Element 5B" — "Information Provided to
+          Prospective and Enrolled Students"). capte.yaml rates 5B "Gap" overall
+          but splits it explicitly in its gap_notes: "the disclosure/attestation
+          side is a Configure on Compliance Management today; the
+          outcomes-publication side is a hard Gap." THIS element is the
+          Configure half — capte.yaml's rationale names "Compliance Management's
+          two-tier attestations (general profile level and course-specific, each
+          retained with a timestamp in the student's Profile > Academics tab)"
+          plus the PT playbook's convention of sharing Handbooks, Policies and
+          Evaluation & Grading as cohort Resources.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no reviewed teardown documents an acknowledgment-tracked policy distribution mechanism."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Two things worth carrying to a PT/PTA conversation. (1) The PT and OT
+          playbooks both record what programs ACTUALLY attest today, and it is
+          narrower than 5B: "Profile verification and Profile update request are
+          generally set up (with due dates), shared with all cohorts/students"
+          (PT playbook, "Students" section; the OT playbook records the same two
+          plus placement-detail acceptance). Nothing in either playbook records a
+          5B-style clinical-education-requirements attestation being configured,
+          so this is a real, specific configuration recommendation rather than a
+          description of current practice. (2) capte.yaml flags a near-miss worth
+          repeating: "travel expectations to clinical sites is an interesting
+          near-miss — Placement Assist already computes distance-based scoring
+          from school-to-location or student-address-to-location, so the data to
+          substantiate a travel-expectations disclosure exists but is never
+          surfaced as a published expectation."
+      - element: "Profile-verification and profile-update attestations with due dates (PT/PTA, OT/OTA convention)"
+        type: "read-only rollup"
+        data_shown: "Student confirmation that their profile data is accurate and current, and acceptance of placement details once received and reviewed"
+        gates_on: []
+        accreditation_citation: >
+          ACOTE Standard A.3.5 (content/accreditation/acote.yaml, element_id
+          "Standard A.3.5" — "Student Advising by Faculty") — indirectly, and
+          stated as indirect. A.3.5 requires documented advisement covering
+          "conduct and responsibilities to enter the profession, student progress
+          and academic standing, fieldwork education"; a dated, acknowledged
+          profile/placement-acceptance record is a supporting artifact for the
+          fieldwork-education strand rather than the standard's own required
+          behavior, which acote.yaml frames as the Communications/Interventions
+          record types (step 11). No ACOTE or CAPTE element requires a
+          profile-accuracy attestation as such.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Shipped and in routine production use, and included because it is the
+          documented BASELINE the expansion-domain attestation story should be
+          scoped against: for PT and OT the attestation item type is already a
+          normal part of a program's setup, with due dates, shared to all
+          cohorts. Confirmed in
+          /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
+          Therapy (PT) Playbook.md ("Attestations: Profile verification and
+          Profile update request are generally set up (with due dates), shared
+          with all cohorts/students") and
+          .../Occupational Therapy (OT) Playbook.md ("Attestations: Can be added
+          to verify profile accuracy and confirm acceptance/completion of
+          placement details once received and reviewed"). Note the OT variant —
+          acknowledging PLACEMENT DETAILS — is a distinct use of the item type
+          that no other discipline's source records, and it makes the attestation
+          part of the placement handshake rather than a policy formality. OT also
+          ships an Attestation Report (OT playbook, "Student Reports") showing
+          per-student completion of placement/program-expectation attestations,
+          which is the reporting surface the general attestation model otherwise
+          lacks.
+    action: >
+      Student reads a policy statement (general profile-level or
+      course-specific) and clicks I Agree to acknowledge it — a distinct item
+      type from uploading a document.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Students/Step-by-Step Guides (How-tos)/Profile/Acknowledging to
+      Attestations.md
+
+  - screen: "Profile > Academics tab > Agreed Attestations"
+    navigation_path: "Student Profile > Academics tab > Agreed Attestations section"
+    elements:
+      - element: "Agreed Attestations list"
+        type: "read-only rollup"
+        data_shown: "Every attestation the student has agreed to, each with the date and time of sign-off"
+        gates_on: []
+        accreditation_citation: >
+          COCA Standard 5, Element 5.4 (proof of distribution/acknowledgment);
+          also relevant as durable evidence for CODA Standard 2, Element 2-2's
+          due-process documentation trail (see step 11) if an attestation
+          acknowledgment becomes part of a case record.
+        competitor_equivalent: "Not evaluated — no competitor's public docs describe a comparable signed-attestation audit trail."
+        gap_severity: "none"
+        gap_note: ""
+    action: "Student (or an admin viewing the profile) reviews the durable, timestamped record of every attestation agreed to."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Students/Step-by-Step Guides (How-tos)/Profile/Acknowledging to
+      Attestations.md; corroborated in
+      content/prism/capability-map.yaml under "Two-tier attestations with
+      signed audit trail."
+
+  - screen: "Placement Clearance Dashboard"
+    navigation_path: >
+      Placements > select Course (or Placement Group, via "Placements for
+      Group") > Placement Clearance banner at the top of the page
+    elements:
+      - element: "Requirement Upload Status column"
+        type: "read-only rollup"
+        data_shown: "Approved | Get Started | Not Applicable (NA) | Action Required, per student"
+        gates_on: ["Whether the student's own compliance documents are placement-ready"]
+        accreditation_citation: >
+          COCA Standard 6, Element 6.10 (per-student completion checklist
+          satisfiable before fourth-year clerkships begin) — this column is
+          the per-student document-completion half of that checklist
+          (content/accreditation/coca.yaml, element 6.10, rated Configure).
+        competitor_equivalent: >
+          eMedley's Student Documents module (content/competitors/emedley.yaml)
+          is the closest public match on the student-document side, but its
+          public pages do not state that eMedley's items actually gate
+          placement start the way this column does — comparable on document
+          status, not on the gating behavior.
+        gap_severity: "none"
+        gap_note: >
+          Shipped, and part of what makes this the strongest-evidenced screen
+          in the stage: a real clearance gate rather than a compliance list.
+      - element: "Contract Status column"
+        type: "read-only rollup"
+        data_shown: "Valid Contract | Needs Attention (missing, invalid, or nearing expiration), per site/location"
+        gates_on: ["Whether the site the student is placed at has a live affiliation agreement"]
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not evaluated — CORE ELMS is named in competitor teardowns as a
+          plausible match on affiliation-agreement tracking, but that teardown
+          does not document its screens at element level, so no
+          element-for-element comparison is possible from the material
+          reviewed. Stated here rather than guessed.
+        gap_severity: "none"
+        gap_note: >
+          Shipped. This is one of the non-student columns that makes the gate
+          multi-entity (student + site + contract + preceptor) rather than a
+          single-entity compliance checklist.
+
+          EXISTING-DISCIPLINE CLAUSE (OT/OTA, added 2026-08-25): the OT
+          playbook records a specific, named false-positive on this column —
+          "Not all sites require a contract, but the system assumes a contract
+          is required when a site is added, so it flags missing contracts even
+          when none is needed. Schools have requested a way to mark a site as
+          'contract not required' so it isn't flagged as missing/incomplete"
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+          Therapy (OT) Playbook.md, "Placement Clearance Requirements"). This is
+          the one documented defect in the clearance gate itself rather than in
+          its inputs, and it degrades the gate in the worst way — by training
+          admins to ignore a red state. It bites OT hardest because Level I
+          fieldwork routinely uses observation/service-learning settings that
+          carry no affiliation agreement, whereas ACOTE Standard C.1.5
+          (content/accreditation/acote.yaml) requires written agreements for
+          Level I and Level II alike, so an OT program cannot simply suppress
+          the column either.
+
+          EXISTING-DISCIPLINE CLAUSE (SLP, added 2026-08-25): CAA Standard 3.0B,
+          Standard 3.9B (content/accreditation/caa-asha.yaml, element_id
+          "Standard 3.0B, Standard 3.9B") is the accreditor citation for THIS
+          column in SLP — it requires "valid written or electronic agreements
+          with ALL active external facilities where students are placed," and
+          caa-asha.yaml rates it "Transfer" specifically because this column
+          "evaluates each location's contracts against the specific placement
+          dates — surfacing Valid Contract vs. Needs Attention (contract expires
+          before placement end) vs. Missing Contracts." Same column, and for SLP
+          it is a direct accreditor fit rather than an uncited convenience.
+      - element: "Compliance Status column"
+        type: "read-only rollup"
+        data_shown: "No Docs Started | Some Action Needed | All Docs Approved — a composite student-compliance rollup"
+        gates_on: ["Overall pre-rotation clearance for the student"]
+        accreditation_citation: >
+          COCA Standard 6, Element 6.10 (per-student completion checklist
+          satisfiable before fourth-year clerkships begin) — this composite
+          rollup is the literal completion-checklist view described there
+          (content/accreditation/coca.yaml, element 6.10, rated Configure).
+        competitor_equivalent: >
+          eMedley's Student Documents module (content/competitors/emedley.yaml)
+          is the closest public match on the student-document side, but its
+          public pages describe no composite per-student clearance rollup that
+          gates placement start; New Innovations' Credentialling Module is
+          named in competitor teardowns as a plausible match but that teardown
+          does not document its screens at element level, so a direct
+          comparison is not possible from the material reviewed.
+        gap_severity: "none"
+        gap_note: >
+          Shipped, and the single strongest-evidenced element in the stage:
+          the composite rollup is what turns per-requirement statuses into an
+          actual pre-rotation clearance verdict.
+
+          EXISTING-DISCIPLINE CLAUSE (PT/PTA, added 2026-08-25) — the most
+          important limitation of this column, and it is CAPTE's finding, not
+          ours. CAPTE Standard 4, Element 4O (content/accreditation/capte.yaml,
+          element_id "Standard 4, Element 4O" — "Students Professional,
+          Competent, Safe, and Ready to Progress to Clinical Education")
+          defines PT/PTA readiness as a COMPETENCY-AND-SAFETY gate, not a
+          document gate: the required behavior is "a pre-clinical competency
+          gate: a defined skill set with per-skill pass/fail results, a severity
+          flag distinguishing critical-safety skills from ordinary ones, a hard
+          block preventing progression to placement until the gate clears." Per
+          capte.yaml's gap_notes: "Placement Clearance's gate evaluates
+          compliance documents, contracts, and preceptor credentials —
+          competency-framework results are not one of its inputs, so 'ready to
+          progress' is currently a human judgment outside the block." So for
+          PT/PTA an All Docs Approved on this column is NOT the readiness
+          verdict 4O asks for. The nearest shipped analog lives on a different
+          screen entirely — the Student Proficiency Distribution chart in step
+          10 — and nothing joins the two. This is the clearest example in the
+          whole stage of a discipline whose readiness gate is structurally
+          different from the document-clearance model, and it belongs to an
+          EXISTING customer base, not an expansion domain.
+
+          EXISTING-DISCIPLINE CLAUSE (Teacher Education, added 2026-08-25):
+          CAEP Standard R3, Component R3.2 (content/accreditation/caep.yaml)
+          cites this rollup as the fidelity evidence behind CAEP's pointed
+          question "how does the EPP ensure there are no loopholes to work
+          around the system?" — caep.yaml's rationale names the Clearance
+          Dashboard's parallel status models plus Exxat's documented
+          6-8-weeks-ahead monitoring practice as exactly that evidence. For TE
+          this column is therefore doing double duty: an operational gate AND a
+          transition-point audit artifact.
+      - element: "Preceptor CV / License / Certification columns"
+        type: "read-only rollup"
+        data_shown: "Missing | Exists | NA, per preceptor, for the assigned specialty"
+        gates_on: ["Whether the preceptor side of the placement is credential-clear"]
+        accreditation_citation: >
+          EXISTING-DISCIPLINE EXTENSION (2026-08-25) — this column was
+          previously uncited; three existing disciplines cite it directly.
+          (1) ARC-PA Standard A2, Element A2.14 (content/accreditation/arc-pa.yaml,
+          element_id "Standard A2, Element A2.14" — "Preceptor Licensure —
+          Valid, Unrestricted, and Unencumbered"), rated "Transfer" and
+          described there as "one of the cleanest fits in the whole file," with
+          this exact three-state Missing/Exists/NA tracker named as the
+          mechanism. (2) CSWE Accreditation Standard 3.3, AS B3.3.6 / M3.3.6
+          (content/accreditation/cswe.yaml) — Field Instructor degree plus two
+          years' post-degree practice — which names the Placement Clearance
+          Dashboard among its mechanisms. (3) ACOTE Standard C.1.13
+          (content/accreditation/acote.yaml, "Qualified Level II Fieldwork
+          Educators"), where acote.yaml notes Compliance Management "already
+          gates on preceptor credentials as a first-class entity, not just the
+          student."
+        competitor_equivalent: >
+          Not evaluated — New Innovations' Credentialling Module is named in
+          competitor teardowns as a plausible match on preceptor credentials,
+          but that teardown does not document its screens at element level, so
+          no element-for-element comparison is possible from the material
+          reviewed. Stated here rather than guessed.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Shipped. The preceptor half of the multi-entity gate; the underlying
+          data is entered on the Personnel record (step 9).
+
+          EXISTING-DISCIPLINE CLAUSE (PA, added 2026-08-25) — severity raised
+          from none to configure-needed on the strength of this: the tri-state
+          proves a credential record EXISTS, not that it CLEARS. ARC-PA 6th
+          edition added "unrestricted, and unencumbered" to A2.14, and
+          content/accreditation/arc-pa.yaml states the consequence precisely:
+          "The three-state tracker proves a license record EXISTS; it does not
+          encode 'unrestricted and unencumbered,' which is a status attribute
+          (board action, probation, restriction) with no field today. For the
+          expansion domains this is the reusable lesson: 6e-style wording
+          changes turn a document-presence check into a document-STATUS check,
+          and Prism's compliance taxonomy is presence-oriented."
+
+          EXISTING-DISCIPLINE CLAUSE (Social Work, added 2026-08-25) — the same
+          presence-vs-substance gap in a different shape, and already logged
+          elsewhere in this repo. Per content/accreditation/cswe.yaml on AS
+          B3.3.6/M3.3.6: "The specific fact CSWE actually audits — 'the degree
+          is from a CSWE-ACCREDITED program' and 'two years POST-DEGREE' — is
+          not a structured attribute anywhere; Placement Clearance reports only
+          that a CV/license/certification document EXISTS, not that its contents
+          clear the standard... Two small structured fields on the Personnel
+          record (accredited-program boolean, degree-conferral date) would
+          convert an existence check into a compliance check." Social Work also
+          uses this column for a purpose no other discipline's source records:
+          per the SW playbook, the dashboard "also flags whether
+          orientation-completion certificates are present," which is the
+          mechanism cswe.yaml cites for AS 3.3.4 (Field Instructor orientation).
+
+          EXISTING-DISCIPLINE CLAUSE (CRNA, added 2026-08-25): for CRNA the
+          preceptor-side check has a second, harder half this column does not
+          carry. COA Standards F.5 and F.8 (content/accreditation/coa.yaml,
+          element_id "Standards F.5 and F.8 (Clinical Site Standards) — F.5
+          CRITICAL (*)") restrict supervision to CRNAs and anesthesiologists who
+          are INSTITUTIONALLY CREDENTIALED at that site — a site-conferred
+          status, not a state licence — so an Exists on this column is
+          necessary but not sufficient for a CRNA placement to be genuinely
+          clear.
+      # --- EXISTING-DISCIPLINE EXTENSION (2026-08-25) ---
+      - element: "Site/Location Requirement document status, with admin approval of student-uploaded location documents directly from the dashboard and bulk location-requirement download"
+        type: "read-only rollup"
+        data_shown: "Whether the student has submitted the documents THIS SPECIFIC site demands, as distinct from the program's own compliance list"
+        gates_on: ["Whether the student is clear for this particular placement, independent of their general compliance status"]
+        accreditation_citation: >
+          CSWE Accreditation Standard 3.3, AS 3.3.5
+          (content/accreditation/cswe.yaml) — the "pre-placement readiness gate"
+          it describes is per-placement, and agency-specific requirements are
+          part of the safety-protocol set. Also CAEP Standard R3, Component R3.2
+          (content/accreditation/caep.yaml) read together with that file's
+          licensure_or_gme_layer entry on state background-check and
+          school-district clearance requirements, which states that TE
+          requirements "vary by state and often by district within a state" and
+          are "absolute placement blockers." This is the column where
+          district-level variation would have to surface.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this
+          research. CORE ELMS, eMedley and New Innovations all describe a single
+          program-level compliance record per student; none of their public
+          sources describes a site-specific document set evaluated per
+          placement. This is a genuine structural difference in Prism's favour
+          and it is under-claimed.
+        gap_severity: "none"
+        gap_note: >
+          Shipped, confirmed in both the PA and OT playbooks — PA:
+          "Requirements: add site/location-specific requirements students must
+          submit when placed there — tracked via the Placement Clearance
+          dashboard"
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+          Assistant (PA) Playbook.md, "Site/Location Assessment"); OT:
+          "Location-specific requirements (COVID-19 vaccination, flu shots, CPR
+          certification, etc.) can be set under Location Requirements, per what
+          the site has requested"
+          (.../Occupational Therapy (OT) Playbook.md, "Sites and Locations").
+          The PT and OT playbooks both list "checking if site/location-specific
+          documents were uploaded by the student or not" as a distinct
+          pre-placement activity alongside checking compliance status — i.e.
+          practitioners treat these as two different checks, not one. The
+          dashboard-side approval and bulk-download behaviors are confirmed in
+          content/prism/capability-map.yaml ("Placement Clearance"). Named here
+          because it is the mechanism a Teacher Education program would need for
+          per-district clearance packets, and the one that makes the general
+          per-setting Program Requirements gap in step 1 partially recoverable —
+          per-LOCATION requirements are supported even where per-district
+          requirement SETS are not modeled.
+      - element: "Delegator merge field @StudentProfileWithComplianceAndLocationRequirementsLink (no-login site view of a student's compliance + location-requirement status), with optional One-Time-Password protection"
+        type: "read-only rollup"
+        data_shown: "A shareable link giving site personnel the student's clearance state without a Prism account; OTP sends a code to the recipient's own school email before the link opens, so a forwarded link is inert for the forwardee"
+        gates_on: ["Whether the receiving site can independently verify clearance rather than trusting the program's assertion"]
+        accreditation_citation: >
+          None asserted at element granularity. Adjacent but explicitly not
+          this element: CSWE AS 3.3.4 and AS 3.3.5
+          (content/accreditation/cswe.yaml) require the program to articulate
+          processes to FIELD PERSONNEL, and this link is a plausible mechanism,
+          but neither element's required_software_behavior names an external
+          verification surface, so no citation is claimed.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this
+          research. Note the competitive significance is inverted here: per the
+          PT playbook, myClinicalExchange, Clinician Nexus, ACEMAPP and
+          CastleBranch Bridges exist precisely because sites want to verify
+          student clearance themselves, and they solve it by making the student
+          register an account with the VENDOR. A no-login, OTP-protected link
+          from the school's own system is the direct structural answer to that
+          model. None of those four vendors has a teardown file in
+          content/competitors/, so this comparison rests on the PT playbook, not
+          on a competitor teardown.
+        gap_severity: "none"
+        gap_note: >
+          Shipped; merge field, no-login behavior and OTP scope all confirmed in
+          content/prism/capability-map.yaml ("Placement Clearance" and
+          "One-Time-Password (OTP) protection for shared compliance data"). Two
+          discipline notes. (1) For PA the student-initiated variant is
+          documented separately: "Profile Share: students can share a curated
+          link to selected compliance documents directly with a preceptor,
+          without granting full record access" (PA playbook, FAQ-sourced
+          workflow mechanics) — so PA has both a school-side and a student-side
+          path. (2) OTP is support-configured, not self-serve, per
+          capability-map.yaml, which means the privacy posture of the whole
+          external-sharing story is a vendor ticket — the same support-gated
+          pattern admin-onboarding--04-compliance-template-setup.yaml documents
+          for sensitive-document marking. Relevant to Social Work, whose sharing
+          is student-initiated and whose compliance set includes background
+          checks and drug screens.
+      - element: "Filter bar (Course Offering, Rotation, Setting, Requirement Upload Status, Contact, Student Attributes, Preceptor CV/License/Certification)"
+        type: "report filter"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: "Not evaluated — no competitor teardown documents dashboard filtering at element level."
+        gap_severity: "none"
+        gap_note: >
+          Shipped. Supports the documented 6-8-week-out monitoring workflow by
+          letting an admin isolate students who are short of clear.
+      - element: "Bulk download control"
+        type: "button"
+        data_shown: "Downloads all student compliance requirement documents for the selected course/placement group"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a bulk document export at element level."
+        gap_severity: "none"
+        gap_note: >
+          Shipped. Practically this is the evidence-extraction path for a site
+          visit, though the reviewed sources describe it only as a bulk
+          document download, not as an accreditation export.
+    action: >
+      Admin monitors this dashboard starting 6-8 weeks before rotations
+      begin (documented best practice), intervening — reminders, direct
+      document upload on a student's behalf, follow-up with sites on
+      preceptor credentials — on anything short of fully clear before
+      placement start.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement
+      Clearance Dashboard.md; multi-entity gate (student + site + contract +
+      preceptor) corroborated in the PA Playbook's "Placement Clearance
+      Requirements" section
+      (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+      Assistant (PA) Playbook.md).
+
+  - screen: "Placement Clearance report (course/placement-group scoped export)"
+    navigation_path: "Dashboard > Placements > Placement Group > Placement Clearance"
+    elements:
+      - element: "Uploaded-document status column"
+        type: "read-only rollup"
+        data_shown: "Same document-approval states as the Dashboard, exported/reviewed in report form"
+        gates_on: []
+        accreditation_citation: >
+          COCA Standard 6, Element 6.10 — same evidence use-case as the
+          Dashboard's status columns, but with a materially narrower scope
+          (see gap_note).
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a report/dashboard split at this granularity."
+        gap_severity: "gap"
+        gap_note: >
+          A named, documented product gap, not a hedge, and it applies to this
+          report as a whole rather than to one column: per FAQ #13 the report
+          explicitly does NOT indicate whether the student's profile has
+          actually been *shared* with the site — only that documents are
+          uploaded and the contract is valid. Profile-sharing is a distinct,
+          easy-to-miss manual step, and a program relying on this report alone
+          (rather than the live Dashboard) could believe a student is
+          clinically placed and clear when the receiving site has never
+          actually seen their compliance profile. Real operational risk worth
+          surfacing in the pre-rotation gate story.
+      - element: "Site contract status column"
+        type: "read-only rollup"
+        data_shown: "Whether the placement site has a valid contract"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a report/dashboard split at this granularity."
+        gap_severity: "gap"
+        gap_note: >
+          Same report-level gap as the sibling column, stated identically
+          because the source material does not distinguish between them: per
+          FAQ #13 the report shows only uploaded-document status and site
+          contract status, and explicitly does NOT indicate whether the
+          student's profile has been *shared* with the site. A program relying
+          on this report instead of the live Dashboard can believe a placement
+          is clear when the site has never seen the student's compliance
+          profile.
+    action: >
+      Admin reviews or exports this report as a point-in-time check before
+      finalizing clinical placements.
+    confirmed_by: >
+      Explicit product-scope statement, FAQ #13: "Placement clearance report
+      status, does it show the status if the student has sent their profile
+      or just the uploaded document? ... the Placements Clearance report only
+      shows the status of uploaded documents and the site contract status." —
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/FAQs for Administrators/Frequently Asked
+      Questions- Program Administrators.md. Navigation path corroborated in
+      the Nursing COA Accreditation Standards Support Guide's "Placement
+      Clearance Report" row.
+
+  - screen: "Personnel record – Preceptor credential fields"
+    navigation_path: "Sites > [Site] > Personnel > [Preceptor record]"
+    elements:
+      - element: "Certification field"
+        type: "input field"
+        data_shown: "e.g. NCCPA certification details for the preceptor's specialty"
+        gates_on: ["Preceptor Certification column on the Placement Clearance Dashboard"]
+        # preceptor/site half of the gate, not a student-readiness standard for this stage
+        accreditation_citation: ""
+        competitor_equivalent: "Not evaluated — no competitor teardown documents preceptor-record fields at this granularity."
+        gap_severity: "none"
+        gap_note: >
+          Shipped. Included because current_state_in_prism describes this
+          stage as gating on more than the student; this is one of the
+          concrete fields where that non-student gating data actually lives.
+      - element: "License Number field"
+        type: "input field"
+        data_shown: "Preceptor's license details"
+        gates_on: ["Preceptor License column on the Placement Clearance Dashboard"]
+        # preceptor/site half of the gate, not a student-readiness standard for this stage
+        accreditation_citation: ""
+        competitor_equivalent: "Not evaluated — no competitor teardown documents preceptor-record fields at this granularity."
+        gap_severity: "none"
+        gap_note: >
+          Shipped. Included because current_state_in_prism describes this
+          stage as gating on more than the student; this is one of the
+          concrete fields where that non-student gating data actually lives.
+      - element: "CV upload"
+        type: "input field"
+        data_shown: "Preceptor curriculum vitae"
+        gates_on: ["Preceptor CV column on the Placement Clearance Dashboard"]
+        # preceptor/site half of the gate, not a student-readiness standard for this stage
+        accreditation_citation: ""
+        competitor_equivalent: "Not evaluated — no competitor teardown documents preceptor-record fields at this granularity."
+        gap_severity: "none"
+        gap_note: >
+          Shipped. Included because current_state_in_prism describes this
+          stage as gating on more than the student; this is one of the
+          concrete fields where that non-student gating data actually lives.
+      # --- EXISTING-DISCIPLINE EXTENSION (2026-08-25) ---
+      - element: "Educator-supplied credential intake that does NOT write back to this record (OT Fieldwork Educator Details Form; OT Educator Verification Form; SW Experiential Supervisor Intake Form / Field Instructor Information Form)"
+        type: "input field"
+        data_shown: "Years of experience, degrees, certifications, licensure and CV collected FROM the educator on a form — which an admin must then re-key into the Personnel record for it to reach the clearance gate"
+        gates_on: ["Nothing directly — that is the defect: the collected data does not gate until re-entered by hand"]
+        accreditation_citation: >
+          ACOTE Standard C.1.13 (content/accreditation/acote.yaml, element_id
+          "Standard C.1.13" — "Qualified Level II Fieldwork Educators"), which
+          requires the educator to be currently licensed or otherwise regulated
+          as an occupational therapist with at least one year of full-time
+          post-licensure practice experience prior to supervising Level II
+          fieldwork. Also CSWE Accreditation Standard 3.3, AS B3.3.6 / M3.3.6
+          (content/accreditation/cswe.yaml), whose named mechanisms include "My
+          Request forms or a Field Instructor Information Form to mandatorily
+          capture FI credentials at placement time" alongside the Agency
+          Personnel profile and the Placement Clearance Dashboard.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this
+          research — no competitor file in content/competitors/ describes a
+          preceptor-facing credential intake form at all, so there is no basis
+          for comparing whether their equivalents sync.
+        gap_severity: "gap"
+        gap_note: >
+          A named, quoted product gap on the preceptor side of the gate, and it
+          is OT's most concrete one. Per the OT playbook: "Schools require
+          students to provide info about their Fieldwork Educator: years of
+          experience, degrees, certifications, licensure, and a CV — an
+          accreditation requirement to confirm educators are qualified to
+          supervise. LIMITATION: CV and other details collected via the
+          Fieldwork Educator Details Form do not sync automatically with the
+          system — schools must manually enter this data"
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+          Therapy (OT) Playbook.md, "Fieldwork Educator" section). The
+          consequence lands exactly on this stage: the step 7 dashboard's
+          Missing/Exists/NA preceptor tracker reads Missing until someone
+          re-keys data the program already holds, so a placement can be blocked
+          by a transcription backlog rather than by an actual credential
+          problem — the mirror image of the OT contract false-positive recorded
+          on the Contract Status column. Social Work runs the same intake
+          pattern (Experiential Supervisor Intake Form, Field Instructor
+          Information Form) but its playbook does not state whether those sync,
+          so the SW case is unconfirmed rather than confirmed-broken; do not
+          assume symmetry. Note the OT playbook also records an "Educator
+          Verification Form" that "lets educators electronically confirm
+          preparation, licensure, and practice experience," which is the closest
+          thing to a self-service path and whose write-back behavior is likewise
+          unstated.
+    action: >
+      Admin (or a site contact via a delegated no-login link) enters or
+      verifies the preceptor's specialty-specific license/certification/CV
+      data, which feeds the Dashboard's three-state Missing/Exists/NA
+      preceptor tracker.
+    confirmed_by: >
+      PA Playbook, "Personnel" and "Personnel data best practices" sections
+      (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+      Assistant (PA) Playbook.md); corroborated in
+      content/prism/capability-map.yaml, "Personnel compliance" feature.
+
+  - screen: "Competency Review Dashboard"
+    navigation_path: >
+      Competency Management > [Framework] > Review Dashboard (per cohort,
+      after mapping assessments/course offerings to the framework)
+    elements:
+      - element: "Domain Scores chart"
+        type: "read-only rollup"
+        data_shown: "Average score per competency domain across the cohort"
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 7, Key Element 7.3.d — the AGGREGATE half of the
+          requirement (evidence of APPE-readiness measured at aggregate level
+          before students enter APPEs); content/accreditation/acpe.yaml rates
+          this element "Configure."
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable pooled competency-scoring dashboard at element level."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The aggregation mechanism is confirmed and more specific than
+          previously known: parent-level (domain) scores are a POOLED mean
+          across all child competencies' mapped questions, not a naive
+          average-of-averages. What remains configure-work is whether a
+          program can point this engine at ACPE's specific 2.1.a-n outcome
+          taxonomy rather than a generic framework.
+      - element: "Student Proficiency Distribution chart"
+        type: "read-only rollup"
+        data_shown: "Meeting Threshold (all domains above configured threshold) vs. Below Threshold (at least one domain below)"
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 7, Key Element 7.3.d — the INDIVIDUAL-STUDENT half of
+          the requirement, since this chart classifies each student against
+          the configured threshold before rolling up;
+          content/accreditation/acpe.yaml rates this element "Configure."
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable pooled competency-scoring dashboard at element level."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Per-student threshold classification exists, which is the closest
+          shipped analog to a readiness verdict. What is genuinely unconfirmed
+          is narrower than the journey's earlier hedge: (1) whether the
+          APPE-ready/Practice-ready/Team-ready three-tier readiness language
+          can be configured here specifically, and (2) standardized,
+          psychometrically valid knowledge assessment behind the gate, which
+          depends on Exam Management (roadmap Q2 2027, still not shipped) per
+          acpe.yaml's own gap_notes.
+      - element: "Score Distribution box plot"
+        type: "read-only rollup"
+        data_shown: "Renders red when a domain's median falls below its configured pass threshold (default 70%, school-configurable)"
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 7, Key Element 7.3.d — aggregate-level evidence, with
+          the configurable pass threshold as the explicit
+          readiness-bar mechanism; content/accreditation/acpe.yaml rates this
+          element "Configure."
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable pooled competency-scoring dashboard at element level."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Threshold is shipped and school-configurable (default 70%), so the
+          bar itself is a configuration decision each program must make
+          against its own ACPE readiness definition rather than a shipped
+          default that satisfies 7.3.d out of the box.
+      # --- EXISTING-DISCIPLINE EXTENSION (2026-08-25) ---
+      - element: "Configurable pass threshold as a pre-clinical safety gate (PT/PTA) — and the absent critical-safety severity flag"
+        type: "toggle"
+        data_shown: "Per-domain pass threshold (default 70%, school-configurable) determining Meeting Threshold vs. Below Threshold per student"
+        gates_on: ["Nothing in Placement Clearance — this is the finding, not an omission in the modeling"]
+        accreditation_citation: >
+          CAPTE Standard 4, Element 4O (content/accreditation/capte.yaml,
+          element_id "Standard 4, Element 4O" — "Students Professional,
+          Competent, Safe, and Ready to Progress to Clinical Education"), rated
+          "Configure." 4O requires the program to document the processes and
+          criteria core faculty use to determine students are "professional,
+          competent, and safe in faculty-identified skills and ready to engage
+          in clinical education"; HOW CRITICAL SAFETY ELEMENTS are identified
+          within the competency testing process; what happens when a student is
+          found not safe and ready to progress; and how the required skills are
+          communicated to students AND to clinical education faculty. The
+          PTA-side equivalent is CAPTE PTA Element 4M, per capte.yaml's source
+          note.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this
+          research — no competitor file in content/competitors/ documents a
+          per-student pass-threshold classification, let alone one intended to
+          gate progression to clinical education.
+        gap_severity: "gap"
+        gap_note: >
+          Named as a gap, not a hedge, and it is the PT/PTA headline for this
+          stage. Three of 4O's four asks are met by machinery already modeled
+          above: per-student threshold classification exists, a remediation
+          record exists (Interventions, step 11), and publication to students
+          exists (the Publish toggle below). The two that do not, per
+          capte.yaml's own gap_notes: (1) "Placement Clearance's gate evaluates
+          compliance documents, contracts, and preceptor credentials —
+          competency-framework results are not one of its inputs, so 'ready to
+          progress' is currently a human judgment outside the block," i.e. there
+          is no hard block; and (2) "Critical-safety severity has no
+          representation" — a program cannot mark a subset of skills as
+          safety-critical so that failing one carries different consequence from
+          failing an ordinary skill. capte.yaml notes the nearest precedent
+          anywhere in the corpus is COA's asterisk convention for critical
+          standards (visible in content/accreditation/coa.yaml, e.g. Standard
+          F.7 and Standards D.1-D.50), which is an accreditor's convention Prism
+          reflects in content, not a product primitive. Also note the dependency
+          capte.yaml flags: scoring a didactic course from final grades requires
+          grading schemes enabled first, and per
+          content/accreditation/caep.yaml the Grading Scheme module is
+          "explicitly record-keeping only" and "does not calculate student
+          grades."
+      - element: "Student-facing publication of the readiness record (SLP: Clinical Clock Hours Report by Student, exportable to PDF by the student)"
+        type: "read-only rollup"
+        data_shown: "The student's own cumulative supervised clinical hours and competency scores across the nine service-delivery areas"
+        gates_on: []
+        accreditation_citation: >
+          CAA Standard 4.0, Standard 4.7 (with 4.8)
+          (content/accreditation/caa-asha.yaml, element_id "Standard 4.0,
+          Standard 4.7 (with 4.8)" — "The program documents student progress
+          toward the graduate degree AND professional credentialing
+          requirements"), rated "Configure." 4.8 specifically requires the
+          program to make that documentation available TO THE STUDENT — and to
+          graduates and non-completing attendees — to assist them in qualifying
+          for the credential.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file describes a student-self-service credentialing record."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Included in this stage because for SLP the "readiness" concept spans
+          two audiences: readiness to ENTER a placement (the compliance gate
+          above) and documented progress toward the CCC-SLP credential, which
+          4.7/4.8 makes a per-student record obligation. The student-facing half
+          is genuinely shipped — caa-asha.yaml notes the Clinical Clock Hours
+          Report (By Student) "is explicitly available to STUDENTS, not just
+          admins, and exports to PDF." The configure-work is assembly and
+          retention: per caa-asha.yaml, "No single artifact combines coursework,
+          hours, and competency sign-off into one per-student credentialing
+          dossier," and "nothing in the sources confirms that a graduate or a
+          non-completing attendee retains access to their own Prism record,
+          which is exactly when the student needs the hours verification."
+      - element: "Publish/Unpublish toggle"
+        type: "toggle"
+        data_shown: ""
+        gates_on: ["Whether scores appear on the student-facing My Competency Tracker"]
+        accreditation_citation: ""
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable pooled competency-scoring dashboard at element level."
+        gap_severity: "none"
+        gap_note: >
+          Shipped visibility control, with no per-domain configuration burden
+          of its own; it governs student visibility, not the readiness
+          evidence ACPE 7.3.d asks for.
+    action: >
+      Admin reviews pooled, per-domain competency attainment for the cohort
+      before publishing it — the closest existing analog to the
+      individual-and-aggregate readiness rollup ACPE 7.3.d asks for.
+    confirmed_by: >
+      content/prism/capability-map.yaml, intelligence_layer > "Competency
+      Tracking" (sourced there to the "Setting Up Competency Management"
+      tutorial transcript and Exxat help-center documentation).
+
+  - screen: "Student Interventions record"
+    navigation_path: "Student Profile > Interventions tab > New Intervention"
+    elements:
+      - element: "Mode / Initiator fields"
+        type: "input field"
+        data_shown: "How the concern was raised and by whom"
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-2 (individual evaluation and documented
+          due process when a student fails to meet published criteria) —
+          content/accreditation/coda.yaml rates this element "Configure."
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable structured incident/case-log record at element level."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Captures how and by whom a concern was raised, which is the opening
+          of the due-process trail. What is still open is whether the field
+          set can be extended to the specific items a formal institutional
+          due-process procedure requires (e.g. hearing date, appeal outcome).
+      - element: "Open/Closed status"
+        type: "toggle"
+        data_shown: "Formal case status, distinct from a plain compliance-item status"
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-2 (documented due process) — the
+          case-status primitive that distinguishes a due-process case record
+          from an ordinary compliance item;
+          content/accreditation/coda.yaml rates this element "Configure."
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable structured incident/case-log record at element level."
+        gap_severity: "configure-needed"
+        gap_note: >
+          This element is what resolves the journey stage's prior hedge that a
+          "case-management/due-process trail" was simply unconfirmed: a real
+          case-management primitive exists. What remains open is reporting —
+          there is no dedicated Interventions report; the only way to see
+          interventions needing follow-up is the Sites/Locations Dashboard
+          (24-hour refresh, per capability-map.yaml), which is not built
+          around due-process case tracking specifically.
+      - element: "Follow-Ups (planned vs. actual date, notes)"
+        type: "input field"
+        data_shown: "Structured remediation/monitoring trail over time"
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-2 (documented due process and
+          remediation over time) — the planned-vs-actual follow-up trail is
+          the durable documentation half of that element;
+          content/accreditation/coda.yaml rates this element "Configure."
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable structured incident/case-log record at element level."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Structured remediation tracking is shipped, but its surfacing is the
+          weak point: there is no dedicated Interventions report, so
+          follow-ups that are due can only be spotted via the Sites/Locations
+          Dashboard (24-hour refresh, per capability-map.yaml), which is not
+          built around due-process case tracking.
+      - element: "Make visible to student toggle"
+        type: "toggle"
+        data_shown: "Requires explicit confirmation before the student can see the intervention record"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable structured incident/case-log record at element level."
+        gap_severity: "none"
+        gap_note: >
+          Shipped visibility control with an explicit confirmation step; it
+          governs student access to the record rather than the due-process
+          documentation CODA 2-2 asks for, so it carries no configure-work of
+          its own.
+      # --- EXISTING-DISCIPLINE EXTENSION (2026-08-25) ---
+      - element: "Communications record type (neutral advising) as a sibling of Interventions, with faculty-advisor binding and RBAC scoping"
+        type: "input field"
+        data_shown: "Dated, attributable advising conversations logged separately from documented concerns; visible only to the assigned advisor and authorized personnel"
+        gates_on: ["Nothing in the placement gate — this is the evidence trail beside the gate, not an input to it"]
+        accreditation_citation: >
+          ACOTE Standard A.3.5 (content/accreditation/acote.yaml, element_id
+          "Standard A.3.5" — "Student Advising by Faculty"), rated "Transfer"
+          and described there as "shipped and in production for OT today."
+          A.3.5 requires documented advisement by faculty who are OT
+          practitioners in the program, covering conduct and responsibilities to
+          enter the profession, student progress and academic standing,
+          fieldwork education, and (OTD only) the doctoral capstone — with
+          visibility restricted to the assigned advisor because advisement
+          content is sensitive. Also CAA Standard 4.0, Standard 4.6
+          (content/accreditation/caa-asha.yaml, "Students receive regular
+          advising on academic and clinical performance and progress") for SLP,
+          which caa-asha.yaml records as "directly served by Compliance
+          Management's Communications record type."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no reviewed teardown documents a structured advising log distinct from an incident log."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The Communications/Interventions SPLIT is the thing worth naming, and
+          it belongs to the existing disciplines rather than the expansion
+          domains: the modeled steps above treat Interventions as the
+          due-process object (CODA 2-2), but for OT and SLP the accreditor asks
+          for the NEUTRAL half — proof that routine advising happened on a
+          regular basis, including specifically on fieldwork preparation. The
+          OT playbook records the distinction in practice, with faculty mentors
+          associated directly to student profiles and notes logged both
+          internally and shared with the student
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+          Therapy (OT) Playbook.md, "Student Profile" and "Communication and
+          Intervention — A.3.5"). Social Work uses the same pair for field-visit
+          documentation with attachments and email records (SW playbook lines
+          79-80: Communications carries "faculty advising notes and field-visit
+          documentation (attachments/email records supported)" and Interventions
+          "captures concerns/support activity, NOT NECESSARILY DISCIPLINARY"),
+          noting both tabs are read-only to students. That
+          not-necessarily-disciplinary framing is worth carrying: it is the one
+          source in this corpus that says the Interventions object is not
+          inherently a due-process record, which cuts against the CODA 2-2 reading
+          the four-domain elements above build on. Configure-work is the reporting: per
+          acote.yaml, "there is currently no dedicated Interventions report —
+          open follow-ups surface only via the Sites/Locations Dashboard
+          (24-hour refresh...) or via an Ask Leo natural-language query. For an
+          A.3.5 evidence pull a program wants a per-student advisement history
+          export, not a dashboard bucket." The OT playbook does confirm a
+          "Communication and Intervention Report" exists, which is the one
+          discipline source contradicting the "no dedicated report" finding —
+          an inconsistency worth resolving before it is repeated to a customer.
+      - element: "Absent complaint register (no record type distinct from Interventions for candidate complaints, including complaints made to the accreditor)"
+        type: "read-only rollup"
+        data_shown: "Nothing — modeled here because its absence is the finding"
+        gates_on: []
+        accreditation_citation: >
+          CAEP Standard R3, Component R3.2 (content/accreditation/caep.yaml,
+          element_id "Standard R3, Component R3.2"), which requires "a system
+          for effectively maintaining records of candidate complaints, including
+          complaints made to CAEP," with documented resolution, and asks for
+          remediation data disaggregated by race/ethnicity across three cycles.
+        competitor_equivalent: >
+          CORE ELMS (content/competitors/core-elms.yaml) is the one competitor
+          whose public compliance list includes "incident report tracking,"
+          which is the nearest public analog to a complaint register — but its
+          source does not describe complaint origination, resolution states, or
+          regulator involvement, so it is not documented at this granularity.
+        gap_severity: "gap"
+        gap_note: >
+          Named gap, Teacher-Education-specific, and quoted rather than inferred.
+          Per content/accreditation/caep.yaml: "Prism has no confirmed complaint
+          register distinct from Interventions, and CAEP's requirement is
+          specifically for complaints INCLUDING those made to CAEP itself — an
+          externally-originated record type with a regulator in the loop. Do not
+          stretch Interventions to cover it; scope it as its own object under
+          Accreditation Management (Q3 2027)." The same file records the
+          companion gap on the reporting side: "the 'three cycles of remediation
+          data, disaggregated by race/ethnicity' that R3.2 demands is not
+          extractable today," because the only intervention-follow-up surface is
+          the Sites/Locations Dashboard on a 24-hour refresh, which is
+          site-oriented rather than candidate-cohort-oriented. Both sit squarely
+          in the pre-rotation gate story for TE, because R3.2's transition points
+          are exactly the gates a candidate must clear before student teaching.
+      - element: "Absence of a 'student safety protocol' object distinct from a compliance item (Social Work)"
+        type: "read-only rollup"
+        data_shown: "Nothing — modeled here because its absence is the finding"
+        gates_on: []
+        accreditation_citation: >
+          CSWE Accreditation Standard 3.3, AS 3.3.5
+          (content/accreditation/cswe.yaml, element_id "Accreditation Standard
+          3.3, AS 3.3.5"), which requires documented processes for implementing
+          "student SAFETY PROTOCOLS" as one of five named field-education
+          activities.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          Quoted from content/accreditation/cswe.yaml: "'Student safety
+          protocols' as CSWE means it — safety in a field agency, incident
+          escalation, lone-visit protocols — is not modeled as its own object.
+          It is currently approximated by compliance items plus the Interventions
+          log, and Interventions notably still has NO dedicated report." Worth
+          separating from the CAEP complaint-register gap above even though both
+          land on Interventions: CAEP needs an externally-originated record with
+          a regulator in the loop; CSWE needs a forward-looking protocol
+          definition (what the student is instructed to do in an unsafe agency
+          situation) plus its escalation trail. Neither is a due-process case in
+          the CODA 2-2 sense the modeled elements above describe, and stretching
+          Interventions across all three is how a single record type ends up
+          proving none of them.
+    action: >
+      Faculty/admin opens a case record when a student fails to meet
+      published didactic/behavioral/clinical criteria, and tracks the
+      remediation or due-process decision over time via Follow-Ups.
+    confirmed_by: >
+      content/prism/capability-map.yaml, "Communications vs. Interventions
+      (structured advising/incident log)" feature note.
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup Student Compliance Section.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Review Student Compliance Document.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Compliance/Uploading Compliance Documents.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Profile/Acknowledging to Attestations.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Rotation Readiness Checklist.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/FAQs for Administrators/Frequently Asked Questions- Program Administrators.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/Nursing/Accreditation Guides/COA Accreditation Standards Support Guide.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
+  # --- Added 2026-08-25 for the eight existing-discipline extension ---
+  # Discipline playbooks (per-student compliance taxonomy, gate practice, pain points)
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — READ IN FULL 2026-08-25. Lines cited in this file: 57-59 (Announcements shared with all cohorts; Handbooks, Policies and Evaluation & Grading shared as Resources; and the two attestations PT programs actually configure — Profile verification and Profile update request, with due dates, shared to all cohorts), 62-64 (the compliance section: students upload health and immunization records, plus the onboarding instruction to ASK where a school tracks compliance if it does not track it in Prism — i.e. Prism is not assumed to be the system of record even for PT), 93-97 (the three pre-placement checks: compliance status, site/location-specific document upload, and contract validity — treated by practitioners as three separate checks rather than one), and 184 (the four unresearched vendors whose entire business is student-paid compliance onboarding)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — read IN FULL 2026-08-25 (previously consulted per-stage). Lines cited across this journey: 12 (the playbook's own data-quality caveat — it is synthesized from eight thin feature-specific artifacts, not a CSS playbook, so silence is documentation absence rather than product absence), 18-21 (ASHA / CAA / CFCC / KASA, and the nine KASA competencies a.k.a. nine service-delivery areas, whose individual names that source never enumerates), 25-35 (Course Offering, Rotation, Learning Activity Group, Clinical Log, Clinical Educator, Student Participation Type, Practice Type, Mode of Delivery, Training Level, Placement Setting, Age Group), 37 (no DCE/ACCE/SCCE-equivalent role terms are documented for SLP), 41-49 (CAA + CFCC curriculum mapping, the Mapped Standards Report, the beyond-KASA CSS dependency, the CFCC V-E attestation hook and its navigation, affiliation agreements in the Sites module, and the 400-hour tracking on the Clinical Clock Hours Report (Cumulative)), 53-67 (per-course-offering Clinical Log setup: template preview, activate toggle, the N-day submission window, grading, the wrench column customization with the first four columns fixed, clinical-educator review routing with a previewable email template, the attestation, and the support-gated min/max hour thresholds), 71-84 (the review workflow: the Logs Count / Log Hours by Status columns, Last Encounter and Last Update, the three-status colour model, the mandatory school-feedback note on Needs Attention, bulk approve and Approve All Logs, the 6am EST Statistics refresh, three export levels, and the filter set incl. Placement Faculty / Clinical Educator), 88-100 (no free off-the-shelf standard instruments; the configured toolkit — KASA Summary Forms, Clinical Supervisor Evaluations (Midterm & Final), Student Self-Assessments, Student Evaluations of Clinical Sites, Student Evaluations of Clinical Supervisors, Site Assessments aligned to program goals and accreditation standards, and custom forms — all support-gated to create; and the student-facing Student Performance Report across all nine service delivery areas), 104-105 (surveys buildable in Prism from December 2025), 109-114 (advisement via Communications & Interventions or custom workflow-based advisement forms with signature, plus profile-level and course-level attestations with their navigation paths), 118 (question-based early-alert notifications configured by support), 120-138 (the report suite, the shared filter set, the 50-course-offering cap, and the broader capability list incl. trend/exposure analysis, low-performance indicators and placement-readiness metrics), 142-149 (the discipline's own gap list — explicitly a DOCUMENTATION gap, plus the recurring self-service gap for SLP). In THIS file the load-bearing lines are 109-114 (the two-tier attestation model — profile-level at Dashboard > Students > Set-up > Attestations, course-level at Dashboard > Courses > Course Offering > select course > Attestation > Set-up — and the two advisement paths) and 142-149 (the absence of any SLP compliance section, which is why the universal-precautions element in step 1 is grounded in caa-asha.yaml rather than in an SLP product source)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — read IN FULL 2026-08-25 (previously consulted per-stage). Lines cited in this file: 77 (Additional Profile Details used in place of a field application form — the parallel, ungated readiness-capture surface added to step 1), 79-80 (Communications vs. Interventions, both read-only to students, Interventions explicitly \"not necessarily disciplinary\"), 81 (student-initiated Share Profile, 25MB, PDF recommended), 82 (attestations gating external profile sharing and field-education unlock), 147-153 (the Compliance module column list, status ladder, CISIVE/Universal/ComplianceJunction integrations, School Pay vs. Student Pay, the immutable university-email binding, and the Included-in-Profile-Link privacy control), 196 (complete profiles and Field Application Forms early — vendor processing lead time)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — READ IN FULL 2026-08-25 (73 lines). It is the thinnest discipline source in this corpus and its own line 12 says why: TE has no dedicated internal help-center playbook article and no CSS discipline playbook PDF, so the note is built from ONE program-administrator video tutorial covering the GoReact/Echo360 LTI integration, transcribed from auto-generated Vimeo captions. Substantive content: lines 19-26 (LTI integration with GoReact, now part of Echo360; assignments, student submissions and scores/status updates sync automatically; described as a genuinely connected two-way workflow in which administrators are not expected to recreate assignments in GoReact), 28-31 (activation is discipline/program-gated — if the Learning Tool Interoperability section is absent from Learning Activities > Setup the feature is not activated, and activation requires an Exxat support ticket), 33-45 (the administrator setup sequence: create at Learning Activities > Setup > Learning Tool Interoperability > +, configure LTI tool, title, description, placement-based vs. didactic, publish and due dates, grading and score settings and faculty visibility; activate and save; Prism auto-creates the matching GoReact activity on first save; GoReact-specific settings are then configured in GoReact and the activity marked Done, at which point the assignment becomes available to students), 47-52 (student workflow from My Coursework: redirect into GoReact, record directly, upload a video file, or submit other supported media, with status syncing back), 54-57 (faculty/reviewer workflow: timestamped comments, feedback, evaluations and scores, syncing back with no reconciliation step), 61 (further GoReact-side configuration is documented in GoReact's help centre, not Exxat's), and 63-73 (the Open Gaps list — TE terminology, program/setup patterns, compliance, placement and slot workflows, standard evaluation forms and reports, accreditor standards, and pain points are ALL explicitly unpopulated, with a standing instruction not to treat field-standard TE terms or CAEP standard numbers as Exxat-specific until confirmed against a TE-specific source). EVERY TE claim in this file that is not about the LTI integration is therefore reasoned from ../accreditation/caep.yaml and carries that caveat inline. In THIS file the load-bearing line is 69, which lists TE-specific compliance — background-check and fingerprinting document patterns — as explicitly unpopulated, which is why the per-setting Program Requirements element in step 1 is an evidence gap on top of a product gap."
+  # CRNA raw transcripts — reviewed and cited for what they do NOT contain (see step 1,
+  # ACLS/PALS element gap_note): the file's only compliance-adjacent line is line 49
+  # (the CCE log keeping students "compliant with accreditation and certification
+  # standards"); there is no ACLS, PALS, background-check, immunization or
+  # readiness-gate narration anywhere in its 117 lines.
+  - "/Users/romitsoley/Downloads/CRNAVideosTranscripts.md"
+  # Accreditor registries for the eight existing disciplines
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/capte.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acote.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/arc-pa.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caa-asha.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/nursing.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coa.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/cswe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caep.yaml"
+  # Competitor teardowns reviewed at compliance-gate granularity. core-elms.yaml is the
+  # only one granular enough for an item-for-item comparison (it publicly enumerates
+  # immunizations, CPR, background checks, drug checks, HIPAA training, licensing);
+  # emedley.yaml and new-innovations.yaml are granular on the item taxonomy but silent on
+  # gating; medhub.yaml, e-value.yaml, axium.yaml, elentra.yaml, leo-davinci.yaml and
+  # one45.yaml document nothing at per-student clearance-gate granularity, which is stated
+  # explicitly on the elements rather than papered over. NOT reviewed because no teardown
+  # exists in this repo: myClinicalExchange (mCE), Clinician Nexus, ACEMAPP and
+  # CastleBranch Bridges — the four vendors the PT playbook names as direct competitors on
+  # exactly this workflow. That is the single largest competitor-research gap for this stage.
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/new-innovations.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
+  # Cross-file consistency anchor for setup-vs-gate scope boundary
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/flows/admin-onboarding--04-compliance-template-setup.yaml"
+last_verified: "2026-08-25"

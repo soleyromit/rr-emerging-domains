@@ -1,0 +1,2081 @@
+# Element-level ground truth underneath rotation-lifecycle.yaml, stage 6.
+# See _TEMPLATE.yaml for field meanings (SCHEMA v2: analysis fields live on each
+# ELEMENT, not on the step). Every accreditation_citation and competitor_equivalent
+# claim below traces to a real source file in confirmed_by — never to this journey's
+# own narrative.
+#
+# COVERAGE NOTE (2026-08-25): this file was originally written against the four
+# EXPANSION domains only (DO, Pharmacy, Dentistry, Medicine). It now also covers the
+# eight disciplines Exxat/Prism serves in production today — PT/PTA, OT/OTA, PA, SLP,
+# Nursing, Social Work, Teacher Education, and CRNA. Discipline-specific behavior is
+# flagged inline with a leading "[PT/PTA]", "[OT/OTA]", "[PA]", "[SLP]", "[NURSING]",
+# "[SW]", "[TE]", or "[CRNA]" tag on the element or in the gap_note, so a reader can
+# tell at a glance which claims are cross-discipline primitives and which are bound to
+# one discipline's named instrument. Untagged elements are the cross-discipline
+# baseline that all twelve disciplines share.
+#
+# ONE STANDING COMPETITOR FINDING, stated once here rather than repeated per element:
+# NO competitor teardown in ../competitors/ (axium, core-elms, e-value, elentra,
+# emedley, leo-davinci, medhub, new-innovations, one45) documents anything at
+# named-formative-instrument granularity. The deepest public claims found are
+# e-value.yaml's "automated low-score alerts; forced comments on low scores;
+# mid-point-to-end-of-rotation summary evaluations" (sourced to
+# medhub.com/software/evalue) and core-elms.yaml's "low-score alerts, and due-date
+# reminders" (sourced to a Capterra listing). Neither names an instrument (no CIET,
+# no PTMACS, no AOTA FWPE), a threshold value, a trigger rule, or a configuration
+# screen. Every element below that concerns a named instrument therefore carries an
+# explicit "not comparable at element level" verdict, and that verdict is a real
+# research finding, not a placeholder.
+flow_name: "Midpoint Formative Feedback & Early-Risk Intervention"
+maps_to_journey: "rotation-lifecycle.yaml, stage 6"
+persona: >
+  Primary: Clinical/Experiential Education Coordinator (../personas/role-clinical-coordinator.yaml)
+  — configures the midpoint-anchored form and reminder, reviews delivery status, and opens
+  Interventions when a score comes back low. Secondary: Preceptor/Site Faculty
+  (../personas/role-preceptor.yaml) — receives the reminder and submits the midpoint
+  evaluation form on the student. In the eight production disciplines this second persona
+  carries discipline-specific titles that matter for who receives the link: Clinical
+  Instructor (CI) in PT/PTA, Fieldwork Educator in OT/OTA, Preceptor in PA/Nursing/CRNA,
+  Clinical Supervisor/Clinical Educator in SLP, Field Instructor in Social Work, and
+  Cooperating/Mentor Teacher in Teacher Education (the TE title is unconfirmed — see the
+  TE step's gap_note). Tertiary in PT/PTA and OT/OTA only: the STUDENT, who is a first-class
+  actor in the midpoint instrument rather than only its subject (self-evaluation on CIET
+  v2.0, PTMACS/PTAMACS, and the AOTA FWPE Student Self-Assessment forms).
+
+steps:
+  - screen: "Learning Activities Setup — Forms/Evaluations drawer"
+    navigation_path: "Courses > [Course Offering] > Learning Activities > Setup > Forms/Evaluations (+) > [select midpoint evaluation form]"
+    elements:
+      - element: "Does this form require a placement?"
+        type: "toggle"
+        data_shown: "Whether the form is placement-scoped vs. a standalone assignment"
+        gates_on: []
+        accreditation_citation: >
+          None at this element. It scopes the form to a placement, which is the
+          precondition for the MID anchor below being computable at all, but no LCME 9.7
+          evidence is captured here.
+        competitor_equivalent: >
+          Not comparable at element level — E*Value's public marketing page
+          (medhub.com/software/evalue) describes midpoint evaluations as an outcome and
+          says nothing about placement-scoping mechanics.
+        gap_severity: "none"
+        gap_note: >
+          Complete as documented; a binary scoping flag with no gap against anything in
+          this stage. [PT/PTA] The PT playbook records a discipline-specific hard rule on
+          this same toggle for the site/CI evaluation family: "When configuring, always
+          answer 'Yes' to 'Does this form require placement?'" for PTSE 1. [PT/PTA] For
+          CIET v2.0 the CIET help guide states the answer defaults to "yes" and may be set
+          to "No" if not applicable — so the same toggle carries opposite default guidance
+          across two PT instruments, which is a real onboarding trap rather than a product
+          gap.
+      - element: "Does the form contribute to the student's final score?"
+        type: "toggle"
+        data_shown: "Grading inclusion flag"
+        gates_on: []
+        accreditation_citation: >
+          None at this element — a grading-inclusion flag, not evidence for LCME 9.7's
+          formative-feedback requirement.
+        competitor_equivalent: >
+          Not comparable at element level — not described in any cited competitor's
+          public docs.
+        gap_severity: "none"
+        gap_note: >
+          Complete as documented; a binary grading flag with no gap against anything in
+          this stage. [OT/OTA] This flag is the root of the FWPE early-alert problem
+          documented three steps below: because only the FINAL FWPE counts toward scoring,
+          Exxat's own published best practice is to leave the Low Score Threshold OFF until
+          all midterms are reviewed — meaning a grading-inclusion decision made here
+          silently disables the midpoint alert.
+      - element: "Publish date"
+        type: "anchor-relative date offset (N days before/after placement start, mid, or end)"
+        data_shown: "When students/preceptors can first see the form"
+        gates_on: []
+        accreditation_citation: >
+          None at this element specifically — visibility timing supports, but is not
+          itself, the LCME 9.7 mid-point delivery evidence, which lives on the Due date
+          anchor below.
+        competitor_equivalent: >
+          Not comparable at element level — E*Value's public page does not describe
+          configuration mechanics, so there is no basis for comparing form-visibility
+          timing field-for-field.
+        gap_severity: "none"
+        gap_note: >
+          The same anchor-relative primitive as the Due date, applied to visibility;
+          confirmed working as documented. [OT/OTA] One documented exception that matters
+          for this stage: the FWPE guide states flatly that "the Publish Date does not
+          apply to Fieldwork Educator forms, as these forms are distributed directly by
+          administrators to the Fieldwork Educators." So for the single most important OT
+          midpoint instrument this element is inert, and timing is instead governed by the
+          Send Form / Set up Automation step documented separately below. An OT coordinator
+          who configures Publish date here and expects the educator to see the midterm FWPE
+          on that date is configuring nothing.
+      - element: "Due date"
+        type: "anchor-relative date offset (N days before/after placement start, mid, or end)"
+        data_shown: "Form due date, set relative to the placement's MID-date anchor for a midpoint evaluation"
+        gates_on: ["form completion status downstream"]
+        accreditation_citation: >
+          LCME Standard 9, Element 9.7. Cross-discipline, the same anchor-relative
+          primitive is the delivery mechanism behind ARC-PA Standard B4, Element B4.01 a-b
+          (timely identification of deficiencies), CAA-ASHA Standard 5.0, Standard 5.2
+          (formative and summative assessment), COA Standard H.1.1 and H.1.1.1 (formative
+          and summative student evaluation), CCNE Standard III, Key Element III-K (and ACEN
+          Standard 4, Criterion 4.10), and CSWE Accreditation Standard 3.3, AS 3.3.5
+          (competency-aligned evaluation at midterm and final).
+        competitor_equivalent: >
+          E*Value's public marketing page (medhub.com/software/evalue) states it ships
+          "mid-point-to-end-of-rotation summary evaluations," but the page does not describe
+          configuration mechanics — it is not possible to confirm from public docs whether
+          E*Value's midpoint trigger is anchor-relative (computed per placement instance, as
+          Prism's is here) or a manually-set date per rotation. Treat this as parity on the
+          user-facing outcome only, not a verified element-level comparison.
+        gap_severity: "none"
+        gap_note: >
+          This is the confirmed anchor-relative scheduling primitive doing exactly what LCME
+          9.7 asks of it: setting the anchor to "Middle of placement" (0 days after MID) makes
+          the trigger fire per placement instance rather than being hand-dated per student.
+          One limit sits on this element: the MID anchor is a single placement-level date, and
+          the standard's "alternate method for experiences under four weeks" is not expressed
+          here — there is no branch logic that swaps the anchor when a placement's duration
+          falls under a threshold. [PT/PTA] The CIET v2.0 guide confirms this element splits
+          into TWO named fields when a multi-term instrument is selected — "Due date for the
+          mid form is" and "Due date for the Final form is" — each anchored independently
+          (its worked example is 10 days AFTER Placement Mid Date). That is the cleanest
+          in-production instance of a real midpoint anchor anywhere in the corpus.
+          [OT/OTA] The FWPE guide describes the same split as "set the due dates for the mid
+          and final form." [SW] The SW playbook (line 73) confirms the "split forms" model — "mid-term,
+          final, Field Instructor rating, and student rating — completed independently" —
+          which means an SW program configures FOUR separate anchored forms here rather than
+          one multi-term instrument, multiplying the anchor configuration work by four with
+          no product affordance binding them together as one assessment event.
+      - element: "Workflow selector (multi-term instruments only)"
+        type: "select"
+        data_shown: >
+          [PT/PTA] For CIET v2.0 the drawer exposes a WorkFlow dropdown with exactly two
+          values — 'CIET v2.0 Midterm and Final' (student and CI each evaluate once at the
+          midpoint and once at the end) and 'CIET v2.0 - Final' (one evaluation, at the end
+          of the placement only)
+        gates_on: ["whether a midpoint formative evaluation event exists at all for this course offering"]
+        accreditation_citation: >
+          CAPTE Standard 2, Element 2D4 — CAPTE's evidence demand is for entry-level
+          performance "by the end of their last clinical education experience," plus a
+          description of the mechanism used where CI assessment suggested less than
+          entry-level performance. This selector is the single element that decides whether
+          a program has any pre-final detection mechanism to describe.
+        competitor_equivalent: >
+          Not comparable at element level. No competitor file documents a per-instrument
+          midterm-vs-final-only workflow switch. E*Value's "mid-point-to-end-of-rotation
+          summary evaluations" claim (../competitors/e-value.yaml, sourced to
+          medhub.com/software/evalue) asserts the outcome without describing whether the
+          midpoint half is optional, defaulted on, or configurable at all.
+        gap_severity: "configure-needed"
+        gap_note: >
+          [PT/PTA] Genuinely shipped and genuinely consequential: this is a one-dropdown
+          decision that determines whether a PT program has a midpoint formative event.
+          Selecting 'CIET v2.0 - Final' makes stage 6 a no-op for that course offering, and
+          nothing in the documented configuration warns the admin of that. [PT/PTA] The PT
+          playbook independently confirms the same optionality for the CI Details-adjacent
+          instrument family — CIET "Completed at Midterm and Final — option exists to activate
+          for Final only." [PA] The PA playbook lists "Mid-point evaluation (optional)" in its
+          standard-course-activities inventory, i.e. PA's midpoint is not merely
+          configuration-optional but is described as optional PRACTICE — which is the
+          sharpest single-line risk in this whole file against ARC-PA B4.01's "timely"
+          requirement. [SLP][NURSING][SW][TE] No equivalent named workflow selector is
+          confirmed, because none of these four disciplines has a shipped standard
+          multi-term instrument to attach one to (see the "no standard instrument" element
+          below); they reach the same outcome by configuring two separate forms with two
+          separate anchors, which is functionally equivalent but leaves no single object
+          representing "this student's midterm-and-final assessment."
+      - element: "Low score threshold"
+        type: "numeric input (per-form score cutoff), configured on the Forms/Evaluations setup screen"
+        data_shown: "The overall-form score below which a submission is treated as a low score"
+        gates_on: ["red highlight of the form score on the review screen", "low score email notification (support-activated)"]
+        accreditation_citation: >
+          ARC-PA Standard B4, Element B4.01 a-b (identify and address student deficiencies
+          in a timely manner); ACOTE Standard C.1.15 (escalate a failing or unsafe
+          performance rating to the program immediately rather than at term end);
+          CAA-ASHA Standard 4.0, Standard 4.3 (an early-warning signal fired from live
+          performance data); CAPTE Standard 2, Element 2D4 (the exception path where CI
+          assessment suggests less than entry-level performance).
+        competitor_equivalent: >
+          This is the ONE element in this stage where a genuine, if shallow, element-level
+          comparison is possible. Both E*Value (../competitors/e-value.yaml, sourced to
+          medhub.com/software/evalue: "automated low-score alerts; forced comments on low
+          scores") and CORE ELMS (../competitors/core-elms.yaml, sourced to a Capterra
+          listing: "low-score alerts") claim low-score alerting as a shipped feature. Two
+          real differences are visible even at that resolution. First, E*Value additionally
+          claims "forced comments on low scores" — a mechanism with no Prism equivalent
+          found anywhere in this corpus, and a meaningful one, because a forced comment
+          converts a bare low number into the narrative an accreditor can actually read.
+          Second, neither competitor discloses a threshold VALUE, a per-instrument default,
+          or whether configuration is self-service — so Prism's published per-instrument
+          defaults ([OT/OTA] 111 for OT, 91 for OTA) are more specific than anything either
+          competitor documents, while Prism's support-ticket dependency for the email half
+          is a friction neither competitor is known to share or not share.
+        gap_severity: "configure-needed"
+        gap_note: >
+          The threshold VALUE is self-service here; the EMAIL that fires off it is not.
+          Per "Track low scores for timely interventions," setting the threshold on this
+          screen produces the in-app red highlight on the review screen immediately, but
+          turning on the outbound "low score notification" requires contacting support and
+          naming the individual who should receive the emails. That split is the crux of
+          this whole stage: detection is configurable, escalation is a services engagement.
+          [PT/PTA] Confirmed for PTSE 1 and PTSE 2 — the PT playbook states admins can set a
+          numeric score threshold at activation and that below-threshold submissions display
+          in red, while automated low-score email notifications "isn't self-service and
+          requires an Exxat support ticket to turn on." (The dedicated help-center article
+          "Low score indicators for PTSE forms" exists in the vault mirror but contains only
+          embedded images and no extractable text, so it corroborates nothing beyond the
+          article's existence — noted here rather than cited as substance.)
+          [OT/OTA] Confirmed for the AOTA FWPE with published values — OT students, total
+          score 111 or below; OTA students, 91 or below — and with the damaging caveat that
+          the threshold setting applies to BOTH midterm and final, so Exxat's own best
+          practice is to hold it off until all midterms are submitted and reviewed. The
+          alert is therefore recommended-off during precisely the window this journey stage
+          exists to serve. That is not a configuration gap; it is a product design gap — a
+          per-term threshold (or a midterm-only threshold) would resolve it outright and is
+          the single highest-value fix identified in this file.
+          [PA] The PA playbook locates the same configuration at "Learning Activity Group >
+          Course > Forms and Evaluations > select form" and frames it explicitly as how PA
+          programs avoid an ARC-PA citation under B4.01.
+          [SLP] Support-gated end to end. Per the SLP playbook, question-based email
+          notifications for early alerts are "configured by the Exxat Prism support team
+          (prism-support@exxat.com), not self-service," as are min/max hour thresholds and
+          new custom forms — the heaviest services dependency of any of the eight
+          production disciplines, and caa-asha.yaml calls this "the clearest SLP-specific
+          self-service gap in the whole file."
+          [NURSING][CRNA][SW][TE] No discipline-specific threshold default is documented for
+          any of these four, because none has a shipped standard instrument carrying a
+          published scale to set one against; each program invents its own cutoff.
+      - element: "Response-based (question-level) notification criteria"
+        type: "support-gated configuration bound to a specific question on the form"
+        data_shown: "The per-question response value(s) that trigger an alert on submission"
+        gates_on: ["notification to placement faculty and any named additional recipients"]
+        accreditation_citation: >
+          ARC-PA Standard B4, Element B4.01 a-b (keyed to the specific evaluation question
+          tied to a program learning outcome); ACOTE Standard C.1.15 (immediate escalation
+          of a failing or unsafe rating); CAA-ASHA Standard 4.0, Standard 4.3.
+        competitor_equivalent: >
+          Not comparable at element level. Question-level (as opposed to form-level)
+          trigger logic is not described in any competitor file. E*Value's and CORE ELMS's
+          claims are both form-score-level ("low-score alerts"); neither public source
+          describes firing on a single item's response, and neither describes severity
+          tiering by item type. If the comparison were documented it would likely favor
+          Prism, but it is not documented, so no claim is made here.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Per "Track low scores for timely interventions," this mechanism supports all
+          question types including single-select and multi-select, and fires to placement
+          faculty (if assigned) plus schools-designated individuals — but setting up the
+          question-level thresholds requires the Account Manager and Configuration team,
+          and activating the notification requires a separate support request naming
+          recipients. Two tickets, two teams, for one behavior.
+          [OT/OTA] This is where the FWPE gets genuinely instrument-aware, and it is the
+          strongest early-risk logic anywhere in the product: the response-based alert fires
+          by default on ANY rating of 1, and fires additionally on a rating of 1 OR 2 on
+          three specific Fundamentals of Practice items — adherence to AOTA's Code of Ethics
+          and applicable federal/state/facility regulations, compliance with safety
+          regulations including accurate incident reporting and documentation, and ensuring
+          safety for self and others by anticipating and preventing hazards. That is
+          severity tiering by item semantics, not a flat numeric cutoff, and unlike the low
+          score threshold it is NOT recommended-off at midterm. For OT specifically, the
+          response-based alert is therefore the real midpoint safety net and the low-score
+          threshold is the decoy.
+          [PA] Confirmed as the PA mechanism of record — "when a student scores below a set
+          threshold on a question tied to a program learning outcome, the response is
+          red-highlighted and can trigger an automatic email alert, enabling real-time
+          identification of struggling students during a rotation rather than only at
+          rotation end."
+          [PT/PTA][SLP][NURSING][CRNA][SW][TE] Available as the same cross-discipline
+          primitive, but no discipline-specific default trigger set is documented for any of
+          them. The OT default-trigger package is a content asset, not an engine feature,
+          and shipping equivalent defaults for other disciplines' instruments is content
+          work rather than engineering.
+      - element: "Configured notifications list (bottom of Forms/Evaluations setup screen)"
+        type: "read-only display of active notification rules"
+        data_shown: "Which low-score and response-based notifications are active on this form, and to whom"
+        gates_on: []
+        accreditation_citation: >
+          None at this element. It displays escalation configuration; it produces no
+          student-performance evidence for any standard.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor's public docs describe a
+          visibility surface for their alert configuration.
+        gap_severity: "cosmetic"
+        gap_note: >
+          A genuinely useful mitigation of the support-gating problem, and worth naming
+          because it is easy to miss: "the configured notifications are visible at the
+          bottom of the Forms/Evaluations setup screen for visibility." So the coordinator
+          can at least SEE what support configured without filing a ticket to ask. It is
+          read-only, so a stale recipient (the failure mode acote.yaml, arc-pa.yaml, and
+          caa-asha.yaml all independently flag — a hand-maintained list of first name, last
+          name, and email that goes stale as faculty turn over) is visible but not
+          fixable here. Cosmetic rather than configure-needed only because the information
+          is present and correct; the inability to act on it is scored on the two elements
+          above.
+      - element: "Refer to another activated form while filling this form"
+        type: "select (points at a second activated form whose responses display alongside)"
+        data_shown: "Prior-term or companion-form responses, surfaced inside the form being completed"
+        gates_on: []
+        accreditation_citation: >
+          ARC-PA Standard B3, Element B3.03 a-c — arc-pa.yaml records that mid-point and
+          end-of-rotation evaluations of the same student by the same preceptor must be
+          substantively consistent, and that PA programs have been CITED when formative
+          mid-point feedback contradicts the summative assessment. This element is the only
+          confirmed product affordance anywhere in the corpus that puts the midpoint answers
+          in front of the person writing the final.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor file describes cross-form or
+          cross-term response referencing during completion.
+        gap_severity: "configure-needed"
+        gap_note: >
+          [PT/PTA] Confirmed as an explicit configuration step on the CIET v2.0 activation
+          screen ("select if you want to refer to another activated form while filling this
+          form"). [PT/PTA] The same behavior is native and non-optional inside the PTSE 2
+          instrument — "Responses from Midterm are visible when completing Final."
+          [OT/OTA] Native and non-optional in the FWPE — "Mid Term Evaluation responses and
+          score will be visible while filling out Final Term form," confirmed from both the
+          Fieldwork Educator help guide and the OT playbook.
+          [PA] This is the gap. The consistency requirement that carries live ARC-PA
+          citation risk is a PA requirement, and PA has no shipped standard multi-term
+          instrument to inherit the native behavior from — a PA program has to reach this
+          affordance through the generic referring-form configuration and know to do so.
+          More importantly, in NO discipline does the product DETECT divergence: displaying
+          the midpoint answers next to the final is a prompt to a human, not a check.
+          Nothing computes "this preceptor rated this student 2 at midterm and 4 at final
+          with no intervening intervention record" and surfaces it. arc-pa.yaml states this
+          plainly — "nothing in the product detects that divergence" — and it is the single
+          clearest unbuilt differentiator identified in this stage: a midpoint-to-final
+          consistency check is computable from data Prism already holds, is citable to a
+          named standard, and no competitor claims it.
+      - element: "Course Faculty / Placement Faculty / Faculty Advisor access controls"
+        type: "role-permission matrix"
+        data_shown: "Who can edit vs. view the activated evaluation"
+        gates_on: []
+        accreditation_citation: >
+          None at this element for the midpoint-delivery requirement — a role-permission
+          matrix, not where LCME 9.7 evidence lives. It IS however the mechanism behind
+          CCNE Standard III, Key Element III-K's structural demand (preceptor input routes
+          to a faculty reviewer who renders the actual determination), which is evidenced
+          on the review workflow rather than on this matrix itself.
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor's public docs describe
+          per-role edit/view permissions on an evaluation form.
+        gap_severity: "none"
+        gap_note: >
+          Complete as documented. Note the drawer as a whole has no short-rotation branch:
+          a program needing the LCME 9.7 "alternate method" would configure a second,
+          separate short-rotation form and apply a manual rule for which one to use.
+          [PT/PTA][OT/OTA] Both the CIET v2.0 and FWPE guides confirm the same two-tier
+          split on this element — "select the faculty role who can view and edit the form"
+          and separately "select the faculty role who can only view the form."
+          [NURSING] nursing.yaml identifies this matrix plus the three-tier faculty
+          association model as what makes CCNE III-K satisfiable: it scopes a
+          placement-level faculty reviewer to only their assigned students, putting faculty
+          structurally last in the chain, which is what CCNE demands when it says faculty
+          "may seek input from preceptors ... but ultimately faculty are responsible for
+          evaluation of individual student outcomes."
+      - element: "Availability of a shipped standard instrument to attach a midpoint to"
+        type: "not a control — the contents of the form-selection list in this drawer"
+        data_shown: "Which pre-built, non-editable Standard forms exist for this discipline vs. which must be custom-built"
+        gates_on: ["whether midpoint configuration is a five-minute activation or a services engagement"]
+        accreditation_citation: >
+          CAA-ASHA Standard 5.0, Standard 5.2 (formative and summative assessment using a
+          variety of techniques administered by multiple academic and clinical faculty);
+          CCNE Standard III, Key Element III-K (and ACEN Standard 4, Criterion 4.10);
+          CAPTE Standard 2, Element 2D4; ACOTE Standard C.1.15.
+        competitor_equivalent: >
+          Not comparable at element level, and the asymmetry is worth stating plainly: no
+          competitor file in ../competitors/ names a single validated clinical instrument
+          it ships. CORE ELMS claims breadth across "15+ disciplines including pharmacy,
+          dental, nursing, PT, OT, PA, veterinary, social" and E*Value claims "24+ named
+          disciplines," but both describe a customizable form BUILDER, not a library of
+          named standard instruments. Prism's shipped instrument library (CIET v2.0, PTSE
+          1, PTSE 2, PTMACS, PTAMACS, SCIPAI, PTA CIET, the five-form AOTA FWPE family) is
+          therefore a differentiator that is invisible in competitor marketing because
+          competitors do not compete on it publicly — but it is a real one, and it is
+          exactly what makes PT/PTA and OT/OTA cheap to onboard and SLP, Nursing, SW, and
+          TE expensive.
+        gap_severity: "gap"
+        gap_note: >
+          This is the sharpest cross-discipline split in the file, and it is a stark
+          two-tier world.
+          [PT/PTA] Richest. The PT playbook inventories PTSE 1, PTSE 2, CI Details Form,
+          Timesheets as standard forms; a Mid-Term Call Form and weekly planning form as
+          "other" forms; and CIET v2, PTA CIET, SCIPAI, PTMACS, PTAMACS as assessments of
+          student performance (with CPI 3.0 explicitly outside Exxat). SCIPAI is
+          particularly relevant to THIS stage: the playbook notes most standard tools are
+          "largely summative (Final and/or Midterm version only)" while SCIPAI "adds
+          formative snapshots" filled at multiple points in time — the only confirmed
+          instrument in the corpus designed for more than two capture points inside one
+          placement.
+          [OT/OTA] Nearly as rich, and deeper on notification logic. Five AOTA FWPE forms
+          ship: Student Self-Assessment for OT, Student Self-Assessment for OTA, Fieldwork
+          Educator for OT, Fieldwork Educator for OTA, and a Supplement form used when an
+          educator leaves mid-session and a new educator takes over — a real mid-placement
+          evaluator-handoff case that no other discipline's instrument set models.
+          [PA] Middle tier. Standard patient-log templates exist and a Preceptor Evaluation
+          of Student is standard practice, but the mid-point evaluation itself is listed as
+          optional and no named validated PA midpoint instrument is confirmed.
+          [SLP] Gap, and caa-asha.yaml states it directly: SLP has "NO free, validated,
+          off-the-shelf standard instruments the way PT does (CIET v2, PTMACS/PTAMACS,
+          SCIPAI) or OT does (AOTA FWPE family)." The documented SLP set (SLP Playbook lines
+          90-96) is seven configured form types — KASA Summary Forms; Clinical Supervisor
+          Evaluations, explicitly split MIDTERM & FINAL; Student Self-Assessments; Student
+          Evaluations of Clinical Sites; Student Evaluations of Clinical Supervisors; Site
+          Assessments "aligned to program goals and accreditation standards"; and additional
+          custom forms — and creating new forms requires a prism-support@exxat.com ticket (line
+          98). Two things follow that this file previously left implicit. First, SLP DOES have a
+          named midpoint instrument in practice: "Clinical Supervisor Evaluations (Midterm &
+          Final)" is the discipline's own convention, it just is not a shipped standard form, so
+          the workflow-selector element above has nothing to attach to and the midterm becomes a
+          separately-anchored form. Second, the SLP toolkit is the only one of the eight that
+          bundles a SITE assessment into the same evaluation family as the student instruments,
+          which is why CAA 3.9B site suitability and CAA 4.3 student early alert are configured
+          against the same support ticket. Shipping a KASA Summary Form as a Standard form
+          type is the obvious product gap to close for this discipline.
+          [NURSING][CRNA] Same gap, same wording from a different registry: nursing.yaml
+          records that "nursing has no shipped standard national instrument the way PT has
+          CIET v2/PTSE and OT has the AOTA FWPE family — nursing programs build custom
+          forms, and custom form creation is support-gated rather than self-service." The
+          nursing playbook's confirmed instrument set (Preceptor Evaluation of Student,
+          student self-evaluations, skills/simulation-lab checklists by skill domain) is all
+          custom. For CRNA the daily formative evaluation is likewise a configured form —
+          what ships for CRNA is the REPORT over it, not the instrument (see the Daily
+          Clinical Evaluation Report step below).
+          [SW] Same gap with a structural twist: the SW playbook's three documented models
+          are all assembly patterns rather than instruments (combined Learning Contract +
+          Evaluation in one form; separate Learning Contract and Evaluation forms; or split
+          mid-term / final / Field Instructor rating / student rating forms completed
+          independently). The Learning Contract is an SW-specific object with no analogue in
+          the other seven disciplines, and it has no shipped form.
+          [TE] Worst. The TE playbook is explicit that TE has no dedicated internal
+          help-center playbook article and no CSS discipline playbook PDF, and lists
+          "Standard evaluation forms and reports — TE-specific assessment instruments
+          (analogous to PTSE1/PTSE2/CIET for PT) and any pre-built reports" as an open,
+          unfilled gap. There is no confirmed TE midpoint instrument in this corpus at all;
+          TE's only documented formative-feedback path is the GoReact LTI integration
+          documented in its own step below.
+    action: >
+      Program admin (or linked course faculty) selects the midpoint evaluation form and sets
+      its Due date anchor to "Middle of placement" (0 days after MID), so the trigger fires
+      automatically per placement instance rather than being hand-dated per student. Where
+      the discipline has a shipped multi-term instrument ([PT/PTA] CIET v2.0, [OT/OTA] AOTA
+      FWPE), the admin additionally selects the midterm-and-final workflow and sets the two
+      due-date anchors independently; where it does not ([SLP], [NURSING], [CRNA], [SW],
+      [TE]), the admin configures two separate anchored forms, or files a support ticket to
+      have the instrument built. The admin also sets the low-score threshold here, but must
+      file a separate support request before any email fires off it.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Track low scores for timely interventions.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/Clinical Internship Evaluation Tool - Version 2.0.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/CIET Form (Clinical Internship Evaluation Tool) Configuration.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/OT-OTA Discipline/Help Guides for OT-OTA/Fieldwork Performance Evaluation Tool.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md (lines 127-129 the standard-instrument inventory; 131-136 PTSE 1 and its always-Yes placement rule; 145-151 CIET midterm-and-final vs. Final-only; 163-168 SCIPAI as the only multi-snapshot formative instrument; 261-263 the low-score threshold and its support-gated email);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md (lines 88-96 the configured-forms toolkit incl. Clinical Supervisor Evaluations Midterm & Final; line 98 form creation is support-gated);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md (lines 69-73 the three Learning Contract / Evaluation configuration models, incl. the four-way split that makes an SW midterm its own separately-anchored form);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md (lines 12 and 63-73 — cited only for its own negative finding: no TE evaluation instruments, reports or accreditor standards are documented, so no TE midpoint instrument can be asserted in either direction)
+
+  - screen: "Learning Activities Setup — Auto Notifications"
+    navigation_path: "Learning Activities > Auto Notifications > Add Notification"
+    elements:
+      - element: "Recipient Type"
+        type: "select"
+        data_shown: "Students or Experiential Supervisor"
+        gates_on: []
+        accreditation_citation: >
+          None at this element — recipient targeting is not itself LCME 9.7
+          delivery-compliance evidence.
+        competitor_equivalent: >
+          Not comparable at element level — CORE ELMS's public materials claim
+          "due-date reminders" as a shipped feature (per ../competitors/core-elms.yaml,
+          sourced from Capterra/marketing copy) without naming recipient types.
+        gap_severity: "none"
+        gap_note: >
+          Complete as documented; a two-value selector that constrains the Forms selector
+          below. Note that "Experiential Supervisor" is the generic term covering all eight
+          production disciplines' preceptor-equivalents ([PT/PTA] Clinical Instructor,
+          [OT/OTA] Fieldwork Educator, [SLP] Clinical Supervisor, [SW] Field Instructor,
+          [PA]/[NURSING]/[CRNA] Preceptor), so no discipline-specific behavior differs here
+          — only the label the recipient would recognize, which this element does not
+          localize.
+      - element: "Forms selector"
+        type: "multi-select"
+        data_shown: "Placement-based and non-placement-based forms; only forms initiated by the selected recipient type are selectable, and a form already used in another active notification cannot be re-selected"
+        gates_on: []
+        accreditation_citation: >
+          None at this element — it binds the reminder to the midpoint form but records
+          no delivery evidence for LCME 9.7.
+        competitor_equivalent: >
+          Not comparable at element level — nothing in CORE ELMS's public docs describes
+          eligibility filtering of which forms a reminder may target.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Complete as documented, including the one-active-notification-per-form
+          constraint — but that constraint bites hardest in the disciplines that split one
+          assessment across multiple forms. [SW] An SW program running the documented split
+          model (mid-term, final, Field Instructor rating, student rating, all completed
+          independently) needs four separate Auto Notification records to nudge one
+          midpoint assessment event, because one form may carry only one active
+          notification. [PT/PTA][OT/OTA] Programs running a single multi-term instrument
+          (CIET v2.0, FWPE) do not hit this, because midterm and final live on one form
+          object — a real, if incidental, advantage of the multi-term archetype that is not
+          documented anywhere as a reason to prefer it.
+      - element: "Reminder Frequency"
+        type: "select (Just once / Daily / Weekly / Send every X days)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None at this element — cadence configuration, not a compliance record.
+        competitor_equivalent: >
+          Not comparable at element level — CORE ELMS's "due-date reminders" claim does
+          not describe cadence options.
+        gap_severity: "none"
+        gap_note: >
+          Complete as documented.
+      - element: "Start Condition"
+        type: "On/Before/After + number of days + system anchor (Beginning of Placement, Middle of Placement, End of Placement, etc.)"
+        data_shown: "e.g. 'Send reminders 3 days before Due Date'"
+        gates_on: []
+        accreditation_citation: >
+          LCME Standard 9, Element 9.7; ARC-PA Standard B4, Element B4.01 a-b (whose whole
+          test is timeliness); ACOTE Standard C.1.15 (returned to the academic program in a
+          timely manner).
+        competitor_equivalent: >
+          CORE ELMS's public materials claim "due-date reminders" as a shipped feature
+          (per ../competitors/core-elms.yaml, sourced from Capterra/marketing copy), but
+          nothing in the public docs describes anchor options at this level of detail —
+          not comparable element-for-element from public sources.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is where the midpoint nudge is actually anchored ("Middle of Placement"),
+          so it is the element carrying the 9.7 timeliness intent — but it nudges
+          submission without producing a compliance record. The firing of this condition
+          leaves no artifact confirming "delivered on time" that the program could report
+          against later.
+      - element: "End Condition"
+        type: "select (after a specific date / after X notifications sent / on an anchor setting)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None at this element — it stops the reminder; it does not evidence delivery for
+          LCME 9.7.
+        competitor_equivalent: >
+          Not comparable at element level — CORE ELMS's public docs describe no stop
+          conditions or eligibility filtering for their reminders.
+        gap_severity: "configure-needed"
+        gap_note: >
+          The reminder fires and stops here, and the auto-exclusion of submitted/reviewed
+          forms and On Hold/Unsuccessful placements happens silently. No persisted artifact
+          results, which is the missing piece for LCME 9.7's delivery-compliance
+          requirement (see the review-screen step below).
+    action: >
+      Coordinator configures a reminder tied to the same midpoint form, anchored to "Middle
+      of Placement," so the preceptor gets nudged automatically. The system auto-excludes
+      submitted/reviewed forms and placements marked On Hold or Unsuccessful from receiving
+      further reminders.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Setup Auto Notifications for Forms and Evaluations.md"
+
+  - screen: "[OT/OTA] Standard AOTA FWPE — Send Form / Set up Automation (distribution automation, distinct from Auto Notifications)"
+    navigation_path: "Learning Activities > [Course] > Setup > Forms/Evaluations (+) > Standard AOTA FWPE - Fieldwork Educator for OT|OTA > Send Form > Set up Automation"
+    elements:
+      - element: "Distribution timing anchor"
+        type: "select (Beginning of the placement / Mid of placement / End of placement)"
+        data_shown: "When the FWPE is pushed to the Fieldwork Educator"
+        gates_on: ["whether the midterm FWPE reaches the educator at all"]
+        accreditation_citation: >
+          ACOTE Standard C.1.15 — acote.yaml states the required software behavior as
+          "schedule distribution relative to the placement timeline rather than to fixed
+          calendar dates," which is literally this control.
+        competitor_equivalent: >
+          Not comparable at element level. No competitor file documents a form-distribution
+          automation distinct from a reminder. The distinction matters: E*Value's and CORE
+          ELMS's documented claims are about REMINDING someone about a form they can already
+          see, whereas this element is about PUSHING a form to a recipient who has no account
+          and therefore no way to discover it. Nothing in any competitor's public docs
+          confirms or denies the no-account push pattern.
+        gap_severity: "none"
+        gap_note: >
+          [OT/OTA] This is the element that actually schedules the OT midpoint, and it is a
+          genuinely different screen from the generic Auto Notifications step above — not a
+          relabeled reminder. It exists because the Fieldwork Educator has no Prism login
+          (see the completion step below), so distribution and reminding are one act rather
+          than two. Confirmed complete as documented, with the three-value anchor matching
+          the placement anchor vocabulary used everywhere else in the product.
+      - element: "Who should get the form email?"
+        type: "select (recipient role)"
+        data_shown: "Which of the placement's associated educator records receives the distributed form"
+        gates_on: ["which educator's submission becomes the FWPE of record for the placement"]
+        accreditation_citation: >
+          ACOTE Standard C.1.15 — "submitted by the qualified fieldwork educator" is a
+          per-placement singularity requirement, and this selector is where that is enforced
+          (by convention rather than by constraint — see gap_note).
+        competitor_equivalent: >
+          Not comparable at element level — no competitor file documents recipient-role
+          selection on form distribution, or a duplicate-submission risk arising from it.
+        gap_severity: "configure-needed"
+        gap_note: >
+          [OT/OTA] Exxat's own published guidance is a workaround, not a constraint: "To
+          reduce the possibility of more than one FWPE being completed for a student for a
+          single placement, Exxat recommends distributing only to the Fieldwork Educator
+          Added by School. Secondary Fieldwork educators can be identified by the student
+          within the FWPE itself, but these educators will not be the primary evaluators and
+          should not receive the distributed form to complete." So the singularity of the
+          evaluation of record is maintained by an admin remembering a best practice, and a
+          misconfiguration here produces two competing midterm FWPEs for one student with no
+          product-level tiebreak. This is a small, cheap constraint to enforce in product
+          and it is not enforced.
+      - element: "Email template selector"
+        type: "select"
+        data_shown: "Which template body the educator receives with the form link"
+        gates_on: []
+        accreditation_citation: >
+          None at this element — message content is not evidence for C.1.15.
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "none"
+        gap_note: >
+          Complete as documented.
+      - element: "Enable Auto notification (on the same FWPE setup screen)"
+        type: "toggle"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None at this element — a switch, with the substantive escalation logic sitting on
+          the support-gated notification configuration described in step 1.
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "cosmetic"
+        gap_note: >
+          [OT/OTA] Confirmed present as a discrete toggle on the FWPE setup screen. Worth
+          flagging only because its presence is misleading: a coordinator who sees an
+          "Enable Auto notification" toggle on the same screen as the low-score threshold
+          would reasonably assume enabling it turns on low-score emails, when in fact both
+          the low-score notification and the response-based notification still require a
+          support ticket naming each recipient's first name, last name, and email address.
+    action: >
+      [OT/OTA] The OT fieldwork coordinator schedules the Fieldwork Educator FWPE to
+      distribute at "Mid of placement," addressed only to the Fieldwork Educator Added by
+      School, with a chosen email template — the concrete, in-production event that
+      constitutes OT's midpoint formative feedback delivery.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/OT-OTA Discipline/Help Guides for OT-OTA/Fieldwork Performance Evaluation Tool.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md (FWPE — Notification Thresholds and Distribution Mechanics);
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acote.yaml (Standard C.1.15)
+
+  - screen: "[OT/OTA] Standard AOTA FWPE midterm — Fieldwork Educator completion (no-login, emailed link)"
+    navigation_path: "Emailed link ('here') > FWPE form opens directly in browser — no Prism account required"
+    elements:
+      - element: "Save / Clear All / Submit"
+        type: "buttons"
+        data_shown: "Save preserves partial work and the same link resumes it; Clear All restarts; Submit finalizes"
+        gates_on: ["form status transition to Pending School Review"]
+        accreditation_citation: >
+          ACOTE Standard C.1.15 — the completed instrument submitted by the qualified
+          fieldwork educator is the evidence artifact this standard demands.
+        competitor_equivalent: >
+          Not comparable at element level. This is the highest-value uncomparable finding in
+          the file: no competitor's public materials describe whether an external evaluator
+          needs a platform account to complete an evaluation. Given that account provisioning
+          for clinical preceptors is the dominant operational cost in this workflow, the
+          absence of any competitor claim here is itself informative — it is not a feature
+          anyone markets, so it cannot be assumed present.
+        gap_severity: "none"
+        gap_note: >
+          [OT/OTA] Confirmed complete and confirmed independently by two sources (the
+          Fieldwork Educator help guide and the OT playbook). The OT playbook flags the
+          reuse potential directly: "This external-stakeholder, link-based access pattern
+          (no portal account needed) is likely reusable messaging for other disciplines'
+          preceptor/CI evaluation flows." [PT/PTA] The same pattern is confirmed for
+          PTMACS/PTAMACS and CIET v2.0 (emailed link from notifications@exxat.com, form
+          opens in a new browser tab) — see those steps below. [SLP][NURSING][CRNA][SW][TE]
+          Not independently confirmed in this corpus for these disciplines; do not assert
+          it for them.
+      - element: "'Student was informed of this review' attestation checkbox"
+        type: "required checkbox"
+        data_shown: ""
+        gates_on: ["Submit"]
+        accreditation_citation: >
+          ACOTE Standard C.1.15 (formal evaluation of student performance, returned to the
+          academic program). This checkbox is also the only confirmed structured artifact
+          anywhere in this stage proving the FEEDBACK CONVERSATION happened rather than
+          merely that a form was filled — which is what the word "formative" actually means
+          and what CAA-ASHA Standard 5.0, Standard 5.2 and COA Standard H.1.1 both require
+          when they say evaluations are conducted "to counsel the student."
+        competitor_equivalent: >
+          Not comparable at element level — no competitor file documents an
+          evaluator-side attestation that the student was informed of a review.
+        gap_severity: "none"
+        gap_note: >
+          [OT/OTA] Complete as documented and quietly the most important element on this
+          screen. Every other discipline's midpoint instrument in this corpus records the
+          RATING; only the FWPE records, as a discrete required field, that the rating was
+          discussed with the student. That is a shippable primitive, not an OT-specific
+          concept: LCME 9.7, ARC-PA B4.01, COA H.1.1, and CAA-ASHA 5.2 all care about the
+          feedback event rather than the score. Promoting this checkbox from an
+          FWPE-instrument field to a Forms/Evaluations engine option would give every
+          discipline a delivery artifact — and it would materially close the "no persisted
+          artifact confirming delivered on time" gap this file scores twice elsewhere.
+      - element: "4-point rating scale with required justification comment per rating"
+        type: "rating input plus mandatory free-text"
+        data_shown: ""
+        gates_on: ["response-based notification triggers on ratings of 1, and of 1 or 2 on the three Fundamentals of Practice items"]
+        accreditation_citation: >
+          ACOTE Standard C.1.15; ACOTE Standard A.3.5 (documentation that advisement
+          actually occurred in the fieldwork-education area draws on this narrative).
+        competitor_equivalent: >
+          Partially comparable, and this is the one place a competitor is arguably ahead of
+          the general Prism engine. E*Value's public page claims "forced comments on low
+          scores" (../competitors/e-value.yaml, sourced to medhub.com/software/evalue) — a
+          conditional requirement fired by a low rating. The FWPE requires justification on
+          EVERY rating, which is stricter, but that strictness is a property of the AOTA
+          instrument's content rather than of Prism's form engine, and no source confirms
+          Prism can impose comment-on-low-score conditionally on an arbitrary form. So:
+          FWPE beats E*Value; Prism's engine is not confirmed to.
+        gap_severity: "none"
+        gap_note: >
+          [OT/OTA] Complete as documented per the OT playbook. The pairing of a mandatory
+          comment with the response-based trigger on a rating of 1 is what makes the OT
+          escalation actionable rather than a bare number — the alert arrives with the
+          educator's own words attached.
+      - element: "Midterm responses and score remain visible while completing the Final"
+        type: "read-only carry-forward display"
+        data_shown: "The educator's own midterm ratings and total score, shown inside the final form"
+        gates_on: []
+        accreditation_citation: >
+          ARC-PA Standard B3, Element B3.03 a-c is the standard that names the
+          midpoint-to-final consistency risk, and although B3.03 is a PA standard the
+          behavior is confirmed here for OT — a case of the mitigation shipping natively in
+          the discipline that does not carry the documented citation risk, and not shipping
+          natively in the one that does.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor file describes cross-term
+          response carry-forward.
+        gap_severity: "none"
+        gap_note: >
+          [OT/OTA] Complete, native, and non-optional — confirmed by both the Fieldwork
+          Educator help guide ("Mid Term Evaluation responses and score will be visible
+          while filling out Final Term form") and the OT playbook. Same caveat as the
+          referring-form element in step 1: this displays divergence to a human, it does not
+          detect it.
+      - element: "FWPE Supplement form (mid-placement evaluator handoff)"
+        type: "separate form in the FWPE family, for both roles"
+        data_shown: "Used specifically when a fieldwork educator leaves mid-rotation and a new educator takes over"
+        gates_on: []
+        accreditation_citation: >
+          ACOTE Standard C.1.15 — acote.yaml names "handle a mid-placement change of
+          evaluator" as a required software behavior for this standard, and identifies the
+          Supplement form as the confirmed answer to it.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor file documents an
+          evaluator-handoff case at all, let alone a dedicated instrument for it.
+        gap_severity: "none"
+        gap_note: >
+          [OT/OTA] Confirmed shipped and, per the OT playbook, the reason the FWPE family is
+          five forms rather than four. Directly relevant to this stage: an evaluator change
+          BETWEEN midterm and final is exactly the scenario in which midpoint formative
+          feedback would otherwise be orphaned, and OT is the only one of the twelve
+          disciplines with a modeled answer. No equivalent is confirmed for any other
+          discipline's instrument — for [PT/PTA] CIET v2.0 and PTMACS the student selects the
+          CI per term, which incidentally accommodates a change of evaluator but does not
+          carry the prior educator's midterm content forward under the new one.
+      - element: "Legacy Formstack distribution path for FWPE II"
+        type: "integration (being phased out)"
+        data_shown: "Integrated forms surface with a 'Formstack -' prefix, with per-student Available/Not Available status driven by current placement"
+        gates_on: []
+        accreditation_citation: >
+          ACOTE Standard C.1.15 — relevant as a records-retention risk against the standard's
+          expectation that completed evaluations are returned to and held by the program.
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "gap"
+        gap_note: >
+          [OT/OTA] A genuine, dated risk rather than a feature gap, confirmed by both the OT
+          playbook and acote.yaml: the Formstack pull is real-time and depends on an active
+          Formstack subscription, so "if the school's Formstack subscription lapses or its
+          data is deleted, previously-pulled data becomes inaccessible inside Prism (no
+          separate Exxat-side copy is retained)." The Fieldwork-Educator-facing guide frames
+          the current work as "a smooth transition from Formstack to the new system," so this
+          is legacy — but any OT school still on that path has midterm FWPE evidence whose
+          durability depends on a third-party subscription the program may not know is
+          load-bearing. Scored a gap because it is an evidence-loss condition against a
+          standard, and because no in-product warning of it is documented.
+    action: >
+      [OT/OTA] The Fieldwork Educator opens the emailed link with no Prism account, rates the
+      student on the 4-point scale with a justification comment per item, checks the "Student
+      was informed of this review" attestation, and submits — moving the form to Pending
+      School Review. If any item is rated 1, or any of the three Fundamentals of Practice
+      safety/ethics items is rated 1 or 2, the support-configured response-based notification
+      fires to the named recipients.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Faculty/Discipline Specific Guides/OT -OTA/Completing FWPE Form - For Fieldwork Educators.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/OT-OTA Discipline/Help Guides for OT-OTA/Fieldwork Performance Evaluation Tool.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md;
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acote.yaml (Standard C.1.15)
+
+  - screen: "[PT/PTA] CIET v2.0 midterm — concurrent blinded student and Clinical Instructor completion"
+    navigation_path: "Student: Learning Activities > Forms/Evaluations > [placement accordion] > CIET v2.0 > Get Started. Clinical Instructor: emailed link from the student's Send action."
+    elements:
+      - element: "CIET training quiz gate"
+        type: "prerequisite quiz, 15/20 (75%) to pass, unlimited retakes, or CI attest-and-bypass"
+        data_shown: "Wrong answers highlighted on a failed attempt; once passed, never retaken — even across different courses and placements"
+        gates_on: ["access to the CIET v2.0 form for both student and CI"]
+        accreditation_citation: >
+          None at this element for midpoint feedback specifically. It is an evaluator- and
+          self-evaluator-readiness control on the instrument. It is adjacent to CAPTE
+          Standard 2, Element 2D4's "description of the mechanisms used to determine
+          entry-level performance," in that a program can evidence rater calibration, but
+          no standard's evidence lives on the quiz itself.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor file documents a rater-calibration
+          gate on an evaluation instrument. Worth noting as a differentiator that is
+          invisible in the competitive corpus rather than absent from it.
+        gap_severity: "none"
+        gap_note: >
+          [PT/PTA] Complete as documented, with a CIET training-quiz report confirmed live
+          per the PT playbook. The attest-and-bypass path is a deliberate friction release
+          for busy CIs and is the sort of detail that decides whether a midpoint form gets
+          completed on time at all. Bound to the CIET instrument and therefore PT/PTA-only;
+          the gate MECHANISM is not confirmed as a generic Forms/Evaluations capability that
+          another discipline could attach to its own instrument, which is worth verifying
+          before it is offered to a new domain.
+      - element: "Student selects the Clinical Instructor and clicks Send"
+        type: "select plus action button, with a Resend option"
+        data_shown: "Which CI supervised the placement and will receive the form link"
+        gates_on: ["the CI receiving the midpoint evaluation link at all"]
+        accreditation_citation: >
+          CAPTE Standard 2, Element 2D4 — the CI's assessment is the evidence CAPTE asks
+          for, and this element is the only confirmed route by which the CI obtains the
+          instrument.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor documents a student-initiated
+          evaluator dispatch. The direction of initiation is a real design divergence worth
+          flagging: [OT/OTA] the FWPE is pushed by the ADMIN on an automation schedule,
+          while [PT/PTA] the CIET and PTMACS are dispatched by the STUDENT. Neither pattern
+          is documented for any competitor.
+        gap_severity: "configure-needed"
+        gap_note: >
+          [PT/PTA] Complete as documented but structurally fragile for a midpoint deadline,
+          and this is a genuine finding rather than a nitpick: the CI cannot receive the
+          midterm CIET until the STUDENT acts. A disengaged or struggling student — exactly
+          the population this stage exists to catch — is the student least likely to dispatch
+          the form that would flag them. The Auto Notifications step above can nudge the
+          student, and the PT playbook confirms the student can cancel a submitted form any
+          time before the CI submits (revoking the CI's link while preserving the CI's
+          in-progress work until the student resends), which is a thoughtful mechanic but
+          also a second student-controlled point of failure. Contrast [OT/OTA], where
+          admin-side automation removes the student from the critical path entirely. No
+          admin-side override to dispatch the CIET directly is documented.
+      - element: "Parallel blinded completion"
+        type: "concurrent workflow behavior"
+        data_shown: "Student and CI fill the form simultaneously via their own links; neither can see the other's ratings until BOTH have submitted"
+        gates_on: ["mutual visibility of ratings"]
+        accreditation_citation: >
+          CAPTE Standard 2, Element 2D4 — capte.yaml names CIET v2.0's
+          "concurrent/blinded student-and-CI completion" as part of why this is "the single
+          best-served element in the whole document."
+        competitor_equivalent: >
+          Not comparable at element level, and this is the clearest instance in the file of
+          Prism holding a mechanism no competitor claims. No competitor file describes
+          blinding, anchoring-bias control, or dual-perspective concurrency in evaluation.
+          E*Value's nearest documented claim is "pre-populated evaluation results," which is
+          arguably the OPPOSITE design choice — pre-population reduces effort by seeding
+          answers, blinding increases rigor by withholding them.
+        gap_severity: "none"
+        gap_note: >
+          [PT/PTA] Confirmed live (the PT playbook records it as having shipped after being
+          flagged "coming with the March end release") and independently confirmed in the
+          CIET v2.0 help guide, which states the rule twice. The stated purpose is bias
+          control — per the PT playbook, it "eliminates anchoring bias between self- and
+          CI-evaluation." This is the most defensible discipline-specific claim in this
+          stage and the one worth carrying into expansion-domain conversations, because the
+          blinding mechanism is instrument-agnostic in principle even though it is currently
+          bound to CIET. [PT/PTA] Note the contrast with PTMACS in the next step, which is
+          SEQUENTIAL and NON-blinded — two PT instruments in the same product making
+          opposite bias-control choices.
+      - element: "Global Rating of Student Clinical Competence"
+        type: "single overall rating at the bottom of the form"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "CAPTE Standard 2, Element 2D4"
+        competitor_equivalent: >
+          Not comparable at element level — no competitor documents instrument-level
+          summary-rating structure.
+        gap_severity: "none"
+        gap_note: >
+          [PT/PTA] Complete as documented. Relevant to this stage because a single global
+          rating is what a form-level low score threshold can actually be set against —
+          per-item scales are served by the response-based notification instead.
+      - element: "Comment field character cap"
+        type: "input constraint (10,000 characters)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None at this element — an input constraint. Named here because the narrative it
+          truncates is the evidence CAPTE Standard 2, Element 2D4 asks for when CI
+          assessment suggests less than entry-level performance.
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "cosmetic"
+        gap_note: >
+          [PT/PTA] The cap itself is generous; the FAILURE MODE is not cosmetic in spirit
+          and is worth recording. Both the PTMACS and PTAMACS CI-facing help guides state
+          "the system will not process any comments that are added once you pass the
+          10000-character limit," and the PT playbook renders the same behavior as
+          "anything past the cap is silently dropped." Silent truncation of a CI's narrative
+          about a struggling student, in the exact field that carries the qualitative
+          evidence, is a data-integrity bug rather than a limit. Scored cosmetic only
+          because 10,000 characters is far past any realistic comment length; scored at all
+          because the behavior is silent. Same cap and same behavior confirmed on CIET.
+      - element: "Status 'Midterm-Pending School Review' with admin override and un-submit"
+        type: "workflow status plus 'Select an Option' action menu"
+        data_shown: "The midterm form awaiting program review; admin may override student or CI evaluations, or un-submit to either party for resubmission"
+        gates_on: ["progression of the form to the Final term workflow"]
+        accreditation_citation: >
+          CAPTE Standard 2, Element 2D4; CCNE Standard III, Key Element III-K's structural
+          principle (preceptor input routes to a faculty reviewer who renders the
+          determination) is satisfied by this same shape, though CCNE is not PT's accreditor.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor file documents a review-stage
+          override or un-submit action on a submitted evaluation.
+        gap_severity: "configure-needed"
+        gap_note: >
+          [PT/PTA] Complete as documented, and the term-specific status label
+          ("Midterm-Pending School Review" rather than a generic "Pending School Review") is
+          a real affordance — the reviewer can see WHICH term is pending without opening the
+          form. One caution against CAPTE 2D4: the admin can OVERRIDE the CI's evaluation,
+          and no audit-trail requirement is documented on that action for CIET.
+          [OT/OTA] By contrast the OT playbook confirms an Audit Log on each SEFWE form
+          showing its full change history, and a more granular action set (Review, Un-Submit
+          to Student, Un-submit to Educator as distinct actions, plus Review and Publish).
+          An override with no confirmed audit trail on an accreditation-evidence instrument
+          is the one substantive weakness on this screen.
+    action: >
+      [PT/PTA] At the placement midpoint the student passes the CIET training quiz (once,
+      ever), selects the supervising CI and sends the form, then completes their own
+      self-evaluation while the CI independently completes theirs — neither seeing the
+      other's ratings until both submit. The program administrator then reviews the
+      Midterm-Pending School Review status and either finalizes or un-submits, after which
+      the form advances to the Final term workflow.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/Clinical Internship Evaluation Tool - Version 2.0.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/CIET Form (Clinical Internship Evaluation Tool) Configuration.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md lines 145-151 (CIET v2 measures professional behaviours and patient management; training quiz housed in Prism with CI attest-and-bypass; Midterm-and-Final with a Final-only option; the parallel workflow noted as forthcoming) and lines 234-244 (the parallel workflow now live: simultaneous completion via the same emailed link with each side hidden until both submit, the 15/20 quiz threshold with unlimited retakes and once-ever persistence, the 10,000-character silent-truncation cap, anchor-based publish/due dates, student cancellation revoking and later restoring the CI's access with in-progress work preserved, and the two dedicated reports);
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/capte.yaml (Standard 2, Element 2D4)
+
+  - screen: "[PT/PTA] PTMACS / PTAMACS midterm — sequential, non-blinded CI evaluation on the student's self-evaluation"
+    navigation_path: "CI: emailed link from notifications@exxat.com, sent after the student completes their self-evaluation. Student: Learning Activities > Forms/Evaluations > PTMACS|PTAMACS."
+    elements:
+      - element: "Per-question display of the student's rating and comment alongside the CI's own rating and comment"
+        type: "side-by-side rating and comment input"
+        data_shown: "For each question, the student's submitted rating and comment, with the CI's own rating and comment entered next to it"
+        gates_on: []
+        accreditation_citation: >
+          CAPTE Standard 2, Element 2D4 — capte.yaml names PTMACS/PTAMACS explicitly as one
+          of the recognized instruments serving this element.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor documents dual-perspective
+          per-question layout. The closest thing anywhere in this corpus is Prism's own
+          [CRNA] Daily Clinical Evaluation Report, which displays student and preceptor
+          responses side by side per question in the exported PDF — the same idea applied at
+          report time rather than at completion time.
+        gap_severity: "configure-needed"
+        gap_note: >
+          [PT/PTA] Confirmed complete for both PTMACS and PTAMACS from their CI-facing help
+          guides. The substantive finding is the DESIGN CONTRADICTION with CIET v2.0 in the
+          previous step: PTMACS is strictly sequential (the CI is emailed only "once the
+          student completes the PTMACS") and deliberately NON-blinded (the CI sees the
+          student's rating and comment while entering their own), whereas CIET v2.0 is
+          parallel and deliberately blinded specifically to eliminate anchoring bias. Both
+          instruments ship in the same product, for the same discipline, at the same
+          midpoint, with opposite bias-control philosophies. That is not necessarily wrong —
+          PTMACS's design arguably supports a shared reflective conversation while CIET's
+          supports independent measurement — but nothing in the corpus explains the tradeoff
+          to a program choosing between them, and a PT program selecting an instrument on
+          other grounds inherits a bias posture it did not choose. Scored configure-needed
+          on that guidance gap rather than on any defect in the element.
+      - element: "'Evaluation of Student Performance' 1-10 scale"
+        type: "rating input, distinct from the per-skill Likert ratings"
+        data_shown: "A single CI rating of the student on a 1-10 scale"
+        gates_on: []
+        accreditation_citation: "CAPTE Standard 2, Element 2D4"
+        competitor_equivalent: >
+          Not comparable at element level — no competitor documents instrument-internal
+          scale structure.
+        gap_severity: "none"
+        gap_note: >
+          [PT/PTA] Complete as documented in both CI-facing help guides and corroborated by
+          the PT playbook ("CI's 'Evaluation of Student Performance' uses a distinct 1-10
+          rating scale, separate from the per-skill Likert ratings"). Practically relevant to
+          this stage: a program setting a low-score threshold on PTMACS is setting it against
+          a mixed-scale instrument, and no source confirms which scale the form-level
+          threshold computes over. Verify before advising a program on a threshold value —
+          this is a real open question, not a hedge.
+      - element: "Overall comments section"
+        type: "free text"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "CAPTE Standard 2, Element 2D4"
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "none"
+        gap_note: >
+          [PT/PTA] Complete as documented, subject to the same 10,000-character silent-drop
+          behavior noted on CIET.
+      - element: "[PTA only] Supplemental skill questions 35, 36, 37"
+        type: "conditional Yes/No toggles that add questions, defaulting to N/A"
+        data_shown: "Additional skills the CI may add at midterm or final if the student did not add them"
+        gates_on: []
+        accreditation_citation: >
+          CAPTE Standard 2, Element 2D4, in its PTA form (capte.yaml records the PTA
+          equivalent of 2D4 at a distinct source page).
+        competitor_equivalent: >
+          Not comparable at element level — no competitor documents conditional instrument
+          expansion by the evaluator mid-completion.
+        gap_severity: "cosmetic"
+        gap_note: >
+          [PT/PTA] Confirmed from the PTAMACS CI help guide and the PT playbook, and
+          specifically confirmed as available "at midterm or final" — i.e. the instrument can
+          grow mid-placement to cover a skill the placement turned out to exercise. A small
+          but genuinely thoughtful formative affordance with no analogue in any other
+          discipline's instrument. Cosmetic severity because the default of N/A on unanswered
+          added skills means an added-but-unrated skill is indistinguishable from a
+          not-applicable one in reporting.
+      - element: "[PTA only] SECEE (Student Evaluation of Clinical Experience) CI review hop"
+        type: "sequential review step with CI sign-off"
+        data_shown: "Final only. The CI receives a further email to review the student's SECEE, signs off at the end, and clicks Review."
+        gates_on: []
+        accreditation_citation: >
+          None for midpoint feedback — the PTAMACS CI help guide states SECEE is Final-only,
+          and the PT playbook confirms "SECEE is PTAMACS-only — not part of the PTMACS
+          workflow." Recorded here to prevent a mistaken stage-6 claim.
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "none"
+        gap_note: >
+          [PT/PTA] Explicitly OUT of scope for this stage and documented for that reason: a
+          reader scanning the PTAMACS workflow could easily mistake the SECEE hop for a
+          midpoint artifact. It is not — it fires at Final only, and only for PTAMACS.
+      - element: "View submitted responses / download"
+        type: "read-only view plus download button on the same emailed link"
+        data_shown: "Read-only rendering of the filled form, downloadable as a copy"
+        gates_on: []
+        accreditation_citation: >
+          CAPTE Standard 2, Element 2D4 — the CI's retention of a copy of the midterm
+          evaluation is part of what makes the midterm-to-final consistency check possible on
+          the CI's side.
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "none"
+        gap_note: >
+          [PT/PTA] Complete as documented in both CI-facing help guides — the CI can return
+          to the same link at any time for a read-only view and a downloadable copy. Note
+          this is the PTMACS/PTAMACS analogue of the [OT/OTA] FWPE's carry-forward: the CI
+          gets their midterm answers back by re-opening the link rather than by seeing them
+          inline in the final form. Functionally weaker (it requires the CI to remember to
+          look) but it does exist.
+    action: >
+      [PT/PTA] The student completes their PTMACS/PTAMACS self-evaluation first; the CI is
+      then emailed a link, sees the student's rating and comment per question, enters their
+      own alongside, adds overall comments, rates the student 1-10 on Evaluation of Student
+      Performance, and submits with an OK confirmation. The same cycle repeats from the
+      student for the Final term.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Site/Discipline Specific Guides/PT-PTA Discipline/Completing the PTMACS for CIs.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Site/Discipline Specific Guides/PT-PTA Discipline/Completing the PTAMACS for CIs.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md lines 153-161 (PTMACS/PTAMACS: standard, free, Exxat-only, used by Texas Consortium programs and many PTA programs; the Student-self-eval > CI-eval > Student-review > School-review workflow and the SECEE variant) and lines 272-277 (the CI's distinct 1-10 Evaluation of Student Performance scale, the three optional supplemental Skill 35/36/37 questions defaulting to N/A, the shared 10,000-character comment cap, and SECEE being PTAMACS-only);
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/capte.yaml (Standard 2, Element 2D4)
+
+  - screen: "Learning Activities > Review > Forms/Evaluations Summary (cross-student midpoint review with low-score highlighting)"
+    navigation_path: "Courses > [Course Offering] > Learning Activities > Review > Forms/Evaluations Summary (or select a specific form from the left panel)"
+    elements:
+      - element: "Form score highlighted in red when below the configured low-score threshold"
+        type: "conditional formatting on the review grid"
+        data_shown: "Which submitted midpoint evaluations fell below the program's threshold"
+        gates_on: []
+        accreditation_citation: >
+          ARC-PA Standard B4, Element B4.01 a-b; ACOTE Standard C.1.15; CAA-ASHA Standard
+          4.0, Standard 4.3; CAPTE Standard 2, Element 2D4 (the below-entry-level exception
+          path).
+        competitor_equivalent: >
+          Partially comparable at outcome level only. E*Value and CORE ELMS both claim
+          "low-score alerts" (../competitors/e-value.yaml, ../competitors/core-elms.yaml),
+          but neither public source distinguishes an IN-APP visual indicator from an EMAIL
+          alert — a distinction that is load-bearing for Prism, where the visual half is
+          self-service and the email half is not. No competitor doc is granular enough to
+          say whether they have the same split.
+        gap_severity: "none"
+        gap_note: >
+          The self-service half of low-score detection, confirmed by "Track low scores for
+          timely interventions" ("you can see the form score highlighted in red on the review
+          screen... To use this feature, set the low score threshold from the Forms/Evaluations
+          setup screen") and corroborated for [PT/PTA] PTSE 1 and PTSE 2 by the PT playbook.
+          Complete as documented — with the standing caveat that it only helps a coordinator
+          who is looking at this screen, which is why the support-gated email half matters.
+      - element: "Cross-student status grid for one form"
+        type: "read-only tabular status per student for the selected form"
+        data_shown: "All students registered for the course offering with the status of the selected form"
+        gates_on: []
+        accreditation_citation: >
+          LCME Standard 9, Element 9.7; ACOTE Standard C.1.15 ("track submission status so
+          the program can chase stragglers," per acote.yaml's required software behavior).
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown documents a per-form,
+          cross-student status grid.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This element materially revises the gap recorded on the Student 360 step below,
+          and the correction is worth stating plainly rather than leaving the two steps in
+          tension. A cross-student view DOES exist: it is scoped to one course offering and
+          one form, it shows every registered student's status, and it is confirmed
+          independently from the [PT/PTA] CIET configuration guide and the [OT/OTA] FWPE
+          guide. What still does NOT exist is a cross-COURSE, cross-rotation rollup
+          expressing "% of student/rotation pairs with midpoint feedback delivered on time"
+          — the reportable LCME 9.7 asks for. So the correct verdict for this stage is
+          configure-needed at course scope (assemblable, one course at a time) escalating to
+          a genuine gap at program scope, not the flat "no cross-student view" the earlier
+          pass implied.
+      - element: "Review All / Publish All bulk actions"
+        type: "buttons"
+        data_shown: "Mark every listed form reviewed; publish completed forms to the site profile where that feature is enabled"
+        gates_on: ["form status transition to Reviewed"]
+        accreditation_citation: >
+          None at this element for midpoint feedback — a bulk status action. Flagged against
+          CAPTE Standard 2, Element 2D4 and ACOTE Standard C.1.15 as a risk rather than as
+          evidence (see gap_note).
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Confirmed present per the CIET configuration guide ("Click Review All to mark all
+          forms as reviewed"). The risk against a formative-feedback standard is real: a
+          bulk "mark all reviewed" action produces the same Reviewed status, and the same
+          apparent compliance record, whether or not any human read the low-score-highlighted
+          row three lines above it. Nothing links the review action to acknowledgment of a
+          flagged score. A confirmation step that surfaces "3 of these 24 forms are below
+          threshold" before a bulk review would convert this from a compliance-theater risk
+          into a triage moment, and it is a small change.
+      - element: "Per-form actions by status (mark reviewed, un-submit, clear, save, submit on behalf)"
+        type: "drawer actions, conditional on form status"
+        data_shown: >
+          Pending School Review offers mark-reviewed or un-submit; In Progress by
+          Student/Site offers clear, save changes, or submit on their behalf
+        gates_on: []
+        accreditation_citation: >
+          CCNE Standard III, Key Element III-K (and ACEN Standard 4, Criterion 4.10) — the
+          faculty-last review chain lives on these actions; CAPTE Standard 2, Element 2D4.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor documents status-conditional
+          action sets on an evaluation under review.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Complete as documented, and the status-conditional design is correct. The
+          "submit on their behalf" action on an In Progress form is the element that
+          deserves scrutiny against [NURSING] CCNE III-K, which insists faculty judgment be
+          distinguishable from preceptor input: an admin submitting a preceptor's
+          in-progress midterm evaluation on their behalf blurs exactly the line CCNE draws.
+          No source confirms whether the resulting record is attributed to the preceptor or
+          to the submitting admin. [OT/OTA] The SEFWE forms are confirmed to carry an Audit
+          Log with full change history that would answer this; no equivalent audit log is
+          confirmed for the generic Forms/Evaluations review drawer, and that asymmetry is
+          the finding.
+    action: >
+      The coordinator opens the course's Forms/Evaluations Summary at the midpoint, scans the
+      grid for red-highlighted below-threshold scores and for students whose midterm form is
+      still unsubmitted, opens any flagged form to read the evaluator's narrative, and either
+      marks it reviewed or un-submits it back to the student or site for correction — then
+      opens an Intervention on any student whose score warrants one.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Track low scores for timely interventions.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/CIET Form (Clinical Internship Evaluation Tool) Configuration.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/OT-OTA Discipline/Help Guides for OT-OTA/Fieldwork Performance Evaluation Tool.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md lines 261-263 (a numeric score threshold set at PTSE 1 / PTSE 2 activation, below-threshold submissions displayed in RED on the review screen, and automated low-score email notifications to a designated recipient that are not self-service and require an Exxat support ticket);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+
+  - screen: "Student 360 — Learning Activities tab (Forms/Evaluations)"
+    navigation_path: "Students > [student] > Learning Activities > Forms/Evaluations"
+    elements:
+      - element: "Status column"
+        type: "read-only status per assigned form"
+        data_shown: "Where the form is in its workflow (e.g. pending, submitted, reviewed) for one student, one form, at a time"
+        gates_on: []
+        accreditation_citation: >
+          LCME Standard 9, Element 9.7; ACOTE Standard A.3.5 (per-student advisement
+          history a site visitor can inspect); CAA-ASHA Standard 4.0, Standard 4.6.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown in ../competitors/ documents
+          a per-student form-status screen at this granularity; all three cited competitors
+          (E*Value, CORE ELMS, one45) are only sourced to stage-level marketing claims about
+          alerts/reminders, not to a specific status-tracking UI.
+        gap_severity: "gap"
+        gap_note: >
+          This view is per-student, one form at a time. REVISED against the discipline pass:
+          a cross-student view does exist at course scope (Learning Activities > Review >
+          Forms/Evaluations Summary, documented in its own step above), so the original
+          framing of "nothing cross-student anywhere" was too strong and is corrected here.
+          What remains genuinely missing, and what keeps this scored a gap, is a
+          cross-student, cross-ROTATION, cross-COURSE report that rolls status up into "% of
+          student/rotation pairs with midpoint feedback delivered on time" — the specific
+          reportable LCME 9.7 asks a program to produce and that
+          ../journeys/rotation-lifecycle.yaml's competitor_comparison for this stage flags as
+          a differentiated, standard-citable claim Prism could build but has not shipped.
+          The discipline pass strengthens rather than weakens this finding: [OT/OTA]
+          acote.yaml names "track submission status so the program can chase stragglers" as
+          required software behavior under C.1.15, and [PA] arc-pa.yaml describes B4.01 as a
+          standard "whose whole test is timeliness." Two accreditors beyond LCME are asking
+          for the same unshipped report.
+    action: >
+      Coordinator clicks a form's status to open it, review the submitted evaluation, and
+      (per this same screen) provide feedback and update status.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md"
+
+  - screen: "Student 360 — Interventions tab"
+    navigation_path: "Students > [student] > Interventions > + (Add)"
+    elements:
+      - element: "Communications vs. Interventions record-type split"
+        type: "two distinct record types on the student profile, each with its own tab"
+        data_shown: >
+          Communications = neutral advising contacts and field-visit documentation.
+          Interventions = documented concerns requiring monitoring or remediation, carrying
+          a formal Open/Closed status and structured Follow-Ups.
+        gates_on: []
+        accreditation_citation: >
+          ACOTE Standard A.3.5; CAA-ASHA Standard 4.0, Standard 4.3 (which asks for
+          "implementing and DOCUMENTING all forms of intervention" — caa-asha.yaml calls
+          this data model a close match to that exact language); ARC-PA Standard B4, Element
+          B4.01 a-b; CAEP Standard R3, Component R3.2; CSWE Accreditation Standard 3.3, AS
+          3.3.5; COA Standard H.1.1 (faculty advising providing ongoing formal and informal
+          feedback).
+        competitor_equivalent: >
+          Not comparable at element level, and notably so: no competitor file documents a
+          typed distinction between neutral advising contacts and formal concern records.
+          Every competitor claim in this stage is about DETECTION (low-score alerts); none
+          is about the case-management object the detection is supposed to open. That is the
+          shape of the competitive opportunity in this stage — Prism's advantage is on the
+          documentation half, not the alerting half.
+        gap_severity: "none"
+        gap_note: >
+          The split itself is complete, shipped, and cited by six accreditors' registries in
+          this repo — which makes it the single most cross-cutting element in this stage.
+          Discipline-specific confirmations: [OT/OTA] the OT playbook describes Interventions
+          as recording "professional concerns, remediation plans, probation statuses, and
+          faculty-led student support interventions," the only source in the corpus naming
+          PROBATION as a captured state. [SW] the SW playbook records that both the
+          Communications tab (faculty advising notes and field-visit documentation, with
+          attachments and email records) and the Interventions tab (concerns and support
+          activity, "not necessarily disciplinary") are READ-ONLY TO STUDENTS — which
+          contradicts, or at least sits awkwardly beside, the "Make this intervention visible
+          to student" publish toggle documented as the next element. Both statements come
+          from real sources; the likely reconciliation is that the toggle governs WHETHER a
+          record appears to the student and the SW note describes that when it does appear it
+          is not editable by them. That reconciliation is inference and is flagged as
+          unverified rather than asserted. [PA] arc-pa.yaml names this record type as the
+          documentation half of B4.01, surfaced via Students > Reports > Interventions and
+          Communications. [CAEP/TE] caep.yaml maps R3.2's remediation half "directly onto the
+          confirmed Interventions record type."
+      - element: "Make this intervention visible to student"
+        type: "toggle"
+        data_shown: "Whether the intervention publishes to the student, with a confirm-on-save prompt"
+        gates_on: ["student-visible label"]
+        accreditation_citation: >
+          None at this element directly, though CODA Standard 2, Element 2-2's due-process
+          expectation implies the student sees the record; this toggle makes that optional
+          rather than required. The same tension applies to CAEP Standard R3, Component
+          R3.2, which requires transition-point criteria to be "transparent to candidates."
+        competitor_equivalent: >
+          Not comparable at element level — none of the cited competitor files
+          (../competitors/e-value.yaml, core-elms.yaml) document an equivalent case-record
+          screen, let alone a student-visibility control on one.
+        gap_severity: "none"
+        gap_note: >
+          Complete as documented, including the confirm-on-save prompt. [SW] See the
+          contradiction flagged on the record-type element above. [OT/OTA][SLP][TE] Three
+          registries independently confirm the RBAC posture around this toggle — acote.yaml
+          ("gated by the same pillar's Role-Based Access Control so only the assigned advisor
+          sees the record"), caa-asha.yaml ("RBAC restricts advisement/intervention notes"),
+          and caep.yaml ("RBAC restricting advisement/intervention notes to assigned faculty
+          and advisors only") — so the sensitivity handling is well established and
+          cross-confirmed, not a single-source claim.
+      - element: "Mode"
+        type: "select (Audio call, Video call, Email, In Person, Other)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None at this element — contact modality is not one of CODA 2-2's named
+          due-process artifacts. [PA] arc-pa.yaml does list mode among what the Student
+          Intervention and Communication report documents for B4.01a-b (per the PA playbook:
+          "mode, schedule, frequency"), so it is reported evidence even though no standard
+          requires the field itself.
+        competitor_equivalent: >
+          Not comparable at element level — competitors' public docs describe only
+          "low-score alerts," which is the trigger, not a case-management artifact.
+        gap_severity: "none"
+        gap_note: >
+          Complete as documented; a closed list covering how the contact happened.
+      - element: "Course / Rotation / Site"
+        type: "cascading select"
+        data_shown: "Ties the intervention to the specific rotation the low midpoint score came from"
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-2; CAA-ASHA Standard 4.0, Standard 4.3 (which requires
+          the intervention policy be shown to apply separately in the ACADEMIC and the
+          CLINICAL component — this scoping select is the only field that distinguishes the
+          two).
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor documents scoping a case
+          record to a specific rotation.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Scopes the record to the rotation, which is as close as the field set gets to
+          CODA 2-2's "individual evaluation" linkage — but the tie is to the rotation, not
+          to the triggering evaluation score itself. There is no link from this record back
+          to the evaluation that prompted it; the coordinator has to know why they opened it.
+          The discipline pass sharpens why this matters rather than softening it: [PA] the
+          ARC-PA B4.01 test is that a deficiency was identified and addressed "in a timely
+          manner," which is provable only if the alert and the record are linked by
+          timestamp; [SLP] CAA-ASHA 4.3 asks the program to prove policies were "applied
+          CONSISTENTLY across all students identified as needing intervention," which
+          requires knowing which students were identified — a set that exists only as
+          transient email alerts, since nothing persists the fact that an alert fired.
+          That missing alert-to-intervention link is the same underlying gap as the missing
+          delivery artifact on the Auto Notifications step, and closing it once would serve
+          LCME 9.7, ARC-PA B4.01, and CAA-ASHA 4.3 together.
+      - element: "Subject / Description"
+        type: "text fields"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-2; CAEP Standard R3, Component R3.2"
+        competitor_equivalent: >
+          Not comparable at element level — none of the cited competitor files
+          (../competitors/e-value.yaml, core-elms.yaml) document an equivalent narrative
+          field on a case record.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is the free text a program would have to lean on to carry due-process
+          information, since no structured field does. Configure, not Transfer: a program
+          could adapt this record via Subject/Description conventions, but Prism does not
+          structure or enforce that trail today.
+      - element: "Status"
+        type: "select (Open / Closed)"
+        data_shown: "Two-state lifecycle for the intervention record"
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-2; CAEP Standard R3, Component R3.2 (documented
+          performance reviews, remediation efforts and support provisions with evidence that
+          action is taken when a candidate's progression is at risk); CAA-ASHA Standard 4.0,
+          Standard 4.3 (a structured intervention record with an owner and a close-out).
+        competitor_equivalent: >
+          Not comparable at element level — competitors' public docs describe only
+          "low-score alerts," not a case lifecycle state.
+        gap_severity: "configure-needed"
+        gap_note: >
+          The thinnest point against CODA 2-2. Open/Closed is the only lifecycle the record
+          carries: there is no dedicated "decision" or "outcome" field and no due-process-stage
+          field (e.g. warning / probation / dismissal / appeal). Closing an intervention
+          evidences that a concern stopped being tracked, not that a "decision made in
+          accordance with institutional due-process policy" was reached and documented.
+          [OT/OTA] The OT playbook's description of Interventions as capturing "probation
+          statuses" implies programs are already using the free-text fields to carry exactly
+          the due-process stage this element does not model — evidence of real demand for the
+          missing field, from a production discipline, not a hypothetical expansion one.
+          [CAEP/TE] caep.yaml adds a distinct requirement this two-state model cannot serve
+          at all: R3.2 demands a complaint register including complaints made to CAEP itself,
+          and explicitly warns "do not stretch Interventions to cover it."
+      - element: "Follow Up (Planned Follow-Up Date / Actual Follow-Up Date / Notes)"
+        type: "sub-form, added via its own + icon"
+        data_shown: "A single planned-vs-actual follow-up pair with free-text notes"
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-2; ARC-PA Standard B4, Element B4.01 a-b (arc-pa.yaml
+          names "structured Follow-Ups with planned vs. actual dates" as the documentation
+          half of B4.01); ACOTE Standard A.3.5; CAA-ASHA Standard 4.0, Standard 4.3; CAEP
+          Standard R3, Component R3.2.
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor documents a planned-vs-actual
+          follow-up structure.
+        gap_severity: "configure-needed"
+        gap_note: >
+          A real, structured piece of the trail — closer to closing coda.yaml's Element 2-2
+          gap than the journey's current "not confirmed anywhere" framing suggested. But it
+          is one planned/actual pair plus free-text notes, which records that follow-up
+          occurred, not what was decided at it. The planned-vs-actual pair is precisely what
+          makes "timely" provable by timestamp for [PA] ARC-PA B4.01, which is the standard
+          most dependent on this element across all twelve disciplines.
+      - element: "Supporting Documents upload"
+        type: "file upload (PDF/DOC/JPG/etc., 25MB max)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None at this element structurally, though it is the only place a program could
+          attach an out-of-system CODA 2-2 due-process document. [PA] the PA playbook names
+          the concrete use — the Student Intervention and Communication report "supports
+          upload of academic-improvement/remediation plans." [OT/OTA] acote.yaml names the
+          equivalent for A.3.5 — "attach meeting notes/progress reports/signed forms."
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor documents attachments on
+          a student case record.
+        gap_severity: "none"
+        gap_note: >
+          Complete as documented as a file store; whatever due-process structure the fields
+          above lack would have to live inside an attached document rather than as data.
+          [PA] The remediation plan — the central artifact ARC-PA B4.01 asks for — is
+          therefore an opaque attachment rather than structured data, which means no report
+          can answer "how many students had a remediation plan this cycle" without a human
+          opening files. [CAEP/TE] The same limitation defeats R3.2's demand for "three
+          cycles of remediation data, disaggregated by race/ethnicity" outright, which
+          caep.yaml records as "not extractable today."
+    action: >
+      When a midpoint evaluation lands below the program's defined threshold, the
+      coordinator opens an Intervention on the student's profile, scoped to the specific
+      Course/Rotation/Site, describing the concern and setting a follow-up date. Where the
+      concern is a neutral advising conversation rather than a documented performance
+      concern, it is logged as a Communication instead — a distinction six accreditors'
+      registries in this repo treat as meaningful.
+      CORRECTION 2026-08-25, on a full read of the SW playbook: the split above is real but
+      the framing is sharper than one source supports. Social Work (SW) Playbook.md line 80
+      describes the Interventions tab as capturing "concerns/support activity, NOT
+      NECESSARILY DISCIPLINARY," and line 79 describes Communications as "faculty advising
+      notes and field-visit documentation (attachments/email records supported)" — i.e. for
+      SW the operative distinction is advising-record versus concern-record, not neutral
+      versus disciplinary, and BOTH tabs are read-only to students. That matters for this
+      stage because an early-risk Intervention opened off a low midpoint score is, on the SW
+      reading, a SUPPORT record the student cannot see unless the visibility toggle is set —
+      which is the opposite of the escalation posture the four-domain framing implies.
+      Recorded as a correction rather than silently rewritten because "documented performance
+      concern" would overstate what an SW program is actually logging.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md (Communication and Intervention — A.3.5);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md lines 79-80 (Communications = faculty advising notes and field-visit documentation with attachments/email records; Interventions = concerns/support activity, "not necessarily disciplinary"; both read-only to students) and line 18 (the Faculty Advisor role documents advising activity via the Communications tab);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (Student Intervention and Communication report);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md lines 109-111 (advisement documentation via Dashboard > Students > select student > Communication > Add Communication, and the alternative custom workflow-based advisement forms with signature capability, available via CSS/Account Manager rather than self-service)
+
+  - screen: "Students > Reports > Intervention Log"
+    navigation_path: "Students > Reports > Intervention Log"
+    elements:
+      - element: "Report grid"
+        type: "read-only tabular report, exportable"
+        data_shown: "Interventions logged across students, with the same core fields captured on the Interventions tab (mode, subject, status, dates)"
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-2; ACOTE Standard A.3.5; CAA-ASHA Standard 4.0,
+          Standard 4.3; ARC-PA Standard B4, Element B4.01 a-b; CAEP Standard R3, Component
+          R3.2; CSWE Accreditation Standard 3.3, AS 3.3.5.
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is the bulk rollup that turns individual Intervention records into
+          accreditor-facing evidence, confirming that a compliance-checklist-adjacent trail does
+          exist for a due-process case, contrary to how flatly coda.yaml's "not confirmed
+          anywhere" reads. It is still a log of the same thin field set from the step above (no
+          decision/outcome field), so it evidences that a concern was tracked, not that a formal
+          due-process decision was reached and documented per CODA 2-2's exact wording.
+      - element: "UNRESOLVED SOURCE CONFLICT — whether a dedicated Interventions report exists"
+        type: "not a control — a documented contradiction between sources, recorded rather than resolved"
+        data_shown: "n/a"
+        gates_on: []
+        accreditation_citation: >
+          ACOTE Standard A.3.5; ARC-PA Standard B4, Element B4.01 a-b; CAA-ASHA Standard
+          3.0B, Standard 3.10B and Standard 4.0, Standard 4.3; CSWE Accreditation Standard
+          3.3, AS 3.3.5; CAEP Standard R3, Component R3.2. All five registries hang an
+          evidence claim on the answer to this question.
+        competitor_equivalent: >
+          Not comparable — this is an internal-source-consistency finding, not a competitive
+          one.
+        gap_severity: "gap"
+        gap_note: >
+          Recorded honestly rather than reconciled, because reconciling it would require
+          product confirmation this research pass cannot supply. FIVE accreditor registries
+          in this repo state flatly that there is NO dedicated Interventions report, and that
+          the only view of interventions needing follow-up is the Sites/Locations Dashboard
+          on a 24-hour refresh, bucketed More than 7 days / Next 7 days / Past Due —
+          acote.yaml, arc-pa.yaml, caa-asha.yaml, cswe.yaml, and caep.yaml all say so, each
+          tracing the claim to ../prism/capability-map.yaml. But TWO discipline playbooks
+          name such a report concretely: the PA playbook gives the path "Students > Reports >
+          Interventions and Communications" and describes its contents, and the OT playbook
+          lists a "Communication and Intervention Report" that "tracks all communication/
+          intervention activity to support student retention and placement," adding that
+          Ask Leo can surface open follow-ups by natural-language query. The step above
+          documents the report as existing, from a third source (the Viewing Student Reports
+          help guide). The most likely reading is that a report EXISTS but is not a
+          follow-up-TRIAGE surface — it lists interventions, it does not answer "which are
+          overdue" — which is exactly the distinction the registries draw when they say the
+          only follow-up view is a dashboard bucket. That reading is inference. Scored a gap
+          because either way the triage question is unanswered by a queryable report, and
+          because a corpus this size should not disagree with itself on whether a named
+          report ships. Flag for product confirmation before any of these five standards is
+          claimed as served.
+      - element: "Filter (Status, Cohort, Group, Student Category, Campus, Attestation Status/Type)"
+        type: "report filter"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None at this element — filters slice the grid above; the CODA 2-2 evidence is
+          the grid's contents, not the filter set.
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Complete for the fields it can filter, but it inherits the thin field set: the
+          only intervention-state dimension available is Status (Open/Closed), so there is
+          no way to pull "all interventions that reached a formal due-process decision" —
+          because no such field exists to filter on. [CAEP/TE] The filter set is also missing
+          the dimension R3.2 specifically demands: race/ethnicity, for the disaggregated
+          three-cycle remediation analysis. Demographic data exists elsewhere in Prism
+          ([PT/PTA] the PT playbook confirms a Students > Reports > Race, Gender, Age &
+          Ethnicity report filtered by cohort), so this is a join that is absent rather than
+          data that is missing — a materially cheaper fix than it first appears.
+    action: >
+      Coordinator pulls the bulk Intervention Log ahead of an end-of-term student-performance
+      meeting or an accreditation self-study to see every open/closed intervention across the
+      program, not one student at a time.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Viewing Student Reports.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md;
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acote.yaml, arc-pa.yaml, caa-asha.yaml, cswe.yaml, caep.yaml (all five recording the no-dedicated-report claim)
+
+  - screen: "Student Competency Dashboard"
+    navigation_path: "Students > [student] > Competency tab, or via a published Competency Framework's Review Dashboard"
+    elements:
+      - element: "Score-over-time trendline per competency"
+        type: "chart"
+        data_shown: "Flags stagnant/declining competencies for intervention"
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-9; ACPE Standard 3, Key Element 3.1.b"
+        competitor_equivalent: >
+          Not comparable at element level — none of the competitor files describe a per-student
+          competency trendline with this field set.
+        gap_severity: "none"
+        gap_note: >
+          Genuinely mature engine per capability-map.yaml; the midpoint evaluation's questions
+          can be mapped into a competency framework so a low midpoint score surfaces here as a
+          trend, not just a one-off number — a real escalation path once the alert exists.
+      - element: "Student-vs-class-average radar chart"
+        type: "chart"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-9; ACPE Standard 3, Key Element 3.1.b"
+        competitor_equivalent: >
+          Not comparable at element level — none of the competitor files describe a
+          student-vs-cohort comparative competency view.
+        gap_severity: "none"
+        gap_note: >
+          Same mature engine, cohort-relative rather than time-relative; confirmed per
+          capability-map.yaml. Read-only, so it informs what the Intervention record should
+          say rather than gating anything itself.
+      - element: "Pass threshold"
+        type: "configured value (default 70%, or a custom school-defined scale)"
+        data_shown: "Per-competency threshold a score is measured against"
+        gates_on: ["Meeting Threshold vs. Below Threshold classification"]
+        accreditation_citation: >
+          CODA Standard 2, Element 2-9; ACPE Standard 3, Key Element 3.1.b; COA Standards
+          D.1-D.50 (the nursing playbook confirms Graduate Standards D.1-D.50 are configured
+          directly as the competency framework for CRNA, with a custom competency reporting
+          scale available instead of the fixed default).
+        competitor_equivalent: >
+          Not comparable at element level — no competitor file documents a configurable
+          per-competency pass threshold.
+        gap_severity: "none"
+        gap_note: >
+          The one element on this screen that actually gates a classification rather than
+          displaying a number, and it is school-configurable (default 70%) — confirmed per
+          capability-map.yaml. [NURSING][CRNA] The nursing playbook independently confirms
+          "optional minimum threshold scores" as part of framework definition and a custom
+          reporting scale for COA specifically, so the threshold primitive is confirmed from
+          two directions.
+      - element: "[NURSING][CRNA] Competency Tracker — row-per-student, column-per-domain grid with drill-down to the sub-competency below threshold"
+        type: "cohort grid with per-cell drill-down"
+        data_shown: "Every student in the cohort against every competency domain, drilling into the specific sub-competency that fell below threshold"
+        gates_on: []
+        accreditation_citation: >
+          COA Standard H.1.1 and H.1.1.1; COA Standards D.1-D.50; CCNE Standard III, Key
+          Element III-K (and ACEN Standard 4, Criterion 4.10); ACEN Standard 5, Criterion 5.1
+          (aggregate assessment data).
+        competitor_equivalent: >
+          Partially comparable and worth stating precisely, because this is the one place a
+          competitor claims a genuinely adjacent capability. E*Value's public materials claim
+          "AI-powered risk assessment" analytics that "flag at-risk learners against
+          board-exam benchmarks" (../competitors/e-value.yaml, sourced to
+          medhub.com/software/evalue). That is a different axis — E*Value flags risk against
+          a BOARD-EXAM benchmark, Prism flags it against a program-defined COMPETENCY
+          threshold fed by clinical evaluations. Neither is a superset of the other, and a
+          program that wants both would today need both. CORE ELMS's competency module
+          (../competitors/core-elms.yaml, sourced to corehighered.com/competency-management)
+          is rated "ahead" in that file but with an explicit provisional caveat about
+          pricing/bundling, and its public copy does not describe a cohort grid or
+          sub-competency drill-down.
+        gap_severity: "none"
+        gap_note: >
+          [NURSING][CRNA] Confirmed shipped per the nursing playbook, which describes it as
+          "supporting early remediation" — i.e. this stage's purpose named explicitly — and
+          confirms availability to Program Administrators, Faculty Advisors, AND to students
+          themselves for self-monitoring, alongside a Cohort Performance Tracking Dashboard
+          for domain averages and score distributions. The student-facing half matters for
+          this stage and is easy to overlook: it is the only confirmed surface in the entire
+          flow where the STUDENT sees their own early-risk signal without a coordinator
+          mediating it. [NURSING] The playbook also records a conceptual distinction worth
+          preserving — Prism tracks formative (exposure) and summative (achievement)
+          separately, with the video transcript explicit that "exposure is not the same as
+          achievement." Every other discipline's midpoint story in this file is achievement
+          only; nursing is the one that models exposure as a first-class early signal, and
+          that framing transfers directly to the Pharmacy IPPE hours case documented in the
+          threshold step below.
+    action: >
+      Coordinator or advisor reviews the dashboard after a low midpoint score to see whether
+      it is an isolated event or part of a declining trend across the competency the midpoint
+      form maps to, informing what the Intervention record should say. [NURSING][CRNA] The
+      same review runs cohort-first from the Competency Tracker grid, scanning for
+      below-threshold cells and drilling into the specific sub-competency, rather than
+      student-by-student.
+    confirmed_by: >
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (intelligence_layer > Competency Tracking, cross-confirmed by tutorial transcript and Exxat help-center documentation per that entry);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md (Student 'Competency' Tab);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md (Competency Management);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (Competency Framework & Competency Tracking Report)
+
+  - screen: "[CRNA] Daily Clinical Forms/Evaluations Report (aggregation of high-frequency formative evaluations)"
+    navigation_path: "Reports > Daily Clinical Forms and Evaluation Reports"
+    elements:
+      - element: "'From' form selector"
+        type: "select (the daily clinical case log form already set up for the program)"
+        data_shown: "Which daily formative instrument the report aggregates"
+        gates_on: []
+        accreditation_citation: >
+          COA Standard H.1.1 and H.1.1.1 — coa.yaml describes the required software behavior
+          as "high-frequency formative instruments (in nurse anesthesia, a per-clinical-day
+          evaluation, which over a three-year doctoral program generates thousands of forms
+          per cohort)."
+        competitor_equivalent: >
+          Not comparable at element level. No competitor file documents a discipline-specific
+          report built for evaluation VOLUME. E*Value's "mid-point-to-end-of-rotation summary
+          evaluations" claim presumes a low-frequency two-point model; nothing in any
+          competitor's public materials addresses the case where formative evaluation happens
+          daily.
+        gap_severity: "none"
+        gap_note: >
+          [CRNA] Complete as documented per /Users/romitsoley/Downloads/CRNAVideosTranscripts.md
+          lines 21-25. This report exists because CRNA breaks the assumption every other
+          discipline in this file makes — that "midpoint" is a single scheduled event. For
+          nurse anesthesia the formative signal is continuous, and the load-bearing product
+          problem is aggregation rather than scheduling. That is the most genuinely distinct
+          discipline finding in this stage: CRNA does not have a different midpoint FORM, it
+          has a different midpoint MODEL.
+      - element: "Filters (student, rotation, course, status)"
+        type: "report filters"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "COA Standard H.1.1 and H.1.1.1"
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "none"
+        gap_note: >
+          [CRNA] Complete as documented (transcript line 25).
+      - element: "Wrench icon — include student responses, preceptor responses, or both"
+        type: "report configuration control"
+        data_shown: "Which perspective(s) the export contains; when both are included they render side by side per question"
+        gates_on: []
+        accreditation_citation: >
+          COA Standard H.1.1 and H.1.1.1, with coa.yaml noting that dual-perspective capture
+          is needed because COA Standard H.1.2.7 separately requires students to evaluate
+          their own achievement.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor file documents dual-perspective
+          side-by-side rendering. The nearest Prism-internal analogue is [PT/PTA]
+          PTMACS/PTAMACS's per-question student-and-CI layout, which does the same thing at
+          completion time rather than at report time.
+        gap_severity: "none"
+        gap_note: >
+          [CRNA] Complete as documented (transcript lines 27 and 31: "If both student and
+          preceptor responses are included, the report displays them side by side for each
+          question, making it easy to compare perspectives"). Directly relevant to early risk:
+          a systematic gap between a student's self-rating and their preceptor's rating is a
+          risk signal in its own right, and this is the only surface in the corpus that
+          renders that comparison. Nothing COMPUTES the divergence — same limitation as the
+          [PA] midpoint-to-final consistency case — but the data is placed side by side for a
+          human to see, which is more than any other discipline gets.
+      - element: "Download Report — per-student PDF, ZIP for multi-student selection"
+        type: "export action"
+        data_shown: "One PDF per student; a ZIP when multiple students are selected"
+        gates_on: []
+        accreditation_citation: >
+          COA Standard H.1.1 and H.1.1.1 — coa.yaml notes "an accreditor cannot read
+          individual forms, so the system must roll response counts and percentage
+          distributions into a per-student artifact," which this export is.
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "configure-needed"
+        gap_note: >
+          [CRNA] Complete as an export, with two limits carried forward from coa.yaml rather
+          than newly found. First, it is an aggregation and export layer, NOT a competency
+          computation — it reports total response counts and percentage distributions per
+          question, whereas COA H.1.1.1 asks for achievement against Graduate Standards
+          D1-D50. Bridging the two requires the daily instrument's questions to be MAPPED into
+          Competency Management, which the transcript does not show and which coa.yaml
+          explicitly says "should be verified rather than assumed." Second, and more
+          seriously for a stage that handles at-risk students: the transcript states these
+          per-student PDFs "can also be shared directly with clinical sites, giving preceptors
+          and site coordinators visibility into student evaluation data" (line 35). coa.yaml
+          flags this as "a FERPA-adjacent disclosure path worth pairing with Compliance
+          Management's OTP protection before it is recommended." A per-student performance
+          PDF sent to a site is exactly the artifact a struggling student would least want
+          circulated, and no access control on that path is documented.
+      - element: "Pattern review across a student's evaluations"
+        type: "reading behavior supported by the report layout, not a discrete control"
+        data_shown: "Sequential evaluations per student, organized to make patterns visible"
+        gates_on: []
+        accreditation_citation: "COA Standard H.1.1 and H.1.1.1; COA Standard C.4 (clinical experience logs, faculty-reviewed on a regular basis)"
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "configure-needed"
+        gap_note: >
+          [CRNA] The transcript names this stage's purpose almost verbatim (line 33): "You can
+          move through each student's report to review their evaluations, spot patterns, and
+          identify areas where additional support or intervention may be needed." Recorded as
+          configure-needed rather than none because it is a HUMAN reading a PDF. There is no
+          confirmed low-score threshold, response-based notification, or automated flag
+          operating over the daily evaluation stream — the two alerting mechanisms documented
+          in step 1 fire on form submission against a threshold, and no source confirms they
+          are configured or configurable for a daily instrument generating thousands of
+          submissions per cohort. For the discipline with the highest formative volume in the
+          product, early-risk detection is confirmed to be manual. That is the single largest
+          unmet early-risk opportunity identified in this file.
+    action: >
+      [CRNA] The program administrator selects the daily clinical case log form, filters by
+      student/rotation/course/status, chooses whether to include student responses, preceptor
+      responses, or both, and downloads per-student PDFs — then reads through each student's
+      accumulated daily evaluations looking for the pattern that warrants an Intervention.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md (lines 15-37, 'Daily Clinical Evaluation Report for CRNA Program');
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coa.yaml (Standard H.1.1 and H.1.1.1);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md (Evaluations & Forms — formative Daily/Midterm vs. Summative/Terminal)
+
+  - screen: "[NURSING][CRNA] Student Activity Insights Report (color-coded mid-rotation pacing)"
+    navigation_path: "Learning Activities > [Course] > Reports (Action column) > Student Activity Insights"
+    elements:
+      - element: "Color-coded completion cell per requirement category"
+        type: "read-only grid with green/amber/red conditional formatting"
+        data_shown: >
+          Green = met or exceeded the minimum requirement (100% or more); yellow/amber =
+          approaching the minimum (roughly 80-99%); red = 0% to below the minimum
+        gates_on: []
+        accreditation_citation: >
+          COA Standard E.2.3 and Appendix (clinical experience minimums — 2,000 clinical
+          hours and roughly 60 case-category thresholds); COA Standard C.4 (clinical
+          experience logs, faculty-reviewed on a regular basis); CCNE Standard III, Key
+          Element III-H (DNP 1,000-hour and NP 500-hour minimums); CAA-ASHA Standard 4.0,
+          Standard 4.3 (an early-warning signal fired from live performance data — the SLP
+          analogue runs on the Clinical Log Report, documented in the next step).
+        competitor_equivalent: >
+          Not comparable at element level. No competitor file documents an exposure-pacing
+          view with banded thresholds. This is a distinct signal type from everything the
+          competitors claim: E*Value's and CORE ELMS's low-score alerts fire on an EVALUATION
+          RESULT, whereas this fires on ACCUMULATION SHORTFALL — a student can be rated
+          perfectly well and still be red here. No competitor public material addresses that
+          axis at all.
+        gap_severity: "none"
+        gap_note: >
+          [NURSING][CRNA] Confirmed complete from two independent sources — the nursing
+          playbook calls it "the core self-monitoring/early-intervention tool" and notes it is
+          "repeatedly cited across the ACEN, COA, and student-facing CCE guides," and the CRNA
+          transcript gives the exact band definitions and a worked example (transcript line
+          87: "if the minimum requirement is 200 and the student has entered only 21, the cell
+          will appear red"). Critically for this stage, the amber band is a genuine EARLY
+          warning rather than a failure report: a student at 80-99% is flagged before they
+          miss. [NURSING][CRNA] The playbook confirms availability to BOTH admins and students
+          — the second confirmed student-facing early-risk surface in this file, alongside the
+          Competency Tracker.
+      - element: "Filters (rotation, program, clinical settings, site location, status, student) plus Generate Report"
+        type: "report filters and action"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "COA Standard E.2.3 and Appendix; COA Standard C.4"
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "none"
+        gap_note: >
+          [CRNA] Complete as documented (transcript line 85), with download/export available.
+      - element: "Absence of a push alert on a red or amber cell"
+        type: "not a control — a documented absence"
+        data_shown: "n/a"
+        gates_on: []
+        accreditation_citation: >
+          COA Standard C.4; CCNE Standard III, Key Element III-H; ACPE Standard 3, Key
+          Element 3.1.b (the same absence is recorded for Pharmacy in the next step).
+        competitor_equivalent: >
+          Not comparable — an absence, and none of the competitor files claim pacing alerts
+          either, so no competitor is ahead here. Recorded because the absence is uniform
+          across the market rather than a Prism-specific deficiency.
+        gap_severity: "gap"
+        gap_note: >
+          [NURSING][CRNA] The report is a PULL surface: a coordinator sees a red cell only by
+          generating the report. No source in this corpus confirms that a student crossing
+          from green into amber, or amber into red, generates any notification to an advisor
+          or to the student. The same absence is separately confirmed for [PHARMACY] hour
+          thresholds in the next step and for [SLP] min/max log thresholds. Three disciplines,
+          three different threshold mechanisms, and the same missing push. Recorded once here
+          as a gap and cross-referenced rather than restated, because it is one product
+          behavior and would be one build: a scheduled evaluation of existing configured
+          thresholds that opens a notification when a student crosses a band. Every ingredient
+          (the thresholds, the bands, the notification engine, the recipient model) is already
+          shipped and confirmed elsewhere in this file.
+    action: >
+      [NURSING][CRNA] Mid-rotation, the coordinator generates the Student Activity Insights
+      report for the course, scans for amber and red cells indicating students approaching or
+      below the program's minimum per category, drills into the underlying logs, and opens an
+      Intervention while there is still rotation time left to fix the shortfall.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md (lines 81-87, 'Managing Clinical Case Experience Log in Exxat Prism' — Viewing the CCE log report);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md (Student Activity Insights Report);
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coa.yaml (Standards C.4 and E.2.3);
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/nursing.yaml (CCNE Standard III, Key Element III-H)
+
+  - screen: "Clinical Log Report (hour-threshold and exposure-minimum configuration)"
+    navigation_path: "Support-ticket/Account-Manager-gated configuration on the Clinical Log Report (not admin self-service)"
+    elements:
+      - element: "Per-participation-type hour threshold"
+        type: "support-gated configuration, not a self-service screen element"
+        data_shown: "Minimum/target hours per participation-type category (e.g. community vs. hospital/health-system for Pharmacy IPPE) against which cumulative logged hours are compared"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.1.b"
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This directly resolves what was "unconfirmed" in acpe.yaml's gap_notes for 3.1.b: the
+          Clinical Log Report does carry per-participation-type hour thresholds, so the
+          setting-category aggregation ACPE needs is a real, named feature — but it is
+          support-ticket/Account-Manager configuration, not admin self-service, and no source
+          found confirms an automatic advisor-facing "off-pace" alert fires off that threshold
+          before the IPPE window closes; that alerting behavior remains unconfirmed. See the
+          Student Activity Insights step above, where the same missing push is recorded for
+          [NURSING][CRNA] — it is one absence across three disciplines, not three absences.
+      - element: "[SLP] Min/max hour thresholds per participation-type x mode-of-delivery combination"
+        type: "support-gated configuration (prism-support@exxat.com), surfaced as red flagging in the Clinical Log Report"
+        data_shown: "Under-logged students flagged red against configured minimum/maximum hour thresholds, per participation type crossed with mode of delivery"
+        gates_on: []
+        accreditation_citation: >
+          CAA-ASHA Standard 4.0, Standard 4.3 (caa-asha.yaml names "low clinical-log hours"
+          first in its list of live performance data an early-warning signal should fire from,
+          and identifies these thresholds as the trigger side that exists today); CAA-ASHA
+          Standard 3.0B, Standard 3.1B (the 400 supervised clinical practice hours the
+          Clinical Clock Hours Report tracks cumulatively).
+        competitor_equivalent: >
+          Not comparable at element level — no competitor file documents hour-threshold
+          flagging on a clinical log, in any discipline.
+        gap_severity: "configure-needed"
+        gap_note: >
+          [SLP] Confirmed from the SLP playbook, which states the thresholds "are not
+          self-service — programs must contact prism-support@exxat.com to configure them,
+          same as new custom forms," and confirms the Clinical Log Report "supports configured
+          min/max thresholds that flag under-logged students in red." The SLP case is the
+          worst-compounded services dependency of the eight production disciplines and
+          caa-asha.yaml says so directly: BOTH trigger mechanisms are support-gated for SLP
+          (the min/max hour thresholds AND the question-based early-alert notifications),
+          and combined with the unresolved Interventions-report question above, "the 'applied
+          consistently across all students' proof for 4.3 is assemblable but not queryable
+          today." Note also the SLP-specific dimensionality: the threshold is not a single
+          number but a matrix over participation type (Intervention vs. Evaluation) crossed
+          with mode of delivery, and the Clinical Log Report additionally breaks out
+          distribution across the 9 KASA competencies by age group. That is a richer
+          exposure model than any other discipline's hour threshold and it is entirely
+          invisible to the program without a ticket.
+      - element: "[PA] Diagnosis and procedure minimums configured on the Patient Log"
+        type: "per-diagnosis and per-procedure minimum encounter counts, scoped to rotations and settings"
+        data_shown: >
+          Which diagnoses a student must encounter and how many times, and which procedures
+          they must observe/assist/perform and how many times, per rotation and setting
+        gates_on: ["the student's real-time patient-logging progress display"]
+        accreditation_citation: >
+          ARC-PA Standard B3, Element B3.03 a-c (SCPE learning outcomes for preventive, acute,
+          and chronic patient encounters); ARC-PA Standard B3, Element B3.04 a-d (required SCPE
+          settings); ARC-PA Standard B4, Element B4.01 a-b (timely identification of
+          deficiencies — exposure shortfall being the deficiency here).
+        competitor_equivalent: >
+          Not comparable at element level — no competitor file documents diagnosis- or
+          procedure-level minimums with per-rotation scoping.
+        gap_severity: "none"
+        gap_note: >
+          [PA] Confirmed complete from the PA playbook, and it belongs in this stage rather
+          than in the in-rotation-capture stage because the playbook frames it explicitly as
+          an EARLY-RISK mechanism: once configured, "students track progress in real time,
+          faculty/admins monitor completion status, gaps surface early (not just at rotation
+          end), and interventions can happen while there's still time to fix exposure
+          shortfalls." That is the clearest statement of this stage's purpose anywhere in the
+          discipline sources. It is also the exposure-side complement to PA's evaluation-side
+          question-level alerting: PA is the only discipline confirmed to have BOTH a
+          question-level performance trigger and a granular exposure-minimum trigger, which
+          makes it the strongest overall early-risk story of the eight production disciplines
+          — and, given ARC-PA B4.01's timeliness test, the one where that strength is most
+          directly citable.
+    action: >
+      For a short-rotation, hours-paced or exposure-paced signal rather than a midpoint-date
+      signal — [PHARMACY] IPPE hours under ACPE 3.1.b, [SLP] clinical clock hours under
+      CAA-ASHA 3.1B and 4.3, [PA] diagnosis and procedure minimums under ARC-PA B3.03/B3.04 —
+      the coordinator needs thresholds configured before any pacing view can show a student
+      falling behind. For Pharmacy and SLP that configuration is a support engagement; for PA
+      the minimums are collected during patient-log setup.
+    confirmed_by: >
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (cross-cutting self-service-vs-support-gated configuration entry, listing 'per-participation-type hour thresholds on the Clinical Log Report' explicitly);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md line 67 (min/max hour thresholds per participation-type/mode-of-delivery combination, used to flag under-logged students red, NOT self-service — a prism-support@exxat.com request, "same as new custom forms"), line 128 (the Clinical Log Report as the surface those thresholds render on) and line 118 (question-based email notifications supporting real-time early-alert monitoring, also configured by the support team rather than by the program);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (Configuring Minimum Diagnosis & Procedure Requirements);
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caa-asha.yaml (Standard 4.0, Standard 4.3)
+
+  - screen: "[TE] Learning Tool Interoperability (GoReact/Echo360) — video-based formative feedback"
+    navigation_path: "Learning Activities > Setup > Learning Tool Interoperability > + (new assignment); reviewer work happens inside GoReact, not in Prism"
+    elements:
+      - element: "LTI section visibility (discipline/program-gated)"
+        type: "presence or absence of the Learning Tool Interoperability section on the setup page"
+        data_shown: "Whether the feature is activated for this discipline and program at all"
+        gates_on: ["access to the entire video-feedback workflow"]
+        accreditation_citation: >
+          CAEP Standard R3, Component R3.2 (documented performance reviews and support
+          provisions with evidence that action is taken when a candidate's progression is at
+          risk) and CAEP Standard R1, Component R1.3 (Instructional Practice) — video of a
+          candidate teaching being the natural evidence for the latter. Both citations are
+          the analyst's mapping of a confirmed Prism feature onto a confirmed CAEP standard;
+          no Exxat source in this corpus names CAEP against this feature, and the TE playbook
+          explicitly warns against citing CAEP standard numbers for TE "until confirmed
+          against a TE-specific source." Flagged rather than asserted.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor file documents an LTI integration
+          with a video-feedback tool, or video-based formative assessment of any kind.
+        gap_severity: "configure-needed"
+        gap_note: >
+          [TE] Confirmed from both the TE playbook and the CRNA transcript's third video
+          (which covers the same integration generically): "If you do not see this section,
+          it means this feature has not been activated for your discipline and program.
+          Please create a ticket with Exxat support to activate this feature." So TE's only
+          documented formative-feedback mechanism is behind a support ticket before a program
+          can use it at all.
+      - element: "Assignment configuration (LTI tool, title, description, placement-based vs. didactic, publish and due dates, grading and score settings, faculty visibility)"
+        type: "form"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None at this element — configuration fields mirroring the standard
+          Forms/Evaluations drawer.
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "none"
+        gap_note: >
+          [TE] Complete as documented, and notably it reuses the same publish/due-date and
+          placement-based/didactic vocabulary as the Forms/Evaluations drawer in step 1 — so
+          a TE program CAN anchor a video assignment to a placement midpoint. Auto-creation of
+          the matching GoReact activity on first save is confirmed and removes a real
+          duplicate-setup burden.
+      - element: "Timestamped comments, feedback, evaluations and scores — all authored inside GoReact"
+        type: "external review surface"
+        data_shown: "Reviewer watches the recording, leaves timestamped comments, completes evaluations, assigns scores; scores and status sync back to Prism"
+        gates_on: []
+        accreditation_citation: >
+          CAEP Standard R1, Component R1.3; CAEP Standard R3, Component R3.2. Same flagged
+          caveat as above — this is an analyst mapping, not an Exxat-sourced claim.
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited competitor.
+        gap_severity: "gap"
+        gap_note: >
+          [TE] This is the substantive TE finding of the whole stage, and it is a real
+          structural gap rather than a documentation thinness. What syncs back into Prism is
+          "scores and status updates" — the transcript and playbook both list exactly that.
+          The FORMATIVE CONTENT — the timestamped comments, the narrative feedback, the thing
+          that actually constitutes midpoint feedback to a teacher candidate — lives in
+          GoReact. Three consequences follow. (1) The low-score threshold and response-based
+          notification mechanisms documented in step 1 are Forms/Evaluations features; no
+          source confirms they operate on LTI activities, so TE's primary feedback channel is
+          very likely outside Prism's early-risk detection entirely. (2) An accreditation
+          evidence pull for CAEP R1.3 would have to reach into a second vendor's system for
+          the qualitative record, or rely on the numeric score alone. (3) The
+          midpoint-to-final consistency question that carries live citation risk for PA is
+          not even askable for TE, because the narrative halves are not in Prism to compare.
+          Scored a gap on all three counts.
+      - element: "Absence of any confirmed TE-specific midpoint instrument, terminology, or accreditor mapping"
+        type: "not a control — a documented absence in the source corpus"
+        data_shown: "n/a"
+        gates_on: []
+        accreditation_citation: >
+          None assertable. The TE playbook states plainly that CAEP "is general industry
+          knowledge, not something named in the current source material; do not cite specific
+          CAEP standard numbers in customer conversations until confirmed against a
+          TE-specific source." This flow file honors that instruction: every CAEP citation
+          above is marked as an analyst mapping.
+        competitor_equivalent: >
+          Not comparable — an absence in Exxat's own source material, not a competitive
+          finding.
+        gap_severity: "gap"
+        gap_note: >
+          [TE] Recorded because a reader of this file should not mistake sparse coverage for
+          verified simplicity. The TE playbook is explicit that Teacher Education "does not
+          currently have a dedicated internal help-center playbook article or a CSS discipline
+          playbook PDF," and lists as unfilled gaps: TE terminology (the
+          cooperating-teacher/university-supervisor role names used in this file's persona
+          block are the playbook's own unconfirmed guesses and are flagged there as such),
+          program setup patterns, compliance patterns, placement workflows, standard
+          evaluation forms and reports, accreditor standards, and pain points. Of the eight
+          production disciplines, TE is the only one for which this research pass could not
+          confirm a single discipline-specific midpoint or early-risk behavior beyond the
+          GoReact integration. That is a finding about the source corpus, and the honest
+          verdict for TE in this stage is: baseline-like by default, with one genuinely
+          distinctive but externally-hosted feedback channel, and a real risk that the
+          discipline's actual midpoint practice is simply undocumented rather than absent.
+    action: >
+      [TE] The program configures a video-based teaching-demonstration assignment via LTI,
+      anchored to the placement like any other learning activity; the candidate records or
+      uploads from My Coursework and is redirected into GoReact; faculty review inside GoReact
+      with timestamped comments and scores, and only the score and status return to Prism.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md
+      (read in full 2026-08-25; lines 54-57 for the timestamped-comment review mechanic inside
+      GoReact, and lines 63-73 for the Open Gaps list confirming that no TE-specific evaluation
+      instrument, report, pain point or accreditor mapping exists in any Exxat source);
+      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md (lines 95-117, 'Setting Up and Managing Echo360 (GoReact) Assignments in Exxat Prism');
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caep.yaml (Standard R3, Component R3.2 — mapping flagged as analyst inference, not an Exxat-sourced claim)
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Setup Auto Notifications for Forms and Evaluations.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Viewing Student Reports.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Track low scores for timely interventions.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/Clinical Internship Evaluation Tool - Version 2.0.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/CIET Form (Clinical Internship Evaluation Tool) Configuration.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/Physical Therapist Student Evaluation (PTSE) Report.md"
+  # NOTE: the vault mirror of the article below contains only embedded images and no
+  # extractable text. Listed for provenance; no substantive claim in this file rests on it.
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Planned Communication for PT-PTA/Low score indicators for PTSE forms.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Site/Discipline Specific Guides/PT-PTA Discipline/Completing the PTMACS for CIs.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Site/Discipline Specific Guides/PT-PTA Discipline/Completing the PTAMACS for CIs.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Faculty/Discipline Specific Guides/OT -OTA/Completing FWPE Form - For Fieldwork Educators.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/OT-OTA Discipline/Help Guides for OT-OTA/Fieldwork Performance Evaluation Tool.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — READ IN FULL 2026-08-25 (previously cited by section name or per-stage sample). Lines used across this journey: 18-22 (DCE, ADCE, Program Coordinator, SCCE and CI role definitions, incl. the SCCE frequently also being a CI and regional SCCEs covering many facilities), 34-37 (APTA, CAPTE, ACAPT, ABPTRFE), 43 (the clinical-settings taxonomy), 45-53 (graduation-year cohorts, always Lock Step, cohort movement, off-track students and the original-rotation best practice), 55-60 (Groups, Categories, Announcements, Resources, Attestations, per-setting Program Requirements), 62-64 (compliance, and the instruction to ask where a school tracks compliance if not in Prism), 66-77 (course and rotation setup incl. the full field list and the ICE/DPE/residency special cases), 79-85 (the March 1 M1M cycle, reserved-vs-FCFS responses and Exxat One), 87-91 (wishlist patterns and Placement Assist), 93-97 (pre-placement activity), 99-108 (the four placement modes), 110-113 (slot confirmation and cancellation emails), 115-123 (placement notification lead times and the student-contacts-CI convention), 125-174 (the learning-activity and standard-instrument inventory: PTSE 1, PTSE 2, CIET v2, PTMACS/PTAMACS, SCIPAI and the Duke-developed Standard PT/PTA Surveys), 176-180 (thanking supervisors and the state-variable CEU conversion), 182-188 (pain points, incl. the four marketplace competitors at line 184 and the national competition for IP/acute slots at line 186), 190-197 (the enhancements list, incl. mapping competencies to CAPTE 2024 and the absent Exxat CSIF), 208-232 (the seven CAPTE-mapped reports and the five-section AAR pull sequence), 234-244 (CIET v2.0 full mechanics), 246-248 (the CI Details form as the licensure-renewal and eligibility-check mechanism), 250-259 (the four DCE performance-survey templates), 261-263 (low-score indicators and the support-gated notification), 265-270 (M1M email operations), 272-277 (PTMACS/PTAMACS additional mechanics), 279-281 (the Exxat One availability-based wishlist). In THIS file the load-bearing lines are 131-136 (the PTSE 1 always-answer-Yes-to-requires-placement rule), 145-151 (CIET completed at Midterm and Final with a Final-only option), 163-168 (SCIPAI as the only instrument in the corpus designed for more than two capture points, assessing both student and CI, with the Student > CI > joint-review > SCCE > DCE chain and the DCE's audit-trail access), 234-244 (CIET v2.0 parallel blinded completion, the 15/20 quiz threshold, the 10,000-character cap, anchor-based due dates, and student cancellation revoking the CI's link), 261-263 (the numeric low-score threshold, the red display, and the support-ticket dependency for the outbound notification), and 272-277 (the PTMACS 1-10 scale and the three optional supplemental skills)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — read IN FULL 2026-08-25 (previously consulted per-stage). Lines cited across this journey: 12 (the playbook's own data-quality caveat — it is synthesized from eight thin feature-specific artifacts, not a CSS playbook, so silence is documentation absence rather than product absence), 18-21 (ASHA / CAA / CFCC / KASA, and the nine KASA competencies a.k.a. nine service-delivery areas, whose individual names that source never enumerates), 25-35 (Course Offering, Rotation, Learning Activity Group, Clinical Log, Clinical Educator, Student Participation Type, Practice Type, Mode of Delivery, Training Level, Placement Setting, Age Group), 37 (no DCE/ACCE/SCCE-equivalent role terms are documented for SLP), 41-49 (CAA + CFCC curriculum mapping, the Mapped Standards Report, the beyond-KASA CSS dependency, the CFCC V-E attestation hook and its navigation, affiliation agreements in the Sites module, and the 400-hour tracking on the Clinical Clock Hours Report (Cumulative)), 53-67 (per-course-offering Clinical Log setup: template preview, activate toggle, the N-day submission window, grading, the wrench column customization with the first four columns fixed, clinical-educator review routing with a previewable email template, the attestation, and the support-gated min/max hour thresholds), 71-84 (the review workflow: the Logs Count / Log Hours by Status columns, Last Encounter and Last Update, the three-status colour model, the mandatory school-feedback note on Needs Attention, bulk approve and Approve All Logs, the 6am EST Statistics refresh, three export levels, and the filter set incl. Placement Faculty / Clinical Educator), 88-100 (no free off-the-shelf standard instruments; the configured toolkit — KASA Summary Forms, Clinical Supervisor Evaluations (Midterm & Final), Student Self-Assessments, Student Evaluations of Clinical Sites, Student Evaluations of Clinical Supervisors, Site Assessments aligned to program goals and accreditation standards, and custom forms — all support-gated to create; and the student-facing Student Performance Report across all nine service delivery areas), 104-105 (surveys buildable in Prism from December 2025), 109-114 (advisement via Communications & Interventions or custom workflow-based advisement forms with signature, plus profile-level and course-level attestations with their navigation paths), 118 (question-based early-alert notifications configured by support), 120-138 (the report suite, the shared filter set, the 50-course-offering cap, and the broader capability list incl. trend/exposure analysis, low-performance indicators and placement-readiness metrics), 142-149 (the discipline's own gap list — explicitly a DOCUMENTATION gap, plus the recurring self-service gap for SLP). In THIS file the load-bearing lines are 88-96 (the configured-forms toolkit, incl. Clinical Supervisor Evaluations explicitly split Midterm & Final — SLP's actual midpoint instrument, and a configured form rather than a shipped standard one), 67 and 98 and 118 (the three separate support-ticket dependencies: min/max hour thresholds, new custom forms, and question-based early-alert notification rules), and 149 (the playbook's own framing of that cluster as a possible self-service gap for SLP specifically)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — read IN FULL 2026-08-25. Lines cited in this file: 18 (Faculty Advisor documents advising via Communications), 69-73 (the four-way split Learning Contract / Evaluation model — mid-term, final, Field Instructor rating and student rating completed independently, which is why an SW program configures four separately-anchored forms rather than one multi-term instrument), 79-80 (the Communications/Interventions split and the 'not necessarily disciplinary' framing corrected in the Interventions step)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — READ IN FULL 2026-08-25 (73 lines). It is the thinnest discipline source in this corpus and its own line 12 says why: TE has no dedicated internal help-center playbook article and no CSS discipline playbook PDF, so the note is built from ONE program-administrator video tutorial covering the GoReact/Echo360 LTI integration, transcribed from auto-generated Vimeo captions. Substantive content: lines 19-26 (LTI integration with GoReact, now part of Echo360; assignments, student submissions and scores/status updates sync automatically; described as a genuinely connected two-way workflow in which administrators are not expected to recreate assignments in GoReact), 28-31 (activation is discipline/program-gated — if the Learning Tool Interoperability section is absent from Learning Activities > Setup the feature is not activated, and activation requires an Exxat support ticket), 33-45 (the administrator setup sequence: create at Learning Activities > Setup > Learning Tool Interoperability > +, configure LTI tool, title, description, placement-based vs. didactic, publish and due dates, grading and score settings and faculty visibility; activate and save; Prism auto-creates the matching GoReact activity on first save; GoReact-specific settings are then configured in GoReact and the activity marked Done, at which point the assignment becomes available to students), 47-52 (student workflow from My Coursework: redirect into GoReact, record directly, upload a video file, or submit other supported media, with status syncing back), 54-57 (faculty/reviewer workflow: timestamped comments, feedback, evaluations and scores, syncing back with no reconciliation step), 61 (further GoReact-side configuration is documented in GoReact's help centre, not Exxat's), and 63-73 (the Open Gaps list — TE terminology, program/setup patterns, compliance, placement and slot workflows, standard evaluation forms and reports, accreditor standards, and pain points are ALL explicitly unpopulated, with a standing instruction not to treat field-standard TE terms or CAEP standard numbers as Exxat-specific until confirmed against a TE-specific source). EVERY TE claim in this file that is not about the LTI integration is therefore reasoned from ../accreditation/caep.yaml and carries that caveat inline. In THIS file the load-bearing lines are 54-57 (timestamped reviewer comments inside GoReact — the only confirmed TE formative-feedback mechanic) and 71-73 (no TE-specific assessment instruments, pre-built reports, pain points or working-style guidance exist, so no TE midpoint instrument or early-alert default can be asserted)."
+  - "/Users/romitsoley/Downloads/CRNAVideosTranscripts.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/capte.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acote.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/arc-pa.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caa-asha.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/nursing.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coa.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/cswe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caep.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/pharmacy.yaml"
+last_verified: "2026-08-25"

@@ -1,0 +1,432 @@
+# Element-level ground truth underneath preceptor-site-onboarding.yaml, stage 5
+# ("5. Access provisioning — getting the preceptor into the system at all").
+# Every confirmed_by citation below is a real file in the help-center mirror or a discipline
+# playbook — never re-derived from the journey's own narrative. This flow is scoped narrowly to
+# ACCESS MECHANICS (how a preceptor gets in, and what happens when they don't/won't authenticate)
+# — it deliberately does NOT re-document the Personnel/CI record model, the Experiential
+# Supervisor Intake Form builder, or Faculty Compliance setup, all of which are already covered in
+# element-level detail by flows/rotation-lifecycle--02-preceptor-site-faculty-credentialing-
+# orientation-calibration.yaml. Where this flow touches the same screen (the Intake Form
+# delegator link, in step 3/step 4), it is examined from the access-mechanism angle only.
+#
+# SCHEMA v2 (2026-08-24): analysis fields (accreditation_citation / competitor_equivalent /
+# gap_severity / gap_note) migrated from step level down to each element. Where the original
+# research genuinely did not distinguish between sibling elements, the same verdict is stated
+# identically on each rather than inventing false precision.
+flow_name: "Preceptor Access Provisioning — Portal Login vs. No-Login Delegator Link"
+maps_to_journey: "preceptor-site-onboarding.yaml, stage 5"
+persona: >
+  Preceptor / Clinical Instructor / Experiential Supervisor (role-preceptor.yaml) — an external,
+  non-institutional user — provisioned and monitored by a Clinical/Experiential Education
+  Coordinator acting as Program Administrator (role-clinical-coordinator.yaml, role-program-
+  admin.yaml).
+steps:
+  - screen: "Preceptor Portal (Mentor Teacher Portal) — Login"
+    navigation_path: "instructor.exxat.com (external URL, separate from the main Prism admin/student/faculty login surface)"
+    elements:
+      - element: "Login email field"
+        type: "input field"
+        data_shown: "Username is the preceptor's own email address — specifically 'your login email address shared with the student/program for the placement,' not a program-assigned username."
+        gates_on: ["Whether a Personnel record with placement association (see step 2) exists for that email at all"]
+        accreditation_citation: >
+          None directly — no accreditor standard names a login method. This field is the
+          reachability precondition behind ACPE Standard 3, Key Element 3.3.a and Standard 7, Key
+          Element 7.3.c, and COCA Standard 5, Element 5.4, all cited at stage level in
+          journeys/preceptor-site-onboarding.yaml — but see step 3, which shows those elements do
+          not actually depend on this field succeeding.
+        competitor_equivalent: >
+          CORE ELMS' documented anti-pattern (competitors/core-elms.yaml, sourced from
+          https://www.capterra.com/p/265422/CORE-ELMS/reviews/) is that "changing a preceptor's
+          employer requires a new account rather than an update." Keying the username to the
+          preceptor's own email rather than to a program-assigned identifier is the design choice
+          that avoids that failure mode. CORE ELMS' own public materials do not publish their
+          login field at this level of detail, so this is a comparison against a documented user
+          complaint, not against a competitor screen — stated explicitly rather than implied as
+          element-for-element.
+        gap_severity: "gap"
+        gap_note: >
+          The field itself is unremarkable, but what it gates on is the gap: a preceptor's email
+          only works here if an admin has already completed the manual prerequisites in step 2.
+          Nothing on this screen tells a preceptor whose email is not yet provisioned why they
+          cannot get in.
+      - element: "Forgot Password link"
+        type: "button/link"
+        data_shown: "The confirmed first-time-access path: there is no vendor-issued temporary password documented anywhere in the source material. A brand-new preceptor is expected to click 'Forgot Password' and self-serve a reset link before ever seeing the dashboard."
+        gates_on: []
+        accreditation_citation: >
+          None directly — no accreditor standard names a credential-issuance method. Indirect
+          reachability role only (ACPE 3.3.a / 7.3.c, COCA 5.4), and step 3 shows that evidence
+          does not depend on this path.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown in content/competitors
+          documents its own first-time-credential mechanism (temporary password vs. magic link vs.
+          self-serve reset) at this granularity, so no claim is made either way rather than
+          guessing.
+        gap_severity: "gap"
+        gap_note: >
+          This is the confirmed friction point on this screen. For the lowest-tolerance user in
+          the product (per this stage's pain_or_gap), first access requires a self-service
+          password-reset round trip before any content is visible. No auto-provisioned temporary
+          credential, magic-link login, or SSO option for preceptors is documented anywhere in the
+          source material — "non-SSO accounts" get a password-change flow per the capability map
+          (Ask Leo entry), implying preceptor accounts are non-SSO by default. This is a real,
+          confirmed friction point, not a hypothetical one — it is exactly the "login wall" the
+          stage's pain_or_gap describes, now traceable to a specific element.
+      - element: "Password field (returning user)"
+        type: "input field"
+        data_shown: "Standard credential entry for a user who has already completed the reset flow once."
+        gates_on: []
+        accreditation_citation: >
+          None — standard credential entry, no accreditor standard implicated.
+        competitor_equivalent: >
+          Not comparable at element level and not worth comparing — no competitor documentation
+          reviewed describes an ordinary password field at this granularity, and nothing
+          distinguishes this one.
+        gap_severity: "none"
+        gap_note: >
+          No gap: per the step's confirmed behavior, a returning preceptor logs in directly with a
+          stored password. The friction documented on this screen is first-access only (see the
+          Forgot Password element), not recurring.
+      - element: "Post-login dashboard navigation (Profile / Associated Schools / Student Placements / Emails / Resources / Help)"
+        type: "nav menu"
+        data_shown: "One aggregated dashboard surfacing every school/program the preceptor is associated with and every student placement across them, keyed to the single email-based login rather than any one institution or site."
+        gates_on: []
+        accreditation_citation: >
+          None directly — no accreditor standard names a dashboard structure. Reachability role
+          only behind ACPE 3.3.a / 7.3.c and COCA 5.4.
+        competitor_equivalent: >
+          This is where the CORE ELMS comparison actually lands. Their documented anti-pattern
+          (competitors/core-elms.yaml, sourced from
+          https://www.capterra.com/p/265422/CORE-ELMS/reviews/) — "changing a preceptor's employer
+          requires a new account rather than an update" — is structurally impossible against this
+          element: every school/program relationship is aggregated under "Associated Schools" in
+          one account. CORE ELMS does not publish their equivalent navigation at this level of
+          detail, so this is a comparison against a documented user complaint, not against a
+          competitor screen — stated explicitly rather than implied as element-for-element.
+        gap_severity: "none"
+        gap_note: >
+          No gap — this is the strongest element on the screen. Once reached, the aggregated
+          multi-school dashboard is exactly the structure that immunizes Prism against the named
+          competitor's most-complained-about account-model failure.
+    action: >
+      A preceptor navigates to instructor.exxat.com and, on first access, must complete a
+      self-service password-reset round trip (there is no temporary credential) before reaching
+      any dashboard content; a returning preceptor logs in directly with a stored password.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module User Guide for Preceptors.md"
+
+  - screen: "Sites > Personnel — Preceptor Login Eligibility Prerequisite"
+    navigation_path: "Sites > Personnel (admin side); no dedicated 'activate preceptor login' screen is documented — eligibility is a side effect of two other admin actions"
+    elements:
+      - element: "Site Personnel record + active placement association (prerequisite state, not a single toggle)"
+        type: "prerequisite data state"
+        data_shown: >
+          Per the Preceptor Module Setup Guide: "The preceptor should be added as site personnel
+          and should be associated with at least one of the student's placements to be eligible
+          for the preceptor login." Both conditions are required; neither alone is documented as
+          sufficient.
+        gates_on: ["Whether the preceptor's email in step 1 can log into instructor.exxat.com at all"]
+        accreditation_citation: >
+          Same indirect reachability role as step 1 (ACPE 3.3.a / 7.3.c, COCA 5.4) — no direct
+          citation.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown in content/competitors
+          documents their own login-eligibility precondition model at this granularity, so no
+          claim is made either way rather than guessing.
+        gap_severity: "gap"
+        gap_note: >
+          Login eligibility is an emergent side effect of two unrelated admin actions rather than
+          an explicit, visible state: there is no documented "activate preceptor login" screen,
+          toggle, or status indicator anywhere in the source material. An admin who has done one
+          of the two actions but not the other has no confirmed way to see that the preceptor
+          still cannot log in.
+      - element: "Invitation email (manual template, not a system-triggered notification)"
+        type: "admin action, off-platform"
+        data_shown: >
+          A fixed email template (institution name, the instructor.exxat.com URL, "username =
+          your email," and forgot-password instructions) that the guide instructs the admin to
+          copy and send "from their personal email." No confirmed system-triggered invite email
+          is tied to the personnel-add or placement-association event itself in the source
+          material.
+        gates_on: []
+        accreditation_citation: >
+          Same indirect reachability role as step 1 (ACPE 3.3.a / 7.3.c, COCA 5.4) — no direct
+          citation.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown in content/competitors
+          documents their own admin-side invite-triggering mechanism (automated vs. manual) at
+          this granularity, so no claim is made either way rather than guessing.
+        gap_severity: "gap"
+        gap_note: >
+          This is the sharpest, most concretely confirmed friction point in the stage: onboarding
+          a preceptor into the full portal depends on an admin remembering to compose and send a
+          personal email using a copy-pasted template — there is no confirmed bulk-invite,
+          auto-invite-on-personnel-add, or auto-invite-on-placement-association behavior anywhere
+          in the source material. For a program onboarding an entire adjunct preceptor pool ahead
+          of a rotation block, this is a real scaling gap, not a cosmetic one.
+    action: >
+      An admin adds the preceptor as Site Personnel, associates them with at least one active
+      student placement, and then manually copies and sends the invitation template from their
+      own email address — three separate, undocumented-as-automated steps that together make
+      step 1's login possible.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md"
+
+  - screen: "Emailed Delegator Link — No-Login Evaluation / Patient Log / FWPE Completion"
+    navigation_path: "External: link arrives by email, opens the specific form directly in-browser — no Prism navigation path exists because no login/dashboard is involved"
+    elements:
+      - element: "Delegator link (per-assignment, unique)"
+        type: "emailed link"
+        data_shown: >
+          Per the PA playbook: "the mechanism by which preceptors access evaluation forms and
+          patient logs without a full Prism login — once a form/log is submitted or assigned, the
+          preceptor gets an email containing a unique delegator link." Confirmed independently for
+          OT's Fieldwork Performance Evaluation (FWPE): "Fieldwork Educators complete the FWPE
+          without a Prism login — they get an emailed link, open the form directly in-browser."
+        gates_on: ["Whether the specific evaluation/log reaches the student/course record at all — this link IS the completion mechanism, not a preview of one"]
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a (preceptor performance evaluations on file) and
+          Standard 7, Key Element 7.3.c (standardized, versioned evaluation forms deployed
+          identically to every site) — this link IS the deployment/completion mechanism for both,
+          confirmed shipped, and it requires no preceptor authentication at all.
+        competitor_equivalent: >
+          Leo (DaVinci): "on-demand evaluation links can be emailed to clinical faculty with NO
+          LOGIN required" (https://www.davinci-ed.com/the-davinci-difference/leo-faqs) is
+          functionally the same mechanism confirmed here. This is a confirmed feature-level parity
+          claim at the mechanism level, not an element-level screen comparison, and is stated as
+          such rather than overclaimed.
+        gap_severity: "none"
+        gap_note: >
+          RESOLVES a meaningful part of this stage's accreditation_link hedge: the stage-level
+          framing treated preceptor authentication as a precondition for ACPE 3.3.a/7.3.c
+          evidence. It is not — this shipped, no-login link is the actual delivery path for both,
+          and it is already at parity with the named competitive benchmark.
+      - element: "Save / Clear All / Submit buttons"
+        type: "button set"
+        data_shown: "Save exits and preserves progress for return via the same link; Clear All restarts the form; Submit finalizes it."
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a and Standard 7, Key Element 7.3.c indirectly — Submit
+          is the act that puts the completed evaluation on file; Save is what makes multi-session
+          completion possible without re-authentication.
+        competitor_equivalent: >
+          Not comparable at element level. Leo's public marketing page, like Prism's help-center
+          articles, does not publish field-by-field screen detail (button names, save-and-resume
+          behavior) — so no button-for-button comparison is possible, stated explicitly rather
+          than falling back to screen-level vagueness.
+        gap_severity: "none"
+        gap_note: >
+          No gap — save-and-resume via the same link means a preceptor is not forced to complete a
+          long evaluation in one sitting, and does so without ever authenticating.
+      - element: "Attestation checkbox (FWPE)"
+        type: "checkbox"
+        data_shown: "'Student was informed of this review' — must be checked before Submit is enabled."
+        gates_on: ["Submit button"]
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a — this checkbox is where the evaluation record
+          captures that the student was informed of the review, hard-gating Submit so the
+          attestation cannot be skipped.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor's public documentation publishes
+          attestation-checkbox wording or whether their equivalent hard-gates submission, so no
+          claim is made either way rather than guessing.
+        gap_severity: "none"
+        gap_note: >
+          No gap — this is a hard gate, not an advisory prompt: Submit is disabled until it is
+          checked, so the attestation is structurally guaranteed on every FWPE submission.
+      - element: "Soft due date / link duration (PES forms)"
+        type: "configuration-driven behavior"
+        data_shown: "Preceptors can still submit after the nominal deadline as long as the link itself remains live; link duration is configured under Program Details."
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a indirectly — whether a late evaluation can still be
+          filed at all depends on this configured duration, not on the nominal due date.
+        competitor_equivalent: >
+          Not addressed by any competitor's public documentation — none of the reviewed teardowns
+          mention link-duration or soft-deadline behavior for external-stakeholder completion, so
+          no comparison is possible in either direction.
+        gap_severity: "configure-needed"
+        gap_note: >
+          The forgiving behavior (submission still accepted past the soft due date) is real but
+          entirely contingent on a program-level setting configured elsewhere — the same duration
+          control documented in step 5, where the unsafe 365-day default is the countervailing
+          risk. A program shortening that duration for access hygiene is simultaneously shortening
+          the window in which a late evaluation can still be filed; nothing in the source material
+          indicates the two concerns are configured independently.
+      - element: "Resend / copy delegator link (admin side)"
+        type: "button (admin-facing)"
+        data_shown: "Learning Activities > Form Distribution lets an admin resend the notification, or copy and manually re-email the same link."
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a indirectly — this is the recovery path when a
+          preceptor loses or never receives the email carrying the evaluation.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor documentation reviewed describes an
+          admin-side resend/copy control for no-login links at this granularity, so no claim is
+          made either way.
+        gap_severity: "none"
+        gap_note: >
+          No gap — unlike the step-2 invitation, which has no in-product trigger at all, this
+          link's re-delivery is a real in-product admin control, with manual copy available as a
+          fallback.
+    action: >
+      A preceptor clicks the emailed link, completes and submits the specific evaluation, patient
+      log, or FWPE form directly, without ever visiting instructor.exxat.com or authenticating —
+      this path is entirely independent of steps 1-2.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+      Assistant (PA) Playbook.md (Delegator Links section); corroborated by
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      Therapy (OT) Playbook.md ("Fieldwork Educator Access — No-Login, Magic-Link Completion");
+      corroborated at the product-capability level by
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml
+      ("Placement publish step & no-login external completion").
+
+  - screen: "Preceptor Portal — Profile Edit (Basic Details / Documents)"
+    navigation_path: "instructor.exxat.com > Profile > Basic Details or Document section > pencil icon"
+    elements:
+      - element: "Basic Details pencil-edit"
+        type: "input field set"
+        data_shown: "Personal details, contact information, practice settings, degree."
+        gates_on: []
+        accreditation_citation: >
+          None directly — personal details, contact information, practice settings, and degree are
+          not themselves named evidence for any standard reviewed. The accreditation-relevant
+          failure on this screen is in the Document section, not here.
+        competitor_equivalent: >
+          Not addressed by any competitor's public documentation at any granularity — this is an
+          internal Prism data-consistency finding, not a competitive-comparison point, and is
+          presented as such rather than forced into a comparison.
+        gap_severity: "gap"
+        gap_note: >
+          Subject to the same non-reconciliation as the Document section: edits here do not map to
+          the program-side preceptor profile. Lower stakes than the license/CV upload because no
+          accreditation evidence depends on these fields, but a program relying on preceptor-
+          maintained contact details still has stale data on the admin side.
+      - element: "Document section pencil-edit"
+        type: "file upload"
+        data_shown: "CV, licenses, and certifications, uploaded by the preceptor themselves."
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a ("preceptor license on file") — this upload is
+          confirmed NOT to be a valid path to that evidence; see gap_note.
+        competitor_equivalent: >
+          Not addressed by any competitor's public documentation at any granularity — this is an
+          internal Prism data-consistency finding, not a competitive-comparison point, and is
+          presented as such rather than forced into a comparison.
+        gap_severity: "gap"
+        gap_note: >
+          The sharpest element in this flow, and one this stage's original text did not know to
+          look for: Prism runs two structurally separate preceptor-identity surfaces that do not
+          reconcile. This upload is one; the Experiential Supervisor Intake Form (PIF) delegator
+          link — which DOES sync one-way into the program-side Personnel record (per
+          /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+          for Preceptor Module/Submitting Experiential Supervisor Intake Form.md and confirmed in
+          flows/rotation-lifecycle--02-preceptor-site-faculty-credentialing-orientation-calibration.yaml
+          step 2) — is the other. A preceptor who uploads their license here has not produced
+          accreditation-usable evidence; only a re-sent Intake Form does that. Which access path a
+          program directs preceptors to therefore determines whether ACPE 3.3.a evidence exists at
+          all, and nothing in the source material indicates the two surfaces are scheduled to be
+          unified.
+      - element: "Vendor caveat (documented, not a UI element)"
+        type: "help-article note"
+        data_shown: >
+          Verbatim from the Setup Guide: "Currently the information updated by the preceptor on
+          their profiles will not be mapped to the preceptor profile on the program's end."
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a — this is the vendor's own written confirmation that
+          the Document upload above is not a valid path to that evidence.
+        competitor_equivalent: >
+          Not addressed by any competitor's public documentation at any granularity — this is an
+          internal Prism data-consistency finding, not a competitive-comparison point.
+        gap_severity: "gap"
+        gap_note: >
+          The caveat is the gap's documentation, not its mitigation: it lives in the admin-facing
+          Setup Guide, not on the preceptor-facing profile screen. Nothing confirmed in the source
+          material warns the preceptor at the point of upload that what they just submitted will
+          not reach the program's record.
+    action: >
+      A preceptor edits their own profile and uploads a CV, license, or certification through the
+      full portal, in the reasonable belief this updates their credentialing record.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module User Guide for Preceptors.md; caveat confirmed in /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md"
+
+  - screen: "Notification Hub > Email Setup — Delegator Link Expiry & OTP Protection"
+    navigation_path: "Notification Hub > Email Setup (admin-side configuration screen)"
+    elements:
+      - element: "Delegator Link Expiry Duration (days) field"
+        type: "numeric input field"
+        data_shown: >
+          Governs how long any externally-shared link (including the step-1/step-3 delegator
+          links) stays valid. Per the OT playbook: default is 365 days, with explicit guidance
+          that "for 4-week rotations, a 30-50 day duration is recommended... to prevent access to
+          student profile/forms/evaluations after rotations end" — i.e. the safe value is
+          rotation-length-dependent and not pre-configured per rotation type out of the box.
+        gates_on: ["How long a preceptor's no-login access to a given student's forms/evaluations/compliance data remains live"]
+        accreditation_citation: >
+          None — no accreditation file reviewed (acpe.yaml, coca.yaml, coda.yaml, lcme.yaml) names
+          a link-retention control directly; this is stated as an honest absence rather than
+          forced into a citation.
+        competitor_equivalent: >
+          Not addressed by any competitor's public documentation — none of the reviewed competitor
+          teardowns mention link-expiry for external-stakeholder access at all, so no comparison
+          is possible in either direction.
+        gap_severity: "configure-needed"
+        gap_note: >
+          The control exists and is real, but the safe default is not automatic: a program that
+          leaves the 365-day default active risks a preceptor's (or a departed/former
+          preceptor's) no-login link to student compliance and evaluation data remaining live long
+          after the supervisory relationship and rotation have ended — an access-hygiene exposure
+          the OT playbook's own guidance treats as something a school must proactively shorten per
+          rotation length, not something Prism defaults safely on its own.
+      - element: "One-Time-Password (OTP) protection toggle"
+        type: "support-configured toggle"
+        data_shown: >
+          Gates any emailed or profile-shared compliance information behind an OTP sent to the
+          recipient's own school email before it can be viewed — confirmed to apply to
+          placement-section emails to preceptors specifically, not just student-to-student shares.
+        gates_on: ["Whether a forwarded/leaked delegator link can be opened by anyone other than the original recipient"]
+        accreditation_citation: >
+          None — no accreditation file reviewed (acpe.yaml, coca.yaml, coda.yaml, lcme.yaml) names
+          an access-hygiene control of this kind directly; stated as an honest absence rather than
+          forced into a citation.
+        competitor_equivalent: >
+          Not addressed by any competitor's public documentation — none of the reviewed competitor
+          teardowns mention OTP-style protection for external-stakeholder access at all, so no
+          comparison is possible in either direction.
+        gap_severity: "configure-needed"
+        gap_note: >
+          More configure-needed than the expiry field beside it: this is not even self-service —
+          it is confirmed as a support-configured toggle, so a program cannot turn it on from this
+          screen without going through Exxat Support. Left off, a delegator link forwarded out of
+          the original recipient's inbox opens for anyone who receives it.
+      - element: "Email Display Name / Default Reply-To Email Address fields"
+        type: "input fields"
+        data_shown: "Controls what the preceptor sees as the sender of these notification/delegator emails."
+        gates_on: []
+        accreditation_citation: >
+          None — sender presentation is not named by any accreditation file reviewed.
+        competitor_equivalent: >
+          Not addressed by any competitor's public documentation — no reviewed teardown describes
+          sender-branding controls for external notifications, so no comparison is possible.
+        gap_severity: "none"
+        gap_note: >
+          No gap — these are presentation-only fields with no access-hygiene or evidence
+          implication, unlike the two controls beside them on the same screen.
+    action: >
+      An admin sets how long externally-shared delegator links stay valid and (via Exxat Support)
+      whether OTP verification is required to open a shared-compliance link.
+    confirmed_by: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (One-Time-Password protection / Notification Hub Email Setup entry); corroborated by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md (Delegator Link Expiry)"
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module User Guide for Preceptors.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Submitting Experiential Supervisor Intake Form.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/flows/rotation-lifecycle--02-preceptor-site-faculty-credentialing-orientation-calibration.yaml"
+last_verified: "2026-08-24"

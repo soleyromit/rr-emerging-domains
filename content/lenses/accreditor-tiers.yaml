@@ -1,0 +1,169 @@
+# Level 2 reframing — cites content/interviews/2026-08-26-wilson-nursing-crosswalk.md
+# (the source of this distinction), content/accreditation/*.yaml, and
+# content/domains/*.yaml. Never re-derives from this file's own prior entries.
+#
+# Operationalizes the accreditor-TIER structure raised on that call: consortium (same
+# program type across many institutions) vs. university (many programs, one
+# institution) vs. regional vs. state-level licensure variation on top of the primary
+# programmatic accreditor. Two facts are CONFIRMED verbatim on that call and apply to
+# every domain below: (1) only Teacher Education has genuine regional accreditation —
+# "there's not typically a regional accreditation for any other discipline"; (2)
+# Pharmacy has real state-level regulatory variation on top of ACPE. Every other
+# domain's `state_licensure_variation` is "unconfirmed" (not "false") — absence of
+# research is not evidence of absence, per this repo's own convention.
+last_updated: "2026-08-26"
+
+domains:
+  # ---- 4 expansion domains (prioritized first per 2026-08-26 direction) ----
+  - domain: "DO"
+    programmatic_accreditor: "COCA"
+    consortium_note: >
+      No confirmed DO-specific consortium (a state/regional grouping of DO programs
+      specifically) — COCA operates as a single national programmatic accreditor per
+      institution.
+    regional_accreditor: false
+    state_licensure_variation: "unconfirmed"
+    notes: >
+      Institutional accreditation for DO programs runs through the school's own
+      regional/institutional accreditor (e.g. a regional higher-ed commission), which
+      is discipline-agnostic and not COCA-specific — out of scope for this crosswalk,
+      which tracks discipline-specific accreditor tiers only.
+    sources: ["../accreditation/coca.yaml", "../interviews/2026-08-26-wilson-nursing-crosswalk.md"]
+
+  - domain: "Pharmacy"
+    programmatic_accreditor: "ACPE"
+    consortium_note: >
+      No confirmed multi-institution consortium structure specific to pharmacy.
+    regional_accreditor: false
+    state_licensure_variation: "confirmed"
+    notes: >
+      CONFIRMED 2026-08-22 (per Wilson call, relaying a separate conversation with
+      Ruchi): pharmacy has real state-level regulatory variation on top of ACPE —
+      "different state has a different regulation." Practice-site licensure and
+      preceptor requirements vary by state, relevant to both contracts and the skill
+      checklist product for multi-campus/distance programs. Exact per-state
+      requirements not yet catalogued — flagged as open research, not yet done.
+    sources: ["../accreditation/acpe.yaml", "../interviews/2026-08-22-wilson-market-penetration.md"]
+
+  - domain: "Dentistry"
+    programmatic_accreditor: "CODA"
+    consortium_note: >
+      No confirmed multi-institution consortium structure specific to dentistry.
+    regional_accreditor: false
+    state_licensure_variation: "unconfirmed"
+    notes: >
+      Not specifically discussed on either Wilson call — Dentistry was flagged as the
+      recommended first expansion target on other grounds (no entrenched incumbent),
+      not for its accreditor-tier structure. State-level dental-board licensure
+      variation is plausible (dentistry is state-licensed practice) but unconfirmed
+      here — flag for follow-up research, do not assume "false."
+    sources: ["../accreditation/coda.yaml"]
+
+  - domain: "Medicine"
+    programmatic_accreditor: "LCME"
+    consortium_note: >
+      No confirmed multi-institution consortium structure specific to MD programs.
+    regional_accreditor: false
+    state_licensure_variation: "unconfirmed"
+    notes: >
+      Not specifically discussed on either Wilson call. MD/DO was named the lowest
+      near-term priority domain ("MD/DO can be last") due to overall complexity, not
+      accreditor-tier structure specifically.
+    sources: ["../accreditation/lcme.yaml", "../interviews/2026-08-22-wilson-market-penetration.md"]
+
+  # ---- 8 existing disciplines ----
+  - domain: "Nursing"
+    programmatic_accreditor: "ACEN / CCNE (dual-accreditor landscape — a nursing program may be accredited by either or both)"
+    consortium_note: >
+      Real, pre-existing state/regional consortium structure plausible per Wilson's
+      general framing ("a consortium would be a bunch of nursing programs in a single
+      state or geographic area") but not confirmed as an existing formal body — flagged
+      as the FIRST discipline for the standard × competitor crosswalk grid per the
+      2026-08-26 call, ahead of Education, Social Work, and Counseling.
+    regional_accreditor: false
+    state_licensure_variation: "unconfirmed"
+    notes: >
+      Nursing market penetration is estimated 5-8% (vs. ~50% for PA/OT) — the lowest
+      of any tracked discipline, which is why this crosswalk work starts here.
+    sources: ["../interviews/2026-08-26-wilson-nursing-crosswalk.md"]
+
+  - domain: "Teacher Education"
+    programmatic_accreditor: "CAEP"
+    consortium_note: >
+      Effectively pre-existing by design: CONFIRMED, this domain has state-level
+      accreditation bodies functioning as a de facto consortium — "they have
+      accreditation bodies at the state level... two or three [overarching], but then
+      each state has its own accreditation body too."
+    regional_accreditor: true
+    state_licensure_variation: "confirmed"
+    notes: >
+      CONFIRMED 2026-08-26 (verbatim): "there's only regional for education, teacher
+      education, and there's not typically a regional accreditation for any other
+      discipline" — the one domain in this set with a genuine regional accreditor tier
+      on top of the state-level bodies above.
+    sources: ["../accreditation/caep.yaml", "../interviews/2026-08-26-wilson-nursing-crosswalk.md"]
+
+  - domain: "Social Work"
+    programmatic_accreditor: "CSWE"
+    consortium_note: "Not yet researched."
+    regional_accreditor: false
+    state_licensure_variation: "unconfirmed"
+    notes: >
+      Named as a next crosswalk-grid target after Nursing and Education, per the
+      2026-08-26 call — not yet built.
+    sources: ["../accreditation/cswe.yaml", "../interviews/2026-08-26-wilson-nursing-crosswalk.md"]
+
+  - domain: "Physical Therapy"
+    programmatic_accreditor: "CAPTE"
+    consortium_note: "Not yet researched."
+    regional_accreditor: false
+    state_licensure_variation: "unconfirmed"
+    notes: "Not specifically discussed on either Wilson call beyond the confirmed 'no regional accreditor' default."
+    sources: ["../accreditation/capte.yaml"]
+
+  - domain: "Occupational Therapy"
+    programmatic_accreditor: "ACOTE"
+    consortium_note: "Not yet researched."
+    regional_accreditor: false
+    state_licensure_variation: "unconfirmed"
+    notes: "Not specifically discussed on either Wilson call beyond the confirmed 'no regional accreditor' default."
+    sources: ["../accreditation/acote.yaml"]
+
+  - domain: "Physician Assistant"
+    programmatic_accreditor: "ARC-PA"
+    consortium_note: "Not yet researched."
+    regional_accreditor: false
+    state_licensure_variation: "unconfirmed"
+    notes: "Not specifically discussed on either Wilson call beyond the confirmed 'no regional accreditor' default."
+    sources: ["../accreditation/arc-pa.yaml"]
+
+  - domain: "Speech-Language Pathology"
+    programmatic_accreditor: "CAA (ASHA)"
+    consortium_note: "Not yet researched."
+    regional_accreditor: false
+    state_licensure_variation: "unconfirmed"
+    notes: "Not specifically discussed on either Wilson call beyond the confirmed 'no regional accreditor' default."
+    sources: ["../accreditation/caa-asha.yaml"]
+
+  - domain: "CRNA"
+    programmatic_accreditor: "COA"
+    consortium_note: "Not yet researched."
+    regional_accreditor: false
+    state_licensure_variation: "unconfirmed"
+    notes: "Not specifically discussed on either Wilson call beyond the confirmed 'no regional accreditor' default."
+    sources: ["../accreditation/coa.yaml"]
+
+  # ---- named on the 2026-08-26 call but not yet tracked anywhere else in this repo ----
+  - domain: "Counseling"
+    programmatic_accreditor: "unconfirmed — likely CACREP, not yet independently verified"
+    consortium_note: "Not yet researched."
+    regional_accreditor: false
+    state_licensure_variation: "unconfirmed"
+    notes: >
+      OPEN QUESTION, not a resolved entry: Counseling was named alongside Education and
+      Social Work as a target discipline on the 2026-08-26 call ("we should do this for
+      education, social work, and counseling as well... PT PA OT nursing social work
+      counseling education"), but it is not one of this repo's 12 tracked disciplines —
+      no persona, accreditation, competitor, or feature-map research exists for it.
+      This entry is a placeholder marking the gap, not a researched finding.
+    sources: ["../interviews/2026-08-26-wilson-nursing-crosswalk.md"]

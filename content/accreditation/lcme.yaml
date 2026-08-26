@@ -1,0 +1,323 @@
+# LCME — researched against the official standards text (see standards_document.url).
+# Content verified verbatim from the March 2023 edition of Functions and Structure of a
+# Medical School (standards/elements effective July 1, 2024; used for surveys in the
+# 2024-25 academic year and, per LCME's periodic-review cadence, still the operative
+# standard text as of last_researched below). LCME republishes this document annually at
+# lcme.org/publications (a 2026-27 edition exists as a Word doc at
+# https://lcme.org/wp-content/uploads/2025/05/2026-27-Functions-and-Structure_2025-05-21.docx);
+# spot-check that edition before citing element numbers in any external-facing deliverable,
+# since LCME does periodically renumber/retire elements after public comment.
+accreditor: "LCME (Liaison Committee on Medical Education)"
+slug: "lcme"
+domain: "Medicine"
+governs: >
+  Complete and independent medical education programs leading to the MD degree in the
+  United States (and Canada, under a parallel CACMS process), operated by universities or
+  medical schools chartered in the US. LCME is co-sponsored by the AAMC (Association of
+  American Medical Colleges) and the AMA (American Medical Association). Accreditation is
+  required for federal funding eligibility, ACGME residency placement (nearly all US
+  residency programs require an MD from an LCME-accredited school), and in most states,
+  medical licensure.
+standards_document:
+  title: "Functions and Structure of a Medical School: Standards for Accreditation of Medical Education Programs Leading to the M.D. Degree"
+  version_or_year: "Published March 2023; standards and elements effective July 1, 2024 (used for surveys in the 2024-25 academic year). LCME republishes an updated edition annually — verify current element numbering at lcme.org/publications before external use."
+  url: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf"
+
+standards:
+  - element_id: "Standard 1, Element 1.1"
+    element_title: "Strategic Planning and Continuous Quality Improvement"
+    evidence_programs_must_produce: >
+      Documentation of an ongoing strategic planning and continuous quality improvement (CQI)
+      process that sets short- and long-term programmatic goals, produces measurable outcomes
+      used to improve program quality, and demonstrates effective, ongoing monitoring of the
+      program's compliance with every LCME accreditation standard (not just at self-study time).
+    required_software_behavior: >
+      A living dashboard that maps evidence artifacts (compliance data, survey results, exam
+      outcomes, curriculum data) to individual LCME standards/elements year-round, flags
+      standards trending out of compliance, and produces a defensible audit trail of the CQI
+      cycle for the self-study and site visit.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      This is exactly the job description of the roadmap "Accreditation Management" pillar
+      (target Q3 2027) — standard-level evidence mapping and ongoing compliance monitoring is
+      not covered by any shipped pillar today (Curriculum Mapping maps content to curriculum,
+      not to accreditor standards).
+    gap_notes: >
+      No shipped pillar currently maps program evidence to named accreditor standards/elements
+      or tracks CQI action-item status against them; this is the single feature that would let
+      Prism be the "system of record" for an LCME self-study rather than just a data source for one.
+    source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.1)"
+
+  - element_id: "Standard 1, Element 1.4"
+    element_title: "Affiliation Agreements"
+    evidence_programs_must_produce: >
+      Written affiliation agreements with every clinical affiliate used regularly for required
+      clinical experiences, specifying the medical school's authority over education/assessment,
+      resource access, faculty appointment role, occupational-exposure follow-up responsibility,
+      and shared responsibility for the learning environment.
+    required_software_behavior: >
+      A per-clinical-site record that stores the agreement document, effective/expiration dates,
+      and the specific responsibility clauses, with renewal alerts and the ability to block new
+      placements at a site whose agreement has lapsed.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Compliance Management (shipped) already tracks gating items against placement
+      start/continuation; a clinical-site's affiliation-agreement status is the same pattern
+      (a compliance item gating a placement) applied at the site level instead of the student
+      level, and would sit alongside the Clinical & Experiential Education site/placement records.
+    gap_notes: "Site-level (vs. student-level) compliance-item taxonomy is unconfirmed — see capability-map.yaml open question."
+    source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.1)"
+
+  - element_id: "Standard 3, Element 3.1"
+    element_title: "Resident Participation in Medical Student Education"
+    evidence_programs_must_produce: >
+      Confirmation that each medical student participates in one or more required clinical
+      experiences working with resident physicians enrolled in an ACGME-accredited GME program.
+    required_software_behavior: >
+      Placement/rotation records that capture the supervising resident(s) alongside attending
+      preceptors, so the program can query "which students had resident-involved clinical
+      experiences" across the curriculum.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      The Clinical & Experiential Education placement engine already models
+      preceptor/supervisor assignment per rotation; adding a resident/GME-trainee role to that
+      same assignment record is a direct transfer of the existing data model.
+    gap_notes: ""
+    source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.4)"
+
+  - element_id: "Standard 5, Element 5.5"
+    element_title: "Resources for Clinical Instruction"
+    evidence_programs_must_produce: >
+      Evidence that clinical sites used for required instruction offer adequate numbers and
+      types of patients (acuity, case mix, age, gender) to support the required clinical
+      curriculum, tracked across every ambulatory and inpatient site used.
+    required_software_behavior: >
+      Site-capacity and case-mix data attached to each clinical site record, ideally rolled up
+      from student-logged encounters, so the program can demonstrate sufficiency site-by-site
+      and flag under-volume sites before a survey.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Clinical & Experiential Education already models sites and placements; case-mix/volume
+      analytics would need to be configured on top of encounter-logging data currently captured
+      via the Forms/Evaluations workflow rather than delivered as an out-of-the-box report.
+    gap_notes: "Aggregate case-mix/patient-acuity reporting across sites is not confirmed as an existing built-in report."
+    source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.6)"
+
+  - element_id: "Standard 6, Element 6.2"
+    element_title: "Required Clinical Experiences"
+    evidence_programs_must_produce: >
+      A defined, published set of patient types/clinical conditions students must encounter,
+      the skills to be performed, the appropriate clinical setting, and the expected level of
+      student responsibility for each — plus evidence that students actually met these
+      requirements (this element pairs directly with Standard 8.6's completion-monitoring duty).
+    required_software_behavior: >
+      Curriculum-to-encounter mapping (required condition/skill list linked to courses and
+      clerkships) plus per-student, per-requirement logging so gaps against the required list
+      are visible before graduation, not discovered at the self-study.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Curriculum Mapping (shipped) provides the course/activity-to-curriculum structure needed
+      to define the required list; the per-student encounter-logging and gap-detection layer on
+      top of it would need to be configured using the placement/forms workflow in Clinical &
+      Experiential Education.
+    gap_notes: "No confirmed out-of-the-box 'required patient encounter' tracking distinct from general placement/rotation completion."
+    source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.8)"
+
+  - element_id: "Standard 8, Element 8.4"
+    element_title: "Evaluation of Educational Program Outcomes"
+    evidence_programs_must_produce: >
+      A collection and use of outcome data — including national norms of accomplishment (e.g.,
+      USMLE performance, residency match outcomes) — gathered both during enrollment and after
+      program completion, to demonstrate achievement of program objectives and drive quality
+      enhancement.
+    required_software_behavior: >
+      A cross-cohort outcomes dashboard that blends exam performance, survey results, and
+      curriculum/competency data over time, benchmarked against national norms where available.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      This requires data from multiple pillars at once — Exam Management (still roadmap,
+      Q2 2027) for national-norm/board-exam data and Surveys & Course Evaluations for
+      student-reported outcomes — rolled up by the Accreditation Management pillar
+      (still roadmap, Q3 2027). CORRECTED 2026-08-26, per Exxat PM confirmation (see
+      content/prism/capability-map.yaml, Surveys & Course Evaluations pillar): Surveys &
+      Course Evaluations is shipped, not roadmap Q1 2027 as this entry previously stated —
+      but Exam Management and Accreditation Management are still roadmap, so this element
+      is still blocked on two of the three original dependencies.
+    gap_notes: "CORRECTED 2026-08-26: previously described as 'fully dependent on three roadmap pillars.' One of those three (Surveys & Course Evaluations) is confirmed shipped per Exxat PM (content/prism/capability-map.yaml); Exam Management and Accreditation Management remain roadmap. Left as Gap because the element still needs the two unshipped pillars and their cross-pillar integration, but this is worth a fresh look — the corrected input fact may narrow what's genuinely missing to Exam Management + Accreditation Management rather than all three."
+    source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.12)"
+
+  - element_id: "Standard 8, Element 8.5"
+    element_title: "Medical Student Feedback"
+    evidence_programs_must_produce: >
+      Formal processes for collecting and considering medical student evaluations of courses,
+      clerkships, and teachers as part of ongoing program-quality evaluation.
+    required_software_behavior: >
+      Systematic survey distribution tied to course/clerkship completion, response-rate
+      tracking, and reporting rolled up by course, clerkship, and individual teacher.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      This is the literal job of the "Surveys & Course Evaluations" pillar. CORRECTED
+      2026-08-26, per Exxat PM confirmation (see content/prism/capability-map.yaml, Surveys
+      & Course Evaluations pillar): this pillar is shipped, not roadmap Q1 2027 as previously
+      stated here — the Exxat Surveys builder plus the Forms/Evaluations engine give Prism a
+      dedicated course/clerkship/teacher-evaluation instrument today.
+    gap_notes: "CORRECTED 2026-08-26: previously read 'Roadmap item — reassess fit once Q1 2027 ships.' That pillar is confirmed shipped per Exxat PM (content/prism/capability-map.yaml), so the reassessment happens now: rated Configure, since course/clerkship/teacher-level survey distribution and rollup reporting still need to be configured for LCME's specific requirements, not built from scratch."
+    source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.12)"
+
+  - element_id: "Standard 8, Element 8.6"
+    element_title: "Monitoring of Completion of Required Clinical Experiences"
+    evidence_programs_must_produce: >
+      Proof of a centrally-overseen system that monitors and ensures every medical student
+      completes all required clinical experiences in the program, and that remedies any
+      identified gaps before graduation.
+    required_software_behavior: >
+      A single, program-wide (not per-site or per-department) view of every student's required
+      rotation/clerkship completion status, with automatic gap flags and a remediation
+      workflow — exactly the kind of central-oversight rollup a distributed clinical curriculum
+      needs.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      This is squarely the Clinical & Experiential Education pillar's core job — the confirmed
+      placement/rotation engine (Courses -> Learning Activities -> Setup -> Assignments) with
+      anchor-relative scheduling is built precisely to give central oversight of rotation
+      completion across sites; this is the strongest fit of any standard in this document.
+    gap_notes: ""
+    source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.12)"
+
+  - element_id: "Standard 8, Element 8.7"
+    element_title: "Comparability of Education/Assessment"
+    evidence_programs_must_produce: >
+      Documentation that a given course or clerkship offers comparable educational experiences
+      and equivalent assessment methods across every location/campus it is taught at, so all
+      students achieve the same program objectives regardless of site.
+    required_software_behavior: >
+      Objective- and assessment-instrument tagging by site within a single course/clerkship,
+      with cross-site comparison reporting to surface divergence before it becomes a compliance
+      finding.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Curriculum Mapping (shipped) can be configured to tag learning objectives and assessment
+      instruments per delivery site within one course; a purpose-built cross-site
+      "comparability" report is not confirmed to exist out of the box.
+    gap_notes: "Cross-site statistical/qualitative comparability reporting would likely need custom configuration or a Phase-2 feature request."
+    source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.13)"
+
+  - element_id: "Standard 9, Element 9.3"
+    element_title: "Clinical Supervision of Medical Students"
+    evidence_programs_must_produce: >
+      Evidence that students in clinical learning situations are appropriately supervised at
+      all times, with the level of student responsibility matched to training level and within
+      the supervisor's scope of practice.
+    required_software_behavior: >
+      A supervision attestation captured per clinical encounter or placement segment, tying a
+      named supervisor (with role/level) to a named student and encounter, queryable for
+      site-visit evidence.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Clinical & Experiential Education already assigns a preceptor per placement; adding a
+      structured supervision-level attestation field to that existing assignment record is a
+      configuration on top of the shipped placement model, not a new pillar.
+    gap_notes: "Supervision-level/scope-of-practice attestation as a distinct structured field is unconfirmed."
+    source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.14)"
+
+  - element_id: "Standard 9, Element 9.4"
+    element_title: "Assessment System"
+    evidence_programs_must_produce: >
+      A centralized system employing a variety of measures (including direct observation) to
+      assess student achievement of knowledge, core clinical skills, behaviors, and attitudes
+      against program objectives, ensuring all students are held to the same objectives.
+    required_software_behavior: >
+      A competency/EPA-based assessment framework linking every assessment instrument (direct
+      observation forms, OSCEs, exams) back to program-level objectives, aggregated centrally
+      per student across the whole curriculum.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The confirmed Forms/Evaluations workflow within Clinical & Experiential Education covers
+      direct-observation-style clinical evaluation forms today; rolling those up against
+      formal program-level competency objectives is a heavier lift that leans on the roadmap
+      Accreditation Management pillar (Q3 2027) for the objective-mapping layer and Exam
+      Management (Q2 2027) for standardized knowledge assessments.
+    gap_notes: "Program-objective-level competency rollup across all assessment types is not a confirmed shipped capability."
+    source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.14)"
+
+  - element_id: "Standard 9, Element 9.7"
+    element_title: "Formative Assessment and Feedback"
+    evidence_programs_must_produce: >
+      Proof that every student receives formal formative feedback early enough in each required
+      course/clerkship to allow remediation, with feedback occurring at least at the midpoint
+      (or an alternate method for experiences under four weeks).
+    required_software_behavior: >
+      Feedback forms auto-triggered relative to a rotation's midpoint date, with compliance
+      tracking of whether the midpoint feedback was actually delivered for every
+      student/rotation pair.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      This maps almost one-to-one onto the confirmed anchor-relative scheduling primitive
+      (publish/due dates set as N days before/after a placement's start, MID, or end date) in
+      Clinical & Experiential Education — a midpoint-formative-feedback trigger is exactly what
+      that primitive was built for.
+    gap_notes: ""
+    source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.15)"
+
+  - element_id: "Standard 9, Element 9.8"
+    element_title: "Fair and Timely Summative Assessment"
+    evidence_programs_must_produce: >
+      A system of fair, timely summative assessment for every course and clerkship, with final
+      grades available within six weeks of the course/clerkship ending.
+    required_software_behavior: >
+      Grade-submission deadline tracking anchored to each rotation's end date, with automatic
+      alerts to faculty/coordinators as the six-week SLA approaches and turnaround-time
+      reporting for program leadership.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The anchor-relative due-date primitive in Clinical & Experiential Education can be
+      configured to fire a "grade due" deadline off each placement's end date; a purpose-built
+      SLA-compliance report on top of that is not confirmed as a shipped feature.
+    gap_notes: "Turnaround-time compliance reporting against the six-week SLA is not confirmed out of the box."
+    source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.15)"
+
+licensure_or_gme_layer:
+  - body: "AAMC (Association of American Medical Colleges)"
+    what_it_governs: >
+      Co-sponsors LCME itself (jointly with the AMA); also operates ERAS (the residency
+      application system that consumes each school's Medical Student Performance Evaluation,
+      LCME Standard 11.4) and sets the national residency-application timeline schools must
+      align MSPE delivery to.
+    relevance_to_product: >
+      Any MSPE-generation or residency-application-readiness feature must align to AAMC/ERAS
+      timelines and data format, not just internal school workflow — a hard external
+      dependency for anything touching Standard 11.4.
+    source: "https://www.aamc.org/"
+  - body: "NBME / USMLE (National Board of Medical Examiners / United States Medical Licensing Examination)"
+    what_it_governs: >
+      NBME co-owns and administers the USMLE (with the Federation of State Medical Boards),
+      the three-step licensure exam sequence every MD-track student must pass; USMLE
+      performance is the primary "national norm of accomplishment" cited in LCME Standard 8.4.
+    relevance_to_product: >
+      Program-outcome evaluation (Standard 8.4) is effectively meaningless without USMLE
+      pass-rate/score data — this is the concrete reason "Exam Management" (roadmap Q2 2027)
+      matters for the Medicine domain specifically, not just as a generic feature.
+    source: "https://www.nbme.org/"
+  - body: "ACGME (Accreditation Council for Graduate Medical Education)"
+    what_it_governs: >
+      Accredits the residency (GME) programs that LCME Standard 3.1 requires medical students
+      to train alongside, and that nearly every LCME graduate enters after graduation — the
+      downstream accreditor in the physician-training pipeline.
+    relevance_to_product: >
+      Resident-involvement tracking (Standard 3.1) and the MD-to-residency handoff (MSPE, match
+      outcomes feeding Standard 8.4) both depend on ACGME-program context; a product serving
+      academic medical centers that also run GME programs may eventually need to model ACGME
+      program structure too, not just the MD curriculum.
+    source: "https://www.acgme.org/"
+  - body: "FSMB (Federation of State Medical Boards)"
+    what_it_governs: >
+      Co-owns USMLE with NBME and, through individual state medical boards, issues the actual
+      medical license MD graduates need to practice — the final gate after LCME accreditation,
+      GME completion, and USMLE passage.
+    relevance_to_product: >
+      State-by-state licensure requirements (beyond USMLE itself) can affect what documentation
+      a program must retain and produce for graduates years after graduation — a longer data-
+      retention horizon than typical academic-term thinking assumes.
+    source: "https://www.fsmb.org/"
+
+last_researched: "2026-08-24"

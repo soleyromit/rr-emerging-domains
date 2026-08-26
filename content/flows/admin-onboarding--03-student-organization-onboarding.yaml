@@ -1,0 +1,1269 @@
+# Element-level ground truth underneath admin-onboarding-product-setup.yaml, stage 3
+# ("Student organization & onboarding").
+#
+# SCOPE NOTE: this is PRODUCT ONBOARDING, not clinical workflow. The subject is a
+# brand-new program administrator on day one of owning a Prism tenant, standing up
+# the student side of the system for the first time: the taxonomy students get
+# filed under (cohorts, groups, enrollment/graduation terms, categories, campuses),
+# the two ways students get into the tenant (single add, bulk import), the
+# invitation/account-activation loop that actually turns a row in a grid into a
+# logged-in user, and the student-profile + student-experience configuration that
+# determines what the student sees when they arrive. Compliance-document setup,
+# course setup, and placement setup are adjacent stages and are NOT modeled here
+# except where this stage's elements gate them.
+#
+# PRIMARY SOURCE for nearly every element below is the general admin-tutorial
+# transcript at /Users/romitsoley/Downloads/exxat_transcripts.md — specifically
+# "2/16 Setting up Students in Exxat Prism" (lines 73-157) and "3/16 Managing
+# Students Profiles in Exxat Prism" (lines 159-265). Where the shipped UI has moved
+# past the video (notably "Student View" being superseded by "Student Experience
+# Settings" with a Profile Fields sub-page), the help-center mirror is cited
+# alongside the transcript and the divergence is called out in gap_note rather
+# than smoothed over.
+#
+# SCHEMA v2: accreditation_citation / competitor_equivalent / gap_severity /
+# gap_note live on each ELEMENT. Most elements in this stage are honestly
+# accreditation-agnostic platform mechanics and are honestly undocumented by
+# competitor teardowns — those verdicts are stated explicitly rather than padded
+# with a forced comparison.
+
+flow_name: "Student Roster Standup and First Invitation"
+maps_to_journey: "admin-onboarding-product-setup.yaml, stage 3"
+persona: >
+  Program Administrator, new to the platform (primary — owns Students > Setup end
+  to end and is the only role that can create cohorts, run bulk import, and send
+  invitations). Secondary: Clinical Coordinator / DCE / Program Coordinator (see
+  ../personas/role-clinical-coordinator.yaml — inherits the taxonomy this stage
+  creates and lives in the resulting student grid daily); Faculty Advisor
+  (secondary, read-mostly — appears in this stage only as an assignable value in
+  the student profile's Associated Staff and Faculty section, per transcript
+  3/16). The student is the downstream recipient, not an actor, until the
+  invitation email lands.
+
+steps:
+
+  - screen: "Students > Setup > Student Organization > Cohort"
+    navigation_path: "Dashboard or upper-left hamburger menu > Students > Setup tab (lands on Cohort by default) > Add Cohort"
+    action: >
+      The new admin creates the first cohort(s) — the root object of the entire
+      student taxonomy — and adds any groups that subdivide students inside a
+      cohort. Nothing else in this stage can proceed: cohort is a mandatory field
+      on both the single-add drawer and the bulk-import template, and the
+      bulk-import template will reject any cohort/group value that does not
+      already exist here.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students in Exxat Prism"
+      (lines 79-83): "click on the Students section from your dashboard or upper left-hand hamburger
+      menu and select the Setup tab. You will automatically be taken to the cohort section... To add a
+      new cohort, click on the Add Cohort button. You will then be able to enter the cohort's name and
+      add groups to the cohort." Mirror: PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/
+      Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Organizing Students.md
+      ("Managing Cohorts").
+    elements:
+      - element: "Add Cohort button"
+        type: "button (opens cohort drawer)"
+        data_shown: "Opens a drawer with a cohort Name field and an inline group-builder; on Save the new cohort is appended to the cohort list."
+        gates_on:
+          - "Cohort is a mandatory field on Add Student and on the bulk-import template — no student can be created before at least one cohort exists."
+          - "Course Offerings are tied to Cohort + Term + Academic Year, so cohort creation precedes course setup as well."
+        accreditation_citation: >
+          COCA Standard 11, Element 11.9 (partial — the annual/mid-cycle report is
+          reported by entering class, so the cohort object is the unit COCA's
+          report fields are keyed to, but this screen only names the unit; it does
+          not produce the report); CODA Standard 1, Element 1-2 (partial — same
+          relationship: institutional-effectiveness evidence is aggregated by
+          class year, and cohort is that aggregation key).
+        gap_severity: "none"
+        gap_note: >
+          The transcript explicitly supports BOTH program shapes on this one
+          screen: "Lock-step programs typically name their cohorts by graduation
+          year... For example, class of 2025. In contrast to this, non-lock-step
+          programs may use cohorts to group students by other criteria, such as a
+          specialization or enrollment term and year. For example, entry-level BSN
+          or Spring 2024 Family Nurse Practitioner." That is a free-text name
+          field doing the work of a program-structure model — flexible, and the
+          reason cohort-naming convention is the single most consequential
+          irreversible decision a new admin makes in this stage.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this
+          research. content/competitors/core-elms.yaml references "competency
+          records per student cohort" and emedley.yaml references "cohort/individual
+          compliance reports," but both describe cohort as a reporting filter on
+          shipped output, not an admin-created setup object with its own creation
+          screen — the comparison cannot be made element-for-element from their
+          public docs.
+
+      - element: "Group name text box + Add button (inside the cohort drawer)"
+        type: "input field + inline list-builder"
+        data_shown: "Free-text group names attached to the cohort being created; multiple groups per cohort."
+        gates_on:
+          - "A group value in the bulk-import template must already exist under its parent cohort or the import row errors."
+        accreditation_citation: "None — this is a platform-mechanics element with no direct accreditor tie. Groups are an internal convenience taxonomy, not an evidence object."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Groups are flat strings scoped to one cohort. Per the transcript they
+          exist "to categorize students within a cohort. For example, you could
+          create groups for the students' enrollment term if there are multiple
+          enrollment cycles for a cohort and if a group of students have
+          additional compliance requirements." Real programs push more structure
+          through this than it holds: the OT playbook records per-campus groups
+          ("Los Angeles Campus / Brooklyn Campus"), the PT playbook records
+          delivery-mode groups ("Hybrid, Residentials, Online"), and the SW
+          playbook records academic-track groups ("Foundation Year, Advanced
+          Standing, Clinical Practice, Macro Practice, Behavioral Health, School
+          Social Work"). None of these carry a faculty owner, a capacity, or a
+          separate compliance profile — a group is a label, so a dental-school
+          clinic pod or a DO branch-campus track has no first-class home here.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this
+          research — no file in content/competitors/ describes a sub-cohort
+          grouping construct at all.
+
+      - element: "Cohort list (post-save)"
+        type: "read-only list"
+        data_shown: "All cohorts created for the program; the selection source for every cohort dropdown elsewhere in the tenant (announcements, resources, attestations, program requirements, additional profile details, course offerings)."
+        gates_on:
+          - "Announcements, Student Resources, Attestations, Program Requirements, and Additional Profile Details questions are all assigned per-cohort or to 'all cohorts' from this list."
+        accreditation_citation: "None directly — this is the read-back of the element above; the accreditation relevance lives on cohort creation, not on the list rendering."
+        gap_severity: "none"
+        gap_note: >
+          There is no visible cohort archive/inactivate state in the transcript —
+          cohorts accumulate. For a program in year 6 of a 4-year curriculum this
+          list is a growing dropdown, and the transcript documents no way to hide
+          graduated classes from the selectors that consume it.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+  - screen: "Students > Setup > Student Organization > Enrollment Term / Graduation Term / Student Category / Campus"
+    navigation_path: "Students > Setup > Student Organization > (Enrollment Term | Graduation Term | Student Category | Campus) > pencil icon"
+    action: >
+      The admin populates the four secondary student attributes. All four behave
+      identically — a pencil icon opens an editable list, values are typed and
+      Added one at a time, existing rows are editable in place, a trash-bin icon
+      deletes, and Save commits. The transcript explicitly makes this step
+      deferrable: "You can either set these attributes while importing your
+      students or later after inviting them."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students" (lines 83-89):
+      "Click on the Enrollment Term option to provide student enrollment terms and dates. An
+      enrollment term is the first term in which the student enrolled in your academic program...
+      The graduation term is the last term in which the student is enrolled in your program...
+      Student categories are an additional way to group students... The last option for student
+      organization is their campus." Mirror: Exxat-Help-Guides/.../Students/Organizing Students.md
+      ("Managing Enrollment & Graduation Calendar," "Managing Student Categories," "Managing Campus Details").
+    elements:
+      - element: "Enrollment Term field + optional Enrollment Date field"
+        type: "input field pair (list-builder)"
+        data_shown: "Term label (e.g. 'Spring 2025') with an optional date. Transcript: 'You must enter the enrollment term, but the enrollment date is optional.'"
+        gates_on:
+          - "Must exist before a bulk-import row can carry an Enrollment Calendar value (term + date)."
+        accreditation_citation: >
+          COCA Standard 11, Element 11.9 (partial — entering-class enrollment
+          counts are a COCA annual-report field, and this is where the entering
+          term is defined; the element does not itself produce a count). Otherwise
+          accreditation-agnostic.
+        gap_severity: "cosmetic"
+        gap_note: >
+          The date being optional means a program can end up with terms that sort
+          alphabetically rather than chronologically ('Fall 2024' before 'Spring
+          2024'). No validation is described in the transcript. For non-lockstep
+          programs with several entry points a year — the Nursing and Social Work
+          shapes — this is the field carrying the real program structure, and it
+          carries it as unvalidated text.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Graduation Term field + optional Graduation Date field"
+        type: "input field pair (list-builder)"
+        data_shown: "Term label for the last term the student is enrolled. Transcript: 'This page functions similarly to the enrollment section.'"
+        gates_on:
+          - "Feeds the Academics tab's graduation term, which is what admins edit when a student decelerates."
+        accreditation_citation: >
+          COCA Standard 11, Element 11.5 (partial — the 4-year PGY-1 placement
+          rate is computed against a graduating class, so graduation term is the
+          denominator's key; Prism does not compute the rate, per
+          ../accreditation/coca.yaml which rates 11.5 'Gap'); CODA Standard 1,
+          Element 1-2 (partial — graduation/attrition rates by class are core
+          institutional-effectiveness evidence).
+        gap_severity: "configure-needed"
+        gap_note: >
+          Attrition and deceleration are the actual reason this field gets edited,
+          and the PT playbook names the workaround directly: "mark students
+          'decelerated' on the student profile (and move their cohort) to keep AAR
+          headcounts accurate." There is no first-class deceleration/LOA status —
+          it is a category or tag plus a manual graduation-term edit plus a cohort
+          move, three separate actions with no linkage between them.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Student Category list (pencil icon > name > Add)"
+        type: "input field (list-builder)"
+        data_shown: "Category names used as an additional grouping axis. Transcript warns: 'student categories can be viewed by the student, so keep this in mind when creating student categories.'"
+        gates_on:
+          - "Student-visible. The transcript routes anything the student must not see to Tags instead: 'If you would like to manage students by a criterion they cannot view, you can use tags for this.'"
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "none"
+        gap_note: >
+          The student-visible/internal split between Category and Tag is a real,
+          deliberate design line and is documented clearly in the transcript. Worth
+          noting because a new admin who files 'Probation' or 'Remediation' as a
+          Category has published it to the student.
+        competitor_equivalent: >
+          Directionally comparable to content/competitors/leo-davinci.yaml's
+          "FERPA-scoped advisor visibility (advisors see only their own advisees)"
+          in that both vendors draw an explicit visibility boundary around student
+          metadata — but Leo's boundary is role-based access to a whole record,
+          not a student-visible-vs-internal split on a taxonomy field, so this is
+          an analogy, not an element-for-element match.
+
+      - element: "Campus list (pencil icon > name > Add)"
+        type: "input field (list-builder)"
+        data_shown: "Campus names for programs delivered at more than one location. Transcript: 'If your academic program has multiple campuses, this is a good way to group students based on the location they attend.'"
+        gates_on:
+          - "Assignable at single-add, in the bulk-import template, on the Academics tab, and via Bulk Update — the transcript's own example of Bulk Update is a campus change."
+        accreditation_citation: >
+          LCME Standard 8, Element 8.7 (Comparability of Education/Assessment —
+          comparability across instructional sites/campuses is the standard's
+          literal subject, and campus is the field that would have to carry the
+          split for any comparability cut); COCA Standard 6, Element 6.11
+          (Comparability Across Clinical Education Sites — same relationship,
+          partial: this element stores the campus label, it does not produce the
+          comparability statistics 6.11 asks for).
+        gap_severity: "configure-needed"
+        gap_note: >
+          Campus is a flat student attribute, not a program-structure object. The
+          OT playbook flags the consequence on the other side of the system:
+          "If a school has multiple campuses, only the main campus address should
+          be entered — Prism takes only 1 address to calculate distance on the
+          map," while also noting a school "can enter different mission/vision
+          statements per campus." So campus is modeled inconsistently across the
+          product, and this stage's version of it is the thinnest one. For DO
+          branch campuses and PA distant campuses (which ARC-PA requires be
+          reported in advance, per the PA playbook's E-series notes) that thinness
+          is a real limitation, not a cosmetic one.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this
+          research. content/competitors/medhub.yaml documents DO-specific
+          positioning and LCME support, but nothing in its public docs describes a
+          campus/site attribute on the learner record at this level.
+
+  - screen: "Students > Add Student > +Add Single Student (drawer)"
+    navigation_path: "Students tab > Add Student button > +Add Single Student"
+    action: >
+      The admin creates one student manually. This is the path used for a late
+      admit, a transfer, or a one-off correction after the bulk import has already
+      run; it is also the path a brand-new admin uses to create a single test
+      student before trusting the import.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students" (lines 89-95):
+      "To add individual students, navigate to the Students tab and click the Add Student button.
+      A drawer will open for you to fill the information. You must enter the student's name, school
+      email address, and cohort to save the information... If your school uses single sign-on
+      accounts, you can also provide the student with an SSO key in this window... If you would like
+      to automatically register the student in all of the course offerings of the selected cohort,
+      check the corresponding box at the bottom of the page." Mirror: Exxat-Help-Guides/.../Students/
+      Managing Student Access and Attributes.md ("Add Individual Students").
+    elements:
+      - element: "First name / Last name / School email address fields"
+        type: "input fields (mandatory)"
+        data_shown: "Student identity. The school email address is the invitation destination and, per the Exxat One transcript section, the key used to auto-match students when schedules are processed in from Exxat One ('student auto-matched by email similarity')."
+        gates_on:
+          - "Invitation delivery — the transcript's troubleshooting for a failed invitation is 'you may have entered an invalid email address.'"
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "none"
+        gap_note: ""
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Cohort dropdown (with search box)"
+        type: "searchable single-select (mandatory)"
+        data_shown: "The cohorts created in step 1. Searchable because the list is unbounded and never archived."
+        gates_on:
+          - "Determines which announcements, resources, attestations, program requirements, and additional-profile-details questions the student receives."
+          - "Determines which course offerings the auto-register checkbox will enroll the student into."
+        accreditation_citation: "None at the point of assignment — the accreditation weight sits on the cohort object itself (see step 1)."
+        gap_severity: "none"
+        gap_note: >
+          Choosing the wrong cohort here is not a simple edit later: it requires
+          the separate Update Cohort workflow (step 7) with its documented list of
+          impact areas. That asymmetry — one dropdown to set, a multi-screen
+          migration to change — is worth flagging to a day-one admin.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Single Sign-On (SSO) Key field (+ icon; editable later via pencil)"
+        type: "input field (conditional)"
+        data_shown: "The institutional SSO identifier for this student. Transcript: 'if you assign an SSO key to a student, this student will be provided with an SSO login when you invite them.'"
+        gates_on:
+          - "Determines the account type the invitation creates — standard username/password vs. SSO. This is a per-student decision made at record-creation time, not a tenant-level setting."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Account type is a per-row attribute rather than a program-level
+          authentication policy. A tenant can therefore end up half SSO and half
+          standard-password with no screen that reports the split, and a missing
+          SSO key silently downgrades a student to a password account at
+          invitation time rather than blocking the invite. The help-center mirror
+          is explicit that the key must be present *before* the invite: "ensure
+          the student's SSO Key is configured when adding the student individually
+          or through the bulk import template."
+        competitor_equivalent: >
+          content/competitors/medhub.yaml is the one teardown with a directly
+          comparable public claim: "128-bit STRONG Encryption SSL, Multifactor
+          authentication, FERPA compliance, SOC 2 compliance" plus
+          "SAML/Shibboleth SSO" — i.e. MedHub markets SSO as a federated
+          institution-level protocol integration. core-elms.yaml, by contrast, is
+          documented as describing "only generic SSO/LTI standards support... with
+          no specific LMS/SIS integration partners named publicly." Prism's
+          per-student SSO Key field is a third shape again (a stored per-learner
+          identifier). The three are comparable at the capability level; none of
+          the competitor docs are granular enough to compare field-for-field.
+
+      - element: "'Register student in all course offerings of the selected cohort' checkbox"
+        type: "toggle (checked by default)"
+        data_shown: "Auto-enrolls the new student into every course offering already attached to the chosen cohort."
+        gates_on:
+          - "Course registration, which in turn gates whether the student sees course-level learning activities, forms, and placements."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "none"
+        gap_note: >
+          The transcript names the exact scenario this exists for: "This could be
+          useful for when a cohort is already in progress and a new student joins
+          the cohort." The help-center mirror confirms the default is ON and must
+          be actively unchecked. Reasonable default; worth knowing it is a default,
+          because unchecking it is the fix for a student who is joining a cohort
+          but not taking its in-flight courses.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+  - screen: "Students > Setup > Student Management > Bulk Import (3-step drawer)"
+    navigation_path: "Students > Add Student > Add Students in Bulk — OR — Students > Setup > Student Management > Bulk Import > + icon"
+    action: >
+      The admin loads the whole incoming class at once. This is the load-bearing
+      day-one action of the entire stage: download template, fill offline,
+      re-upload, resolve validation, confirm with a typed number, watch the import
+      instance complete.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students" (lines 95-103):
+      "click on the Setup tab, click on the Student Management dropdown in the left-hand menu, and
+      select the Bulk Import option... Click on the download template icon to download the import
+      template... Any columns containing an asterisk will need this information to add the students.
+      Make sure you do not make any changes to the columns of this template. Also, to enter a cohort,
+      group, enrollment, graduation, student category, and campus, you must first set up these
+      categories in the system under the Student Organization section... The system will then display
+      any relevant issues with your Excel file. Important issues are called errors and require making
+      changes to the uploaded template to import these students. Less important issues are called
+      warnings." Mirror (Excel-formatting gotchas not in the video):
+      Exxat-Help-Guides/.../Students/Managing Student Access and Attributes.md ("Add Students in Bulk").
+    elements:
+      - element: "Download template icon"
+        type: "button (file download)"
+        data_shown: "An .xlsx template whose columns are fixed; asterisked columns are required. Per the help-center mirror the required set is first name, last name, email address, cohort, and SSO key if applicable."
+        gates_on:
+          - "Column structure is immutable — transcript: 'Make sure you do not make any changes to the columns of this template.'"
+          - "Per the help-center's Student Experience Settings page, the template is DYNAMIC with respect to required fields: 'if a field is marked as required, it becomes mandatory in the import template, and any missing values will trigger validation errors. For example, if Date of Birth (DOB) is required, the system will display an error such as \"DOB should not be empty\".'"
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The template couples to the Profile Fields configuration (step 9), which
+          a new admin has almost certainly not visited yet at the moment they
+          download this template. Sequencing hazard: configure Profile Fields
+          BEFORE downloading the import template, or re-download after.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this
+          research. The nearest documented competitor behaviour is a different
+          shape entirely: content/competitors/medhub.yaml claims MedHub
+          "integrates AAMC ERAS resident demographic data" — i.e. roster ingest
+          from an ecosystem source rather than an admin-authored spreadsheet. That
+          is a genuine architectural contrast worth carrying into positioning, but
+          it is not an equivalent to this button.
+
+      - element: "Prerequisite-value validation (cohort, group, enrollment calendar, graduation calendar, student category, campus)"
+        type: "server-side validation on upload"
+        data_shown: "Errors on any row whose cohort/group/term/category/campus value does not already exist in Student Organization."
+        gates_on:
+          - "Hard dependency on step 1 and step 2 being complete first. Help-center mirror: 'Some fields require information to exist in the system before you can associate it with any students. If you provide details for an item that does not exist in your database, the system will not be able to process it.'"
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "none"
+        gap_note: >
+          This is the single most common day-one failure mode in the stage and it
+          is a *correct* design (referential integrity over silent value creation)
+          — but it means the taxonomy decisions in steps 1-2 must be final before
+          the import runs, which is exactly backwards from how a new admin
+          naturally works (import first, organize later).
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Error / warning grid with red-cell and yellow-cell alert icons, counts, and a filter icon"
+        type: "validation review grid"
+        data_shown: "Per-cell error (red, blocking) and warning (yellow, non-blocking) markers with hover text; error/warning counts in the top-left; a filter to show only rows with errors or warnings."
+        gates_on:
+          - "Errors block the import. Warnings do not — transcript: 'You can still import the list of students if there are warnings detected. However, we advise resolving any warning messages before you import the students.'"
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "cosmetic"
+        gap_note: >
+          There is no in-grid editing: the documented remedy is to fix the source
+          .xlsx and re-upload ("If you need to make changes, click Previous and
+          re-upload the import template once done making edits"). For a 200-row MD
+          or PharmD class with scattered errors this is a multi-round-trip loop.
+          The help-center also documents two Excel-side data-integrity traps the
+          video does not mention: leading zeros stripped from Student ID unless
+          the column is formatted as Text, and date fields (DOB, enrollment date,
+          graduation date) corrupted unless formatted as Text in MM/DD/YYYY.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Type-the-number import confirmation"
+        type: "confirmation gate"
+        data_shown: "A displayed number the admin must re-type to commit the import."
+        gates_on:
+          - "Commit of the whole batch."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "none"
+        gap_note: >
+          The same friction pattern appears on Bulk Update (per the OT playbook's
+          Capstone workflow: 'a confirmation step requiring the admin to re-type a
+          displayed number before it commits') — a consistent product convention
+          for irreversible bulk writes, which is a point in Prism's favour for a
+          day-one admin.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Bulk Import Instances table (Title, Initiated By, Initiated On, Status, source file download, refresh icon)"
+        type: "read-only audit table"
+        data_shown: "Every prior import: name, the administrator who ran it, timestamp, status (In Progress / complete), and the exact Excel file used, re-downloadable. Sortable by Title and Initiated On."
+        gates_on: []
+        accreditation_citation: >
+          None directly. Worth noting for a compliance-minded reader that this is
+          a genuine who-did-what-when audit trail over roster changes, which is the
+          kind of artifact FERPA-adjacent institutional audits ask for — but no
+          named element in ../accreditation/ (COCA, CODA, ACPE, LCME) requires it,
+          so citing one would be a fabrication.
+        gap_severity: "none"
+        gap_note: >
+          Retaining the source file for re-download is stronger than a bare status
+          log and is the recovery path when an import produces surprises.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+  - screen: "Students > Setup > Student Management > Invite Students"
+    navigation_path: "Students > Setup > Student Management dropdown > Invite Students"
+    action: >
+      The admin selects students and sends the account-activation invitation —
+      the step that converts roster rows into logged-in users. This is a 3-step
+      drawer: recipients, email template, send-now-or-schedule.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students" (lines 103-111):
+      "Click on the Setup tab, then click on the Student Management dropdown, and select Invite
+      Students... Please note that if you have assigned a valid SSO key to a student you have
+      selected, this student will be provided with an SSO login account when you invite them...
+      You can select our pre-made standard template or any other template you have created... Be sure
+      to use the merge fields displayed in the upper right-hand corner of the page... Please note you
+      will need to include the invitation link merge field when you send an invitation to a student,
+      otherwise, the student would not be able to set up their account... You can then choose to send
+      the invitation now or schedule it to be sent later." Mirror (override-recipient / reply-to /
+      merge-field governance): Exxat-Help-Guides/.../Students/Managing Student Access and Attributes.md
+      ("Invite Students").
+    elements:
+      - element: "Select-all checkbox + per-row selection on the invite grid"
+        type: "multi-select"
+        data_shown: "All active students who have not yet activated an account, with the same search / filter / column-wrench / export affordances as the main Students grid."
+        gates_on:
+          - "Nothing sends until a selection is made; the grid is pre-scoped to un-activated students, so re-inviting the whole class is safe by construction."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "none"
+        gap_note: ""
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Email template selector + Add a Template (name, subject, header/footer layout, body)"
+        type: "template builder"
+        data_shown: "A pre-made Standard template plus any program-authored templates; templates are editable, previewable, and deletable from the template list."
+        gates_on:
+          - "A template must be selected before Preview/Send."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "none"
+        gap_note: >
+          Shipping a working Standard template matters disproportionately on day
+          one: a new admin can get the class invited without authoring anything.
+        competitor_equivalent: >
+          Weakly comparable to content/competitors/e-value.yaml's "automated
+          document collection during onboarding" and content/competitors/
+          emedley.yaml's "reminders and dashboard + frequency-analysis reporting"
+          — both describe outbound onboarding communication existing, neither
+          describes an admin-authored template editor with a merge-field
+          vocabulary. Not comparable element-for-element.
+
+      - element: "Merge-field picker (@-triggered) — including the mandatory invitation-link merge field"
+        type: "inline token inserter"
+        data_shown: "Typing '@' opens the merge-field list (first name, last name, invitation link, etc.); tokens resolve per-recipient at send time."
+        gates_on:
+          - "HARD GATE: omitting the invitation-link merge field produces an email that cannot activate an account. Transcript: 'you will need to include the invitation link merge field when you send an invitation to a student, otherwise, the student would not be able to set up their account.'"
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "gap"
+        gap_note: >
+          The transcript states the consequence but describes no validation that
+          blocks a save or a send when the invitation-link token is missing — it
+          is documented as an instruction to the admin, not an enforced
+          precondition. This is the highest-consequence silent-failure risk in the
+          whole stage: the send reports success, the Invitation Status column
+          reads delivered, and the entire class receives an email that cannot
+          create an account. Also note the merge-field vocabulary is closed:
+          per the help-center, "Standard merge fields are standardized across all
+          Exxat programs and cannot be edited or deleted. If your program requires
+          additional merge fields, contact the Exxat Support to request that new
+          merge fields be evaluated for inclusion."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Override recipient's email / Reply-to / CC / BCC / file attachment fields"
+        type: "input fields (send configuration)"
+        data_shown: "Override recipient redirects the whole send to one address for testing; Reply-to sets where student replies land; CC/BCC and attachments as normal."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "none"
+        gap_note: >
+          Override-recipient is a genuinely thoughtful day-one affordance — it lets
+          a brand-new admin test the invitation end to end without emailing real
+          students. It appears in the help-center mirror but NOT in the video
+          transcript, so a new admin following the tutorial alone will not
+          discover it. The OT playbook notes Reply-To is often deliberately left
+          blank at multi-campus schools "where different staff manage Level II vs.
+          Capstone," so replies can be routed manually.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Send now / Schedule for later (date + time) + left-hand live preview"
+        type: "radio + datetime picker + preview pane"
+        data_shown: "Rendered invitation preview beside the scheduling choice."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "none"
+        gap_note: ""
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Invitation Status column"
+        type: "read-only status column"
+        data_shown: "Delivery outcome of the invitation email (e.g. 'Invitation Delivered Successfully'), with a documented failure path."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "none"
+        gap_note: >
+          Delivery failure is attributed to a bad email address first and
+          otherwise escalated to support ('please reach out to our support team at
+          prism-support@exxat.com') — there is no self-serve bounce log described
+          in this stage; the closest self-serve tool is the per-student Email
+          History drawer (step 8).
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Account Status column"
+        type: "read-only status column"
+        data_shown: "Whether the student has actually activated. Documented values per the help-center mirror: 'Invitation Delivered Successfully', 'Activated', 'Not Invited', with a last-sent timestamp."
+        gates_on:
+          - "Un-activated students cannot see announcements, resources, attestations, or their profile — every downstream student-facing configuration in step 9 is inert until this column reads Activated."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "cosmetic"
+        gap_note: >
+          This is the true completion metric for the stage and it is a grid column
+          rather than a dashboard number — the transcript's remedy for stalled
+          activation is entirely manual: "If the student has not activated their
+          account, you may want to reach out to them outside the EXXAT system."
+          No automated activation-reminder cadence is documented.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+  - screen: "Students tab — the main student grid"
+    navigation_path: "Dashboard or hamburger menu > Students (Students tab)"
+    action: >
+      The admin works the roster: finds students, reshapes the grid to the columns
+      their program actually cares about, exports, applies attribute changes across
+      many students at once, and removes bad rows.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students" (lines 111-121):
+      "The table will display the student's name, student ID, school email address, status, cohort,
+      et cetera. If you would like to edit the columns of the table, click on the wrench icon...
+      The column setup is sticky... To reset the columns to their default settings, click on the
+      column icon, then select the Reset All hyperlink... Please note that these filters are sticky
+      as well... However, unlike the column setup, when you log out and log back in, these filters
+      will reset to default... To bulk update student attributes, select multiple students and click
+      the Bulk Update button... Please note that if a student has learning activity data saved or
+      submitted in their courses, the system will not let you delete them."
+    elements:
+      - element: "Column wrench (reorder via arrows or drag handle, remove, Add a Column, Reset All)"
+        type: "grid configuration control"
+        data_shown: "The visible column set for the student grid."
+        gates_on:
+          - "Column setup is sticky ACROSS SESSIONS — it survives logout. This is per-user persistence, not a program-level default."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "cosmetic"
+        gap_note: >
+          Sticky-per-user with no shareable/program-default saved view means every
+          new coordinator rebuilds the same grid layout by hand, and two admins
+          looking at 'the student list' may be looking at different columns —
+          a small but real onboarding tax for a multi-admin program.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Filter icon (multi-category faceted filter, Show More, per-facet X, Apply)"
+        type: "report filter"
+        data_shown: "Facets across student attributes including Tags (the transcript's worked example filters the grid by the 'married' tag)."
+        gates_on:
+          - "Filters are sticky within a session but RESET on logout — deliberately different persistence from columns."
+          - "Filters applied here also scope the left-hand student picker inside an individual student's profile, and must be cleared via a 'clear all' hyperlink there."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "cosmetic"
+        gap_note: >
+          The filter-persists-into-the-profile-navigator behaviour is genuinely
+          surprising on day one — an admin who filtered to one cohort and then
+          opened a student will find most of the program missing from the side
+          navigator until they notice the clear-all link.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Export icon (Excel download of the student list)"
+        type: "button (export)"
+        data_shown: "The current student list as .xlsx, honouring the configured columns and applied filters."
+        gates_on: []
+        accreditation_citation: >
+          None directly at this element. Note for context: the discipline
+          playbooks route accreditation headcount/demographic asks to a different,
+          purpose-built report — the PT and OT playbooks both name
+          Students > Reports > "Race, Gender, Age & Ethnicity," filtered by cohort,
+          as the CAPTE/ACOTE annual-report source, not this generic export.
+        gap_severity: "none"
+        gap_note: ""
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Bulk Update button (select students > choose attribute > choose value > Update > confirm)"
+        type: "bulk-write action"
+        data_shown: "One attribute at a time applied to the whole selection. Transcript's example: moving multiple students from one campus to another."
+        gates_on:
+          - "Requires a multi-row selection; commits behind a confirmation step."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "configure-needed"
+        gap_note: >
+          One attribute per pass. The OT playbook documents the real-world usage
+          precisely — "filter students by Cohort, select them, and use Bulk Update
+          to set Student Category = Capstone in one pass (with a confirmation step
+          requiring the admin to re-type a displayed number before it commits)."
+          Critically, Cohort is NOT one of the bulk-updatable attributes: cohort
+          changes go through the separate per-student Update Cohort workflow
+          (step 7), so a program moving a group of decelerated students must do it
+          one at a time.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Delete Student (from the student profile, upper right) + reason field + Proceed confirmation"
+        type: "destructive action with impact preview"
+        data_shown: "A drawer enumerating the data that would be lost, a mandatory free-text reason, and a two-step confirmation."
+        gates_on:
+          - "HARD BLOCK: 'if a student has learning activity data saved or submitted in their courses, the system will not let you delete them.' Removal in that case requires prism-support@exxat.com."
+        accreditation_citation: >
+          None as an accreditor requirement, but the block is the correct behaviour
+          for evidence integrity: deleting a student who has submitted patient
+          logs, timesheets, or evaluations would destroy the very records that
+          LCME Standard 8, Element 8.6 (monitoring completion of required clinical
+          experiences) and CODA Standard 2, Element 2-5 rely on. Cited as
+          rationale, not as a standard this element satisfies.
+        gap_severity: "none"
+        gap_note: >
+          Showing the impact preview before the destructive act, requiring a
+          written reason, and hard-blocking on submitted learning-activity data is
+          the strongest safety design in this stage.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+  - screen: "Student profile > Academics tab (+ student banner and tags)"
+    navigation_path: "Students > click a student name > Overview tab > Academics tab"
+    action: >
+      The admin maintains one student's institutional record: internal tags, the
+      academic attribute set, internal vs. student-shared notes, faculty advisor
+      assignment, program-requirement status, and — when a student decelerates or
+      switches track — the cohort migration.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "3/16 Managing Students Profiles" (lines 165-191):
+      "Think about tags as E post-it notes on individual students. Tags are useful because they're only
+      for internal use and therefore the student cannot view these. For example, tags like new parent or
+      needs public transport allow you to consider the needed accommodations while making placements...
+      Click on the pencil icon in the academic section to make changes to their status. Academic standing,
+      enrollment term, graduation term, group, campus and student category... students will be able to
+      view notes added to the notes shared with students section... Notes added to the internal use only
+      section cannot be viewed by students... To change the student's cohort, click on the update cohort
+      button. A description of the impact areas of moving a student from one cohort to another will be
+      displayed... Please note that the role selected is for information purposes only. The role of the
+      faculty member does not affect their permitted access in the system."
+      Tag cap confirmed in Exxat-Help-Guides/.../Students/Organizing Students.md ("Managing Students Tags").
+    elements:
+      - element: "Add Tag (name + colour; edit via pencil; filterable from the student grid)"
+        type: "internal label (multi-select, colour-coded)"
+        data_shown: "Program-defined internal labels attached to a student. Explicitly not student-visible."
+        gates_on:
+          - "Capped at 10 tags per student (help-center mirror: 'You can only have a maximum of 10 tags for a student')."
+          - "Feeds the Tags facet on the student-grid filter."
+        accreditation_citation: >
+          None as a requirement. Contextually relevant to placement equity/
+          accommodation decisions — the transcript's own examples are 'new parent'
+          and 'needs public transport,' i.e. placement-constraint data — but no
+          COCA/CODA/ACPE/LCME element in ../accreditation/ names anything this
+          element satisfies.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Tags are the de facto home for accommodation, hardship, and
+          risk-flag data — sensitive information stored as a free-text colour
+          label with no defined access scope beyond 'not student-visible,' no
+          expiry, and a hard cap of 10. A program that needs both accommodation
+          flags and cohort-management flags will run out. There is a stronger
+          adjacent primitive in the product (the capability map records
+          "Sensitive records (e.g. advisement/intervention notes) restricted to
+          assigned faculty/advisors only") but it is not documented as applying to
+          tags.
+        competitor_equivalent: >
+          content/competitors/leo-davinci.yaml documents "FERPA-scoped advisor
+          visibility (advisors see only their own advisees)" — the same underlying
+          concern (who can see sensitive learner metadata) solved at the
+          role-permission layer rather than with an internal-vs-visible field
+          split. A real design contrast, but Leo's public docs are not granular
+          enough for a field-for-field comparison.
+
+      - element: "Academic section pencil (Status, Academic Standing, Enrollment Term, Graduation Term, Group, Campus, Student Category)"
+        type: "input field set (edit drawer)"
+        data_shown: "The per-student values drawn from the Student Organization lists built in steps 1-2."
+        gates_on:
+          - "Values are constrained to what exists in Student Organization — the same referential integrity as the bulk-import validation."
+        accreditation_citation: >
+          COCA Standard 11, Element 11.9 and CODA Standard 1, Element 1-2 (both
+          partial — enrollment/graduation/standing by class are the raw inputs to
+          the annual and institutional-effectiveness reporting those elements
+          require; this screen stores them per student, it does not aggregate or
+          submit them).
+        gap_severity: "none"
+        gap_note: >
+          The OT playbook confirms this is where day-to-day maintenance happens:
+          "Academics Profile: Displays enrolled term, graduation term, status,
+          campus, and student requirements. Lets admins update cohort info, check
+          attestation requirements, and associate faculty/staff with specific
+          students."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Notes — 'Shared with students' vs. 'Internal use only' (+ icon, text area, document attachment)"
+        type: "dual-visibility note log with attachments"
+        data_shown: "Two separate note streams on one student, each with attachments; the visibility boundary is the section, not a per-note toggle."
+        gates_on:
+          - "Anything typed into 'Shared with students' is published to the student — transcript: 'make sure you do not include any information you would like to hide from students.'"
+        accreditation_citation: >
+          CODA Standard 2, Element 2-2 (partial — 'documentation that when a
+          student fails to meet published didactic, behavioral, and/or clinical
+          criteria, an individual evaluation was performed leading to a decision
+          made in accordance with institutional due-process policy'). Internal
+          notes are where the transcript says behavioural concerns go ('track
+          student behavioral issues or suspected plagiarism'), but a free-text
+          note log is not the timestamped decision trail 2-2 asks for — see the
+          Interventions tab element below, which is closer.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Two note streams with a section-level visibility boundary is easy to
+          get wrong under time pressure, and the OT playbook shows both being used
+          on the same student ("a positive-feedback note shared with the student
+          vs. an internal note about needing more challenging placements").
+          Deleting a note is also non-obvious: pencil icon, then vertical
+          ellipsis, then Delete.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Update Cohort button (impact-areas disclosure > current-vs-new cohort > confirm > async migration)"
+        type: "guarded migration workflow"
+        data_shown: >
+          A pre-migration disclosure of exactly what changes: announcements,
+          resources, attestations, program requirements, and additional profile
+          details assigned per-cohort are lost/gained; items assigned to 'all
+          cohorts' are unaffected; course registrations are NOT affected;
+          compliance documents are carried over for requirements configured
+          identically in both cohorts; placement and learning-activity data are
+          unaffected; subscriptions should be unaffected (with a support escalation
+          if they are not). Runs asynchronously.
+        gates_on:
+          - "The only supported way to change a student's cohort — Cohort is not available in Bulk Update."
+        accreditation_citation: >
+          None as a standard, but this is the mechanism behind a documented
+          accreditation-reporting practice: the PT playbook instructs programs to
+          "mark students 'decelerated' on the student profile (and move their
+          cohort) to keep AAR headcounts accurate" for CAPTE annual reporting —
+          i.e. cohort integrity is what makes class-level accreditation counts
+          correct.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Best-in-stage transparency (the impact disclosure is unusually explicit
+          and honest, including the hedge that subscriptions "should be"
+          unaffected) wrapped around a one-student-at-a-time workflow. The PT and
+          OT playbooks both record that "cohort movement is common when students
+          withdraw and later return, go on leave, fail experiences," so this is a
+          routine action, not an edge case — and there is no bulk path for it, no
+          undo described, and no dry-run.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Associated Staff and Faculty (faculty/staff dropdown + multi-select Role + notes icon)"
+        type: "assignment control"
+        data_shown: "Faculty advisors assigned to this student, each with one or more informational roles."
+        gates_on:
+          - "Assignment grants advisor visibility into the student's Academics, coursework, placements, and learning activities (view-only)."
+          - "It does NOT grant compliance review — transcript: 'Student advisors do not have access to review student compliance, but they can be given the ability to view compliance status if you provide them with this ability' (configured in Faculty setup, not here)."
+          - "It does NOT grant learning-activity review — 'student advisors cannot review learning activities, but they can view them.'"
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie. (Advising-quality standards exist in most accreditors' student-services sections but no such element is loaded in ../accreditation/, so citing one would be re-deriving rather than tracing.)"
+        gap_severity: "gap"
+        gap_note: >
+          The Role dropdown is decorative: "the role selected is for information
+          purposes only. The role of the faculty member does not affect their
+          permitted access in the system." Real permissions live in a different
+          module (Faculty setup), so a day-one admin who assigns 'Clinical
+          Advisor' here reasonably but wrongly believes they have granted
+          something. This is the clearest instance in the stage of a control that
+          looks like access management and is not.
+        competitor_equivalent: >
+          content/competitors/leo-davinci.yaml is the only teardown documenting a
+          comparable construct — "FERPA-scoped advisor visibility (advisors see
+          only their own advisees)" — and it is documented as an actual access
+          scope, which is precisely what Prism's Role field here is not. This is a
+          rare case where a competitor's public doc is specific enough to support
+          a genuine, unfavourable comparison at element granularity.
+
+      - element: "Program Requirements section (Pending / Placed / Completed)"
+        type: "read-only rollup with manual override"
+        data_shown: "Graduation requirements assigned to this student by cohort, bucketed: Pending (not yet met), Placed (will be met by a current placement), Completed."
+        gates_on:
+          - "Requirements can be satisfied automatically by placement completion when a requirement is attached to the placement, or marked complete manually from the student profile."
+        accreditation_citation: >
+          LCME Standard 8, Element 8.6 (Monitoring of Completion of Required
+          Clinical Experiences — 'a centrally-overseen system that monitors and
+          ensures every medical student completes all required clinical
+          experiences... and that remedies any identified gaps before graduation';
+          ../accreditation/lcme.yaml rates this the strongest Prism fit of any
+          LCME element). ACPE Standard 3, Key Elements 3.1.b and 3.2.b/3.2.d
+          (partial — required practice settings and minimum clock hours are
+          exactly the kind of per-student requirement this section tracks, though
+          hour minimums live in the timesheet layer, not here).
+        gap_severity: "none"
+        gap_note: >
+          The PT playbook confirms the accreditation-facing usage directly: "For
+          each setting, schools may set up a requirement to track completion —
+          e.g. Rural, Underserved, School-based, Integrated Clinical
+          Experience-Acute." The three-state model (including 'Placed' as a
+          distinct forward-looking state) is more useful than a binary
+          met/not-met.
+        competitor_equivalent: >
+          Directionally comparable to content/competitors/new-innovations.yaml's
+          Procedure Logger with ACGME case-log import and
+          content/competitors/medhub.yaml's "session-level exposure reporting for
+          accreditation documentation," both of which track required-experience
+          completion — but neither vendor's public docs describe a per-student
+          Pending/Placed/Completed requirement ledger, so the comparison holds at
+          capability level only.
+
+  - screen: "Student profile > Profile tab, Share Profile menu, View As, and Email History"
+    navigation_path: "Students > student name > Profile tab; Share Profile dropdown (top right); View As button; vertical ellipsis > Email History"
+    action: >
+      The admin verifies what the student actually filled in, checks the account
+      from the student's own seat before the class arrives, packages the profile
+      for site personnel, and audits what the system has emailed this student.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "3/16 Managing Students Profiles" (lines 191-219):
+      "Most of the time students are supposed to fill out all the information in the student profile
+      tab. You do have the ability to add and edit information on behalf of the student, but we advise
+      you have you students fill it out initially. This section of the student profile is important
+      because there is information on this page that sites will use in determining whether to accept
+      them for a clinical placement... When sharing a student's profile, the link you send will
+      automatically contain their full name, preferred pronouns, school, email address, areas of
+      professional interest, resume, educational history, work experience, skills and accomplishments,
+      and the summary section... To view what a specific student's [Exxat] login looks like, click on
+      the view as button... you will not be able to make changes, add or delete information on behalf
+      of the student when you are in view as mode."
+    elements:
+      - element: "Profile tab section set (Demographic, Personal Contact, Emergency Contact, Additional Profile Details, Summary, Areas of Professional Interest, Resume, Education, Work Experience, Membership, Licensure, Skills & Accomplishments)"
+        type: "student-authored input field set (admin-editable on behalf)"
+        data_shown: "The student's own record. Each section has +/pencil/ellipsis-delete affordances for admins acting on behalf."
+        gates_on:
+          - "Site acceptance decisions — 'there is information on this page that sites will use in determining whether to accept them for a clinical placement.'"
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie. (The Licensure section is the closest to accreditation-relevant, but student licensure is not a named element in any of the four loaded accreditor files; preceptor licensure is, and that lives in a different journey.)"
+        gap_severity: "none"
+        gap_note: >
+          The product's stated posture is student-authored-first with admin
+          override — correct for data quality, and the reason the attestation
+          pattern below exists (PT and OT playbooks both record 'Profile
+          verification' and 'Profile update request' attestations set up with due
+          dates, shared with all cohorts, purely to force students to keep this
+          tab current).
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Share Profile > Share Profile (recipient/CC, inclusion checkboxes, notes, attachments, Preview, Send)"
+        type: "outbound share workflow"
+        data_shown: >
+          An always-included core (full name, preferred pronouns, school email,
+          areas of professional interest, resume, education, work experience,
+          skills & accomplishments, summary) plus opt-in blocks: contact
+          information (personal / address / emergency, individually selectable),
+          completed program requirements, completed placements (selectable
+          individually, showing course, location, experiential supervisor, dates,
+          setting), and compliance documents (selectable individually).
+        gates_on:
+          - "Optional blocks render only if populated — 'the data will only be displayed if there is information populated in these fields.'"
+          - "Optional one-time-password protection on shared compliance information is NOT self-serve: it must be enabled by Exxat support (prism-support@exxat.com), after which the site contact must enter an OTP sent to the same address the link was mailed to (including CC/BCC recipients)."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie. The privacy posture is FERPA-adjacent but no loaded accreditor element governs student-profile disclosure to sites."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Granular per-block consent design is strong, but the protection that
+          actually matters — OTP-gating the compliance/health data — is off by
+          default and requires a support ticket to enable. A brand-new admin
+          sharing a profile on day one is, by default, emailing an unauthenticated
+          link to student health documents. That default is the single most
+          defensible criticism in this stage.
+        competitor_equivalent: >
+          No competitor teardown in this research documents a no-login,
+          site-facing student profile share at this granularity. The nearest
+          documented posture is content/competitors/medhub.yaml's platform-level
+          security claims (FERPA compliance, SOC 2, multifactor authentication) —
+          which describe authentication for platform users, not a link-based
+          share to a non-user, so the two are not comparable element-for-element.
+          Prism's own capability map records the related
+          @StudentProfileWithComplianceAndLocationRequirementsLink merge field as
+          giving "site personnel a no-login link to a student's compliance +
+          location requirements," confirming this is an intentional product
+          pattern rather than an oversight.
+
+      - element: "Share Profile > Generate Profile URL / Download Profile (PDF)"
+        type: "link generator / export"
+        data_shown: "Same inclusion checkboxes as the email share; produces either a copyable URL for out-of-band sharing or a PDF."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "configure-needed"
+        gap_note: >
+          A generated URL leaves the system's tracking entirely: Profile Share
+          History (below) records emailed shares, and the transcript describes no
+          expiry, revocation, or access log for a manually generated URL. It is
+          the same payload as the emailed share with less accountability.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Profile Share History (recipient name, email, status with hover explanation, timestamp)"
+        type: "read-only audit table"
+        data_shown: "Every emailed profile share for this student."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie, though it is the disclosure log an institutional FERPA audit would ask for."
+        gap_severity: "none"
+        gap_note: "Covers emailed shares only; see the Generate Profile URL gap above."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "View As button (+ 'switch back' hyperlink)"
+        type: "impersonation (read-only)"
+        data_shown: "The full student dashboard as that student sees it. Explicitly read-only: 'you will not be able to make changes, add or delete information on behalf of the student when you are in view as mode.'"
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "none"
+        gap_note: >
+          The single most valuable verification tool in this stage for a brand-new
+          admin — the transcript frames it exactly that way ("At some point you
+          might want to verify if you've completely set up the student account as
+          intended"). Every step-9 configuration (announcements, resources,
+          attestations, visibility toggles) is only checkable from here. It should
+          be the last action of this stage, and read-only impersonation is the
+          right safety choice.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file describes a read-only view-as-learner mode."
+
+      - element: "Email History drawer (Sent / Scheduled tabs; category, subject, status, timestamp; date-range filter)"
+        type: "read-only audit table"
+        data_shown: "Every system email to this student, including scheduled-but-unsent items; click the subject to read the message body."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "cosmetic"
+        gap_note: >
+          This is the self-serve answer to 'did the invitation actually reach
+          them?' and it is per-student only — there is no program-wide email
+          delivery log described anywhere in the two tutorials, so diagnosing a
+          class-wide delivery problem means opening students one at a time.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+  - screen: "Student profile > Communications tab and Interventions tab"
+    navigation_path: "Students > student name > Communications tab | Interventions tab > + icon"
+    action: >
+      The admin sets up (and begins using) the two parallel logs that record
+      everything notable said to or done for a student. Configured in this stage
+      because the distinction between them is a program policy decision a new
+      admin must make before either log has any analytic value.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "3/16 Managing Students Profiles" (lines 229-245):
+      "Communications are typically notable conversations with the student, which are neutral.
+      Interventions are notable conversations with students to help them overcome various academic,
+      personal, and professional challenges. In terms of functionality, both the communication and
+      intervention sections function similarly, but this distinction allows you to keep track of these
+      two different types of interactions with students. By keeping intervention separate, it makes it
+      significantly easier for your school's academic review committee to keep track of struggling
+      students... After completing your documentation, you can enable this toggle to publish the
+      intervention to the student. This toggle is turned off by default and must be enabled for the
+      student to view the intervention and its follow up."
+      Mirror: Exxat-Help-Guides/.../Students/Adding Interventions and Communications.md.
+    elements:
+      - element: "Communication entry card (mode, initiator, subject, description, date, attachment, follow-up plan/actual date + description)"
+        type: "log entry with follow-up scheduling"
+        data_shown: "One card per logged communication, visible to all admins and faculty, never to students. Overdue planned follow-ups render in red."
+        gates_on: []
+        accreditation_citation: "None — this log is the neutral half of the pair by design; the accreditation weight sits on Interventions below."
+        gap_severity: "none"
+        gap_note: >
+          The neutral/concerning split is a policy decision disguised as two tabs.
+          A new admin who logs everything as a Communication has quietly emptied
+          the object their academic review committee is supposed to read.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Intervention entry (method, initiator, related course/rotation/site, subject, description, date, Open/Closed status, attachment, multiple follow-ups)"
+        type: "case record with open/closed lifecycle"
+        data_shown: "Open and Closed sections; per-intervention follow-up counts (total, completed, next planned date, overdue in red); attachable remediation or academic-improvement plans; linkage to the specific course/rotation/site where the issue arose."
+        gates_on:
+          - "Status (Open/Closed) is the lifecycle state an academic review committee reads."
+        accreditation_citation: >
+          CODA Standard 2, Element 2-2 (Individual evaluation and due process for
+          students not meeting criteria) — this is the closest shipped object in
+          Prism to what 2-2 requires: 'a workflow that flags a student falling
+          below a defined didactic/clinical threshold, opens a case record, and
+          tracks the remediation/due-process decision trail with timestamps and
+          outcomes.' ../accreditation/coda.yaml rates 2-2 'Configure' and notes 'a
+          formal due-process case-management trail distinct from a compliance
+          checklist item is not confirmed in the capability map' — this element is
+          the strongest candidate to satisfy it, and it is manually initiated, not
+          threshold-triggered.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Has the case-record shape (open/closed, dated follow-ups, attached
+          remediation plan, course/site linkage) but not the trigger: nothing
+          automatically opens an intervention when a student falls below a
+          competency threshold or fails a rotation. It is an excellent manual
+          ledger awaiting an automated flag.
+        competitor_equivalent: >
+          content/feature-map/dentistry.yaml states directly, for the Compliance
+          Management pillar under CODA, that "the individual-evaluation/due-process
+          trail (2-2) and a faculty-facing evaluation workflow (3-4) are white
+          space — nobody, including Prism, ships either today," and names "a
+          student due-process case log" as "unclaimed by any vendor in the set."
+          That prior finding should be revised on the strength of this transcript:
+          Prism does ship a manual due-process case log here. No competitor
+          teardown documents an equivalent.
+
+      - element: "'Publish to student' toggle on an intervention (default OFF)"
+        type: "visibility toggle"
+        data_shown: "Whether the student can see the intervention and its follow-ups."
+        gates_on:
+          - "Off by default — 'must be enabled for the student to view the intervention and its follow up.'"
+        accreditation_citation: >
+          CODA Standard 2, Element 2-2 (partial — due process implies the student
+          is informed of the evaluation and decision; this toggle is the mechanism
+          for informing them, and its OFF default means informing the student is
+          an affirmative act, not automatic).
+        gap_severity: "none"
+        gap_note: >
+          Default-off is the right default for draft documentation, but it means
+          nothing in the product ensures a student was ever notified of an
+          intervention affecting their progression. That is a policy gap the
+          program must close outside the software.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+  - screen: "Students > Setup > student-experience configuration (Announcements, Student Resources, Attestations, Program Requirements, Areas of Professional Interest, Additional Profile Details, Student Experience Settings)"
+    navigation_path: "Students > Setup tab > left-menu sections below Student Organization / Student Management"
+    action: >
+      The admin configures everything the student will encounter on first login.
+      This is the half of the stage that is invisible until the invitation is
+      accepted, and the reason View As (step 8) is the correct final verification.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students" (lines 123-155):
+      "This includes communicating with students via announcements, providing resources to cohorts of
+      students, collecting signatures for attestations, assigning program requirements to students,
+      setting up areas of professional interest for students to indicate their preference for,
+      collecting additional information from your students via the additional profile details section,
+      customizing the view ability of placement information, and allowing students to change their
+      profile picture... You will not be able to change the title or content of an attestation if
+      students have already agreed to the statement... In the Student View section, you can enable and
+      disable bits to show or hide various placement details from student view."
+      The shipped UI has since superseded "Student View" with "Student Experience Settings"
+      (Actions & Permissions + Profile Fields) — confirmed in
+      Exxat-Help-Guides/.../Students/Key Features of Student Management and Administration.md
+      ("Managing Student Experience Settings").
+    elements:
+      - element: "Announcements (Add Announcement: start/end datetime, title, description, attachment, cohort targeting, 'notify students via email when the announcement goes live')"
+        type: "scheduled broadcast with cohort targeting"
+        data_shown: "Upcoming / current / former announcements on the student dashboard, windowed by start and end time."
+        gates_on:
+          - "The email-on-go-live checkbox appears only when the start date is in the future."
+          - "Cohort targeting defaults to all cohorts (checkbox pre-checked)."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "none"
+        gap_note: >
+          Both the PT and OT playbooks record the same real-world usage —
+          announcements "typically shared with all cohorts (e.g. welcome messages,
+          new-class announcements, meeting sign-up reminders)" (PT) and "set up
+          for student compliance completion and profile completion... flu-shot
+          documentation reminders" (OT) — i.e. the cohort targeting exists but is
+          rarely used, which suggests the all-cohorts default is well chosen.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Student Resources (category manager via pencil; Add Resource: type = document | link | video | FAQ, category, name, description, upload/URL/Q&A, 'Show to Student' toggle, cohort targeting, Reorder)"
+        type: "content library with staged publication"
+        data_shown: "Categorised resources filterable by type and by cohort, including a 'Shared with All Cohorts' view; drag-to-reorder."
+        gates_on:
+          - "'Show to Student' gates visibility — resources can be staged before release."
+        accreditation_citation: >
+          CODA Standard 2, Element 2-1 (partial — 'written information provided to
+          students in advance of each course covering goals/requirements, content,
+          method(s) of evaluation, and how grades and competency are determined').
+          The PT playbook records exactly this content living here: "Handbooks,
+          Policies, Evaluation & Grading are usually shared with students." Note
+          ../accreditation/coda.yaml routes 2-1 to the Curriculum Mapping pillar
+          for syllabus-level publication; this element covers the program-level
+          document half, not the per-course half, and has no versioning.
+        gap_severity: "configure-needed"
+        gap_note: >
+          No version control or acknowledgement. A handbook uploaded here is a
+          file, not a versioned policy — pairing it with an Attestation (below) is
+          the only way to evidence that students received it, and nothing in the
+          product links the two objects.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Attestations (Add Attestation: title [required], description, assign-to-all-students toggle, due date, show-to-students toggle)"
+        type: "signature collection with lock-on-signature"
+        data_shown: "Attestation list plus, on the student profile, per-student status and the exact date/time the student agreed."
+        gates_on:
+          - "HARD LOCK: 'You will not be able to change the title or content of an attestation if students have already agreed to the statement.' Only the due date, assigned cohorts, and active state remain editable after the first signature."
+        accreditation_citation: >
+          CODA Standard 2, Element 2-1 (partial — the acknowledgement half of
+          'written information provided to students in advance': the attestation
+          timestamp is the evidence the student received and accepted the policy,
+          which the resource upload alone cannot show).
+        gap_severity: "none"
+        gap_note: >
+          Lock-on-signature is correct and consequential — it means attestation
+          wording is effectively immutable from the first signature onward, so a
+          day-one admin must get the text right before publishing. Both the PT and
+          OT playbooks record the same two canonical attestations ("Profile
+          verification and Profile update request... generally set up (with due
+          dates), shared with all cohorts/students"), which is the practical
+          answer to keeping the Profile tab current.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Program Requirements (Add Program Requirement: title, description, fulfilling Settings, cohort assignment)"
+        type: "graduation-requirement definition"
+        data_shown: "Requirement title, the settings that fulfil it, and the cohorts it applies to."
+        gates_on:
+          - "Fulfilment is either automatic on completion of a placement the requirement is attached to, or a manual mark from the student profile."
+        accreditation_citation: >
+          LCME Standard 8, Element 8.6 (Monitoring of Completion of Required
+          Clinical Experiences — this is the definition side of the per-student
+          ledger cited in step 7); ACPE Standard 3, Key Elements 3.2.b & 3.2.d
+          (the four required APPE practice settings map directly onto
+          setting-fulfilled requirements).
+        gap_severity: "none"
+        gap_note: >
+          Defining requirements by Setting is the mechanism that makes the PT
+          playbook's list workable ("Rural, Underserved, School-based, Integrated
+          Clinical Experience-Acute") and would carry ACPE's four required APPE
+          settings for pharmacy without new construction. Requirements are
+          cohort-scoped, so a curriculum change means new requirements on the new
+          cohort rather than a versioned requirement.
+        competitor_equivalent: >
+          Directionally comparable to content/competitors/new-innovations.yaml's
+          "Continuity" tracking and content/competitors/medhub.yaml's
+          required-experience/exposure reporting, but neither vendor's public docs
+          describe an admin-authored requirement object with setting-based
+          auto-fulfilment, so this cannot be compared element-for-element.
+
+      - element: "Areas of Professional Interest (name + colour, list-builder)"
+        type: "student-selectable taxonomy"
+        data_shown: "Colour-coded practice areas (transcript examples: private practice, pediatrics, geriatrics) that the student picks from on their Profile tab."
+        gates_on:
+          - "Always included in a shared profile — the transcript lists areas of professional interest in the always-sent core of the profile share, so this taxonomy is site-facing by default."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "none"
+        gap_note: >
+          The PT playbook's settings list (Acute, SNF, TCU, Neuro IP/OP, OP Mix,
+          OP Peds, EDS, Wound Care, etc.) shows how discipline-specific this
+          vocabulary is — it is program-authored free text, which is the right
+          call, but it means nothing is pre-seeded for a new domain and the list
+          must be built from scratch on day one.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Additional Profile Details (Add Question: content, mandatory toggle, 'include when sharing profile' toggle, cohort assignment, active toggle, Reorder)"
+        type: "program-authored questionnaire"
+        data_shown: "An ordered question list, filterable by cohort; answers surface in the student's Profile tab and, if flagged, in the shared profile sent to sites."
+        gates_on:
+          - "The 'include in shared profile' toggle is per-question — 'By including this in the shared student's profile, you will have the ability to share this information collected from the student with sites.'"
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "none"
+        gap_note: >
+          This is the product's designated escape hatch for anything the fixed
+          profile schema does not model, and the transcript is candid about how
+          broadly it gets used: "Some schools use the Additional Profile Details
+          section to collect student standardized exam scores. Others use the
+          section as a survey to collect student T-shirt sizes or career
+          preferences." Free-text questions with no answer typing means exam
+          scores collected here are strings, not analysable numbers.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Student Experience Settings > Actions and Permissions toggles (Housing and Parking; Add Clinical Instructor + 'Show List of Clinical Instructors to Students'; Contract Documents; Other Students Placed Here; Profile Picture Upload; Additional Documents)"
+        type: "visibility / capability toggles"
+        data_shown: "Per-feature ON (visible/permitted) or OFF (hidden/restricted) for all students."
+        gates_on:
+          - "Contract Documents OFF hides site contract documents from students."
+          - "Add Clinical Instructor ON lets students add an experiential supervisor to their own placement — a genuine write permission, not just a visibility flag."
+        accreditation_citation: >
+          None as a requirement. Contextually: allowing students to self-add a
+          clinical instructor has downstream consequences for preceptor
+          credentialing evidence (ACPE Standard 3, Key Element 3.3.a; COCA
+          Standard 5, Element 5.4), because a student-entered supervisor still has
+          to be verified somewhere. Cited as a consequence, not as a standard this
+          toggle satisfies.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Program-wide only — no per-cohort or per-course override, so a program
+          that trusts third-years to add their own CI but not first-years cannot
+          express that. The video's "Student View" naming is superseded by
+          "Student Experience Settings" in the shipped UI, and the newer page adds
+          two toggles the video never mentions (Show List of Clinical Instructors
+          to Students, Additional Documents) — a documentation drift a day-one
+          admin following the tutorial will hit.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+
+      - element: "Student Experience Settings > Profile Fields (per-field Visible/Hidden, Required/Optional, Editable-by-student)"
+        type: "schema configuration matrix"
+        data_shown: "Every student-profile field with three independent configuration axes."
+        gates_on:
+          - "'Only optional fields can be marked as mandatory: When a field is set as Required, it must remain visible and editable by students, and the option to hide the field is automatically disabled.'"
+          - "'Fields populated via a data feed are read-only for students... the editable option remains disabled, and the required setting—if enabled—is locked.'"
+          - "'Bulk import templates dynamically adjust based on field configuration: If a field is marked as required, it becomes mandatory in the import template.'"
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        gap_severity: "gap"
+        gap_note: >
+          Two findings here. (1) SEQUENCING: this screen retroactively changes the
+          bulk-import template, so it belongs BEFORE step 4, yet it sits at the
+          bottom of the Setup left-menu and is absent from the video tutorial
+          entirely — a new admin following the tutorial will import first and
+          discover the coupling later. (2) DATA FEED: the phrase "fields populated
+          via a data feed" is the only evidence anywhere in this stage's sources
+          that an automated SIS/roster feed exists at all. It is referenced purely
+          as a downstream consequence (such fields become read-only) — no source
+          in this research documents how a feed is configured, what systems it
+          connects to, its cadence, or who sets it up. For MD/DO/PharmD programs
+          with 150-200+ per class and an institutional Banner/Colleague SIS, that
+          undocumented path is the difference between a day-one spreadsheet ritual
+          and a solved problem, and it is the largest open question in this stage.
+        competitor_equivalent: >
+          The data-feed gap is where a competitor comparison is genuinely
+          available and genuinely unfavourable at the capability level:
+          content/competitors/medhub.yaml documents MedHub integrating "AAMC ERAS
+          resident demographic data" and importing ACGME survey/case-log/milestone
+          data — named, ecosystem-specific roster and outcome feeds. By contrast
+          content/competitors/core-elms.yaml is documented as naming "no specific
+          LMS/SIS integration partners... publicly (Canvas, Banner, etc.) — only
+          generic SSO/LTI standards support," i.e. the same opacity as Prism. The
+          per-field Visible/Required/Editable matrix itself is not documented at
+          this granularity by any competitor teardown in this research.
+
+sources:
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '2/16 Setting up Students in Exxat Prism' (lines 73-157) [PRIMARY: cohorts, groups, enrollment/graduation terms, student categories, campuses, single add, SSO key, bulk import, invitations, merge fields, grid columns/filters, bulk update, delete, announcements, resources, attestations, program requirements, areas of professional interest, additional profile details, Student View toggles]"
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '3/16 Managing Students Profiles in Exxat Prism' (lines 159-265) [PRIMARY: student banner, profile image, tags (internal-only), Overview/Needs Attention, Academics tab, shared vs. internal notes, Update Cohort impact areas, program requirements Pending/Placed/Completed, associated staff & faculty + role-is-informational-only, attestation status, Profile tab sections, Share Profile / Generate URL / Download Profile / Share History, OTP protection for compliance, View As, Email History, Communications and Interventions tabs]"
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '1/16 Administrator Navigation in Exxat Prism' (lines 5-72) [navigation context: dashboard and hamburger-menu entry to Students]"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Managing Student Access and Attributes.md [help-center mirror: bulk-import Excel formatting traps (leading zeros, date-as-text), Add Student drawer defaults, override-recipient/reply-to on invitations, merge-field governance, Account Status values]"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Organizing Students.md [help-center mirror: cohort/calendar/category/campus management; 10-tag-per-student cap]"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Key Features of Student Management and Administration.md [help-center mirror ONLY source for Student Experience Settings > Actions and Permissions + Profile Fields, the required-field/import-template coupling, and the 'fields populated via a data feed' reference]"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md [cohort = graduation year; PT always lock-step; cohort movement common; Groups = Hybrid/Residentials/Online; Categories = Scholarship/Hybrid/Full time/Part time; announcements/resources/attestations conventions; per-setting Program Requirements; 'decelerated' marking for CAPTE AAR headcounts]"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md ['Program setup is always Lockstep'; per-campus Groups (Los Angeles/Brooklyn); CAPSTONE Student Category applied via filter-by-cohort + Bulk Update with type-the-number confirmation; Academics Profile contents; single-campus-address limitation; per-campus mission/vision]"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md [lockstep-only placement limits keyed to Location + Setting + Cohort; placement group per cohort; ARC-PA E-series advance-notice obligations for class-size changes and new distant campuses]"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md [two named cohort conventions (enrollment date vs. practicum start date) tied to whether the school has a banner/automated data feed; Groups = Foundation Year/Advanced Standing/Clinical Practice/Macro Practice/Behavioral Health/School Social Work; Campuses = Main/Satellite/Online/Regional; Categories = Full-Time/Part-Time/Traditional/Advanced Standing]"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md [explicit data-quality note: cohort/lock-step conventions and Groups/Categories usage patterns are NOT yet documented for Nursing]"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md [explicit data-quality caveat: no SLP cohort-pattern source exists]"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md [explicit data-quality caveat: TE cohort structure and terminology unconfirmed; single GoReact/Echo360 source only]"
+  - "content/accreditation/coca.yaml (Elements 11.5, 11.9, 6.11, 5.4)"
+  - "content/accreditation/coda.yaml (Elements 1-2, 2-1, 2-2, 2-5)"
+  - "content/accreditation/lcme.yaml (Elements 8.6, 8.7)"
+  - "content/accreditation/acpe.yaml (Key Elements 3.1.b, 3.2.b, 3.2.d, 3.3.a)"
+  - "content/competitors/medhub.yaml (SAML/Shibboleth SSO, MFA, FERPA/SOC 2; AAMC ERAS demographic import; ACGME data import)"
+  - "content/competitors/core-elms.yaml (generic SSO/LTI only, no named LMS/SIS integration partners)"
+  - "content/competitors/leo-davinci.yaml (FERPA-scoped advisor visibility — advisors see only their own advisees)"
+  - "content/competitors/new-innovations.yaml, content/competitors/emedley.yaml, content/competitors/e-value.yaml (adjacent onboarding/reminder/required-experience claims, none granular enough for element-level comparison)"
+  - "content/feature-map/dentistry.yaml (Compliance Management pillar: due-process case log named as white space unclaimed by any vendor — revised by this flow's Interventions finding)"
+  - "content/prism/capability-map.yaml (@StudentProfileWithComplianceAndLocationRequirementsLink no-login site share; sensitive advisement/intervention note scoping; Exxat One student auto-match by email similarity)"
+last_verified: "2026-08-24"

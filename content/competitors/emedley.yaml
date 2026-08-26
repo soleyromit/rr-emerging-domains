@@ -1,0 +1,217 @@
+competitor: "eMedley (AllofE Solutions)"
+slug: "emedley"
+domains_served: ["MD", "DO"]
+category: "Med-ed management (curriculum, clinical education, testing/evaluations) for health science programs"
+company:
+  founded: "1999 (AllofE Solutions; site footer reads '©1999-2026 AllofE Solutions')"
+  hq: "Lawrence, KS (2510 W 6th St, Lawrence, KS 66049)"
+  ownership: "Independent, privately held; eMedley is AllofE Solutions' flagship product suite"
+
+# One entry per Prism pillar (see ../prism/capability-map.yaml) this competitor
+# is comparable on, plus any capability they have that Prism does not.
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: >
+      Suite of modules: eduSched (preference-, lottery-, track/path-based rotation
+      scheduling with site capacity management), eCLAS (mobile iOS/Android case-log
+      tracking of patient encounters, diagnoses/ICD-10, procedures/CPT, competency
+      mastery, preceptor time-approval), eValuate (clinical evaluations, OSCEs,
+      EPA entrustment ratings with growth-curve reporting), eKeeper (affiliation
+      agreement tracking with auto-expiration reminders, preceptor pay automation),
+      and auto-generated MSPE (Medical School Performance Evaluation) letters
+      pulling data from other modules.
+    depth_vs_prism: "at-parity"
+    evidence: >
+      Publicly documented named sub-features (mobile case logging, EPA growth-curve
+      reporting, auto-generated MSPE, affiliation/credentialing tracking with
+      preceptor pay) match or slightly exceed what Prism's public materials
+      describe for its rotation/placement engine, but Prism's anchor-relative
+      scheduling primitive (assignments/evaluations scheduled N days
+      before/after rotation start/mid/end) is a real architectural strength not
+      confirmed as present in eMedley's public docs, so treated as parity
+      rather than a clear lead either way.
+    source: "https://clinical.emedley.com/features/ ; https://www.emedley.com/medical/"
+  - pillar: "Compliance Management"
+    competitor_capability: >
+      eKeeper-based "Student Documents" module tracks immunizations (MMR,
+      Hepatitis, flu, PPD, Varicella), certifications/regulatory items (BLS,
+      CPR, HIPAA training, licenses), and disease-occurrence records; supports
+      manual or auto-approval workflows, automated expiration notifications,
+      and cohort/individual compliance reports showing missing vs. submitted
+      documents.
+    depth_vs_prism: "unknown"
+    evidence: >
+      eMedley's document taxonomy and expiration-tracking workflow are
+      publicly confirmed. Whether eMedley's compliance items actually GATE
+      placement start/continuation (the way Prism's compliance pillar is
+      described internally as doing) is not stated on eMedley's public pages,
+      so a direct depth comparison cannot be made from public sources alone.
+    source: "https://www.emedley.com/student-documents/"
+  - pillar: "Curriculum Mapping"
+    competitor_capability: >
+      eCurriculum module maps courses/sessions to physician competencies, EPA
+      competencies, the USMLE Step 1 Content Outline, and program objectives;
+      provides gap-and-overlap analysis, auto-generated curriculum websites,
+      and explicit mapping to LCME accreditation standards. eMedley is
+      publicly listed as an AAMC Curriculum Inventory (CI) Participating
+      Vendor, supporting annual CI content uploads.
+    depth_vs_prism: "ahead"
+    evidence: >
+      eMedley publicly and specifically documents mapping curriculum content
+      to LCME standards and to the AAMC Curriculum Inventory as a named
+      Participating Vendor — a level of named, standards-specific detail not
+      matched in Prism's public materials (Prism's curriculum-mapping pillar
+      is described only generically as "maps courses/activities to a
+      curriculum structure").
+    source: "https://emedley.com/curriculum-mapping ; https://www.emedley.com/medical/"
+  - pillar: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    competitor_capability: >
+      eValuate / eValuate+ is a shipped, general-purpose evaluation engine
+      supporting didactic course evaluations, clinical/preceptor/site
+      evaluations, OSCEs, and 360-degree feedback, with rubrics, question
+      sets, file uploads, anonymous-response options, scheduled/automated
+      reminders, and dashboard + frequency-analysis reporting.
+    depth_vs_prism: "ahead"
+    evidence: >
+      This capability is live and generally available in eMedley today,
+      while Exxat's own public roadmap places "Surveys & Course Evaluations"
+      at Q1 2027 (not yet shipped). This is a clear, dated timing advantage
+      for eMedley on this pillar specifically.
+    source: "https://emedley.com/evaluate/ ; https://evaluateplus.emedley.com/ ; https://clinical.emedley.com/features/"
+  - pillar: "Exam Management (Prism roadmap Q2 2027)"
+    competitor_capability: >
+      ExamN is a shipped, standalone exam-management product: question banks
+      with folder organization, version control for tests/questions, a
+      lockdown browser (blocks navigating away, copy/paste, keyboard
+      shortcuts), an add-on automated webcam proctoring module (eProctor),
+      built-in image optimizer, item analysis via algorithmic psychometrics,
+      and a performance dashboard tied to competencies/objectives/standards.
+    depth_vs_prism: "ahead"
+    evidence: >
+      Fully shipped today with named sub-features (lockdown browser, remote
+      proctoring add-on, item-analysis psychometrics) versus Exxat's public
+      roadmap placing "Exam Management" at Q2 2027 (not yet shipped). Same
+      dated-timing advantage pattern as the Surveys/Evaluations pillar.
+    source: "https://www.emedley.com/examn/"
+  - pillar: "Accreditation Management (Prism roadmap Q3 2027)"
+    competitor_capability: >
+      No standalone "Accreditation Management" module is publicly described.
+      Accreditation support today is delivered indirectly through
+      eCurriculum's mapping of courses/sessions to LCME standards and through
+      AAMC Curriculum Inventory vendor status (see Curriculum Mapping row);
+      no public evidence of a dedicated self-study evidence-aggregation
+      workflow, COCA-specific mapping, or accreditation-cycle project
+      management tooling.
+    depth_vs_prism: "unknown"
+    evidence: >
+      Neither company has a publicly confirmed, dedicated accreditation
+      self-study/evidence-aggregation module: Prism's is roadmapped for Q3
+      2027 and unshipped, and eMedley's accreditation story is folded into
+      curriculum mapping rather than a discrete pillar. Could not verify
+      eMedley has anything comparable to what Prism's roadmap implies it will
+      build (evidence aggregation, standard-level self-study support).
+    source: "https://emedley.com/curriculum-mapping"
+
+strengths:
+  - claim: >
+      Ships Surveys/Course Evaluations (eValuate+) and Exam Management
+      (ExamN) as generally-available products today, both areas where Exxat
+      PRISM's own public roadmap has not shipped yet (targeted Q1 2027 and Q2
+      2027 respectively) — a real near-term full-suite RFP advantage for
+      programs that need exams and evaluations now, not in 2027.
+    source: "https://www.emedley.com/examn/ ; https://emedley.com/evaluate/"
+  - claim: >
+      Curriculum mapping explicitly and publicly ties to LCME accreditation
+      standards and eMedley is a named AAMC Curriculum Inventory Participating
+      Vendor, giving MD-program buyers a documented accreditation-adjacent
+      story at the curriculum layer.
+    source: "https://emedley.com/curriculum-mapping"
+  - claim: >
+      Direct, named traction with DO-granting institutions — Nova
+      Southeastern University (KPCOM, competency-based assessment case study)
+      and the University of the Incarnate Word School of Osteopathic Medicine
+      (UIWSOM) are both featured customers — evidencing real presence in the
+      DO segment this research targets, not just MD.
+    source: "https://emedley.com/2026/03/17/transforming-medical-education-how-nova-southeastern-university-partnered-with-emedley-to-implement-competency-based-assessment/ ; https://www.emedley.com/"
+  - claim: >
+      25+ years of operating history specifically in health-sciences
+      education software (AllofE Solutions site footer shows continuous
+      operation since 1999), and the eMedley platform spans a broad set of
+      disciplines beyond medicine (dentistry, PA, nursing, optometry,
+      podiatry, PT, OT, pharmacy) under one umbrella per its Capterra listing.
+    source: "https://allofe.com/about/ ; https://www.capterra.com/p/185269/eMedley/"
+weaknesses:
+  - claim: >
+      Mobile usability is a documented weak point — reviewers state the
+      product is "not the most mobile user-friendly" and is "difficult to
+      navigate on a phone or tablet," despite eCLAS having a dedicated
+      mobile app.
+    source: "https://www.capterra.com/p/185269/eMedley/reviews/"
+  - claim: >
+      UI is described by at least one reviewer as "clunky" relative to
+      modern survey/evaluation tools like Qualtrics, and new implementation
+      teams report a lack of comparable-program examples and no sandbox
+      environment to test changes before they go to production.
+    source: "https://www.capterra.com/p/185269/eMedley/reviews/"
+  - claim: >
+      Public review volume is very thin (Capterra shows an overall 3.7/5
+      score based on only 3 reviews as of this research), limiting how much
+      independent verification of satisfaction-at-scale is publicly
+      available.
+    source: "https://www.capterra.com/p/185269/eMedley/reviews/"
+  - claim: >
+      No standalone, publicly described Accreditation Management workflow
+      (self-study evidence aggregation, COCA/LCME-specific project
+      management) — today's accreditation support is folded entirely into
+      the curriculum-mapping module rather than being a discrete pillar.
+    source: "https://emedley.com/curriculum-mapping"
+retention_anchor: >
+  Multi-year accreditation cycles create structural lock-in: once a program
+  has mapped its curriculum to LCME/AAMC Curriculum Inventory standards inside
+  eCurriculum and built up years of longitudinal case-log, MSPE, and
+  evaluation history inside eCLAS/eValuate, re-platforming means redoing that
+  standards mapping and losing continuity of historical student/competency
+  data right before or during an accreditation review — a risk most program
+  administrators will avoid absorbing near a site visit. AllofE's decade-plus
+  client relationships (per allofe.com) are consistent with this kind of
+  sticky, accreditation-anchored retention, though no churn/retention figures
+  are publicly disclosed.
+exxat_opportunity: >
+  Exxat's clearest near-term opening is timing: eMedley already ships
+  Surveys/Course Evaluations and Exam Management today, while Prism's public
+  roadmap places both in 2027 — until Prism ships, full-suite MD/DO RFPs that
+  require exams and evaluations in one system will favor eMedley by default.
+  Prism should therefore either accelerate messaging around its Q1/Q2 2027
+  roadmap commitments to hold deals open, or lead competitively on dimensions
+  where eMedley is publicly weak: eMedley's own reviewers cite dated,
+  non-mobile-friendly UI, a "clunky" evaluation interface, and no sandbox
+  testing environment — all areas where Prism's WCAG AA compliance, modern UX,
+  and "Leo AI" / early-risk-alerts / competency-tracking intelligence layer
+  can differentiate sharply. Longer-term, because eMedley's accreditation
+  story is just curriculum-standards mapping (not a dedicated self-study or
+  evidence-aggregation workflow), Prism's Q3 2027 Accreditation Management
+  pillar has room to leapfrog eMedley outright if it is built as a true
+  dedicated module — and should be scoped explicitly for COCA (DO) alongside
+  LCME (MD) given eMedley's own accreditation references are LCME-centric.
+pricing_signal: >
+  Capterra lists eMedley's "Starting price" as "$5,000 Flat Rate, Per Year"
+  with no free trial and no free version offered; eMedley's own marketing
+  pages do not publish pricing and describe implementations as "customized per
+  program," so actual enterprise/multi-module pricing for MD/DO programs is
+  not publicly disclosed and requires a custom quote.
+last_researched: "2026-08-24"
+sources:
+  - "https://www.emedley.com/medical/"
+  - "https://www.emedley.com/solutions/"
+  - "https://clinical.emedley.com/features/"
+  - "https://clinical.emedley.com/"
+  - "https://emedley.com/curriculum-mapping"
+  - "https://www.emedley.com/examn/"
+  - "https://emedley.com/evaluate/"
+  - "https://evaluateplus.emedley.com/"
+  - "https://www.emedley.com/student-documents/"
+  - "https://www.capterra.com/p/185269/eMedley/"
+  - "https://www.capterra.com/p/185269/eMedley/reviews/"
+  - "https://allofe.com/about/"
+  - "https://www.emedley.com/"
+  - "https://emedley.com/2026/03/17/transforming-medical-education-how-nova-southeastern-university-partnered-with-emedley-to-implement-competency-based-assessment/"

@@ -1,0 +1,33 @@
+# One file per journey stage: content/flows/<journey-slug>--<NN>-<short-stage-slug>.yaml
+# Element-level ground truth that journeys/*.yaml cites. Journeys are the cross-domain
+# comparative narrative; flows are the single-product, screen-by-screen verification layer
+# underneath a specific journey stage. Every accreditation_citation and competitor_equivalent
+# claim below must trace to a real source file in `confirmed_by` — never re-derive from the
+# journey's own narrative, which would be citing our own synthesis as ground truth.
+#
+# SCHEMA v2 (2026-08-24): analysis fields (accreditation_citation / competitor_equivalent /
+# gap_severity / gap_note) live on each ELEMENT, not on the step — "connect competitor
+# analysis against each product/feature/interaction" means literally that: per field,
+# button, column, or toggle, not aggregated to the screen. `action` and `confirmed_by` stay
+# at step level since navigation context is naturally per-screen. Don't fabricate false
+# precision: if every element on a screen genuinely shares one verdict, say so identically
+# on each rather than inventing artificial distinctions.
+flow_name: "e.g. 'Placement Clearance Gate'"
+maps_to_journey: "e.g. 'rotation-lifecycle.yaml, stage 3'"
+persona: "who performs this flow (see ../personas/)"
+steps:
+  - screen: "e.g. 'Placement Clearance Dashboard'"
+    navigation_path: "e.g. 'Placements > Course > Placement Clearance Dashboard'"
+    action: "what the user does at this screen"
+    confirmed_by: "exact source file(s) — a help-center path, discipline-playbook, or raw-transcript citation"
+    elements:
+      - element: "e.g. 'Compliance status column'"
+        type: "e.g. 'read-only rollup' | 'input field' | 'toggle' | 'button' | 'report filter'"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "standard ID(s), if THIS element is where evidence for that standard lives — not the whole screen"
+        competitor_equivalent: "named competitor + what their equivalent field/button/column does, only if their public docs are granular enough to support the comparison at THIS granularity — otherwise state that explicitly rather than guessing or falling back to screen-level vagueness"
+        gap_severity: "none | cosmetic | configure-needed | gap"
+        gap_note: ""
+sources: []
+last_verified: ""

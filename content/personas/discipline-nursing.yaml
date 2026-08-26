@@ -1,0 +1,242 @@
+# Discipline-layer persona for the Nursing domain.
+# The PROGRAM is the archetype, not an individual.
+#
+# SOURCE-DEPTH CAVEAT: unlike the four expansion-domain personas (DO, Pharmacy,
+# Dentistry, Medicine), Nursing has NO dedicated ../domains/*.yaml,
+# ../accreditation/*.yaml, or discipline-scoped ../competitors/*.yaml teardown.
+# This file is grounded in exactly two primary sources — the internal Nursing
+# Playbook (itself synthesized from accreditor support guides + help-center
+# articles, and self-described as thin on ADN/BSN conventions, cohort/slot
+# cadence, and CSM pain points) and a single video-tutorial transcript on
+# competency-based education. It is deliberately shorter than the expansion
+# personas; gaps below mean "not yet documented," not "not applicable."
+# Persona framing (persona_name, JTBD wording, switching_trigger) is Exxat-side
+# synthesis, not a claim quoted from any source.
+#
+# Cross-reference: ../journeys/admin-onboarding-product-setup.yaml stage 4
+# (compliance template setup) names Nursing as the one discipline where Faculty
+# Compliance is explicitly accreditation-load-bearing (COA Standard B critical
+# sub-standards) — and stage 5 notes Nursing stores preceptors under Sites >
+# Personnel, outside that faculty compliance engine — which is exactly the
+# clearance-before-placement job in the JTBD list below.
+domain: "Nursing"
+persona_name: "The Multi-Track Nursing School Answering to Three Accreditors at Once"
+archetype_summary: >
+  A school of nursing running several degree pathways in one building — ADN,
+  BSN, MSN, DNP, post-graduate APRN certificates, and specialty tracks like FNP,
+  Psych Mental Health NP, and CRNA — each configured as its own curriculum grid,
+  and often answering to more than one accreditor simultaneously (ACEN and/or
+  CCNE for the pre-licensure and graduate tracks, COA for nurse anesthesia).
+  Unlike the lockstep MD/DO/PharmD class-of-YYYY model, its cohorts are
+  non-lockstep by default — Exxat's own training materials use "entry-level BSN"
+  and "Spring 2024 Family Nurse Practitioner" as the canonical non-lockstep
+  cohort examples — so student organization, placement math, and aggregate
+  reporting all cut across overlapping tracks rather than a single class. Its
+  current strategic project is the transition to competency-based education
+  against AACN's 2021 Essentials (10 Domains, 8 Concepts, 45 Competencies,
+  numbered 1.1-10.3), which CCNE requires programs to map to — plus secondary
+  frameworks (Spheres of Care, NONPF, IPEC, program SLOs) layered on top. If it
+  hosts a CRNA program, a second, sharper regime applies: COA's Graduate
+  Standards D.1-D.50 as the competency framework, NBCRNA case-log categories
+  feeding certification-exam eligibility, a hard 2:1 student-to-preceptor
+  supervision cap, and ACLS/PALS student certifications gating every placement.
+  Its preceptors live at clinical sites, not on the faculty roster — a
+  structural fact that shapes who tracks whose license. What this file cannot
+  yet say: general ADN/BSN case-log conventions, slot-request seasonality, and
+  program-office pain-point color are all flagged as undocumented in the source
+  playbook.
+accreditation_pressure:
+  - point: "No dedicated Nursing accreditation file yet (caveat)"
+    detail: >-
+      NOTE: no dedicated ../accreditation/*.yaml file exists for Nursing yet —
+      the four files in that folder (coca, lcme, acpe, coda) are
+      DO/Medicine/Pharmacy/ Dentistry-specific. What follows is cited from the
+      accreditors as named in the internal Nursing Playbook, which is itself
+      built from accreditor support guides rather than from the standards
+      documents directly; a proper standards-level file (ACEN 2023, CCNE 2025,
+      COA 2026) is the obvious next research artifact for this discipline.
+  - point: "Nursing programs may face three accreditors at once (ACEN, CCNE, COA)"
+    detail: >-
+      Three accreditors, potentially all at once: ACEN (2023 Standards and
+      Criteria), CCNE (baccalaureate/graduate standards effective Jan 1, 2025),
+      and COA for nurse anesthesia (Practice Doctorate standards effective
+      Jan 1, 2026).
+  - point: "CCNE expects curricula mapped to the AACN Essentials framework"
+    detail: >-
+      The pressure points the playbook surfaces: (1) CCNE's Essentials mapping
+      expectation makes the CBE transition an accreditation project, not just a
+      curricular one — with the AACN Essentials Toolkit crosswalk
+      (knowledge/skill/ behavior x introduced/reinforced/demonstrated, per
+      course) as the expected evidence format.
+  - point: "Programs must report aggregate outcomes and job-placement rates (ACEN 5.1, 5.4)"
+    detail: >-
+      (2) ACEN Criterion 5.1 requires collection and analysis of AGGREGATE
+      assessment data, and 5.4 an annual job-placement-rate assessment —
+      post-graduation outcomes evidence that has to come from alumni/employer
+      surveys, not in-system records.
+  - point: "Minimum clinical hours required for DNP and NP students (CCNE III-H, ACEN 4.6)"
+    detail: >-
+      (3) Clinical-hour minimums are explicit: DNP 1,000 hours and NP 500
+      direct hours (CCNE III-H), contact-hour/ratio evidence for ACEN 4.6, plus
+      CCNE's recommended 1:8 faculty-to-student ratio for indirect NP-track
+      supervision.
+  - point: "Programs must have enough clinical sites (ACEN 4.9, CCNE II-C, COA A.10/F.1)"
+    detail: >-
+      (4) Clinical-site sufficiency recurs across all three accreditors (ACEN
+      4.9, CCNE II-C, COA A.10/F.1).
+  - point: "COA marks some standards as critical failures (Standards B, D, F.7, H)"
+    detail: >-
+      (5) COA is the outlier in severity: it flags certain standards as
+      CRITICAL (asterisked), where failure is treated as a matter of critical
+      concern in accreditation decisions — including faculty/administrator
+      licensure and NBCRNA certification (Standard B), the D.1-D.50 graduate
+      competencies (Standard D), the 2:1 supervision ratio (F.7), and several
+      evaluation sub-standards (Standard H). No ACEN or CCNE equivalent of the
+      "critical standard" concept appears in the source guides.
+current_tools:
+  - point: "Nursing's competitor landscape has not been researched yet"
+    detail: >-
+      Honest scope note first: the competitive landscape for Nursing is NOT
+      covered by the existing competitor teardowns, which were researched for
+      the four expansion domains — and the Nursing Playbook itself lists
+      "competitor landscape" as an undocumented gap.
+  - point: "Exxat Prism already serves Nursing programs today"
+    detail: >-
+      Nursing also differs from the expansion personas in kind: it is a
+      discipline Exxat Prism already serves in production (the playbook and
+      transcript are internal help-center material), so "current tools" here
+      describes the field this program shops in, not a system Prism must
+      displace.
+  - point: "Competitor teardowns mention Nursing only in passing"
+    detail: >-
+      What the existing teardowns do establish in passing: E*Value/MedHub
+      explicitly serves nursing among its advanced-practice fields (~100,000
+      advanced-practice students claimed at the 2015 merger); CORE ELMS names
+      nursing in its 15+ disciplines; Elentra spans nursing across its 14
+      disciplines and acquired Skyfactor Benchworks (Jan 2024) specifically as
+      a nursing-assessment product; one45 lists nursing among its 100+
+      programs; and Leo/DaVinci has NO dedicated nursing page — its own
+      teardown reads that as "less direct overlap with Prism's current
+      nursing/allied-health customer base than the MD/DO overlap implies."
+  - point: "Competitor tools for Essentials, NBCRNA, or COA are unresearched"
+    detail: >-
+      No teardown documents any competitor's Essentials mapping, NBCRNA
+      transcript generation, or COA-specific tooling — that is unresearched,
+      not absent.
+  - point: "Excel is the realistic incumbent tool today"
+    detail: >-
+      The realistic incumbent for the workflows in this file, per the video
+      transcript's own framing, is Excel: "data collection, report creation,
+      and busy analysis using Excel files."
+jtbd:
+  - job: >
+      When CCNE expects my curriculum mapped to the Essentials framework and
+      I'm redesigning courses for competency-based education anyway, I want to
+      map course objectives to competencies once, with gaps and redundancies
+      surfaced before self-study submission, so my evidence arrives in the
+      standard crosswalk format instead of a hand-built spreadsheet matrix.
+    evidence_or_rationale: >
+      The single Nursing tutorial video is entirely about this job ("adopt the
+      new Essentials in three easy steps"), and the playbook documents a
+      Nursing-flavored report suite built for it: pre-populated 2021 Essentials,
+      the Cumulative Report modeled on AACN's own Essentials Toolkit crosswalk
+      template, Heatmap and Unmapped Standards reports for gap-catching, and the
+      Crosswalk Report's knowledge/skill/behavior x introduced/reinforced/
+      demonstrated cell convention. Cited to ACEN 4.3/4.5 and CCNE III-B/C/D/G in
+      the source guides. THIS IS THE PRIMARY JOB in the available sources — with
+      the caveat that the sources skew toward it by construction.
+    related_flows:
+      - flow: "rotation-lifecycle--08-post-rotation-rollup-cross-site-comparability.yaml"
+        step: "Curriculum Mapping > Mapping Reports > Heatmap Report"
+        element: "Crosswalk Report (Nursing sibling report on the same pillar)"
+  - job: >
+      When exposure is not the same as achievement, I want formative exposure
+      and summative competency achievement tracked separately, with per-student
+      threshold flags, so I can remediate a lagging student mid-course and hand
+      my accreditor the aggregate cohort-level analysis from the same data.
+    evidence_or_rationale: >
+      The transcript is explicit that "student exposure to the Essentials is not
+      the same as achievement" and that both are tracked separately: formative
+      exposure via activity and patient logs, and summative achievement from
+      evaluation questions mapped once to competencies and computed
+      automatically thereafter. The playbook ties the Cohort Performance
+      Tracking Dashboard to ACEN 5.1's aggregate-data requirement and the
+      per-student Competency Tracker (row-per-student, column-per-domain,
+      drill-down to the failing sub-competency) to early remediation, with
+      student self-monitoring access.
+    related_flows:
+      - flow: "rotation-lifecycle--06-midpoint-formative-feedback-early-risk-intervention.yaml"
+        step: "Student Competency Dashboard"
+        element: "[NURSING][CRNA] Competency Tracker — row-per-student, column-per-domain grid with drill-down to the sub-competency below threshold"
+  - job: >
+      When my CRNA students' case logs are their certification eligibility, I
+      want every clinical encounter logged against required categories with
+      preceptor attestation and a locked, uneditable record once approved, so
+      the transcript is generated per student rather than reconstructed at
+      graduation, and my accreditor's critical standards are evidenced
+      continuously instead of at self-study.
+    evidence_or_rationale: >
+      The playbook's deepest coverage: the Patient Log / CCE Log workflow (In
+      Progress -> Pending Review -> Approved, then locked as permanent academic
+      record), the auto-generated NBCRNA Transcript Report (COA E.2, C.4),
+      D.1-D.50 configured directly as the competency framework, the 2:1
+      supervision cap assigned and monitored at Sites > Slots (F.7, critical),
+      and ACLS/PALS certifications verified at the Placement Clearance gate
+      before placement. The admin-onboarding journey (stage 4) independently
+      confirms Nursing as the one discipline where faculty/preceptor credential
+      compliance is accreditation-load-bearing (COA Standard B) — while its
+      stage 5 flags that Nursing preceptors sit under Sites > Personnel, OUTSIDE
+      the faculty compliance engine, a live gap for exactly this job.
+    related_flows:
+      - flow: "rotation-lifecycle--05-in-rotation-capture-hours-encounters-procedures.yaml"
+        step: "Student Activity Insights & NBCRNA Transcript reports (CRNA / Nursing)"
+        element: "NBCRNA Transcript Report"
+  - job: >
+      When ACEN wants an annual job-placement rate and COA wants alumni and
+      employer feedback as outcome measures, I want surveys that reach people
+      who are not system users — alumni and employers at external email
+      addresses — so post-graduation outcomes evidence is collected on a cycle
+      instead of scrambled together before a visit.
+    evidence_or_rationale: >
+      The playbook is specific that surveys are the accreditors' preferred
+      evidence source for post-graduation outcomes (ACEN 5.4, COA H.1.4/H.1.6)
+      and that external-address distribution is the load-bearing capability,
+      since alumni/employers hold no Prism accounts. Thinner evidence than the
+      jobs above — no transcript or anecdote color — but the accreditor citation
+      is direct.
+switching_trigger: >
+  Weaker evidence here than any other section — the playbook explicitly lists
+  CSM-reported pain points and "how to work with this discipline" notes as
+  undocumented, so these are inferred from the standards clock rather than from
+  observed buying behavior. (1) THE ESSENTIALS TRANSITION: CCNE's 2025 standards
+  plus the sector-wide CBE shift force a curriculum-remapping project on every
+  baccalaureate/graduate program; a program discovering that its mapping,
+  exposure tracking, and achievement math all live in Excel at the moment it
+  must produce an AACN-style crosswalk is the most plausible evaluation trigger
+  the sources support. (2) THE COA 2026 CLOCK for CRNA programs: critical-
+  flagged standards (faculty NBCRNA certification, D.1-D.50, the 2:1 ratio)
+  plus NBCRNA transcript requirements make nurse anesthesia the segment where
+  a compliance failure carries the most explicit consequence language. (3)
+  MULTI-ACCREDITOR FATIGUE: a school evidencing ACEN, CCNE, and COA
+  simultaneously from separate spreadsheets per track is the structural version
+  of the pain — but no source documents a program actually switching over it.
+  What is genuinely unknown: slot-request seasonality (Nursing's equivalent of
+  PT's March 1 trigger), incumbent-tool frustrations, and pricing sensitivity —
+  all flagged for follow-up when a Nursing-specific interview or playbook
+  source exists.
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+  - "/Users/romitsoley/Downloads/NursingTutorialsTranscripts.md"
+  - "https://help.exxatprism.com/hc/en-us/articles/32845825722769-Nursing-Tutorials"
+  - "https://vimeo.com/1042550892"
+  - "../journeys/admin-onboarding-product-setup.yaml"
+  - "../competitors/e-value.yaml"
+  - "../competitors/medhub.yaml"
+  - "../competitors/core-elms.yaml"
+  - "../competitors/elentra.yaml"
+  - "../competitors/one45.yaml"
+  - "../competitors/leo-davinci.yaml"
+  # No ../domains/nursing.yaml or ../accreditation/{acen,ccne,coa}.yaml exists
+  # yet — those files are the prerequisite for bringing this persona to the
+  # evidence depth of the four expansion-domain personas.
+last_researched: "2026-08-24"

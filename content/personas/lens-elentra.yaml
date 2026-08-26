@@ -1,0 +1,135 @@
+# COMPETITOR LENS — reframes ../competitors/elentra.yaml around roles, not features.
+# Synthesis pass over the existing teardown; no fresh research.
+competitor: "Elentra"
+
+how_they_implicitly_serve_roles:
+  - role: "Program Admin"
+    read: >
+      Well served on the academic side of the admin's job, and the consortium heritage
+      shows: features built by one member school flow back to all 20+ members, so the admin
+      gets tooling shaped by real institutional requirements across the US, Canada, and
+      Singapore rather than by a product team's guess. Curriculum management and mapping,
+      clinical experience scheduling with a lottery system that auto-builds rotation
+      schedules, learner-driven elective selection inside admin-set capacity rules,
+      logbook, ePortfolio, assessment and evaluation, and accreditation reporting all sit
+      in one platform. The admin's live risk is structural rather than functional: Elentra
+      has absorbed two formerly independent platforms (Skyfactor Benchworks in Jan 2024,
+      DaVinci Education/Duke's LCMS+ in May 2024) within roughly a year of its own
+      acquisition by Achieve Partners — three codebases under one brand, with integration
+      consequences the admin will feel first if they materialize.
+  - role: "Clinical Coordinator"
+    read: >
+      Adequately served on scheduling, structurally unserved on readiness. The Clinical
+      Experience Management module handles rotation and clerkship scheduling across sites,
+      with lottery-based auto-build and learner self-service elective add/drop under
+      capacity rules — genuinely capable placement tooling. But the coordinator's other
+      half of the job has no home here: there is no dedicated Compliance Management module
+      anywhere in Elentra's public feature set. The coordinator who needs to know which
+      students are cleared to start Monday — immunizations current, background check
+      returned, certifications unexpired — has no documented workflow for it. That is not a
+      depth difference; it is an absent surface, and it lands entirely on this role.
+    related_flows:
+      - flow: rotation-lifecycle--02-preceptor-site-faculty-credentialing-orientation-calibration.yaml
+        step: "Faculty Compliance > Setup > Requirements, Requirement Groups, Faculty Associations"
+        element: "Add new Requirement drawer"
+  - role: "Preceptor"
+    read: >
+      Present as an assessor, undocumented as a user. Elentra's Logbook routes patient
+      encounters and procedures to supervisor evaluation, and the Assessment & Evaluation
+      module distributes forms to evaluate faculty, courses, and activities — so the
+      preceptor is wired into the workflow at both ends. What the public material does not
+      describe is the preceptor's own experience of it: no mobile completion, no no-login
+      evaluation link, no preceptor workload view. This is also the role where Elentra's
+      total absence from third-party review sites bites hardest — no G2, Capterra, or
+      Software Advice listing could be located, so there is neither vendor documentation
+      nor user testimony about what completing an Elentra evaluation actually feels like
+      for a busy clinician.
+  - role: "Compliance/Accreditation Liaison"
+    read: >
+      The most sharply split role of any competitor in this set — best-in-class on
+      accreditation, empty on compliance. On accreditation, Elentra is the strongest story
+      here: Curriculum Explorer, Search, and Matrix map objectives, competencies, and
+      individual teaching sessions to accreditation standards via tag management; it is an
+      AAMC Curriculum Inventory participating vendor with native MedBiquitous support and
+      claims coverage of over 40% of one major accreditor's Data Collection Instrument;
+      its Medicine page names six accreditors by acronym plus AAMC Core EPAs; and a named
+      reference customer describes automated accreditation reporting used in a mock
+      accreditation visit. Critically for DO expansion, Elentra names COCA and AACOM
+      competencies explicitly — the one competitor here that doesn't treat DO as an
+      afterthought. Against that, the liaison's compliance-tracking job has no module at all:
+      "ensure and report on compliance" appears in homepage tagline copy with no feature
+      page, item taxonomy, or gating workflow behind it.
+    related_flows:
+      - flow: accreditation-self-study--01-standards-intake-evidence-crosswalk-setup-cycle.yaml
+        step: "Program Details > Setup > Standards — Accreditation Standards panel"
+        element: "Standards tree (left panel)"
+      - flow: rotation-lifecycle--02-preceptor-site-faculty-credentialing-orientation-calibration.yaml
+        step: "Faculty Compliance > Setup > Requirements, Requirement Groups, Faculty Associations"
+        element: "Add new Requirement drawer"
+  - role: "Dean"
+    read: >
+      Served on institutional assurance and accreditation confidence, weak on
+      verifiability. The dean gets a credible security posture (SOC 2 Type 2, TX-RAMP
+      provisional, GDPR-aligned, Google Cloud dedicated instances), a two-decade academic
+      pedigree from Queen's University with Queen's still a shareholder, active growth
+      capital, and — the thing deans actually care about — a demonstrated accreditation
+      outcome story. What is missing is any independent read: no third-party review listing
+      exists anywhere, pricing is entirely non-public (G2 records that Elentra "has not
+      provided pricing information"), and a Glassdoor review describing "terrible
+      management, lack of support and communication... and micromanagement" sits
+      unresolved alongside more positive ones. A dean evaluating Elentra is working from
+      vendor material and reference calls only.
+
+gaps_prism_can_exploit:
+  - claim: "Compliance Management is the single clean wedge — Elentra has none."
+    detail: >
+      Elentra has no dedicated compliance module — the concept appears only in
+      tagline copy — while placement-gating compliance is one of Prism's
+      already-shipped pillars. The Clinical Coordinator loses readiness gating and
+      the Compliance/Accreditation Liaison loses half their job. In DO placement
+      conversations where clearance-to-start is high-stakes, this is verifiable, not
+      rhetorical.
+    related_flows:
+      - flow: rotation-lifecycle--02-preceptor-site-faculty-credentialing-orientation-calibration.yaml
+        step: "Faculty Compliance > Setup > Requirements, Requirement Groups, Faculty Associations"
+        element: "Add new Requirement drawer"
+  - claim: "Preceptor experience is the least-defended role — undocumented on both sides."
+    detail: >
+      No vendor description and no user reviews exist for the preceptor experience.
+      Any concrete, demonstrable preceptor workflow competes against an unknown.
+  - claim: "Single-codebase stability is a real institutional-risk argument."
+    detail: >
+      Elentra is now operating three formerly independent platforms (Elentra,
+      Benchworks, DaVinci/LCMS+) under one brand after being acquired itself in 2023.
+      One vendor, one codebase, one roadmap lands with the Program Admin and Dean.
+  - claim: "The Dean has no neutral benchmark during procurement."
+    detail: >
+      Zero third-party review presence and fully opaque pricing mean the Dean role
+      has nothing independent to evaluate. Transparency and reference-ability are
+      differentiators here independent of features.
+  - claim: "Do NOT lead with Exam Management or Accreditation Management against Elentra — but Curriculum Mapping and course evaluations need a fresh comparison, not the old roadmap excuse."
+    detail: >
+      It ships named-standard accreditation reporting (AAMC CI vendor, >40% CACMS
+      DCI coverage) and proctored online exams, genuinely ahead of Prism's
+      still-roadmap Exam Management and Accreditation Management pillars.
+      CORRECTED 2026-08-26 (per Exxat PM confirmation, see
+      ../prism/capability-map.yaml): Prism's Curriculum Mapping and Surveys
+      pillars are shipped, not roadmap — Elentra's lead there, if any, is now
+      about depth, unverified since. Elentra remains the one competitor naming
+      COCA explicitly, so "DO is an afterthought" doesn't work here.
+
+sources:
+  - "../competitors/elentra.yaml"
+  - "Elentra's named accreditor coverage (relocated from how_they_implicitly_serve_roles[].read, Compliance/Accreditation Liaison): Medicine page names LCME (including ED-5/ED-7-aligned reporting), COCA, CACMS, ACPE, CODA, and ARC-PA; >40% coverage claim is against the CACMS Data Collection Instrument; University of Miami Miller School reference describes an LCME mock visit; DO-specific naming covers COCA, AACOM Osteopathic Core Competencies, and COMLEX-USA Levels 1 & 2."
+  - "https://elentra.com/"
+  - "https://elentra.com/features/curriculum-management-and-mapping"
+  - "https://elentra.com/features/clinical-experience-scheduling"
+  - "https://elentra.com/features/assessment-and-evaluation"
+  - "https://elentra.com/features/accreditation"
+  - "https://elentra.com/disciplines/medicine-undergraduate"
+  - "https://elentra.com/elentra-news/elentra-acquires-skyfactor-benchworks"
+  - "https://elentra.com/elentra-news/better-together-elentra-and-davinci-education-combine-to-drive-transformation-in-healthcare-education"
+  - "https://elentra.com/elentra-news/elentra-corp-achieves-soc-2-compliance-and-tx-ramp-provisional-certification-ensuring-unparalleled-data-security-for-higher-education-institutions"
+  - "https://elentra.org/2018/04/04/introducing-the-elentra-consortium/"
+  - "https://help.elentra.com/faculty-use-of-assessment-and-evaluation"
+  - "https://www.glassdoor.com/Reviews/Elentra-Reviews-E5471208.htm"

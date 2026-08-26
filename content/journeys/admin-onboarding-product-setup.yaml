@@ -1,0 +1,1527 @@
+# Admin Onboarding & Product Setup — cross-cutting journey map, ALL ELEVEN DISCIPLINES
+# (DO / Pharmacy / Dentistry / Medicine / PT-PTA / OT-OTA / PA / Nursing / SLP /
+# Social Work / Teacher Education).
+# Grounded in: ../prism/capability-map.yaml, ../accreditation/{coca,lcme,acpe,coda}.yaml,
+# ../competitors/*.yaml, ../domains/*.yaml, the Exxat admin tutorial transcript corpus
+# (exxat_transcripts.md, 16-video admin series plus feature videos), the six
+# discipline-specific transcript sets, the PRISM-Expansion-Vault help-center mirror and
+# discipline playbooks, and the eight element-level flow files
+# ../flows/admin-onboarding--01..08-*.yaml written during this research pass.
+#
+# NOTE ON STAGE SHAPE: stages follow the _TEMPLATE.yaml keys exactly, plus one added
+# key — `discipline_variance` (renamed from the `domain_variance` used in prior journeys)
+# — because this is the first cross-cutting artifact in this repo that is NOT scoped to
+# the four expansion domains: the setup path a new Program Administrator walks is the
+# same product for all eleven disciplines Exxat serves, and the interesting question at
+# every stage is which disciplines get seeded content, discipline-specific tooling, or
+# self-service access, and which get a blank tenant and a support ticket. Where a
+# stage's Prism state is asserted, it is traced to a named transcript section, help-center
+# article, or flow-file element; unconfirmed items are labelled as unconfirmed rather
+# than assumed.
+
+journey_name: "Admin Onboarding & Product Setup"
+domain_scope: ["DO", "Pharmacy", "Dentistry", "Medicine", "PT/PTA", "OT/OTA", "PA", "Nursing", "SLP", "Social Work", "Teacher Education"]
+persona: >
+  Primary: Program Administrator — specifically a brand-new one, from the day the
+  support-issued invitation email lands through to a steady-state tenant with students,
+  compliance, sites, courses, placement machinery and reporting all configured. This is
+  the persona who discovers every irreversible setting, every support-gated boundary, and
+  every empty taxonomy first, and whose day-one decisions (term nomenclature, clinical
+  settings, wishlist types, learning-activity groups) silently constrain the program for
+  years. Secondary personas touched at specific stages: Exxat support/CSR and the CSS
+  agent (the mandatory counterpart at every support-gated step — stages 1, 2, 4, 5, 7, 8),
+  university IT (SSO and SendGrid domain authentication — stages 1, 2), the Institution
+  Administrator on multi-program tenants (stage 4), and the students, faculty and site
+  personnel whose accounts and records the admin is creating (stages 3, 5).
+
+stages:
+  - stage: "1. Account activation, login & navigation"
+    current_state_in_prism: >
+      Prism's day-one path is fully shipped and documented end to end, and
+      flows/admin-onboarding--01-account-activation-login-navigation.yaml traces all 62
+      elements of it: a support-issued email invitation carrying a school-assigned
+      username and an activation link, a password-setup screen enforcing five complexity
+      rules (minimum 8 characters, upper, lower, digit, non-alphanumeric), login at
+      login.exxat.com by either username/password or SSO email-domain discovery through
+      the school IdP, mandatory Two-Factor Authentication for all non-SSO users (SMS or
+      registered-institutional-email OTP, "Remember this device for 30 days," in force
+      since July 2025 with a 90-day grace window per capability-map.yaml), and a hard
+      Privacy Policy / Terms of Use acceptance gate on both auth paths. Post-login the
+      admin lands on a Dashboard split into Program, Curriculum/Course Management and
+      Placement Management link groups, with a persistent hamburger menu, a return-home
+      dashboard icon, and a global search bar filtered by People / Curriculum / Sites and
+      Locations / Placements / Standards — where Placements alone is searchable by five
+      keys (student name, placement ID, site name, rotation name, experiential
+      supervisor) and resolves into the Placement 360 dashboard. The help chrome is
+      unusually deep for the category: a Resource Center spanning Product Education,
+      Product Updates, Webinars, Workshops, Community and Support Services (Submit a
+      Ticket / Know Your Account Manager / Book a Meeting), a live-chat button, an
+      Onboarding Notes surface with module tagging, document upload and comment threads
+      shared with Exxat associates, and Ask Leo — a multi-turn, voice-in/voice-out,
+      source-citing, pinnable-history floating AI assistant that is also agentic (creates
+      tags, opens the password-change flow for non-SSO accounts, changes theme,
+      deep-links, answers live data queries, exports to PDF). User Settings carries Theme,
+      Light/Dark Mode, Change Password, Consent Detail, Logged-in Devices, Login History
+      and the Trust Portal (SOC 2 Type II, ISO 27001, ISO 42001, HIPAA, TX-RAMP Level 2,
+      with downloadable SOC 2/ISO/HIPAA/VAPT/HECVAT artifacts).
+    pain_or_gap: >
+      Three gap-severity findings, then a cluster of configure-needed ones. First, the
+      canonical onboarding asset is stale at the highest-stakes moment: the 1/16
+      Administrator Navigation video walks a login flow with no 2FA step at all, despite
+      2FA being mandatory for non-SSO users since July 2025, and describes Ask Leo as a
+      button offering FAQs — a description the later 16/16 Part 1 video and the help
+      center both supersede, and neither mentions any agentic capability. Second, the
+      Dashboard's own caveat ("if you are assigned a custom role, you might have limited
+      access to these sections") has no in-product resolution: nothing names the admin's
+      assigned role or lists withheld sections, so a missing tile is indistinguishable
+      between "not permitted," "not configured," and "not licensed" — and since custom
+      roles are support-requested, the admin often did not choose their own role. Third,
+      Onboarding Notes is a self-acknowledged trap: Exxat associates comment in it, which
+      makes it behave like a support channel, while the transcript itself warns "this is
+      not a formal place to receive support from the EXAT team" — a warning that lives
+      only in a training video, never on the screen. Beneath those: the
+      highest-frequency day-one failure (invite in spam, activation link reused) has no
+      self-service remedy and no Prism-specific troubleshooting content — the help
+      center's "Login/Logout Issues" section is literally instructions for signing in and
+      out of Windows and macOS, and the Whitelist Communications article names Exxat's
+      sending IPs but is written for the admin to forward to clinical sites, i.e.
+      downstream of the very first email that can fail. The SSO path is worse: no
+      invitation, no admin-visible status, no ETA, no protocol named anywhere in any
+      transcript or article, and SSO configuration sits on capability-map.yaml's
+      confirmed support-gated boundary alongside custom roles, faculty admin grants,
+      idle-timeout settings and named-report requests — making Submit a Ticket a
+      mandatory part of setup rather than an escape hatch. The email-OTP fallback has a
+      circular day-one dependency (keep your institutional email current in a profile a
+      first-time user has not yet seen), live chat runs 7:30am–7:30pm EST despite "24/7
+      Support" in Prism's advantage layer, and the read-only accreditation site-visit
+      account type exists but appears in no transcript, no Getting Started guide and no
+      self-service screen — so the default behaviour under site-visit pressure is the
+      insecure one: sharing an admin credential.
+    accreditation_link: >
+      This stage is almost entirely accreditation-agnostic, and the flow file says so
+      explicitly on 58 of its 62 elements rather than manufacturing ties: no element in
+      coca.yaml, lcme.yaml, acpe.yaml or coda.yaml names an authentication, session, or
+      navigation control. Two near-miss temptations were checked and deliberately
+      declined — COCA Standard 11, Element 11.2's requirement for documented proof of
+      confidentiality in student evaluations of instruction is an evidence-handling
+      requirement, not an account-security one, so citing 2FA against it would be a
+      stretch; and axiUm's marketing framing of RBAC and audit trails as helping schools
+      "meet HIPAA, FERPA and CODA requirements" is axiUm's claim, not a CODA element this
+      repo has verified, so it appears as competitor positioning on the custom-role
+      element rather than as an accreditation citation. The one genuine tie is the
+      support-provisioned read-only accreditation site-visit account, cited narrowly to
+      CODA Standard 1, Element 1-2 and COCA Standard 11, Element 11.9 following the
+      precedent already set in
+      flows/competency-verification--08-close-the-loop-external-validation-against.yaml
+      and coda.yaml — with the explicit caveat that this element governs site-visit
+      ACCESS, not the evidence those standards require, which remains a Gap pending the
+      Q3 2027 Accreditation Management pillar. Two adjacent screens are pointed at rather
+      than re-derived: Program Details > Setup > Accreditation (COCA 11.9 / CODA 1-2) and
+      the standards library (COCA 11.1, LCME 1.1, ACPE 7.5.b) are already modeled at
+      element level in the competency-verification stage 8 flow and belong to later
+      stages of this journey. Separately, the Trust Portal is flagged as an institutional
+      procurement/IT-governance artifact (HECVAT, SOC 2, ISO 42001, TX-RAMP Level 2) and
+      explicitly NOT an accreditor requirement, and the "Earn Your Exxat Certification"
+      link is a user-proficiency credential not to be conflated with programmatic
+      accreditation.
+    competitor_comparison: >
+      Product-onboarding UX is the thinnest-covered area in this research, and the flow
+      file states "not documented at this granularity by any competitor teardown in this
+      research" on roughly two-thirds of elements rather than forcing comparisons. Where
+      real comparators exist: MedHub is the only competitor whose public materials name
+      the authentication stack — "SAML/Shibboleth SSO," multifactor authentication,
+      128-bit SSL, FERPA and SOC 2 — making it the fair head-to-head on the SSO and 2FA
+      elements, and Prism is actually BEHIND on public specificity there because no Prism
+      transcript or help article names a protocol at all, a procurement liability in the
+      IT-governed academic health centers where DO/Pharmacy/Dentistry/Medicine programs
+      live. CORE ELMS is weaker still ("only generic SSO/LTI standards support," no named
+      partners) but sets the service bar on the Submit a Ticket element with Customer
+      Service rated 4.9/5 across 36 Capterra reviews. On Ask Leo, Prism is uncontested —
+      no competitor teardown documents any in-product conversational assistant — with two
+      near-misses that must not be confused for one: E*Value's "AI-powered risk
+      assessment" is an analytics model, not an assistant, and DaVinci Education's
+      product is literally NAMED Leo (an entire LMS, not an assistant), a name collision
+      that is a live GTM hazard in MD/DO conversations. On the Trust Portal, MedHub is at
+      parity on the claim but has no self-service artifact-delivery portal, and ISO 42001
+      plus TX-RAMP Level 2 have no competitor analog anywhere in this research.
+      Elentra's 20+ university Consortium model, where features built by one member
+      school flow back to all others, is a structurally stronger version of a different
+      thing than the Resource Center's Community page and is named as such rather than
+      scored. eMedley supplies the sharpest positive contrast for the onboarding period
+      specifically — its reviewers report "a lack of comparable-program examples and no
+      sandbox environment to test changes before they go to production," precisely the
+      implementation-period need Onboarding Notes, Cohere/Cohere-X workshops and the
+      Resource Center address. one45 is the only competitor with a verified public
+      knowledge base (Exxat's Learning Hub sits behind the Resource Center), and
+      one45/eMedley/MedHub each carry documented UI or mobile complaints that support
+      Prism's theming/accessibility elements only at atmosphere level, not element level.
+    discipline_variance: >
+      The mechanics of this stage are the most discipline-invariant thing in the entire
+      product: activation, password rules, SSO, 2FA, the privacy gate, the dashboard's
+      three section groups, the hamburger menu, global search and User Settings are
+      identical for all eleven disciplines. The discipline video corpora corroborate this
+      by assumption rather than instruction — every PT/PTA, OT/OTA, PA and SLP tutorial
+      simply opens with "from your dashboard or upper left hand hamburger menu," and the
+      OT and PA transcripts say "log into Exxat using your university credentials,"
+      confirming SSO as the assumed default in practice; the Nursing and TE transcript
+      files contain no login or navigation-chrome content at all. Variance is
+      concentrated in exactly one place — the Resource Center's discipline-tailored
+      content — and it breaks precisely where expansion needs it. The help-guide mirror
+      contains discipline-specific folders for only six disciplines (Nursing, OT-OTA,
+      PA, PT-PTA, SLP, Social Work) and playbooks for seven (those six plus Teacher
+      Education); nothing discipline-specific exists for DO, Pharmacy, Dentistry or
+      Medicine. So the transcript's own promise for Community > Explore — "you'll
+      automatically land on the page for your specific discipline" — has nothing to
+      route a new DO or Pharmacy admin to, and Product Education > Help Guides returns
+      generic content for all four expansion domains on the first support surface they
+      touch. Teacher Education is the double outlier: non-clinical, no health-system
+      accreditor, a playbook but no help-guide folder, and a Resource Center whose FAQ
+      and community content is clinically framed throughout. The one cheap fix the flow
+      file surfaces: Ask Leo's suggested questions are tailored by ROLE
+      (student/faculty/administrator), never by discipline — a brand-new Dentistry admin
+      gets the same "How do I create a placement? / How do I review my students' patient
+      logs?" prompts as a PT admin — making discipline-conditioned prompts the least
+      expensive personalization available anywhere in this stage. Support-gating is
+      uniform across all eleven (SSO config, custom roles, site-visit accounts), though
+      capability-map.yaml notes SLP is more support-gated than PT/OT/PA further
+      downstream in form building.
+    key_findings:
+      - subject: "DO"
+        headline: "Community > Explore promises discipline routing with no DO page to route to"
+        severity: "gap"
+        detail: "The help-guide mirror carries discipline-specific folders for only six disciplines and playbooks for seven, none of them DO. The transcript's promise that a user automatically lands on the page for their specific discipline has nothing behind it for a DO admin."
+      - subject: "Pharmacy"
+        headline: "Help Guides return generic content on the first support surface a Pharmacy admin touches"
+        severity: "gap"
+        detail: "Nothing discipline-specific exists in the Resource Center for DO, Pharmacy, Dentistry or Medicine, so Product Education > Help Guides serves generic allied-health material to every expansion-domain tenant on day one."
+      - subject: "Dentistry"
+        headline: "Ask Leo tailors suggested prompts by role, never by discipline"
+        severity: "cosmetic"
+        detail: "A brand-new Dentistry admin gets the same 'How do I create a placement? / How do I review my students' patient logs?' prompts as a PT admin. The flow file names discipline-conditioned prompts as the least expensive personalization available anywhere in this stage."
+      - subject: "Teacher Education"
+        headline: "Double outlier: a playbook but no help-guide folder, and clinically framed content"
+        severity: "gap"
+        detail: "TE is non-clinical with no health-system accreditor, yet the Resource Center's FAQ and community content is clinically framed throughout, and TE is the one discipline with a playbook and no matching help-guide folder."
+      - subject: "OT/OTA"
+        headline: "One of six disciplines with both a help-guide folder and a playbook"
+        severity: "none"
+        detail: "OT-OTA sits inside the documented set (Nursing, OT-OTA, PA, PT-PTA, SLP, Social Work) that the Resource Center's discipline routing can actually resolve, so Community > Explore behaves as the transcript describes."
+      - subject: "PA"
+        headline: "Transcripts confirm university-credential SSO as the assumed default login"
+        severity: "none"
+        detail: "The OT and PA tutorials open by telling users to log into Exxat using their university credentials, corroborating SSO rather than username/password as the practical default and bypassing the 2FA path entirely."
+      - subject: "SLP"
+        headline: "Support-gating is uniform here but tightens for SLP further downstream"
+        severity: "configure-needed"
+        detail: "SSO configuration, custom roles and site-visit accounts are support-gated identically across all eleven disciplines, though capability-map.yaml notes SLP is more support-gated than PT, OT and PA once form building starts."
+
+  - stage: "2. Program details & settings setup"
+    current_state_in_prism: >
+      A brand-new Program Administrator does effectively all of this stage inside one
+      module — Program Details — and the 1/16 Administrator Navigation transcript walks
+      the entire stage end to end in a single video;
+      flows/admin-onboarding--02-program-details-settings-setup.yaml captures it as 14
+      screens and 65 individually-analyzed elements. Setup > School Profile carries logo
+      upload, a validated program-name field, and a Details drawer (description, Type of
+      program, Degree offered, Address); the Information card holds Terms and
+      Professional years; then Mission and Vision, repeatable Accreditation instances
+      (accrediting body, status, type, details, next and most-recent accreditation
+      dates), Grading Scheme (Add New > Letter Grade cutoff table or Pass/Fail single
+      threshold), Program clinical settings (name + color, with an explicit lock on any
+      setting already tied to placements or slots), the Standards tab, and the AI
+      Features Hub legal-consent gate. The Notification Hub splits in two: Email Setup
+      (Email Display Name, Default Reply-To, Delegator Link Expiry Duration, a Secure
+      External Access OTP toggle) and Email Templates (a Section > Category > Template
+      library with Locked / Regular / Restricted permission tiers, merge fields,
+      header/footer layouts, Set as Default, Preview, Clone, Delete). User Roles offers
+      By Name and By Role tabs, Manage Roles with Assigned/Unassigned, an eye-icon
+      permission viewer and Excel export; Program 360 shows six live metric groups; the
+      Program Calendar ships Month/Week/Day/Agenda views, module color-coding and an Add
+      Event drawer. One off-platform step is included because it is genuinely day-one:
+      sending mail from the university's own domain via SendGrid CNAME/DMARC records,
+      which requires a support ticket plus university IT.
+    pain_or_gap: >
+      The stage is not actually self-service: four separate items are vendor-gated with
+      no in-product path — new Type of program dropdown values (support ticket), the
+      Terms and Professional years academic calendar (the help center warns edits
+      "impact entire course catalog, course offering and curriculum grid" and routes
+      changes through your CSR), custom user roles, and View as Student access — the
+      last being the one a new admin most needs while configuring the student
+      experience. The second theme is inert data: Next accreditation date and Most
+      recent accreditation date are stored but no source shows them feeding the Program
+      Calendar, a reminder, or a "since last cycle" report filter, even though Prism
+      ships a due-date-aware Program Calendar two tabs away. Third, there is no
+      onboarding-completeness surface anywhere — Program 360 already computes every
+      count that would drive a "what have I not set up yet?" checklist but presents them
+      as steady-state metrics, so the only answer to that question lives in a 16-video
+      tutorial series and a CSR's head. Smaller but universal frictions: the
+      program-name field rejects whitespace and numerals so no real program name can be
+      typed literally; grading schemes are hand-built row by row with no seeded default,
+      no documented gap/overlap validation and — unlike clinical settings — no
+      documented in-use edit guard; clinical settings start empty for every tenant with
+      no discipline-seeded starter set; email templates delete unrecoverably; and the
+      Site Resource Page is shared by copying a plain browser URL while delegator links
+      two screens away can be OTP-gated and time-boxed, leaving the program's data
+      posture inconsistent by default.
+    accreditation_link: >
+      Most of this stage is accreditation-agnostic platform mechanics, but four elements
+      carry real ties and the flow file cites them per-element rather than per-screen.
+      The Accreditation record (body / status / type / next / most-recent date) is the
+      program-level anchor already established as the COCA Standard 11, Element 11.9 and
+      CODA Standard 1, Element 1-2 tie in journeys/competency-verification.yaml stage 8,
+      and that precedent is adopted rather than re-derived; the gap is that coca.yaml
+      names "deadline and submission-status tracking" as the required software behavior
+      for 11.9 and these dates do nothing, while coca.yaml Element 10.2's "since the
+      last accreditation cycle" framing has no corresponding report filter. The Mission
+      and Vision free-text area is the most accreditation-load-bearing field on the
+      School Profile — ACPE requires evidence every preceptor was oriented to the
+      program's mission, CODA 1-2 ties improvement to institutional goals, and ARC-PA
+      B1.01 a-d requires curriculum aligned to mission — yet it is unstructured prose
+      that nothing downstream can reference or attest against. The clinical settings
+      taxonomy is where COCA Element 6.9's "more than one in an inpatient setting"
+      clerkship requirement is literally evidenced, and per the playbooks it already
+      maps to CAPTE 2024 6H / 2016 6L2 (PT), ACOTE via AOTA setting categories (OT), and
+      ARC-PA B3.xx SCPE settings (PA). Program 360's "Accreditation standards" tile
+      counts mapped standards (COCA 6.4 / ACPE 2.2.d / CODA 2-8 / LCME 9.4) but is a
+      count, not evidence — the substantive analysis stays in
+      flows/competency-verification--01-define-the-competency-framework-and-map.yaml.
+      The Notification Hub's OTP and link-expiry controls are cited as data-handling
+      posture adjacent to COCA 5.4 and LCME clinical-supervision territory, explicitly
+      not as standard compliance.
+    competitor_comparison: >
+      This is product onboarding, so most elements honestly get "not documented at this
+      granularity by any competitor teardown in this research" — none of the nine
+      competitor files documents logo upload, program-name validation, term taxonomy,
+      mission records, template permission tiers, or role-assignment UX, because that
+      material sits below public marketing and help-doc granularity. Three real
+      element-level comparisons survive. Grading Scheme: axium.yaml records axiUm's
+      Evaluations Module letting faculty "record student assessments using customizable
+      grading schemes," but positioned inside a competency/clinical evaluation module
+      rather than as a program-level scheme library reusable across courses and learning
+      activities — architecturally different, and it matters because axiUm is the
+      dentistry incumbent. Program Calendar: the clearest documented competitor
+      advantage in the stage — one45.yaml documents learner dashboards "synced to Google
+      Calendar/Apple iCal/Outlook" and leo-davinci.yaml a central calendar with a
+      "real-time iCal feed," against no documented export or feed from Prism's Program
+      Calendar — though the honest caveat is that both competitors' synced calendars are
+      learner-facing schedule feeds while Prism's is an admin-only program surface, so
+      this is "they publish external sync and Prism does not," not a like-for-like loss.
+      Email Setup security: medhub.yaml documents MedHub's own vendor-level posture
+      (SAML/Shibboleth SSO, MFA, FERPA/SOC 2) for logged-in users, whereas Prism's OTP
+      toggle protects unauthenticated external recipients of a forwarded link — a harder
+      case no competitor teardown documents. The AI Features Hub consent ledger has no
+      counterpart in any competitor file at all, consistent with capability-map.yaml's
+      read that Prism's AI-assist work is ahead of anything documented.
+    discipline_variance: >
+      The setup mechanics are identical across all eleven disciplines; what varies is
+      the content poured into three fields, and the variance concentrates in the four
+      expansion domains. Professional years is where discipline-native nomenclature
+      lives — OMS-1..4 for DO (domains/do.yaml frames clinical training as "OMS-3 and
+      OMS-4"), MS1-MS4 for MD, P1-P4 for Pharmacy, D1-D4 for Dentistry, versus DPT1-3
+      for PT — and the generic "1st year / 2nd year" default matches none of them, so
+      every new-domain tenant needs exactly the edit the help center routes through a
+      CSR. Program clinical settings varies most: PT and OT already have large
+      production value lists (the OT playbook documents ~25 settings organized against
+      AOTA Recommended Practice & Fieldwork Settings for ACOTE; PT maps Practice
+      Settings to CAPTE 2024 6H / 2016 6L2 via PTSE 1 Q3), PA uses SCPE settings as an
+      ARC-PA B3.xx course attribute, SLP uses Placement Setting as a filter across a
+      clock-hour-centric report suite, and Nursing groups Patient Log data by setting as
+      evidence for ACEN 4.9 / CCNE II-C / COA A.10/F.1 — but the four expansion domains
+      have no seeded taxonomy at all and must hand-build one (DO/MD needs COCA 6.9's
+      inpatient-versus-outpatient clerkship cut; Pharmacy needs community /
+      hospital-health-system / ambulatory-care APPE language; Dentistry needs clinic
+      versus extramural rotation), and the in-use edit lock makes that day-one guess
+      close to permanent. Two disciplines have a vocabulary mismatch with the field
+      itself: Social Work stores setting type, population served and services on Agency
+      profiles for CSWE rather than as "clinical settings," and Teacher Education (CAEP,
+      GoReact/Echo360 video assignments per the TE playbook) has no clinical-settings
+      analogue whatsoever. Grading Scheme type flips by discipline too — pass/fail is
+      the primary scheme for MD and DO preclinical work, not the secondary one — and the
+      Accreditation record's repeatable-instance design is right for Nursing (ACEN plus
+      CCNE plus COA simultaneously) and SLP (CAA program accreditation alongside ASHA
+      individual certification) but overkill for single-accreditor programs like
+      PT/CAPTE and OT/ACOTE.
+    key_findings:
+      - subject: "DO"
+        headline: "OMS-1 through OMS-4 nomenclature cannot be entered without a CSR ticket"
+        severity: "configure-needed"
+        detail: "Professional years ships a generic 1st year / 2nd year default that matches no expansion domain, and the help center routes Terms and Professional years edits through your CSR because they impact the entire course catalog, course offering and curriculum grid."
+      - subject: "Medicine"
+        headline: "Pass/fail is MD's primary preclinical scheme but Prism treats it as secondary"
+        severity: "configure-needed"
+        detail: "Grading Scheme type flips by discipline, with pass/fail primary for MD and DO preclinical work. Schemes are hand-built row by row with no seeded default and no documented gap or overlap validation."
+      - subject: "Pharmacy"
+        headline: "No seeded APPE setting taxonomy, and the in-use edit lock makes guesses permanent"
+        severity: "gap"
+        detail: "Pharmacy needs community, hospital-health-system and ambulatory-care APPE language in Program clinical settings, but expansion domains start empty. Any setting already tied to placements or slots is locked from editing, so the day-one guess is close to irreversible."
+      - subject: "Dentistry"
+        headline: "Clinic-versus-extramural rotation cut must be hand-built from an empty list"
+        severity: "configure-needed"
+        detail: "Unlike PT and OT, which arrive with large production value lists, Dentistry has no seeded clinical-settings taxonomy and must author the clinic-versus-extramural distinction itself during onboarding."
+      - subject: "OT/OTA"
+        headline: "Roughly 25 settings already organized against AOTA categories for ACOTE"
+        severity: "none"
+        detail: "The OT playbook documents a mature production settings list mapped to AOTA Recommended Practice and Fieldwork Settings, the strongest seeded taxonomy of any discipline in this stage."
+      - subject: "Nursing"
+        headline: "Repeatable accreditation instances fit ACEN, CCNE and COA simultaneously"
+        severity: "none"
+        detail: "The Accreditation record's repeatable-instance design is right for Nursing's multiple concurrent accreditors and for SLP's CAA program accreditation alongside ASHA individual certification, though it is overkill for single-accreditor programs like PT/CAPTE and OT/ACOTE."
+      - subject: "Social Work"
+        headline: "Setting type, population served and services live on Agency profiles, not clinical settings"
+        severity: "gap"
+        detail: "Social Work stores this data against CSWE expectations on the Agency profile rather than in Program clinical settings, a vocabulary mismatch with the field itself that leaves the setup screen either unused or repurposed."
+      - subject: "Teacher Education"
+        headline: "No clinical-settings analogue whatsoever for a non-clinical CAEP program"
+        severity: "gap"
+        detail: "TE runs GoReact/Echo360 video assignments against CAEP and has nothing that maps onto Program clinical settings, so a mandatory-looking setup screen has no meaningful content to receive."
+
+  - stage: "3. Student organization & onboarding"
+    current_state_in_prism: >
+      Prism ships a complete, coherent day-one path for standing up the student side of
+      a tenant, all reachable from Students > Setup, and
+      flows/admin-onboarding--03-student-organization-onboarding.yaml traces it across
+      51 elements. The admin builds the taxonomy first (Cohort with inline Groups, then
+      Enrollment Term, Graduation Term, Student Category, and Campus — all pencil-icon
+      list-builders), then loads students either through the Add Student drawer
+      (mandatory first/last name, school email, cohort; optional per-student Single
+      Sign-On Key; a default-ON "register in all course offerings of the selected
+      cohort" checkbox) or through the three-step Bulk Import wizard — download a fixed
+      .xlsx template, upload, resolve a red-error/yellow-warning validation grid, then
+      re-type a displayed number to commit, with every instance logged in a Bulk Import
+      Instances table (initiator, timestamp, status, re-downloadable source file).
+      Accounts only become real at Student Management > Invite Students, a three-step
+      drawer with a shipped Standard email template, an @-triggered merge-field picker,
+      override-recipient/reply-to/CC/BCC, send-now-or-schedule, and two grid columns
+      (Invitation Status, Account Status: Not Invited / Invitation Delivered
+      Successfully / Activated) that are the real completion metric for the stage.
+      Downstream, the student profile is genuinely deep — internal-only Tags (max 10,
+      colour-coded, grid-filterable), an Academics tab with dual shared-vs-internal note
+      streams, a guarded Update Cohort migration that discloses its impact areas before
+      running, a Pending/Placed/Completed Program Requirements ledger, Associated Staff
+      and Faculty advisor assignment, Communications and Interventions logs, Share
+      Profile / Generate Profile URL / Download Profile with per-block inclusion
+      checkboxes plus a Profile Share History audit table, read-only View As
+      impersonation, and per-student Email History — while Students > Setup also carries
+      Announcements, Student Resources, Attestations, Program Requirements, Areas of
+      Professional Interest, Additional Profile Details, and Student Experience Settings
+      (Actions and Permissions plus a per-field Visible/Required/Editable Profile Fields
+      matrix).
+    pain_or_gap: >
+      Three real defects and one structural unknown. First, the invitation-link merge
+      field is a documented hard requirement with no documented enforcement — the
+      transcript says omitting it means "the student would not be able to set up their
+      account," yet nothing blocks the save or the send, so an entire class can receive
+      an invitation that reports as delivered and cannot activate; this is the
+      highest-consequence silent failure in the stage. Second, the Associated Staff and
+      Faculty Role dropdown is decorative — "the role selected is for information
+      purposes only. The role of the faculty member does not affect their permitted
+      access in the system" — a control that looks like access management and is not,
+      compounded by advisors getting view-only access that excludes compliance review
+      and learning-activity review unless separately granted in the Faculty module.
+      Third, Student Experience Settings > Profile Fields retroactively rewrites the
+      bulk-import template (marking a field Required makes it mandatory in the
+      template), yet it sits at the bottom of the Setup left-menu and is absent from the
+      video tutorial entirely, so admins reliably import first and discover the coupling
+      afterward. The structural unknown is the SIS/roster data feed: the only evidence
+      it exists anywhere in this research is one downstream help-center sentence
+      ("fields populated via a data feed are marked as read-only for students") — no
+      source documents how a feed is configured, what systems it connects to, its
+      cadence, or who owns it, which for 150-200+ student MD/DO/PharmD classes is the
+      difference between a solved problem and an annual spreadsheet ritual. Secondary
+      pains: sharing a student profile emails an unauthenticated link to
+      compliance/health documents by default, because one-time-password protection
+      requires a support ticket to enable; Cohort is excluded from Bulk Update so
+      decelerated students must be migrated one at a time through the Update Cohort
+      drawer; the import error grid has no in-grid editing (fix the .xlsx and
+      re-upload); and grid column layouts are sticky per-user with no shareable program
+      default.
+    accreditation_link: >
+      Most of this stage is honestly accreditation-agnostic, and roughly two-thirds of
+      the 51 elements carry an explicit "none — platform-mechanics element with no
+      direct accreditor tie" verdict rather than a forced citation. Where the ties are
+      genuine: Cohort and Graduation Term are the aggregation keys COCA 11.9
+      (annual/mid-cycle reports keyed to entering and graduating classes) and CODA 1-2
+      (institutional-effectiveness evidence by class) depend on, and COCA 11.5's
+      four-year GME placement rate is computed against a graduating class Prism stores
+      but does not compute — consistent with accreditation/coca.yaml rating 11.5 and
+      11.9 both Gap. Campus is the field that would have to carry any comparability cut
+      for LCME 8.7 and COCA 6.11, but it is a flat student attribute here and modeled
+      inconsistently elsewhere (the OT playbook notes Prism accepts only one program
+      address for map-distance calculation). Program Requirements
+      (Pending/Placed/Completed) is the strongest positive fit in the stage: LCME 8.6,
+      which lcme.yaml already rates the best Prism fit of any LCME element, plus ACPE
+      3.2.b/3.2.d's four required APPE settings, which the setting-fulfilled requirement
+      model would carry without new construction. The Interventions tab is the notable
+      revision: it has the case-record shape CODA 2-2 asks for (open/closed lifecycle,
+      dated follow-ups, attachable remediation plan, course/rotation/site linkage, a
+      default-OFF publish-to-student toggle) but is manually initiated rather than
+      threshold-triggered, so coda.yaml's Configure rating on 2-2 still holds — the
+      missing piece is the automated flag, not the ledger. Student Resources plus
+      Attestations together cover the program-level half of CODA 2-1 (written
+      information provided in advance), with the attestation timestamp supplying the
+      acknowledgement evidence a file upload alone cannot; the lock-on-signature
+      behavior (title and content become immutable once any student agrees) is correct
+      and means wording must be right before publishing.
+    competitor_comparison: >
+      This is product-onboarding UX and it is near-invisible in competitor teardowns:
+      the large majority of the 51 elements are marked "not documented at this
+      granularity by any competitor teardown in this research," because
+      competitors/*.yaml is built from public marketing and review sources describing
+      clinical, placement and accreditation output, not admin setup mechanics. Four
+      comparisons are genuinely supportable. MedHub is the only vendor with a directly
+      comparable authentication posture — SAML/Shibboleth SSO, MFA, FERPA and SOC 2 — a
+      federated institution-level protocol integration versus Prism's stored per-student
+      SSO Key, which is a different shape (and means a Prism tenant can silently end up
+      half SSO and half password with no screen reporting the split). MedHub is also the
+      only vendor documenting ecosystem roster ingest (AAMC ERAS resident demographic
+      import, plus ACGME survey/case-log/milestone import), an architecturally different
+      answer to "how do students get in" than Prism's admin-authored spreadsheet — while
+      CORE ELMS is documented as sharing Prism's opacity here, naming "only generic
+      SSO/LTI standards support" with no specific LMS/SIS partners named publicly.
+      Leo/DaVinci's "FERPA-scoped advisor visibility (advisors see only their own
+      advisees)" is a real, unfavourable comparison against Prism's informational-only
+      advisor Role field — the same concern solved as an access scope by one vendor and
+      as a label by the other. Finally, feature-map/dentistry.yaml's standing claim that
+      "a student due-process case log... [is] unclaimed by any vendor in the set —
+      nobody, including Prism, ships either today" should be revised: the transcript
+      confirms Prism does ship a manual due-process case log in the Interventions tab,
+      and no competitor teardown documents an equivalent, making this a quiet Prism-only
+      capability. Nothing in the competitor set documents anything resembling read-only
+      View As impersonation, a no-login site-facing profile share, or a per-field
+      Visible/Required/Editable profile schema matrix.
+    discipline_variance: >
+      Cohort naming is where all eleven disciplines diverge, and the transcript itself
+      frames the split: lockstep programs "typically name their cohorts by graduation
+      year... For example, class of 2025," while non-lockstep programs "may use cohorts
+      to group students by other criteria, such as a specialization or enrollment term
+      and year. For example, entry-level BSN or Spring 2024 Family Nurse Practitioner" —
+      meaning Nursing is Exxat's own canonical non-lockstep example even though the
+      Nursing playbook explicitly flags cohort conventions and Groups/Categories usage
+      as "not yet documented." PT and OT are the cleanest cases: both playbooks state
+      the program is always lockstep with cohort = graduation year, PT using Groups for
+      delivery mode (Hybrid, Residentials, Online) and Categories for Scholarship/Full
+      time/Part time, OT using Groups for campuses and driving its entire Capstone
+      workflow through this stage's Bulk Update path (filter by Cohort, select, set
+      Student Category = CAPSTONE, re-type the confirmation number). PA is lockstep-only
+      and raises the stakes on cohort accuracy more than any other discipline: its
+      PA-exclusive placement-limit feature is keyed to Location + Setting + Cohort and
+      explicitly not configurable for non-lockstep clients, so a cohort naming error
+      propagates directly into slot math — while ARC-PA's E-series obligations (six
+      months' advance notice for class-size changes or new distant campuses) give the
+      Campus attribute real compliance weight. Social Work is the richest documented
+      variance and the only discipline with two named conventions: cohort by enrollment
+      date (Traditional Fall 2025, Advanced Standing Fall 2025) for schools with a
+      banner/automated data feed, versus cohort by practicum start date (Generalist Fall
+      2025, Specialization Spring 2026) for schools uploading manually — with Groups
+      carrying academic tracks, Campuses carrying Main/Satellite/Online/Regional, and
+      Categories carrying Full-Time/Part-Time/Traditional/Advanced Standing; Advanced
+      Standing students skip the generalist year, so SW is structurally non-lockstep
+      inside a single cohort. Among the four expansion domains: Medicine (LCME) brings
+      150-200+ classes, institutional Banner/Colleague SIS expectations that make the
+      undocumented data feed the decisive question, regional campuses LCME 8.7 requires
+      comparability across, and frequent MD/PhD and LOA deceleration forcing
+      one-at-a-time Update Cohort migrations; DO (COCA) adds branch campuses and OMS-I
+      through OMS-IV nomenclature the free-text term fields absorb but do not model,
+      with COCA 11.9's annual report needing class-level counts by campus; Dentistry
+      (CODA) is not rotation-based at all — DS1-DS4 students on a longitudinal in-house
+      patient panel, typically assigned to clinical pods or group practices with a
+      faculty group-practice leader, which Prism's flat, ownerless Groups cannot
+      represent, and where CODA 2-2 due process makes the Interventions tab the most
+      load-bearing screen in the stage; Pharmacy (ACPE) uses P1-P4 with large
+      multi-campus programs and dual-degree or part-time tracks landing in Student
+      Category, and is the domain where the setting-fulfilled Program Requirements
+      object maps most cleanly onto an accreditor requirement (the four required APPE
+      practice settings). SLP and Teacher Education are both documentation gaps rather
+      than known-different shapes: the SLP playbook carries an explicit caveat that no
+      cohort-pattern source exists, and the TE playbook — built from a single
+      GoReact/Echo360 video — states outright that cohort structure, terminology and
+      program-setup patterns are unconfirmed, so TE's likely need to group students by
+      licensure content area (Secondary Math, Elementary Ed) in Student Category should
+      be treated as unverified, not asserted.
+    key_findings:
+      - subject: "Nursing"
+        headline: "Exxat's own canonical non-lockstep example, yet its cohort conventions are undocumented"
+        severity: "configure-needed"
+        detail: "The transcript uses entry-level BSN and Spring 2024 Family Nurse Practitioner as its illustration of non-lockstep cohorts, while the Nursing playbook explicitly flags cohort conventions and Groups/Categories usage as not yet documented."
+      - subject: "PA"
+        headline: "Cohort naming errors propagate straight into PA-exclusive placement-limit slot math"
+        severity: "configure-needed"
+        detail: "The PA placement-limit feature is keyed to Location plus Setting plus Cohort and is explicitly not configurable for non-lockstep clients, so cohort accuracy carries more downstream consequence here than in any other discipline."
+      - subject: "Social Work"
+        headline: "Advanced Standing students break lockstep inside a single cohort"
+        severity: "configure-needed"
+        detail: "SW is the only discipline with two named conventions — cohort by enrollment date for schools with an automated feed, cohort by practicum start date for manual uploads — and Advanced Standing students skip the generalist year, making the cohort structurally non-lockstep."
+      - subject: "Medicine"
+        headline: "Undocumented SIS data feed is the decisive question for 150-200+ classes"
+        severity: "gap"
+        detail: "The only evidence a roster feed exists anywhere is one help-center sentence about feed-populated fields being read-only. Medicine programs expect institutional Banner/Colleague ingest, and nothing documents configuration, cadence or ownership."
+      - subject: "Dentistry"
+        headline: "Flat, ownerless Groups cannot represent clinical pods or group practices"
+        severity: "gap"
+        detail: "Dentistry is not rotation-based: DS1-DS4 students sit on a longitudinal in-house patient panel assigned to pods with a faculty group-practice leader. Prism's Groups carry no owner, so that structure has nowhere to live."
+      - subject: "Pharmacy"
+        headline: "Setting-fulfilled Program Requirements map most cleanly onto the four required APPE settings"
+        severity: "none"
+        detail: "Pharmacy is the domain where the Pending/Placed/Completed Program Requirements object lines up with an accreditor requirement without new construction, matching ACPE 3.2.b and 3.2.d."
+      - subject: "OT/OTA"
+        headline: "Entire Capstone workflow runs through this stage's Bulk Update path"
+        severity: "none"
+        detail: "OT filters by Cohort, selects students, sets Student Category to CAPSTONE and re-types the confirmation number, while using Groups for campuses on top of a lockstep graduation-year cohort."
+      - subject: "Teacher Education"
+        headline: "Cohort structure and terminology are explicitly unconfirmed, not merely different"
+        severity: "gap"
+        detail: "The TE playbook, built from a single GoReact/Echo360 video, states that cohort structure, terminology and program-setup patterns are unconfirmed, so TE's likely need to group by licensure content area is unverified rather than asserted."
+
+  - stage: "4. Compliance template setup"
+    current_state_in_prism: >
+      A new Program Administrator builds compliance in two structurally different
+      halves, and flows/admin-onboarding--04-compliance-template-setup.yaml models them
+      as 13 screens and 70 elements (50 rated none, 8 gap, 7 cosmetic, 5
+      configure-needed). Student side: Student Compliance > Setup, scoped per cohort —
+      pick a Select Template (or None, the only real option on a day-one tenant),
+      scaffold categories (shipped set: Health & Immunization, Certifications &
+      Training, Verification/Identity Documents, Insurance & Liability, Memberships &
+      Licensure, Attestations, Additional Documents) and requirements, then open each
+      requirement's pencil drawer to set alias/short name, Enabled bit, Detailed vs
+      Simplified collection, start/expiration date capture, up to two extra free-text
+      questions, the expiration model (student-entered / "Expires Automatically In" N
+      days / "Expires Automatically On" a date) plus "Expiry Renews in Days," Mandatory,
+      "available in the shared profile link," Requires review, Due Date, Guidelines for
+      Students, Guidelines for Reviewers, and Template/Sample uploads — then External
+      Trainings (HIPAA via ComplianceJunction: vendor, Course Id, Course Link), then
+      Publish, then the Auto Notifications drawer (weekly reminders, end date,
+      suppress-optional toggle), then Notification-tab email templates with merge
+      fields, scheduling, and Delivered/Opened/Dropped History. The faculty side works
+      differently: Faculty Compliance ships pre-populated with commonly used
+      requirements, requirement names are renameable, requirements bundle into Groups
+      pushed via Associate Faculty > Assign Group (with an "override currently
+      associated groups" checkbox), and faculty auto-notifications are a full campaign
+      scheduler (title, frequency like "every 1 week on Monday," start/end dates,
+      per-requirement scoping, deactivate/edit/delete). Three setup decisions have no UI
+      at all and are prism-support@exxat.com tickets: marking a document Sensitive, OTP
+      protection on externally shared compliance info, and disabling student
+      auto-notifications. Multi-program tenants additionally get an Institution
+      Administrator > Compliance Management section with a cross-program student status
+      table plus Setup > Requirements / Auto-Notifications / Student Specific Due Date.
+    pain_or_gap: >
+      The dominant pain is irreversibility clustered on a screen a first-time admin is
+      guaranteed to experiment on: Apply Template is one-shot per cohort, student
+      requirement names are permanent (alias-only), "Enable Auto Notifications" cannot
+      be turned off without emailing support, its Notification End Date "cannot be
+      changed after saving," and Publish freezes an unnamed subset of per-document
+      settings ("there will be some configurations of specific documents which you will
+      not be able to change" — the tutorial never says which). Second, three
+      privacy/security-critical settings are vendor tickets rather than product:
+      Sensitive marking ("You will not be able to mark a document sensitive... contact
+      prism-support"), OTP protection on shared compliance links, and auto-notification
+      disablement — so a tenant that never emails support silently ships
+      unauthenticated external compliance links. Third, structured data capture is
+      capped at two free-text questions per requirement, and free-text requirement
+      naming has no controlled vocabulary, rename, or merge path. Fourth, the two
+      halves of the same feature behave inconsistently in ways that cost learnability:
+      faculty requirements are renameable and ship seeded, student ones are neither;
+      faculty notifications are a reversible, per-requirement, arbitrary-frequency
+      scheduler while student notifications are fixed-weekly, all-documents, and
+      irreversible. Fifth, Faculty Compliance is gated entirely on contracting Exxat
+      Approve, and the institution tier offers edit-each-program access with no
+      documented push-down/inherit model, so a multi-program rollout is N setups, not
+      one.
+    accreditation_link: >
+      Most of this stage is genuinely accreditation-agnostic platform mechanics, and the
+      flow file says so per element rather than manufacturing ties. The real ties are
+      narrow: the shipped Attestations category, the Mandatory toggle, and the Publish
+      action are the mechanism COCA Standard 5, Element 5.4 needs (published supervision
+      policy plus proof of distribution to each student and faculty member) — and
+      accreditation/coca.yaml's own open question is exactly whether Compliance
+      Management supports document-acknowledgment item types rather than only
+      checklist/expiry items, which nothing in the compliance-setup transcript resolves;
+      the Notification History Delivered/Opened log is weaker evidence than a true
+      attestation record. The expiration model (Expires Automatically In/On, Expiry
+      Renews in Days) is adjacent to but explicitly NOT the thing CODA Standard 4,
+      Element 4-6, ACPE Standard 3, Key Element 3.5.b, and LCME Standard 1, Element 1.4
+      require, because those need expiry tracking on site affiliation agreements and
+      this Setup tab confirms the mechanism exists only on student- and faculty-level
+      items — corroborating coda.yaml's own gap_note that site-level compliance-item
+      tracking is unconfirmed. Faculty Compliance's licensure/certification tracking
+      maps to nursing COA Standard B (several critical sub-standards) per the Nursing
+      playbook, but no element in coca.yaml, coda.yaml, acpe.yaml, or lcme.yaml
+      addresses faculty credential item tracking at all. Critically, no screen in this
+      stage carries an accreditor field, standard mapping, or evidence-binder semantics
+      — the accreditation-aware record precedent in this repo is the Program Details >
+      Accreditation record in
+      flows/competency-verification--08-close-the-loop-external-validation-against.yaml,
+      a different screen that is itself rated status-only.
+    competitor_comparison: >
+      Compliance tracking as a capability is commoditized; the admin-side configuration
+      surface is not documented by anyone. CORE ELMS (at parity: immunizations, CPR,
+      background checks, drug checks, HIPAA training, licensing with automated
+      expiration reminders, HIPAA-compliant storage), eMedley's eKeeper "Student
+      Documents" (a fixed taxonomy of MMR/Hep/flu/PPD/Varicella/BLS/CPR/HIPAA/licenses,
+      manual-or-auto approval, expiration notices), New Innovations' Credentialling
+      Module (rated ahead: licenses, certifications, visas, immunizations with
+      expiration alerts), and E*Value/MedHub (automated credentials monitoring for
+      state/DEA/controlled-substance licenses with auto-alerts) all claim the outcome.
+      But none of their public sources describe the configuration mechanics this stage
+      is made of — cohort-scoped templates, admin-created categories, a per-requirement
+      detail-level switch, a derivation rule for expiration, an Expiry-Renews-in-Days
+      re-upload window, per-item external-share toggles, notification-template
+      authoring, or bulk group assignment with replace-vs-append semantics — so most
+      elements are honestly marked "not documented at this granularity by any competitor
+      teardown in this research." The two genuine element-for-element matches are
+      eMedley's "manual or auto-approval workflows" against Prism's Requires-review
+      toggle, and everyone's expiration alerts against Prism's auto-notifications.
+      Elentra, one45, Leo/DaVinci and axiUm have no dedicated compliance-item module at
+      all per their teardowns, which is Prism's clearest wedge. Uniquely, no competitor
+      in the nine-file set sells anything like Exxat Approve (outsourced human document
+      review, Guidelines for Reviewers, Review Clarifications) — the honest comparison
+      is that there is nothing to compare it to.
+    discipline_variance: >
+      Variance in this stage is almost entirely about WHAT goes in the taxonomy, since
+      the mechanism is identical across disciplines. OT has the most concrete
+      documented starter list (COVID-19 test and vaccination, Flu, HepA, HepB, TB, CPR,
+      Physical Exam, CBC; background check and drug screening; health and professional
+      liability insurance) plus flu-shot reminder announcements; PT's playbook gives
+      the same instruction plus the onboarding caveat "ask the school where they're
+      tracking compliance if they don't track it on Prism," meaning many PT programs
+      never adopt this module at all. Nursing adds licensure verification and,
+      specifically for CRNA, ACLS/PALS student certifications, and is the one
+      discipline where Faculty Compliance is explicitly accreditation-load-bearing (COA
+      Standard B faculty licensure/NBCRNA certification, critical sub-standards).
+      Social Work is the only discipline with named third-party integrations wired into
+      Setup — CISIVE and Universal for background checks/drug screens,
+      ComplianceJunction for HIPAA training, with School Pay vs Student Pay
+      configuration — and its playbook independently flags the "Included in Profile
+      Link" toggle as the privacy control admins must get right when configuring
+      categories. PA's texture is downstream: compliance status is item 1 on the
+      Placement Clearance checklist and students share curated Profile Share links of
+      selected compliance documents to preceptors. Teacher Education is a documented
+      blank: its playbook lists compliance (background check/fingerprinting) as an
+      explicit open gap with no TE-specific pattern available. SLP's playbook has no
+      compliance section at all, and the SLP/PT/PA/Nursing/TE video transcripts contain
+      zero compliance content (the sole hit anywhere is an OT FWPE alert about
+      "compliance with safety regulations"). For the four expansion domains — DO,
+      Medicine, Pharmacy, Dentistry — there is no seeded category set, no requirement
+      list, and no confirmation that the CISIVE/Universal/ComplianceJunction vendor
+      integrations are offered to them, so their compliance taxonomy (including any
+      COCA 5.4-style supervision-policy attestation) is pure greenfield configuration
+      work at onboarding.
+    key_findings:
+      - subject: "Social Work"
+        headline: "Only discipline with named third-party compliance integrations wired into Setup"
+        severity: "configure-needed"
+        detail: "CISIVE and Universal cover background checks and drug screens and ComplianceJunction covers HIPAA training, each requiring a School Pay versus Student Pay decision at configuration time. The SW playbook separately flags the Included in Profile Link toggle as the privacy control admins must get right."
+      - subject: "OT/OTA"
+        headline: "Most concrete documented starter requirement list of any discipline"
+        severity: "none"
+        detail: "The OT playbook names COVID-19 test and vaccination, Flu, HepA, HepB, TB, CPR, Physical Exam and CBC, plus background check, drug screening, and health and professional liability insurance, alongside flu-shot reminder announcements."
+      - subject: "PT/PTA"
+        headline: "Playbook tells staff to ask whether the program tracks compliance in Prism at all"
+        severity: "configure-needed"
+        detail: "PT's onboarding guidance carries the caveat to ask the school where they are tracking compliance if they do not track it on Prism, implying many PT programs never adopt this module."
+      - subject: "Nursing"
+        headline: "Only discipline where Faculty Compliance is explicitly accreditation-load-bearing"
+        severity: "configure-needed"
+        detail: "COA Standard B critical sub-standards cover faculty licensure and NBCRNA certification, and Nursing additionally tracks licensure verification plus ACLS/PALS student certifications for its CRNA track."
+      - subject: "PA"
+        headline: "Compliance status is item one on the Placement Clearance checklist"
+        severity: "none"
+        detail: "PA's compliance texture is downstream of setup rather than in it: clearance depends on compliance status first, and students share curated Profile Share links of selected compliance documents with preceptors."
+      - subject: "Teacher Education"
+        headline: "Compliance is a documented blank, with background check and fingerprinting unresolved"
+        severity: "gap"
+        detail: "The TE playbook lists compliance as an explicit open gap with no TE-specific pattern available, so nothing in this research tells a TE admin which categories or requirements to build."
+      - subject: "SLP"
+        headline: "No compliance section in the playbook and zero compliance content in transcripts"
+        severity: "gap"
+        detail: "SLP has no documented compliance requirements anywhere in this corpus. Across the SLP, PT, PA, Nursing and TE transcripts the sole compliance hit is an OT FWPE alert about compliance with safety regulations."
+      - subject: "DO"
+        headline: "Greenfield taxonomy, with vendor integrations unconfirmed for expansion domains"
+        severity: "gap"
+        detail: "DO, Medicine, Pharmacy and Dentistry get no seeded category set and no requirement list, and no source confirms the CISIVE/Universal/ComplianceJunction integrations are offered to them — including any COCA 5.4-style supervision-policy attestation."
+
+  - stage: "5. Sites, locations & personnel management"
+    current_state_in_prism: >
+      A new Prism administrator builds the site directory in a strict, mostly
+      undocumented order, and
+      flows/admin-onboarding--05-sites-locations-personnel-management.yaml traces it
+      across 22 steps and 111 analyzed elements: Sites > Setup > Sites Organization
+      (site/location categories, personnel categories, location areas) and Contract
+      Organization (contract categories, routing checklist, contract statuses), then
+      the Site Sharing Model, then Add Site (name, alias, EIN, the pivotal "Do you want
+      to add this site as a location?" checkbox, domestic/international address), then
+      the site About tab (Programs, Requirements, Settings, Payment Details with
+      payment model/rate/rate unit/vendor ID, Categories, Documents, Notes, Student
+      Requirement Uploads), the Contracts tab (link a shared contract via the chain
+      icon or add one with contract number, tax ID, start/end, open-ended bit, status,
+      Locations Covered, Routing Checklist, Contract Documents, Contract Generation),
+      and Setup > Auto-Notifications for expiring contracts. Locations are added under
+      sites with rural/underserved attributes and a "Show on Explore Clinical
+      Locations" bit, then tuned through a rich inheritance layer (X-to-remove
+      inherited settings/requirements, "Inherit Setting Notes," per-location enablement
+      of student requirement uploads, "Inherit Notes from Site"), plus a Move Location
+      workflow with a pre-flight implications table and Location Move History for
+      hospital M&A. People come in two separate systems: site-side Personnel (a 3-step
+      wizard with an "experiential supervisor" toggle that unlocks Slots/Placements
+      tabs, per-location designation and communication preferences, primary-site
+      marker, licensure/certification/CV cards, Communications and Interventions logs)
+      and program-side Faculty & Staff (dashboard configuration toggles, faculty
+      rank/administrative position lists, individual add plus per-user SSO key, a
+      validated Bulk Import with red/yellow error cells, Invite Faculty with
+      merge-field email templates, Contact Sharing, Associations to
+      courses/students/placements, View As, Generate CV, Bulk Update). The stage closes
+      with the login-free Site Resources page (Program Details > Site Resource Page),
+      optional Exxat Approved faculty compliance, the Exxat One one-time site/location
+      linkage with AI high/medium/no-match bulk linking, and verification surfaces:
+      Sites Missing Contracts, Comprehensive Personnel Report, HRSA Grant Details Raw,
+      Explore Locations map with Draw Miles Radius, and the 24-hour-refresh Faculty
+      Information Report.
+    pain_or_gap: >
+      The largest day-one gap is throughput: there is no bulk import or data feed for
+      sites, locations, or personnel anywhere in the transcript or help center — bulk
+      import exists only for Faculty & Staff, and the Data Feed Integration article
+      covers only student and course-registration feeds — so a program migrating
+      hundreds of preceptors enters them one Add Personnel wizard at a time, while the
+      only bulk site/location creation path (Exxat One AI smart bulk link) is available
+      solely to dual-product customers. Three setup decisions are not self-serve at all
+      and route to Exxat support or the institutional administrator: the site-sharing
+      model, contract-generation templates, and additions to the
+      administrative-positions list (plus contract organization lists being read-only
+      when programs share contracts). Several irreversible or silent traps sit in the
+      path of a first-time admin: publishing a site assessment form and using it once
+      locks it permanently; editing a site payment rate forces a new placement start
+      date and never applies retroactively; a personnel record attached to a site but
+      not to any location is silently excluded from slot-request emails; the "add this
+      site as a location" checkbox, if missed, leaves an unplaceable site; and Move
+      Location explicitly does not carry contracts, leaving a re-parented location with
+      no agreement and no alert (expiry notifications key off end dates, not absence —
+      as do Open-Ended contracts). Personnel licensure/certification is stored but has
+      no documented expiry-alerting engine of its own, while CORE ELMS and
+      MedHub/E*Value both advertise exactly that; faculty compliance auto-notifications
+      cover Faculty & Staff records, not site personnel. Finally, orientation material
+      distributed through Faculty Resources and the login-free Site Resources page
+      carries no acknowledgment or completion record — precisely what ACPE 3.3.c
+      preceptor-orientation evidence requires — and the Site Resources page publishes
+      staff contact details to an unauthenticated URL protected only by not being
+      search-indexed.
+    accreditation_link: >
+      Most of this stage is accreditation-agnostic platform mechanics, but a handful of
+      elements are load-bearing and were cited per element rather than per screen. The
+      Contracts tab (contract fields, Locations Covered, Contract Documents, Routing
+      Checklist) plus the expiring-contract lead-time/frequency/recipient
+      auto-notification is the direct evidence surface for LCME Standard 1, Element
+      1.4, CODA Standard 4, Element 4-6, ACPE Standard 3, Key Element 3.5.b, and COCA
+      Standard 6, Element 6.9 — and the Sites Missing Contracts tab is the single best
+      coverage check for all four. Two prior repo hedges are resolved by this
+      transcript: acpe.yaml rates 3.5.b a Gap ("site affiliation-agreement management
+      isn't named in any current or roadmap pillar") when a full contract object with
+      status, expiry, documents, routing and notification demonstrably ships
+      (transcript lines 399-419), and coda.yaml's 2-6 note that "faculty-side
+      calibration/credential tracking is an open Phase 2 question" is answered by the
+      shipped Faculty Compliance module collecting licensure/certification with
+      expiration dates, group assignment, review states and recurring reminders. The
+      experiential-supervisor toggle and the personnel licensure/certification cards
+      carry ACPE 3.3.a and COCA 5.4; the Slots/Placements grids are the raw data behind
+      ACPE 3.3.e's 2:1 ratio (and Nursing COA F.7), though no automatic ratio
+      enforcement is confirmed. Custom site assessment forms map to COCA 6.11 and CODA
+      2-6 comparability, and the form builder's attestation/e-signature field types
+      partially answer coca.yaml 5.4's open question about document-acknowledgment item
+      types. Genuine shortfalls: LCME 1.4's clause-level agreement content (school
+      authority, resource access, faculty appointment role, occupational-exposure
+      follow-up) lives only inside uploaded PDFs and free-text notes, and LCME 5.5 /
+      COCA 6.9 site capacity and case-mix adequacy has no field in this stage at all.
+    competitor_comparison: >
+      This is product-onboarding UX, and the honest finding — recorded explicitly on
+      roughly two-thirds of the 111 elements — is that none of the nine teardowns in
+      content/competitors/ documents admin-setup mechanics at element granularity, so
+      most setup elements carry "not documented at this granularity by any competitor
+      teardown in this research" rather than a forced comparison. Where real comparison
+      is possible it clusters in three places. Affiliation-agreement lifecycle:
+      eMedley's eKeeper ships "affiliation agreement tracking with auto-expiration
+      reminders" (and preceptor pay automation, the only documented analog to Prism's
+      Payment Details card) and CORE ELMS ships "affiliation agreement tracking with
+      expiration alerts" — capability parity, with Prism's configurable lead time,
+      frequency and recipient roster un-benchmarked, and neither competitor documenting
+      a missing-agreement exception report or a many-to-many contract-to-site link.
+      Credential monitoring: MedHub/E*Value's "Automated Credentials Monitoring" for
+      state/DEA/controlled-substances licenses with expiry alerts, and CORE ELMS's
+      preceptor license tracking, are documented capabilities Prism matches for faculty
+      via Faculty Compliance but apparently not for site personnel — the clearest
+      competitive exposure in this stage. Identity: MedHub documents SAML/Shibboleth
+      SSO and CORE ELMS is criticized in its own teardown for "only generic SSO/LTI
+      standards support," while Prism's per-user SSO key is comparable at capability
+      level and un-benchmarked at element level. Notably un-benchmarked, and therefore
+      candidate differentiators to verify before claiming: the two-level site/location
+      hierarchy with attribute inheritance, Move Location with a pre-flight
+      implications table and move history for M&A, AI confidence-tiered record matching
+      in the Exxat One linkage, the unauthenticated Site Resources partner page
+      (counter-positioning against the myClinicalExchange / Clinician Nexus / ACEMAPP /
+      CastleBranch friction the PT playbook names), accreditor-formatted Generate CV,
+      HRSA grant reporting, and the Explore Locations mileage-radius map. axiUm's
+      role-based access control is the only rough analog to the faculty dashboard
+      visibility toggles.
+    discipline_variance: >
+      Terminology and role structure change what these identical screens mean across
+      the eleven disciplines. OT renames the module outright (Sites become Agencies,
+      Rotations become Fieldwork Education, Preceptor becomes Fieldwork Educator, with
+      a Site Mentor for the capstone) and ACOTE C.1.2 turns the "Show on Explore
+      Clinical Locations" toggle into a standards-relevant control; Social Work
+      likewise uses "Agency" and needs two supervisors on one placement — the
+      CSWE-qualified Field Instructor plus a Task Supervisor who may lack the SW degree
+      — a qualification distinction Prism can only carry in personnel categories or
+      free-text designation. PT needs two site-side roles on the same Personnel records
+      (a regional SCCE receiving slot requests, often also a CI, with some facilities
+      having separate IP and OP SCCEs), which is exactly what per-location designation
+      and communication-preference overrides exist for. PA splits into Site Based
+      versus Preceptor Based slot sourcing, the latter publishing all of a preceptor's
+      locations to students and making the personnel-to-many-locations association
+      load-bearing. Nursing puts preceptors under Sites > Personnel rather than Faculty
+      & Staff, so the faculty compliance engine does not cover them and the
+      preceptor-license-expiry gap bites hardest; COA F.7's hard 2:1 CRNA ratio is
+      managed at Sites > Slots, site visits map to COA F.4, and site sufficiency (ACEN
+      4.9, CCNE II-C, COA A.10/F.1) comes from the Sites database plus a Slot
+      Sufficiency Report. SLP's Clinical Educator drives every clinical-log report
+      filter (Site, Location, Clinical Educator) and its playbook states affiliation
+      agreements are monitored in the Sites module. Teacher Education is the one
+      discipline where fit is inferred, not documented — its own playbook warns that
+      Cooperating Teacher / Mentor Teacher / University Supervisor terminology is
+      unconfirmed for Exxat. Among expansion domains: Medicine's clerkship team
+      (attending, fellow, resident, intern) is under-described by
+      one-personnel-record-per-supervisor, LCME 5.5 case-mix adequacy has no field, and
+      site scarcity plus preceptor payment pressure makes Payment Details unusually
+      relevant; DO programs recruit hundreds of independent community preceptors across
+      small sites, so the missing personnel importer is the domain's sharpest friction
+      and consolidation makes Move Location (and its contracts-don't-move caveat)
+      disproportionately consequential; Dentistry runs mostly in its own teaching
+      clinic so the site hierarchy is thin (often one site marked as its own location)
+      while faculty-side calibration (CODA 2-6) carries the weight and incumbent axiUm
+      documents no external site directory at all; Pharmacy's four mandatory APPE
+      settings and 2:1 ratio make the Settings card and the personnel Slots/Placements
+      grids the fields its whole coverage argument rests on.
+    key_findings:
+      - subject: "Nursing"
+        headline: "Preceptors sit under Sites > Personnel, so faculty compliance never covers them"
+        severity: "gap"
+        detail: "Because Nursing puts preceptors in the site-side Personnel system rather than Faculty & Staff, the faculty compliance engine and its auto-notifications do not reach them, and the missing preceptor-license-expiry alerting bites hardest here."
+      - subject: "DO"
+        headline: "Missing personnel importer is DO's sharpest friction across hundreds of community preceptors"
+        severity: "gap"
+        detail: "DO programs recruit hundreds of independent community preceptors across small sites, and there is no bulk import or data feed for sites, locations or personnel. Consolidation also makes Move Location — which explicitly does not carry contracts — disproportionately consequential."
+      - subject: "Medicine"
+        headline: "One personnel record per supervisor under-describes the clerkship team"
+        severity: "gap"
+        detail: "Medicine's supervision is a team of attending, fellow, resident and intern rather than an individual, and LCME 5.5 case-mix adequacy has no field in this stage at all. Site scarcity and preceptor payment pressure also make Payment Details unusually relevant."
+      - subject: "Social Work"
+        headline: "Two-supervisor placements have no qualification field beyond categories or free text"
+        severity: "gap"
+        detail: "A CSWE-qualified Field Instructor and a Task Supervisor who may lack the SW degree both sit on one placement, and Prism can only carry that qualification distinction in personnel categories or free-text designation."
+      - subject: "PT/PTA"
+        headline: "Per-location designation exists precisely for regional SCCEs who are also CIs"
+        severity: "none"
+        detail: "PT needs two site-side roles on the same Personnel records, with some facilities running separate inpatient and outpatient SCCEs, which per-location designation and communication-preference overrides handle directly."
+      - subject: "PA"
+        headline: "Preceptor Based sourcing makes personnel-to-many-locations associations load-bearing"
+        severity: "configure-needed"
+        detail: "PA splits into Site Based versus Preceptor Based slot sourcing; the latter publishes all of a preceptor's locations to students, so those associations must be complete before slot requests go out."
+      - subject: "OT/OTA"
+        headline: "Module renames wholesale to Agencies, Fieldwork Education and Fieldwork Educator"
+        severity: "none"
+        detail: "OT also adds a Site Mentor for the capstone, and ACOTE C.1.2 turns the Show on Explore Clinical Locations toggle into a standards-relevant control rather than a convenience setting."
+      - subject: "Teacher Education"
+        headline: "Cooperating Teacher and University Supervisor terminology is unconfirmed for Exxat"
+        severity: "gap"
+        detail: "TE is the one discipline in this stage where fit is inferred rather than documented; its own playbook warns that the Cooperating Teacher / Mentor Teacher / University Supervisor mapping is unverified."
+
+  - stage: "6. Courses, rotations & curriculum mapping"
+    current_state_in_prism: >
+      Prism ships this stage as a strict four-part sequence the admin transcript states
+      outright (Tutorial 8/16, line 659), and
+      flows/admin-onboarding--06-courses-rotations-curriculum-mapping.yaml traces 80
+      elements across 16 screens (41 clean, 16 configure-needed, 7 cosmetic, 16 real
+      gaps): configure Courses > Setup > Course Organization (Terms, Professional
+      Years, Academic Years, Additional Course Identifier), populate the Course Catalog
+      (Add Course, or a four-column CSV via Upload Courses), instantiate Course
+      Offerings (individually or via the three-step Import Course Offerings wizard),
+      then fill each offering's About section (description, credits,
+      duration/hours/clock hours, Nature, core-vs-elective, grading scheme, requisites,
+      textbooks, evaluation criteria, policies, faculty & staff, Generate Syllabus, Go
+      to Mapping). Curriculum mapping then layers on top through four more screens:
+      Program Details > Standards (pre-loaded accreditor sets to Activate, plus a
+      Program Specific Standards builder for PLOs/SLOs with arbitrary-depth child
+      standards), Courses > Setup > Measures, Curriculum Mapping > Attributes (two
+      separate taxonomies — Course and Measure Attributes for what content IS, Mapping
+      Attributes for how deeply it is taught, e.g. Knowledge with
+      introduce/reinforce/demonstrate levels), and the four-step Add Curriculum wizard
+      ending in a Curriculum Grid preview. Mapping itself happens per course on the
+      Course Mapping page (Map Entire Course plus per-measure mapping, each mapping
+      instance carrying attributes, tags, rationale Notes, and an uploaded evidence
+      artifact "for your accreditation site visits"), and the output family is
+      genuinely deep: Mapping Summary, Course/Measure Attributes Usage, Measure Linking
+      Report, Cumulative Report (course-anchored or standard-anchored Excel),
+      per-standard Mapped/Unmapped Standards with an authored Narrative field, the
+      Mapping Level Attribute crosswalk, and the Heatmap Report. Clone Course Offering,
+      Clone From, and Clone Curriculum (which carries the mapping setup forward) make
+      year two cheap.
+    pain_or_gap: >
+      The dominant onboarding pain is irreversibility discovered late, and the
+      transcript itself names most of it. Requires Placement is set at
+      catalog-creation time and can never be changed ("it is not possible to change a
+      placement-related course to a didactic course, or vice versa," line 687); course
+      numbers are not deduplicated ("our system does not prevent you from adding
+      multiple courses with the same course number"); and once a course offering is
+      used in curriculum mapping, its academic-calendar options freeze and it cannot be
+      deleted, with the documented remedy being a support ticket (lines 701-705).
+      Destructive-action guarding is inconsistent within the same product: deleting one
+      mapped standard requires typing a confirmation number, while the far more
+      destructive "Delete All" on a measure category and the Activate Standard toggle
+      (which destroys all mapping data tied to that standard set) are guarded by
+      narration alone. Two structural limits hurt most: reports run against exactly one
+      curriculum grid at a time ("you cannot run reports on multiple grids
+      simultaneously," line 1525) — stated once, in passing, during grid creation —
+      which breaks any program that legitimately needs multiple grids; and the Heatmap
+      Report's entry point appears only for PA programs using the ARC-PA sixth edition
+      mapping and, per the PA playbook, cannot be downloaded at all ("advise programs
+      to screenshot it"). Labor-wise, per-course measure entry is the biggest cost and
+      the corpus contradicts itself on relief: no bulk measure/objective import appears
+      anywhere in the admin transcript or the help-center Curriculum Mapping folder,
+      yet the Nursing CBE video claims objectives can be "imported in bulk to save
+      time" — flagged in the flow file for product verification. Finally there is a
+      sequencing trap with no in-product signal: the course About page's Attributes
+      panel is empty until a curriculum grid exists and has activated attributes, and
+      term ordering set in week one silently determines curriculum-grid column order
+      that the admin will not see until three or four weeks later.
+    accreditation_link: >
+      Most setup mechanics here are accreditation-agnostic, but three element clusters
+      carry direct citations. First, Program Details > Standards is where the
+      accreditor taxonomy physically lives (COCA Standard 6, Element 6.4; ACPE Standard
+      2, Key Element 2.2.d; CODA Standard 2, Element 2-8; LCME Standard 9, Element
+      9.4), and per journeys/competency-verification.yaml stage 8 that library plus the
+      Heatmap Report is the evidence base already cited against COCA 11.9 and CODA 1-2
+      — inherited here rather than re-derived. Second, the mapping-instance pencil
+      (mapping attributes plus Notes rationale plus an uploaded artifact) is the single
+      strongest accreditation element in the stage: it is the difference between
+      asserting coverage and showing the assignment that produced it, and the Mapping
+      Level Attribute crosswalk operationalizes ACPE's "breadth AND depth" and COCA
+      6.4's progression requirement by ordering course columns by academic schedule so
+      complexity visibly graduates left to right. Third, the syllabus surface
+      (student-visible Description, Evaluation Criteria, Course Policies, Grading
+      Scheme, and Generate Syllabus) maps directly onto CODA Standard 2, Element 2-1's
+      advance-written-course-information duty — with the caveat that Generate Syllabus
+      emits a point-in-time Word file with no version stamp while the Event Schedule is
+      explicitly NOT student-visible. Pre-loading of accreditor standard sets is
+      confirmed only for ARC-PA, ACOTE 2023 (all degree levels plus NBCOT), the AACN
+      Essentials, and CAA/CFCC — it is unconfirmed for COCA, CODA, ACPE, and LCME,
+      which is a content-seeding gap rather than an engineering one, since the custom
+      Program Specific Standards builder already carries CSWE's full EPAS hierarchy in
+      production. Also worth flagging: the parent-standard select-all checkbox makes
+      over-mapping one click cheaper than accurate mapping, with no warning, and CODA
+      2-8's redundancy-detection duty cuts directly against that.
+    competitor_comparison: >
+      An honest split verdict, per element. On pure setup mechanics —
+      term/professional-year/academic-year lists, the academic calendar, additional
+      course identifier, timesheet categories, offering cloning, bulk-import template
+      contracts, registration — no competitor teardown documents anything at this
+      granularity, and the flow file says so explicitly rather than forcing
+      comparisons. Where competitors are genuinely documented, three findings matter.
+      First, interchange is Prism's sharpest deficit: Elentra (AAMC Curriculum
+      Inventory participating vendor, native MedBiquitous, >40% CACMS DCI coverage),
+      eMedley (LCME + AAMC CI vendor, auto-generated curriculum websites), New
+      Innovations (direct submission to the AAMC CI portal), and E*Value (AAMC
+      Curriculum Survey + MedBiquitous + CIR integration) all ship a named external
+      submission or interchange path; Prism's documented output is Excel and Word
+      export. For MD/DO buyers that is a concrete, four-source competitive gap.
+      Second, grain and freshness: Leo/DaVinci maps "every session in every course —
+      didactic or clinical" with an Insights Dashboard flagging gaps, Elentra maps
+      individual teaching sessions via tag management, and one45's Canvas Alignment
+      Tool syncs LMS learning-event and facilitator data to keep maps current — where
+      Prism offers course-or-measure grain populated by hand; one45's documented
+      version control and audit trail is also the repeated counterexample to Prism's
+      block-or-destroy pattern around mapped data. Third, Prism leads in two places:
+      no competitor teardown documents AI-assisted mapping at all (Map with Leo,
+      Auto-Suggest Bloom's with human-in-the-loop consent and a data-deletion right),
+      and none documents per-mapping-instance evidence attachment plus an authored
+      narrative field. CORE ELMS is the architectural outlier worth naming in sales —
+      it sells the equivalent gap analysis as a separately priced CompMS add-on rather
+      than a bundled screen.
+    discipline_variance: >
+      Variance in this stage is mostly about what is pre-seeded and how many
+      curriculum grids a program needs. PA is the reference implementation and the
+      only discipline with a confirmed Heatmap Report: ARC-PA standards come
+      pre-loaded, attribute categories Lifespan / ARC-PA Themes / SCPE settings /
+      Interprofessional Education are live, and a dedicated B2 Instructional
+      Objectives Report produces an accreditation-ready Excel tab per standard. OT is
+      nearly as mature — ACOTE 2023 pre-loaded across all four degree levels plus
+      NBCOT, population tagging by age group for A.5.1 breadth evidence, and Generate
+      Syllabus explicitly cited for the written-syllabi standard. Nursing is the
+      hardest configuration case in the stage: AACN Essentials come pre-populated with
+      sub-competency ABC (entry-level) vs EFG (advanced) mapping, plus secondary
+      frameworks (spheres of care, IPEC, NONPF, SLOs), but each degree/track (ADN,
+      BSN, MSN, DNP, CRNA, FNP, PMHNP) is configured as its own Curriculum Grid —
+      which collides head-on with the one-grid-per-report limit — and CRNA programs
+      additionally configure COA Graduate Standards D.1–D.50 with a custom scale.
+      Social Work has the same multi-grid shape for a different reason: CSWE EPAS
+      requires a generalist framework plus one per specialization, all built as custom
+      Program Specific Standards sets with Client System Levels and Dimensions of
+      Learning as attributes; the SW playbook's own advice is to finish this setup
+      before field-placement season. SLP maps to CAA and CFCC standards and leans on
+      the Mapped Standards Report for gap-finding. PT is notably behind its peers —
+      the PT playbook lists CAPTE 7 (2024) competency mapping as "in progress," so PT
+      programs today lean on seven pre-built CAPTE reports rather than a mature
+      mapping taxonomy. TE is the thinnest: no TE curriculum-mapping source and no
+      confirmed CAEP standard content exists anywhere in this corpus, and the TE
+      playbook explicitly warns against citing CAEP standard numbers. All four
+      expansion domains — DO, Pharmacy, Dentistry, Medicine — are in the same
+      position: no COCA, ACPE, CODA, or LCME standard set is confirmed pre-loaded, no
+      discipline-default attribute taxonomy is confirmed (no OPP/OMM course attribute
+      for DO, no IPPE/APPE practice-setting attribute for PharmD), and no
+      domain-scoped Heatmap exists. The mechanism is proven domain-agnostic by CSWE
+      running fully custom in production; what is missing is content seeding, and for
+      Pharmacy specifically the clock-hours-by-practice-setting accounting ACPE 3.1.b
+      demands is where the three overlapping duration fields and the
+      single-vs-multi-select timesheet category decision become consequential.
+    key_findings:
+      - subject: "PA"
+        headline: "Reference implementation and the only discipline with a confirmed Heatmap Report"
+        severity: "none"
+        detail: "ARC-PA standards come pre-loaded, the Lifespan / ARC-PA Themes / SCPE settings / Interprofessional Education attribute categories are live, and a dedicated B2 Instructional Objectives Report emits an accreditation-ready Excel tab per standard."
+      - subject: "OT/OTA"
+        headline: "ACOTE 2023 pre-loaded across all four degree levels plus NBCOT"
+        severity: "none"
+        detail: "OT additionally gets population tagging by age group for A.5.1 breadth evidence, and Generate Syllabus is explicitly cited against the written-syllabi standard."
+      - subject: "Nursing"
+        headline: "Per-track curriculum grids collide head-on with the one-grid-per-report limit"
+        severity: "gap"
+        detail: "Each Nursing degree or track (ADN, BSN, MSN, DNP, CRNA, FNP, PMHNP) is configured as its own Curriculum Grid, but reports run against exactly one grid at a time, so no cross-track view is possible. CRNA programs additionally configure COA Graduate Standards D.1-D.50 on a custom scale."
+      - subject: "Social Work"
+        headline: "CSWE EPAS forces a generalist grid plus one per specialization"
+        severity: "configure-needed"
+        detail: "All of it is built as custom Program Specific Standards sets with Client System Levels and Dimensions of Learning as attributes, and the SW playbook's own advice is to finish this setup before field-placement season."
+      - subject: "PT/PTA"
+        headline: "CAPTE 7 (2024) competency mapping is still in progress, leaving PT behind peers"
+        severity: "gap"
+        detail: "The PT playbook lists CAPTE 7 mapping as in progress, so PT programs today lean on seven pre-built CAPTE reports rather than a mature mapping taxonomy."
+      - subject: "Teacher Education"
+        headline: "No TE mapping source exists and the playbook warns against citing CAEP numbers"
+        severity: "gap"
+        detail: "There is no TE curriculum-mapping content and no confirmed CAEP standard set anywhere in this corpus, making TE the thinnest discipline in the stage."
+      - subject: "DO"
+        headline: "No COCA set confirmed pre-loaded and no OPP/OMM course attribute exists"
+        severity: "gap"
+        detail: "Pre-loading is confirmed only for ARC-PA, ACOTE 2023, the AACN Essentials and CAA/CFCC. For DO this is content seeding rather than engineering, since the custom builder already runs CSWE's full EPAS hierarchy in production."
+      - subject: "Pharmacy"
+        headline: "ACPE 3.1.b clock-hours-by-setting makes a day-one timesheet decision consequential"
+        severity: "configure-needed"
+        detail: "Three overlapping duration fields plus the single-versus-multi-select timesheet category choice determine whether Pharmacy can later account for clock hours by practice setting, and no IPPE/APPE practice-setting attribute is seeded."
+
+  - stage: "7. Wishlists, slot requests & Placement Assist"
+    current_state_in_prism: >
+      A new Prism admin sets up the preference-and-allocation machinery in a fixed
+      order, traced across 23 steps and 100 elements in
+      flows/admin-onboarding--07-wishlists-slot-requests-placement-assist.yaml: edit
+      the Slot Type and Supervision Type vocabularies under Sites and Locations >
+      Setup > Slot Setup; build a reusable Site Communication under Sites > Emails >
+      Setup New Communication with two independent bits (Request Slots, Request
+      Updated Location Information); scope what partners may offer (rotations,
+      per-rotation instruction notes, allowed Setting/Slot Type/Supervision Type
+      values, Contact Later and Slot Confirmation auto-notification templates,
+      site-level slots); send it via the Locations or Personnel tab; then read back
+      deliverability on the Email Dashboard (Delivered/Opened/Link Clicked/
+      Dropped/Bounced) and responses in the Response Report (No Response / Slots
+      Offered / Contact Later / No Slots to Offer). Capacity arriving outside the
+      portal is keyed in through the Add Slot drawer (site > location > experiential
+      supervisor > setting > Confirmed/Tentative/Cancelled > slot type > supervision
+      type > shared vs internal notes > per-rotation quantity). Demand is collected
+      through one of twelve wishlist types created at Placements > [course] > Wishlist
+      > Create Wishlist — slot, location, slot+location, setting, location area,
+      rotation preference, setting-and-rotation nested, address preference,
+      questionnaire, My Request, Field Application Form, and Exxat One
+      Availability-Based — each with View/Open/Close dates, min/max ranked selections,
+      optional questionnaire, student auto-enrollment and
+      open/24-hours-before-close/close notifications; a lighter parallel path (Slots >
+      select > Notify Student > Publish Slots) collects interest with no wizard.
+      Supply and demand meet at Placement Assist (wishlist-source selector, Consider
+      Distance, IN EACH / IN COMBINED max-placement rules, an overlapping-rotation
+      guard, Pair Courses with Clinical Settings, slot type/setting/status
+      weightings), which proposes but never commits — the admin reviews a Summary
+      showing 1st/2nd/3rd/4th-choice satisfaction and a distance histogram, then
+      presses Place or Create Placement. Three other commit paths exist: Process My
+      Request, Process Field Application Forms, and Exxat One Schedules > Add to Prism
+      for programs on both products.
+    pain_or_gap: >
+      The sharpest day-one edges are irreversibility and hidden gating. Wishlist type
+      is immutable after Save with no in-product warning and no guidance on which of
+      twelve types fits a discipline, and only seven of the twelve feed Placement
+      Assist — Address Preference, Questionnaire, and My Request wishlists collect
+      preferences the allocator cannot read, discoverable only after a cohort has
+      submitted. Three setup paths dead-end on an Exxat support ticket (My Request
+      form templates, the Field Application Form type which is explicitly "not
+      available for self-setup," and Placement Assist self-service outside PT/PTA and
+      OT/OTA), and the Exxat One section is simply absent without dual-product login.
+      Elsewhere the product records rather than enforces: Supervision Type is a
+      descriptive label with no live ratio computation; the four status dropdowns on
+      Process My Request (compliance, preceptor, contract, overall) are admin
+      assertions, not verified facts, and compliance is explicitly "ideally" checked
+      rather than blocking; Placements > Setup offers a program-wide Auto-Approve
+      Placements radio that skips review of every student-originated placement
+      entirely; and both My Request and Field Application Forms let an admin create a
+      brand-new site and location inline with no contract precondition. Smaller traps
+      compound: include-by-default wishlist filters expose every slot in the system,
+      the slot-confirmation email template is global so editing it for one campaign
+      rewrites it for all, recipient selections are lost across pagination without an
+      explicit Save Changes, location-update responses arrive as prose requiring a
+      manual two-screen round trip ending in an unverified Mark as Updated, and the
+      Requires Update queue in Exxat One Schedules has no alerting so a Prism
+      placement can sit knowingly stale.
+    accreditation_link: >
+      Most of this stage is accreditation-agnostic platform mechanics, but four
+      elements carry real weight and each falls short in the same direction — the data
+      is captured, the rule is not enforced. Supervision Type on the Slot Setup and
+      Add Slot screens is the only place preceptor-ratio data lives, yet ACPE Standard
+      3, Key Element 3.3.e requires a real-time calculation across a preceptor's
+      concurrent placements that blocks or flags a 2:1 violation, and nothing computes
+      or blocks on this label. COCA Standard 6, Element 6.9 (per-site capacity
+      adequacy, executed agreements for every contracted site, and a contingency plan
+      for lost capacity) maps onto the slot-request Response Report, the
+      Cancelled/cancelled-by-Site slot status, and the Last Updated By provenance
+      column — the raw events exist per campaign, but nothing aggregates them into a
+      rolling capacity average or a lost-capacity trend, and site-level (unlocated)
+      slots actively undermine per-site attribution. ACPE 3.5.b and COCA 6.9's
+      executed-agreement requirements are most exposed at Process My Request and
+      Process Field Application Forms, where student-sourced facilities enter the
+      site inventory through inline Add New Site / Add New Agency with only an
+      advisory View Contract link, and at the Auto-Approve setting which bypasses
+      contract review entirely. On the curriculum side, ACPE 3.1.b and 3.2 (IPPE/APPE
+      required setting categories) are partly served by Setting on the slot and by
+      Pair Courses with Clinical Settings in Placement Assist, but the max-placement
+      rule builder expresses only maxima — "cap this student at one ambulatory APPE"
+      is expressible, "require one" is not. LCME 5.5 and CODA 2-6 comparability
+      arguments are touched only indirectly: the Placement Assist Summary quantifies
+      preference-satisfaction equity and View Setup of the Run preserves allocation
+      provenance, but neither is framed or exportable as accreditation evidence.
+    competitor_comparison: >
+      Six competitor teardowns document a comparable allocation feature and all six
+      are one-sided lotteries over a single object type: one45's three named methods
+      (Stream Lottery, Rotation Lottery, Randomized Stream Lottery), MedHub UME's
+      Schedule Lottery "based on custom rules and preferences," LEO/DaVinci's
+      Clerkship Lottery (rank-order with random tiebreak, optional
+      first-come-first-serve mode), Elentra's "leading edge lottery system" with
+      learner-driven elective selection inside admin-set capacity rules, eMedley's
+      preference/lottery/track-based eduSched with site capacity management, and New
+      Innovations' rotation lottery for 3rd/4th-year students. Prism ranks against
+      twelve different object types, composes multiple heterogeneous wishlists into
+      one run, weights slots by type/setting/status, scores by distance from school or
+      student address, and reports 1st-through-4th-choice satisfaction — none of
+      which any competitor's public materials describe. The two structural
+      differentiators with no documented equivalent anywhere in this research are the
+      unauthenticated tokenized site-facing slot-request form (partners supply
+      capacity without an account) and Send Interest to Location, which makes the
+      match two-sided by letting sites rank interested students. The genuinely
+      unfavorable comparison is availability: CORE ELMS markets SmartMatch across
+      "15+ disciplines including pharmacy, dental, nursing, PT, OT, PA, veterinary,
+      social work, and undergraduate medicine" with no discipline gating disclosed,
+      while Prism's Placement Assist is self-service only for PT/PTA and OT/OTA. The
+      most useful competitor datapoint for the onboarding narrative is CORE ELMS'
+      reviewer-sourced weakness — "SmartMatch's extensive settings lack clear setup
+      documentation/checklists" — which is precisely the risk Prism's own weighting
+      screen carries, since its weight scale is undefined and its only in-product
+      explanation is a single Learn More hyperlink. For pure setup-mechanics elements
+      (email template authoring with merge fields, deliverability telemetry, column
+      editors, schedule import mapping) no competitor teardown documents anything at
+      that granularity, and the flow file says so explicitly rather than forcing a
+      comparison.
+    discipline_variance: >
+      This is the most discipline-fragmented stage in the whole admin-onboarding
+      journey. PT/PTA and OT/OTA are the privileged pair: they alone get self-service
+      Placement Assist and they alone get the Exxat One Availability-Based wishlist,
+      which has its own dedicated video in both transcript sets and flips the model
+      to demand-first (students rank real cross-institutional availabilities filtered
+      by state/experience type/specialization, admins hit Request Slot per
+      availability, then pull approved schedules back via Import Schedules). Their
+      internal patterns differ: PT defaults to slot-based wishlists with
+      location-based as the fallback when a March slot-request cycle underdelivers;
+      OT splits by fieldwork level — slot- or location-based for Level I, location-
+      or setting-based for Level II, questionnaire plus My Request for capstone — and
+      prefers Placement Assist for Level I but direct placement for Level II and
+      capstone. PA is the heaviest documented Placement Assist strategist despite
+      needing support to enable it (slot-based for core, setting-based for electives,
+      wishlist open 2-4 months out but only for a weekend, staged placement groups
+      running scarcest-slot courses first), and is the only discipline with the Max
+      Placement Limit slot cap, which warns rather than blocks. Social Work barely
+      uses this stage's mainline at all: its signature instrument is the Field
+      Application Form (up to 10 agency suggestions per student, each an interview)
+      plus My Requests and course-specific Wishlist Questionnaires — and both of
+      those are the exact two types a new admin cannot self-configure. Nursing, SLP,
+      and Teacher Education have no coverage in this stage at all: their video
+      transcripts cover only competency-based education, clinical logs, and
+      Echo360/GoReact respectively, and all three playbooks explicitly list
+      slot-request cadence, wishlist behavior, and Placement Assist adoption as
+      unknown gaps — SLP's playbook states outright that it has no equivalent source.
+      For the four expansion domains the picture is uniformly worse: Pharmacy, DO,
+      Dentistry, and Medicine get none of the discipline-specific tooling, cannot
+      press Run Placement Assist without a support engagement, and have no
+      availability-based wishlist — while their accreditation demands are the
+      strictest in the set (ACPE 3.3.e's blocking 2:1 ratio and 3.2's four required
+      APPE settings, COCA 6.9's rolling capacity average and contingency plan, LCME
+      5.5's per-site resource adequacy, CODA 2-6's cross-site comparability).
+      Dentistry is additionally mismatched at the model level: per the axiUm
+      teardown, the dental allocation unit is student-to-patient matching against
+      graduation requirements inside a clinic, not student-to-external-site slots, so
+      most of this stage's supply-side machinery has no obvious dental analog.
+    key_findings:
+      - subject: "PT/PTA"
+        headline: "Half of the only pair with self-service Placement Assist and availability wishlists"
+        severity: "none"
+        detail: "PT defaults to slot-based wishlists with location-based as the fallback when a March slot-request cycle underdelivers, and shares with OT the Exxat One Availability-Based wishlist that flips the model to demand-first."
+      - subject: "OT/OTA"
+        headline: "Wishlist type splits by fieldwork level, with direct placement for Level II"
+        severity: "none"
+        detail: "OT uses slot- or location-based wishlists for Level I, location- or setting-based for Level II, and questionnaire plus My Request for capstone, preferring Placement Assist only at Level I."
+      - subject: "PA"
+        headline: "Max Placement Limit is PA-exclusive and warns rather than blocks"
+        severity: "gap"
+        detail: "PA is the heaviest documented Placement Assist strategist — slot-based for core, setting-based for electives, staged placement groups running scarcest-slot courses first — yet it still needs a support engagement to enable Placement Assist and its slot cap only warns."
+      - subject: "Social Work"
+        headline: "Its two signature instruments are exactly the two an admin cannot self-configure"
+        severity: "gap"
+        detail: "SW runs on the Field Application Form (up to 10 agency suggestions per student, each an interview) plus My Requests and course-specific Wishlist Questionnaires; Field Application Form is explicitly not available for self-setup and My Request templates require a support ticket."
+      - subject: "Nursing"
+        headline: "No coverage in this stage at all; slot-request cadence is an unknown gap"
+        severity: "gap"
+        detail: "The Nursing transcript covers only competency-based education, and the playbook explicitly lists slot-request cadence, wishlist behavior and Placement Assist adoption as unknowns."
+      - subject: "SLP"
+        headline: "Playbook states outright that it has no equivalent source for this stage"
+        severity: "gap"
+        detail: "SLP joins Nursing and Teacher Education with zero documented wishlist or slot-request pattern, so any recommendation for an SLP tenant would be extrapolation rather than evidence."
+      - subject: "Dentistry"
+        headline: "Allocation unit is student-to-patient inside a clinic, not student-to-site slots"
+        severity: "gap"
+        detail: "Per the axiUm teardown, dental matching runs against graduation requirements on an in-house patient panel, so most of this stage's supply-side machinery has no obvious dental analog."
+      - subject: "Pharmacy"
+        headline: "Strictest ratio and setting rules, none of the discipline-specific tooling"
+        severity: "gap"
+        detail: "Pharmacy cannot press Run Placement Assist without a support engagement and has no availability-based wishlist, while ACPE 3.3.e's blocking 2:1 ratio and 3.2's four required APPE settings are the strictest demands in the set."
+
+  - stage: "8. Learning activities, competency management & reporting"
+    current_state_in_prism: >
+      A new program administrator configures this stage entirely per-course from
+      Learning Activity > Course Offerings > Setup, and
+      flows/admin-onboarding--08-learning-activities-competency-management-reporting.yaml
+      traces it across 18 steps and 137 elements (95 none, 26 configure-needed, 8
+      cosmetic, 8 gap). Four activity types (Forms & Evaluations, Patient Log,
+      Timesheet, Time Off — plus a feature-flagged Learning Tool Interoperability
+      section for GoReact/Echo360 video assignments) sit alongside Gradebook and
+      Reports tabs, with a live "Design" old/new toggle in the corner. Setup is
+      genuinely deep and self-service at the rules level: anchor-relative publish/due
+      dates (N days before/after Placement Start / MID / End), Auto-Notifications
+      with Just Once/Daily/Weekly/Every-X-days cadence, timesheet rules (per-day hour
+      cap, past-edit window, future dating, break-time and patient-encounter capture,
+      single-vs-multi-select category taxonomy with a Category Alias override),
+      patient-log encounter-age windows, attestation text, wrench-icon reviewer
+      column configurators, and merge-field email templates the admin owns outright.
+      The output layer is the strongest part: a standard report library
+      (Comprehensive Report for Placement-Based Forms with Group By
+      course/rotation/setting/site/location/supervisor/student and cell-level
+      drill-down to raw forms, Graphical Report with pie/tabular/heatmap views, Hours
+      by Categories, Hours Summary by Week, Aggregated Log Details, ICD-10 and CPT
+      usage), a self-service Custom Reports builder (data-source cards with disclosed
+      refresh cadence, raw vs pivot, nested rows/columns/values with
+      Sum/Avg/Min/Max/Count/Distinct Count, advanced filters, favorites), and a
+      Competency Management module whose framework wizard (standards picker >
+      Experiential/Didactic/Both > scored-form or graded-course selection > 1-5 or
+      custom scale with cross-instrument normalization > threshold slider defaulting
+      to 70%) drives question-level competency mapping, a cohort Review grid with red
+      below-threshold cells, and a per-student dashboard with score-per-competency
+      bars, longitudinal score-per-course lines, a student-vs-class radar, and a
+      Download Comprehensive Report export carrying a "Number of Times Evaluated"
+      column. Learning Activity Groups are the scoping object that makes any of the
+      reporting work across courses.
+    pain_or_gap: >
+      The defining day-one pain is that Prism lets an admin configure everything
+      about a learning activity except the instrument itself: standard forms (CIET,
+      PT SE, AOTA FWPE) require a support ticket to appear in the form picker, custom
+      form workflows are built by a CSS agent ("we can accommodate nearly any
+      workflow required of your program. Please reach out to your CSS agent"), custom
+      patient-log templates need the same, patient-log minimum/preferred procedure
+      counts need a support email, FWPE response-based and low-score notifications
+      require emailing Prism support a list of recipient names and addresses, and the
+      LTI section is invisible until support enables it for the discipline — five
+      instances of the same vendor dependency, while the only instrument a new admin
+      can author alone is a simple "Assignment." Two structural traps are set on day
+      one and only surface months later: placement-based and didactic forms cannot be
+      reported on together (forcing a separate learning activity group, a decision
+      made in step 2 before the admin knows the rule), and reconfiguring a competency
+      framework's forms or scoring scale destroys the entire question mapping with no
+      versioning or migration — the same "no revision history" pattern already logged
+      against the standards library one layer down. Beyond that: competency
+      frameworks accept only scored forms, so narrative evaluations and procedural
+      sign-offs cannot feed them; patient-log and timesheet gradebook scores must be
+      typed in manually even though the system already holds approved hours and log
+      counts; gradebook weightage-to-100 is advisory with the fix on a different
+      screen; report runs cap at 50 course offerings; below-threshold competency
+      scores and "Needs Attention" logs are passive red flags with no in-product
+      alert or intervention hand-off (Needs Attention explicitly requires reminding
+      the student "outside the Exxat system"); auto-approval on logs and timesheets
+      silently disables attestation, preceptor review and notification recipients;
+      and experiential supervisors are notified of Time Off requests but cannot
+      approve them.
+    accreditation_link: >
+      Most of this stage is accreditation-agnostic setup mechanics, but a handful of
+      elements are load-bearing evidence surfaces and were cited as such.
+      Anchor-relative publish/due dates map almost one-to-one onto LCME 9.7
+      (formative feedback at least at the midpoint) and support 9.8 (timely summative
+      assessment) — the only element in the stage this repo's lcme.yaml already rates
+      Transfer. Timesheet category taxonomy plus the Hours by Categories and Hours
+      Summary by Week reports are the direct evidence path for ACPE 3.1.b (IPPE clock
+      hours split by practice setting) and 3.2.b/3.2.d (36 weeks / 1,440 APPE hours
+      across four required settings), and the PA help-center guide names Hours by
+      Categories as the mechanism for proving ARC-PA telehealth ceilings (≤50% per
+      course, ≤20% of total). Patient-log templates and the Comprehensive Report for
+      Program-Specified Log Attributes (with red/green minimum-vs-actual formatting)
+      carry CODA 2-24 (adequate patient experiences), LCME 6.2 and 8.6 (required
+      clinical experiences and monitoring of completion). The competency framework's
+      standards picker, scored-form eligibility rule, threshold, and Download
+      Comprehensive Report carry CODA 2-5 (evaluation methods must measure defined
+      competencies), LCME 9.4 (centralized assessment system), COCA 6.4 (seven
+      osteopathic core competencies), ACPE 7.3.c (APPE-ready/Practice-ready/
+      Team-ready), and — for the export as a self-study artifact — COCA 11.9 and 11.1
+      and CODA 1-2, following the precedent set in
+      journeys/competency-verification.yaml stage 8 and its flow file rather than
+      re-deriving it. The Group By site/supervisor control and the scoring-scale
+      normalization are the cross-site comparability mechanism for COCA 6.11 / CODA
+      2-6 / LCME 8.7, but only descriptively: the output is counts and averages, not
+      a statistical comparability test, which is exactly the limitation coca.yaml
+      already records for 6.11. Mandatory-reason-on-rejection, audit logs on
+      forms/logs/timesheets, the attestation message, and the Publish-to-students
+      control all serve CODA 2-2 due process. Everything else — group wizards, search
+      boxes, the Design toggle, custom-report builder mechanics — was marked "none, a
+      platform-mechanics element with no direct accreditor tie."
+    competitor_comparison: >
+      This is product onboarding, so roughly two-thirds of the 137 elements are
+      honestly marked "not documented at this granularity by any competitor teardown
+      in this research" — no competitor file describes an admin-side setup screen, a
+      data-source refresh model, a reviewer column configurator, or an email-delivery
+      audit dashboard. Where comparisons hold, they cluster in three places.
+      Assessment instrument authoring is where Prism is genuinely behind: New
+      Innovations ships an "Evaluations Builder: customizable form creation with
+      multiple question types and real-time editing," Elentra a customizable
+      form/item bank, and one45 customizable forms/scales with question tagging — all
+      self-service, versus Prism's CSS-agent dependency. Competency management is
+      the most contested element: CORE ELMS's CompMS add-on (rated "ahead" in
+      core-elms.yaml) maps competencies to accreditation standards and produces
+      curriculum-effectiveness reports, one45 ships CanMEDS/AAMC vocabularies with
+      explicit version control and audit trail (precisely what Prism's destructive
+      reconfiguration lacks), eMedley ships EPA entrustment ratings with growth-curve
+      reporting, and New Innovations ships CCC Milestone Review competency spider
+      graphs — though Prism's question-level (not course-level) experiential mapping
+      and its cross-instrument 1-5 normalization appear finer-grained than anything
+      publicly documented. Hours/log capture is near parity: E*Value markets
+      validating hours with automated reminders, CORE ELMS timesheets with optional
+      GPS, one45 event-level duty-hours and leave tracking, eMedley's eCLAS mobile
+      case logging with ICD-10/CPT and preceptor time-approval — though E*Value's
+      "violation-triggering work hours" is a duty-hour rule engine Prism's simple
+      per-day cap does not match. Prism-favorable spots: eMedley is the only
+      competitor documenting the same anchor-relative "N days from rotation"
+      scheduling primitive; the Email Dashboard's Delivered/Link Clicked/Bounced
+      telemetry and Remove Form Access have no documented competitor analogue; and
+      CORE ELMS carries a public Capterra complaint that its "reporting suite lacks
+      depth and consistency," against which Prism's raw+pivot custom builder is a
+      defensible strength.
+    discipline_variance: >
+      PT/PTA is the most workflow-distinct: the CIET v2.0 standard form carries a
+      multi-term midterm+final workflow, school-specific benchmarks customizable at
+      course level, an integrated prerequisite training quiz for both student and
+      clinical instructor (bypassable by attestation), blinded concurrent completion
+      so neither party sees the other's ratings until both submit, and a raw report
+      producing four rows per student (student-midterm, CI-midterm, student-final,
+      CI-final). OT/OTA runs the AOTA FWPE family (four forms plus a
+      mid-session-handover supplement) with the stage's most sophisticated alerting —
+      response-based triggers on any rating of 1, extra triggers on 1-2 in the AOTA
+      ethics/safety fundamentals, and low-score cutoffs at OT ≤111 / OTA ≤91 — but
+      all of it requires emailing Prism support a recipient roster, and the
+      publish-date field does not apply to educator forms. PA centers on patient logs
+      with per-course/per-rotation templates and uses Timesheet categories with
+      single-select to police ARC-PA telehealth ceilings, with Competency Management
+      > Review mapped straight to ARC-PA B3.03/B3.04 outcomes. SLP relabels the
+      activity to "clinical logs" and gets the most discipline-shaped report in the
+      library — Clock Hours, breaking hours down by patient age group, mode of
+      delivery, graduate vs undergraduate training level, type of service, and
+      direct-contact vs observation — plus review columns (Logs Count by Status, Log
+      Hours by Status, Last Encounter, Last Update) the generic patient-log surface
+      does not show. Nursing drives competency management hardest: AACN Essentials
+      pre-populated, sub-competency A/B/C mapping for entry-level vs E/F/G for
+      advanced, and an explicit insistence that "student exposure to the Essentials
+      is not the same as achievement" — which collides with the scored-forms-only
+      rule, since exposure is captured via activity/patient logs that cannot feed a
+      framework. Teacher Education is the only discipline with the LTI/GoReact
+      video-assignment path, and it is invisible until support enables it. Of the
+      four expansion domains, Dentistry is worst served: procedure-quota-and-sign-off
+      progression (per domains/dentistry.yaml) maps only partially onto the red/green
+      minimum-count log report, whose minimums are not admin-configurable, and its
+      faculty sign-off model is exactly the non-scored assessment competency
+      frameworks reject. Pharmacy's 1,440-hour/four-setting APPE structure fits the
+      timesheet category taxonomy well, provided single-vs-multi-select is chosen
+      correctly on day one. Medicine (MD) and DO have no discipline transcript in
+      this source set; their needs map onto LCME 9.4/9.7/9.8 and COCA 6.4/11.1
+      respectively through the generic forms/competency machinery, with COCA's
+      7-competency taxonomy (including OPP/OMM) fitting the standards picker. Social
+      Work has no transcript, no help-center discipline guide, and no domain file in
+      this repo — nothing in this stage's sources speaks to it, and that is stated
+      rather than inferred from allied-health analogues.
+    key_findings:
+      - subject: "PT/PTA"
+        headline: "CIET v2.0 blinds student and CI ratings until both parties submit"
+        severity: "none"
+        detail: "The PT workflow also carries a multi-term midterm-plus-final structure, course-level school-specific benchmarks, an integrated prerequisite training quiz bypassable by attestation, and a raw report producing four rows per student."
+      - subject: "OT/OTA"
+        headline: "Most sophisticated alerting in the stage, all of it configured by support email"
+        severity: "configure-needed"
+        detail: "AOTA FWPE response-based triggers fire on any rating of 1, with extra triggers on 1-2 in the ethics/safety fundamentals and low-score cutoffs at OT 111 or below and OTA 91 or below — but every recipient roster must be emailed to Prism support, and the publish-date field does not apply to educator forms."
+      - subject: "Nursing"
+        headline: "Exposure is not achievement, yet log-captured exposure cannot feed a framework"
+        severity: "gap"
+        detail: "Nursing insists that student exposure to the AACN Essentials is not the same as achievement, which collides with the scored-forms-only rule, since exposure is captured through activity and patient logs that competency frameworks will not accept."
+      - subject: "Dentistry"
+        headline: "Worst-served domain: minimum procedure counts are not admin-configurable"
+        severity: "gap"
+        detail: "Procedure-quota-and-sign-off progression maps only partially onto the red/green minimum-count log report, and dentistry's faculty sign-off model is exactly the non-scored assessment that competency frameworks reject."
+      - subject: "Pharmacy"
+        headline: "1,440-hour four-setting APPE structure fits timesheet categories if chosen correctly"
+        severity: "configure-needed"
+        detail: "The fit depends on getting the single-versus-multi-select timesheet category decision right on day one, since Hours by Categories and Hours Summary by Week are the evidence path for ACPE 3.1.b and 3.2."
+      - subject: "Teacher Education"
+        headline: "Only discipline with the LTI/GoReact video path, invisible until support enables it"
+        severity: "configure-needed"
+        detail: "The Learning Tool Interoperability section for GoReact/Echo360 video assignments is feature-flagged per discipline, so a TE admin cannot see or configure their signature instrument without a support engagement."
+      - subject: "SLP"
+        headline: "Clock Hours is the most discipline-shaped report in the whole library"
+        severity: "none"
+        detail: "SLP relabels the activity to clinical logs and breaks hours down by patient age group, mode of delivery, graduate versus undergraduate training level, type of service, and direct-contact versus observation, plus review columns the generic patient-log surface does not show."
+      - subject: "Social Work"
+        headline: "No transcript, no help-center guide and no domain file speak to this stage"
+        severity: "gap"
+        detail: "Nothing in this stage's sources addresses Social Work at all, and the file states that plainly rather than inferring behavior from allied-health analogues."
+
+sources:
+  - "../flows/admin-onboarding--01-account-activation-login-navigation.yaml"
+  - "../flows/admin-onboarding--02-program-details-settings-setup.yaml"
+  - "../flows/admin-onboarding--03-student-organization-onboarding.yaml"
+  - "../flows/admin-onboarding--04-compliance-template-setup.yaml"
+  - "../flows/admin-onboarding--05-sites-locations-personnel-management.yaml"
+  - "../flows/admin-onboarding--06-courses-rotations-curriculum-mapping.yaml"
+  - "../flows/admin-onboarding--07-wishlists-slot-requests-placement-assist.yaml"
+  - "../flows/admin-onboarding--08-learning-activities-competency-management-reporting.yaml"
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — the 16-video admin tutorial series (1/16 Administrator Navigation through 16/16 Ask Leo / Resource Center) plus feature videos (Heatmap Report, Comprehensive Report for Placement Based Forms, Configuring Custom Reports, Faculty Compliance, Exxat One linkage and schedule processing)"
+  - "/Users/romitsoley/Downloads/PTPTAVideosTranscripts.md — incl. CIET v2.0 and Exxat One Availability-Based Wishlist"
+  - "/Users/romitsoley/Downloads/OTOTAVideosTranscripts.md — incl. AOTA FWPE and Exxat One Availability-Based Wishlist"
+  - "/Users/romitsoley/Downloads/PAVideosTranscripts.md — incl. Setting up and Managing Patient Logs"
+  - "/Users/romitsoley/Downloads/SLPVideosTranscripts.md — incl. Setting up and Reviewing Clinical Logs"
+  - "/Users/romitsoley/Downloads/NursingTutorialsTranscripts.md — incl. Streamline Transition to Competency-Based Education"
+  - "/Users/romitsoley/Downloads/TEVideosTranscripts.md — incl. Setting Up and Managing Echo360 (GoReact) Assignments"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/ (help-center mirror: Getting Started for Admin, Step-by-Step Guides for Program Details / Students / Student Compliance / Sites / Courses / Curriculum Mapping, Institution-level Compliance Management, Discipline Specific Guides)"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/ (PT, OT, PA, Nursing, SLP, Social Work, Teacher Education discipline playbooks — none exist for DO, Pharmacy, Dentistry, Medicine)"
+  - "../prism/capability-map.yaml (Ask Leo agentic detail; July 2025 mandatory 2FA; Trust Portal; support-gated configuration boundary; Placement Assist self-service limitation; Accreditation Management as Q3 2027 roadmap)"
+  - "../accreditation/coca.yaml, ../accreditation/lcme.yaml, ../accreditation/acpe.yaml, ../accreditation/coda.yaml"
+  - "../competitors/core-elms.yaml, ../competitors/e-value.yaml, ../competitors/medhub.yaml, ../competitors/elentra.yaml, ../competitors/one45.yaml, ../competitors/emedley.yaml, ../competitors/leo-davinci.yaml, ../competitors/new-innovations.yaml, ../competitors/axium.yaml"
+  - "../domains/do.yaml, ../domains/pharmacy.yaml, ../domains/dentistry.yaml, ../domains/medicine.yaml"
+  - "../journeys/competency-verification.yaml (stage 8) and ../flows/competency-verification--08-close-the-loop-external-validation-against.yaml — adopted precedent for the COCA 11.9 / CODA 1-2 accreditation-record citation"
+
+last_researched: "2026-08-24"

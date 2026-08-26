@@ -1,0 +1,1117 @@
+# Competency Verification — cross-domain journey map.
+#
+# Schema note: follows content/journeys/_TEMPLATE.yaml exactly, plus ONE additive
+# key per stage — `domain_divergence` — because the brief for this journey
+# explicitly asks where the journey structurally differs by domain, and that
+# divergence is the whole reason this journey is hard to build once and sell four
+# times. If the template is later formalized, `domain_divergence` should be
+# promoted into it rather than dropped.
+#
+# Every claim traces to research already on disk:
+#   ../prism/capability-map.yaml      (what Prism ships vs. what is roadmap-dated)
+#   ../accreditation/{coca,lcme,acpe,coda}.yaml
+#   ../competitors/*.yaml
+#   ../domains/{do,pharmacy,dentistry,medicine}.yaml
+# Standard numbers and roadmap dates are quoted from those files, not from memory.
+
+journey_name: "Competency Verification"
+domain_scope: ["DO", "Pharmacy", "Dentistry", "Medicine"]
+persona: >
+  Centers on the Assessment / Curriculum & Competency Director — the person who
+  owns the answer to "can we prove this student is competent, and prove it to our
+  accreditor." Secondary personas: the Compliance & Accreditation Liaison (owns
+  the evidence export), the Clinical/Experiential Education Coordinator (owns
+  capture at the site), and the Preceptor/clinical faculty member (does the
+  actual rating). See ../personas/ — the role files themselves are not yet
+  written (only _TEMPLATE_role.yaml exists); the planned filenames are
+  role-compliance-accreditation-liaison.yaml, role-program-admin.yaml,
+  role-clinical-coordinator.yaml, and role-preceptor.yaml.
+
+stages:
+  - stage: "1. Define the competency framework and map it into the curriculum"
+    current_state_in_prism: >
+      Strongest shipped position in the journey. "Curriculum Mapping" is a shipped
+      core-ring pillar (capability-map.yaml) whose stated job is mapping
+      courses/activities to a curriculum structure — exactly the substrate a
+      competency taxonomy needs. Adopting a new domain's framework is a taxonomy
+      configuration on an existing pillar, not new architecture: coca.yaml rates
+      Element 6.4 "Configure," acpe.yaml rates Key Element 2.2.d "Transfer," and
+      coda.yaml rates Element 2-8 "Transfer."
+    pain_or_gap: >
+      The pillar is described in Prism's own capability map only as "maps
+      courses/activities to a curriculum structure" — generic. There is no
+      documented EPA/entrustment dimension, no mapping-completion dashboard, and
+      no evidence of shipped support for named external taxonomies (AACP COEPA,
+      AAMC Curriculum Inventory / MedBiquitous, USMLE content outline). The gap
+      here is not capability, it is named-framework depth and proof.
+    accreditation_link: >
+      COCA Standard 6, Element 6.4 (Osteopathic Core Competencies) — curriculum map
+      showing where each of the 7 competencies incl. OPP/OMM is taught and assessed.
+      ACPE Standard 2, Key Element 2.2.d — map every course and APPE to the 2.1.a-m
+      outcomes (adapted from AACP COEPA 2022). CODA Standard 2, Element 2-8
+      (curriculum management plan / course-to-competency crosswalk). LCME Standard 9,
+      Element 9.4 (assessment system tied to program objectives).
+    competitor_comparison: >
+      Prism is behind on named depth against four vendors. CORE ELMS sells this as a
+      separate priced module, CompMS, doing gap analysis and mapping competencies to
+      accreditation standards/domains/sub-domains ("ahead," core-elms.yaml). Leo/DaVinci
+      maps "every session in every course" to multiple competency sets AND EPAs with a
+      mapping-completion Insights Dashboard, and markets directly against tools that
+      "only map to your assessments or your content" ("ahead," leo-davinci.yaml).
+      eMedley's eCurriculum maps to physician competencies, EPA competencies and the
+      USMLE Step 1 Content Outline and is a listed AAMC Curriculum Inventory
+      Participating Vendor ("ahead," emedley.yaml). Elentra ships Curriculum
+      Explorer/Matrix, supports MedBiquitous natively, and claims coverage of >40% of
+      the CACMS DCI (elentra.yaml). one45 ships CanMEDS/AAMC-aligned vocabularies with
+      version control and audit trail (one45.yaml).
+    domain_divergence: >
+      DO carries a competency with no analog anywhere else: OPP/OMM, which do.yaml
+      documents as 200-500 hours of hands-on manipulative medicine assessed DURING
+      clinical clerkships, not only pre-clinically — so the DO framework needs a
+      manual-skills competency that lives on the rotation record. Pharmacy's taxonomy
+      is externally authored and versioned by a third party (AACP COEPA feeding ACPE
+      2.1.a-m), so the mapping dimension must be updatable without a re-implementation.
+      Dentistry's is a fixed ~15-category clinical list (CODA 2-24 a-o) that behaves
+      more like a procedure taxonomy than a competency taxonomy. Medicine's is the
+      loosest — LCME 9.4 names no fixed list, leaving each school's own program
+      objectives as the mapping target.
+    key_findings:
+      - subject: "DO"
+        headline: "OPP/OMM is a competency with no analog in any other domain"
+        severity: "configure-needed"
+        detail: >
+          do.yaml documents 200-500 hours of hands-on manipulative medicine assessed
+          DURING clinical clerkships, not only pre-clinically, so the DO framework needs a
+          manual-skills competency that lives on the rotation record rather than in the
+          didactic map.
+      - subject: "Pharmacy"
+        headline: "Taxonomy is third-party authored and versioned, so mapping must stay updatable"
+        severity: "configure-needed"
+        detail: >
+          AACP COEPA feeds ACPE 2.1.a-m, meaning the competency list changes outside the
+          school's control; the mapping dimension has to absorb a new version without a
+          re-implementation. ACPE Key Element 2.2.d is rated "Transfer" onto the shipped
+          Curriculum Mapping pillar.
+      - subject: "Dentistry"
+        headline: "CODA's ~15 fixed categories behave like a procedure taxonomy, not a competency one"
+        severity: "configure-needed"
+        detail: >
+          CODA 2-24 a-o is a fixed clinical list rather than an open competency framework,
+          and Element 2-8 (course-to-competency crosswalk) is rated "Transfer" — the work
+          is modelling a procedure-shaped taxonomy on the existing curriculum structure.
+      - subject: "Medicine"
+        headline: "LCME names no fixed list, so generic curriculum mapping fits cleanly"
+        severity: "none"
+        detail: >
+          LCME 9.4 leaves each school's own program objectives as the mapping target, which
+          is the loosest of the four frameworks and the best match for a pillar described
+          only as mapping courses/activities to a curriculum structure.
+      - subject: "Medicine"
+        headline: "No shipped support for any named external taxonomy — AAMC CI, MedBiquitous, USMLE outline"
+        severity: "gap"
+        detail: >
+          capability-map.yaml describes the pillar generically with no EPA/entrustment
+          dimension and no mapping-completion dashboard, while eMedley is a listed AAMC
+          Curriculum Inventory Participating Vendor and Elentra supports MedBiquitous
+          natively with >40% CACMS DCI coverage.
+
+  - stage: "2. Build and deploy the assessment instruments tied to those competencies"
+    current_state_in_prism: >
+      Partially shipped, and more architecturally real than the prior synthesis credited
+      it for. Element-level tracing (see
+      competency-verification--02-build-and-deploy-the-assessment-instruments.yaml)
+      surfaces a full, previously-unnamed Competency Management module that goes beyond
+      the "Managing Course Activities" form-attachment workflow already on file: a
+      program can associate already-scored experiential or didactic assessments to a
+      competency framework, configure a shared scoring scale and threshold, and —
+      critically — map individual assessment QUESTIONS, not just whole forms, to a
+      specific competency, with scores recalculating immediately once mappings are
+      applied. coda.yaml's "Configure" rating on Element 2-5 and acpe.yaml's "Transfer"
+      rating on Key Element 7.3.c both hold up at screen level: Setup ->
+      Forms/Evaluations -> Add Assignment is exactly the anchor-relative
+      (days-before/after-placement, not fixed-date) form object that acpe.yaml's
+      rationale describes as reused per site by design. Prism also ships a
+      rubric-scored, video-based skills instrument via a GoReact LTI hand-off — the
+      closest thing to a structured OSCE/clinical-skills demonstration Prism supports
+      today — though the rubric itself is authored and held inside GoReact, not natively
+      in Prism.
+    pain_or_gap: >
+      The half that is missing is still exam-grade instrument delivery, and this is now
+      confirmed directly rather than inferred from a roadmap date alone: a targeted
+      help-center search for OSCE, proctor, item bank, lockdown, and psychometric
+      terminology returned zero program-administrator or faculty how-to articles, and
+      capability-map.yaml's own "Exam Management" entry lists no shipped features under
+      its Q2 2027 target. coda.yaml states this plainly for Element 2-5 ("Exam-grade
+      assessment delivery is not yet shipped"), and lcme.yaml's 9.4 rationale says
+      program-level competency rollup "leans on ... Exam Management (Q2 2027)." A
+      second, more specific gap resolved by this pass: the one shipped path toward an
+      OSCE-shaped rubric-scored instrument depends on a bolted-on third-party tool
+      (GoReact) rather than a native rubric/OSCE builder, which is a real architectural
+      gap and not only a timing one
+      (competency-verification--02-build-and-deploy-the-assessment-instruments.yaml). So
+      programs can capture, and even question-map to a competency, a preceptor's rating
+      form — but they still cannot administer the standardized, secure competency exam
+      that accreditors treat as the harder evidence.
+    accreditation_link: >
+      LCME Standard 9, Element 9.4 — a centralized system using a VARIETY of measures
+      including direct observation. CODA Standard 2, Element 2-5 — instruments
+      (narrative evaluations, OSCEs, clinical skills testing) must measure skills,
+      behaviors and attitudes, not recall. ACPE Standard 7, Key Element 7.3.c —
+      standardized key components and consistent assessment across all sites offering
+      the same experience. COCA Standard 6, Element 6.4 (assessed, not just taught) —
+      this dimension is now confirmed at screen level rather than inferred: Competency
+      Management's question-level assessment-to-competency mapping is a direct, shipped
+      mechanism satisfying exactly this requirement
+      (competency-verification--02-build-and-deploy-the-assessment-instruments.yaml).
+    competitor_comparison: >
+      This is where the roadmap dates cost the most, but the element-level pass narrows
+      exactly where. eMedley ships eValuate (clinical evaluations, OSCEs, EPA
+      entrustment ratings with growth-curve reporting) AND ExamN as a full standalone
+      exam product — lockdown browser, eProctor webcam proctoring add-on, item analysis
+      via algorithmic psychometrics, and a performance dashboard tied to
+      competencies/objectives/standards; emedley.yaml rates both "ahead" and calls it a
+      "dated-timing advantage" against Q1/Q2 2027. Elentra's Assessment & Evaluation
+      module spans "formative assessments to summative exams" with proctored/secured
+      online exams and an item bank (elentra.yaml). one45 ships EPAs/WBAs, 360° reviews
+      and customizable scales today (one45.yaml), but has no native exam-authoring or
+      delivery engine either — its Analytics product only pulls third-party ExamSoft and
+      NBME data into a performance dashboard (one45.yaml) — so the exam-management gap
+      is sharpest specifically against eMedley and Elentra, not universal across every
+      named competitor. In dentistry axiUm is the exception that proves the rule:
+      coda-relevant competency/procedure grading with faculty sign-off, but "no
+      exam-management feature found on any public axiUm/Exan/Henry Schein One page
+      reviewed" (axium.yaml) — Prism is at parity with the dominant dental incumbent on
+      this specific step even while trailing eMedley and Elentra. A newly-resolved
+      architectural nuance: where Prism does reach OSCE-shaped rubric scoring today, it
+      does so via a third-party LTI hand-off to GoReact, while eMedley's and Elentra's
+      rubric/OSCE tooling is native to their own evaluation engines — a structural
+      difference, not only a dated-timing one
+      (competency-verification--02-build-and-deploy-the-assessment-instruments.yaml).
+    domain_divergence: >
+      Dentistry needs chairside, procedure-step instruments (CODA 2-5 pairs with the
+      DLOSCE's OSCE-format, rubric-scored shape per coda.yaml's JCNDE entry). Pharmacy
+      needs the same instrument deployed identically across every site offering a
+      course (ACPE 7.3.c) plus an alternate "formalized faculty assessment" instrument
+      for NTPD-pathway students (acpe.yaml, 3.2.d gap_notes). DO needs an OMM
+      manual-skills instrument usable by a community preceptor. Medicine leans hardest
+      on direct-observation forms plus national-norm exams (LCME 9.4 + 8.4).
+    key_findings:
+      - subject: "Dentistry"
+        headline: "No native OSCE or rubric builder for chairside, procedure-step instruments"
+        severity: "gap"
+        detail: >
+          CODA 2-5 pairs with the DLOSCE's OSCE-format, rubric-scored shape, but the only
+          rubric-scored instrument Prism reaches today is a GoReact LTI hand-off where the
+          rubric is authored and held inside GoReact — an architectural gap, not only a
+          timing one.
+      - subject: "Medicine"
+        headline: "Exam-grade delivery is confirmed absent, not just roadmap-dated at Q2 2027"
+        severity: "gap"
+        detail: >
+          A targeted help-center search for OSCE, proctor, item bank, lockdown and
+          psychometric terminology returned zero articles, and capability-map.yaml's Exam
+          Management entry lists no shipped features — so LCME 9.4's "variety of measures"
+          and the national-norm exams of 8.4 have no delivery path.
+      - subject: "Pharmacy"
+        headline: "Anchor-relative Add Assignment forms are reused per site by design"
+        severity: "none"
+        detail: >
+          Setup -> Forms/Evaluations -> Add Assignment builds a days-before/after-placement
+          form object rather than a fixed-date one, which is exactly the standardized,
+          identically-deployed instrument ACPE 7.3.c requires across every site offering
+          the same experience.
+      - subject: "Pharmacy"
+        headline: "NTPD-pathway students need a separate 'formalized faculty assessment' instrument"
+        severity: "configure-needed"
+        detail: >
+          acpe.yaml's 3.2.d gap_notes call for an alternate instrument alongside the
+          standard preceptor form, so the program has to author and schedule a second
+          form variant for that pathway.
+      - subject: "DO"
+        headline: "Question-level competency mapping directly satisfies COCA 6.4's 'assessed' half"
+        severity: "none"
+        detail: >
+          Competency Management maps individual assessment QUESTIONS, not just whole forms,
+          to a specific competency with scores recalculating immediately — a shipped
+          mechanism confirmed at screen level for the "taught AND assessed" requirement.
+      - subject: "DO"
+        headline: "An OMM manual-skills instrument for community preceptors has no native home"
+        severity: "gap"
+        detail: >
+          The OMM instrument has to be usable by an off-site community preceptor, but the
+          only rubric-scored skills path is the third-party GoReact hand-off, while
+          eMedley and Elentra ship rubric/OSCE tooling native to their own evaluation
+          engines.
+
+  - stage: "3. Capture evidence at the point of care — encounter, procedure and hour logging"
+    current_state_in_prism: >
+      Real for placement-level capture, and now substantially resolved for the granular
+      capture this journey actually runs on. Clinical & Experiential Education's Patient
+      Log is a shipped, cross-discipline mechanism, not just placement-level forms: it
+      already supports admin-configured "Diagnosis Minimums" and "Procedure Minimums"
+      per rotation with real-time student progress and pre-graduation gap surfacing,
+      plus a parallel Timesheet Category taxonomy (single/multi-select, nested
+      subcategories, a filterable "Settings" dimension, a dedicated Hours by Category
+      report) already used in production to check an ARC-PA telehealth-hours threshold
+      (flows/competency-verification--03-capture-evidence-at-the-point-of.yaml). This
+      resolves acpe.yaml's 3.1.b hedge: hour aggregation by custom setting-category is
+      confirmed shipped, not unconfirmed — what remains open is only whether the exact
+      300/75/75-hour sub-thresholds can be enforced by a program admin directly, since
+      capability-map.yaml's "per-participation-type hour thresholds" are confirmed real
+      but gated behind Exxat Support/an Account Manager. It also resolves lcme.yaml's
+      6.2 hedge: Diagnosis Minimums IS the out-of-the-box "required patient encounter"
+      tracking Element 6.2 asks for, already shipped for PA and needing only Medicine's
+      own list configured on top. coda.yaml's CODA 2-24 "Gap" rating is now more
+      precisely bounded rather than closed: the underlying minimum-per-category logging
+      engine is confirmed shipped and already reused across two disciplines (PA's
+      ICD/CPT diagnosis-procedure logging; CRNA's case logging with color-coded
+      benchmark thresholds against NBCRNA minimums), but CDT-code-level,
+      tooth/surface-specific logging is still confirmed absent — no dental code set or
+      tooth/surface field appears anywhere in the source material read.
+    pain_or_gap: >
+      Of the three capture models this stage runs on, two are now confirmed
+      configuration work rather than open unknowns, and one remains a real gap.
+      Pharmacy's hours-by-setting-category requirement and medicine's required-encounter
+      list both trace to the same shipped, cross-discipline logging engine — Timesheet
+      Categories with an Hours by Category report, and Patient Log Diagnosis/Procedure
+      Minimums, respectively
+      (flows/competency-verification--03-capture-evidence-at-the-point-of.yaml) — so
+      both move from "unconfirmed" to Configure. Dentistry's procedure-code model is the
+      one genuine gap left standing: no CDT code set or tooth/surface-level field exists
+      anywhere in the confirmed product, so a CDT-native procedure log is still a real,
+      dentistry-specific build. coda.yaml's framing of it as "likely the single largest
+      dentistry-specific build if Prism enters this domain" should be read as smaller
+      than "from scratch," though, now that the underlying minimum-per-category engine
+      it would extend is confirmed shipped and has already been extended once before,
+      for CRNA/NBCRNA case logging. COCA 6.10's rotation-attribute need fares similarly
+      split: preceptor-DO-credential and inpatient/outpatient setting both map onto
+      existing filterable fields (Personnel "Degree"; Setting/location tags), while
+      "residents present at this rotation" has no confirmed existing field and would
+      need a genuinely new one. Whatever Prism still cannot capture here it cannot
+      verify at Stage 6 or defend at Stage 8.
+    accreditation_link: >
+      CODA Standard 2, Element 2-24 — competence across ~15 clinical categories (a-o),
+      "each typically evidenced by procedure-level logs"; and Element 2-9 (sufficient
+      patient experiences to achieve every stated competency, confirmed as a Transfer
+      fit onto the shipped Patient Log Aggregate Report). ACPE Standard 3, Key Element
+      3.1.b — 300 IPPE clock hours with 75-hour community and 75-hour hospital minimums,
+      simulation excluded, now confirmed reachable via Timesheet Categories plus the
+      Hours by Category report
+      (flows/competency-verification--03-capture-evidence-at-the-point-of.yaml); Key
+      Elements 3.2.b/3.2.d — 1,440 APPE hours, ≥160 per APPE, all four required
+      settings. LCME Standard 6, Element 6.2 — defined patient types/conditions/skills
+      with evidence students met them, now confirmed reachable via the Patient Log's
+      Diagnosis Minimums mechanism. COCA Standard 6, Element 6.10 — filterable rotation
+      attributes (residents present, DO supervisor, inpatient setting), of which
+      supervisor credential and setting type now map to confirmed existing fields
+      (Personnel "Degree"; Setting/location tags) while resident-presence remains
+      unconfirmed as an existing field.
+    competitor_comparison: >
+      Every serious competitor ships mobile point-of-care logging. eMedley's eCLAS is
+      mobile iOS/Android case-log capture of encounters, ICD-10 diagnoses, CPT
+      procedures AND competency mastery with preceptor time-approval (emedley.yaml).
+      E*Value ships mobile procedure logging with teacher review/validation of logs
+      (e-value.yaml). Elentra ships a Logbook for patient encounters/procedures with
+      supervisor evaluation, plus an ePortfolio (elentra.yaml). Leo/DaVinci ties
+      diagnoses and procedures in the curriculum map directly to patient encounter logs
+      (leo-davinci.yaml). In dentistry the incumbent is structurally unbeatable at this
+      stage: axiUm is the combined EHR/billing/competency-grading database at ~90% of
+      U.S. dental schools, where faculty "review and approve student treatments within
+      the same system" — axium.yaml identifies exactly this fused clinical+academic
+      record as the retention anchor, and warns Prism should not try to displace the EHR
+      core. Element-level tracing
+      (flows/competency-verification--03-capture-evidence-at-the-point-of.yaml) confirms
+      most of these competitor claims sit at the feature/marketing level rather than a
+      documented field schema: eMedley, E*Value, and Leo/DaVinci are granular enough to
+      support a concept-level comparison (diagnosis/procedure/encounter capture), but
+      none publish a minimum-count-enforcement UI or a category-taxonomy builder to
+      compare field-for-field against Prism's, and axium.yaml itself still rates axiUm's
+      "depth_vs_prism" as unknown rather than confirming a specific capability advantage
+      beyond the fused-record positioning already noted.
+    domain_divergence: >
+      This is the stage where the four domains stop being the same product. Dentistry
+      logs CDT-coded, tooth/surface-level procedures inside a live teaching-clinic EHR,
+      and dentistry.yaml notes progression is "competency- and quota-based rather than
+      calendar-based" with faculty sign-off on individual procedural STEPS. Pharmacy
+      logs clock hours bucketed by practice setting against hard numeric floors.
+      Medicine logs required patient types/conditions/skills against a published list.
+      DO logs the medical encounter set PLUS discrete rotation attributes (was a
+      resident present, was the supervisor a DO, was it inpatient) PLUS OMM manual-skill
+      encounters. A single "case log" object cannot serve all four without a
+      domain-specific taxonomy layer.
+    key_findings:
+      - subject: "Dentistry"
+        headline: "No CDT code set and no tooth/surface field exists anywhere in the product"
+        severity: "gap"
+        detail: >
+          A CDT-native, tooth/surface-level procedure log is a real dentistry-specific
+          build — though smaller than "from scratch," since the underlying
+          minimum-per-category logging engine it would extend is confirmed shipped and has
+          already been extended once for CRNA/NBCRNA case logging.
+      - subject: "Dentistry"
+        headline: "axiUm fuses the clinical and academic record at ~90% of U.S. dental schools"
+        severity: "gap"
+        detail: >
+          Faculty review and approve student treatments inside the same EHR/billing/
+          competency database; axium.yaml identifies that fused record as the retention
+          anchor and warns Prism should not try to displace the EHR core.
+      - subject: "Pharmacy"
+        headline: "Hours-by-setting-category is confirmed shipped, not an open unknown"
+        severity: "none"
+        detail: >
+          Timesheet Categories (single/multi-select, nested subcategories, a filterable
+          "Settings" dimension) plus a dedicated Hours by Category report are already used
+          in production to check an ARC-PA telehealth-hours threshold, resolving
+          acpe.yaml's 3.1.b hedge.
+      - subject: "Pharmacy"
+        headline: "The 300/75/75 sub-thresholds are gated behind Exxat Support, not admin self-service"
+        severity: "configure-needed"
+        detail: >
+          capability-map.yaml's per-participation-type hour thresholds are confirmed real
+          but configured through Exxat Support or an Account Manager, so a program admin
+          cannot set ACPE 3.1.b's IPPE floors directly.
+      - subject: "Medicine"
+        headline: "Diagnosis Minimums IS the required-patient-encounter tracking LCME 6.2 asks for"
+        severity: "configure-needed"
+        detail: >
+          The Patient Log ships admin-configured Diagnosis and Procedure Minimums per
+          rotation with real-time student progress and pre-graduation gap surfacing,
+          already live for PA — Medicine needs only its own required list configured on
+          top.
+      - subject: "DO"
+        headline: "Two of three COCA 6.10 rotation attributes exist; 'residents present' does not"
+        severity: "gap"
+        detail: >
+          Preceptor DO credential maps onto the Personnel "Degree" field and
+          inpatient/outpatient onto Setting/location tags, but no confirmed field records
+          whether residents were present at a rotation — that one needs a genuinely new
+          field.
+
+  - stage: "4. Formative mid-point feedback and early remediation trigger"
+    current_state_in_prism: >
+      The single best fit in the entire journey, and it is architectural rather than
+      configured. capability-map.yaml records as a confirmed fact that publish/due dates
+      are set as ANCHORS — N days before/after a placement's start, MID, or end date —
+      and the element-level trace in
+      competency-verification--04-formative-mid-point-feedback-and-early.yaml confirms
+      the exact mechanic in the Forms/Evaluations setup drawer: the due date is a
+      day-offset from the MID anchor, not a calendar date. lcme.yaml rates Element 9.7
+      "Transfer" and says the midpoint-feedback trigger "is exactly what that primitive
+      was built for." Early-Risk Alerts in the intelligence layer is the natural
+      surfacing mechanism (coda.yaml, Element 2-2), and the same flow file confirms two
+      supporting layers around that primitive: a low-score threshold/notification on the
+      form itself (though activating the notification is a support ticket, not admin
+      self-service) and a mature Competency Dashboard (trendline, radar chart, pass
+      threshold) that turns a single low midpoint score into a trend signal.
+    pain_or_gap: >
+      Two gaps sit on top of a strong primitive. First, firing the form is not the same
+      as proving it was delivered — LCME 9.7 requires evidence that EVERY student got
+      midpoint feedback, which is a compliance report over the anchor-scheduled
+      assignments, not the assignments themselves; the element-level trace confirms a
+      per-student, per-form status view (Student 360 > Learning Activities) but found no
+      cross-student, cross-rotation "% delivered on time" report anywhere in the
+      help-center mirror or capability-map.yaml, so this half of the gap stands
+      confirmed, not just suspected. Second, the due-process trail is thinner than
+      "unconfirmed" suggested but not the "Configure" black box coda.yaml implied
+      either: Adding Interventions and Communications.md confirms a real, structured
+      case record exists on the Interventions tab (Course/Rotation/Site scoping,
+      Open/Closed status, one planned/actual follow-up pair, file attachments, and a
+      bulk Intervention Log report for self-study evidence) — but it has no dedicated
+      decision/outcome field, no due-process-stage field
+      (warning/probation/dismissal/appeal), and no structural link back to the
+      triggering evaluation score, so it evidences that a concern was tracked, not that
+      a due-process decision was reached and documented per CODA 2-2's exact wording.
+      See competency-verification--04-formative-mid-point-feedback-and-early.yaml for
+      the screen-level evidence behind both halves of this finding.
+    accreditation_link: >
+      LCME Standard 9, Element 9.7 — formal formative feedback early enough to allow
+      remediation, at least at the midpoint (alternate method for experiences under four
+      weeks); the element-level trace confirms Prism's midpoint anchor has no branch
+      logic for that under-four-weeks alternate method, so a short-rotation program
+      needs a second, separately-configured form. CODA Standard 2, Element 2-2 —
+      individual evaluation and institutional due process when a student fails to meet
+      published didactic, behavioral, or clinical criteria. LCME Standard 8, Element 8.6
+      — remedy identified gaps BEFORE graduation, which the confirmed Competency
+      Dashboard trendline directly supports.
+    competitor_comparison: >
+      No competitor file documents an equivalent to the anchor-relative primitive —
+      emedley.yaml explicitly says Prism's anchor-relative scheduling is "a real
+      architectural strength not confirmed as present in eMedley's public docs," which
+      is why that pillar is scored at-parity rather than behind. elentra.yaml similarly
+      says Elentra's "exact scheduling primitives (e.g. anchor-date logic) are not
+      disclosed." Competitors compete on the delivery side instead: CORE ELMS ships
+      low-score alerts and due-date reminders (core-elms.yaml), one45 gives students
+      real-time access to longitudinal feedback (one45.yaml). The element-level trace
+      re-confirmed this is a one-sided verification rather than a scored comparison —
+      every cited competitor file documents the absence of public element-level detail,
+      not a comparable mechanic Prism can be measured against — so this stage remains
+      the most defensible place to plant a differentiation claim.
+    domain_divergence: >
+      Pharmacy's 4-6 week APPE blocks (pharmacy.yaml) and DO's four-week clerkship
+      blocks (do.yaml) both have a clean, meaningful midpoint the anchor primitive fits
+      perfectly. Medicine's core clerkships behave the same way. Dentistry does not —
+      dentistry.yaml describes progression as quota- and competency-gated rather than
+      calendar-blocked, so there is often no "midpoint of a rotation" to anchor to and
+      the trigger has to fire off procedure-quota pacing instead of a date. The
+      strongest primitive in the product is the weakest fit in exactly one domain.
+    key_findings:
+      - subject: "Dentistry"
+        headline: "Quota-gated progression means there is often no rotation midpoint to anchor to"
+        severity: "gap"
+        detail: >
+          dentistry.yaml describes progression as competency- and quota-based rather than
+          calendar-blocked, so the MID-anchor primitive — the strongest architecture in the
+          journey — has nothing to fire against and the trigger must key off procedure-quota
+          pacing instead of a date.
+      - subject: "Dentistry"
+        headline: "Interventions record proves a concern was tracked, not that due process ran"
+        severity: "gap"
+        detail: >
+          The Interventions tab ships real structure (Course/Rotation/Site scoping,
+          Open/Closed status, planned/actual follow-up, attachments, a bulk Intervention Log
+          report) but has no decision/outcome field, no warning/probation/dismissal/appeal
+          stage field, and no structural link back to the triggering evaluation score that
+          CODA 2-2 implies.
+      - subject: "Pharmacy"
+        headline: "4-6 week APPE blocks fit the MID-anchor due-date mechanic perfectly"
+        severity: "none"
+        detail: >
+          The Forms/Evaluations setup drawer sets the due date as a day-offset from the MID
+          anchor rather than a calendar date, which is exactly the primitive a clean
+          block-shaped rotation midpoint needs.
+      - subject: "DO"
+        headline: "Four-week clerkship blocks land on the same clean midpoint anchor"
+        severity: "none"
+        detail: >
+          do.yaml's four-week clerkship structure gives a meaningful midpoint, and the
+          Competency Dashboard (trendline, radar chart, pass threshold) turns a single low
+          midpoint score into a trend signal supporting LCME 8.6's remedy-before-graduation
+          requirement.
+      - subject: "Medicine"
+        headline: "No cross-student report proves EVERY student got midpoint feedback"
+        severity: "gap"
+        detail: >
+          LCME 9.7 needs evidence of delivery, but element-level tracing found only a
+          per-student, per-form status view (Student 360 > Learning Activities) and no
+          cross-student, cross-rotation "% delivered on time" report anywhere in the
+          help-center mirror or capability-map.yaml.
+      - subject: "Medicine"
+        headline: "The under-four-weeks alternate method needs a second, separately-configured form"
+        severity: "configure-needed"
+        detail: >
+          LCME 9.7 allows an alternate feedback method for experiences shorter than four
+          weeks, and Prism's midpoint anchor has no branch logic for that case, so
+          short-rotation programs must build and schedule a parallel form.
+
+  - stage: "5. Summative sign-off — supervision attestation, preceptor credentialing, grade release"
+    current_state_in_prism: >
+      Configure across the board, now with meaningfully sharper mechanics behind that
+      rating
+      (competency-verification--05-summative-sign-off-supervision-attestation-preceptor.yaml).
+      Compliance Management is shipped and gates placement start/continuation on
+      completed items, and the anchor-relative due-date primitive is confirmed at the
+      field level: each evaluation form's due date is set as N days after a placement's
+      end date, with an explicit "contributes to final score" toggle — the literal
+      mechanism behind the "grade due" deadline lcme.yaml (9.8) describes. coca.yaml
+      rates Element 5.4 "Configure" on the theory that a policy-attestation item type
+      fits the existing gating model; that item type is now confirmed shipped, not
+      theoretical — Faculty Compliance's requirement-edit toggles support mandatory,
+      expiring, document-backed, attestation-style requirements. acpe.yaml rates 3.3.a
+      and 3.3.c "Configure" on the theory that preceptor license status and orientation
+      completion can gate a precepting assignment; the mechanism underneath that theory
+      is now more precise than before — preceptor license/certification/CV are confirmed
+      tracked, but as flat Personnel-record fields feeding the Placement Clearance
+      Dashboard's three-state tracker, a materially thinner mechanism than the
+      mandatory/expiring/approval-workflow engine Faculty Compliance gives the separate,
+      direct-login Faculty entity.
+    pain_or_gap: >
+      The stage's open questions no longer collapse into one undifferentiated "signer
+      side is unconfirmed" hedge; element-level tracing
+      (competency-verification--05-summative-sign-off-supervision-attestation-preceptor.yaml)
+      splits it into sharper, more specific findings. First, the entity model is now
+      resolved in a mixed direction: Compliance Management's fuller item-taxonomy engine
+      is confirmed to extend beyond students via the Faculty Compliance module — but
+      "Faculty" is a distinct, separately-added, direct-login entity, and nothing in the
+      reviewed material shows it unified with the external Preceptor/Personnel record;
+      acpe.yaml's (3.3.a) "unclear whether Compliance Management natively models
+      preceptors" should now read as "modeled via Personnel fields, not via the Faculty
+      Compliance engine." Second, lcme.yaml's (9.3) "not a distinct structured field"
+      hedge is partly resolved: a Supervision Type field (Direct/Indirect/configurable)
+      is confirmed shipped at the slot level — though it is admin-set configuration
+      metadata, not a signed per-encounter attestation, so the hedge narrows rather than
+      disappears. Third, a gap not previously captured at the stage level: the preceptor
+      credential gate and the actual sign-off action are unconnected mechanisms —
+      nothing shows a lapsed preceptor license blocking that preceptor from submitting a
+      summative evaluation later in the same rotation. What remains honestly
+      unconfirmed, unchanged by this research: lcme.yaml's (9.8) turnaround-time
+      reporting against the six-week SLA is still not a shipped feature — a
+      submitted-vs-outstanding count exists, but no elapsed-time or percentage-on-time
+      report does — and coda.yaml's (2-6) faculty calibration extending specifically to
+      preceptors (as opposed to school-employed faculty) is still an open question, now
+      asked more precisely rather than answered. Separately, newly surfaced: the grading
+      scale itself is confirmed record-keeping only — Prism does not compute the final
+      grade, a human still enters it — a nuance worth attaching to any "grade release"
+      claim going forward.
+    accreditation_link: >
+      LCME Standard 9, Element 9.3 (appropriate supervision at all times, responsibility
+      matched to training level) and Element 9.8 (final grades within six weeks of
+      course/clerkship end). COCA Standard 5, Element 5.4 (published direct-supervision
+      policy incl. telemedicine, distributed and acknowledged). ACPE Standard 3, Key
+      Elements 3.3.a (majority of a student's preceptors must be U.S.-licensed
+      pharmacists, performance evaluations on file), 3.3.c (orientation completed BEFORE
+      accepting a student) and 3.3.e (2:1 student-to-preceptor maximum — rated
+      "Transfer," a live query against existing assignment data). CODA Standard 2,
+      Element 2-6 (documented faculty calibration across every site).
+    competitor_comparison: >
+      MedHub verifies credentials against NPDB/NPPES and integrates AAMC ERAS
+      demographic data (medhub.yaml) — external, third-party-verified credential
+      checking Prism has no documented analog for; Prism's preceptors are instead
+      tracked through manually-entered license/certification/CV fields on the Personnel
+      record
+      (competency-verification--05-summative-sign-off-supervision-attestation-preceptor.yaml),
+      not an automated verification integration. eMedley's eKeeper handles
+      affiliation-agreement tracking with auto-expiration reminders and preceptor pay
+      automation (emedley.yaml). E*Value's model has teachers "review and validate logs"
+      as a first-class step (e-value.yaml). axiUm's whole pitch in dentistry is faculty
+      reviewing and approving student treatments inside the same record (axium.yaml) —
+      Prism's own summative sign-off screen (Learning Activities > Forms/Evaluations >
+      Completing Evaluation) is a real, comparably-shaped review-and-submit workflow
+      confirmed at element level, so this is a capability Prism has, just one no public
+      competitor teardown documents granularly enough to compare screen-for-screen.
+      Prism's counter-position that its gating is real gating (blocking placement
+      start/continuation) still holds — emedley.yaml notes it cannot confirm eMedley's
+      compliance items actually GATE anything — but element-level tracing now narrows
+      exactly where that advantage lives: confirmed for student compliance and for the
+      Placement Clearance Dashboard's preceptor-presence tracker (license/cert/CV
+      Exists-vs-Missing), not yet for a preceptor-side item-taxonomy engine equivalent
+      to what Faculty Compliance gives school-employed faculty.
+    domain_divergence: >
+      Pharmacy is the only domain with a hard numeric supervision ratio (ACPE 3.3.e,
+      2:1) and a licensure-share test across a student's preceptor set (3.3.a), and
+      pharmacy.yaml notes state boards license the practice FACILITIES too, so site
+      records need a per-state dimension. Dentistry's sign-off is per-procedure-step and
+      chairside (dentistry.yaml), producing far higher evaluation volume than any
+      preceptor model. DO adds a supervisor-credential test that is domain-specific in
+      kind, not just degree: at least one core clerkship must be DO-supervised (do.yaml,
+      COCA 6.10). Medicine's constraint is a turnaround SLA (six weeks) rather than a
+      credential test.
+    key_findings:
+      - subject: "Pharmacy"
+        headline: "Preceptors are modeled as flat Personnel fields, not by the Faculty Compliance engine"
+        severity: "gap"
+        detail: >
+          License, certification and CV are confirmed tracked, but they feed only the
+          Placement Clearance Dashboard's three-state Exists-vs-Missing tracker — materially
+          thinner than the mandatory/expiring/approval-workflow item taxonomy Faculty
+          Compliance gives the separate, direct-login Faculty entity that ACPE 3.3.a/3.3.c
+          gating would want.
+      - subject: "Pharmacy"
+        headline: "A lapsed preceptor license does not block that preceptor from signing off"
+        severity: "gap"
+        detail: >
+          The credential gate and the summative sign-off action are unconnected mechanisms —
+          nothing in the reviewed material shows an expired license stopping an evaluation
+          submission later in the same rotation.
+      - subject: "Pharmacy"
+        headline: "The 2:1 student-to-preceptor maximum is a live query over existing assignment data"
+        severity: "configure-needed"
+        detail: >
+          ACPE 3.3.e is rated "Transfer" because the assignment data already exists; the
+          numeric ratio test and pharmacy.yaml's per-state dimension on site records
+          (state boards license the practice FACILITIES too) are configuration on shipped
+          structures.
+      - subject: "DO"
+        headline: "The DO-supervision test maps onto the existing Personnel Degree field"
+        severity: "configure-needed"
+        detail: >
+          COCA 6.10 requires at least one core clerkship supervised by a DO — a credential
+          test that is domain-specific in kind, not just degree — and the filterable Degree
+          attribute already exists to express it.
+      - subject: "Dentistry"
+        headline: "Per-procedure-step chairside sign-off produces far higher evaluation volume"
+        severity: "gap"
+        detail: >
+          dentistry.yaml describes faculty signing off individual procedural steps, and
+          axiUm's whole pitch is faculty approving student treatments inside the same
+          record — a volume and locus of sign-off no preceptor-shaped evaluation model
+          matches.
+      - subject: "Medicine"
+        headline: "No elapsed-time report exists against LCME 9.8's six-week grade SLA"
+        severity: "gap"
+        detail: >
+          A submitted-vs-outstanding count exists, but no turnaround-time or
+          percentage-on-time report does — and the grading scale itself is record-keeping
+          only, since Prism does not compute the final grade, a human still enters it.
+
+  - stage: "6. Roll up to a per-student competency attainment record and gate progression"
+    current_state_in_prism: >
+      This is where the journey converges, and where Prism is more built than previously
+      credited, though still short of a gate. Competency Tracking is no longer just a
+      bullet in capability-map.yaml's intelligence layer — the Competency Management
+      module is CONFIRMED SHIPPED with real depth: a 4-step lifecycle (configure
+      framework -> map assessments/course offerings -> generate reports -> publish
+      scores), pooled scoring across experiential assessments and/or didactic grades
+      against a configurable threshold, and a Review Dashboard that renders a genuine
+      per-student, per-competency attainment record (Domain Scores, Student Proficiency
+      Distribution, Score Distribution box plots, per-student drill-down) plus a
+      student-facing My Competency Tracker — see
+      competency-verification--06-roll-up-to-a-per-student.yaml for the screen-level
+      trace. That resolves the prior "no confirmed data model, no shipped module" hedge
+      outright. What element-level tracing did not resolve — and in fact hardens from an
+      inference into a directly confirmed gap — is enforcement: the module's own FAQ
+      states publishing "only controls visibility... competency calculations continue
+      regardless of publication status," and no button, field, or workflow step anywhere
+      in its documented workflow blocks APPE enrollment or graduation. acpe.yaml (7.3.d)
+      still correctly rates this "Configure," but now for the more precise reason that
+      the data model is mature while the readiness gate is unbuilt, not because the data
+      model itself is unconfirmed. coda.yaml (2-24)'s flat "Gap" on the per-category
+      graduation-readiness dashboard also stands, now confirmed by a targeted,
+      zero-result search of the full help-center mirror and all seven discipline
+      playbooks for procedure-quota, procedure-log, or graduation-readiness screens,
+      rather than resting on absence-of-mention in capability-map.yaml alone. lcme.yaml
+      (9.4)'s hedge that "program-objective-level competency rollup across all
+      assessment types is not a confirmed shipped capability" also stands: Competency
+      Management is confirmed shipped, but nothing in this research confirms it has been
+      wired to a full LCME program-objective taxonomy specifically.
+    pain_or_gap: >
+      LCME 8.6 remains the strongest confirmed fit here — central, program-wide
+      monitoring of rotation COMPLETION, which lcme.yaml rates "Transfer" and calls "the
+      strongest fit of any standard in this document." But completion is not competence,
+      and that half of the original claim has changed: element-level tracing through
+      Competency Management's Review Dashboard confirms Prism DOES convert mapped
+      assessment and grade data into a per-competency, per-student attainment state
+      today — Meeting Threshold / Below Threshold, per domain, per student, drillable to
+      an individual report (competency-verification--06-roll-up-to-a-per-student.yaml).
+      What still, confirmedly, does not exist is the gate: the Publish/Unpublish control
+      and the module's own FAQ state that publishing is visibility-only and "never
+      touch[es] the underlying calculation," and no step in its documented workflow
+      blocks a student from advancing. The nearest thing to an enforcement pattern
+      anywhere in the product — the Placement Clearance Dashboard's status columns — is
+      also confirmed, at element level, to be a monitoring surface that drives manual
+      admin follow-up ("schools can take proactive measures, such as sending
+      reminders"), not a system-enforced block, so there is no gate precedent in Prism
+      today to extend, on either the compliance side or the competency side. That gate
+      is still not optional in three of the four domains: a student must be blocked from
+      advancing or graduating, not merely flagged. This remains the stage where a
+      compliance failure is a finding, not a reporting inconvenience.
+    accreditation_link: >
+      ACPE Standard 7, Key Element 7.3.d — measure attainment against 2.1.a-n at
+      individual AND aggregate level, with a readiness gate: APPE-ready before entering
+      APPEs, Practice-ready and Team-ready at graduation; and Key Element 3.2.d —
+      flag/block graduation clearance for any student missing a required setting. The
+      individual/aggregate attainment half of 7.3.d is now traceable to a specific
+      confirmed screen (Competency Management's Review Dashboard, per
+      competency-verification--06-roll-up-to-a-per-student.yaml); the readiness-gate
+      half is not. CODA Standard 2, Element 2-24 — document every graduate competent
+      across all ~15 categories. COCA Standard 6, Element 6.10 — a per-student
+      completion checklist the program can query BEFORE fourth-year clerkships begin;
+      the closest existing Prism precedent for this checklist pattern is the Placement
+      Clearance Dashboard's per-student status columns, per coca.yaml's own "Configure"
+      rationale. LCME Standard 8, Element 8.6 — centrally ensure every student completed
+      all required experiences and remedy gaps before graduation; Standard 9, Element
+      9.4 (central assessment system against program objectives).
+    competitor_comparison: >
+      Element-level tracing narrows, but does not close, this gap. Prism's Competency
+      Management module — confirmed shipped with a 4-step lifecycle, threshold-flagged
+      per-student/per-cohort dashboards, and an explicit formative-vs-summative
+      distinction ("exposure is not the same as achievement," Nursing Playbook) — is now
+      closer to at-parity on the rollup mechanic itself than the prior "bullet in a
+      marketing ring" framing suggested. But Prism still lacks a named, purpose-built
+      milestone/EPA-entrustment framework: New Innovations' CCC Milestone Review
+      specifically aggregates evaluation data into competency spider graphs for Clinical
+      Competency Committees (new-innovations.yaml), and eMedley's eValuate ships EPA
+      entrustment ratings with growth-curve reporting plus a case study with Nova
+      Southeastern's KPCOM, a DO school (emedley.yaml) — no source in this research
+      confirms an equivalent named EPA/entrustment scale or spider-graph visualization
+      on Prism's side, only a domain-score bar chart and a threshold box plot. CORE
+      ELMS's CompMS (core-elms.yaml), one45's real-time longitudinal feedback feeding
+      auto-generated MSPE letters (one45.yaml), and MedHub's direct ACGME milestone
+      import (medhub.yaml) round out the field, but all five competitor sources are
+      marketing-page claims rather than screen-level documentation — the same
+      element-level caveat this stage's flow file applies to Prism's own claims, so none
+      of these comparisons can be verified field-by-field in either direction. On the
+      dimension this stage cares about most — an enforced progression gate — none of the
+      five competitor sources confirms their own product actually blocks advancement
+      either; their "ahead" ratings (core-elms.yaml, new-innovations.yaml, medhub.yaml)
+      describe shipped reporting/aggregation depth, not confirmed enforcement, so the
+      vendor race on the actual GATE is unconfirmed across the board, not a lead any
+      competitor has demonstrably proven — only a claim Prism has not yet made either.
+    domain_divergence: >
+      The gate fires at a different moment and against a different unit in each domain.
+      Pharmacy gates TWICE — once at APPE entry (ACPE 7.3.d APPE-ready) and once at
+      graduation (four required settings, 1,440 hours, Practice-ready/Team-ready) — and
+      the second gate is numeric and auditable. DO gates before fourth-year clerkships
+      on a rotation-attribute checklist (COCA 6.10) and must additionally carry OMM
+      manual-skills attainment (do.yaml). Dentistry gates continuously against
+      procedure quotas rather than at a moment at all (dentistry.yaml: "competency- and
+      quota-based rather than calendar-based"), so the rollup must be live, not
+      end-of-term. Medicine gates at graduation against a school-defined required-
+      experience list (LCME 8.6/6.2) with no external numeric floor. One rollup engine
+      with four gate policies — not four products, but not one hard-coded rule either.
+    key_findings:
+      - subject: "Pharmacy"
+        headline: "Pharmacy gates twice, and Prism has no gate at either moment"
+        severity: "gap"
+        detail: >
+          ACPE 7.3.d requires APPE-ready before APPE entry and Practice-ready/Team-ready at
+          graduation, but the module's own FAQ states publishing "only controls
+          visibility... competency calculations continue regardless of publication status,"
+          and no step in its documented workflow blocks enrollment or graduation.
+      - subject: "Pharmacy"
+        headline: "The individual-and-aggregate attainment half of 7.3.d is confirmed shipped"
+        severity: "none"
+        detail: >
+          Competency Management's Review Dashboard renders a genuine per-student,
+          per-competency record — Domain Scores, Student Proficiency Distribution, Score
+          Distribution box plots, per-student drill-down — plus a student-facing My
+          Competency Tracker, resolving the prior "no confirmed data model" hedge outright.
+      - subject: "Dentistry"
+        headline: "No per-category graduation-readiness dashboard exists for CODA 2-24"
+        severity: "gap"
+        detail: >
+          A targeted search across the full help-center mirror and all seven discipline
+          playbooks for procedure-quota, procedure-log or graduation-readiness screens
+          returned zero results, and dentistry gates continuously against quotas rather
+          than at a moment, so the rollup must be live rather than end-of-term.
+      - subject: "DO"
+        headline: "No gate precedent exists anywhere in the product to extend"
+        severity: "gap"
+        detail: >
+          COCA 6.10 wants a per-student checklist queryable BEFORE fourth-year clerkships,
+          but the nearest enforcement pattern — the Placement Clearance Dashboard — is
+          confirmed a monitoring surface driving manual admin follow-up ("schools can take
+          proactive measures, such as sending reminders"), not a system-enforced block.
+      - subject: "DO"
+        headline: "No named EPA/entrustment scale or spider graph on Prism's side"
+        severity: "gap"
+        detail: >
+          New Innovations' CCC Milestone Review ships competency spider graphs and
+          eMedley's eValuate ships EPA entrustment ratings with growth curves plus a DO-school
+          case study at Nova Southeastern's KPCOM; Prism offers only a domain-score bar
+          chart and a threshold box plot.
+      - subject: "Medicine"
+        headline: "Central rotation-completion monitoring is the strongest standard fit in the file"
+        severity: "none"
+        detail: >
+          lcme.yaml rates Element 8.6 "Transfer" and calls it the strongest fit of any
+          standard in the document — though completion is not competence, and Medicine's
+          graduation gate against a school-defined experience list still has no enforcement
+          mechanism behind it.
+
+  - stage: "7. Prove comparability of competency verification across sites and campuses"
+    current_state_in_prism: >
+      Gap for the accreditor's actual ask, but less total darkness than the prior
+      synthesis implied. coca.yaml still rates Element 6.11 a "Gap" because no shipped
+      pillar runs inferential statistics over site-tagged outcome data — that half is
+      unchanged, and now confirmed absent rather than merely unconfirmed: flow file
+      competency-verification--07 traced every aggregation function across every Custom
+      Report data source (Sum/Average/Min/Max/Earliest-Latest, no
+      variance/standard-deviation/effect-size anywhere) and the intelligence layer's own
+      Competency Management Review Dashboard, whose four charts (Domain Scores, Student
+      Proficiency Distribution, Students Meeting Threshold by Domain, Score Distribution
+      by Domain) group only by Cohort and Course Type with no Site dimension at all. But
+      lcme.yaml's "not confirmed to exist out of the box" on a purpose-built
+      comparability report resolves the other way: it does exist. The Aggregate Report
+      for Placement-Based Forms ships a Group By Site option with average score per
+      question set against a class-average benchmark — confirmed independently in the OT
+      playbook, the PA playbook, and the official ARC-PA help-center report guide, and
+      reachable generically through the Forms and Evaluations Custom Report pivot
+      builder too. acpe.yaml's 7.3.c hedge on cross-site consistency analytics resolves
+      the same way. What Prism has, concretely, is descriptive cross-site comparison;
+      what it lacks, concretely, is the inferential layer, per
+      competency-verification--07-prove-comparability-of-competency-verification-across.yaml.
+    pain_or_gap: >
+      The evidence gap is narrower than it looked. COCA 6.11 wants a
+      statistical-analysis report comparing student outcomes across all core/required
+      sites with a plan for any gaps found — variance or effect-size by site, flagging
+      sites outside the comparable band — and that inferential layer is now confirmed
+      absent, not just missing from one report: no variance, standard deviation, or
+      threshold-band flag exists in any Custom Report data source Prism ships, checked
+      across the full field set documented in "Generating and Managing Custom
+      Reports.md," not only the Forms and Evaluations source. But the previous hedge
+      that Prism "plausibly has" site-tagged assessment data understated the actual
+      state: it is confirmed real and already surfaced today. The Aggregate Report for
+      Placement-Based Forms groups scored evaluations by Site, with a class-average
+      benchmark shown alongside, cross-confirmed in two independent discipline playbooks
+      and an official ARC-PA help-center guide (see
+      competency-verification--07-prove-comparability-of-competency-verification-across.yaml,
+      steps 2–3). coca.yaml's recommendation stands unchanged: the statistical layer
+      "should be scoped explicitly into the Accreditation Management build rather than
+      assumed to fall out of the rotation engine" — the rotation engine's descriptive
+      half is done; only the statistics on top are missing.
+    accreditation_link: >
+      COCA Standard 6, Element 6.11 (Comparability Across Clinical Education Sites) —
+      the sharpest version, requiring an actual statistical-analysis report. LCME
+      Standard 8, Element 8.7 (comparable experiences and EQUIVALENT assessment methods
+      across every location). ACPE Standard 7, Key Element 7.3.c (standardized key
+      components and consistent assessment of student performance across all sites
+      offering the same course). CODA Standard 2, Element 2-6 (documented faculty
+      calibration and periodic monitoring across every site). No change to the citation
+      set itself — this field carried no resolvable hedge; the element-level tracing
+      changed what we know about Prism's fit against these same four standards, not
+      which standards apply.
+    competitor_comparison: >
+      This is still the clearest white space in the journey — no competitor file
+      documents a shipped cross-site STATISTICAL comparability report either — and that
+      comparison is now sharper, not just re-asserted: Prism's own descriptive
+      comparability tooling (Aggregate Report for Placement-Based Forms, grouped by Site
+      with a class-average benchmark, plus a general-purpose Custom Report pivot
+      builder) is confirmed real and shipped, which means the remaining
+      inferential-statistics gap is a genuine industry-wide white space rather than a
+      Prism-specific deficit next to more mature competitors. The closest claims remain
+      indirect: Elentra's mapping coverage of the CACMS DCI (elentra.yaml), one45's
+      verified LCME outcome where an evaluation system "powered in large part by One45"
+      was cited as a program strength (one45.yaml), and New Innovations' shipped (not
+      roadmap) APE trend analysis and CCC Milestone Review competency spider graphs
+      (new-innovations.yaml) — though New Innovations' public docs don't disclose
+      whether that spider-graph screen supports a site-level cut, so it can't be
+      confirmed as ahead of Prism's descriptive tooling, only as a different,
+      ACGME/GME-shaped analog (see
+      competency-verification--07-prove-comparability-of-competency-verification-across.yaml,
+      step 1). Prism is behind on shipped accreditation tooling generally but not
+      specifically beaten on comparability analytics — and COCA 6.11 makes DO the domain
+      where the remaining, industry-wide statistical gap bites first.
+    domain_divergence: >
+      DO feels this hardest and most structurally: do.yaml describes hundreds of
+      independently-recruited preceptor relationships spread across many states rather
+      than a small stable set of contracted affiliates, which is precisely the condition
+      COCA 6.11 exists to police. Medicine's version is campus/location comparability
+      within one school (LCME 8.7) — fewer sites, higher scrutiny. Pharmacy's is
+      instrument-and-grading consistency for the same course across sites (ACPE 7.3.c).
+      Dentistry's is not a statistics problem at all but a faculty-calibration problem
+      (CODA 2-6): prove the graders were trained to grade the same way, with
+      calibration-training records per faculty member per site.
+    key_findings:
+      - subject: "DO"
+        headline: "No variance, standard deviation or effect-size function exists in any Custom Report source"
+        severity: "gap"
+        detail: >
+          Every aggregation function across every Custom Report data source was traced —
+          Sum/Average/Min/Max/Earliest-Latest only — so COCA 6.11's statistical-analysis
+          report comparing outcomes across core sites is confirmed absent, not merely
+          unconfirmed.
+      - subject: "DO"
+        headline: "Hundreds of independently-recruited preceptors across many states is exactly what 6.11 polices"
+        severity: "gap"
+        detail: >
+          do.yaml describes a distributed site network rather than a small stable set of
+          contracted affiliates, so DO is the domain where the remaining, industry-wide
+          inferential-statistics gap bites first.
+      - subject: "Medicine"
+        headline: "A purpose-built cross-site comparability report does exist out of the box"
+        severity: "none"
+        detail: >
+          The Aggregate Report for Placement-Based Forms ships a Group By Site option with
+          average score per question set against a class-average benchmark — confirmed
+          independently in the OT playbook, the PA playbook and the official ARC-PA
+          help-center report guide — which resolves lcme.yaml's 8.7 hedge the other way.
+      - subject: "Medicine"
+        headline: "The Competency Management dashboard has no Site dimension at all"
+        severity: "gap"
+        detail: >
+          Its four charts (Domain Scores, Student Proficiency Distribution, Students Meeting
+          Threshold by Domain, Score Distribution by Domain) group only by Cohort and Course
+          Type, so competency-level equivalence across locations cannot be cut by site.
+      - subject: "Pharmacy"
+        headline: "Cross-site consistency analytics for ACPE 7.3.c resolve onto the same shipped report"
+        severity: "none"
+        detail: >
+          acpe.yaml's 7.3.c hedge resolves the same way as LCME 8.7 — descriptive per-site
+          comparison of scored evaluations is real and shipped today, reachable both through
+          the Aggregate Report and the Forms and Evaluations Custom Report pivot builder.
+      - subject: "Dentistry"
+        headline: "CODA 2-6 is a faculty-calibration records problem, not a statistics problem"
+        severity: "gap"
+        detail: >
+          Dentistry must prove graders were trained to grade the same way, which needs
+          calibration-training records per faculty member per site — a different object
+          entirely from the site-grouped score comparison Prism ships.
+
+  - stage: "8. Close the loop — external validation against licensure exams and the CQI/self-study record"
+    current_state_in_prism: >
+      Gap, and it is a triple dependency. The external-validation half needs Exam
+      Management (roadmap Q2 2027) as an INGEST/reporting layer — coca.yaml is explicit
+      that Prism cannot administer COMLEX-USA and must scope this "as an NBOME
+      data-import/reporting integration, not as exam delivery." Element-level tracing in
+      competency-verification--08-close-the-loop-external-validation-against.yaml confirms
+      this exhaustively rather than by roadmap label alone: an exhaustive keyword search
+      across all 322 help-center articles and every discipline playbook returns zero hits
+      for NBOME, COMLEX, NAPLEX, USMLE, or any board-exam-ingestion feature, and the
+      student record's own Status field has no state or field beyond a terminal
+      "Graduate" — nowhere for a licensure-exam result or Match outcome to live even if
+      it existed elsewhere. The loop-closing half needs Accreditation Management
+      (roadmap Q3 2027): coca.yaml rates Element 11.1 a Gap because "no shipped pillar
+      currently closes the finding-to-action evidence loop," and lcme.yaml rates 8.4 a
+      Gap requiring "three roadmap pillars shipping and being integrated with each other,
+      not just individually." The same flow file grounds capability-map.yaml's "not
+      starting from zero" argument in actually-inspected screens rather than only its own
+      summary claim: a real per-domain accreditation-standards library (Program Details >
+      Standards), a standard-mapped Heatmap Report, and a documented (if fully manual)
+      multi-report annual-report data-pull runbook all exist today — but none of them
+      contains a link field connecting a logged finding to the action taken and the
+      evidence that the action occurred, which is the specific missing piece across every
+      screen inspected.
+    pain_or_gap: >
+      Without this stage the first seven produce an internal record no external party
+      validates. capability-map.yaml itself calls the Accreditation Management roadmap
+      item "the single most load-bearing fact for the whole domain expansion
+      initiative," and coda.yaml calls its absence "the single item the capability map
+      itself calls the most load-bearing gap." coca.yaml adds a design constraint worth
+      carrying into scoping: the closed-loop finding->action->evidence pattern "recurs
+      across most 'continuous improvement' standards from every accreditor in this
+      workstream — it should be a first-class object type in Accreditation Management,
+      not bolted onto Curriculum Mapping." acpe.yaml adds a hard boundary: ACPE now runs
+      its own submission platform, PHARMS (replacing AACP's AAMS as of Standards 2025),
+      so Prism should be scoped as an evidence-aggregation/export layer feeding PHARMS,
+      not a competing self-study portal. One narrower piece of ACPE 7.5.a is more
+      resolved than a blanket roadmap dependency would suggest: element-level tracing
+      (competency-verification--08-close-the-loop-external-validation-against.yaml)
+      confirms Exxat Surveys — a live, general-purpose feedback engine with raw/aggregate
+      export, already extended to at least PT and SLP per capability-map.yaml — is not
+      itself blocked on Accreditation Management; only the standard-tagged
+      findings-to-action synthesis and the "communication of major findings/actions to
+      key stakeholders" artifact 7.5.a also requires remain unbuilt.
+    accreditation_link: >
+      COCA Standard 11, Elements 11.1 (Program Assessment — 3 years of outcomes plus the
+      concrete changes made in response), 11.4 (COMLEX-USA pass rates published within
+      30 days, improvement plan below threshold) and 11.9 (COCA annual/mid-cycle
+      reports). LCME Standard 1, Element 1.1 (CQI with ongoing monitoring of compliance
+      with EVERY standard) and Standard 8, Element 8.4 (outcome data including national
+      norms — USMLE, match). ACPE Standard 7, Key Elements 7.5.a (documented CQI cycle,
+      annual communication of findings/actions) and 7.5.b (continuous compliance;
+      standards-to-evidence repository). CODA Standard 1, Element 1-2 (broad-based,
+      systematic, continuous institutional effectiveness — the backbone of the
+      self-study).
+    competitor_comparison: >
+      Prism is behind essentially every vendor here, because all of them ship what Prism
+      dates at Q3 2027. MedHub claims "seamless accreditation management" and imports
+      ACGME survey, case-log and milestone data (medhub.yaml). New Innovations ships
+      NAS accreditation tools, CLER visit management, and APE with citation/concern
+      tracking (new-innovations.yaml). axiUm markets "CODA-Ready Reporting" as an
+      established capability in dentistry (axium.yaml). CORE's CompMS markets
+      accreditation-standards mapping and claims its pharmacy solutions "meet and exceed
+      ACPE Pharmacy Standards and CAPE Outcomes" (core-elms.yaml). one45 has the
+      strongest third-party proof point on disk — a customer-attributed full eight-year
+      LCME accreditation (one45.yaml). The counter-argument in Prism's favor is scoping,
+      not features: coca.yaml argues Accreditation Management should be built around
+      COCA's exact report field taxonomy rather than as "a generic evidence binder,"
+      which is what most of these competitors ship. Element-level tracing
+      (competency-verification--08-close-the-loop-external-validation-against.yaml)
+      confirms this comparison cannot go deeper than marketing-claim-to-roadmap-target for
+      any vendor here: none of medhub.yaml, new-innovations.yaml, axium.yaml,
+      core-elms.yaml, or one45.yaml documents its accreditation-management feature at
+      field/screen level, so "behind on features" is accurate but not verifiable
+      screen-for-screen in either direction — the honest comparison is claim-to-claim, not
+      element-to-element, for every vendor including Prism.
+    domain_divergence: >
+      DO has the most prescriptive external-validation regime: COMLEX-USA pass rates
+      published on a public page within 30 days, with a 2-standard-deviation/90%
+      trigger and a three-year out-of-compliance clock (COCA 11.4), plus a public 4-year
+      PGY-1 placement rate with a 95% floor (COCA 11.5) — both requiring data Prism
+      does not hold. Medicine's is USMLE plus match outcomes as "national norms of
+      accomplishment" (LCME 8.4), with MSPE/ERAS timing as a hard external dependency
+      (lcme.yaml, AAMC entry). Pharmacy's is two exams, NAPLEX and MPJE (pharmacy.yaml),
+      submitted through ACPE's own PHARMS platform. Dentistry's is the most fragmented:
+      INBDE plus DLOSCE plus a state-by-state regional clinical licensure exam (ADEX),
+      so the outcomes rollup is inherently multi-jurisdiction (coda.yaml). Post-graduate
+      structure diverges too — dentistry is a single-accreditor continuum where CODA
+      accredits both the DDS/DMD program and the postdoctoral GPR/AEGD residency, unlike
+      the MD/DO split between LCME/COCA and a separate ACGME (coda.yaml).
+    key_findings:
+      - subject: "DO"
+        headline: "Zero hits for NBOME or COMLEX across all 322 help-center articles"
+        severity: "gap"
+        detail: >
+          COCA 11.4 demands COMLEX-USA pass rates published within 30 days with a
+          2-standard-deviation/90% trigger and a three-year out-of-compliance clock, plus a
+          public 4-year PGY-1 placement rate with a 95% floor (11.5) — data Prism does not
+          hold and has no ingestion path for.
+      - subject: "DO"
+        headline: "No screen anywhere links a logged finding to the action taken and its evidence"
+        severity: "gap"
+        detail: >
+          A per-domain accreditation-standards library, a standard-mapped Heatmap Report and
+          a manual multi-report annual-report runbook all exist today, but COCA 11.1's
+          finding->action->evidence link field is the specific missing piece across every
+          screen inspected.
+      - subject: "Medicine"
+        headline: "The student Status field has nowhere to store a licensure result or Match outcome"
+        severity: "gap"
+        detail: >
+          LCME 8.4 wants USMLE and match outcomes as national norms of accomplishment, but
+          the student record has no state or field beyond a terminal "Graduate" — so the
+          data has no home even if an ingest existed.
+      - subject: "Pharmacy"
+        headline: "ACPE's own PHARMS platform makes Prism an export layer, not a portal"
+        severity: "configure-needed"
+        detail: >
+          PHARMS replaced AACP's AAMS as of Standards 2025, which sets a hard scoping
+          boundary: Prism should be built as the evidence-aggregation and export layer
+          feeding PHARMS rather than a competing submission platform.
+      - subject: "Pharmacy"
+        headline: "Exxat Surveys is live and not blocked on the Q3 2027 Accreditation Management pillar"
+        severity: "none"
+        detail: >
+          A general-purpose feedback engine with raw and aggregate export, already extended
+          to at least PT and SLP, covers part of ACPE 7.5.a — only the standard-tagged
+          findings-to-action synthesis and the stakeholder-communication artifact remain
+          unbuilt.
+      - subject: "Dentistry"
+        headline: "Three separate exam regimes make the dental outcomes rollup multi-jurisdiction"
+        severity: "gap"
+        detail: >
+          INBDE plus DLOSCE plus a state-by-state regional clinical licensure exam (ADEX)
+          means results arrive from multiple bodies, and CODA accredits both the DDS/DMD
+          program and the postdoctoral GPR/AEGD residency as one continuum, unlike the
+          MD/DO split with ACGME.
+
+# Cross-cutting reading of the eight stages, for the synthesis layer.
+journey_summary:
+  strongest_stage: "Stage 4 — the anchor-relative scheduling primitive (capability-map.yaml, confirmed) is the only place in this journey where Prism has a documented architectural advantage no competitor file can match."
+  biggest_gap_stage: "Stage 6 — per-student competency attainment rollup and progression gating."
+  why: >
+    Stages 1-5 produce inputs and Stages 7-8 consume outputs; Stage 6 is the only
+    stage that produces the artifact the journey is named for. Prism's sole asset
+    there is "Competency Tracking," a bullet in capability-map.yaml's intelligence
+    layer with no confirmed data model, no module and — unlike the six core-ring
+    pillars — not even a roadmap date. Three separate accreditation files decline to
+    credit it (lcme.yaml 9.4 "not a confirmed shipped capability"; acpe.yaml 7.3.d
+    "likely outside current Prism capability"; coda.yaml 2-24 "Gap"), while CORE
+    CompMS, New Innovations' CCC Milestone Review and eMedley's EPA growth curves all
+    ship it today.
+  scoping_implication: >
+    Stage 6 should be scoped as a first-class attainment-state object with four
+    pluggable gate policies (APPE-entry + graduation for Pharmacy; pre-clerkship
+    checklist + OMM for DO; continuous quota for Dentistry; graduation-only for
+    Medicine), fed by a domain-specific Stage 3 capture taxonomy. It is a
+    prerequisite for Stage 7 and Stage 8, so sequencing it after the Q3 2027
+    Accreditation Management pillar inverts the dependency order.
+
+sources:
+  - "../prism/capability-map.yaml (shipped vs. roadmap pillars; confirmed anchor-relative scheduling primitive; Competency Tracking as an intelligence-layer bullet; Phase 2 open questions on compliance-item taxonomy)"
+  - "../accreditation/coca.yaml (Elements 6.4, 6.9, 6.10, 6.11, 5.4, 11.1, 11.4, 11.5, 11.9; NBOME/COMLEX and ACGME layers)"
+  - "../accreditation/lcme.yaml (Elements 1.1, 6.2, 8.4, 8.6, 8.7, 9.3, 9.4, 9.7, 9.8; AAMC/ERAS and NBME/USMLE layers)"
+  - "../accreditation/acpe.yaml (Key Elements 2.2.d, 3.1.a, 3.1.b, 3.2.b, 3.2.d, 3.3.a, 3.3.c, 3.3.e, 7.3.c, 7.3.d, 7.5.a, 7.5.b; NABP/NAPLEX/MPJE and AACP/COEPA layers; ACPE PHARMS submission platform)"
+  - "../accreditation/coda.yaml (Elements 1-2, 2-2, 2-5, 2-6, 2-8, 2-9, 2-24, 3-4, 4-6, 5-3; JCNDE INBDE/DLOSCE, state boards/ADEX, ADA CDT code set)"
+  - "../competitors/core-elms.yaml (CompMS competency-management add-on; survey module shipped)"
+  - "../competitors/emedley.yaml (eCLAS mobile case logging, eValuate OSCE/EPA entrustment, ExamN, eCurriculum, eKeeper; KPCOM competency-based-assessment case study)"
+  - "../competitors/leo-davinci.yaml (session-level curriculum mapping to EPAs, Insights Dashboard; merged with Elentra May 2024)"
+  - "../competitors/elentra.yaml (Clinical Experience Management, Logbook, ePortfolio, Assessment & Evaluation incl. proctored exams, Curriculum Matrix, MedBiquitous/CACMS DCI)"
+  - "../competitors/one45.yaml (Assessment and Evaluation with EPAs/WBAs and encounter logs; Augusta University eight-year LCME accreditation case study)"
+  - "../competitors/medhub.yaml (E*Value case logs, ACGME milestone/case-log import, NPDB/NPPES credential verification)"
+  - "../competitors/new-innovations.yaml (CCC Milestone Review spider graphs, APE, NAS/CLER accreditation tooling)"
+  - "../competitors/e-value.yaml (mobile procedure logging with teacher validation; 24+ disciplines)"
+  - "../competitors/axium.yaml (dental EHR + competency grading fused; ~90% U.S. dental school share; CODA-Ready Reporting; no exam-management module found)"
+  - "../domains/do.yaml (eight core clerkships, DO-supervision and inpatient requirements, 200-500 OMM hours assessed during clerkships, distributed independently-recruited site network)"
+  - "../domains/pharmacy.yaml (coursework-free APPE capstone year, 1,440 hours, four required settings, NAPLEX + MPJE + state intern hours, state-licensed practice facilities)"
+  - "../domains/dentistry.yaml (procedure-gated chairside supervision, competency- and quota-based progression rather than calendar-based, ADEX regional clinical licensure exam)"
+  - "../domains/medicine.yaml (two-phase exam-gated structure, USMLE Step milestones, away/audition rotations, Match as downstream bottleneck)"
+  - "../flows/competency-verification--01-define-the-competency-framework-and-map.yaml (element-level trace of Competency Framework Configuration and the Generate Assessment Map Report)"
+  - "../flows/competency-verification--02-build-and-deploy-the-assessment-instruments.yaml (element-level trace of the Competency Management module, question-level assessment-to-competency mapping, and the GoReact LTI rubric-scoring hand-off)"
+  - "../flows/competency-verification--03-capture-evidence-at-the-point-of.yaml (element-level trace of Patient Log Diagnosis/Procedure Minimums and Timesheet Category hour aggregation, incl. PA/ARC-PA and CRNA/NBCRNA production use)"
+  - "../flows/competency-verification--04-formative-mid-point-feedback-and-early.yaml (element-level trace of the MID-anchor due-date mechanic, low-score notification, Competency Dashboard, and the Interventions case-record primitive)"
+  - "../flows/competency-verification--05-summative-sign-off-supervision-attestation-preceptor.yaml (element-level trace of Faculty Compliance, the slot-level Supervision Type field, and the Placement Clearance Dashboard's preceptor-credential tracker)"
+  - "../flows/competency-verification--06-roll-up-to-a-per-student.yaml (element-level trace of the Competency Management Review Dashboard and its publish/unpublish visibility-only enforcement boundary)"
+  - "../flows/competency-verification--07-prove-comparability-of-competency-verification-across.yaml (element-level trace of the Aggregate Report for Placement-Based Forms' Group By Site option and a negative search across every Custom Report data source for inferential statistics)"
+  - "../flows/competency-verification--08-close-the-loop-external-validation-against.yaml (element-level trace of the Program Details Accreditation record, Standards library, Heatmap Report, Exxat Surveys, the PT/PTA AAR data-pull runbook, and an exhaustive negative keyword search confirming no board-exam-ingestion feature exists anywhere in the corpus)"
+last_updated: "2026-08-24"

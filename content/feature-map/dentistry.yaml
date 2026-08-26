@@ -1,0 +1,38 @@
+domain: "Dentistry"
+pillars:
+  - pillar: "Clinical & Experiential Education"
+    status: behind
+    leader: "axiUm (Exan / Henry Schein One), ~90% of U.S. dental schools"
+    summary: "axiUm owns the market as a fused patient-EHR + billing + competency system, matching students to patients against graduation requirements chairside. But dentistry isn't rotations — it's a longitudinal in-house patient panel — so Prism's placement engine has structurally little to anchor to here, not just a feature gap."
+    opportunity: "Compete alongside axiUm on external placements (dental hygiene/assisting programs, community rotations), not by displacing its clinic-native panel model."
+    sources: ["content/accreditation/coda.yaml (2-9)", "content/competitors/axium.yaml"]
+  - pillar: "Compliance Management"
+    status: opportunity
+    leader: "CORE ELMS, eMedley (site agreements only)"
+    summary: "Site-agreement tracking is covered by CORE/eMedley, but the individual-evaluation/due-process trail (2-2) and a faculty-facing evaluation workflow (3-4) are white space — nobody, including Prism, ships either today."
+    opportunity: "A student due-process case log and a faculty evaluation module are unclaimed by any vendor in the set."
+    sources: ["content/accreditation/coda.yaml (2-2, 3-4)"]
+  - pillar: "Curriculum Mapping"
+    status: opportunity
+    leader: "Leo, CORE, Elentra (generally) — but axiUm has none"
+    summary: "Leo/CORE/Elentra are ahead on mapping depth in general, but axiUm — the actual dominant incumbent in dentistry — has no curriculum-mapping module at all."
+    opportunity: "A real wedge against the incumbent that matters: curriculum mapping is axiUm's clearest blind spot."
+    sources: ["content/accreditation/coda.yaml (2-8)", "content/competitors/axium.yaml"]
+  - pillar: "Surveys & Course Evaluations"
+    status: opportunity
+    leader: "eMedley, Elentra, one45 — for comparison; Prism now ships this pillar too"
+    summary: "CORRECTED 2026-08-26 (per Exxat PM confirmation): this pillar is shipped, not roadmap — Prism ships a placement-evaluation Forms engine plus a separate general-purpose 'Exxat Surveys' builder (14 question types, multi-channel distribution, full analytics). See content/prism/capability-map.yaml's 'Surveys & Course Evaluations' pillar. The prior 'Q1 2027 dependency' framing was wrong and is retired."
+    opportunity: "Re-verify Prism's shipped Surveys/Evaluations depth against eMedley/Elentra/one45's competency-linked instruments (OSCE, clinical skills testing) — the platform-level gap is closed; what remains, if anything, is whether Prism's shipped instruments cover the same competency-linked assessment types, not availability."
+    sources: ["content/accreditation/coda.yaml (2-5)", "content/prism/capability-map.yaml (Surveys & Course Evaluations pillar)"]
+  - pillar: "Exam Management"
+    status: opportunity
+    leader: "axiUm (procedure/competency grading, EHR-native)"
+    summary: "axiUm's competency grading is real but built around its own EHR, not a portable procedure-log standard. CODA's ~15 competency categories need CDT-coded, tooth/surface-level logging — the single largest dentistry-specific build in this research."
+    opportunity: "Build the procedure log CDT-native from the start — programs' clinic systems, insurance workflows, and CODA site-visit reviewers already think in CDT, not a parallel taxonomy."
+    sources: ["content/accreditation/coda.yaml (2-24)", "content/synthesis/gap-analysis.md (§2.3)"]
+  - pillar: "Accreditation Management"
+    status: opportunity
+    leader: "axiUm (\"CODA-Ready Reporting\")"
+    summary: "axiUm markets CODA-ready reporting, but it's ad hoc query building (Custom Query Engine), not structured standard-by-standard evidence mapping. CORE's dental page makes no CODA-specific claim at all, unlike its explicit ACPE claim for pharmacy."
+    opportunity: "\"Nobody clearly wins this stage\" — the strongest single differentiation target in the whole research set, per the gap analysis."
+    sources: ["content/accreditation/coda.yaml (1-2, 5-3)", "content/synthesis/gap-analysis.md (§3.4)"]

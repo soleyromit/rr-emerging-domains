@@ -1,0 +1,753 @@
+# NURSING — dual national accreditor file (CCNE + ACEN).
+#
+# NOTE ON `domain`: every other file in this directory sets `domain` to one of
+# the four expansion markets (DO | Pharmacy | Dentistry | Medicine). Nursing is
+# NOT one of those four — it is an EXISTING Exxat-served discipline (see
+# ../prism/capability-map.yaml `served_today`), researched here because its
+# accreditor coverage is the best-documented proof of the "Prism already ships
+# accreditor-mapped evidence" argument that the four expansion domains depend
+# on. Using the discipline name "Nursing" in `domain` is deliberate, not a
+# schema violation.
+#
+# NOTE ON THE DUAL-ACCREDITOR STRUCTURE: US nursing programs choose ONE of two
+# national programmatic accreditors — CCNE or ACEN — and many hold state board
+# of nursing approval alongside. Both are real, both are USDE-recognized, and a
+# product decision for "nursing" must satisfy either. This file therefore
+# carries TWO standards documents and one interleaved `standards` list; each
+# element_id names the body it comes from. Where both bodies demand materially
+# the same evidence (preceptor qualification, licensure pass rate, affiliation
+# agreements), the entry is written once against the tighter/more prescriptive
+# body and the counterpart citation is recorded in gap_notes rather than
+# duplicated. CRNA / nurse anesthesia is accredited by a THIRD body (COA,
+# Council on Accreditation of Nurse Anesthesia Educational Programs) and is
+# researched separately in a sibling file — CRNA appears here only in passing.
+#
+# NOTE ON SOURCE HANDLING: unlike COCA (see coca.yaml lines 1-17), NEITHER CCNE
+# NOR ACEN publishes an AI-usage restriction on its standards document, and no
+# such notice was found on either body's site. ACEN is on the record as
+# AI-positive in nursing education ("Balancing Innovation and Integrity: AI
+# Integration in ACEN-Accredited Nursing Programs", acenursing.org). One real
+# restriction does apply and is worth flagging to Legal/Compliance before any
+# customer-facing reuse: the CCNE standards PDF carries a copyright page
+# granting "its constituent programs permission to copy and otherwise reproduce
+# this standards document as necessary for their own use" and reserving all
+# other print/electronic reproduction to CCNE's express written permission.
+# Exxat is not a CCNE constituent program. This file paraphrases requirements
+# for internal product planning and does not reproduce the standards verbatim.
+
+accreditor: "CCNE (Commission on Collegiate Nursing Education) and ACEN (Accreditation Commission for Education in Nursing) — dual accreditor; US nursing programs elect one or the other"
+slug: "nursing"
+domain: "Nursing"
+governs: >
+  CCNE accredits baccalaureate, master's, DNP, and post-graduate APRN
+  certificate nursing programs (plus nursing residency/fellowship programs) at
+  US colleges and universities; it is an autonomous accrediting arm of the
+  American Association of Colleges of Nursing (AACN). ACEN accredits the full
+  ladder of nursing program types — practical/vocational, diploma, associate
+  (ADN), baccalaureate, master's/post-master's certificate, and clinical
+  doctorate/DNP — and is the only national nursing accreditor covering
+  pre-baccalaureate program types. Both are recognized by the U.S. Department
+  of Education. A program chooses one; ADN-and-below programs in practice have
+  only ACEN. Nurse anesthesia (CRNA) tracks additionally answer to COA, and
+  every pre-licensure program separately answers to its state board of nursing.
+
+standards_document:
+  - title: "Standards for Accreditation of Baccalaureate and Graduate Nursing Programs (CCNE)"
+    version_or_year: >
+      Amended 2026 edition, approved by the CCNE Board of Commissioners July
+      2026 and effective January 1, 2027 (all programs hosting an on-site
+      evaluation or submitting a report on or after that date must address it,
+      including self-studies submitted in late 2026 for a 2027 visit). The
+      2024 edition — effective January 1, 2025 — remains in effect through
+      December 31, 2026. This file is researched against the 2026 edition
+      because it is what any program buying software in 2026-2027 will be held
+      to; the 2026 revision was a focused re-alignment to AACN's updated
+      Essentials (2026), so Standard/Key Element lettering is materially
+      continuous with 2024.
+    url: "https://www.aacnnursing.org/Portals/0/PDFs/CCNE/CCNE-Education-Standards-2026.pdf"
+  - title: "ACEN Accreditation Manual, Section 3: Standards and Criteria"
+    version_or_year: >
+      2023 Standards and Criteria (February 28, 2024 revision of the published
+      PDF), effective January 1, 2023 with mandatory full implementation by all
+      ACEN-accredited programs from January 1, 2024. Still the live document as
+      of this research; ACEN has stated the next review cycle begins late
+      summer 2026 and runs into spring 2027. Five Standards, each with
+      numbered Criteria, applied across all ACEN program types with explicit
+      "Additionally, for Graduate Programs" sub-clauses.
+    url: "https://resources.acenursing.org/download/attachments/1824227333/2023-Standards-and-Criteria-02282024.pdf?download=true"
+
+standards:
+  - element_id: "CCNE Standard II, Key Element II-C"
+    element_title: "Clinical Sites (adequacy, currency, availability, accessibility)"
+    evidence_programs_must_produce: >
+      Documentation that clinical sites are sufficient, appropriate, and
+      available to achieve the program's mission, goals, and expected outcomes,
+      plus evidence of a DEFINED, periodically-run process for determining site
+      currency/availability/accessibility/adequacy and the modifications made
+      as a result. CCNE's own supporting-documentation list for Standard II
+      asks specifically for "documentation of the sufficiency and availability
+      of clinical sites" and "evidence of how the program is responsible for
+      obtaining clinical placements" — i.e. the program, not the student, owns
+      site sourcing, and must prove it.
+    required_software_behavior: >
+      A site/location registry carrying setting, capacity, and historical
+      placement volume per site; a recurring, exportable sufficiency
+      calculation (slots offered vs. placements made vs. placements completed,
+      by site and by cohort) that stands as the periodic-review artifact; and
+      a record of what changed after each review.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The Clinical & Experiential Education pillar's Sites database plus the
+      Slot Sufficiency Report (a Custom report under Sites -> Reports, named in
+      the Nursing playbook as the CCNE II-C evidence source) already produce
+      exactly this: Total Slots Offered / Total Placements / Completed
+      Placements by site. Slot Request and Explore Locations feed the same data
+      model. The configuration work is defining the program's review cadence
+      and expected-adequacy threshold, not building the report.
+    gap_notes: >
+      ACEN asks a narrower question at Standard 4, Criterion 4.9 (clinical/
+      practicum environments must reflect evidence-based nursing practice and
+      meet regulatory-agency requirements) and leaves site-count sufficiency to
+      Standard 1's resource criteria, so CCNE II-C is the tighter bar and this
+      entry covers both. What Prism does not do: the report shows volume, not a
+      judgment of adequacy against a defined threshold — the "defined process"
+      narrative and the modifications-made record are still assembled by hand
+      outside the product (natural Accreditation Management, Q3 2027, scope).
+    source: "https://www.aacnnursing.org/Portals/0/PDFs/CCNE/CCNE-Education-Standards-2026.pdf (p. 12, Key Element II-C; supporting documentation items 3-4, p. 15)"
+
+  - element_id: "CCNE Standard II, Key Element II-G (and ACEN Standard 2, Criterion 2.9)"
+    element_title: "Preceptor Qualification, Orientation, and Evaluation"
+    evidence_programs_must_produce: >
+      CCNE: policies/procedures on preceptor qualifications and evaluation,
+      documentation of each preceptor's qualifications AND of the program's
+      evaluation of preceptor performance, and the materials used for preceptor
+      orientation — with preceptor roles and performance expectations defined,
+      communicated, congruent with professional nursing standards, and
+      periodically reviewed. ACEN 2.9 adds the same qualification/licensure
+      test and explicitly requires preceptors to be "oriented, mentored, and
+      monitored" with "clearly documented responsibilities, which may include
+      input into student evaluation."
+    required_software_behavior: >
+      A preceptor/personnel record holding degree, licensure, certification and
+      expiry dates; a way to collect and version that data from the preceptor
+      directly with a timestamped audit trail; distribution and acknowledgment
+      tracking for the orientation packet and the role-expectations document;
+      an evaluation instrument the program completes ON the preceptor (not just
+      the preceptor on the student); and a hard gate that stops a placement
+      when a preceptor's credential is missing or expired.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Three shipped mechanisms already line up. Compliance Management's
+      Placement Clearance Dashboard runs a three-state tracker (Missing /
+      Exists / NA) specifically for Preceptor CV, License, and Certification
+      and blocks the placement on it. The Clinical & Experiential Education
+      pillar's Experiential Supervisor Intake Form (PIF) collects and syncs
+      preceptor credentials via an encrypted delegator link with a timestamped
+      sync history explicitly marketed to close "accreditation audit gaps."
+      Resources (Site Resources) plus Compliance Management's Attestations
+      cover orientation-material distribution and acknowledgment.
+    gap_notes: >
+      Two real gaps. (1) The program's EVALUATION OF the preceptor — required
+      by CCNE II-G's "the program is responsible for evaluating the performance
+      of preceptors" and by ACEN 2.9's "monitored" — is a form Prism can build
+      but does not ship as a standard instrument for nursing the way the AOTA
+      FWPE family ships for OT; the PT-only PTSE2 (CI evaluation) is the
+      closest shipped analogue. (2) PIF bulk-sending is not supported (one
+      supervisor at a time), which is a real operational cost for an ADN/BSN
+      program running hundreds of preceptors per term.
+    source: "https://www.aacnnursing.org/Portals/0/PDFs/CCNE/CCNE-Education-Standards-2026.pdf (p. 13, Key Element II-G; supporting documentation item 14, p. 15) and https://resources.acenursing.org/download/attachments/1824227333/2023-Standards-and-Criteria-02282024.pdf?download=true (p. 5, Criterion 2.9)"
+
+  - element_id: "CCNE Standard II, Key Element II-F"
+    element_title: "Faculty Sufficiency, Academic/Experiential Preparation, and the 1:8 NP Supervision Ratio"
+    evidence_programs_must_produce: >
+      Current CVs for the chief nurse administrator and all faculty; a summary
+      table of every faculty member's name, title, degrees with specialization,
+      certification, relevant work experience, and teaching responsibilities;
+      evidence that faculty-to-student ratios within defined workloads provide
+      adequate supervision and evaluation; evidence that didactic faculty hold
+      a graduate degree; and, for any baccalaureate clinical faculty WITHOUT a
+      graduate degree, evidence of all four fallback conditions (BSN held,
+      significant clinical experience, enrolled in a graduate program or
+      otherwise qualified, and formal oversight by a graduate-prepared faculty
+      member). CCNE names a recommended 1:8 faculty-to-student ratio for
+      indirect faculty supervision on nurse practitioner tracks.
+    required_software_behavior: >
+      A structured faculty record (degrees, licensure, national certification,
+      population focus, teaching assignments by academic year) that both
+      generates the CV/summary table and feeds a computed supervision ratio per
+      NP track; conditional-logic tracking so the four-part baccalaureate
+      clinical-faculty exception is provable per individual rather than
+      asserted in prose.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Faculty CV auto-generation (exxat_advantage_layer) builds a .docx CV from
+      the structured faculty profile with Teaching Details auto-populated from
+      courses the program actually assigned, broken out by academic year — that
+      is the CCNE supporting-documentation summary table, generated rather than
+      maintained. Compliance Management's Faculty Compliance module tracks
+      licensure/certification expiry on the same records (note: it requires the
+      paid Exxat Approve add-on).
+    gap_notes: >
+      The 1:8 indirect-supervision ratio is the gap. Prism's three-tier faculty
+      association model records WHICH students/placements a faculty member is
+      associated with, so the numerator and denominator both exist, but no
+      shipped report computes or alerts on a faculty-to-student ratio per NP
+      track — unlike the Slot Sufficiency Report for sites. Also worth carrying
+      into scoping: the CSWE (Social Work) accreditation guide is candid that
+      faculty headcount/degree-threshold data forms "must be completed outside
+      Exxat Prism"; the same honest limit applies here.
+    source: "https://www.aacnnursing.org/Portals/0/PDFs/CCNE/CCNE-Education-Standards-2026.pdf (pp. 12-13, Key Element II-F; supporting documentation items 5-11, p. 15)"
+
+  - element_id: "CCNE Standard I, Key Element I-B"
+    element_title: "Congruence with Professional Nursing Standards — the AACN Essentials (2026)"
+    evidence_programs_must_produce: >
+      Identification of the professional nursing standards and guidelines the
+      program uses, with CCNE REQUIRING three named components of The
+      Essentials: Core Competencies for Professional Nursing Education (AACN,
+      2026) — the 10 "Domains for Nursing," the 8 "Concepts for Nursing
+      Practice," and the 45 "Competencies" numbered 1.1 through 10.3 and
+      organized by Domain. Programs layer additional standards on top, and APRN
+      tracks must additionally align to the Consensus Model for APRN Regulation
+      (July 2008) role-and-population structure.
+    required_software_behavior: >
+      A standards library that ships the Essentials taxonomy at all three
+      levels (Domain / Concept / numbered Competency) as a pre-loaded, mappable
+      framework, allows program-authored SLOs alongside it, and supports
+      simultaneous mapping of one course objective to several frameworks at
+      once (Essentials + NONPF + IPEC + spheres of care + program SLOs).
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The Curriculum Mapping pillar already does this specifically for nursing.
+      The AACN Essentials ship PRE-POPULATED under Program Details -> Standards
+      (confirmed in both the Nursing playbook and the "Streamline Transition to
+      Competency-Based Education" tutorial), and the pillar models a single
+      accreditor framework with level-conditional sub-scopes — entry-level
+      programs map to sub-competencies A/B/C, advanced-level to E/F/G. The same
+      objective maps simultaneously to Essentials, NONPF, IPEC, the four
+      spheres of care and program SLOs. Nothing here needs building.
+    gap_notes: >
+      Version currency is the live risk. Prism's pre-loaded set is documented
+      against the 2021 Essentials (10 Domains / 8 Concepts / 45 Competencies);
+      CCNE's 2026 amendment exists precisely because AACN reissued the
+      Essentials in 2026, and CCNE now cites 2026 page ranges (Domains pp.
+      10-11, Concepts pp. 11-14, Competencies pp. 27-54). The competency
+      numbering 1.1-10.3 is unchanged, but Prism must confirm and refresh the
+      loaded content against the 2026 edition before January 1, 2027. The CAPTE
+      precedent — report metadata carrying BOTH 2016 and 2024 standard numbers
+      side by side — is the pattern to reuse here.
+    source: "https://www.aacnnursing.org/Portals/0/PDFs/CCNE/CCNE-Education-Standards-2026.pdf (p. 7, Key Element I-B)"
+
+  - element_id: "CCNE Standard III, Key Elements III-B, III-C, III-D, III-E"
+    element_title: "Degree-Level Curricula (Baccalaureate / Master's / DNP / Post-Graduate APRN Certificate)"
+    evidence_programs_must_produce: >
+      A separate demonstration, per degree program AND per track offered, of
+      where and how the Essentials' Domains, Concepts, and 45 Competencies are
+      incorporated into that curriculum — plus the program of study/curricular
+      plan for EACH track under review, and evidence that APRN tracks (CNS,
+      nurse anesthesia, nurse-midwife, NP) carry three separate comprehensive
+      graduate-level APRN-core courses (advanced physiology/pathophysiology,
+      advanced health assessment, advanced pharmacology). Each key element is
+      individually marked "not applicable if that program is not under review,"
+      so the evidence must be sliceable by degree.
+    required_software_behavior: >
+      Per-track curriculum structures that can each be mapped independently
+      against the same shared standards framework, with per-track and
+      cross-track coverage reporting so a program running ADN + BSN + MSN + DNP
+      + post-graduate certificate can produce five self-contained crosswalks
+      AND one institutional view.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Curriculum Mapping's Curriculum Grid model is built for exactly this —
+      the Nursing playbook confirms programs configure a separate grid per
+      degree/track (ADN/BSN/MSN/DNP/specialty) so each pathway is independently
+      documented, and the Crosswalk Report (Essentials by row, course/objective
+      by column, each cell recording knowledge/skill/behavior AND introduced/
+      reinforced/demonstrated) is a nursing-specific report shape modelled on
+      AACN's own Essentials Toolkit template.
+    gap_notes: >
+      This is the single most consequential structural limit in the file, and
+      nursing is the discipline where it bites hardest. Prism states plainly
+      during grid creation that "you can run reports across a curriculum grid,
+      but you cannot run reports on multiple grids simultaneously." A nursing
+      school with five tracks therefore produces five disconnected report sets
+      and no product-supported program-level union view — which is fine for
+      CCNE III-B/C/D/E (deliberately per-degree) but breaks ACEN Criterion 4.1,
+      which requires ONE set of end-of-program student learning outcomes that
+      "apply to all program options." A CCNE school and an ACEN school need
+      opposite things from the same feature. Flag to Product.
+    source: "https://www.aacnnursing.org/Portals/0/PDFs/CCNE/CCNE-Education-Standards-2026.pdf (pp. 16-19, Key Elements III-B through III-E; supporting documentation items 3, 5, 7, p. 22)"
+
+  - element_id: "CCNE Standard III, Key Element III-H"
+    element_title: "Planned Clinical Practice Experiences (DNP 1,000-hour and NP 500-hour minimums)"
+    evidence_programs_must_produce: >
+      Evidence that clinical practice experiences are planned, implemented, and
+      evaluated by faculty, align with student and program outcomes, and are
+      provided to students in ALL programs including distance-education
+      offerings; evidence of direct care experiences for every direct-care
+      track; and hard numeric proof that DNP programs deliver a minimum of
+      1,000 post-baccalaureate supervised practice hours and that NP-preparing
+      tracks deliver a minimum of 500 direct patient care clinical hours (with
+      the 500 counting inside the 1,000 for NP tracks in DNP programs).
+    required_software_behavior: >
+      Hour capture at the encounter level with a category dimension (direct
+      care vs. indirect vs. simulation vs. in-service), a preceptor/faculty
+      approval workflow so only approved hours count, per-student running
+      totals against a configured threshold, and a nested-threshold rule so the
+      500 direct-care hours are provably a subset of the 1,000 practice hours
+      rather than an additive second bucket.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Clinical & Experiential Education's Timesheets capture date, start/end,
+      duration and category with a preceptor/admin approval workflow; the Hours
+      by Categories Report aggregates completed/approved hours by category, and
+      the Nursing playbook names it directly as the CCNE III-H evidence source.
+      Program Requirements (Compliance Management) hold the hour thresholds and
+      surface progress on the student profile, and the DNP Activity Log Report
+      already breaks project vs. non-project hours with exposure mapped to the
+      Essentials.
+    gap_notes: >
+      The nesting rule (500 direct-care hours counted INSIDE the 1,000, not
+      alongside) is not documented as a supported threshold relationship —
+      Program Requirements thresholds appear to be flat per-category minimums.
+      Confirm with Product before claiming CCNE III-H is fully automated for
+      DNP-NP tracks. Note also the shipped analogue worth reusing: SLP's
+      Clinical Log carries support-configured min/max hour thresholds per
+      participation-type x mode-of-delivery cell that red-flag students below
+      minimum — the same mechanic nursing needs, but support-gated, not
+      self-service.
+    source: "https://www.aacnnursing.org/Portals/0/PDFs/CCNE/CCNE-Education-Standards-2026.pdf (p. 20, Key Element III-H; supporting documentation item 9, p. 22)"
+
+  - element_id: "CCNE Standard III, Key Element III-I"
+    element_title: "Planned Experiences Preparing Students to Care for Diverse Individuals and Populations"
+    evidence_programs_must_produce: >
+      Examples of planned didactic, simulation, and/or clinical practice
+      experiences, in a variety of settings appropriate to the role, that
+      prepare students to care for individuals and populations with diverse
+      life experiences, perspectives, and backgrounds. ACEN asks a parallel
+      question at Criterion 4.7(a), which requires the curriculum to
+      incorporate diversity, equity, inclusion, and/or social determinants of
+      health across all learning environments.
+    required_software_behavior: >
+      Encounter-level logging tagged by patient demographics and setting, with
+      aggregation that answers "which populations has this student actually
+      seen, and where are the exposure gaps" both per student (for remediation)
+      and per site (for placement planning) — plus a curriculum-side attribute
+      tagging so didactic and simulation coverage is provable alongside
+      clinical.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Two shipped surfaces cover the two halves. On the clinical side, the
+      Patient Log (Clinical & Experiential Education) feeds the Patient Log
+      Aggregate Report, which groups by course, rotation, setting, location,
+      site, or student with two-level drill-down — the Nursing playbook notes
+      that grouping by student "surfaces equitable-exposure gaps across patient
+      demographics" — and the Graphical Patient Log Summary Report is cited in
+      Exxat's own nursing guides as the diverse-populations evidence artifact.
+      On the didactic/simulation side, Curriculum Mapping's configurable course
+      and mapping attributes (lifespan/population tags are a confirmed shipped
+      nursing default) tag coverage inside the map.
+    gap_notes: >
+      Non-CRNA case-log conventions are the documented weak spot: nearly all
+      Patient/CCE Log detail in Exxat's nursing sources is CRNA-specific
+      (NBCRNA anatomical categories, anesthesia methods), and general ADN/BSN
+      encounter-logging conventions are undocumented. A BSN program adopting
+      the Patient Log is configuring a CRNA-shaped template, which is a real
+      onboarding cost and a discovery question for any nursing deal.
+    source: "https://www.aacnnursing.org/Portals/0/PDFs/CCNE/CCNE-Education-Standards-2026.pdf (p. 20, Key Element III-I; supporting documentation item 10, p. 22) and https://resources.acenursing.org/download/attachments/1824227333/2023-Standards-and-Criteria-02282024.pdf?download=true (p. 9, Criterion 4.7a)"
+
+  - element_id: "CCNE Standard III, Key Element III-K (and ACEN Standard 4, Criterion 4.10)"
+    element_title: "Faculty Evaluation of Individual Student Performance (Preceptor Input Is Not Faculty Judgment)"
+    evidence_programs_must_produce: >
+      Examples of didactic and clinical student performance evaluations
+      including the tools used; documentation that FACULTY are responsible for
+      grading all courses and clinical experiences; and defined, consistently
+      applied evaluation policies. CCNE is explicit that where preceptors
+      facilitate clinical learning, "faculty may seek input from preceptors
+      regarding student performance, but ultimately faculty are responsible for
+      evaluation of individual student outcomes." ACEN 4.10 adds that formative
+      AND summative methods must be used throughout the curriculum in all
+      learning environments, be varied and appropriate to the delivery method,
+      and align with the progression of course outcomes.
+    required_software_behavior: >
+      Evaluation instruments that model a multi-role review chain in which the
+      preceptor's submission is INPUT that routes to a faculty reviewer who
+      renders the actual determination — with the role, timestamp, and
+      sequence preserved on the record — plus midterm/final (formative/
+      summative) instances of the same instrument within one placement.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The Forms/Evaluations engine inside Clinical & Experiential Education is
+      built on exactly this shape: the Multi-Term form archetype covers the
+      midterm-plus-final pattern within a placement, and the configurable
+      multi-step review workflow (student completes -> site/preceptor reviews
+      -> school admin/faculty reviews) puts faculty structurally last, which is
+      what CCNE III-K demands. The three-tier faculty association model scopes
+      a placement-level faculty reviewer to only their assigned students.
+      Nursing-specific instruments the playbook confirms in production —
+      Preceptor Evaluation of Student, student self-evaluations, skills/
+      simulation-lab checklists by skill domain — all run on this engine.
+    gap_notes: >
+      Nursing has no shipped standard national instrument the way PT has CIET
+      v2/PTSE and OT has the AOTA FWPE family — nursing programs build custom
+      forms, and custom form creation is support-gated rather than
+      self-service. Worth pricing into any nursing implementation estimate.
+    source: "https://www.aacnnursing.org/Portals/0/PDFs/CCNE/CCNE-Education-Standards-2026.pdf (p. 21, Key Element III-K; supporting documentation items 12-13, p. 22) and https://resources.acenursing.org/download/attachments/1824227333/2023-Standards-and-Criteria-02282024.pdf?download=true (p. 10, Criterion 4.10)"
+
+  - element_id: "CCNE Standard IV, Key Element IV-C (and ACEN Standard 5, Criterion 5.3)"
+    element_title: "Nursing Licensure (NCLEX-RN) Pass Rates"
+    evidence_programs_must_produce: >
+      CCNE: an 80% licensure pass rate demonstrated FOR EACH CAMPUS/SITE AND
+      TRACK by any one of four permitted calculations — first-time takers most
+      recent calendar year, all takers most recent calendar year, all
+      first-time takers across the three most recent calendar years, or all
+      takers across three years — with the program stating which option it
+      used, per campus and per track, regardless of how few test-takers there
+      are. Takers sitting the exam more than two years after completion may be
+      excluded. ACEN 5.3 sets a parallel but not identical bar: the most recent
+      annual rate OR the three-year mean must hit 80% for first-time takers,
+      OR 80% for first-time-plus-repeaters, OR be at/above the national/
+      territorial mean for that program type — and additionally requires the
+      data be DISAGGREGATED (with written justification when it is not),
+      analyzed annually with actions taken, documented for three years, and
+      SHARED with communities of interest.
+    required_software_behavior: >
+      Ingest NCLEX-RN pass-rate data from the external source of record (NCSBN
+      / the state board), store it per cohort, per campus/site, per track and
+      per attempt-type, compute all four CCNE options and all three ACEN
+      options side by side, compare against the 80% threshold and against the
+      published national mean, and trigger an improvement-plan workflow when a
+      cohort falls short.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      Nothing shipped ingests or reports licensure-exam results. This is the
+      intended job of the roadmap Exam Management pillar (Q2 2027), and — as
+      with COCA/COMLEX — the requirement is an integration and reporting layer,
+      not exam delivery: Prism cannot administer NCLEX-RN, NCSBN does.
+      Competency Management can prove in-program achievement but says nothing
+      about the external exam.
+    gap_notes: >
+      Two nursing-specific scoping notes that do not appear in the DO/MD files.
+      (1) The per-campus/site AND per-track slice is unusually granular — a
+      multi-campus BSN program owes a separate pass rate per site, which means
+      the exam data model must key on the same campus/site entity the placement
+      engine already uses, not just on cohort. (2) ACEN's "at or above the
+      national/territorial mean" option requires ingesting a national benchmark
+      figure, not just the program's own numbers — a second external data
+      dependency the Exam Management scope should name explicitly. NCLEX-RN
+      pass rate is also the single most commercially load-bearing number in
+      nursing (state boards act on it independently of the accreditor), which
+      makes this the highest-value Gap in this file.
+    source: "https://www.aacnnursing.org/Portals/0/PDFs/CCNE/CCNE-Education-Standards-2026.pdf (p. 24, Key Element IV-C; supporting documentation item 3, p. 27) and https://resources.acenursing.org/download/attachments/1824227333/2023-Standards-and-Criteria-02282024.pdf?download=true (pp. 11-12, Criterion 5.3)"
+
+  - element_id: "CCNE Standard IV, Key Elements IV-A and IV-F"
+    element_title: "Systematic Process to Determine Program Effectiveness, and Use of Outcome Data for Improvement"
+    evidence_programs_must_produce: >
+      IV-A: a written, ongoing, comprehensive evaluation/assessment plan that
+      covers completion, licensure, certification and employment rates (as
+      required by the U.S. Department of Education) plus faculty and other
+      program outcomes, names which quantitative/qualitative data are
+      collected, carries timelines for collection, review and analysis, and is
+      itself periodically reviewed — with meeting minutes proving the review
+      happened. IV-F: proof that discrepancies between actual and CCNE-expected
+      outcomes (70% completion, 80% licensure, 80% certification, 80%
+      employment) informed specific, deliberate, ongoing changes that were then
+      analyzed for effectiveness, with faculty engaged in the process.
+    required_software_behavior: >
+      A closed-loop "outcome -> discrepancy -> action -> re-measurement"
+      object, versioned by review cycle, that binds each numeric outcome to the
+      change made in response and to the evidence the change worked, queryable
+      by academic year and exportable in the accreditor's own report structure.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      This is the definition of the roadmap Accreditation Management pillar
+      (Q3 2027). No shipped pillar closes the finding-to-action loop. Program
+      Details -> Setup -> School Profile -> Accreditation stores the
+      program's accreditation record (body, status, type, next/most-recent
+      date) but not the evidence chain, and the Communications/Interventions
+      record type is student-scoped, not program-scoped.
+    gap_notes: >
+      Same closed-loop pattern already flagged against COCA Element 11.1 — it
+      recurs in every accreditor in this workstream and should be a
+      first-class object in Accreditation Management rather than bolted onto
+      Curriculum Mapping. The nursing-specific addition: CCNE IV-A requires the
+      plan to span FOUR federally-mandated outcome families at once
+      (completion, licensure, certification, employment), three of which live
+      entirely outside Prism today — so the nursing build is an aggregation
+      problem across four external data sources, not a reporting problem over
+      Prism's own data.
+    source: "https://www.aacnnursing.org/Portals/0/PDFs/CCNE/CCNE-Education-Standards-2026.pdf (p. 23, Key Element IV-A and p. 25, Key Element IV-F; supporting documentation items 1-2 and 6, p. 27)"
+
+  - element_id: "ACEN Standard 4, Criterion 4.9"
+    element_title: "Clinical/Practicum Learning Environments — Current Written Agreements"
+    evidence_programs_must_produce: >
+      For every clinical/practicum learning environment: CURRENT written
+      agreements that specify expectations for all parties for the protection
+      of the student; evidence the environments reflect evidence-based nursing
+      practice and meet regulatory agencies' requirements; and evidence they
+      reflect the educational level students are being prepared at, so that
+      course and end-of-program outcomes (plus role-specific competencies for
+      graduate programs) can be achieved. CCNE's Standard II supporting
+      documentation asks the same thing more loosely — "examples of current
+      affiliation agreements with institutions at which student instruction
+      occurs."
+    required_software_behavior: >
+      A contract object linked to sites/locations with executed-document
+      storage, effective and expiry dates, renewal alerting, and — critically —
+      an automated check that evaluates each contract against the DATES of the
+      placements running under it, so "current" is enforced rather than
+      asserted.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Compliance Management's Contracts feature is a direct, no-adaptation fit
+      and is already the documented nursing pattern (upload -> expiry alert ->
+      Program Calendar surfacing -> Placement Clearance gate, recurring
+      identically across Exxat's ACEN, CCNE and COA guides). The automated
+      Contract Status check on the Placement Clearance Dashboard evaluates each
+      location's contracts against placement dates and returns Valid Contract /
+      Needs Attention (contract expires before placement end) / Missing
+      Contracts — which is precisely ACEN's "current written agreements" test,
+      computed rather than reviewed by hand. Contract linking (one agreement
+      chained across many sites) and the common-contract-sharing toggle handle
+      the multi-program university case a nursing school usually sits in.
+    gap_notes: >
+      Marked Transfer rather than Configure because this requires no new
+      taxonomy, no new object, and no accreditor-specific setup — it is the
+      same feature nursing programs already run. The one caveat carried from
+      the capability map: the "Placement Clearance" REPORT reflects uploaded
+      compliance-document and contract status only and does NOT indicate
+      whether the student profile was actually shared with the site — a
+      distinct manual step admins miss.
+    source: "https://resources.acenursing.org/download/attachments/1824227333/2023-Standards-and-Criteria-02282024.pdf?download=true (pp. 9-10, Criterion 4.9) and https://www.aacnnursing.org/Portals/0/PDFs/CCNE/CCNE-Education-Standards-2026.pdf (p. 15, Standard II supporting documentation item 3)"
+
+  - element_id: "ACEN Standard 4, Criterion 4.6"
+    element_title: "Course Credits, Clock Hours, and Contact-Hour Ratios"
+    evidence_programs_must_produce: >
+      Evidence that course credits and/or clock hours for ALL nursing courses
+      in the program of study — including the ratios for contact hours —
+      comply with the requirements of the governing organization and of
+      regulatory agencies, and additionally, for graduate programs, of
+      certifying agencies as applicable. Diploma pre-licensure RN programs face
+      a hard cap in the absence of other requirements: a maximum 90 credit
+      hours including no more than 50 credit hours of nursing courses.
+    required_software_behavior: >
+      Credit/clock-hour values held on the course record itself and rolled up
+      per program of study, with an explicit didactic-to-clinical contact-hour
+      ratio computed per course, plus captured clinical hours reconciled
+      against the published clock hours so the plan and the reality can be
+      compared in one view.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Two shipped halves. Curriculum Mapping's Course Catalog / Course Offering
+      model holds the published course structure and Generate Syllabus emits
+      the program-of-study artifact per track. Clinical & Experiential
+      Education's Timesheets plus the Hours by Categories Report hold actual
+      approved hours by category, which is what proves the clinical side of the
+      ratio was really delivered.
+    gap_notes: >
+      Nothing shipped computes a contact-hour RATIO or validates it against a
+      state board's rule table — and state boards, not the accreditor, set most
+      of these numbers, which vary by jurisdiction. This is a per-state
+      configuration surface no current pillar owns, and it is the clearest
+      example in this file of nursing's state-regulatory layer sitting
+      alongside (and sometimes above) the national accreditor. The diploma
+      90/50 credit cap is a fixed rule that could be encoded; the state ratios
+      cannot be, without a jurisdiction rule table.
+    source: "https://resources.acenursing.org/download/attachments/1824227333/2023-Standards-and-Criteria-02282024.pdf?download=true (pp. 8-9, Criterion 4.6, including the diploma pre-licensure note on p. 10)"
+
+  - element_id: "ACEN Standard 5, Criterion 5.1"
+    element_title: "Systematic Plan for Evaluation — Summative Assessment of End-of-Program Student Learning Outcomes"
+    evidence_programs_must_produce: >
+      A written systematic plan for evaluation (SPE) per program type in which
+      faculty: use a VARIETY of appropriate DIRECT outcome assessment methods
+      for each end-of-program student learning outcome; set a specific,
+      measurable expected level of achievement per method; collect AGGREGATE
+      data at faculty-determined intervals AND DISAGGREGATE it for meaningful
+      analysis (with written justification wherever data is not disaggregated);
+      analyze it and implement actions when needed; maintain three years of
+      data, analysis, and evidence of use in decision-making; and SHARE the
+      analysis with communities of interest. Graduate programs additionally
+      assess role-specific nursing competencies per program option.
+    required_software_behavior: >
+      Assessment questions mapped once to competencies so achievement
+      calculates automatically thereafter; cohort-level aggregation with
+      distribution and threshold views; disaggregation by track, campus,
+      cohort and delivery method; three-year retention of both the numbers and
+      the decisions made from them; and an export fit to hand to an advisory
+      board.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The Competency Management engine (intelligence layer) covers the
+      measurement half properly: a 4-step lifecycle (configure framework -> map
+      assessments/course offerings -> generate reports -> publish scores), a
+      configurable expected-level threshold per competency (default 70%),
+      pooled-mean parent scoring, and a Review Dashboard rendering Domain
+      Scores, Student Proficiency Distribution, Students Meeting Threshold by
+      Domain, and a Score Distribution box plot that turns red when a domain's
+      median falls below threshold — which is ACEN 5.1(b) and (c) rendered as a
+      product. The Nursing playbook names the Cohort Performance Tracking
+      Dashboard as the central ACEN 5.1 aggregate-data evidence.
+    gap_notes: >
+      The gap is 5.1(d), (e) and (f), not (a)-(c): Prism measures and displays,
+      but does not retain a three-year versioned record of the ANALYSIS and of
+      the decisions taken from it, nor produce the communities-of-interest
+      share. Same closed-loop hole as CCNE IV-A/IV-F — Accreditation Management
+      (Q3 2027). One genuine nursing advantage to note: because assessment-to-
+      competency mapping happens once and then calculates automatically,
+      disaggregation by track/cohort is a filter rather than a rebuild, which
+      is exactly what ACEN 5.1(c) asks for and what spreadsheet-based programs
+      cannot do.
+    source: "https://resources.acenursing.org/download/attachments/1824227333/2023-Standards-and-Criteria-02282024.pdf?download=true (p. 11, Criterion 5.1)"
+
+  - element_id: "ACEN Standard 5, Criterion 5.4 (and CCNE Standard IV, Key Element IV-E)"
+    element_title: "Job Placement / Employment Rate"
+    evidence_programs_must_produce: >
+      ACEN: an annual, SPE-described process in which faculty request job
+      placement data from ALL graduates using appropriate assessment methods,
+      set a measurable expected level of achievement with a rationale, collect
+      sufficient aggregate data INCLUDING THE RESPONSE RATE, disaggregate it,
+      analyze both the sufficiency of the data and the rate itself, act on the
+      analysis, retain three years of it, and share the analysis with
+      communities of interest. For students already licensed at admission
+      (RN-to-BSN, post-master's), the assessment may instead measure
+      professional growth, career advancement, or a new role specialty. CCNE
+      IV-E sets the numeric bar: an 80% employment rate per degree/certificate
+      program, collected at or within 12 months of completion, or 80% after
+      excluding graduates who elected not to be employed.
+    required_software_behavior: >
+      Survey authoring and distribution to people who are no longer system
+      users (alumni, employers), reaching external email addresses; response-
+      rate tracking as a first-class metric, not a footnote; aggregate and
+      disaggregate exports; and retention of the analysis across three cycles.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Exxat Surveys is a shipped, first-party survey builder with 14 question
+      types, three distribution channels — in-Prism by persona, additional
+      email/CSV upload, and an anonymous public link/QR code — and analytics
+      covering Status Overview, Weekly Response Rates, per-channel breakdown,
+      completion-time distribution, and Raw vs. Aggregate exports. The Nursing
+      playbook names Alumni Surveys and Job Placement Surveys distributable to
+      EXTERNAL email addresses as the ACEN 5.4 mechanism specifically, and the
+      built-in Weekly Response Rates analytic is a direct match for ACEN's
+      unusual requirement to report the response rate itself.
+    gap_notes: >
+      This entry previously flagged a deliberate deviation from how coca.yaml
+      scored the equivalent element: Exxat's official pillar diagram marked
+      "Surveys & Course Evaluations" as roadmap Q1 2027, which had made
+      survey-dependent COCA elements a hard Gap, while the help-center corpus
+      and the Nursing playbook both documented Exxat Surveys as already
+      shipped and already used for nursing job-placement evidence. CORRECTED
+      2026-08-26: that contradiction is now resolved, per Exxat PM
+      confirmation (see content/prism/capability-map.yaml, Surveys & Course
+      Evaluations pillar) — "Surveys & Course Evaluations" is a shipped
+      pillar, not a Q1 2027 roadmap item layered on top of Exxat Surveys.
+      coca.yaml's equivalent survey elements have since been corrected to
+      Configure as well, so this is no longer a cross-file inconsistency; it
+      is safe to quote Configure for this capability across disciplines.
+    source: "https://resources.acenursing.org/download/attachments/1824227333/2023-Standards-and-Criteria-02282024.pdf?download=true (p. 12, Criterion 5.4) and https://www.aacnnursing.org/Portals/0/PDFs/CCNE/CCNE-Education-Standards-2026.pdf (p. 25, Key Element IV-E)"
+
+licensure_or_gme_layer:
+  - body: "NCSBN / NCLEX-RN (National Council of State Boards of Nursing)"
+    what_it_governs: >
+      NCSBN is the not-for-profit organization through which the boards of
+      nursing of all 50 states, the District of Columbia, and four US
+      territories act together on matters of common interest. It develops and
+      administers the NCLEX-RN (National Council Licensure Examination for
+      Registered Nurses) and the NCLEX-PN for practical nurses — the single
+      required entry-to-practice examination for RN licensure in every US
+      jurisdiction. NCSBN sets the passing standard (a periodically reviewed
+      logit cut score, not a fixed percentage), publishes annual and quarterly
+      national and per-program first-time pass rates, and operates Nursys, the
+      national database of nurse licensure and discipline data. Candidates
+      register with NCSBN but are made eligible to test by their state board,
+      not by the school and not by the accreditor.
+    relevance_to_product: >
+      The NCLEX-RN first-time pass rate is the number both accreditors key
+      their most consequential outcome element to (CCNE IV-C's 80% threshold
+      per campus/site and track; ACEN 5.3's 80%-or-national-mean test) AND the
+      number state boards act on independently. Any Exam Management capability
+      serving nursing is therefore an ingestion-and-reporting layer over NCSBN/
+      state-board-reported results, plus the published national mean as a
+      second external feed — Prism cannot administer NCLEX-RN. The
+      per-campus/per-track granularity CCNE requires means the exam data model
+      must key to the same site/campus entity the placement engine already
+      uses. Adjacent and distinct: ANCC, AANPCB, PNCB, NBCRNA and the other
+      specialty certification boards supply the CERTIFICATION pass rates CCNE
+      IV-D and ACEN 5.3 also demand for graduate tracks — a many-bodies
+      ingestion problem, not one feed.
+    source: "https://www.ncsbn.org/"
+  - body: "State Boards of Nursing (55 jurisdictional boards; approval is separate from accreditation)"
+    what_it_governs: >
+      Each state/territorial board of nursing independently APPROVES nursing
+      education programs operating in its jurisdiction, issues RN and APRN
+      licenses, and enforces that state's Nurse Practice Act. Board approval is
+      a legal prerequisite to operate and to make graduates eligible for NCLEX;
+      national accreditation by CCNE or ACEN is a separate, voluntary
+      (but federally and financially consequential) status. Boards set
+      jurisdiction-specific rules national accreditors do not — minimum
+      clinical clock hours, permitted simulation substitution percentages,
+      faculty-to-student ratios in clinical settings, preceptor qualification
+      floors — and can place a program on conditional status or close it on
+      sustained NCLEX pass-rate shortfall.
+    relevance_to_product: >
+      This is the structural difference between nursing and the four expansion
+      domains, and it changes product scope. A nursing program is not answering
+      to ONE rule set: it answers to CCNE or ACEN nationally AND to a state
+      board whose numeric rules differ by jurisdiction and outrank the
+      accreditor's on clock hours and ratios (see ACEN Criterion 4.6, which
+      explicitly defers to "regulatory agencies"). ACEN Criterion 4.8(c) and
+      4.9(c) do the same for simulation and clinical environments. Prism's
+      Program Details -> Setup -> School Profile -> Accreditation record already
+      stores repeatable accrediting-body entries, so a program can record both
+      its accreditor and its board approval — but no shipped feature encodes a
+      per-state rule table to validate hours, ratios, or simulation caps
+      against. Any serious nursing accreditation-readiness claim has to say
+      out loud that it covers the national accreditor and not the 55 boards.
+    source: "https://www.ncsbn.org/contact-bon.htm"
+  - body: "AACN (American Association of Colleges of Nursing) — publisher of The Essentials, parent of CCNE"
+    what_it_governs: >
+      The national membership organization for baccalaureate and
+      graduate nursing programs. It publishes The Essentials: Core Competencies
+      for Professional Nursing Education — 10 Domains, 8 Concepts, and 45
+      Competencies numbered 1.1 through 10.3 — which CCNE does not merely
+      recommend but REQUIRES programs to incorporate (Key Elements I-B and
+      III-B through III-E). CCNE operates as an autonomous accrediting arm of
+      AACN. AACN reissued the Essentials in 2026, which is the sole reason
+      CCNE's 2026 focused revision exists.
+    relevance_to_product: >
+      This is the tightest coupling between a framework publisher and an
+      accreditor anywhere in this workstream, and it creates a standing
+      maintenance obligation: when AACN republishes the Essentials, CCNE
+      amends within months and every mapped curriculum in the product is
+      pointing at a superseded framework. Prism ships the Essentials
+      pre-populated (a genuine differentiator and the closest existing template
+      for what the four expansion domains would need), which means Exxat, not
+      the customer, owns the refresh. Confirm the loaded set is the 2026
+      edition before January 1, 2027, and reuse the CAPTE precedent of carrying
+      both editions' numbering side by side in report metadata.
+    source: "https://www.aacnnursing.org/essentials"
+  - body: "COA / NBCRNA (nurse anesthesia — pointer only)"
+    what_it_governs: >
+      The Council on Accreditation of Nurse Anesthesia Educational Programs
+      (COA) accredits CRNA programs at the practice-doctorate level, and the
+      National Board of Certification and Recertification for Nurse
+      Anesthetists (NBCRNA) governs the certification examination and the case-
+      log requirements CRNA graduates must document. A CRNA track inside a DNP
+      program is accredited by COA while the DNP program around it is
+      accredited by CCNE or ACEN — a genuine three-accreditor stack on one
+      curriculum.
+    relevance_to_product: >
+      Named here only for boundary-setting: CRNA is researched in a sibling
+      file and is NOT covered by the standards list above, which addresses the
+      general BSN/MSN/DNP tracks. Two facts matter for scoping this file's
+      elements, though. COA uses an explicit "critical standard" asterisk
+      convention (e.g. its hard 2:1 student-to-preceptor supervision cap) where
+      failure is treated as a matter of critical concern — a standard-severity
+      tier absent from both CCNE and ACEN, and worth carrying into how a
+      unified Accreditation Management pillar surfaces risk. And Prism's
+      deepest shipped nursing logging (the CCE/Patient Log layout, the NBCRNA
+      Transcript Report) was built for CRNA, which is precisely why general
+      ADN/BSN encounter-logging conventions are the documented gap under CCNE
+      III-I above.
+    source: "https://www.coacrna.org/"
+
+last_researched: "2026-08-25"

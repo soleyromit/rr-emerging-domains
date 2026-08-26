@@ -1,0 +1,221 @@
+# Discipline-layer persona for the Social Work (SW) domain.
+# The PROGRAM is the archetype, not an individual.
+#
+# SOURCE-DEPTH NOTE (read before relying on this file): unlike the four
+# expansion-domain personas (DO/Pharmacy/Dentistry/Medicine), SW has NO
+# ../domains/*.yaml file, NO dedicated ../accreditation/*.yaml file, and NO
+# competitor teardown scoped to it. This persona is grounded almost entirely in
+# one document — the internal SW playbook — which is itself synthesized from six
+# public Exxat Prism Help Center articles with no dedicated video-tutorial
+# transcript and no internal CSS/CX commentary. It is therefore two steps
+# removed from primary field research, deliberately shorter than the
+# expansion-domain personas, and lower-confidence on pain points, competitive
+# landscape, and switching triggers. Persona framing (persona_name, JTBD
+# wording, switching_trigger) is Exxat-side synthesis, not quoted from any source.
+domain: "SW"
+persona_name: "The Interview-Season CSWE Field Education Office"
+archetype_summary: >
+  A CSWE-accredited BSW/MSW program whose administrative center of gravity is the
+  field education office — a Director of Field Education plus placement
+  coordinators managing relationships with community AGENCIES (SW's consistent
+  term for sites), not a registrar or a clinical-affairs dean. Its defining
+  structural pattern is the one CSWE's EPAS (2022) imposes: a generalist practice
+  curriculum every student completes, built on the nine CSWE competencies, plus
+  one or more areas of specialized practice (Advanced Clinical, Policy and
+  Advocacy, Management and Administration) that extend the same nine competencies
+  in parallel frameworks — with Advanced Standing students skipping the
+  generalist year entirely, so a single cohort is structurally non-lockstep in a
+  way PT/OT-style graduation-year cohorts never are. Its defining operational
+  pattern is the interview season: students commonly must interview with
+  multiple candidate agencies (the Exxat workflow supports up to 10 placement
+  suggestions per Field Application Form) before a placement is secured, and the
+  documented historical workaround was tracking that churn through temporary
+  placements and outside spreadsheets. Supervision has a two-tier shape unique
+  among Exxat's disciplines: the CSWE-qualified Field Instructor (SW degree plus
+  two years post-degree experience) may be off-site, paired with an on-site Task
+  Supervisor who lacks the degree — "alternative field instruction" that a
+  placement record must carry as two supervisors with different qualification
+  weights. Field hours are floor-regulated (400 BSW / 900 MSW, with breaks
+  explicitly not counting), and the Learning Contract — goals and activities tied
+  to competencies, agreed per placement — is the discipline's signature document.
+accreditation_pressure:
+  - point: "No dedicated Social Work accreditation file yet (caveat)"
+    detail: >-
+      NOTE: no dedicated ../accreditation/*.yaml file exists for this
+      discipline yet — the four existing files (coca, acpe, coda, lcme) are
+      DO/Pharmacy/Dentistry/ Medicine-specific and none applies here. The
+      accreditor named throughout the playbook is CSWE, via EPAS (2022);
+      everything below is the playbook's own standard-by-standard mapping,
+      not independent standards research. The pressures that shape this
+      program:
+  - point: "Programs need two assessment tools per competency (AS 5.0.1)"
+    detail: >-
+      (1) AS 5.0.1 — a systematic competency assessment plan with at least
+      two instruments per competency, at least one field-based, across the
+      generalist framework AND every specialization framework, which makes
+      multi-instrument, field-inclusive competency reporting the
+      self-study's spine.
+  - point: "Field Instructors need a SW degree plus 2 years' experience (AS B3.3.6/M3.3.6)"
+    detail: >-
+      (2) AS B3.3.6/M3.3.6 — every Field Instructor must hold the SW degree
+      plus two years post-degree experience, so FI credential evidence
+      (degree, licensure, experience, documents) must be producible at scale
+      across an agency network the program does not employ, including for
+      alternative-instruction placements where the qualified FI is off-site.
+  - point: "Field hours must hit 400/900, and breaks don't count (AS 3.3.3)"
+    detail: >-
+      (3) AS 3.3.3 — the 400/900 hour minimums, with the break-exclusion
+      rule making raw timesheet totals insufficient evidence.
+  - point: "Agencies must be vetted and students monitored for safety (AS 3.3.1/3.3.4/3.3.5)"
+    detail: >-
+      (4) AS 3.3.1/3.3.4/3.3.5 — agency vetting, FI orientation, and student
+      monitoring/safety, evidenced through agency assessments, orientation
+      certificates, and de-identified sample Learning Agreements submitted
+      with the self-study.
+  - point: "Faculty credential data must be filed outside Prism (AS B4.2.1/M4.2.1)"
+    detail: >-
+      (5) A named evidence gap the playbook is unusually explicit about:
+      faculty headcount/credential standards (AS B4.2.1/M4.2.1, Form AS
+      4.2.1 and Faculty Data Forms) must be completed OUTSIDE Prism — a
+      known audit-friction point, not a solved one.
+current_tools:
+  - point: "No competitor research exists specifically for Social Work"
+    detail: >-
+      The competitive landscape for SW is not covered by existing
+      competitor teardowns, which focus on the four new-domain incumbents —
+      no teardown is scoped to social work, and the playbook (built from
+      help-center articles) carries no competitive commentary at all.
+  - point: "Only mentioned in passing by CORE ELMS and E*Value"
+    detail: >-
+      Two incidental mentions are all this repo holds: core-elms.yaml lists
+      social work among the 15+ disciplines CORE ELMS claims (its "allied
+      health" breadth play), and e-value.yaml lists social work among
+      E*Value's advanced-practice fields. Neither documents any SW-specific
+      capability.
+  - point: "No real vendor competitor found — spreadsheets fill the gap"
+    detail: >-
+      The honest working assumption, from the playbook's own evidence, is
+      that the realistic incumbent for the interview-season workflow is not
+      a vendor at all: the one workaround-pattern the source names is
+      temporary placements and outside spreadsheets for tracking
+      multi-agency interview activity — suggesting the field office's
+      status quo is a generic placement tool (or nothing) plus
+      coordinator-maintained spreadsheets. Treat this section as a research
+      gap, not a finding.
+jtbd:
+  - job: >
+      When each of my students is interviewing at several candidate agencies at
+      once — up to ten suggestions in flight per student — I want interview
+      status (pending, scheduled, offered, accepted, declined) tracked per
+      candidate agency inside the placement system, so my coordinators stop
+      running interview season through temporary placements and a spreadsheet
+      that dies when the coordinator leaves.
+    evidence_or_rationale: >
+      The playbook presents the Multi-Location Field Application Form and
+      Interview Statuses as SW's signature workflow, and explicitly names the
+      anti-pattern it was built to replace: "programs requiring multi-agency
+      interviews tracked interview activity via temporary placements or outside
+      spreadsheets," with troubleshooting guidance still flagging it as a live
+      risk. THIS IS THE PRIMARY JOB, and the one place the source documents a
+      real, pre-existing pain rather than a feature description.
+    related_flows:
+      - flow: "rotation-lifecycle--01-site-sourcing-capacity-contracting-affiliation-agreement.yaml"
+        step: "Process Field Application Forms — location & supervisor mapping (Social Work); MyRequest / questionnaire wishlist (PT, OT capstone, PA)"
+        element: "Student-entered location & supervisor, and the admin Map action"
+  - job: >
+      When CSWE requires every Field Instructor to hold the SW degree plus two
+      years post-degree experience, and some of my agencies have no qualified
+      on-site supervisor at all, I want FI credentials captured at placement
+      time and alternative-instruction arrangements (on-site Task Supervisor +
+      off-site qualified FI) recorded as two distinct supervisors on one
+      placement, so qualification compliance is an export, not a reconstruction.
+    evidence_or_rationale: >
+      Direct union of AS B3.3.6/M3.3.6 (the degree-plus-experience requirement)
+      and the playbook's alternative-field-instruction workflow (multiple
+      supervisors per placement record, placement tags flagging the
+      arrangement, Personnel profiles storing degree/licensure/experience with
+      document uploads, and the Comprehensive Personnel Report as the at-scale
+      compliance export).
+    related_flows:
+      - flow: "rotation-lifecycle--02-preceptor-site-faculty-credentialing-orientation-calibration.yaml"
+        step: "Placements > Course > Place Student drawer (Location View / Student View / Direct Placement)"
+        element: "[SW] Multiple supervisors on one placement (Task Supervisor + off-site Field Instructor)"
+  - job: >
+      When my BSW students must clear 400 hours and my MSW students 900, and
+      CSWE says breaks and time off do not count, I want timesheets that deduct
+      breaks automatically and roll up by category across every placement, so I
+      can see who is off-pace mid-term instead of discovering a shortfall at
+      program end.
+    evidence_or_rationale: >
+      AS 3.3.3 plus the playbook's Field Hours section: auto break-deduction is
+      called out as aligning specifically with CSWE's rule, and the Hours by
+      Category Report is named as the tool for monitoring progress toward the
+      400/900 minimums.
+    related_flows:
+      - flow: "rotation-lifecycle--05-in-rotation-capture-hours-encounters-procedures.yaml"
+        step: "Timesheet Entry (Add Time Entry)"
+        element: "Break Time deduction behaviour (contested across disciplines)"
+  - job: >
+      When my self-study must show at least two assessment instruments per
+      competency with at least one field-based — across a generalist framework
+      and a parallel framework for every specialization — I want Learning
+      Contracts and field evaluations mapped to the nine competencies from the
+      start, so multi-instrument competency reports fall out of a normal year
+      rather than a rebuild.
+    evidence_or_rationale: >
+      AS 5.0.1(a)/(b), which the playbook calls an area of STRONG system
+      support, plus its best-practice warning that curriculum mapping
+      (generalist framework + one per specialization + the Client System Levels
+      attribute) must be set up BEFORE field placement season because Learning
+      Contracts depend on it for competency reporting.
+    related_flows:
+      - flow: "rotation-lifecycle--07-summative-evaluation-grading-turnaround-completion-verification.yaml"
+        step: "Social Work Learning Contract / field evaluation configuration and competency readout"
+        element: "Comprehensive Report for Placement Based Form — de-identified sample Learning Agreements"
+  - job: >
+      When background checks, drug screens, and HIPAA training all carry
+      third-party provider lead times and my placement review starts months
+      before field education does, I want compliance requirements assigned,
+      tracked, and provider-integrated early — with control over which items are
+      exposed when a student shares their profile with an agency — so no
+      accepted placement stalls on a pending clearance or overshares a
+      student's records.
+    evidence_or_rationale: >
+      The playbook's Compliance section: SW is the one discipline in the
+      playbook corpus with named third-party integrations (CISIVE and Universal
+      for background checks/drug screens, ComplianceJunction for HIPAA), an
+      explicit start-early best practice tied to provider processing time, and
+      the "Included in Profile Link" privacy toggle flagged as the control
+      admins must get right. Cross-reference: this job lands squarely on stage
+      4 (Compliance template setup) of
+      ../journeys/admin-onboarding-product-setup.yaml, whose
+      discipline_variance section independently identifies SW as the only
+      discipline with these vendor integrations wired into Setup and flags the
+      same profile-link privacy control.
+    related_flows:
+      - flow: "admin-onboarding--04-compliance-template-setup.yaml"
+        step: "Student Compliance – Setup tab: External Trainings (third-party vendor requirements)"
+        element: "Vendor selector (ComplianceJunction)"
+switching_trigger: >
+  LOWER CONFIDENCE than the expansion-domain personas: no CSS pain-point
+  history or competitive research exists for SW, so these are inferred from the
+  documented workflow rather than observed buying behavior. (1) INTERVIEW
+  SEASON BREAKING THE SPREADSHEET — the one workaround the source actually
+  documents. A field office tracking hundreds of simultaneous
+  student-by-agency interview threads through temporary placements and
+  spreadsheets hits its ceiling as enrollment or specialization count grows,
+  or when the coordinator who owned the spreadsheet departs. (2) THE CSWE
+  REAFFIRMATION CLOCK — a self-study that must produce de-identified sample
+  Learning Agreements, FI credential evidence across the agency network,
+  hour-minimum proof with break exclusions, and two-instruments-per-competency
+  assessment data is the moment a program discovers whether that evidence is a
+  query or an archaeology project. Honest caveat to carry into any
+  conversation: the faculty-data forms (AS 4.2.1) stay outside the system
+  regardless, so the pitch cannot claim full self-study coverage.
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md"
+  - "https://www.cswe.org/"
+  - "../competitors/core-elms.yaml"
+  - "../competitors/e-value.yaml"
+  - "../journeys/admin-onboarding-product-setup.yaml"
+last_researched: "2026-08-24"

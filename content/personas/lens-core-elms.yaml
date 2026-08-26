@@ -1,0 +1,128 @@
+# COMPETITOR LENS — reframes ../competitors/core-elms.yaml around roles, not features.
+# Synthesis pass over the existing teardown; no fresh research.
+competitor: "CORE ELMS (CORE Higher Ed / PeopleGrove)"
+
+how_they_implicitly_serve_roles:
+  - role: "Program Admin"
+    read: >
+      Served broadly but not coherently. The admin gets 30+ modules spanning 15+
+      disciplines from one vendor — placement, compliance, evaluations, surveys, document
+      library, incident reports — which is genuinely more surface area than most
+      competitors here offer a single admin. The problem is that reviewers describe the
+      platform as "disjointed," with limited connectivity between elements, and rate ease
+      of use at 4.3/5 against a 4.7/5 overall — the admin is the person who feels every
+      seam between those 30 modules. Two specific admin taxes show up in the reviews: a
+      steep learning curve despite "intuitive" marketing, and SmartMatch's extensive
+      settings shipping without clear setup documentation or checklists. Curriculum mapping
+      is not even in the same product — it lives in a separately branded CompMS module, so
+      the admin who wants mapping is buying (and learning) a second thing.
+  - role: "Clinical Coordinator"
+    read: >
+      The best-served role in the product, and the reason CORE holds 90% of U.S. pharmacy
+      programs. SmartMatch auto-matches students to sites and preceptors against
+      customizable rules with instant results, and reviewers independently confirm the
+      payoff in the coordinator's own terms: "the ability to collect student requests for
+      rotations easily and match them to experiences has cut down matching time
+      significantly." Around it sit centralized site/student/preceptor management,
+      scheduling, timesheets with optional GPS, absence tracking, case logging, and
+      reflections. This is a placement-first product built for the person who does
+      placement. The residual friction is configuration, not capability — the same
+      SmartMatch that saves the matching week is the thing reviewers say lacks setup
+      guidance, so the coordinator's cost is front-loaded into implementation.
+  - role: "Preceptor"
+    read: >
+      Recognized as a real entity but treated as a record to be managed rather than a user
+      to be served. CORE tracks preceptor licenses, routes preceptor assessments of
+      students, collects student evaluations of preceptors and sites, and can survey
+      preceptors directly — the preceptor is present at four separate points in the
+      workflow. Yet the one concrete preceptor-experience detail in the teardown is
+      negative and telling: changing a preceptor's employer requires creating a new account
+      rather than updating the existing one. That is a data model in which the preceptor is
+      an attribute of a site rather than a person with a continuous relationship to the
+      program — and it means a preceptor who changes jobs loses identity continuity, and
+      the coordinator inherits the cleanup. No preceptor-facing mobile or no-login
+      experience is documented.
+  - role: "Compliance/Accreditation Liaison"
+    read: >
+      Split cleanly in two, and served unevenly across the halves. On day-to-day
+      compliance, this role is well served: immunizations, background checks, drug
+      checks, training, and licensing with automated expiration reminders; preceptor
+      license tracking; affiliation-agreement tracking with expiration alerts;
+      compliant document storage; incident reports. Reviewers cite this module by name for
+      "larger requirements such as accreditation and audits." On accreditation proper, the
+      picture is thinner and discipline-dependent: standards mapping lives in the separate
+      CompMS module (gap analysis, competency-to-standard mapping, auto-built assessment
+      e-portfolios, curriculum-effectiveness reports), and CORE's accreditor claims are
+      explicit for pharmacy while its dental page makes no equivalent claim. The liaison at
+      a dental program therefore gets the same compliance tracker as a pharmacy program but
+      a conspicuously weaker accreditation story — and possibly a separate purchase to get
+      it at all, since CompMS bundling with base ELMS is not publicly confirmed.
+  - role: "Dean"
+    read: >
+      The least-served role, and the gap is specific: reporting. The dean's need is
+      cross-cohort, cross-program, longitudinal — and reviewers say plainly that the
+      "reporting suite lacks depth and consistency." That single complaint hits the Dean
+      persona harder than any other, because reporting is the whole of that role's
+      interaction with the system. The positive signals a dean would weigh are real but
+      indirect: 4.7/5 overall on Capterra across 36 reviews with 4.9/5 customer service,
+      90% pharmacy-program penetration, and now a wider PeopleGrove suite (career services,
+      mentoring) adjacent to the ELMS. Pricing is fully opaque with no public tier or
+      per-student figure anywhere, and CompMS looks like add-on cost on top of base ELMS —
+      so the dean cannot size the commitment without a quote.
+    related_flows:
+      - flow: admin-onboarding--08-learning-activities-competency-management-reporting.yaml
+        step: "Reports — Custom tab (custom report builder)"
+        element: "Raw Data vs Pivot Report type selector"
+
+gaps_prism_can_exploit:
+  - claim: "The Dean is the clearest role-level gap."
+    detail: >
+      CORE's own users say the reporting suite lacks depth and consistency, which is
+      precisely and only how a dean uses the platform. Program Quality Analytics / AI
+      Insights is a direct answer to a complaint CORE's customers already articulate
+      publicly.
+    related_flows:
+      - flow: admin-onboarding--08-learning-activities-competency-management-reporting.yaml
+        step: "Reports — Custom tab (custom report builder)"
+        element: "Raw Data vs Pivot Report type selector"
+  - claim: "The Preceptor data model treats a person as a site attribute."
+    detail: >
+      Requiring a new account when a preceptor changes employer reveals the preceptor
+      is modeled as a site attribute, not a durable person. A preceptor identity that
+      survives employer changes is both a preceptor win and a coordinator-cleanup win
+      from one fix.
+  - claim: "Platform cohesion is a real Program Admin complaint, in CORE's own words."
+    detail: >
+      Reviewers call CORE "disjointed" across 30+ modules with limited connectivity,
+      and curriculum mapping is a separately branded CompMS product. A unified
+      Courses/Faculty/Students core ring answers a complaint CORE's own reviewers
+      make in their own words.
+  - claim: "Dental accreditation is a provable coverage gap for the Compliance/Accreditation Liaison."
+    detail: >
+      CORE's pharmacy page makes an explicit accreditor claim while its dental page
+      makes no equivalent claim. That asymmetry is provable — target dental programs'
+      liaisons first, where CORE is weakest, rather than pharmacy where it holds 90%
+      share.
+  - claim: "Exam Management is genuine white space here, not parity."
+    detail: >
+      No CORE page, help doc, or review mentions exam authoring, delivery, or
+      proctoring. When Prism ships Q2 2027 it fills a gap CORE has never publicly
+      claimed to cover — though this is unverified rather than confirmed absent, so
+      claim it carefully.
+  - claim: "Do NOT lead with placement/matching against CORE."
+    detail: >
+      SmartMatch is CORE's strongest role surface and reviewers validate it
+      unprompted. Compete on the roles around the coordinator, not on the
+      coordinator.
+
+sources:
+  - "../competitors/core-elms.yaml"
+  - "CORE's named accreditor/compliance-item claims (relocated from how_they_implicitly_serve_roles[].read, Compliance/Accreditation Liaison): ACPE standards and CAPE outcomes named explicitly for pharmacy, no equivalent CODA claim on the dental page; day-to-day compliance items include HIPAA training and HIPAA-compliant document storage alongside immunizations, background checks, and drug checks."
+  - "https://services.corehighered.com/elms/pharmacy-experiential-learning-management-software"
+  - "https://services.corehighered.com/student-clinical-experential-education"
+  - "https://corehighered.com/competency-management"
+  - "https://corehighered.com/core-for-dental"
+  - "https://corehighered.com/core-for-pharmacy"
+  - "https://corehighered.com/one-company.-more-impact-what-the-peoplegrovecore-merger-means-for-you"
+  - "https://www.capterra.com/p/265422/CORE-ELMS/reviews/"
+  - "https://www.peoplegrove.com/products/core-elms/"

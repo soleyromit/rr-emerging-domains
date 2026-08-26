@@ -1,0 +1,84 @@
+domain: "DO"
+full_name: "Osteopathic Medicine"
+credential: "DO"
+program_length_years: 4
+market:
+  program_count: "48 accredited colleges of osteopathic medicine (COMs), delivering instruction at 75 teaching locations across 36 states as of the 2025-26 academic year (9 public, 39 private)."
+  program_count_trend: >
+    Growing. Total osteopathic medical student enrollment rose from 39,763
+    (2024-25) to 40,905 (2025-26) — a 2.9% one-year increase and an all-time
+    high. First-year enrollment grew 3.6% to 11,590 and matriculants grew 6.9%
+    to 10,297 in the same period. Over the past decade, first-year enrollment
+    is up 62% and total enrollment up 59%; applications to the 2026-27 cycle
+    rose 12.8% year-over-year to 26,506, the most received since 2021.
+  total_enrollment: "40,905 osteopathic medical students in 2025-26 (all-time high; up from 39,763 in 2024-25)."
+  sources:
+    - "https://www.aacom.org/become-a-doctor/about-osteopathic-medicine/quick-facts"
+    - "https://www.aacom.org/searches/reports/report/applicants-enrollment-and-graduates-1977-78---2023-24"
+    - "https://osteopathicfounders.org/osteopathic-medical-school-applications-jump/"
+standards_bodies:
+  - name: "COCA"
+    type: "institutional accreditor"
+    description: "Commission on Osteopathic College Accreditation (AOA-affiliated, U.S. Dept. of Education-recognized); accredits all colleges of osteopathic medicine and sets clinical-clerkship standards."
+  - name: "NBOME"
+    type: "licensure exam board"
+    description: "National Board of Osteopathic Medical Examiners; develops and administers the COMLEX-USA exam series required for DO licensure, accepted in all 50 states."
+  - name: "ACGME"
+    type: "GME / residency accreditor"
+    description: "Accreditation Council for Graduate Medical Education; sole accreditor of U.S. residency/fellowship programs since the 2020 completion of the AOA-ACGME Single Accreditation System merger, which folded former AOA-only programs into ACGME."
+  - name: "AOA"
+    type: "professional association"
+    description: "American Osteopathic Association; represents and certifies osteopathic physicians, oversees COCA, and publishes osteopathic-profession workforce data."
+  - name: "AACOM"
+    type: "academic association"
+    description: "American Association of Colleges of Osteopathic Medicine; represents the 48 accredited COMs and publishes the applicant, enrollment, and clinical-education data used market-wide."
+clinical_education_shape: >
+  DO clinical training runs OMS-3 and OMS-4 (the final two of four years) on a
+  "distributive" model: rather than being anchored to one or two university-owned
+  teaching hospitals, students are dispersed across a wide, geographically
+  scattered network of independent community hospitals, physician practices, and
+  ambulatory sites that each college of osteopathic medicine (COM) recruits and
+  credentials individually. COCA-accredited programs require eight core
+  clerkships — Family Medicine, Internal Medicine, General Surgery, Pediatrics,
+  OB/GYN, Psychiatry, Emergency Medicine, and Osteopathic Principles &
+  Practice/OMM — commonly run as four-week rotation blocks (e.g., a 22-month,
+  twenty-two-block OMS-3/4 sequence at schools such as Touro COM), plus
+  student-scheduled electives and, at many schools, a required rural or
+  underserved primary-care rotation in OMS-4. At least one core clerkship must be
+  supervised by a DO preceptor, and more than one must include inpatient care.
+  Layered on top of the standard rotations is a distinct competency track: 200-500
+  hours of hands-on Osteopathic Manipulative Medicine (OMM/OMT) training that is
+  taught and assessed DURING clinical clerkships, not just in pre-clinical
+  coursework — so clinical-site and preceptor records must track a manual-skills
+  competency in addition to the usual case-log/EPA data. Because sites are
+  individually recruited rather than block-contracted through one health system,
+  clinical-rotation site capacity is a named, ongoing bottleneck for COMs,
+  intensified since the 2020 AOA-ACGME Single Accreditation System merger put DO
+  students in direct competition with MD students for the same away-rotation
+  slots. This is structurally different from a typical allied-health program
+  (Prism's base), which usually places students with a small, stable set of
+  institutionally-contracted affiliate sites for shorter, single-supervisor
+  placements — DO clinical education instead requires the school to manage
+  hundreds of independently-recruited preceptor relationships spread across many
+  states, verify DO-supervision requirements per clerkship, and track a parallel
+  hands-on manipulative-medicine competency all the way through the clinical years.
+distinctive_pain_points:
+  - claim: "Clinical rotation site capacity is a widely reported bottleneck for osteopathic medical schools, as community hospitals increasingly reserve slots exclusively for affiliated MD programs while university systems acquire hospital networks."
+    source: "https://thedo.osteopathic.org/2023/11/to-solve-the-problem-of-too-few-clinical-rotation-sites-leaders-in-medicine-consider-business-solutions/"
+  - claim: "Since the 2020 completion of the AOA-ACGME Single Accreditation System merger, DO students compete directly with MD students for the same fourth-year away-rotation slots; peer-reviewed research documents a cost/access gap that disadvantages DO applicants for competitive specialties such as general surgery."
+    source: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11984451/"
+  - claim: "DO students complete 200-500 additional hours of hands-on Osteopathic Manipulative Medicine (OMM/OMT) training, integrated into both pre-clinical coursework and clinical clerkships, with no direct analog in MD or allied-health curricula."
+    source: "https://www.aacom.org/become-a-doctor/about-osteopathic-medicine/omm-explained"
+  - claim: "DO licensure requires passing the COMLEX-USA exam series (administered by NBOME) rather than the USMLE used by MD programs, though COMLEX-USA is accepted for licensure in all 50 states."
+    source: "https://www.ama-assn.org/system/files/cme-issue-brief-single-pathway.pdf"
+sources:
+  - "https://www.aacom.org/become-a-doctor/about-osteopathic-medicine/quick-facts"
+  - "https://www.aacom.org/searches/reports/report/applicants-enrollment-and-graduates-1977-78---2023-24"
+  - "https://osteopathicfounders.org/osteopathic-medical-school-applications-jump/"
+  - "https://www.aacom.org/become-a-doctor/about-osteopathic-medicine/overview-of-osteopathic-medical-education-and-accreditation"
+  - "https://tourocom.touro.edu/media/schools-and-colleges/tourocom/clinical-rotations/clinical_rotations_manual.pdf"
+  - "https://thedo.osteopathic.org/2023/11/to-solve-the-problem-of-too-few-clinical-rotation-sites-leaders-in-medicine-consider-business-solutions/"
+  - "https://pmc.ncbi.nlm.nih.gov/articles/PMC11984451/"
+  - "https://www.aacom.org/become-a-doctor/about-osteopathic-medicine/omm-explained"
+  - "https://www.ama-assn.org/system/files/cme-issue-brief-single-pathway.pdf"
+  - "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12718519/"

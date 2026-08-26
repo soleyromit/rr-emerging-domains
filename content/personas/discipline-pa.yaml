@@ -1,0 +1,256 @@
+# Discipline-layer persona for the PA (Physician Assistant) domain.
+# The PROGRAM is the archetype, not an individual.
+#
+# SOURCE-BASE CAVEAT — read before reusing this file. Unlike the four expansion-domain
+# personas (DO/Pharmacy/Dentistry/Medicine), this discipline has NO ../domains/*.yaml,
+# NO ../accreditation/*.yaml, and NO dedicated competitor teardown. It is grounded in
+# exactly two primary sources, both Exxat-side: the internal PA product playbook and
+# one help-center video-tutorial transcript. That is an inside-out view (what Exxat has
+# built and advises for PA programs it already serves), not outside-in market research.
+# Claims here about the market, incumbents, and switching behavior are correspondingly
+# thinner and flagged as inference. This file is deliberately shorter than
+# discipline-do.yaml — padding it to match would misrepresent the evidence base.
+#
+# A second structural difference from the expansion-domain personas: PA is a discipline
+# where Exxat Prism is ALREADY an incumbent — the playbook names live customer programs
+# (EVMS-PA, Kean PA, Stonybrook PA) and ships PA-exclusive features (Max Placement
+# Limit). So this is partly a retention/expansion persona, not purely a greenfield-
+# switch persona like the four new domains.
+domain: "PA"
+persona_name: "The Lockstep PA Program Whose Clinical Year Runs on Confirmed Slots"
+archetype_summary: >
+  A physician assistant program built on the tightest lockstep structure in the
+  health-professions portfolio: one didactic year, then a clinical year of 8-10
+  supervised clinical practice experiences (SCPEs) run back-to-back with no slack —
+  roughly 4-6 weeks each, a minimum of 2,000 clinical hours, and seven ARC-PA-required
+  core settings (Family Medicine, Internal Medicine, Emergency Medicine, General
+  Surgery, Pediatrics, Women's Health/OB-GYN, Behavioral Health) plus 1-3
+  electives/selectives, with school-specific adds like rural/underserved or orthopedics
+  requirements. Because every student must clear every core setting inside one
+  compressed year, the program's operational center of gravity is slot arithmetic:
+  collecting confirmed slot availability from sites and preceptors (via site-based or
+  preceptor-based models), staging hard-to-fill specialties first (Women's Health and
+  Pediatrics are the canonical scarce settings), and reconciling what it believes it
+  has against what the ARC-PA portal says it reported. Placement clearance layers four
+  gates on top — student compliance status, site-specific documents, an active
+  contract, and a preceptor license/board certification valid for the specialty — and
+  the preceptor population must remain majority practicing physicians and PAs under
+  the 6th-edition standards. Enrollment scale and growth figures for this archetype
+  are NOT established in this repo's sources (no domains/pa.yaml exists); what the
+  playbook does establish is that the program's administrative life is organized
+  around ARC-PA standard citations to an unusual degree — the playbook itself is
+  structured standard-by-standard (B3.01, B3.02, B3.04, B3.06, A1.10, A2.15/A2.16),
+  reflecting a discipline whose accreditor names specific evidence formats, portal
+  workflows, and even Self-Study Report appendix numbers.
+accreditation_pressure:
+  - point: "No dedicated ARC-PA source file yet (caveat)"
+    detail: >
+      NOTE: no dedicated ../accreditation/arc-pa.yaml exists yet — the four files in
+      content/accreditation/ are ACPE, COCA, CODA, and LCME. Everything below is ARC-PA
+      6th-edition pressure as documented in the Exxat PA playbook (which cites standards
+      inline), not from a primary read of the standards themselves.
+  - point: "Affiliation agreements must name PA students by name (Standard B3.01)"
+    detail: >
+      (1) B3.01 a-e affiliation agreements: every clinical affiliate must have a written,
+      signed agreement that EXPLICITLY names "Physician Assistant students" — broad
+      university-wide "all learners" language is no longer sufficient under 6e, and the
+      playbook calls generic institution-wide wording "a common source of accreditation
+      citations." Renewals and addenda must re-state PA-student inclusion, and
+      multi-program/multi-campus institutions must identify which are covered.
+  - point: "Confirmed clinical slots must be reported on an ongoing basis (Standard A1.10)"
+    detail: >
+      (2) A1.10 a-b + B3.01a slot sufficiency: under updated ARC-PA portal requirements,
+      programs must update confirmed slots per location/setting on an ONGOING basis, not
+      annually — documenting the number of written agreements, the method used to confirm
+      availability, and per-site student capacity. A1.10b (new in 6e) restricts
+      international sites/preceptors to elective rotations only.
+  - point: "Telehealth rotations are capped at 50% per rotation, 20% overall (Standard B3.01)"
+    detail: >
+      (3) B3.01 b-e telehealth ceilings: hard numeric caps — max 50% telehealth in any
+      single SCPE, max 20% across the entire clinical year, with Behavioral/Mental Health
+      allowed up to 100% — which require time-based (not encounter-based) tracking to
+      evidence honestly.
+  - point: "Every clinical site and preceptor must be evaluated regularly (Standards B3.02/B3.04)"
+    detail: >
+      (4) B3.02 a-c and B3.04 a-d: documented initial AND ongoing evaluation of every site
+      and preceptor (facilities, patient population, supervision adequacy), and proof of
+      breadth/depth of patient encounters across the curriculum — the standards behind
+      site-visit forms, patient logs, and diagnosis/procedure minimums.
+  - point: "Most clinical preceptors must be PAs or physicians (Standards A2.15/A2.16)"
+    detail: >
+      (5) A2.15/A2.16 preceptor composition: a majority (≥50%) of SCPE experiences with
+      PA/physician preceptors, with a new 6e allowance of up to 10% program-vetted
+      non-PA/physician/APN clinicians — a composition claim that must be provable from
+      preceptor degree/certification records.
+  - point: "Key staff must be hired months before site visits (Standard D1.01)"
+    detail: >
+      (6) D1.01 staffing lead times (program director + medical director hired ≥15 months
+      before a site visit; ≥2.0 FTE PA-C principal faculty ≥9 months before) and the
+      E-series notification clocks: program-director vacancies reported within 2 BUSINESS
+      DAYS, class-size or program-length changes requiring ≥6 months' advance written
+      approval, over-enrollment or 20%+ budget cuts reported immediately.
+  - point: "Programs get cited when student evaluations contradict each other"
+    detail: >
+      (7) A documented citation pattern with no analog in the other discipline files:
+      programs have been cited when a student's mid-point (formative) evaluation
+      contradicts the same preceptor's end-of-rotation (summative) assessment —
+      consistency across evaluation instruments is itself an audit surface.
+  - point: "Self-study reports must follow ARC-PA's own appendix numbering"
+    detail: >
+      (8) The Self-Study Report has numbered appendices (11a, 14D, 14E, 15) that specific
+      evidence reports are expected to populate — ARC-PA, like COCA, effectively names the
+      output format, not just the outcome.
+current_tools:
+  - point: "No dedicated PA competitor research exists yet (caveat)"
+    detail: >
+      Honest limitation: no competitor teardown in content/competitors/ covers the PA
+      market as such — the nine teardowns were researched for the four expansion domains,
+      and PA appears only in passing discipline lists.
+  - point: "Generalist rotation-management suites list PA as a supported discipline"
+    detail: >
+      What those passing mentions establish: E*Value/MedHub, CORE ELMS, eMedley, one45,
+      and Leo/DaVinci all name PA among their served disciplines (CORE ELMS "15+
+      disciplines including... PA"; E*Value 24+ including PA; MedHub's advanced-practice
+      count includes PA; Leo/DaVinci lists PA among five served domains; one45 lists PA
+      among its 100+ programs), and Elentra's Medicine page names ARC-PA among the
+      accreditors its reporting aligns to.
+  - point: "Competitor pricing and PA-specific depth remain unresearched (caveat)"
+    detail: >
+      So the plausible non-Exxat incumbent set is the same generalist multi-discipline
+      suites seen elsewhere — but per-discipline depth, PA market share, and pricing are
+      NOT researched, and no PA-specific capability comparison exists.
+  - point: "Exxat Prism is already the incumbent tool for PA programs"
+    detail: >
+      Equally important: Exxat Prism itself is a live PA incumbent with PA-specific
+      product depth the playbook documents in detail (ARC-PA standards pre-loaded in
+      curriculum mapping, an SCPE report that mirrors the ARC-PA portal format, a
+      PA-exclusive Max Placement Limit feature, an ARC-PA-formatted B2 Instructional
+      Objectives report, telehealth hour tracking against the 6e caps). For this
+      discipline the honest framing is "defend and deepen an existing position," not
+      "displace a mapped incumbent."
+jtbd:
+  # These jobs are inferred from what Exxat built and advises for PA programs — good
+  # evidence that the demand exists (the features were built for someone), but
+  # vendor-side evidence, not independent program-voice research.
+  - job: >
+      When ARC-PA expects my confirmed slots per location/setting to be current in its
+      portal on an ongoing basis, I want site-confirmed slot numbers collected directly
+      from partners and rendered in the portal's own format, so reconciliation is a
+      quick check instead of a line-by-line Excel comparison every reporting period.
+    evidence_or_rationale: >
+      ARC-PA A1.10 a-b and B3.01a per the playbook, which documents the Slot Request
+      feature feeding an SCPE Details report that "mirrors the ARC-PA portal's format"
+      and a "gold in, gold out" naming discipline — and whose own best-practice
+      workflow still ends with downloading both reports and comparing them "side by
+      side in Excel, line by line." The residual manual step is the tell that this job
+      is real and not yet fully closed. THIS IS THE PRIMARY JOB.
+    related_flows:
+      - flow: "rotation-lifecycle--04-placement-allocation-scheduling-capacity-balancing.yaml"
+        step: "Placement Capacity & Utilization Reports"
+        element: "SCPE Details report (Sites > Reports > SCPE Details) — PA"
+  - job: >
+      When my affiliation agreements are riding on university-wide contracts, I want
+      every agreement verified to explicitly name Physician Assistant students, with
+      expiry alerts and an addendum trail, so a generic "all learners" clause never
+      surfaces as a citation during a site visit.
+    evidence_or_rationale: >
+      ARC-PA 6e B3.01 a-e per the playbook, which flags generic university-wide
+      language as "a common source of accreditation citations" and documents the
+      working remedy (an addendum stating "All learners in this agreement include
+      Physician Assistant students") plus the contract-expiring feature as the
+      compliance backstop.
+    related_flows:
+      - flow: "preceptor-site-onboarding--02-affiliation-agreement-execution-contract-lifecycle-management.yaml"
+        step: "Contract record — Locations Covered / Programs Covered / Categories"
+        element: "Programs Covered (common contract sharing)"
+  - job: >
+      When I have to place an entire lockstep cohort into 8-10 back-to-back rotations
+      across seven required settings, I want to place the scarcest settings first with
+      confirmed-slot wishlists and setting weights, so Women's Health and Pediatrics
+      shortfalls surface months before the clinical year starts rather than six weeks
+      before a block.
+    evidence_or_rationale: >
+      The playbook's Placement Assist best practices are built around exactly this:
+      staged placement runs ordered by scarcity, example weights (Women's Health = 10,
+      Pediatrics = 9, Family Medicine = 4), a 2-4-month-out wishlist window, and the
+      PA-exclusive Max Placement Limit capping true intake below listed slots. A
+      feature built only for PA is strong evidence the pain concentrates here.
+    related_flows:
+      - flow: "admin-onboarding--07-wishlists-slot-requests-placement-assist.yaml"
+        step: "Placement Assist — Setup and Advanced Options"
+        element: "Customization Based on Slot Types / Slot Settings / Slot Status (three bits + weightage inputs)"
+  - job: >
+      When ARC-PA caps how much of a rotation — and of the whole clinical year — can
+      run via telehealth, and requires proof of encounter breadth and minimum
+      diagnosis/procedure exposure, I want hour- and encounter-level tracking that
+      flags gaps mid-rotation, so I can fix a student's exposure shortfall while
+      there is still clinical year left.
+    evidence_or_rationale: >
+      B3.01 b-e telehealth ceilings (max 50% in any single SCPE, max 20% across the
+      clinical year) and B3.04 a-d (breadth/depth) per the playbook, which recommends
+      timesheet-based hour tracking precisely because encounter counts misstate
+      telehealth percentages, and documents configurable diagnosis/procedure minimums
+      surfacing gaps "not just at rotation end." The patient-log tutorial transcript
+      confirms the day-to-day admin reality: a per-rotation review queue of Pending
+      Review / Needs Attention / Approved logs.
+    related_flows:
+      - flow: "rotation-lifecycle--05-in-rotation-capture-hours-encounters-procedures.yaml"
+        step: "Timesheet Category Configuration"
+        element: "Type"
+  - job: >
+      When my self-study needs curriculum evidence in ARC-PA's own shape, I want
+      B-standard mappings and instructional objectives exportable in the accreditor's
+      format keyed to the right SSR appendix, so self-study assembly is report
+      generation rather than document archaeology.
+    evidence_or_rationale: >
+      The playbook ships ARC-PA standards pre-loaded for mapping, an ARC-PA-formatted
+      B2 Instructional Objectives report (one tab per standard), and a
+      report-to-standard-to-SSR-appendix table (Appendices 11a, 14D, 14E, 15) — the
+      most format-prescriptive accreditor evidence chain documented in any playbook in
+      this vault.
+    related_flows:
+      - flow: "accreditation-self-study--08-self-study-assembly-submission-site-visit.yaml"
+        step: "Curriculum Mapping > Mapping Reports (Heatmap, Mapped Standards, Cumulative)"
+        element: "B2 Instructional Objectives Report (ARC-PA-formatted export)"
+switching_trigger: >
+  Weaker evidence here than for the four expansion domains — no market research or
+  program-voice sources exist for PA in this repo, so these are inferences. (1) THE
+  6E TRANSITION: the 5e-to-6e crosswalk renumbers standards, adds new ones (B3.05,
+  A1.10b), converts telehealth from guidance to hard numeric caps, and tightens the
+  affiliation-agreement wording bar — a program on a generalist multi-discipline suite
+  that cannot produce PA-specific 6e evidence (explicit PA-student agreement language,
+  time-based telehealth splits, preceptor-composition percentages) discovers the gap
+  during self-study prep, on a deadline. (2) A CITATION WITH A NAME ON IT: the two
+  citation patterns the playbook documents as common — generic agreement wording, and
+  mid-point/summative evaluation inconsistency — are exactly the failures that turn a
+  tolerated process into a procurement conversation. (3) PORTAL-RECONCILIATION
+  FATIGUE: ongoing (not annual) confirmed-slot reporting makes the Excel-reconciliation
+  ritual recurring rather than episodic; the program that misses a portal update once
+  starts shopping for the system that mirrors the portal natively. (4) For Exxat
+  specifically, the sharper risk is the inverse — churn: PA programs already on Prism
+  are retention accounts whose 6e evidence chain is a defensive moat, and the same
+  vendor-consolidation churn documented in the DO persona (QGenda/New Innovations,
+  Ascend/MedHub, Achieve/Elentra roll-up) applies to the generalist suites PA programs
+  might otherwise sit on — an opening, but one asserted from the DO-side research, not
+  PA-market sources.
+journey_crossref: >
+  Per ../journeys/admin-onboarding-product-setup.yaml, PA is the reference
+  implementation for stage 6 (Courses, rotations & curriculum mapping) — ARC-PA
+  standards come pre-loaded and PA is the only discipline with a confirmed Heatmap
+  Report — and the heaviest documented Placement Assist strategist in stage 7, which
+  is exactly where this persona's primary slot-sufficiency and staged-placement jobs
+  land during a new tenant's setup.
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "/Users/romitsoley/Downloads/PAVideosTranscripts.md (Patient Log setup/review tutorial, the only PA admin video transcribed)"
+  - "../journeys/admin-onboarding-product-setup.yaml (PA discipline_variance notes across stages 3-8)"
+  - "../competitors/core-elms.yaml (PA named among 15+ served disciplines)"
+  - "../competitors/e-value.yaml (PA named among 24+ served disciplines)"
+  - "../competitors/medhub.yaml (PA in advanced-practice installed-base claim)"
+  - "../competitors/emedley.yaml (PA among disciplines beyond medicine)"
+  - "../competitors/leo-davinci.yaml (PA among five served domains)"
+  - "../competitors/one45.yaml (PA among served program types)"
+  - "../competitors/elentra.yaml (ARC-PA named in accreditation-reporting claim)"
+  # No domains/pa.yaml, accreditation/arc-pa.yaml, or PA-dedicated competitor teardown
+  # exists yet — see the source-base caveat in this file's header.
+last_researched: "2026-08-24"

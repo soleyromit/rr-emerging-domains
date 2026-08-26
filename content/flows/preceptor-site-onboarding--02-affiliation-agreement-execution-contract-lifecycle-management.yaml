@@ -1,0 +1,503 @@
+# Element-level ground truth underneath preceptor-site-onboarding.yaml, stage 2
+# ("Affiliation agreement execution & contract lifecycle management"). See
+# _TEMPLATE.yaml for the contract this file follows: every accreditation_citation
+# and competitor_equivalent below traces to a real source in confirmed_by, never
+# back to the journey's own synthesis.
+#
+# SCHEMA v2 (2026-08-24): analysis fields (accreditation_citation /
+# competitor_equivalent / gap_severity / gap_note) now live on each ELEMENT rather
+# than on the step. Where the underlying research genuinely did not differentiate
+# between sibling elements on a screen, the same verdict is stated identically on
+# each rather than inventing artificial precision.
+
+flow_name: "Site Contracts — Affiliation Agreement Lifecycle"
+maps_to_journey: "preceptor-site-onboarding.yaml, stage 2"
+persona: >
+  Primary: Clinical/Experiential Education Coordinator (../personas/role-clinical-coordinator.yaml),
+  who adds sites, uploads/links contracts, and monitors Contract Status on the
+  Placement Clearance Dashboard before rotations start. Secondary: Institutional
+  Administrator (../personas/role-program-admin.yaml lens, institutional tier), who
+  owns Contract Organization setup (Categories, Routing Checklist, Contract Status
+  list) and the cross-program Contracts & Sites Management rollup. Tertiary: the
+  Compliance/Accreditation Liaison, who pulls the "Sites > Contracts filtered Active"
+  view as annual-report evidence.
+
+steps:
+  - screen: "Add Site drawer"
+    navigation_path: "Sites > +Add Site"
+    elements:
+      - element: "Name / Alias Name / Address / EIN / Active toggle"
+        type: "input fields"
+        data_shown: "Site identity and status; Active toggle controls whether the site is available for new placements at all."
+        gates_on: ["placement scheduling eligibility (Active sites only)"]
+        accreditation_citation: >
+          ACPE 3.5.b; COCA 6.9; LCME 1.4; CODA 4-6 — all four require the agreement
+          to be tracked per practice facility/clinical site, not per student. This
+          element is the confirmation point: the Site record (not the Location
+          record) is the entity a contract attaches to, resolving the
+          capability-map/accreditation-file open question of "whether a site/facility
+          can be the tracked entity at all."
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown in
+          ../competitors/ documents a distinct Site-vs-Location data model; CORE ELMS
+          and eMedley's public pages describe "site management" only as a marketing
+          bullet with no entity-model detail.
+        gap_severity: none
+        gap_note: ""
+    action: >
+      Coordinator creates a Site record — Prism's help documentation defines "Site"
+      explicitly as "a single entity with a contract to accept students," distinct
+      from its one-or-more physical Locations, so the site itself (not the location)
+      is the entity a contract attaches to.
+    confirmed_by: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md (line 43: 'a Site is a single entity with a contract to accept students'); Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Understanding Site vs. Location.md (line 11: 'A Site is best described as the group or entity with which a contractual relationship is established')"
+
+  - screen: "Contracts tab — Add Contract drawer"
+    navigation_path: "Sites > [select Site] > Contracts (ribbon) > + icon"
+    elements:
+      - element: "Contract name, Contract number (auto-generated, editable), Tax ID, Initiator/primary contact, Start date, Expiration date, Contract template, Status, Active/Inactive toggle, Notes"
+        type: "input fields (mandatory: name, start date, expiration date, template, status)"
+        data_shown: "Full agreement metadata; Status is a configurable list (OT playbook confirms institutional-level values: Fully Executed, Awaiting Signoff, Draft, Finalized, In Development, On Hold, Terminated)."
+        gates_on: ["Contract Status column on the Placement Clearance Dashboard (step below)"]
+        accreditation_citation: >
+          This is the element where the dated-agreement evidence lives: LCME 1.4
+          (written agreement with effective/expiration dates) maps to the Start
+          date/Expiration date fields specifically; ACPE 3.5.b (fully executed,
+          current agreement on file) and COCA 6.9 map to the Status field's
+          "Fully Executed" value. Together these move the "Configure" rationale in
+          coca.yaml/lcme.yaml/coda.yaml and the "Gap" rating in acpe.yaml from a
+          plausible extension into a confirmed, shipped, in-production object model
+          — the remaining accreditor-specific work is field/taxonomy configuration,
+          not new construction.
+        competitor_equivalent: >
+          CORE ELMS advertises "affiliation agreement tracking with expiration
+          alerts" and eMedley's eKeeper advertises the same plus preceptor pay
+          automation, but neither vendor's public site publishes field-level detail
+          (no visible contract-number or status-taxonomy equivalents), so no true
+          element-level comparison is possible from public sources — see
+          ../competitors/core-elms.yaml and ../competitors/emedley.yaml, both of
+          which log this capability only as a stage-level marketing bullet.
+        gap_severity: none
+        gap_note: ""
+      - element: "Chain icon — Link Contract"
+        type: "button opening a drawer of existing contracts"
+        data_shown: "One contract can be linked to multiple sites without duplicating the record; already-linked contracts are greyed out."
+        gates_on: []
+        accreditation_citation: >
+          Supports ACPE 3.5.b / COCA 6.9 / LCME 1.4 / CODA 4-6 tracking where one
+          executed master agreement covers several sites, without forcing duplicate
+          records that would then have to be kept in sync — but the accreditation
+          evidence itself lives on the linked contract record, not on this button.
+        competitor_equivalent: >
+          Not comparable at element level — neither CORE ELMS nor eMedley publishes
+          any documentation of a one-contract-to-many-sites linking model.
+        gap_severity: none
+        gap_note: ""
+      - element: "Contract documents upload / archive"
+        type: "file upload with archive action"
+        data_shown: "The executed agreement PDF/scan itself, with old versions archivable rather than overwritten."
+        gates_on: []
+        accreditation_citation: >
+          ACPE 3.5.b (fully executed, current agreement on file), COCA 6.9 (executed
+          affiliation agreements for every contracted clinical site), and CODA 4-6
+          (written agreement defining roles/responsibilities) all ultimately require
+          the document itself, not just its metadata — this element is where that
+          artifact lives, and the archive action (rather than overwrite) is what
+          preserves the prior-version history an accreditor may ask for. Also the
+          element where ARC-PA 6th ed. B3.01's requirement that the agreement TEXT
+          explicitly name the specific discipline's students has to be satisfied,
+          since that is a property of the uploaded document, not of any Prism field.
+        competitor_equivalent: >
+          Not comparable at element level — neither competitor's public pages
+          document document-storage behavior (versioning vs. overwrite) for
+          affiliation agreements.
+        gap_severity: none
+        gap_note: ""
+      - element: "Routing Checklist"
+        type: "institutional-level configurable checklist with per-item completed toggle + completion date"
+        data_shown: "Negotiation/execution steps (OT playbook's configured example: Date Signed by Dean, Date Signed by Provost, Copy Sent to Dept, Date) — i.e. the contract's execution workflow status, not just a final signed/unsigned flag."
+        gates_on: []
+        accreditation_citation: >
+          Evidence for the "fully executed" half of ACPE 3.5.b and COCA 6.9: the
+          per-item completion dates are what distinguish a signed agreement from one
+          still in routing, at a granularity finer than the Status field alone.
+          Configured per institution, so the checklist item set is a configuration
+          task for a newly onboarded program rather than a build task.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown documents a
+          configurable per-step contract routing/sign-off checklist.
+        gap_severity: none
+        gap_note: ""
+      - element: "Contract Generation tab"
+        type: "template-based document generator"
+        data_shown: "Auto-produces a downloadable contract document from a saved program template (requires Exxat Support to set up a template initially)."
+        gates_on: []
+        accreditation_citation: >
+          Indirectly supports ACPE 3.5.b / COCA 6.9 / LCME 1.4 / CODA 4-6 by
+          standardizing the agreement text a program issues — and is the natural
+          place to bake in ARC-PA-style discipline-naming language so every
+          generated agreement names the specific discipline's students. No standard
+          requires generation itself; the requirements attach to the executed
+          document.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown documents a
+          template-driven contract generator.
+        gap_severity: configure-needed
+        gap_note: >
+          Shipped, but not self-serve: the step's own documentation states a template
+          "requires Exxat Support to set up ... initially," so a newly onboarded
+          DO/Pharmacy/Dentistry/Medicine program cannot use this element until that
+          setup happens. A configuration/onboarding dependency, not a missing
+          capability — its sibling elements in this drawer are all usable day one.
+    action: >
+      Coordinator (or, per the ARC-PA-aligned PA playbook, the same workflow used
+      for allied-health affiliation agreements today) enters a signed agreement's
+      metadata, uploads the executed document, and works the Routing Checklist as
+      the agreement moves through institutional sign-off.
+    confirmed_by: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md; Playbooks/Occupational Therapy (OT) Playbook.md (lines 230-234, 297-304, 421-436); Playbooks/Physician Assistant (PA) Playbook.md (lines 139-152, 'Entering Contracts')"
+
+  - screen: "Contract record — Locations Covered / Programs Covered / Categories"
+    navigation_path: "Sites > [Site] > Contracts > [select contract] > About tab"
+    elements:
+      - element: "Locations Covered"
+        type: "multi-select association"
+        data_shown: "Which of the site's physical locations this specific contract applies to, when a site has multiple locations under one or several agreements."
+        gates_on: ["per-location Contract Status calculation"]
+        accreditation_citation: >
+          Satisfies the per-practice-facility scoping that ACPE 3.5.b, COCA 6.9,
+          LCME 1.4 and CODA 4-6 all assume, and the multi-campus half of ARC-PA
+          6th ed. B3.01 (per PA Playbook lines 150-152), which requires a
+          multi-campus program to identify which campuses/locations an agreement
+          covers.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown documents an
+          equivalent per-location contract scoping control.
+        gap_severity: none
+        gap_note: ""
+      - element: "Programs Covered (common contract sharing)"
+        type: "multi-select, visible only when 'common contract sharing' is enabled institution-wide"
+        data_shown: "Which of the university's several Prism-hosted programs (e.g. a school running PA + OT + a future Pharmacy/DO program together) share one agreement."
+        gates_on: []
+        accreditation_citation: >
+          ARC-PA 6th ed. B3.01 a-e (per PA Playbook lines 150-152) is the sharpest
+          confirmed real-world evidence of why this element matters: a
+          university-wide "all learners" agreement is no longer sufficient — the
+          agreement (or an addendum) must name the specific discipline's students,
+          and for multi-campus programs must identify which campuses/programs are
+          covered. The same logic applies directly to a new COCA/LCME/ACPE/CODA
+          program sharing a host university's existing agreements.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown documents an
+          equivalent multi-program contract-sharing model.
+        gap_severity: configure-needed
+        gap_note: >
+          The multi-program sharing scope is real and shipped, but making it work
+          correctly for a newly onboarded DO/Pharmacy/Dentistry/Medicine program
+          depends entirely on someone manually re-scoping every shared
+          university-wide contract's Programs Covered field and, per the PA
+          playbook's ARC-PA B3.01 finding, checking whether the underlying agreement
+          text itself needs an addendum naming the new discipline — a real
+          compliance risk if skipped, not a system limitation.
+      - element: "Categories"
+        type: "tag-style multi-select, configured under Sites > Setup"
+        data_shown: "Free-form grouping for filtering/search (e.g. by agreement type)."
+        gates_on: []
+        accreditation_citation: >
+          No accreditation standard's evidence lives on this element — it is a
+          filtering/search convenience that feeds the Contracts report's Categories
+          filter, not a field any accreditor asks to see.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown documents a
+          contract tagging/category taxonomy.
+        gap_severity: none
+        gap_note: ""
+    action: "Coordinator scopes exactly which locations and which sibling programs a given executed agreement legally covers."
+    confirmed_by: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md (lines 76-90)"
+
+  - screen: "Sites > Setup > Auto Notifications (contract expiry alerts)"
+    navigation_path: "Sites > Setup (ribbon) > Auto Notifications > Add Notifications"
+    elements:
+      - element: "Notification Type"
+        type: "dropdown, single option"
+        data_shown: "'Expiring Contract' is the only notification type currently available."
+        gates_on: []
+        accreditation_citation: >
+          COCA 6.9 and LCME 1.4 both explicitly ask for "renewal alerts" as part of
+          the required software behavior — this screen is that alert, already
+          shipped, not a Configure-stage gap. The sole available type is exactly the
+          contract-expiry alert those standards name.
+        competitor_equivalent: >
+          CORE ELMS and eMedley both name "expiration alerts"/"auto-expiration
+          reminders" in marketing copy, but neither publishes the notification-type
+          granularity shown here, so the comparison cannot go past "both claim to
+          have alerts."
+        gap_severity: none
+        gap_note: ""
+      - element: "What to include in alerts — days/weeks/months before contract end date"
+        type: "numeric + unit input"
+        data_shown: "Lead time before a linked contract's expiration date (Exxat's stated best practice: set multiple tiers, e.g. 90 days and 6 months, not just a 30-day warning)."
+        gates_on: []
+        accreditation_citation: >
+          COCA 6.9 and LCME 1.4 both explicitly ask for "renewal alerts" as part of
+          the required software behavior — this field is the element that makes the
+          alert land far enough ahead of expiration to be actionable, confirmed in
+          production use (OT Playbook line 234).
+        competitor_equivalent: >
+          CORE ELMS and eMedley both name "expiration alerts"/"auto-expiration
+          reminders" in marketing copy, but neither publishes lead-time
+          configurability, so the comparison cannot go past "both claim to have
+          alerts."
+        gap_severity: none
+        gap_note: ""
+      - element: "Frequency"
+        type: "dropdown (Daily/Weekly/Monthly/Yearly)"
+        data_shown: "How often the reminder repeats once inside the alert window."
+        gates_on: []
+        accreditation_citation: >
+          Part of the same COCA 6.9 / LCME 1.4 "renewal alerts" behavior; the repeat
+          cadence is what turns a single notice into sustained follow-up, confirmed
+          in production use (OT Playbook line 234: "repeats weekly").
+        competitor_equivalent: >
+          CORE ELMS and eMedley both name "expiration alerts" in marketing copy, but
+          neither publishes reminder-frequency granularity, so the comparison cannot
+          go past "both claim to have alerts."
+        gap_severity: none
+        gap_note: ""
+      - element: "Recipients tab"
+        type: "multi-select of school users + free-text additional email addresses"
+        data_shown: "Who receives the reminder; not limited to system users."
+        gates_on: []
+        accreditation_citation: >
+          Part of the same COCA 6.9 / LCME 1.4 "renewal alerts" behavior; the
+          free-text address support is what lets the alert reach non-Prism actors
+          (institutional Legal, a dean's office) who actually control renewal.
+        competitor_equivalent: >
+          CORE ELMS and eMedley both name "expiration alerts" in marketing copy, but
+          neither publishes recipient granularity, so the comparison cannot go past
+          "both claim to have alerts."
+        gap_severity: none
+        gap_note: ""
+    action: "Coordinator (or institutional admin, via the parallel Contracts & Sites Management > Setup > Auto Notifications screen) configures recurring email reminders before an agreement lapses."
+    confirmed_by: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md (lines 131-155); Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Manage Contract Expirations Easily with Exxat Prism.md; Exxat-Help-Guides/Help for Institutional Users/Step-by-Step Guides (How-tos)/Institutional Level- Contracts and Sites Management.md (lines 51-111); Playbooks/Occupational Therapy (OT) Playbook.md (line 234, confirms this is actively used in production: '2 months within contract end date, send notification email, repeats weekly')"
+
+  - screen: "Placement Clearance Dashboard — Contract Status column"
+    navigation_path: "Placements > [Course or Placement Group] > Placement Clearance (banner)"
+    elements:
+      - element: "Contract Status column"
+        type: "read-only computed status, per student row (reflecting the row's Location's contract(s))"
+        data_shown: >
+          Valid Contract — the location has a contract that is fully executed,
+          active, and valid through the placement dates (or open-ended); if
+          multiple contracts are linked, at least one satisfies all three
+          conditions and is not expiring during the placement.
+          Needs Attention — covers three distinct real scenarios the help
+          documentation enumerates precisely: (a) 'Needs Attention (expiring
+          during placement)' when the only qualifying contract is fully
+          executed/active but expires before the placement ends; (b) plain
+          'Needs Attention' when no linked contract is fully-executed/active/
+          non-expired at all; (c) 'Needs Attention (Missing Contracts)' when the
+          location has zero linked contracts.
+        gates_on: ["nothing enforced automatically — see gap_note"]
+        accreditation_citation: >
+          ACPE 3.5.b, COCA 6.9, LCME 1.4, CODA 4-6 all ask for the ability to "block
+          new placement scheduling at a site whose agreement has lapsed" as
+          required_software_behavior. THIS element is where that requirement is
+          resolved PARTIALLY, not fully: Contract Status is a confirmed, real-time,
+          site/location-level computed status already live on the exact dashboard
+          coordinators use before clearing a rotation — the pain_or_gap language in
+          the journey file overstated the gap by describing the gating primitive as
+          pointing "only at students"; it does not. What remains genuinely
+          unconfirmed in the sourced material is whether "Needs Attention" is a hard
+          technical block that prevents an admin from creating/confirming a
+          placement, or purely an advisory status a coordinator must act on manually
+          — none of the help-center or playbook language uses "block," "prevent," or
+          "cannot schedule" for this specific column (compare to the Active/Inactive
+          Site toggle, which the same help guide explicitly states DOES block new
+          placements).
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown documents an
+          equivalent status-taxonomy (Valid/Needs Attention/Missing, single- vs.
+          multi-contract logic) on a placement-readiness dashboard.
+        gap_severity: configure-needed
+        gap_note: >
+          Confirmed as a real-time status indicator, not confirmed as a hard
+          scheduling block. If accreditors' "blocking" language is read literally,
+          closing this gap fully would mean either (a) extending the Active/Inactive
+          Site toggle's confirmed hard-block behavior to auto-trigger off contract
+          expiration, or (b) documenting to accreditors that the human-monitored
+          Needs Attention workflow itself is the compensating control — a
+          policy/positioning decision, not purely an engineering one.
+      - element: "Requirement Upload Status / Compliance Status columns (adjacent)"
+        type: "read-only computed status"
+        data_shown: "Parallel student-level compliance tracking shown in the same row, so a coordinator sees site-contract risk and student-compliance risk side by side."
+        gates_on: []
+        accreditation_citation: >
+          No affiliation-agreement standard's evidence lives on these columns — they
+          are student-level compliance, not site-contract compliance. Their
+          relevance to ACPE 3.5.b / COCA 6.9 / LCME 1.4 / CODA 4-6 is contextual
+          only: they sit in the same row as Contract Status, which is why a
+          coordinator can clear a rotation against both risks in one pass.
+        competitor_equivalent: >
+          Not comparable at element level — student-compliance dashboards are
+          advertised by both CORE ELMS and eMedley, but with no published column-level
+          detail to compare against.
+        gap_severity: none
+        gap_note: ""
+      - element: "Filter — funnel icon"
+        type: "report filter"
+        data_shown: "Can filter the whole dashboard to Contract Status, letting a coordinator surface every student currently sitting on a 'Needs Attention' site/location before rotations start."
+        gates_on: []
+        accreditation_citation: >
+          This is the element that makes the Contract Status signal actionable at
+          scale for ACPE 3.5.b / COCA 6.9 / LCME 1.4 / CODA 4-6 — filtering to
+          "Needs Attention" produces the worklist a coordinator chases 6-8 weeks
+          before rotations. It is also what the compensating-control argument in the
+          Contract Status column's gap_note rests on operationally.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown documents
+          filtering a placement-readiness dashboard by contract status.
+        gap_severity: none
+        gap_note: ""
+    action: >
+      Coordinator monitors this dashboard starting 6-8 weeks before rotations
+      begin (Exxat's own documented best practice) and manually intervenes —
+      chasing Legal or the site — on any row flagged Needs Attention.
+    confirmed_by: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md (lines 49-54); Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md (lines 346-374, 'Contract Status on Clearance Dashboard'); Playbooks/Occupational Therapy (OT) Playbook.md (line 435, 'Placement Clearance Dashboard ... verifies students are placed only at sites with active contracts')"
+
+  - screen: "Sites Missing Contracts report"
+    navigation_path: "Sites > Contracts (ribbon) > Sites Missing Contracts"
+    elements:
+      - element: "Sites Missing Contracts list"
+        type: "filtered report"
+        data_shown: "Every site in the program with zero contract records at all — the coordinator's proactive audit view, independent of any active placement."
+        gates_on: []
+        accreditation_citation: >
+          The negative-evidence counterpart to ACPE 3.5.b / COCA 6.9 / LCME 1.4 /
+          CODA 4-6: it enumerates the sites for which no agreement exists at all,
+          which is precisely the exception list a site-visit team probes. Note its
+          known false-positive behavior for institutionally-owned sites, documented
+          on the final step of this flow.
+        competitor_equivalent: >
+          Not comparable at element level from public sources — neither CORE ELMS nor
+          eMedley documents a missing-contract exception report.
+        gap_severity: none
+        gap_note: ""
+      - element: "Contracts report — funnel filter"
+        type: "report filter"
+        data_shown: "Filter by Site Status, Status, Expiration (e.g. expiring in 30/60 days), Programs, Contract Tags, Categories."
+        gates_on: []
+        accreditation_citation: >
+          COCA 6.9's required_software_behavior explicitly asks for "one-click export
+          of the rotation roster and capacity table a site visit team would request"
+          — this filter, plus the confirmed PT-program "Sites > Contracts filtered
+          Active" pull documented for Annual Accreditation Report assembly, is direct
+          evidence that export capability already exists for the contract half of
+          that ask (the capacity/rolling-average half remains the stage-1 gap).
+        competitor_equivalent: >
+          Not comparable at element level from public sources — no competitor
+          teardown documents contract-report filter dimensions.
+        gap_severity: none
+        gap_note: ""
+    action: "Coordinator or Compliance/Accreditation Liaison runs this before a site visit to produce the roster of contracted sites an accreditor will ask for."
+    confirmed_by: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md (lines 156-172)"
+    confirmed_by_secondary: "prism/capability-map.yaml lines 808-819 (AAR data-pull workflow, PT)"
+
+  - screen: "Institutional Level — Contracts & Sites Management dashboard"
+    navigation_path: "Institution Administrator tile > Contracts & Sites Management"
+    elements:
+      - element: "Summary dashboard (all contracts/status across all programs)"
+        type: "read-only rollup with switch to list view"
+        data_shown: "Cross-program contract status, for universities running multiple Prism-hosted programs (e.g. an existing PA/OT program plus a newly onboarded Pharmacy or DO program)."
+        gates_on: []
+        accreditation_citation: >
+          Directly relevant to the "one repo, many disciplines" onboarding path for a
+          university adding a new accreditation-driven program onto an existing Prism
+          tenant — this rollup is where the inherited contract set becomes visible to
+          the new program's compliance liaison before they start re-scoping it.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown documents an
+          institutional/multi-program contract rollup tier.
+        gap_severity: none
+        gap_note: ""
+      - element: "Add Contract (institutional level)"
+        type: "drawer, same fields as program-level Add Contract plus explicit program-sharing selection"
+        data_shown: "Lets an institutional admin create one contract and immediately choose which programs it covers."
+        gates_on: []
+        accreditation_citation: >
+          The same Site Sharing Model the capability map documents (Standard/All
+          Sharing/No Sharing) applies to Contracts as one of its four shareable
+          entity types; this element is where a new DO/Pharmacy program is added to
+          an agreement's coverage at creation time rather than retrofitted via the
+          per-contract Programs Covered field.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown documents
+          institution-tier contract creation with program-sharing selection.
+        gap_severity: none
+        gap_note: ""
+      - element: "Contract Organization > Contract Status list (Setup)"
+        type: "editable status taxonomy"
+        data_shown: "The institution defines its own contract-lifecycle status vocabulary (OT playbook's real example: Fully Executed, Awaiting Signoff, Draft, Finalized, In Development, On Hold, Terminated); locked at the program level if contracts are shared."
+        gates_on: []
+        accreditation_citation: >
+          This element determines whether the "fully executed" state that ACPE 3.5.b
+          and COCA 6.9 depend on actually exists as a selectable value — the
+          Placement Clearance Dashboard's Valid Contract computation reads from this
+          taxonomy. A newly onboarded program on a shared tenant inherits the
+          institution's existing vocabulary rather than defining its own.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown documents a
+          configurable contract-status taxonomy.
+        gap_severity: none
+        gap_note: ""
+    action: "Institutional admin manages the master contract set that a new discipline program (e.g. a first-year DO or Pharmacy program riding on an existing university's Prism tenant) would inherit or extend, rather than starting from zero."
+    confirmed_by: "Exxat-Help-Guides/Help for Institutional Users/Step-by-Step Guides (How-tos)/Institutional Level- Contracts and Sites Management.md"
+
+  - screen: "Add Site drawer — contract requirement assumption (confirmed product friction)"
+    navigation_path: "Sites > +Add Site (same screen as step 1); friction surfaces later on the Contracts report and Placement Clearance Dashboard"
+    elements:
+      - element: "(no 'contract not required' flag exists on the Site record)"
+        type: "missing toggle"
+        data_shown: "Every newly added site is implicitly assumed to need a contract; there is no way to mark a site as contractually exempt."
+        gates_on: ["Contract Status column and Sites Missing Contracts report both flag these sites as incomplete regardless of accreditor requirement"]
+        accreditation_citation: >
+          Directly relevant to CODA 4-6 and LCME 1.4, both of which apply the
+          agreement requirement only to sites "not owned by the sponsoring
+          institution" — a dental school's in-house teaching clinic (the dominant
+          CODA site type per ../domains/dentistry.yaml) is exactly the case this
+          false-positive would hit hardest, since most of its "sites" are owned, not
+          affiliated.
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown documents this
+          specific owned-vs-affiliated site distinction.
+        gap_severity: cosmetic
+        gap_note: >
+          Confirmed, named product friction (not a hedge) — a real accumulated
+          feature request from production OT schools, not merely theoretical. It is a
+          false-positive/noise problem on existing reports, not a compliance-blocking
+          defect, which is why it is rated cosmetic rather than gap: it does not stop
+          anyone from correctly tracking a real agreement, it just pollutes the
+          "missing contracts" signal for institutionally-owned sites — a category
+          CODA/LCME programs will have disproportionately many of.
+    action: "Coordinator adds a site that genuinely does not require a written agreement under their program's policy (e.g. an in-house teaching clinic already owned by the institution) and has no way to suppress the resulting false-positive flag."
+    confirmed_by: "Playbooks/Occupational Therapy (OT) Playbook.md (line 424: 'Not all sites require a contract, but the system assumes a contract is required when a site is added, so it flags missing contracts even when none is needed. Schools have requested a way to mark a site as \"contract not required\" so it isn't flagged as missing/incomplete.')"
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Understanding Site vs. Location.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Manage Contract Expirations Easily with Exxat Prism.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Institutional Users/Step-by-Step Guides (How-tos)/Institutional Level- Contracts and Sites Management.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/dentistry.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/do.yaml"
+last_verified: "2026-08-24"

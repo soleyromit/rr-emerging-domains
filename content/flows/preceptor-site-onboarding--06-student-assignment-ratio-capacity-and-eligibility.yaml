@@ -1,0 +1,142 @@
+# Element-level ground truth underneath preceptor-site-onboarding.yaml, stage 6.
+# Every accreditation_citation and competitor_equivalent claim below traces to a real
+# source file in confirmed_by — see content/flows/_TEMPLATE.yaml for the contract.
+# SCHEMA v2 (2026-08-24): analysis fields live per element, not per step.
+flow_name: "Student Assignment — Ratio, Capacity & Eligibility Checks at Match Time"
+maps_to_journey: "preceptor-site-onboarding.yaml, stage 6"
+persona: "Clinical Coordinator / Program Administrator (see ../personas/role-clinical-coordinator.yaml, ../personas/role-program-admin.yaml)"
+steps:
+  - screen: "Site/Location Slots — Add Slot drawer"
+    navigation_path: "Sites > [Site] > Slots tab > +Add Slot (or Sites > [Location] > Slots tab)"
+    elements:
+      - element: "Location, Rotation, # of offers"
+        type: "input fields"
+        data_shown: "A raw count of how many students a site says it can take for a given Location + current-or-future Rotation; # of offers is required and, once saved, cannot be edited (a new slot must be added instead)."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.e (2:1 student-to-preceptor cap) and COA Standard F.7 (nurse-anesthesia 2:1 supervision ratio, a currently-shipped discipline) both resolve to this same field in practice — see next step for the direct COA citation."
+        competitor_equivalent: "Not comparable at element level — no competitor's public docs expose a slot/capacity-entry screen with this field-level detail."
+        gap_severity: "configure-needed"
+        gap_note: "This resolves a real ambiguity in the journey's framing of ACPE 3.3.e as a clean 'Transfer': the number entered here is a human-declared capacity ceiling per Location+Rotation, not a system-computed ratio tied to a named preceptor's identity or concurrent caseload across placements. Nothing in the sourced documentation shows the '# of offers' field being derived from (or validated against) an actual preceptor count — a site could enter '5' for one rotation with one precepting individual and nothing here would flag it."
+    action: "Site staff or admin records a capacity number for a rotation at a location — this single field is the mechanism every ratio/adequacy claim in this stage ultimately rolls up to."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md (\"Adding Slots by Site and Location\" section)"
+
+  - screen: "Sites > Slots (COA / nurse-anesthesia F.7 usage)"
+    navigation_path: "Dashboard > Sites > [Select a site] > Slots"
+    elements:
+      - element: "Slots section (same screen as the step above, described from an accreditor-mapping angle)"
+        type: "read/write list"
+        data_shown: "Per the COA Accreditation Standards Support Guide, this is the screen a currently-shipped discipline (Nurse Anesthesia) points to as its evidence for Standard F.7's 2:1 clinical-supervision-ratio requirement: 'Assign and track student-to-preceptor supervision ratio within the slots section, supporting monitoring of supervision ratios across clinical sites.'"
+        gates_on: []
+        accreditation_citation: "COA Standard F.7 (2:1 clinical supervision ratio) — rated by Exxat's own help documentation as satisfied by this screen; ACPE Standard 3, Key Element 3.3.e is the direct pharmacy analog to this exact same standard shape (2:1 cap)."
+        competitor_equivalent: "Not comparable at element level — no competitor source in this research documents an equivalent accreditor-mapped slots/ratio screen."
+        gap_severity: "configure-needed"
+        gap_note: "This is a genuine, useful data point the prior journey synthesis did not have: a 2:1-style ratio standard is already being satisfied in production, today, for a different discipline, using the exact same slot-capacity mechanism as the PA Max Placement Limit feature (next step) — meaning the pattern for the four new domains is proven, but ('monitoring'/'track') is documentation language for a self-declared count, not confirmed proof of an automated real-time block computed from actual preceptor assignments — the same caveat as the step above."
+    action: "Program uses the same Sites > Slots capacity field, for a live discipline today, as its documented evidence artifact for a 2:1 supervision-ratio accreditation standard."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/Nursing/Accreditation Guides/COA Accreditation Standards Support Guide.md (Standard F.7 section)"
+
+  - screen: "Max Placement Limit (Slot Cap) — Slot Offering Drawer step 2, and its warning surfaces at match time"
+    navigation_path: "Site/Delegator slot-offering link, or Placements > Slots > Offer Availability > (edit pencil) step 2; warning then surfaces at Placements > Location view > Select Student, and in the Make Placement drawer (Place Individually / Place as a Group)"
+    elements:
+      - element: "Placement Limit field (per Location + Setting + Cohort)"
+        type: "input field"
+        data_shown: "A configured intake ceiling for a Location/Setting/Cohort combination, independent of the raw slot count offered."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.e — this configured ceiling is the stored value every match-time ratio check in this stage is evaluated against."
+        competitor_equivalent: "Not comparable at element level — no competitor's public docs describe an equivalent configurable per-Location/Setting/Cohort placement-cap field at this granularity."
+        gap_severity: "gap"
+        gap_note: "Documented as PA-exclusive today, and scoped to Location+Setting+Cohort — not to an individual preceptor's identity or their concurrent caseload across sites/placements. Extending this field to Pharmacy, DO, Dentistry, or Medicine is real product work, not configuration, and even once extended its scoping unit is not the unit ACPE 3.3.e's 2:1 cap is actually expressed in."
+      - element: "Warning banner at the point of placement"
+        type: "non-blocking alert"
+        data_shown: "Surfaces once the configured limit is reached or exceeded, at the exact moment a coordinator is matching a student — i.e., this stage's 'at match time' check."
+        gates_on: ["informational only — does not block or prevent completing the placement"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.e — this banner is the one confirmed instance anywhere in the sourced material of a ratio/capacity check actually surfacing to a user at the point of matching a student, which is the specific moment this journey stage is about. It resolves the journey's 'real-time capacity calculation blocking or flagging an over-ratio assignment [Transfer]' framing with an important correction: the mechanism flags, it does not block."
+        competitor_equivalent: "Not comparable at element level — no competitor's public docs describe an equivalent soft-cap warning mechanism at this granularity."
+        gap_severity: "gap"
+        gap_note: "Advisory rather than blocking: the coordinator can proceed past it regardless. Tightening this from a soft warning into ACPE 3.3.e's implied hard block is real product work. This is the most load-bearing single finding for this stage — it means 'Transfer' in the journey's accreditation_link overstates how close the existing mechanism is to what ACPE 3.3.e actually requires."
+    action: "Coordinator sees a ratio/capacity warning at the moment of matching a student to a slot, but can proceed regardless."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Max Placement Limit (MAX Slot Limit).md; corroborated by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (\"Max Placement Limit (Slot Cap) — PA-Exclusive Feature\" section)"
+
+  - screen: "Placement Clearance Dashboard — filters and per-preceptor columns"
+    navigation_path: "Placements > [Course or Placement Group] > Placement Clearance"
+    elements:
+      - element: "Filter bar: Course offering, Rotation, Setting, Requirement Upload Status, Contact, Student Attributes, Preceptor CV, Preceptor License, Preceptor Certification"
+        type: "report filter"
+        data_shown: "A filterable, per-student, per-placement clearance view that can be sliced by Rotation and Setting."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.10 — this filter bar is the closest real mechanism to 6.10's 'filterable rotation attributes' requirement, which meaningfully tightens the journey's [Configure] claim from a hypothetical to a concrete existing screen with a proven filter pattern (Rotation, Setting) to extend."
+        competitor_equivalent: "Not comparable at element level — no competitor's public docs expose a pre-placement clearance filter screen with this filter-level detail."
+        gap_severity: "configure-needed"
+        gap_note: "The existing 'Setting' dimension is a real, reusable slot for one of COCA 6.10's three required attributes ('setting is inpatient/outpatient'). But 'Student Attributes' here is confirmed (via Managing Student Access and Attributes.md — the only place that term is defined) to mean enrollment/status metadata (Active/Inactive/Graduate, cohort, campus, category), not clinical-eligibility flags — so 'residents present at site' and 'supervising physician is a DO' have no existing filter dimension to attach to yet. One of three required attributes has a home; the other two do not."
+      - element: "Preceptor CV / License / Certification columns"
+        type: "read-only rollup (Missing / Exists / NA)"
+        data_shown: "Whether a given preceptor's required credential documents are on file for this placement."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.10 — these columns are the shipped precedent for 6.10's 'rolling up into a per-student pre-clerkship completion checklist' half of the requirement, demonstrating the per-row status-rollup display pattern already exists."
+        competitor_equivalent: "Not comparable at element level — no competitor's public docs expose a pre-placement clearance view with this column-level detail."
+        gap_severity: "configure-needed"
+        gap_note: "These columns are read-only status display only — they roll up preceptor credential documents, not clinical-eligibility attributes, and there is no completion-checklist rollup view built on top of this screen today. The rollup view COCA 6.10 needs is precedented by this column pattern but is not itself built, and these columns gate nothing: a Missing status is displayed, not enforced."
+    action: "Coordinator filters the pre-placement clearance view by Rotation/Setting and reviews preceptor credential status before students begin rotations (documented as a 6-8-week-out monitoring habit)."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
+
+  - screen: "Curriculum Mapping — Configurable course & mapping attributes"
+    navigation_path: "Dashboard > Curriculum Mapping > Attributes > Course and Measure Attributes"
+    elements:
+      - element: "Per-discipline attribute taxonomy (e.g. PANCE Topics, Bloom's Taxonomy, SCPE settings for PA; ACOTE Instructional Methods, Lifespan/population tags for OT)"
+        type: "configurable tag/attribute set"
+        data_shown: "A proven mechanism for attaching a fixed, accreditor-specific metadata taxonomy to a course/measure record."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.10 and ACPE Standard 3, Key Elements 3.2.b/3.2.d — this is the generalized version of the mechanism the two accreditation-standard files independently rate 'Configure': loading a COCA/LCME/ACPE/CODA-specific attribute set is the same class of work already done twice in production (PA, OT), not new architecture."
+        competitor_equivalent: "Not comparable at element level in the direction that matters most — this is Prism's own documented capability being materially deeper than either accreditation file's standalone rationale previously suggested, not a claim about any competitor's equivalent."
+        gap_severity: "none"
+        gap_note: "This is curriculum/course-level attribute tagging, confirmed twice in production for other disciplines — it is the right building block for COCA 6.10's rotation attributes, but nothing in the sourced material shows this taxonomy mechanism already wired into the Placement Clearance Dashboard's filter bar (previous step) or into a placement-time eligibility block; that integration would still need to be built."
+    action: "Admin configures a new attribute set for a discipline once, then tags relevant course/rotation records against it."
+    confirmed_by: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (\"Curriculum Mapping\" pillar, \"Configurable course & mapping attributes\" feature)"
+
+  - screen: "Make Placement drawer — Multiple Preceptors and post-publish preceptor changes"
+    navigation_path: "Placements > [Course] > Location view > Make Placement drawer; preceptor/faculty association can also be edited from the published placement record"
+    elements:
+      - element: "Preceptor(s) association field"
+        type: "multi-select / editable association"
+        data_shown: "More than one preceptor can be linked to a single student placement, and preceptors or placement faculty can be added or changed even after the placement has been published."
+        gates_on: []
+        accreditation_citation: "LCME Standard 8, Element 8.6 — directly relevant to Medicine's requirement in this journey stage's pain_or_gap that 'the preceptor is not a single record for the duration.'"
+        competitor_equivalent: "Not comparable at element level — no competitor's public docs describe a multi-preceptor-per-placement or post-publish-reassignment mechanism at this detail."
+        gap_severity: "configure-needed"
+        gap_note: "This is a real, concrete correction to the journey's Medicine framing: the data model already supports more than one preceptor per placement and supports changing that association mid-clerkship, which directly addresses the 'evaluating site can change mid-clerkship' and 'the preceptor is not a single record' concerns raised in pain_or_gap. What is NOT confirmed anywhere in the sourced material is any notion of a supervision HIERARCHY — the FAQ describes a flat, unordered list of associated preceptors, with no evidence of role-tagging (attending vs. fellow vs. resident vs. intern) or of a ratio/eligibility check that understands that hierarchy. So Medicine's team-supervision model is closer to buildable than the journey assumed, but the specific tiered-supervision structure remains unconfirmed."
+    action: "Coordinator assigns one or more preceptors to a placement, and can add or swap preceptors/faculty later without recreating the placement."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/FAQs for Administrators/Frequently Asked Questions- Program Administrators.md (\"## Placements\" section, Q10 \"Can multiple Preceptors be added for a Single Placement?\" and Q11 \"Can preceptors/faculty be added to a placement post-publishing the placement?\")"
+
+  - screen: "Dentistry — no equivalent screen exists"
+    navigation_path: "N/A — traced across Placements, Sites, and Curriculum Mapping; no per-procedure faculty sign-off or quota-tracking screen was found in the sourced Prism documentation"
+    elements:
+      - element: "N/A"
+        type: "N/A"
+        data_shown: "Prism's placement/rotation model (Slot -> Rotation -> Placement, all of the above) is calendar/block-based; nothing in the sourced help-center or playbook material models a per-procedure faculty sign-off or a completed-procedure quota, which per ../domains/dentistry.yaml is how Dentistry actually gates progression."
+        gates_on: []
+        accreditation_citation: "No CODA element is cited in content/accreditation/coda.yaml as satisfied by the ratio/capacity mechanisms traced in this flow — this stage's 2:1-style ratio primitive has, as the journey's pain_or_gap already states, nothing to bind to in a procedure-gated, quota-based model."
+        competitor_equivalent: "Directional, not element-level: axiUm (the dominant dental academic EHR, ~90% U.S. dental-school share) publicly markets 'student-patient matching based on graduation requirements' as a Practice Management feature — i.e., a competitor in this exact domain does document a requirements-based matching mechanism, which is the general shape Dentistry would need. But axiUm's public pages do not expose screen-level or field-level detail (no visible rule builder, quota structure, or sign-off workflow), so this cannot be compared element-by-element — it can only be said that a named competitor capability exists in roughly the right shape, sourced from /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml."
+        gap_severity: "gap"
+        gap_note: "Confirms rather than merely restates the journey's existing framing: the gap is architectural (no procedure/quota-based progression model anywhere in the sourced Prism documentation), not a configuration gap on top of an existing primitive."
+    action: "N/A — this is a documented absence, not a screen to walk through."
+    confirmed_by: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/dentistry.yaml"
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Exploring Locations.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/Nursing/Accreditation Guides/COA Accreditation Standards Support Guide.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Max Placement Limit (MAX Slot Limit).md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Managing Student Access and Attributes.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/FAQs for Administrators/Frequently Asked Questions- Program Administrators.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/medicine.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/dentistry.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
+last_verified: "2026-08-24"

@@ -1,0 +1,291 @@
+# One file per domain: discipline-DO.yaml, discipline-pharmacy.yaml, etc.
+# The PROGRAM is the archetype (e.g. "a growing COCA-accredited DO program"),
+# not an individual — this is the discipline layer of the persona system.
+domain: "Pharmacy"
+persona_name: "The Enrollment-Squeezed ACPE Program Re-Proving Itself Under Standards 2025"
+archetype_summary: >
+  A mid-sized, ACPE-accredited PharmD program at a private or regional public
+  university — one of the 142 U.S. colleges and schools of pharmacy accredited as
+  of 2022, up from 78 in 2000. It expanded during the growth era and is now
+  absorbing the correction: national PharmD applicant volume fell more than 60%
+  between fall 2011 (106,815) and fall 2021 (40,552), enrollment slid from 44,403
+  (2023) to 42,312 (2024), and at least one program (University of Charleston
+  School of Pharmacy) closed in December 2024 citing declining enrollment.
+  Applications have since ticked up two years running (+6% fall 2024 to fall
+  2025), so the program is cautiously stabilizing rather than growing. Its
+  experiential operation is disproportionately large for its headcount because of
+  the PharmD curriculum shape: a longitudinal 300-hour IPPE requirement woven
+  through the first two didactic years, then an entire coursework-free fourth
+  professional year of APPE — a minimum of 36 weeks / 1,440 hours delivered as six
+  to seven block rotations of four to six weeks, each supervised one-to-one (or
+  at most two-to-one) by a licensed pharmacist preceptor. The people who feel this
+  are a small experiential-education team — typically an Experiential Director, an
+  IPPE/APPE coordinator or two, and an Assessment/Accreditation lead wearing a
+  second hat — who between them own hundreds of sites, hundreds of preceptors, and
+  a graduation-gating hour count for every student. The program's outcomes are
+  publicly scored twice over: ACPE's own review, and NAPLEX/MPJE pass rates that
+  prospective students read as a proxy for quality in a shrinking applicant pool.
+accreditation_pressure:
+  - point: "ACPE's new Standards 2025 and new PHARMS system launched together"
+    detail: >-
+      The dominant fact is that the rules just changed. ACPE's Standards 2025 (approved June
+      2024, updated June 2025) took effect for evaluations beginning fall 2025 and supersede
+      Standards 2016, and ACPE simultaneously retired AACP's AAMS platform in favor of its own
+      submission system, PHARMS. The program is therefore re-mapping its evidence against a
+      new standard set AND re-learning where that evidence gets submitted, in the same cycle —
+      with ACPE, not any vendor, owning the system of record for submission. Underneath that,
+      the liaison's specific anxieties are quantitative and student-level, not narrative:
+  - point: "Hour counts must be broken out by category, not just totaled (Standards 3.1.b, 3.2.b/d)"
+    detail: >-
+      Hour arithmetic that has to survive an audit. Standard 3.1.b demands at least 300 IPPE
+      clock hours with sub-minimums of 75 community and 75 hospital/health-system hours, with
+      simulation hours explicitly excluded from the count. Standard 3.2.b/3.2.d demands at
+      least 1,440 APPE hours with each APPE at least 160 hours. Getting the total right is not
+      enough; the hours must be categorized correctly and the simulation carve-out defensible
+      per student.
+  - point: "Every student must complete rotations in four required practice settings"
+    detail: >-
+      Four required APPE settings per student — community pharmacy, ambulatory care,
+      hospital/health-system, and inpatient adult patient care — which turns graduation
+      clearance into a per-student coverage check the program must be able to run before it is
+      too late to schedule a make-up rotation. Nontraditional PharmD students must be shown to
+      have met the same four via formalized faculty assessment, a record type that does not
+      fit a normal placement row.
+  - point: "No more than two students per preceptor at once (Standard 3.3.e)"
+    detail: >-
+      A hard capacity ceiling on preceptors: Standard 3.3.e caps the student-to-preceptor
+      ratio at 2:1 in most situations, with documented exceptions. In a year where the entire
+      P4 class is on rotation simultaneously, this is a live scheduling constraint, not an
+      annual report.
+  - point: "Preceptors must be vetted and trained before taking a student (Standards 3.3.a, 3.3.c)"
+    detail: >-
+      Preceptor eligibility as a gate, not a record. Standard 3.3.a requires documented
+      quality criteria at recruitment, evidence that the majority of any given student's
+      preceptors are U.S.-licensed pharmacists, and performance evaluations on file; 3.3.c
+      requires that every preceptor complete orientation to the mission, the specific
+      syllabus, and evaluation technique *before* accepting a student, plus ongoing
+      development records.
+  - point: "Every training site needs a signed, current agreement on file (Standard 3.5.b)"
+    detail: >-
+      Site paperwork with legal teeth. Standard 3.5.b requires a fully executed, current
+      affiliation agreement on file for every practice facility used — and because state
+      boards of pharmacy license both the pharmacist and the practice site, a multi-campus or
+      distance program running rotations across state lines carries a per-state
+      licensure/compliance dimension on each site record.
+  - point: "Student grading must be consistent across all rotation sites (Standard 7.3.c)"
+    detail: >-
+      Consistency across sites. Standard 7.3.c requires a documented QA procedure showing
+      standardized key components and consistent student assessment across every site offering
+      the same course — i.e., the program must be able to detect and answer for preceptor
+      grading drift.
+  - point: "Students must show readiness, and the program must keep improving (7.3.d, 7.5.a/b)"
+    detail: >-
+      Readiness gates and CQI. Standard 7.3.d requires evidence students are APPE-ready before
+      entering APPEs and Practice-/Team-ready at graduation, measured against the 2.1 outcome
+      elements (adapted from AACP's COEPA framework); 7.5.a requires a demonstrated annual CQI
+      loop using AACP's standardized graduating-student, faculty, and preceptor surveys; 7.5.b
+      requires documented processes for continuous compliance across the whole standard set.
+  - point: "Standards 2025 was aligned to the NAPLEX licensing exam's own competencies"
+    detail: >-
+      Layered on top, Standards 2025 was explicitly revised against the 2021 NAPLEX Competency
+      Statements, and NAPLEX pass rate is the headline number ACPE and prospective applicants
+      both watch — so the outcome taxonomy the program maps to and the licensure metric it is
+      judged on are meant to be the same spine.
+current_tools:
+  - point: "The program's placement software is probably CORE ELMS"
+    detail: >-
+      Most likely CORE ELMS (CORE Higher Ed), which claims 90% of U.S. pharmacy programs as
+      partners and markets its pharmacy ELMS as meeting "ACPE Pharmacy Standards and CAPE
+      Outcomes" — with SmartMatch rule-based student-site-preceptor matching, hours/timesheet
+      tracking, immunization and background-check compliance, preceptor license tracking,
+      affiliation-agreement expiration alerts, and a shipped survey module.
+  - point: "Accreditation mapping costs extra, and CORE was just acquired by a PE firm"
+    detail: >-
+      Curriculum-to-accreditation-standard mapping sits in a separately branded add-on,
+      CompMS, rather than in base ELMS. CORE is now part of a merged "PeopleGrove + CORE"
+      entity following a private-equity-backed acquisition.
+  - point: "Several competing platforms already serve pharmacy programs"
+    detail: >-
+      The realistic alternatives already inside pharmacy: E*Value (merged with MedHub under
+      Ascend Learning in 2015, explicitly listing pharmacy among 24+ supported program types
+      and serving ~100,000 advanced-practice students at time of merger); Leo (DaVinci
+      Education), which lists pharmacy as a served domain and merged with Elentra in May 2024
+      under Achieve Partners; Elentra itself, whose 14-discipline coverage includes pharmacy;
+      eMedley (AllofE); and one45 (Acuity Insights), which lists pharmacy among 100+
+      health-professions programs.
+  - point: "Hour tracking, surveys, and accreditation evidence still live in spreadsheets (7.2.d)"
+    detail: >-
+      Whatever the platform of record, the same three things almost certainly live outside it:
+      the IPPE hour-category reconciliation and the four-setting graduation check
+      (spreadsheets, because reviewers say CORE's "reporting suite lacks depth and
+      consistency" and modules "seem disjointed"), the AACP standardized surveys required by
+      Standard 7.2.d, and the Standards 2025 evidence assembly itself, which now has to land
+      in ACPE's PHARMS.
+jtbd:
+  - job: >
+      When an ACPE site visit or interim report is coming, I want a per-student,
+      per-category hour ledger that already excludes simulation and already
+      proves every required APPE setting, so I can answer "show me this
+      student's evidence" in seconds instead of reconciling spreadsheets against
+      the placement system for weeks.
+    evidence_or_rationale: >
+      ACPE requires auditable student-level hour logs at 300 IPPE hours with 75/75
+      community and hospital sub-minimums and simulation excluded (Standard 3.1.b),
+      plus 1,440 APPE hours at ≥160 hours each across four named required settings
+      (Standards 3.2.b, 3.2.d). The accreditation file itself names the needed software
+      behavior as aggregating hours by setting category, enforcing sub-thresholds,
+      and blocking/flagging graduation clearance for a missing category — while
+      flagging as an open question whether the incumbent placement engines
+      aggregate against a custom setting taxonomy at all rather than a single total
+      per placement. CORE reviewers independently complain the reporting suite
+      "lacks depth and consistency."
+    related_flows:
+      - flow: "accreditation-self-study--02-continuous-student-level-clinical-evidence-capture.yaml"
+        step: "Course Setup — Timesheet Categorization"
+        element: "Category List"
+  - job: >
+      When I am scheduling an entire P4 cohort into a coursework-free APPE year,
+      I want live preceptor capacity and eligibility enforced at the moment of
+      assignment, so I can fill every student's rotation schedule without
+      exceeding preceptor capacity or seating a student with a preceptor whose
+      license or orientation isn't current.
+    evidence_or_rationale: >
+      Standard 3.3.e caps students at 2 per precepting pharmacist (a hard 2:1
+      ratio) with documented exceptions, and 3.3.a/3.3.c make licensure status and
+      completed orientation preconditions for accepting a student. Because the
+      entire fourth professional year is a coursework-free, full-time block
+      sequence of at least 36 weeks, the whole cohort competes for preceptor
+      capacity at once — the ratio check has to be a real-time assignment
+      constraint, not an after-the-fact report. The accreditation research notes
+      the gating pattern exists today for student-side compliance items but that
+      it is unconfirmed whether preceptors are modeled as a gate-able entity at all.
+    related_flows:
+      - flow: "preceptor-site-onboarding--06-student-assignment-ratio-capacity-and-eligibility.yaml"
+        step: "Max Placement Limit (Slot Cap) — Slot Offering Drawer step 2, and its warning surfaces at match time"
+        element: "Warning banner at the point of placement"
+  - job: >
+      When I am re-mapping the program against a standard set that just replaced
+      the one I built my last self-study on, I want every course, IPPE, and APPE
+      linked to the current outcome taxonomy with coverage gaps surfaced, so I
+      can produce the curriculum mapping and continuous-compliance evidence as an
+      export into PHARMS rather than rebuilding the map by hand.
+    evidence_or_rationale: >
+      Standards 2025 supersedes Standards 2016 effective for evaluations beginning
+      fall 2025, its Standard 2.1 outcomes are explicitly adapted from AACP's COEPA
+      (2022) framework, and ACPE retired AAMS for its own PHARMS submission system
+      in July 2025. Standard 2.2.d requires documented mapping of didactic content
+      areas and of every APPE's outcomes to the 2.1 elements; 7.5.b requires a
+      standards-to-evidence process. Critically, ACPE owns the submission system —
+      so the job is evidence aggregation and export, not a competing self-study
+      portal. CORE already ships ACPE-aligned gap analysis via its CompMS add-on,
+      which is why this job is currently being solved by a paid module or by hand.
+    related_flows:
+      - flow: "accreditation-self-study--04-curriculum-competency-coverage-mapping-to-the.yaml"
+        step: "Course/Measure mapping grid"
+        element: "Objective/measure list"
+  - job: >
+      When the same APPE course runs at twenty different sites with twenty
+      different preceptors, I want standardized evaluation forms deployed
+      identically everywhere plus analytics that flag grading drift, so I can show
+      ACPE consistent assessment across sites instead of asserting it.
+    evidence_or_rationale: >
+      Standard 7.3.c requires a documented QA procedure demonstrating standardized
+      key components and consistent student assessment across all sites offering
+      the same course. The one-to-one preceptor supervision model — a licensed
+      pharmacist precepting one or two students at a site, rather than a large
+      clinical teaching team — multiplies the number of independent graders per
+      course, which is exactly the condition that produces drift. Cross-site
+      consistency analytics is flagged in the accreditation research as not
+      confirmed to exist as a report in current tooling.
+    related_flows:
+      - flow: "preceptor-site-onboarding--08-ongoing-site-preceptor-quality-review-agreement.yaml"
+        step: "Comprehensive (Site/Location) Assessment Report"
+        element: "Rolled-up assessment responses across all sites/locations, with last-assessment-date column, export, filter, and edit-columns"
+  - job: >
+      When a student is halfway through the pre-APPE curriculum, I want to know
+      now whether they are off-pace on IPPE hours or short of APPE-readiness
+      thresholds, so I can intervene while there is still time — because a student
+      who cannot be cleared for APPE cannot simply take an extra semester when the
+      entire fourth year is one uninterrupted block sequence.
+    evidence_or_rationale: >
+      Standard 3.1.b's software requirement explicitly includes alerting advisors
+      when a student is off-pace before the IPPE window closes, and 7.3.d requires
+      evidence students are APPE-ready before entering APPEs. The domain research
+      establishes that the fourth professional year is typically 100% experiential
+      with no concurrent didactic coursework, so a readiness failure is not a
+      course to retake — it is a delayed graduation and a delayed NAPLEX sitting.
+    related_flows:
+      - flow: "rotation-lifecycle--03-student-readiness-compliance-clearance-pre-rotation.yaml"
+        step: "Competency Review Dashboard"
+        element: "Student Proficiency Distribution chart"
+  - job: >
+      When enrollment is falling and my dean is asking what the program's outcomes
+      justify, I want cohort NAPLEX/MPJE pass rates trended against the IPPE/APPE
+      and competency data that preceded them, so I can defend the program's
+      viability with a closed loop from rotation performance to licensure outcome.
+    evidence_or_rationale: >
+      Applicant volume fell over 60% from 2011 to 2021 while the number of
+      accredited programs nearly doubled since 2000, and a program closed in
+      December 2024 citing declining enrollment — making per-program viability a
+      board-level question. Standards 2025 was revised using the 2021 NAPLEX
+      Competency Statements, and the accreditation research names trending cohort
+      NAPLEX pass rates as a leading indicator that closes the loop from
+      experiential performance to licensure. Licensure additionally requires two
+      distinct NABP exams (NAPLEX and MPJE) plus state-tracked intern hours, so the
+      post-graduation outcome picture is multi-part. Board-exam/licensure-result
+      ingestion is itself an unshipped roadmap pillar (target Q2 2027, per
+      capability-map.yaml) with no confirmed mechanism today for capturing a
+      NAPLEX/MPJE result against a student record.
+    related_flows:
+      - flow: "accreditation-self-study--05-external-outcome-data-ingestion-board-exams.yaml"
+        step: "Exam Management (roadmap pillar) — no shipped screen exists"
+        element: "Board-exam / licensure result ingestion — no such element exists in any shipped screen"
+switching_trigger: >
+  Three triggers, roughly in order of force.
+  (1) The Standards 2025 + PHARMS transition. The program has to rebuild its
+  evidence map against a new standard set and submit through a new ACPE-owned
+  platform in the same cycle. Re-mapping work has to happen regardless of vendor,
+  which is precisely the moment the switching cost of moving platforms looks
+  smallest — and the moment an incumbent that can only produce hour totals rather
+  than category-level, simulation-excluded, four-setting evidence gets exposed.
+  (2) A bad moment in a review. A site visit or interim report where the team
+  cannot produce a student-level hour ledger by setting category, a 2:1 ratio
+  report for active rotations, a current affiliation agreement for every facility
+  used, or cross-site assessment-consistency evidence — the four places the
+  accreditation research flags as unsupported or unconfirmed in current tooling,
+  with site-level affiliation-agreement management called an outright gap.
+  (3) Vendor churn plus budget compression. CORE is now inside a PE-backed
+  "PeopleGrove + CORE" entity with opaque, quote-only pricing and its accreditation
+  mapping sold as a separately positioned CompMS module; Leo customers are being
+  pointed toward Elentra following the May 2024 merger under Achieve Partners,
+  meaning pharmacy programs on Leo are already being told a migration is coming.
+  A program whose enrollment dropped from a 2023 peak reads an add-on-module
+  renewal quote very differently than it did five years ago, and its own users'
+  documented complaints — disjointed modules, thin reporting, steep learning curve
+  — become sufficient reason to take the competitive meeting.
+  A secondary, quieter trigger: multi-campus or distance programs running rotations
+  across state lines discover their site records have no per-state licensure
+  dimension, and go looking for a system that models it.
+sources:
+  - "ACPE, Accreditation Standards and Key Elements for the Professional Program in Pharmacy (Standards 2025): https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf"
+  - "ACPE, PharmD Program Accreditation: https://www.acpe-accredit.org/pharmd-program-accreditation/"
+  - "Drug Topics, 'Number One No Longer' (142 accredited schools by 2022, growth from 78 in 2000, application decline 2011-2021): https://www.drugtopics.com/view/number-one-no-longer"
+  - "AACP, 'Academic Pharmacy's Vital Statistics': https://www.aacp.org/article/academic-pharmacys-vital-statistics"
+  - "AACP, 'Pharmacy School Interest Rises as Applications Jump 6%': https://www.aacp.org/article/pharmacy-school-interest-rises-applications-jump-6"
+  - "WVU Today, University of Charleston pharmacy program closure (Dec 2024): https://wvutoday.wvu.edu/stories/2024/12/19/wvu-school-of-pharmacy-offers-support-to-university-of-charleston-students-affected-by-program-closure"
+  - "University of Texas College of Pharmacy, IPPE/APPE structure: https://pharmacy.utexas.edu/programs/pharmd/experiential/ippe-appe"
+  - "Noodle.com, 'How Do Pharmacy School Rotations Work?': https://resources.noodle.com/articles/pharmacy-rotation/"
+  - "NABP, NAPLEX/MPJE Candidate Application Bulletin: https://read.nxtbook.com/nabp/bulletin/naplex_mpje_bulletin/what_is_the_naplex.html"
+  - "NABP, NAPLEX program page: https://nabp.pharmacy/programs/examinations/naplex/"
+  - "AACP (COEPA outcomes framework, standardized surveys, AAMS discontinuation): https://www.aacp.org/"
+  - "ASHP, residency information: https://www.ashp.org/professional-development/residency-information"
+  - "CORE ELMS pharmacy experiential learning management software (ACPE alignment, SmartMatch, compliance, surveys): https://services.corehighered.com/elms/pharmacy-experiential-learning-management-software"
+  - "CORE Higher Ed, 'CORE for Pharmacy' (90% of U.S. pharmacy programs claim): https://corehighered.com/core-for-pharmacy"
+  - "CORE Higher Ed, CompMS competency/accreditation mapping: https://corehighered.com/competency-management"
+  - "Capterra, CORE ELMS reviews (reporting depth, disjointed modules, learning curve): https://www.capterra.com/p/265422/CORE-ELMS/reviews/"
+  - "CORE Higher Ed / PeopleGrove merger announcement: https://corehighered.com/one-company.-more-impact-what-the-peoplegrovecore-merger-means-for-you"
+  - "MedHub / E*Value merger announcement (pharmacy and advanced-practice coverage, installed base): https://www.medhub.com/leading-healthcare-education-management-providers-medhub-and-evalue-have-merged/"
+  - "MedHub supported program types (pharmacy, DO): https://www.medhub.com/medical-education-institutional-effectiveness/supported-program-types/"
+  - "DaVinci Education / Leo (pharmacy among served domains; Elentra merger under Achieve Partners): https://www.davinci-ed.com/"
+  - "Acuity Insights / one45 (100+ health-professions programs incl. pharmacy): https://acuityinsights.com/products/one45/"
+  - "Internal research: content/domains/pharmacy.yaml, content/accreditation/acpe.yaml, content/competitors/core-elms.yaml, content/competitors/e-value.yaml, content/competitors/leo-davinci.yaml, content/competitors/elentra.yaml, content/competitors/one45.yaml, content/competitors/emedley.yaml"

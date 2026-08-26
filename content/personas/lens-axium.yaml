@@ -1,0 +1,121 @@
+# COMPETITOR LENS — reframes ../competitors/axium.yaml around roles, not features.
+# Synthesis pass over the existing teardown; no fresh research.
+competitor: "axiUm (Exan / Henry Schein One)"
+
+how_they_implicitly_serve_roles:
+  - role: "Program Admin"
+    read: >
+      Served as a clinic administrator, not as an education program administrator — the
+      distinction is the whole story with axiUm. The product is an academic dental EHR plus
+      practice-management system: multi-mode scheduling (Chair, Book, Availability views)
+      with drag-and-drop and operatory monitor views, student-patient matching against
+      graduation requirements, and appointment coordination across undergraduate, graduate,
+      and faculty clinics. That serves the person running a teaching clinic where patients
+      come to the school. It does not serve the person routing students out to external
+      clinical sites: no rotation or external-placement engine is publicly documented at
+      all. The admin also pays a heavy usability cost — Capterra reviewers rate axiUm 3.1/5
+      across 12 verified reviews and describe it as "clunky," "outdated like a program
+      created in the early 90s," with frequent crashes and navigation requiring many
+      screens per task.
+  - role: "Clinical Coordinator"
+    read: >
+      Structurally the worst-served role in this entire competitive set, because the
+      product was not built for the job. The coordinator's work is multi-site external
+      placement: finding sites, matching students, tracking affiliation agreements,
+      confirming readiness before a start date. axiUm's clinical model is single-site and
+      in-house — students treat patients in the school's own clinic, and "matching" means
+      matching a patient to a student's graduation requirements, not matching a student to
+      an external site. There is no publicly documented placement engine, site network,
+      or affiliation-agreement tracking. A dental hygiene or dental assisting program that
+      rotates students through outside clinics gets essentially nothing from axiUm for
+      this role.
+  - role: "Preceptor"
+    read: >
+      Served narrowly and specifically as a chairside supervising faculty member, and
+      within that narrow scope it is genuinely strong — stronger than most competitors
+      here. Faculty review and approve student treatments inside the system, record
+      assessments via an Evaluations Module with customizable grading schemes, and every
+      transaction, form, and clinical entry carries a time-stamped, user-tagged audit
+      trail. Clinical sign-off is tied directly to the patient record and to billing, which
+      is a real dentistry-specific integration no cross-discipline platform replicates.
+      But this is an on-site faculty preceptor, physically at the school, working in a
+      desktop EHR. There is no evidence of an external/community preceptor experience —
+      no remote evaluation, no mobile completion, no lightweight no-login path — and given
+      the reviewers' description of the interface, an occasional off-site preceptor would
+      face a steep, dated system for a five-minute task.
+    related_flows:
+      - flow: competency-verification--05-summative-sign-off-supervision-attestation-preceptor.yaml
+        step: "Learning Activities > Forms/Evaluations Summary — Completing Evaluation"
+  - role: "Compliance/Accreditation Liaison"
+    read: >
+      Split between strong data governance and absent student compliance. On governance,
+      the liaison is well covered: role-based access control, full audit trails on every
+      clinical entry, and stated support for HIPAA, PIPEDA, FERPA, and CODA. On
+      accreditation output, axiUm markets "CODA-Ready Reporting" and accreditation report
+      generation as shipped today — real, and ahead of Prism's Q3 2027 pillar — though the
+      teardown flags that this may be ad hoc reporting via a Custom Query Engine and Info
+      Manager rather than structured standard-by-standard evidence mapping. The clear gap
+      is the other half of the liaison's job: there is no publicly documented student
+      compliance-item tracker — no immunizations, background checks, or certifications
+      gating a placement start. axiUm's "compliance" is who-can-see-what, not
+      who-is-cleared-to-start.
+    related_flows:
+      - flow: admin-onboarding--04-compliance-template-setup.yaml
+  - role: "Dean"
+    read: >
+      Served on institutional risk, underserved on program quality. The dean's confidence
+      comes from near-total market saturation — roughly 90% of U.S. dental schools, 70% of
+      Canadian, ~30,000 students, and a flagship reference list (Harvard, Penn, UCLA, USC,
+      NYU, Tufts, Toronto, UBC, Ohio State) — plus Henry Schein One's backing since 2012
+      and Academic Insights reporting on student progress, unapproved treatments, and
+      grading trends. The uncomfortable read for a dean is what the reviews say about why
+      that share persists: reviewers note axiUm is tolerated because institutional
+      customers have few switching options, not because the experience is good. A dean is
+      buying market consensus and a locked patient/billing/grading database, and paying for
+      it in faculty and student experience.
+
+gaps_prism_can_exploit:
+  - claim: "The Clinical Coordinator role is not addressed at all."
+    detail: >
+      axiUm's clinical model is the school's own in-house teaching clinic, with no
+      documented external rotation/placement engine, site network, or
+      affiliation-agreement tracking. This is the single largest role-level void in
+      the set — but it is a void by design, so the winnable buyers are programs whose
+      students go out (dental hygiene, dental assisting, dental-adjacent allied
+      health), not entrenched DDS programs.
+  - claim: "Student compliance gating is undocumented for the Compliance/Accreditation Liaison."
+    detail: >
+      axiUm's compliance is security/audit governance, with no public evidence of an
+      immunization/background-check/certification tracker gating placement start.
+      That is one of Prism's already-shipped pillars against a documented absence.
+    related_flows:
+      - flow: admin-onboarding--04-compliance-template-setup.yaml
+  - claim: "The external/community Preceptor is an unserved role."
+    detail: >
+      axiUm serves on-site chairside faculty well and off-site preceptors not at all
+      — no mobile, remote, or no-login evaluation path is documented, in a UI
+      reviewers call early-90s. Any program with community preceptors has an unserved
+      role.
+  - claim: "Modern UX is a role-agnostic wedge against axiUm."
+    detail: >
+      3.1/5 on Capterra with "clunky," crashes, and many-screens-per-task complaints
+      affects every persona daily, and is strongest with newer or growing programs
+      not yet locked into the EHR/billing database.
+  - claim: "Do NOT attempt to displace axiUm's EHR/billing/grading core at entrenched dental schools."
+    detail: >
+      Patient-record migration, chairside workflow retraining, and CODA reporting
+      re-establishment make that switching cost prohibitive near-term at
+      CODA-accredited programs. Compete alongside axiUm, on the roles it never
+      claimed.
+
+sources:
+  - "../competitors/axium.yaml"
+  - "https://www.axiumacademic.com/"
+  - "https://www.axiumacademic.com/platform/practice-management/"
+  - "https://www.axiumacademic.com/platform/education-evaluation/"
+  - "https://www.axiumacademic.com/platform/analytics-reporting/"
+  - "https://www.axiumacademic.com/solutions/"
+  - "https://www.exansoftware.com/why-dental-education-programs-trust-axium-ascend-software/"
+  - "https://www.capterra.com/p/130811/axiUm/reviews/"
+  - "https://www.g2.com/products/axium-dental/reviews"
+  - "https://www.newswire.ca/news-releases/henry-schein-acquires-majority-interest-in-dental-software-company-the-exan-group-510834151.html"

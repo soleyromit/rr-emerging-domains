@@ -1,0 +1,23 @@
+# One file per cross-cutting role: role-program-admin.yaml, role-clinical-coordinator.yaml,
+# role-preceptor.yaml, role-compliance-accreditation-liaison.yaml, role-dean.yaml
+role_name: "e.g. 'Clinical/Experiential Education Coordinator'"
+applies_across_domains: ["DO", "Pharmacy", "Dentistry", "Medicine"]
+day_in_the_life_summary: ""
+top_tasks: []
+# Plain language: the sentence a coordinator or dean could say out loud. No inline
+# "Element N.N" citations or named-source parentheticals in `pain` itself — that
+# detail belongs in accreditation_link/source, which already exist to carry it.
+top_pains:
+  - pain: ""
+    accreditation_link: "which standard/element this traces back to, if any"
+    source: ""
+    # Optional cross-reference to the flows/*.yaml element(s) that show this pain —
+    # navigational metadata, not a citation (see ARCHITECTURE.md). Bare flow
+    # filename, no ../flows/ prefix. Omit step/element for a whole-flow match.
+    # Leave the whole key off rather than force a weak match.
+    # related_flows:
+    #   - flow: "<exact flow filename>.yaml"
+    #     step: "<exact steps[].screen, optional>"
+    #     element: "<exact steps[].elements[].element, optional>"
+tools_touched: []
+sources: []

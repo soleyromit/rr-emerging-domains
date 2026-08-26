@@ -1,0 +1,468 @@
+# Element-level ground truth underneath competency-verification.yaml, stage 4
+# ("Formative mid-point feedback and early remediation trigger"). See
+# _TEMPLATE.yaml for field meanings (SCHEMA v2: analysis fields live on each
+# element, not on the step). Every accreditation_citation and
+# competitor_equivalent claim below traces to a real source file in
+# confirmed_by — never to this journey's own narrative. This flow overlaps
+# heavily in screens with rotation-lifecycle--06-midpoint-formative-feedback-
+# early-risk-intervention.yaml (same underlying Prism primitive, viewed
+# through the rotation-lifecycle lens rather than the competency-verification
+# lens); citations below were independently re-opened and re-read against
+# current help-center source rather than copied from that file, and one
+# screen (Low Score Indicators / Track low scores for timely interventions)
+# was not covered by that earlier flow at all.
+flow_name: "Formative Midpoint Feedback & Early Remediation Trigger"
+maps_to_journey: "competency-verification.yaml, stage 4"
+persona: >
+  Primary: Clinical/Experiential Education Coordinator
+  (../personas/role-clinical-coordinator.yaml) — configures the midpoint-anchored
+  form, the low-score notification, and reviews delivery/status; opens an
+  Intervention when a score comes back low. Secondary: Preceptor
+  (../personas/role-preceptor.yaml) — receives the anchor-triggered form and
+  submits the midpoint evaluation on the student.
+
+steps:
+  - screen: "Learning Activities Setup — Forms/Evaluations drawer"
+    navigation_path: "Courses > [Course Offering] > Learning Activities > Setup > Forms/Evaluations (+) > [select midpoint evaluation form]"
+    elements:
+      - element: "Publish date"
+        type: "anchor-relative date offset"
+        data_shown: "Number of days before/after a placement start, mid, or end date — not an actual calendar date — controlling when students/preceptors can first see the form"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.7 — supporting: this element controls when the midpoint form becomes visible, not when it is due, so it is where 'the form reached the preceptor in time to be formative' is set up, not where the trigger itself fires"
+        competitor_equivalent: >
+          Not comparable at element level. emedley.yaml explicitly documents
+          that Prism's anchor-relative scheduling is "a real architectural
+          strength not confirmed as present in eMedley's public docs," and
+          elentra.yaml says Elentra's "exact scheduling primitives (e.g.
+          anchor-date logic) are not disclosed" — both competitor files
+          independently confirm the absence of public element-level detail
+          rather than the presence of a comparable mechanic, so this stays a
+          one-sided verification, not a scored comparison.
+        gap_severity: "none"
+        gap_note: >
+          Works as the anchor primitive is documented (help-center line 34:
+          publish and due date are both anchor-based day offsets, not calendar
+          dates). Shares the same domain limitation as the Due date element
+          below: the only anchors available are placement start/mid/end
+          calendar dates, so a Dentistry program — which dentistry.yaml
+          describes as gating progression on "quotas of completed/graded
+          procedures... rather than by completing a fixed-length rotation
+          block" — has no quota-percentage anchor to publish against.
+      - element: "Due date"
+        type: "anchor-relative date offset"
+        data_shown: "Same anchor mechanism, set to the placement's MID anchor for a midpoint evaluation"
+        gates_on: ["form completion status downstream"]
+        accreditation_citation: "LCME Standard 9, Element 9.7 — primary: this is the element where the mid-rotation formative-feedback trigger is actually expressed, per placement instance"
+        competitor_equivalent: >
+          Not comparable at element level. emedley.yaml explicitly documents
+          that Prism's anchor-relative scheduling is "a real architectural
+          strength not confirmed as present in eMedley's public docs," and
+          elentra.yaml says Elentra's "exact scheduling primitives (e.g.
+          anchor-date logic) are not disclosed" — both competitor files
+          independently confirm the absence of public element-level detail
+          rather than the presence of a comparable mechanic, so this stays a
+          one-sided verification, not a scored comparison.
+        gap_severity: "none"
+        gap_note: >
+          This is the primitive doing exactly what LCME 9.7 asks: set to the
+          MID anchor at 0 days offset, the trigger fires automatically per
+          placement instance rather than being hand-dated per student. It has
+          no branch logic for the standard's own carve-out, though: LCME 9.7's
+          "alternate method for experiences under four weeks" is not expressed
+          anywhere in this drawer as a conditional swap — a program running
+          short rotations needs a second, separately-configured form and a
+          manual rule for which one applies. Separately, this is the element
+          where dentistry.yaml's domain-divergence problem becomes concrete:
+          the MID anchor is a single placement-level calendar date, and
+          dentistry.yaml describes dental clinical progression as "gated by
+          faculty sign-off on individual procedural steps and by quotas of
+          completed/graded procedures... rather than by completing a
+          fixed-length rotation block." Nothing in this drawer or elsewhere in
+          the help-center mirror offers a quota-percentage anchor as an
+          alternative to a date anchor, so a Dentistry program has no native
+          way to fire this same trigger off "50% of required procedures
+          logged" instead of "day 15 of 30."
+      - element: "Grading-inclusion toggle ('Does the form contribute to the student's final score?')"
+        type: "toggle"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "None — LCME 9.7 evidence lives in the two anchor-offset elements above, not here; this toggle governs summative grade contribution, and the confirmed_by source documents it only as a setup option, not as accreditation evidence"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file
+          (emedley.yaml, elentra.yaml, core-elms.yaml) documents a
+          form-level grading-contribution toggle at all, so there is nothing
+          public to compare against rather than a confirmed absence.
+        gap_severity: "none"
+        gap_note: >
+          Present and self-service. Carries none of this step's shortfalls —
+          the LCME 9.7 short-rotation carve-out and the dentistry
+          quota-anchor problem both sit on the date-offset elements above,
+          not on this toggle.
+    action: >
+      Coordinator selects the midpoint evaluation form and sets its Due date
+      anchor to the placement's MID date (0 days offset), so the trigger fires
+      automatically per placement instance rather than being hand-dated per
+      student — the confirmed anchor-relative scheduling primitive that
+      capability-map.yaml and lcme.yaml both point to for LCME 9.7.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md (line 34: 'Both the publish and due date are based on anchors, meaning you won't add an actual date, but rather the number of days before or after a placement start, mid, or end date.')"
+
+  - screen: "Forms/Evaluations setup — Low Score Indicators & Auto Notifications"
+    navigation_path: "Learning Activities > Setup > Forms/Evaluations > [form] (low-score threshold) and Learning Activities > Auto Notifications > Add Notification"
+    elements:
+      - element: "Low score threshold"
+        type: "configured value on the Forms/Evaluations setup screen"
+        data_shown: "The overall-form-score cutoff below which a submission is flagged"
+        gates_on: ["red highlight on the review screen", "low-score email notification eligibility"]
+        accreditation_citation: "LCME Standard 9, Element 9.7 — this is where 'early identification' is given a machine-checkable definition"
+        competitor_equivalent: >
+          CORE ELMS's public materials claim "low-score alerts" as a shipped
+          feature (per ../competitors/core-elms.yaml, sourced from marketing
+          copy), but nothing in those docs describes whether the alert is
+          threshold-configurable at all — so Prism's admin-set cutoff cannot
+          be scored against a CORE ELMS equivalent from public sources.
+        gap_severity: "none"
+        gap_note: >
+          Self-service on the form setup screen and doing its job: the
+          threshold both drives the red highlight on review and makes a
+          submission eligible for the low-score email. The support dependency
+          that gives this step its configure-needed character sits on the
+          notification elements below, not on setting this value.
+      - element: "Low score notification"
+        type: "support-activated notification, not self-service"
+        data_shown: "Fires automatically to placement faculty (if assigned) and any designated individuals when a submitted form's overall score drops below the threshold"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.7 — the element that actually delivers the early-warning signal to a human"
+        competitor_equivalent: >
+          CORE ELMS's public materials claim "low-score alerts" as a shipped
+          feature (per ../competitors/core-elms.yaml, sourced from marketing
+          copy), but nothing in CORE ELMS's public docs describes whether that
+          alert is support-gated versus self-service — which is precisely the
+          distinction that matters for this element, so not comparable
+          element-for-element from public sources.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This resolves, more precisely than the journey's stage-level
+          framing, what "firing the form" actually means: the low-score email
+          notification exists and is real, but activating it is a support
+          ticket ("Contact support to activate the 'low score notification'"),
+          not an admin self-service toggle — a configuration dependency the
+          journey's pain_or_gap did not previously distinguish.
+      - element: "Response-based notification"
+        type: "support/Account-Manager-configured, question-level threshold"
+        data_shown: "Fires when the response to a specific question fails a set criterion, independent of the overall form score"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.7 — catches a single failed competency question that an acceptable overall score would otherwise hide"
+        competitor_equivalent: >
+          CORE ELMS's public materials claim "low-score alerts"
+          (../competitors/core-elms.yaml, marketing copy), but nothing in
+          those docs describes a question-level alert distinct from an
+          overall-score one — not comparable element-for-element from public
+          sources.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Real and more granular than the overall-score alert, but a step
+          further from self-service than the low-score notification: it is
+          configured by the Account Manager / support rather than by the
+          coordinator in the setup drawer, so a program cannot iterate on
+          which questions warrant an alert on its own timetable.
+      - element: "Auto Notification — Start Condition"
+        type: "On/Before/After + number of days + system anchor (Beginning/Middle/End of Placement)"
+        data_shown: "e.g. reminder N days before the Due Date"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.7 — supports the 'delivered mid-rotation' half of the requirement by nudging submission, not the 'low score identified' half"
+        competitor_equivalent: >
+          CORE ELMS's public materials claim "due-date reminders" as a shipped
+          feature (per ../competitors/core-elms.yaml, sourced from marketing
+          copy) — the closest public analogue to this element — but the docs
+          do not describe the anchor/offset structure behind it, so the
+          comparison stops at "both claim reminders" and cannot be scored at
+          element level.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Self-service, unlike the two notifications above, but the reminder
+          nudges submission and creates no artifact confirming "delivered on
+          time" that a program could report against later — that reportable
+          compliance artifact is the missing piece for LCME 9.7's delivery
+          requirement, and it is recorded as a full gap on the Status column
+          element in the next step, where the rollup would have to live.
+    action: >
+      Coordinator sets the low-score threshold on the form, then contacts
+      Exxat support to activate the low-score (and, separately, Account
+      Manager-configured response-based) notification and name its
+      recipients; separately, the coordinator configures an Auto Notification
+      reminder anchored to "Middle of Placement" so the preceptor is nudged to
+      submit on time in the first place.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Track low scores for timely interventions.md and /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Setup Auto Notifications for Forms and Evaluations.md"
+
+  - screen: "Student 360 — Learning Activities tab (Forms/Evaluations)"
+    navigation_path: "Students > [student] > Learning Activities > Forms/Evaluations"
+    elements:
+      - element: "Status column"
+        type: "read-only status per assigned form"
+        data_shown: "Where the form is in its workflow (pending, submitted, reviewed) for one student, one form, at a time"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.7"
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown in
+          ../competitors/ documents a per-student form-status screen at this
+          granularity; the cited competitors (e-value.yaml, core-elms.yaml,
+          one45.yaml) are sourced only to stage-level marketing claims about
+          alerts/reminders, not to a specific status-tracking UI.
+        gap_severity: "gap"
+        gap_note: >
+          This view is per-student, one form at a time. Nothing found in the
+          help-center mirror, capability-map.yaml, or the Viewing Student
+          Reports guide describes a cross-student, cross-rotation report that
+          rolls this status up into "% of student/rotation pairs with midpoint
+          feedback delivered on time" — the specific reportable metric LCME
+          9.7 asks a program to produce. This element-level pass did not find
+          that report; the gap in the journey's pain_or_gap stands as written.
+    action: >
+      Coordinator clicks a form's status to open it, review the submitted
+      midpoint evaluation, provide feedback, and update status on this same
+      screen.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md (lines 466-480: 'For each learning activity, a status will indicate where they are in the process... With forms/evaluations, you will see the form, be able to update the status, provide feedback, and click Update once done.')"
+
+  - screen: "Student 360 — Interventions tab (Add Intervention drawer)"
+    navigation_path: "Students > [student] > Interventions > + (Add), or Courses > [course offering] > Students > Communications & Interventions > [student] > Interventions"
+    elements:
+      - element: "Make this intervention visible to student"
+        type: "toggle"
+        data_shown: "Whether the intervention publishes to the student, with a confirm-on-save prompt"
+        gates_on: ["student-visible 'Published to Student' label"]
+        accreditation_citation: "CODA Standard 2, Element 2-2 — the only element in this drawer that touches the 'student was notified' half of due process"
+        competitor_equivalent: >
+          Not comparable at element level — none of the cited competitor files
+          (../competitors/e-value.yaml, core-elms.yaml) document an equivalent
+          case-record screen, let alone a student-visibility control on one.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Publishing to the student is a single opt-in toggle with a
+          confirm-on-save prompt — it makes the record visible but records no
+          acknowledgement, date of notice, or response from the student, so it
+          evidences that the program could have notified, not that due-process
+          notice was given and received.
+      - element: "Mode"
+        type: "select (Audio call, Video call, Email, In Person, Other)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-2 — supporting detail on the intervention record; not itself where the due-process decision is evidenced"
+        competitor_equivalent: >
+          Not comparable at element level — none of the cited competitor files
+          (../competitors/e-value.yaml, core-elms.yaml) document an equivalent
+          case-record screen with this field set.
+        gap_severity: "none"
+        gap_note: >
+          Complete for what it captures: a closed list covering how the
+          contact happened. Carries none of this drawer's due-process
+          shortfall, which sits on the Status, Follow Up, Subject/Description,
+          and Course/Rotation/Site elements.
+      - element: "Initiated By"
+        type: "text field, prefilled with the acting admin's name"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-2 — supporting detail; establishes who acted, not what was decided"
+        competitor_equivalent: >
+          Not comparable at element level — none of the cited competitor files
+          (../competitors/e-value.yaml, core-elms.yaml) document an equivalent
+          case-record screen with this field set.
+        gap_severity: "none"
+        gap_note: >
+          Prefilled and editable; captures authorship of the intervention.
+          Nothing missing at this element's own scope.
+      - element: "Course / Rotation / Site"
+        type: "cascading select"
+        data_shown: "Ties the intervention to the specific rotation the low midpoint score came from"
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-2 — carries the scoping that connects a remediation record to the experience that prompted it"
+        competitor_equivalent: >
+          Not comparable at element level — none of the cited competitor files
+          (../competitors/e-value.yaml, core-elms.yaml) document an equivalent
+          case-record screen with this field set; their public docs describe
+          only "low-score alerts," which is the trigger this stage's second
+          step covers, not a case-management artifact.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Scopes the record to the right rotation, which is as close as this
+          drawer gets to linking cause and response — but it stops at the
+          rotation. There is no structural link from this record back to the
+          triggering evaluation score itself, so the connection between "this
+          midpoint form came back below threshold" and "this intervention was
+          opened" survives only by the coordinator's own convention.
+      - element: "Subject / Description"
+        type: "text fields"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-2 — in practice this is where the due-process decision ends up being recorded, by convention rather than by structure"
+        competitor_equivalent: >
+          Not comparable at element level — none of the cited competitor files
+          (../competitors/e-value.yaml, core-elms.yaml) document an equivalent
+          case-record screen with this field set.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Free text carrying the whole weight of CODA 2-2's "individual
+          evaluation... decision made in accordance with institutional
+          due-process policy," because there is no dedicated decision/outcome
+          field anywhere else in the drawer. A program can adopt a convention
+          for what goes here, which is exactly the Configure pattern — but
+          nothing enforces or reports on it.
+      - element: "Status"
+        type: "select (Open / Closed)"
+        data_shown: "Two-state lifecycle for the intervention record"
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-2 — the nearest thing to a due-process stage marker on the record"
+        competitor_equivalent: >
+          Not comparable at element level — none of the cited competitor files
+          (../competitors/e-value.yaml, core-elms.yaml) document an equivalent
+          case-record screen with this field set.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Two states only. There is no due-process-stage field (warning /
+          probation / dismissal / appeal), so "Closed" cannot distinguish
+          resolved-informally from escalated-to-dismissal — the single
+          sharpest instance of this drawer's thinness against CODA 2-2.
+      - element: "Follow Up (Planned Follow-Up Date / Actual Follow-Up Date / Description)"
+        type: "sub-form, added via its own + icon"
+        data_shown: "A single planned-vs-actual follow-up pair with free-text notes"
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-2 — evidences that remediation was followed up on, within the limits noted below"
+        competitor_equivalent: >
+          Not comparable at element level — none of the cited competitor files
+          (../competitors/e-value.yaml, core-elms.yaml) document an equivalent
+          case-record screen with this field set.
+        gap_severity: "configure-needed"
+        gap_note: >
+          A real planned-versus-actual pair, which is genuinely useful
+          evidence — but one pair, with the substance in free text. A
+          multi-stage remediation (initial meeting, re-evaluation, decision)
+          has to be flattened into that one pair or split across several
+          intervention records.
+      - element: "Supporting Documents upload"
+        type: "file upload (PDF/DOC/JPG/XLS/CSV/PPT/etc., 25MB max)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-2 — the escape hatch where a signed remediation plan or due-process letter can at least be attached"
+        competitor_equivalent: >
+          Not comparable at element level — none of the cited competitor files
+          (../competitors/e-value.yaml, core-elms.yaml) document an equivalent
+          case-record screen with this field set.
+        gap_severity: "none"
+        gap_note: >
+          Works as a general attachment slot with a broad format list and a
+          25MB cap. Its contents are opaque to the system — nothing in the
+          record parses or reports on an attached document — but that is the
+          expected behaviour of a file field, not a shortfall of this element.
+    action: >
+      When a midpoint evaluation lands below threshold, the coordinator opens
+      an Intervention (from the student's profile, or from the course's own
+      Communications & Interventions page for a placement-specific concern),
+      scoped to the specific Course/Rotation/Site, describing the concern and
+      setting a follow-up date.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md"
+
+  - screen: "Students > Reports > Intervention Log"
+    navigation_path: "Students > Reports > Intervention Log"
+    elements:
+      - element: "Report grid"
+        type: "read-only tabular report"
+        data_shown: "Interventions logged across students, carrying the same core fields captured on the Interventions tab (mode, subject, status, dates)"
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-2"
+        competitor_equivalent: >
+          Not comparable at element level — not documented for any cited
+          competitor.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Confirms a bulk rollup exists that turns individual Intervention
+          records into self-study-ready evidence that a concern was tracked.
+          The source article shows only the report's existence and column
+          header style (a screenshot reference, not field-level documentation
+          beyond what's already listed on the Interventions tab itself), so it
+          evidences that a concern was tracked and logged program-wide — not
+          that a formal due-process decision was reached and documented per
+          CODA 2-2's exact wording, which is the same field-set gap carried up
+          from the Status and Subject/Description elements in the step above.
+    action: >
+      Coordinator pulls the bulk Intervention Log ahead of an end-of-term
+      student-performance meeting or a CODA self-study, to see every
+      open/closed intervention across the program rather than one student at
+      a time.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Viewing Student Reports.md (line 95, 'Intervention Log report')"
+
+  - screen: "Student Competency Dashboard"
+    navigation_path: "Students > [student] > Competency tab, or a published Competency Framework's Review Dashboard"
+    elements:
+      - element: "Score-over-time trendline per competency"
+        type: "chart"
+        data_shown: "Flags stagnant/declining competencies for intervention"
+        gates_on: []
+        accreditation_citation: "LCME Standard 8, Element 8.6 — this is the element that turns a single low midpoint score into the trend evidence a 'remedy before graduation' duty can act on"
+        competitor_equivalent: >
+          Not comparable at element level — none of the competitor files
+          describe a per-student competency trendline with this field set.
+        gap_severity: "none"
+        gap_note: >
+          Genuinely mature engine per capability-map.yaml; the midpoint
+          evaluation's questions can be mapped into a competency framework so
+          a low midpoint score surfaces here as a trend, not just a one-off
+          number — a real escalation path once the low-score alert exists.
+          This is the strongest link in the chain and the clearest evidence
+          for why the journey's current_state_in_prism calls this stage "the
+          single best fit in the entire journey."
+      - element: "Student-vs-class-average radar chart"
+        type: "chart"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "LCME Standard 8, Element 8.6; CODA Standard 2, Element 2-9 — comparative context for the same competency data; the source material does not distinguish this element's evidentiary role from the trendline's"
+        competitor_equivalent: >
+          Not comparable at element level — none of the competitor files
+          describe a per-student competency radar chart with this field set.
+        gap_severity: "none"
+        gap_note: >
+          Same verdict as the trendline, and deliberately not differentiated:
+          the confirming sources (capability-map.yaml's Competency Tracking
+          entry, the Student Competency Tab overview, and the Nursing
+          Playbook's row-per-student/column-per-domain description) treat the
+          dashboard's charts as one confirmed-shipped capability rather than
+          documenting them separately, so inventing a sharper verdict here
+          would be false precision.
+      - element: "Pass threshold"
+        type: "configured value (default 70%, or a custom school-defined scale)"
+        data_shown: "Per-competency threshold a score is measured against"
+        gates_on: ["Meeting Threshold vs. Below Threshold classification"]
+        accreditation_citation: "CODA Standard 2, Element 2-9; LCME Standard 8, Element 8.6 — the element that defines competency attainment, since it is what Meeting/Below Threshold is computed against"
+        competitor_equivalent: >
+          Not comparable at element level — none of the competitor files
+          describe a configurable per-competency pass threshold.
+        gap_severity: "none"
+        gap_note: >
+          Configurable with a sane default (70%) and support for a custom
+          school-defined scale, which is what lets a program state its own
+          attainment standard rather than inherit a vendor's — the
+          drill-down-to-the-sub-competency-below-threshold behaviour the
+          Nursing Playbook describes (line 62) depends on this value.
+    action: >
+      Coordinator or advisor reviews the dashboard after a low midpoint score
+      to see whether it is an isolated event or part of a declining trend
+      across the competency the midpoint form maps to, informing what the
+      Intervention record should say and giving LCME 8.6's "remedy before
+      graduation" duty something concrete to act on.
+    confirmed_by: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (intelligence_layer > Competency Tracking, CONFIRMED SHIPPED via 'Setting Up Competency Management' tutorial transcript) and /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md (Student 'Competency' Tab), cross-confirmed by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md (line 62: 'Competency Tracker / Student Competency Dashboard — row-per-student, column-per-domain grid with drill-down to the specific sub-competency below threshold, supporting early remediation')"
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Track low scores for timely interventions.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Setup Auto Notifications for Forms and Evaluations.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Viewing Student Reports.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/dentistry.yaml"
+last_verified: "2026-08-24"

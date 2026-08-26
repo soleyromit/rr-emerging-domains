@@ -1,0 +1,184 @@
+# Cross-cutting ROLE persona (not a per-domain program archetype — see
+# _TEMPLATE_discipline.yaml for the discipline layer).
+# Titles vary by domain: preceptor (Pharmacy), attending/clerkship faculty or
+# community preceptor (DO, Medicine), clinical faculty / chairside instructor
+# (Dentistry). The defining trait is the same everywhere — this person's
+# primary job is patient care, and teaching is layered on top of it.
+role_name: "Preceptor (Clinical Preceptor / Attending / Chairside Clinical Faculty)"
+applies_across_domains: ["DO", "Pharmacy", "Dentistry", "Medicine"]
+
+day_in_the_life_summary: >
+  A practicing clinician who sees patients all day and supervises a student
+  while doing it. In Pharmacy this is usually a one-to-one relationship — a
+  licensed pharmacist precepting one or two students at a community or
+  health-system site for a four-to-six week APPE block. In Medicine and DO it
+  is layered — attending over senior resident over intern over student — and
+  the supervising person changes every few weeks as the student rotates
+  services, which means evaluation responsibility is distributed across a
+  hierarchy nobody centrally administers. In Dentistry the shape is entirely
+  different: a faculty clinical practice unit (roughly one lead faculty plus
+  one or two instructors per two-student team) inspects and signs off on each
+  individual clinical step — prep, impression, seating — before the student
+  proceeds, which means dozens of discrete sign-off events per student per
+  week rather than one evaluation per rotation. Across all four domains, the
+  preceptor is typically volunteer or nominally compensated, has no office
+  hours for administrative work, and interacts with the school's software in
+  short, interrupted bursts — often on a phone, between patients. They are the
+  program's single biggest evidence-generation dependency and its least
+  controllable one: almost every accreditation artifact about student
+  performance originates in a form only this person can complete, and the
+  program has no authority to make them do it on time.
+
+top_tasks:
+  - "Supervise the student in live patient care at the level appropriate to their training, within the preceptor's own scope of practice."
+  - "Complete the midpoint formative feedback conversation and form, early enough that the student can actually remediate."
+  - "Complete the end-of-rotation summative evaluation and submit the grade inside the program's turnaround window."
+  - "Verify or approve student-submitted hours, case logs, and patient/procedure encounters."
+  - "Sign off on individual procedures or clinical steps (dentistry's per-procedure model; procedure-log verification in medicine, DO, and pharmacy)."
+  - "Complete program-required onboarding before taking a student — orientation to the program's mission, the specific experience syllabus, and effective evaluation technique."
+  - "Maintain and re-attest their own credentials — license number, status, expiration; DEA and controlled-substances registrations where applicable."
+  - "Complete the program's preceptor-side surveys (e.g., the AACP standardized preceptor survey that ACPE names as required assessment-plan evidence)."
+  - "Attest to supervision policies, including telemedicine supervision policies."
+
+top_pains:
+  - pain: >
+      The evaluation burden lands on the worst possible tool at the worst
+      possible moment — preceptors do administrative work in the gaps between
+      patients, usually on a phone, and mobile is where the incumbent tools
+      are weakest. A form that fails on submission doesn't just annoy the
+      preceptor, it destroys the accreditation evidence the program was
+      counting on.
+    accreditation_link: >
+      LCME Standard 9, Element 9.7 (formative feedback at or before the
+      midpoint of every required course/clerkship) and Element 9.8 (final
+      grades within six weeks of the course/clerkship ending) — both are
+      satisfied only when the preceptor actually completes a form on time.
+    source: "../competitors/e-value.yaml (weaknesses — MedHub/eValue users describe hours entry as 'atrociously slow, buggy, laggy,' an app that is 'very buggy, freezes and exits,' https://play.google.com/store/apps/details?id=com.medhub.mobile, https://justuseapp.com/en/app/1126919433/medhub/reviews); ../competitors/medhub.yaml (weaknesses — evaluation forms that 'constantly glitch and skip fields — preventing proper completion,' with submitted hours that do not register); ../competitors/emedley.yaml (weaknesses — reviewers say it is 'not the most mobile user-friendly' and 'difficult to navigate on a phone or tablet' despite having a mobile app, https://www.capterra.com/p/185269/eMedley/reviews/); ../competitors/one45.yaml (weaknesses — reviewers flag a limited mobile site and duplicate evaluation requests, https://www.capterra.com/p/126224/one45/reviews/); ../competitors/axium.yaml (weaknesses — described as 'clunky,' 'outdated like a program created in the early 90s,' with frequent crashes and many screens per task, https://www.capterra.com/p/130811/axiUm/reviews/); ../accreditation/lcme.yaml (Elements 9.7, 9.8)"
+    related_flows:
+      - flow: "rotation-lifecycle--07-summative-evaluation-grading-turnaround-completion-verification.yaml"
+
+  - pain: >
+      Logging patient encounters and procedures is cumbersome enough that it
+      gets deferred, batched, or approximated. That friction is multiplied
+      hardest in dentistry, where the volume of discrete sign-off events per
+      student is far higher than any preceptor model in the other three
+      domains.
+    accreditation_link: >
+      CODA Standard 2, Element 2-24 (competence across roughly fifteen clinical
+      categories, typically evidenced by procedure-level logs) and Element 2-9
+      (sufficient patient experiences per student); LCME Standard 6, Element
+      6.2 (evidence students actually met the required encounter list).
+    source: "../competitors/e-value.yaml (weaknesses — one MedHub reviewer wrote the system 'needs some major reworking to the patient logging system so it is not so cumbersome and time consuming,' and separately criticized an age field that uses a scrolling menu instead of numeric entry, https://apps.apple.com/us/app/medhub/id1126919433); ../accreditation/coda.yaml (2-24 — prism_fit 'Gap', no confirmed CDT-code-level procedure logging; 2-9); ../domains/dentistry.yaml (distinctive_pain_points — progression is gated by per-procedure faculty sign-off and quotas of completed, graded procedures rather than by finishing a fixed-length rotation, https://www.dental.upenn.edu/admissions-academics/dmd-program/clinical-education/); ../accreditation/lcme.yaml (6.2)"
+    related_flows:
+      - flow: "rotation-lifecycle--05-in-rotation-capture-hours-encounters-procedures.yaml"
+
+  - pain: >
+      Onboarding requirements arrive before the preceptor has any relationship
+      with the program, and they gate their ability to take a student at all —
+      add per-site health-system credentialing and license verification, and a
+      volunteer clinician faces a multi-step compliance funnel just to donate
+      their time, with each program running its own separate version of it.
+    accreditation_link: >
+      ACPE Standard 3, Key Elements 3.3.a (quality criteria at recruitment,
+      licensure verification, performance evaluations on file) and 3.3.c
+      (orientation and development, gating assignment); COCA Standard 5,
+      Element 5.4 (supervision policy distribution and attestation to faculty).
+    source: "../accreditation/acpe.yaml (3.3.a, 3.3.c — required_software_behavior describes an orientation/training-completion checklist per preceptor per course, gating assignment; requires documented completion of orientation to the program's mission, the specific syllabus expectations for the experience, and effective evaluation technique before a preceptor accepts a student, plus an ongoing professional-development record); ../accreditation/coca.yaml (5.4 — attestation tracking for students AND faculty)"
+    related_flows:
+      - flow: "preceptor-site-onboarding--04-preceptor-orientation-training-policy-attestation-the.yaml"
+
+  - pain: >
+      Identity and history don't follow the preceptor when their job
+      changes — a clinician who moves employers can become effectively a new
+      person to the system, with their orientation, development, and
+      licensure history stranded on the old record.
+    accreditation_link: >
+      ACPE Standard 3, Key Element 3.3.a (a record that the majority of
+      preceptors for any given student are U.S.-licensed pharmacists, with
+      performance evaluations on file) — split records make that roster-level
+      reporting unreliable.
+    source: "../competitors/core-elms.yaml (weaknesses — reviewers report that changing a preceptor's employer requires creating a new account rather than updating the existing one, so a clinician who moves from a community pharmacy to a health system is effectively a new person to the system; for the preceptor it means redoing onboarding, for the program it means the licensed-preceptor evidence trail breaks, https://www.capterra.com/p/265422/CORE-ELMS/reviews/); ../accreditation/acpe.yaml (3.3.a)"
+    related_flows:
+      - flow: "preceptor-site-onboarding--05-access-provisioning-getting-the-preceptor-into.yaml"
+        step: "Preceptor Portal (Mentor Teacher Portal) — Login"
+        element: "Post-login dashboard navigation (Profile / Associated Schools / Student Placements / Emails / Resources / Help)"
+
+  - pain: >
+      Preceptors are being asked to take more students at a moment when the
+      supply of willing preceptors is the field's binding constraint — the
+      program can't solve capacity by simply loading more students onto the
+      preceptors who do say yes, so every hour of avoidable administrative
+      friction is a direct withdrawal from the program's scarcest resource.
+    accreditation_link: >
+      ACPE Standard 3, Key Element 3.3.e (2:1 maximum, with documented
+      exceptions); COCA Standard 6, Element 6.9 (demonstrated adequate
+      faculty/capacity at each site).
+    source: "../domains/medicine.yaml (distinctive_pain_points — 44% of AAMC-surveyed medical schools report moderate-to-severe pressure to pay community physicians and clinics to host students, https://www.aamc.org/news/so-many-medical-students-so-few-clerkship-sites); ../domains/do.yaml (distinctive_pain_points — site capacity bottleneck, DO programs report community hospitals reserving slots for affiliated MD programs); ../accreditation/acpe.yaml (3.3.e — holds most IPPE/APPE situations to a 2:1 student-to-preceptor cap); ../accreditation/coca.yaml (6.9)"
+    related_flows:
+      - flow: "preceptor-site-onboarding--06-student-assignment-ratio-capacity-and-eligibility.yaml"
+
+  - pain: >
+      Feedback goes in and nothing comes back — the loop that would show
+      preceptors how their site compares, what changed as a result, or how
+      their students performed downstream depends on capabilities that
+      mostly aren't shipped, and the predictable result is declining
+      response rates on exactly the instruments the accreditor names as
+      required evidence.
+    accreditation_link: >
+      ACPE Standard 7, Key Elements 7.5.a and 7.2.d (CQI cycle using AACP
+      standardized surveys of graduating students, faculty, AND preceptors,
+      with findings and actions communicated to stakeholders annually);
+      COCA Standard 11, Element 11.2 (evaluation data visibly driving
+      curricular improvement).
+    source: "../accreditation/acpe.yaml (7.5.a — prism_fit 'Gap'; ACPE's CQI element requires that major findings and actions be communicated to key stakeholders, preceptors explicitly among them, at least annually); ../accreditation/coca.yaml (11.2 — prism_fit 'Gap'); ../prism/capability-map.yaml (Surveys & Course Evaluations — CORRECTED 2026-08-26 per Exxat PM confirmation: shipped, not roadmap; the gap this pain describes is the comparative feedback loop back to preceptors, which the prism_fit 'Gap' ratings above were not re-verified against after that correction)"
+
+  - pain: >
+      Preceptors log into a different system for every school they precept
+      for, and remember none of them — a community preceptor in a
+      distributive network may host students from several programs running
+      different platforms, each with its own credentials, form conventions,
+      and reminder cadence, and most of the stack still assumes an account
+      and a password.
+    accreditation_link: >
+      ACPE Standard 7, Key Element 7.3.c (standardized key components and
+      consistent assessment of student performance across all sites offering
+      the same course) — inconsistent, low-completion evaluation capture is
+      what erodes that consistency in practice.
+    source: "../competitors/leo-davinci.yaml (Surveys row — Leo's no-login on-demand evaluation link, emailed directly to clinical faculty, exists precisely because vendors know this, https://www.davinci-ed.com/the-davinci-difference/leo-faqs); ../domains/do.yaml (clinical_education_shape — hundreds of independently-recruited preceptor relationships across many states); a community preceptor may host students from Prism, CORE, MedHub/eValue, eMedley, Elentra, Leo, New Innovations, or one45 in the same season; ../accreditation/acpe.yaml (7.3.c)"
+    related_flows:
+      - flow: "preceptor-site-onboarding--05-access-provisioning-getting-the-preceptor-into.yaml"
+        step: "Emailed Delegator Link — No-Login Evaluation / Patient Log / FWPE Completion"
+        element: "Delegator link (per-assignment, unique)"
+
+tools_touched:
+  - "The school's clinical-ed platform, on mobile — Exxat Prism, CORE ELMS, MedHub/eValue mobile app, eMedley eCLAS, Elentra, Leo, New Innovations, one45"
+  - "axiUm (dental) — the Evaluations Module for chairside student assessment, faculty review and approval of student treatments, tied to the patient EHR and billing record"
+  - "The clinical site's own EHR (Epic, Cerner, a community-pharmacy dispensing system) — where their actual work happens, entirely separate from the school's system"
+  - "Email — where the evaluation reminders arrive, and where on-demand evaluation links (Leo-style) land"
+  - "Health-system credentialing and occupational-health portals — per-site onboarding for the students they host"
+  - "State licensure boards and CE/CPD tracking — their own credential maintenance, which the program must also verify"
+  - "Paper and memory — the fallback when the form will not submit between patients"
+
+sources:
+  - "../accreditation/acpe.yaml (Key Elements 3.3.a, 3.3.c, 3.3.e, 7.2.d, 7.3.c, 7.5.a)"
+  - "../accreditation/lcme.yaml (Elements 6.2, 9.3, 9.7, 9.8)"
+  - "../accreditation/coca.yaml (Elements 5.4, 6.9, 11.2)"
+  - "../accreditation/coda.yaml (Elements 2-6, 2-9, 2-24, 3-4)"
+  - "../domains/dentistry.yaml (per-procedure chairside sign-off; procedure quotas)"
+  - "../domains/pharmacy.yaml (one-to-one preceptor model; 4-6 week APPE blocks)"
+  - "../domains/medicine.yaml (layered attending/resident/intern supervision; preceptor scarcity)"
+  - "../domains/do.yaml (distributive network of independently recruited preceptors; DO-supervision requirement)"
+  - "../competitors/e-value.yaml (mobile reliability and patient-logging complaints)"
+  - "../competitors/medhub.yaml (mobile app complaints)"
+  - "../competitors/emedley.yaml (mobile navigation complaints)"
+  - "../competitors/one45.yaml (limited mobile site; duplicate evaluation requests)"
+  - "../competitors/axium.yaml (dated, crash-prone chairside UI)"
+  - "../competitors/core-elms.yaml (preceptor account handling)"
+  - "../competitors/leo-davinci.yaml (no-login on-demand evaluation links)"
+  - "../prism/capability-map.yaml (anchor-relative scheduling; Surveys & Course Evaluations shipped — CORRECTED 2026-08-26 per Exxat PM confirmation)"
+  - "https://justuseapp.com/en/app/1126919433/medhub/reviews"
+  - "https://apps.apple.com/us/app/medhub/id1126919433"
+  - "https://www.capterra.com/p/130811/axiUm/reviews/"
+  - "https://www.dental.upenn.edu/admissions-academics/dmd-program/clinical-education/"
+
+last_researched: "2026-08-24"

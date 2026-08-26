@@ -1,0 +1,225 @@
+# Discipline-layer persona for the PT (Physical Therapy) domain.
+# The PROGRAM is the archetype, not an individual.
+#
+# SOURCING NOTE — read before comparing to the four expansion-domain personas
+# (discipline-do/pharmacy/dentistry/medicine.yaml): PT has NO ../domains/pt.yaml,
+# NO ../accreditation/capte.yaml, and no PT-focused competitor teardown. This file
+# is grounded in Exxat's own internal PT playbook (a CSS/CX asset describing how
+# Exxat already serves this discipline) and the PT/PTA admin tutorial transcripts —
+# i.e. it describes an ALREADY-SERVED discipline as Exxat sees its customers, not
+# third-party market research on a prospect domain. It is deliberately shorter and
+# hedged accordingly; do not pad it to match the expansion personas until a real
+# domain/accreditation research pass exists for PT.
+# Persona framing (persona_name, JTBD wording, switching_trigger) is Exxat-side
+# synthesis of those sources, not a claim quoted from any of them.
+domain: "PT"
+persona_name: "The One-DCE Lockstep DPT Program Racing the March 1 Mailing"
+archetype_summary: >
+  A CAPTE-accredited DPT (or PTA) program whose clinical education machinery runs
+  through one or two faculty — a Director of Clinical Education (DCE), sometimes an
+  Assistant DCE at larger programs — supported by a Program Coordinator who is often
+  shared with another department (commonly OT) and is frequently the primary system
+  user; many programs, PTA programs especially, have no dedicated administrative
+  staff at all. Cohorts are always lockstep and named by graduation year, with
+  deceleration, leave, and remediation handled as cohort moves or out-of-sequence
+  experiences rather than structural exceptions. The placement year revolves around
+  one industry-wide ritual: the March 1 Mailing (M1M), an annual slot request sent
+  every March 1 for the FOLLOWING calendar year, answered by Site Coordinators for
+  Clinical Education (SCCEs) — often regional contacts covering many facilities, and
+  often also serving as Clinical Instructors themselves — with a mix of reserved and
+  first-come-first-served slots. The FCFS share is climbing, which turns placement
+  into a speed competition among schools for the same slots, most acutely for
+  inpatient and acute-care experiences (a national, industry-level shortage). The
+  curriculum mixes full-time Clinical Experiences I/II/III with part-time Integrated
+  Clinical Experiences early in the didactic years, Directed Practice Experiences in
+  specialty areas, and "split" terminal rotations that the playbook itself names as
+  a management pain point. Evaluation runs on a standardized APTA/consortium form
+  ecosystem (PTSE 1/2, CI Details, CIET v2, PTMACS/PTAMACS, SCIPAI) rather than
+  program-authored forms — with the notable exception that CPI 3.0, a dominant
+  summative tool, lives outside the placement system entirely. Site goodwill is
+  maintained with thank-you emails and supervision-hour letters that CIs convert to
+  CEUs through their state APTA chapter. The playbook's own read on the buyer:
+  PTs are typically not great with technology, and developing programs are
+  impressionable and grateful for best-practice guidance.
+accreditation_pressure:
+  - point: "Note: CAPTE is the accreditor, but standards aren't independently verified yet"
+    detail: >
+      The accreditor is CAPTE (Commission on Accreditation in Physical Therapy
+      Education). A dedicated ../accreditation/capte.yaml does NOT exist yet — the
+      four files in that directory are COCA/ACPE/CODA/LCME-specific — so
+      everything here comes from the accreditor references embedded in Exxat's
+      own PT playbook rather than a standards-document research pass, and
+      standard-level citations below should be verified against the CAPTE 2024
+      standards before going customer-facing.
+  - point: "Annual Accreditation Report (AAR) requires five specific data pulls"
+    detail: >
+      What the playbook does establish: the recurring burden is the AAR (Annual
+      Accreditation Report), which the playbook maps to a five-part data pull —
+      active clinical education agreements/sites, CI qualification and
+      credentialing percentages (percent credentialed, percent with advanced
+      certification, any CI under one year of experience), admissions/enrollment/
+      demographics by cohort, and a unique count of sites with at least one
+      placement in the academic year — plus a "decelerated" student flag to keep
+      headcounts accurate.
+  - point: "Seven Prism reports already map to CAPTE standards; CIET mapping still in progress"
+    detail: >
+      Prism already ships seven pre-built reports mapped to named CAPTE standards
+      (2024 4P / 2016 4O CI teaching effectiveness and total CI qualifications;
+      2024 6F / 2016 6L3-6L4 interprofessional practice and PTA supervision; 2024
+      6H / 2016 6L1-6L2 patient conditions, lifespan, and practice settings; 2C
+      number/variety of sites; 8F number/variety of slots), most fed by specific
+      PTSE 1 questions and the CI Details form — meaning the accreditation
+      evidence chain runs through the standardized evaluation forms, so form
+      completion rates ARE accreditation data quality. Competency mapping of the
+      CIET to the CAPTE 2024 standards is listed as in progress on the product
+      side.
+  - point: "PT reporting is annual, unlike COCA's public bright-line metrics (for now)"
+    detail: >
+      Contrast with the expansion domains: this is an annual-report-and-evidence
+      cadence centered on clinical education data, not the bright-line
+      public-metric regime (pass-rate publication windows, placement-rate floors)
+      documented for COCA — but that asymmetry may partly reflect that nobody has
+      done the CAPTE standards read yet.
+current_tools:
+  - point: "Note: no PT-specific competitor research exists yet"
+    detail: >
+      Two honest caveats frame this section. First, no competitor teardown in
+      ../competitors/ is PT-focused — the nine files cover the four expansion
+      domains' vendor set — so the PT competitive landscape is NOT covered by
+      existing teardowns. The multi-discipline platforms do claim PT in passing:
+      CORE ELMS lists PT among 15+ disciplines served, E*Value/MedHub ships to
+      PT/OT among its named disciplines, Elentra names PT among 14 disciplines,
+      and eMedley's AllofE parent lists PT under its umbrella — but none of those
+      files assesses PT-specific depth.
+  - point: "Note: \"current tools\" here just means Exxat Prism itself"
+    detail: >
+      Second, this persona is drawn from an internal playbook about EXISTING
+      Exxat customers, so "current tools" here means Exxat Prism itself
+      (wishlists, Placement Assist, the APTA form library, CAPTE-mapped reports,
+      Exxat One availability-based wishlists) plus whatever the program ran
+      before or runs alongside it.
+  - point: "Hospitals often require separate vendors like myClinicalExchange, forcing double entry"
+    detail: >
+      The alongside-it layer is the competitively interesting part: the playbook
+      names myClinicalExchange (mCE), Clinician Nexus, ACEMAPP, and CastleBranch
+      Bridges as direct competitors that clinical SITES impose on programs —
+      vendors that charge students registration and onboarding fees and "will not
+      integrate with us" — meaning even a happy Prism customer double-enters data
+      wherever a hospital system mandates one of them.
+  - point: "CPI 3.0 evaluations and compliance tracking both live outside Prism"
+    detail: >
+      CPI 3.0 sits outside Exxat as a widely-used summative assessment, splitting
+      the evaluation record for programs that use it. And the playbook's
+      compliance guidance ("ask the school where they are tracking compliance if
+      they don't track it on Prism") concedes that some PT programs still track
+      health/immunization compliance somewhere else entirely — typically a vendor
+      like CastleBranch or a spreadsheet.
+jtbd:
+  - job: >
+      When SCCEs answer my March 1 Mailing with a growing share of
+      first-come-first-served slots, I want to publish those slots to students and
+      confirm reservations the moment they arrive, so I don't lose acute-care and
+      inpatient placements to the other schools chasing the same national shortage.
+    evidence_or_rationale: >
+      Direct from the playbook: the M1M convention (sent March 1 for the following
+      calendar year), the rising FCFS percentage with schools advertising slots to
+      students immediately "to avoid losing out... to other schools competing for
+      them," slot-confirmation emails sent to reserve slots even before a student is
+      placed, and the named industry problem of national competition for IP and
+      acute-care slots. THIS IS THE PRIMARY JOB — it is a speed-and-throughput job,
+      not an evidence job, which is the sharpest contrast with the COCA/LCME-driven
+      expansion personas.
+  - job: >
+      When I am one DCE with a coordinator shared with another department — or a
+      PTA program with no administrative staff at all — I want the wishlist,
+      Placement Assist, confirmation-email, and thank-you-letter cycle to run
+      itself, so clinical education administration doesn't consume the faculty
+      role that is also supposed to teach and advise.
+    evidence_or_rationale: >
+      The playbook's roles section (coordinator "may also be shared with another
+      department... oftentimes the primary Exxat user") and its pain-point list
+      ("many programs don't have administrative staff to help manage the program,
+      especially common for PTA programs"). Placement Assist being called "a
+      popular feature for PT programs" and the popularity of merge-field thank-you
+      certificates are adoption evidence that automation of this cycle is what the
+      discipline actually values. Split terminal rotations are the named case where
+      the machinery still hurts.
+  - job: >
+      When the AAR comes due, I want CI credentialing percentages, site and slot
+      variety, practice-setting spread, and cohort demographics generated from the
+      placement and evaluation data the program already collected, so annual CAPTE
+      reporting is a set of report downloads instead of a spreadsheet assembly
+      project.
+    evidence_or_rationale: >
+      The playbook documents both halves: a defined five-part AAR pull sequence
+      mapped to specific Prism reports, and seven pre-built CAPTE-mapped reports
+      fed by PTSE 1 questions and CI Details data. The dependency runs backward
+      into form operations — if students and CIs don't complete PTSE 1 and CI
+      Details, the CAPTE reports have nothing to aggregate — which is why form
+      workflow quality (low-score alerts, review states, the CIET parallel
+      workflow) is accreditation infrastructure for this discipline, not just
+      pedagogy.
+    related_flows:
+      - flow: "rotation-lifecycle--04-placement-allocation-scheduling-capacity-balancing.yaml"
+        step: "Placement Capacity & Utilization Reports"
+        element: "Distribution of Slots Across Settings / Number and Variety of Clinical Sites (Standard 2C)"
+  - job: >
+      When my summative assessment tool (CPI 3.0) lives outside the system that
+      holds my placements, evaluations, and CAPTE reports, I want a credible
+      in-system alternative, so the whole clinical-performance record feeds one
+      report layer.
+    evidence_or_rationale: >
+      The playbook lists CPI 3.0 explicitly as "Outside of Exxat" among assessment
+      tools, and its product-adoption section frames continuous improvement of the
+      CIET as having "potential to supplant CPI 3.0 as the top evaluation tool for
+      the PT discipline," with best-practice guidance to advocate for the CIET.
+      The CIET v2 tutorial (concurrent blind student/CI completion, integrated
+      training quiz, school-specific benchmarks, raw-data and graphical reports)
+      is the shipped substance behind that pitch. Programs also want to customize
+      the standard forms (CI Details, CIET) — a tension with the
+      standardized-form model this discipline runs on.
+    related_flows:
+      - flow: "rotation-lifecycle--06-midpoint-formative-feedback-early-risk-intervention.yaml"
+        step: "Learning Activities Setup — Forms/Evaluations drawer"
+        element: "Availability of a shipped standard instrument to attach a midpoint to"
+switching_trigger: >
+  Because this persona describes a discipline Exxat already serves, the trigger
+  question cuts both ways. What opens an evaluation at a non-customer program:
+  (1) an M1M/FCFS season that visibly lost slots to faster schools; (2) the
+  departure of the DCE or shared coordinator who held the placement process in
+  their head — acute here because backup admin staffing often does not exist;
+  (3) CAPTE self-study or AAR season exposing that CI credentialing and site-variety
+  numbers cannot be produced without weeks of spreadsheet work. What threatens
+  retention at an existing customer, per the playbook's own pain list: clinical
+  sites mandating non-integrating, student-fee-charging intermediaries
+  (myClinicalExchange, Clinician Nexus, ACEMAPP, CastleBranch Bridges), which makes
+  Prism feel like one more system rather than the system of record; frustrated
+  demands to customize locked standard forms; and split-terminal-rotation
+  management pain. Counter-forces that favor incumbency: the standardized APTA
+  form ecosystem (PTMACS, SCIPAI) is documented as available only in Exxat, and a
+  discipline self-described as "typically not great with technology" migrates
+  reluctantly. Cross-reference: this discipline's setup-time leverage is mapped in
+  ../journeys/admin-onboarding-product-setup.yaml — PT is one of the few
+  disciplines whose clinical-settings taxonomy (stage 2) arrives with a documented
+  production value list that feeds CAPTE 2024 6H / 2016 6L2 evidence directly via
+  PTSE 1 Q3, so getting settings right at onboarding IS the accreditation-report
+  setup for a PT program (the same journey's stage 4 also records the playbook's
+  caveat that many PT programs never adopt the compliance module at all).
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md (Exxat internal PT playbook, help-center capture)"
+  - "/Users/romitsoley/Downloads/PTPTAVideosTranscripts.md (PT/PTA admin tutorial transcripts: CIET v2, Exxat One availability-based wishlist)"
+  - "https://help.exxatprism.com/hc/en-us/articles/43654428008081-PT-PTA-Videos"
+  - "https://vimeo.com/1068220490"
+  - "https://vimeo.com/1159562881"
+  - "https://www.capteonline.org/ (CAPTE — accreditor; NOT independently researched: no ../accreditation/capte.yaml exists yet)"
+  - "https://www.apta.org/ (APTA — professional association, source of the standard PTSE/CPI form ecosystem)"
+  - "../journeys/admin-onboarding-product-setup.yaml (stages 2 and 4: PT settings taxonomy and compliance-adoption notes)"
+  - "../competitors/core-elms.yaml (PT named among 15+ disciplines served — no PT-depth assessment)"
+  - "../competitors/e-value.yaml (PT/OT named among disciplines served — no PT-depth assessment)"
+  - "../competitors/elentra.yaml (PT named among 14 disciplines — no PT-depth assessment)"
+  - "../competitors/emedley.yaml (PT under AllofE umbrella — no PT-depth assessment)"
+  # Deliberately absent, because they do not exist for this discipline yet:
+  # ../domains/pt.yaml, ../accreditation/capte.yaml, and any PT-focused
+  # competitor teardown (myClinicalExchange, Clinician Nexus, ACEMAPP,
+  # CastleBranch Bridges are named in the playbook but have no teardown files).
+last_researched: "2026-08-24"

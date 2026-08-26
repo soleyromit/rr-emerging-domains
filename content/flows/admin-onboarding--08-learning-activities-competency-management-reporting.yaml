@@ -1,0 +1,1327 @@
+# Element-level ground truth underneath admin-onboarding-product-setup.yaml, stage 8
+# ("Learning activities, competency management & reporting"). See _TEMPLATE.yaml
+# (schema v2) for field meanings: accreditation_citation / competitor_equivalent /
+# gap_severity / gap_note live on each ELEMENT, not on the step.
+#
+# SOURCING NOTE (important — this file exists to fix a prior sourcing defect):
+# the primary source here is the raw general admin-tutorial transcript at
+# /Users/romitsoley/Downloads/exxat_transcripts.md, cited by section heading and
+# line range. Earlier work in this repo laundered the same content through
+# help-center paraphrases; every step below cites the transcript directly wherever
+# the transcript covers the step, and only reaches for the help-center mirror or a
+# discipline transcript where the general transcript is genuinely silent.
+#
+# This is the PRODUCT-SETUP journey: what a brand-new program administrator does on
+# day one to stand Prism up, not the clinical-rotation lifecycle that runs afterward.
+# Where a screen below also appears in rotation-lifecycle--05/--07 or
+# competency-verification--01/--02/--06, the lens here is deliberately different:
+# "can a new admin configure this without a support ticket?", not "does the clinical
+# workflow work?". That question is where most of the gap_severity values come from.
+
+flow_name: "Learning Activities, Competency & Reporting Setup"
+maps_to_journey: "admin-onboarding-product-setup.yaml, stage 8"
+persona: >
+  Primary: Program Administrator, new to the platform
+  (../personas/role-program-admin.yaml) — owns Learning Activity setup per course,
+  the Gradebook, the competency framework, and the report library.
+  Secondary: Clinical Coordinator (../personas/role-clinical-coordinator.yaml) —
+  runs day-to-day form distribution, log/timesheet review and reminders once setup
+  is done; and Compliance / Accreditation Liaison
+  (../personas/role-compliance-accreditation-liaison.yaml) — consumes the report and
+  competency output as accreditation evidence. Prerequisite from earlier stages:
+  course offerings, cohorts, students, faculty, sites and placements must already
+  exist — "before you can set up learning activities, you will first need to have set
+  up placement-related or didactic course offerings."
+
+steps:
+
+  - screen: "Learning Activity — Course Offerings (module landing table)"
+    navigation_path: "Dashboard or hamburger menu > Learning Activity > Course Offerings"
+    action: >
+      New admin opens the Learning Activity module for the first time and orients on
+      the inventory of course offerings that can carry learning activities, before
+      configuring anything.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities in Exxat Prism' (lines 1293-1298)"
+    elements:
+      - element: "Course offerings table (course number, course name, learning activities activated, academic schedule, cohort, additional course identifier)"
+        type: "read-only rollup table"
+        data_shown: "One row per course offering; the 'learning activities activated' cell is the only at-a-glance signal of which courses are already configured"
+        gates_on: ["everything downstream in this stage — a course with no offering cannot carry a learning activity"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — competitor files describe evaluation/log capability (one45 'Assessment and Evaluation', emedley 'eValuate'), not their admin-side course-inventory landing table."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Search box with type-switch dropdown (course number / course name)"
+        type: "search control"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Filter icon (cohort / academic year / term)"
+        type: "report filter"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Filter set is cohort/year/term only — no filter for 'has no learning activity configured yet', which is exactly the view a day-one admin needs to work a setup backlog."
+
+  - screen: "Learning Activity — Add Group (learning activity group wizard)"
+    navigation_path: "Learning Activity > Add Group > [Name/Description] > [Select Courses] > [Overview] > Save"
+    action: >
+      Admin creates a learning activity group to bundle course offerings so reports can
+      be run across the whole group. Per the transcript, "lockstep programs typically
+      group course offerings together by cohort... Non-lockstep programs may use learning
+      activity groups to group together courses of the same academic year, graduation
+      term, or area of focus." This is the single highest-leverage setup decision in the
+      stage: report scope is defined by group membership.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1299-1307); report-scoping consequence at lines 1443-1447"
+    elements:
+      - element: "Group name text box"
+        type: "input field"
+        data_shown: ""
+        gates_on: ["group-level reporting"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Group description text area"
+        type: "input field"
+        data_shown: "Admin-only — 'This description can only be viewed by you and other program administrators'"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Course selection step (search by course number/name; filter by academic year, professional year, term, cohort, additional course identifier; select-all checkbox)"
+        type: "multi-select picker with filters"
+        data_shown: "Courses matching search criteria after clicking Search"
+        gates_on: ["which courses appear in every group-scoped report"]
+        accreditation_citation: "none directly, but this is the mechanism by which a program later assembles cohort-scoped evidence — e.g. ACPE Standard 3, Key Element 3.1.b (IPEC minimum clock hours by setting) is only reportable if the IPPE courses are grouped so an hours report can span them"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. CORE ELMS's CompMS markets cohort-level competency reporting (core-elms.yaml) but public materials do not describe a user-built report-scope grouping object."
+        gap_severity: "configure-needed"
+        gap_note: "Group membership is a static hand-picked list, not a saved query — a new cohort's courses do not join an existing group automatically, so a day-one admin who builds 'Class of 2027' must re-edit it every term."
+      - element: "Overview step with per-course trash-bin removal + previous-section tabs"
+        type: "review/confirm step"
+        data_shown: "Selected courses pending save"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Group Courses / Rotations / Reports tabs (post-save)"
+        type: "navigation tabs with per-row hyperlinks"
+        data_shown: "Courses tab: each activated learning activity as a hyperlink into its review section, plus academic schedule and Setup/Reports hyperlinks. Rotations tab: all rotations for the added courses. Reports tab: report runner pre-scoped to the group."
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "The Courses tab's per-row Setup hyperlink is the practical entry point into per-course configuration — worth noting because a new admin who navigates via Courses > [course] > Learning Activities > Setup instead never discovers the group."
+
+  - screen: "Learning Activity Setup (per course offering)"
+    navigation_path: "Learning Activity > [group] > Courses > Setup hyperlink — or Courses > [course offering] > Learning Activities > Setup"
+    action: >
+      Admin opens one course's setup surface and sees the four learning-activity types
+      plus Gradebook and Reports tabs. Per the transcript, setup is strictly per-course:
+      "You will need to set up learning activities for each course individually."
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1307-1312)"
+    elements:
+      - element: "Forms & Evaluations / Patient Log / Timesheet / Time Off sections"
+        type: "configuration section headers with add (+) or edit (pencil) affordances"
+        data_shown: "Which of the four activity types are configured for this course"
+        gates_on: ["student-facing availability of each activity type"]
+        accreditation_citation: "none at this container level; the individual activity configurations below carry the accreditor ties"
+        competitor_equivalent: "eMedley splits the equivalent surfaces across separate named modules — eCLAS for case logs, eValuate for evaluations (emedley.yaml); Prism co-locates all four on one per-course screen. Comparable at module level, not at field level from public materials."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Placement-based vs didactic course type constraint"
+        type: "system-enforced availability rule"
+        data_shown: "In didactic/non-placement courses only non-placement forms and evaluations can be set up — 'you cannot set up patient logs, timesheets, or time off learning activities'"
+        gates_on: ["which activity types can be activated"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.1.b and 3.2.b/3.2.d (clock-hour minimums are only capturable on placement-based courses, so a program that mis-types a course as didactic loses its hours evidence)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "The course-type decision was made back in course setup (an earlier stage) and silently determines what is configurable here; a new admin discovers the constraint only when the Patient Log/Timesheet sections do not appear."
+      - element: "'Design' toggle (new design / old design)"
+        type: "toggle"
+        data_shown: "Defaults to the new design on every navigation into learning activities; disabling reverts to the legacy design"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "A live old/new design toggle means a day-one admin's screen may not match half the help content or the tutorial video they were pointed at — a real onboarding friction, not a functional gap."
+      - element: "Gradebook tab and Reports tab"
+        type: "navigation tabs"
+        data_shown: "Gradebook: per-student scores and final weighted score. Reports: all reports for the configured activities."
+        gates_on: []
+        accreditation_citation: "none at tab level"
+        competitor_equivalent: "CORE ELMS ships 'automated grade calculation/conversion' inside its evaluation module (core-elms.yaml); Elentra ships 'gradebook tasks... and gradebook integration for flexible grade scales' (elentra.yaml). Comparable in kind, but neither vendor's public material is granular enough to compare a tab-level layout."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "Forms & Evaluations — activate an existing form"
+    navigation_path: "Learning Activity Setup > Forms and Evaluations > + icon > [select form]"
+    action: >
+      Admin picks a form from the program's configured form list and sets its publish
+      timing, review columns and faculty visibility. Critically for onboarding, the admin
+      is CHOOSING from a pre-built list, not authoring: standard forms (CIET, PT SE) "can
+      be activated by reaching out to our support team, your account manager, or your CSS
+      agent" and are non-editable; custom forms are "those which you decide the workflow
+      for and information collected by" but are built by Exxat — "please reach out to your
+      CSS agent or account manager for more information on how to get custom forms
+      configured."
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1313-1321); form-type taxonomy in the standalone 'Forms/Evaluations Workflows in Exxat Prism' section (lines 1971-1986)"
+    elements:
+      - element: "Form picker list + search box"
+        type: "single-select picker"
+        data_shown: "Forms currently configured for the program (standard + program's custom forms)"
+        gates_on: ["what can be activated in this course"]
+        accreditation_citation: "CODA Standard 2, Element 2-5 (student evaluation methods must measure defined competencies via assessment instruments mapped to competencies); LCME Standard 9, Element 9.4 (a centralized assessment system using a variety of measures)"
+        competitor_equivalent: "New Innovations ships an admin-facing 'Evaluations Builder: Customizable form creation with multiple question types and real-time editing capabilities' (new-innovations.yaml); Elentra ships a 'customizable form/item bank' in its Assessment & Evaluation module (elentra.yaml); one45 ships 'customizable forms/scales with question tagging' (one45.yaml). All three document self-service form authoring by the program; Prism's transcript routes custom form authoring through a CSS agent."
+        gap_severity: "gap"
+        gap_note: "This is the sharpest onboarding gap in the stage: a new admin cannot author a form. Standard forms need a support ticket to appear in this list; custom forms need a CSS-agent engagement to build. Everything else in Learning Activities is self-service; the instrument itself is not. Three named competitors document self-service form builders."
+      - element: "'Who will be filling the form' summary box"
+        type: "read-only rollup"
+        data_shown: "Which stakeholders are in the form's workflow (e.g. preceptor, admin, student)"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.3 (clinical supervision) — indirectly, since this box is where an admin verifies a supervisor is actually in the evaluation loop"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "'Workflow Details' summary box"
+        type: "read-only rollup"
+        data_shown: "The series of steps from initiation to completion the form passes through"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: "Read-only. The admin can SEE the workflow but not change it — changing who fills what and in what order requires the CSS agent. For a new program still deciding whether the preceptor or the student initiates, this is a hard dependency on the vendor."
+      - element: "Form name hyperlink (preview the form)"
+        type: "button / preview link"
+        data_shown: "The rendered form as respondents will see it"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.2 (programs must produce 'copies of the evaluation forms used' as self-study evidence — this preview is where an admin retrieves them)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "'Does this form require a placement?' yes/no"
+        type: "radio / toggle"
+        data_shown: ""
+        gates_on: ["whether the form appears against a placement or as a didactic assignment", "which report family the form is eligible for"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "This flag has a non-obvious downstream consequence the setup screen does not surface: placement-based and didactic forms cannot be reported on together (transcript line 1447), so getting it wrong forces a separate learning activity group later."
+      - element: "Publish timing — 'Event Anchored' (days + before/after + anchor) vs 'Specific Date'"
+        type: "conditional input group (all three anchored fields required)"
+        data_shown: "Publish date computed relative to a placement event, or a fixed calendar date"
+        gates_on: ["when the form becomes visible to the student/respondent"]
+        accreditation_citation: "LCME Standard 9, Element 9.7 (formative feedback at least at the midpoint of each required experience) — the midterm anchor is the mechanism that makes 9.7 auditable; LCME Standard 9, Element 9.8 (fair and timely summative assessment) via an end-date-anchored due date"
+        competitor_equivalent: "eMedley documents the same primitive — 'assignments/evaluations scheduled N days' relative to a rotation (emedley.yaml); one45 documents 'automated distribution of in-training evaluations tied to the master schedule' (one45.yaml). eMedley is the closest true element-level match found."
+        gap_severity: "none"
+        gap_note: "Strongest single element in this stage — anchor-relative publishing maps almost one-to-one onto LCME 9.7's midpoint-feedback requirement (see content/accreditation/lcme.yaml, which rates that element 'Transfer')."
+      - element: "'Customize Columns' control (evaluation-review column set)"
+        type: "column configurator"
+        data_shown: "Which columns appear when reviewing submissions of this form"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Faculty role assignment — 'can view and make changes' + optional view-only role"
+        type: "role picker (two tiers)"
+        data_shown: ""
+        gates_on: ["which faculty can review/edit this form's submissions"]
+        accreditation_citation: "CODA Standard 2, Element 2-2 (individual evaluation and due process — who may alter a student's evaluation record is a due-process question)"
+        competitor_equivalent: "LEO/DaVinci documents FERPA-scoped advisor visibility ('advisors see only their own advisees') as its comparable access control (leo-davinci.yaml) — the same concern, expressed as a scope rule rather than a per-form role picker."
+        gap_severity: "none"
+        gap_note: "Note the interaction with the review scope rule at transcript line 1357: 'Course faculty can review learning activities for all the students registered in the courses they oversee, while placement faculty can only review learning activities for the specific student placements they are assigned.' The picker sets the role; the role's scope is fixed by the system."
+      - element: "Save / Back buttons"
+        type: "button"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "Forms & Evaluations — Add Assignment (self-service simple form)"
+    navigation_path: "Learning Activity Setup > Forms and Evaluations > + icon > Add Assignment"
+    action: >
+      The one instrument a new admin CAN build alone. Per the transcript: "It is also
+      possible to configure simple forms on your own called Assignments. Assignments can
+      be used to collect any student written assignments, for example, a midterm
+      reflection essay."
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1325-1329)"
+    elements:
+      - element: "Title text area + Instructions text area"
+        type: "input fields"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-1 (advance course information to students — instructions delivered with the assignment)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "'Requires student placement?' yes/no"
+        type: "radio"
+        data_shown: ""
+        gates_on: ["whether the assignment attaches to a placement"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "'Applicable for other course offerings in the program?' yes/no"
+        type: "radio"
+        data_shown: "If Yes, the assignment joins the program-wide form list for one-click activation in any course"
+        gates_on: ["reusability across courses"]
+        accreditation_citation: "CODA Standard 2, Element 2-6 / COCA Standard 6, Element 6.11 (comparability of instruction and assessment across sites — reuse of one instrument is the mechanism by which comparability is achieved)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "This is the closest thing to a template library a new admin gets without vendor involvement — and it is a one-way flag set at creation time, not a library the admin manages."
+      - element: "Scored? + 'Out Of' score + low score indicator"
+        type: "conditional input group"
+        data_shown: ""
+        gates_on: ["gradebook contribution", "low-score alerting"]
+        accreditation_citation: "LCME Standard 9, Element 9.4 (assessment system) — partial; a scored assignment is one measure feeding the centralized picture"
+        competitor_equivalent: "CORE ELMS documents 'low-score alerts' as a shipped evaluation-module feature (core-elms.yaml) — a direct, element-level match for the low score indicator."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Gradebook weightage contribution / publish date / due date / assigned faculty"
+        type: "input fields, same pattern as form activation"
+        data_shown: ""
+        gates_on: ["final course score calculation"]
+        accreditation_citation: "LCME Standard 9, Element 9.8 (fair and timely summative assessment — due-date mechanics)"
+        competitor_equivalent: "CORE ELMS documents 'due-date reminders' and 'automated grade calculation/conversion' (core-elms.yaml)."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "School Templates upload section"
+        type: "file upload (documented file types + size limits)"
+        data_shown: "Downloadable template the student fills and re-uploads"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Active toggle"
+        type: "toggle"
+        data_shown: ""
+        gates_on: ["student visibility"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "Learning Activities — Auto-Notifications setup"
+    navigation_path: "Learning Activities > (left menu) Auto-Notifications > Add Notification"
+    action: >
+      Admin configures automatic reminder notifications for evaluation forms so that
+      chasing submissions is not a manual weekly task. Per the transcript: "With
+      configurable timing, frequency, and stop conditions, auto-notifications help ensure
+      that evaluation forms are completed on time and without sending unnecessary
+      reminders after submission."
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1321-1325)"
+    elements:
+      - element: "Notification title"
+        type: "input field"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Notification Type selector"
+        type: "dropdown"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Recipient Type (students or preceptor)"
+        type: "dropdown"
+        data_shown: "Two recipient classes only"
+        gates_on: ["who is reminded"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "LEO/DaVinci documents 'completion/reminder tracking reports' for administrators (leo-davinci.yaml); eValue markets 'automate reminder notifications for students' (e-value.yaml); CORE ELMS documents 'due-date reminders' (core-elms.yaml). All three are comparable in kind at this element."
+        gap_severity: "configure-needed"
+        gap_note: "Recipient type is student-or-preceptor. Site/location contacts and placement faculty are addressable in manual distribution (transcript line 1365) but not, per this transcript, in auto-notifications — so the roles most likely to go silent on a form are the ones you can auto-chase, and the rest still need manual reminders."
+      - element: "Form multi-select ('select one or more forms')"
+        type: "multi-select picker"
+        data_shown: ""
+        gates_on: ["which forms trigger this reminder"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Reminder frequency (Just Once / Daily / Weekly / Every X days) + 'When to Send' fields"
+        type: "radio group + conditional inputs"
+        data_shown: ""
+        gates_on: ["reminder cadence"]
+        accreditation_citation: "LCME Standard 9, Element 9.8 (timely summative assessment — reminder cadence is the operational lever on grade turnaround)"
+        competitor_equivalent: "eValue markets automated reminder notifications tied to hours/evaluations (e-value.yaml) but public materials do not enumerate a frequency option set, so this is comparable in kind but not at field level."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Summary & Confirmation step > Save"
+        type: "review/confirm step"
+        data_shown: "The configured notification before commit"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Notification list row controls — edit icon / delete icon / active-inactive toggle"
+        type: "row action controls"
+        data_shown: "Toggle 'turns off reminders without deleting the setup'"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "Patient Log setup (per course)"
+    navigation_path: "Learning Activity Setup > Patient Log > pencil icon"
+    action: >
+      Admin configures and activates patient-encounter logging for placed students.
+      Per the transcript, the naming varies by discipline: "Different domains may use
+      different names for patient logs. SLP programs call them clinical logs, and CRNA
+      programs call them case logs."
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1329-1338). Discipline confirmation: /Users/romitsoley/Downloads/PAVideosTranscripts.md 'Physician Assistant: Setting up and Managing Patient Logs' and /Users/romitsoley/Downloads/SLPVideosTranscripts.md 'Setting up and Reviewing Clinical Logs'"
+    elements:
+      - element: "Patient log template dropdown + eye icon preview (PA transcript: 'Preview Layout' button)"
+        type: "single-select picker with preview"
+        data_shown: "The log layout students will fill"
+        gates_on: ["what encounter data the program can ever report on"]
+        accreditation_citation: "CODA Standard 2, Element 2-24 (adequate patient experiences to achieve competency — the log is the evidence); LCME Standard 6, Element 6.2 and Standard 8, Element 8.6 (required clinical experiences and monitoring of their completion); COCA Standard 6, Element 6.10"
+        competitor_equivalent: "eMedley's eCLAS is the closest documented equivalent: 'mobile iOS/Android case-log tracking of patient encounters, diagnoses/ICD-10, procedures/CPT, competency mastery, preceptor time-approval' (emedley.yaml). eValue documents 'case logs for tracking competencies/interventions/encounters' and 'mobile procedure logging' (e-value.yaml). Both are comparable in capability; neither documents an admin-side template-selection control at field level."
+        gap_severity: "gap"
+        gap_note: "Per the PA transcript, 'We provide a standard template, but if you need a customized template, you can contact your CSS agent or account manager' — same vendor dependency as forms. A new admin selects among templates; they cannot design the log. For dentistry (procedure-quota-driven progression per content/domains/dentistry.yaml) and for PA (ARC-PA setting-exposure evidence) the template's field set IS the accreditation evidence model, and it is not admin-editable."
+      - element: "Activate toggle"
+        type: "toggle"
+        data_shown: "Untoggled = configure without exposing to students"
+        gates_on: ["student ability to submit logs in this course"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Genuinely good onboarding affordance: a new admin can stage the whole configuration and flip it live later."
+      - element: "'Log must be created within N days of patient encounter'"
+        type: "input field (integer, days)"
+        data_shown: "Hard submission window — a log for an encounter older than N days cannot be submitted"
+        gates_on: ["student submission"]
+        accreditation_citation: "LCME Standard 8, Element 8.6 (monitoring completion of required clinical experiences — data timeliness is what makes mid-course monitoring possible)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Hard block, not a warning. A day-one admin setting this too tight (e.g. 3 days) will generate a support load of students who cannot log real encounters."
+      - element: "Grading section — contributes to final score? / Out Of score / weightage / grading type"
+        type: "conditional input group"
+        data_shown: ""
+        gates_on: ["Gradebook column existence and weighting"]
+        accreditation_citation: "none directly; grading mechanics are program policy"
+        competitor_equivalent: "CORE ELMS documents 'automated grade calculation/conversion' (core-elms.yaml); Elentra documents 'gradebook integration for flexible grade scales' (elentra.yaml)."
+        gap_severity: "configure-needed"
+        gap_note: "Patient log scores are NOT auto-populated into the gradebook — per transcript line 1433, 'For other learning activities like patient logs or timesheets, you must enter the student's score manually.' The weightage set here creates a column the admin then has to fill by hand."
+      - element: "Wrench icon — reviewer column configurator (first four columns fixed; delete/reorder/add)"
+        type: "column configurator"
+        data_shown: "Columns faculty or experiential supervisors see when reviewing logs"
+        gates_on: ["review-screen legibility"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "First four columns are immovable and unnamed in the transcript — a new admin cannot fully tune the reviewer view."
+      - element: "Auto-approve logs on submission (yes/no)"
+        type: "toggle"
+        data_shown: ""
+        gates_on: ["whether attestation and preceptor-review options remain configurable"]
+        accreditation_citation: "LCME Standard 9, Element 9.3 (clinical supervision of students — auto-approval removes the supervisor verification step); CODA Standard 2, Element 2-24 (patient experience evidence quality)"
+        competitor_equivalent: "eMedley documents 'preceptor time-approval' inside eCLAS (emedley.yaml) as the comparable verification control; public materials do not document an auto-approve inverse."
+        gap_severity: "configure-needed"
+        gap_note: "Three-way mutual exclusion the setup screen states only as a note: turning auto-approve on disables BOTH preceptor review AND the attestation message. A new admin optimizing for low review workload silently gives up the supervisor-verification evidence an accreditor is most likely to ask for."
+      - element: "Allow students to send logs to preceptors for review (+ first-log email notification, template preview)"
+        type: "toggle + email template preview"
+        data_shown: "'The first log recorded against a preceptor will trigger an email notification' with a link to review and approve"
+        gates_on: ["preceptor-side verification"]
+        accreditation_citation: "LCME Standard 9, Element 9.3 (clinical supervision); ACPE Standard 3, Key Element 3.3.a (preceptor performance and evaluation)"
+        competitor_equivalent: "LEO/DaVinci documents 'on-demand evaluation links can be emailed to clinical faculty with no login required' (leo-davinci.yaml) — the same no-login preceptor-access pattern, applied to evaluations rather than logs."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Enable Attestation toggle + Attestation Message text area"
+        type: "toggle + input field"
+        data_shown: "Statement the experiential supervisor signs when reviewing logs (transcript example: an academic integrity attestation)"
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-2 (due process, via an auditable signed statement); LCME Standard 9, Element 9.3"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Free-text attestation the admin writes themselves — one of the few genuinely self-service authoring surfaces in this stage."
+
+  - screen: "Timesheet setup (per course)"
+    navigation_path: "Learning Activity Setup > Timesheet > pencil icon"
+    action: >
+      Admin activates and rules-configures electronic hours logging. This is the screen
+      that determines whether a program's clock-hour accreditation evidence is capturable
+      at all.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1339-1350)"
+    elements:
+      - element: "Activate toggle"
+        type: "toggle"
+        data_shown: ""
+        gates_on: ["all timesheet configuration below and student submission"]
+        accreditation_citation: "ACPE Standard 3, Key Elements 3.1.b and 3.2.b/3.2.d (IPPE minimum clock hours by setting; APPE 36 weeks / 1,440 hours)"
+        competitor_equivalent: "CORE ELMS ships 'timesheet/hours tracking with optional GPS' (core-elms.yaml); eValue ships 'time tracking with automated reminders and summary reporting' and hours validation (e-value.yaml); one45 ships event-level 'duty-hours and leave-time tracking' (one45.yaml)."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Rules — 'limit hours a student can log per day' (yes/no + max hours)"
+        type: "conditional input"
+        data_shown: "Default when No: up to 24 hours/day"
+        gates_on: ["student entry validation"]
+        accreditation_citation: "none directly; duty-hour policy is program- and GME-specific, not a listed element in this repo's four accreditation files"
+        competitor_equivalent: "eValue documents flagging 'incomplete, or violation-triggering work hours' (e-value.yaml) — a duty-hour-violation concept Prism's per-day cap approximates but does not name."
+        gap_severity: "configure-needed"
+        gap_note: "A per-day maximum is not a duty-hour rule engine — no weekly cap, no consecutive-day rule, no violation flag. Programs with ACGME-style duty-hour obligations will find this thinner than eValue's violation-triggering model."
+      - element: "Rules — 'limit days a student can edit past timesheets prior to approval' (yes/no + N days)"
+        type: "conditional input"
+        data_shown: ""
+        gates_on: ["student edit window"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Rules — allow future-dated entries (yes/no)"
+        type: "radio"
+        data_shown: "For programs that allow logging planned or pre-scheduled activity in advance"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Rules — require patient-encounter count per entry (yes/no); require break time per entry (yes/no)"
+        type: "radio pair"
+        data_shown: ""
+        gates_on: ["what the Hours by Categories report can subtract/report"]
+        accreditation_citation: "CODA Standard 2, Element 2-24 (patient experience volume); LCME Standard 6, Element 6.2"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Break-time capture is what makes 'total timesheet time excluding breaks' a real number in the Hours by Categories report (transcript line 1493) — a new admin who leaves it off cannot later separate contact hours from shift length."
+      - element: "Review & Approval — faculty sign-off required (yes/no)"
+        type: "radio"
+        data_shown: ""
+        gates_on: ["approval workflow existence"]
+        accreditation_citation: "LCME Standard 9, Element 9.3 (clinical supervision); ACPE Standard 3, Key Element 3.1.b (hours must be attested, not merely self-reported, to serve as evidence)"
+        competitor_equivalent: "eMedley documents 'preceptor time-approval' (emedley.yaml); eValue markets the ability to 'validate hours' (e-value.yaml)."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Review & Approval — require student to select a preceptor per time entry (yes/no)"
+        type: "radio"
+        data_shown: ""
+        gates_on: ["preceptor attribution of hours", "the 'hours by preceptor' custom pivot report"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.e (2:1 student-to-preceptor ratio — unattributed hours make ratio evidence unreconstructable)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Quiet but load-bearing: the transcript's own custom-report example ('track timesheet hours by preceptor and location', line 1763) only works if this was set to Yes at setup time. A day-one No is unrecoverable for historical data."
+      - element: "Review & Approval — automatic approval on submission (yes/no) + 'users who should receive email each time a timesheet is submitted' (Preceptor / Placement Faculty / School) + email template link"
+        type: "toggle with dependent multi-select and template editor"
+        data_shown: "Selecting auto-approval disables the notification recipient selector"
+        gates_on: ["review workload", "who is notified"]
+        accreditation_citation: "LCME Standard 9, Element 9.3 (supervision verification is lost under auto-approval)"
+        competitor_equivalent: "eValue documents automated reminder notifications on time tracking (e-value.yaml); no competitor file documents an auto-approve-disables-notification dependency."
+        gap_severity: "configure-needed"
+        gap_note: "Same shape of trap as patient-log auto-approve: choosing auto-approval to reduce admin workload silently removes the notification path AND the attestation trail. The dependency is stated in prose on the screen, not enforced as a warning."
+      - element: "Categorization — 'settings inherited from the course offering setup' + 'Edit Category Lists' link"
+        type: "inheritance notice + escape hatch link to program-level list"
+        data_shown: "'Any changes made here will apply only to this specific course offering'"
+        gates_on: ["category consistency across courses"]
+        accreditation_citation: "COCA Standard 6, Element 6.11 / CODA Standard 2, Element 2-6 (comparability across sites — inconsistent categories across courses make cross-site hour comparison impossible)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Per-course override of an inherited list with no drift detection. A new admin who edits categories course-by-course will fragment the taxonomy the Hours by Categories report depends on — and nothing warns them."
+      - element: "Categorization — Category Alias field"
+        type: "input field"
+        data_shown: "Overrides the default label 'Category'; blank = default"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "This is how a discipline renames the concept in-product (e.g. an SLP program relabeling to match ASHA vocabulary) without a vendor ticket."
+      - element: "Categorization — Single Select vs Multi-Select + category list builder (add / X to remove)"
+        type: "radio + repeatable tag input"
+        data_shown: "Transcript examples: single-select for mutually exclusive categories ('simulation or direct contact'); multi-select for non-exclusive ('new patient and evaluative practice')"
+        gates_on: ["Hours by Categories report shape", "telehealth percentage calculations"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.2.b/3.2.d (the four required APPE practice settings are only provable if hours are categorized by setting)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — competitor hours-tracking descriptions (eValue, CORE ELMS, one45) do not enumerate a category-taxonomy builder."
+        gap_severity: "none"
+        gap_note: "The PA help-center guide makes the accreditation stakes explicit: 'By using Timesheet categories with the single-select option, you can add Telehealth/Telemedicine as a category and track the hours' to prove telehealth hours stay under the ARC-PA 50%-per-course and 20%-of-total ceilings (Exxat-Help-Guides > Discipline Specific Guides > PA Discipline > 'Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition)', lines 245-267). Getting single-vs-multi wrong at setup breaks that calculation."
+      - element: "Grading — contributes to final grade book? / max score / weightage / grading type"
+        type: "conditional input group"
+        data_shown: "If No, 'the timesheet will be tracked for documentation purposes only'"
+        gates_on: ["Gradebook column"]
+        accreditation_citation: "none directly"
+        competitor_equivalent: "CORE ELMS 'automated grade calculation/conversion' (core-elms.yaml)."
+        gap_severity: "configure-needed"
+        gap_note: "Same manual-entry consequence as patient logs — the column is created but the score is typed by hand."
+
+  - screen: "Time Off setup (per course)"
+    navigation_path: "Learning Activity Setup > Time Off > pencil icon"
+    action: >
+      Admin activates student-initiated absence requests, including reason, make-up plan
+      and (optionally) documentation.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1351-1356)"
+    elements:
+      - element: "Notify experiential supervisor on request (yes/no) + email template preview"
+        type: "radio + template preview link"
+        data_shown: ""
+        gates_on: ["site-side awareness of absence"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "one45 documents 'leave-time tracking at the event level' for 'accurate and simplified program and accreditation reporting' (one45.yaml) — comparable in kind, no documented notification granularity."
+        gap_severity: "gap"
+        gap_note: "Per the transcript: 'experiential supervisors cannot approve time off entries. Only you or other school faculty can review and approve.' Supervisors are notified but powerless. For programs where the site controls attendance (dentistry clinic sessions, pharmacy APPE blocks), the approval authority sits in the wrong place and cannot be reassigned."
+      - element: "Require categorization (yes/no) + comma-separated category list"
+        type: "conditional repeatable input"
+        data_shown: "Transcript examples: illness, bereavement"
+        gates_on: ["Time Off pivot report grouping"]
+        accreditation_citation: "none directly; absence categories are program policy"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "Comma-separated free text rather than a managed program-level list (unlike timesheet categories, which inherit from course setup) — an inconsistency between two adjacent screens that will produce category drift."
+      - element: "Require document upload (yes/no)"
+        type: "radio"
+        data_shown: "Transcript example: a doctor's note"
+        gates_on: ["what a reviewer can verify"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Notify a school faculty member on submission (yes/no) + recipient email address box"
+        type: "conditional input (free-text email, multiple addresses allowed)"
+        data_shown: ""
+        gates_on: ["review turnaround"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Typed email addresses, not a picker off the faculty records set up in an earlier stage. When the reviewing admin changes, every course's time-off config has to be edited individually — a classic day-one setup decision that becomes year-three maintenance debt."
+      - element: "Notify placement faculty assigned to the placement (yes/no)"
+        type: "radio"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Activate toggle + Save"
+        type: "toggle + button"
+        data_shown: ""
+        gates_on: ["student ability to request time off"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "Learning Tool Interoperability (LTI) — GoReact/Echo360 assignment setup"
+    navigation_path: "Learning Activities > [course] > Setup > Learning Tool Interoperability > + icon"
+    action: >
+      For programs doing video-based assessment, admin creates an LTI assignment that
+      auto-provisions the matching activity in GoReact. Included here because it is a
+      fifth learning-activity type a new admin may need on day one, and because its
+      availability is discipline-gated.
+    confirmed_by: "/Users/romitsoley/Downloads/TEVideosTranscripts.md, 'Setting Up and Managing Echo360 (GoReact) Assignments in Exxat Prism' — not covered in the general admin transcript"
+    elements:
+      - element: "Learning Tool Interoperability section (visible alongside Forms and Evaluations, Timesheets, Patient Logs)"
+        type: "configuration section, feature-flagged"
+        data_shown: "'If you do not see this section, it means this feature has not been activated for your discipline and program. Please create a ticket with Exxat support.'"
+        gates_on: ["all LTI assignment creation"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "one45's comparable pattern is integration-only too — Analytics 'integrates with ExamSoft Enterprise' and pulls NBME data rather than owning the tool (one45.yaml). Elentra documents native 'proctored/secured online exams' instead of an LTI bridge (elentra.yaml)."
+        gap_severity: "configure-needed"
+        gap_note: "Invisible-until-ticketed. A new admin cannot discover this capability exists from the UI; they have to know to ask. Third instance in this stage of the same pattern (standard forms, custom log templates, LTI)."
+      - element: "LTI Tool selector / assignment title / description / placement-based or didactic / publish + due dates / grading and score settings / faculty visibility"
+        type: "input group, mirroring the assignment setup pattern"
+        data_shown: "'The setup process is very similar to creating a regular evaluation or activity inside Exxat Prism'"
+        gates_on: ["student access from My Coursework"]
+        accreditation_citation: "LCME Standard 9, Element 9.4 (a variety of measures, including direct observation — video review is direct observation at scale)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Auto-provisioning of the matching GoReact activity on first save; automatic sync of submissions, scores and status back to Prism"
+        type: "system behavior (LTI)"
+        data_shown: "Status updates to Pending Review / Reviewed without manual re-entry"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "one45 pulls third-party exam data into a dashboard (one45.yaml); this is a closer two-way sync than that, though no competitor file documents an LTI write-back at this level."
+        gap_severity: "none"
+        gap_note: "Genuinely strong — but the GoReact-side settings (activity type, recording/feedback privacy) are configured in GoReact, so the admin still learns two products."
+
+  - screen: "Forms/Evaluations Distribution + Email Dashboard"
+    navigation_path: "Learning Activity > [course] > Forms or Evaluations Distribution — or select a distributable form > Initiate Distribution; then the Email Dashboard tab"
+    action: >
+      Admin sends supervisor-facing forms out, chases non-submitters, and audits delivery.
+      Per the transcript, "while most forms and evaluations are initiated by the student,
+      there may be some forms and evaluations which you need to distribute to the
+      experiential supervisor," separated in the list by a thin gray line.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1359-1381)"
+    elements:
+      - element: "Distributable-forms table (form, number of placements, rotation, Distribution Status, Submission Status)"
+        type: "read-only rollup with row selection"
+        data_shown: "Distribution Status shows count of placements distributed for + last distribution date, plus an auto-distribution indicator with hover detail on the scheduled timing; Submission Status shows how many distributed forms are complete"
+        gates_on: ["reminder targeting"]
+        accreditation_citation: "LCME Standard 9, Element 9.8 (fair and timely summative assessment — this table is the operational view of turnaround)"
+        competitor_equivalent: "LEO/DaVinci documents that 'administrators get completion/reminder tracking reports' (leo-davinci.yaml); New Innovations documents automated 360° evaluation generation (new-innovations.yaml). Comparable in kind at screen level; neither documents this column set."
+        gap_severity: "none"
+        gap_note: "Note the row-splitting behavior: 'each form will be broken up into several entries if you have students placed in multiple rotations in the course.'"
+      - element: "Recipient class selector — preceptor added by school / preceptor added by student / placement faculty / site & location contacts"
+        type: "multi-select"
+        data_shown: ""
+        gates_on: ["who receives the form link"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.a (preceptor evaluation — the school-added vs student-added distinction determines whether the evaluator is a vetted preceptor)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "The OT/FWPE transcript gives the operational rule a new admin will not infer: 'to avoid duplicate evaluations, Exxat recommends sending the form only to the fieldwork educator added by school' (/Users/romitsoley/Downloads/OTOTAVideosTranscripts.md)."
+      - element: "Per-instance status columns (Not Distributed / Submitted / Pending Submission) per stakeholder type"
+        type: "read-only status columns"
+        data_shown: "Whether this exact form has previously reached this stakeholder"
+        gates_on: ["duplicate-send avoidance"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Email template picker + Add Template (name / subject / body with merge fields) + delete"
+        type: "template manager"
+        data_shown: "Merge fields listed on the right of the composer auto-populate recipient/student/placement data"
+        gates_on: ["what the recipient actually reads"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Notification/template management is one of the few admin-setup mechanics competitors do document adjacently — CORE ELMS 'due-date reminders', eValue 'automate reminder notifications' (core-elms.yaml, e-value.yaml) — but neither publishes a merge-field template editor at field level, so no fair element-level comparison exists."
+        gap_severity: "none"
+        gap_note: "Fully self-service — a bright spot against the form-authoring gap above. The admin owns the message even though they do not own the instrument."
+      - element: "Send now vs schedule for later (calendar + time) > Send"
+        type: "radio + datetime picker + button"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Send Reminder flow (Recipient Details count > uncheck exclusions > Distribute Now > template > preview > send/schedule)"
+        type: "multi-step wizard"
+        data_shown: "Number of placements and recipients who will be reminded"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.8 (timeliness)"
+        competitor_equivalent: "LEO/DaVinci 'completion/reminder tracking reports' (leo-davinci.yaml); eValue automated reminders (e-value.yaml)."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "'Scheduled Emails' hyperlink + Cancel Scheduled Distributions button"
+        type: "hyperlink + destructive button"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "All-or-nothing: 'this will cancel all the scheduled email distributions, but it will not cancel future distributions using auto distribution.' Cancelling one instance requires going to the Email Dashboard; cancelling auto-distribution requires going back to Learning Activity Setup and editing the form. Three different screens for one conceptual undo."
+      - element: "Email Dashboard table (form, student, recipient + email, delivery status, distributor, date sent/scheduled)"
+        type: "read-only audit table"
+        data_shown: "Delivery statuses: In Progress, Delivered, Link Clicked (with hover detail on click time), Bounced"
+        gates_on: ["troubleshooting non-response"]
+        accreditation_citation: "COCA Standard 11, Element 11.2 (evidence that evaluation collection actually occurred, not merely that forms exist)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file documents an email-delivery audit surface."
+        gap_severity: "none"
+        gap_note: "Link Clicked telemetry is a genuine differentiator for chasing preceptor non-response. Bounce handling is manual though: 'The email you have on file for the experiential supervisor may be incorrect' — no automatic flag back onto the preceptor record set up in an earlier stage."
+      - element: "Row actions — View (sent email) / Remove Form Access / Get Form Link / Cancel Schedule"
+        type: "row action buttons"
+        data_shown: "Get Form Link produces a shareable link usable outside Exxat"
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-2 (due process — revoking access to an incorrectly distributed evaluation)"
+        competitor_equivalent: "LEO/DaVinci's no-login emailed evaluation links (leo-davinci.yaml) are the same access model; access revocation is not documented publicly by any competitor in this research."
+        gap_severity: "none"
+        gap_note: "Remove Form Access is the recovery path for misdirected evaluations — a real safeguard, and worth flagging to a new admin during onboarding because it is buried on a dashboard row."
+
+  - screen: "Learning Activity Review (Forms & Evaluations / Patient Log / Timesheet / Time Off review surfaces)"
+    navigation_path: "Learning Activity > [course] > Review > [activity tab] > click a status"
+    action: >
+      Admin works the review queue. All four activity types share one interaction grammar:
+      a per-student table split into rotation accordions, status-colored counts, click a
+      status to open that student's items, act, and update.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1357-1427). SLP-specific column set confirmed in /Users/romitsoley/Downloads/SLPVideosTranscripts.md; PA-specific in /Users/romitsoley/Downloads/PAVideosTranscripts.md"
+    elements:
+      - element: "Forms & Evaluations summary grid (students in rows, forms across columns, rotation accordions)"
+        type: "read-only status matrix"
+        data_shown: "Statuses: Get Started, In Progress, Pending School Review, Reviewed/Submitted; a person's name inside the status box means the form was distributed and that recipient is working on it"
+        gates_on: ["what the admin must act on"]
+        accreditation_citation: "LCME Standard 8, Element 8.6 (monitoring completion); COCA Standard 11, Element 11.2"
+        competitor_equivalent: "New Innovations documents 'CCC Milestone Review: Evaluation data aggregation' and spider graphs (new-innovations.yaml) as its aggregate view; that is an analysis surface rather than a work queue, so not a fair element-level match."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Filter icon on the review grid (placement setting / review status / placement faculty)"
+        type: "report filter"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Identical filter triple (setting / status / placement faculty) appears on all four review surfaces — consistent, and worth teaching once during onboarding."
+      - element: "Form review pane — 'Select an Option' dropdown (Review / Unsubmit To [person]) + Comment + signature pad (with Clear) + Update"
+        type: "workflow action control group"
+        data_shown: "Options 'vary based on the form and the workflow of the form'"
+        gates_on: ["form status advancement"]
+        accreditation_citation: "CODA Standard 2, Element 2-2 (individual evaluation and due process); LCME Standard 9, Element 9.8"
+        competitor_equivalent: "one45 documents 'two-tier workflows' in Assessment and Evaluation (one45.yaml) — comparable concept, not documented at control level."
+        gap_severity: "none"
+        gap_note: "Note the admin's edit power: 'Usually, you are given edit access to the student-submitted responses on the form.' Powerful, and paired with the Audit Log below rather than restricted."
+      - element: "Audit Log / View Log button"
+        type: "read-only history"
+        data_shown: "Dates and times of previous changes to submission status"
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-2 (due process requires a defensible record of who changed an evaluation and when)"
+        competitor_equivalent: "one45 documents 'version control and audit trail' in Curriculum Management (one45.yaml) — an audit trail on the curriculum map, not on assessment submissions, so adjacent rather than equivalent."
+        gap_severity: "none"
+        gap_note: "Present on forms, patient logs and timesheets. This is the element that makes admin edit access defensible."
+      - element: "Review All button + bulk comment > Proceed"
+        type: "bulk action"
+        data_shown: "'This will move all pending review entries for this form to the Reviewed status'"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.8 (timeliness) — with the obvious tension that bulk-reviewing is fast but not individualized"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "'Some forms allow you to review all submissions in one go' — availability is per-form and not surfaced at setup time, so a new admin cannot plan around it."
+      - element: "Patient log statuses and counts (Pending Review yellow / Needs Attention red / Approved green / gray total)"
+        type: "read-only status counts, clickable"
+        data_shown: "Per-student counts by status; page-top counts of students with Pending Review or Needs Attention logs"
+        gates_on: ["review work"]
+        accreditation_citation: "CODA Standard 2, Element 2-24 (adequate patient experiences); LCME Standard 8, Element 8.6"
+        competitor_equivalent: "eMedley eCLAS documents case logging with preceptor time-approval (emedley.yaml) — comparable, without a documented status taxonomy."
+        gap_severity: "configure-needed"
+        gap_note: "Explicit dead end in the transcript: 'If a student fails to attend to Needs Attention logs, you may need to remind them to resubmit them outside the Exxat system.' The one status that requires student action has no in-product nudge — and auto-notifications (earlier step) cover forms, not logs."
+      - element: "Per-log actions — Approve / Needs Attention + School Feedback (required for non-approval) / edit-in-place / Delete / Approve All Logs / bulk checkbox approve"
+        type: "action button group"
+        data_shown: "'If you choose not to approve a log, you will need to provide a reason to the student'"
+        gates_on: ["log status"]
+        accreditation_citation: "CODA Standard 2, Element 2-2 (due process — mandatory reason on rejection)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Mandatory-reason-on-rejection is a good default; the same rule appears on timesheets and time off ('a comment will need to be provided before you can select Not Approve')."
+      - element: "SLP clinical-log review columns — Logs Count by Status / Log Hours by Status / Last Encounter / Last Update"
+        type: "read-only rollup columns (discipline-specific)"
+        data_shown: "Both count and hours per status, plus recency of last encounter and last edit"
+        gates_on: ["hours-toward-graduation tracking"]
+        accreditation_citation: "none of this repo's four accreditation files covers ASHA/CAA; the SLP transcript frames it as graduation-requirement tracking rather than an accreditor element"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "The SLP variant carries an hours dimension the general patient-log review does not surface — evidence that the log review surface is genuinely discipline-parameterized, not just relabeled."
+      - element: "Timesheet review — status set (In Progress blue / Pending Review yellow / Not Approved red / Approved green), date-range calendars, Add Comment with 'Apply Comments to All the Selected Records', Resend (send entries for preceptor review), pencil edit-on-behalf, wrench column configurator with Reset All"
+        type: "review action group"
+        data_shown: "Total hours at top of table, categorized by status"
+        gates_on: ["hours evidence quality"]
+        accreditation_citation: "ACPE Standard 3, Key Elements 3.1.b / 3.2.b / 3.2.d (clock-hour minimums are only defensible from APPROVED hours)"
+        competitor_equivalent: "eValue markets the ability to 'validate hours, create summary reports, and automate reminder notifications for students' (e-value.yaml) — the closest documented equivalent, at capability rather than control level."
+        gap_severity: "none"
+        gap_note: "'You can re-edit the comments for any status, and all updates will be recorded in the audit log' — comment history is auditable, which matters when hours are contested."
+      - element: "Time Off review — same status set, View Document hyperlink, bulk approve/not-approve with mandatory comment, trash-bin delete (any status)"
+        type: "review action group"
+        data_shown: "Counts of requested time off by status; 'only students who have saved or submitted time off entries will appear in the table'"
+        gates_on: ["attendance record"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "one45's event-level leave-time tracking (one45.yaml) is the nearest documented equivalent."
+        gap_severity: "cosmetic"
+        gap_note: "Approved entries can be deleted outright with no stated audit-log equivalent — the only one of the four review surfaces where the transcript does not mention a View Log."
+
+  - screen: "Gradebook (per course)"
+    navigation_path: "Learning Activity Setup > Gradebook — or Courses > [course] > Learning Activities > Gradebook"
+    action: >
+      Admin verifies weightings sum correctly, fills in the scores the system cannot
+      compute, and overrides where needed. Per the transcript, "you can use the gradebook
+      to identify students who may need academic intervention."
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1427-1441). Grading-scheme prerequisite: same transcript, '1/16 Administrator Navigation' (line 41)"
+    elements:
+      - element: "Total weightage indicator (top right of table)"
+        type: "read-only rollup"
+        data_shown: "Sum of all learning-activity weightages in the course; 'You want the total weightage to be 100'"
+        gates_on: ["final score validity"]
+        accreditation_citation: "LCME Standard 9, Element 9.8 (fair summative assessment)"
+        competitor_equivalent: "CORE ELMS documents 'automated grade calculation/conversion' (core-elms.yaml); Elentra documents 'gradebook tasks... flexible grade scales' (elentra.yaml). Neither documents a weightage-sum validator."
+        gap_severity: "configure-needed"
+        gap_note: "Advisory, not enforced. 'If it is not 100, you will need to edit the weightage of your learning activities in the Learning Activity Setup section' — and the fix lives on a different screen, per activity. A new admin will only discover an 87%-weighted course when they read this number."
+      - element: "Student rows x learning-activity columns grid, with per-cell score and weighted score"
+        type: "read-only/editable matrix"
+        data_shown: "Left of cell: raw score; right of cell: weighted contribution. An eye icon replaces the score when the student is not yet placed. Letter or pass/fail rendering depends on the grading scheme configured in Program Details."
+        gates_on: ["final course score"]
+        accreditation_citation: "LCME Standard 9, Element 9.4 (centralized assessment); CODA Standard 2, Element 2-5"
+        competitor_equivalent: "LEO/DaVinci documents that evaluation 'results can be reviewed, modified, summarized, and exported to gradebooks' (leo-davinci.yaml) — export-to-gradebook rather than a native gradebook."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Auto-population rule for scoring forms vs manual entry for logs/timesheets"
+        type: "system behavior"
+        data_shown: "Scoring forms that are configured to contribute AND fully reviewed auto-populate; non-scoring or not-fully-reviewed forms show a hyphen out of the total; 'For other learning activities like patient logs or timesheets, you must enter the student's score manually'"
+        gates_on: ["how much manual work the gradebook costs per term"]
+        accreditation_citation: "LCME Standard 9, Element 9.8 (timeliness of final grades — manual entry is the rate limiter)"
+        competitor_equivalent: "CORE ELMS's 'automated grade calculation/conversion' (core-elms.yaml) is documented without the log/timesheet carve-out; the comparison suggests parity on forms and a possible Prism gap on logs, but CORE's public material is not granular enough to confirm they auto-score logs."
+        gap_severity: "gap"
+        gap_note: "The single largest recurring manual burden a new admin inherits from this stage: any course that grades patient logs or timesheets requires hand-entered scores every term, even though the system already holds the log counts and approved hours needed to compute them."
+      - element: "Per-cell score drawer — Form Score column (with evaluating supervisor) / Obtained Score / pencil override / undo revert / eye-icon change description"
+        type: "editable drawer with revert"
+        data_shown: "One row per placement if the student is placed multiple times; calculated score = average of obtained scores across placements; weighted score in the drawer's upper right"
+        gates_on: ["final score"]
+        accreditation_citation: "CODA Standard 2, Element 2-2 (due process — an override of a supervisor's score must be traceable)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Override + revert + hover-explanation is a well-designed triad. The averaging rule ('if the student is placed multiple times... the student's calculated score will be the average of these obtained scores') is a policy decision baked into the product and not configurable."
+      - element: "Bulk edit drawer per learning activity (per-student obtained/calculated/weighted, checkbox multi-select, Bulk Update to one value)"
+        type: "bulk edit control"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Partial mitigation for the manual-entry gap above — one activity at a time, one value to many students."
+      - element: "Final score column (sum of weighted scores) + student search"
+        type: "read-only rollup"
+        data_shown: ""
+        gates_on: ["academic intervention triggers"]
+        accreditation_citation: "CODA Standard 2, Element 2-2 (individual evaluation of students not meeting criteria)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "Learning Activity Reports — Standard tab"
+    navigation_path: "Learning Activity > Reports — or [group] > Reports tab — or [course row] > Reports hyperlink — or [group] > Rotations > Reports hyperlink"
+    action: >
+      Admin runs out-of-the-box reports across forms, patient logs, timesheets and time
+      off. Four navigation entry points pre-scope the report differently, but "once you
+      are in the Learning Activity Reports section, you can change the courses, rotations,
+      and other options."
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1441-1495); standalone sections 'Comprehensive Report for Placement Based Forms' (lines 1721-1733) and 'Hours Summary by Week Report' (lines 1747-1757)"
+    elements:
+      - element: "Select Course Offerings picker (search + type-switch, filter by cohort/academic year/term, select-all, Show More, X to remove, Clear All)"
+        type: "multi-select picker with filters"
+        data_shown: "Up to 50 courses per report run; the select-all checkbox 'select[s] the first 50 courses on the list'"
+        gates_on: ["report scope"]
+        accreditation_citation: "COCA Standard 6, Element 6.11 / CODA Standard 2, Element 2-6 (cross-site comparability requires reporting across the full set of courses at once)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Hard 50-course ceiling. A large multi-cohort program assembling a multi-year self-study cannot produce one run; they must stitch exports. This is the concrete mechanic behind the cross-site-comparability gap already flagged in content/accreditation/coca.yaml for Element 6.11."
+      - element: "Placement-based vs didactic form separation rule"
+        type: "system constraint"
+        data_shown: "'You cannot run a report on placement-based forms and didactic forms at the same time. Therefore, we recommend creating a separate learning activity group for didactic courses.'"
+        gates_on: ["report design", "group design back in step 2"]
+        accreditation_citation: "LCME Standard 9, Element 9.4 (a CENTRALIZED assessment system using a variety of measures — this constraint prevents one combined view)"
+        competitor_equivalent: "eMedley's eCurriculum + eValuate and Elentra's single Assessment & Evaluation module both describe unified didactic-plus-clinical assessment reporting (emedley.yaml, elentra.yaml), though neither publishes evidence of a combined single-report run, so treat as suggestive rather than confirmed."
+        gap_severity: "gap"
+        gap_note: "A structural split in the evidence layer. Because the workaround is a grouping decision made in step 2, a new admin who does not know this rule on day one builds groups that make their accreditation reporting harder for years. This is the single most consequential piece of tribal knowledge in the stage."
+      - element: "Comprehensive Report for Placement-Based Forms — form selector + Site/Rotation/Settings/Status/Student/Placement Faculty filters"
+        type: "report configuration"
+        data_shown: "Runs on scoring, non-scoring and multi-response placement forms; not didactic forms"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.2 (evaluation data driving improvement); LCME Standard 9, Element 9.4"
+        competitor_equivalent: "eMedley documents 'dashboard + frequency-analysis reporting' on eValuate (emedley.yaml); New Innovations documents evaluation aggregation into 'competency spider graphs' (new-innovations.yaml). Comparable analysis families; neither publishes a filter set to compare against."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Comprehensive report — Group By dropdown (course offering, rotation, setting, site, location, experiential supervisor, student; multi-select with nesting by selection order)"
+        type: "aggregation control"
+        data_shown: "'The criteria you select after the first criteria will become nested in the first criteria'"
+        gates_on: ["what comparison the report can prove"]
+        accreditation_citation: "COCA Standard 6, Element 6.11 and CODA Standard 2, Element 2-6 (comparable instruction and assessment across all clinical sites — grouping by site/supervisor is precisely the cross-site comparison these elements demand); ACPE Standard 3, Key Element 3.3.a (preceptor performance)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. CORE ELMS markets cohort-level 'curriculum-effectiveness reports' (core-elms.yaml) without a documented group-by control."
+        gap_severity: "configure-needed"
+        gap_note: "Group-by-site produces the raw cross-site comparison, but the output is counts and averages, not a statistical comparability test — which is exactly the limitation content/accreditation/coca.yaml records against Element 6.11 ('statistical cross-site comparability reporting should be scoped explicitly'). Descriptive, not inferential."
+      - element: "Comprehensive report — wrench icon view configurator (response count / average score / text responses) > Apply"
+        type: "output configurator"
+        data_shown: "'If this option is not selected, only the response counts will be shown, and the qualitative comments will not appear'"
+        gates_on: ["whether narrative feedback reaches the report"]
+        accreditation_citation: "COCA Standard 11, Element 11.2 (self-study evidence increasingly rests on qualitative comment analysis, not just rating distributions)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Qualitative comments are off unless explicitly enabled — a defaults trap for a new admin who concludes the report has no narrative data."
+      - element: "Comprehensive report — drill-down cells (Number of Placements / Number of Forms / response boxes) + Download Report + Export icon + Refresh"
+        type: "drill-down + export"
+        data_shown: "Clicking a response box opens the underlying forms; qualitative columns hover to reveal numbered individual responses; per-question average score columns for scoring forms"
+        gates_on: []
+        accreditation_citation: "LCME Standard 8, Element 8.7 / COCA Standard 6, Element 6.11 (comparability evidence must be traceable to source records, which is what drill-down provides)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Aggregate-to-raw traceability in one surface is a real strength for site-visit defensibility — the auditor's question 'show me the underlying forms' is one click."
+      - element: "Graphical Report for Placement Forms — section navigator, submission status + response distribution, pie / tabular / heat map view switch, Download"
+        type: "visualization report"
+        data_shown: "Per-question response distribution; heat map view surfaces 'areas consistently receiving high ratings or areas that may be flagging concerns across multiple students'"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.1 (outcomes assessment across academic years); LCME Standard 8, Element 8.4"
+        competitor_equivalent: "New Innovations 'CCC Milestone Review: Evaluation data aggregation with competency spider graphs' (new-innovations.yaml); eMedley 'EPA entrustment ratings with growth-curve reporting' (emedley.yaml); LEO/DaVinci 'Insights Dashboard' (leo-davinci.yaml). All three ship comparable visualization layers today."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Forms & Evaluations Raw Data Report (placement) and Raw Data Report for Non-Placement Forms"
+        type: "raw export report"
+        data_shown: "One row per form submission with student, course, placement details and all submitted responses"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.2 ('copies of the evaluation forms used' plus the response corpus)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "For multi-term, multi-respondent forms the row count multiplies: the PT/PTA transcript documents four rows per student for a CIET run to midterm+final by student+CI (/Users/romitsoley/Downloads/PTPTAVideosTranscripts.md)."
+      - element: "Patient log reports — Aggregated Log Details / Comprehensive Report for Program-Specified Log Attributes / ICD-10 Codes Usage / CPT Codes Usage / Graphical Patient Log Summary (Statistics)"
+        type: "report family"
+        data_shown: "Aggregated Log Details: placements per student, total logs, average logs per placement, encounter time, option-selection counts. Program-specified attributes: an Excel sheet per custom-value category with preferred/minimum count columns, red/green conditional formatting against minimums. ICD/CPT: code x student x participation-level counts."
+        gates_on: ["procedure/diagnosis exposure evidence"]
+        accreditation_citation: "CODA Standard 2, Element 2-24 (adequate patient experiences to achieve competency) and Element 2-25-adjacent minimum-competency framing at Element 2-24/2-6; LCME Standard 6, Element 6.2 and Standard 8, Element 8.6 (required clinical experiences and monitoring)"
+        competitor_equivalent: "eMedley's eCLAS tracks 'diagnoses/ICD-10, procedures/CPT, competency mastery' (emedley.yaml) — the closest documented feature-level match in this research. eValue documents case logs for 'competencies/interventions/encounters' (e-value.yaml)."
+        gap_severity: "configure-needed"
+        gap_note: "The red/green minimum-vs-actual formatting is the closest thing Prism has to a procedure-quota tracker — exactly what dentistry needs (content/domains/dentistry.yaml: 'students must log a required number/type of completed procedures'). But per the transcript, configuring minimum/preferred counts is NOT self-service: 'If you would like to collect information such as this or configure minimum or preferred counts, please reach out to our support team.' Fourth instance of the vendor-dependency pattern."
+      - element: "Timesheet reports — Hours by Categories (filters: rotation, settings, status, students, sites, locations, experiential supervisors, categories, submission dates, placement faculty; Group By with nesting)"
+        type: "aggregation report"
+        data_shown: "Row per course/student/category combination; total timesheet time excluding breaks, per-category time, total break time, patients encountered"
+        gates_on: ["clock-hour evidence by setting"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.1.b (IPPE minimum clock hours split across practice settings) and 3.2.b/3.2.d (four required APPE settings) — this report is the direct evidence artifact for both"
+        competitor_equivalent: "eValue markets hours validation and 'summary reporting' (e-value.yaml); one45 markets duty-hour/leave tracking 'for accurate and simplified program and accreditation reporting' (one45.yaml). Comparable in purpose; no public filter/group-by detail to compare."
+        gap_severity: "none"
+        gap_note: "The PA help-center guide names this exact report as the ARC-PA telehealth-ceiling evidence path (Exxat-Help-Guides > PA Discipline > ARC-PA 6th Edition guide, 'Learning Activities > Reports > Hours by Categories')."
+      - element: "Hours Summary by Week Report (multi-course selection; filters: rotation, program clinical settings, status; Generate Report; Download)"
+        type: "time-series report"
+        data_shown: "Week-by-week hours logged per selected student across chosen course offerings, with status per week"
+        gates_on: ["early detection of falling-behind students"]
+        accreditation_citation: "LCME Standard 8, Element 8.6 (monitoring of completion of required clinical experiences — weekly granularity is what makes mid-course intervention possible); ACPE Standard 3, Key Element 3.1.b"
+        competitor_equivalent: "eValue's time tracking 'with automated reminders and summary reporting' (e-value.yaml) is the nearest documented analogue; no competitor file documents a weekly-bucket hours view."
+        gap_severity: "none"
+        gap_note: "Per the standalone transcript, its purpose is exactly the onboarding pitch: 'quickly identify students who may be falling behind, have missing entries, or have hours that are still pending review so you can step in and take action early rather than catching issues at the end of a rotation.' The multi-course selection is the differentiator over the per-course review screens."
+      - element: "SLP Clock Hours report (filters add mode of delivery, training level graduate/undergraduate, clinical educator, from/to dates)"
+        type: "discipline-specific aggregation report"
+        data_shown: "Hours by patient age demographic x mode of delivery; intervention vs evaluation hours by type of service, bifurcated by age group; direct contact vs observation splits with subtotals"
+        gates_on: ["ASHA graduation-hour certification"]
+        accreditation_citation: "none of this repo's four accreditation files covers ASHA/CAA; the SLP transcript frames this as graduation-requirement and program-accreditation evidence generally"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file documents an age-group x service-type x participation-type hours matrix."
+        gap_severity: "none"
+        gap_note: "The most discipline-shaped report in the library and a genuine differentiator: 'Let's say you would like a total number of direct contact intervention hours with the adult age group for a specific student — this report makes collecting these hours an easy task' (/Users/romitsoley/Downloads/SLPVideosTranscripts.md)."
+
+  - screen: "Reports — Custom tab (custom report builder)"
+    navigation_path: "Learning Activities > Reports > Custom tab > Create New Report — or Reports section on the main dashboard, or the Reports tab within Students / Placements / Sites"
+    action: >
+      Admin builds a report the standard library does not cover. Per the transcript, the
+      motivating examples are "a report that breaks down timesheet hours by student,
+      course, or setting... track timesheet hours by preceptor and location, or even
+      create a student watchlist to monitor those needing follow-ups or extra academic
+      support."
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, standalone section 'Configuring Custom Reports' (lines 1759-1855)"
+    elements:
+      - element: "Contextual vs central entry points (section Reports tab vs main-dashboard Reports section)"
+        type: "navigation pattern"
+        data_shown: "From a contextual entry, 'relevant filters such as the associated courses and rotations are automatically applied'; the central entry is where you 'view all the data sets'"
+        gates_on: ["how much manual filter setup is required"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Data source cards (title, description, refresh-cadence status box)"
+        type: "single-select source picker"
+        data_shown: "Named sources include Timesheet, Time Off, Student, Placement. Refresh cadence is shown per source: 'live' = continuously refreshed; the Student data source 'is refreshed once every twenty-four hours'"
+        gates_on: ["everything about the resulting report"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — competitor 'reporting suite' descriptions (CORE ELMS, MedHub 'Non-Linear Reporting') do not expose a data-source/refresh model publicly."
+        gap_severity: "configure-needed"
+        gap_note: "Staleness is disclosed but not solved: a student watchlist built on the Student source can be up to 24 hours behind, which matters when the watchlist is the intervention trigger. A new admin needs to be told this during onboarding — the status box is easy to skip."
+      - element: "Raw Data vs Pivot Report type selector"
+        type: "radio"
+        data_shown: "Raw: one row per record, configurable columns. Pivot: counts and sums across configured rows/columns/values."
+        gates_on: ["report shape"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "MedHub markets 'Non-Linear Reporting: Generate actionable insights using granular curriculum mapping data' (medhub.yaml) — a self-service reporting claim without published builder mechanics. CORE ELMS carries the opposite public signal: a Capterra reviewer complaint that its 'reporting suite lacks depth and consistency' (core-elms.yaml)."
+        gap_severity: "none"
+        gap_note: "Having a genuine self-service pivot builder is a defensible strength versus at least one named competitor's reviewed weakness."
+      - element: "Column configurator (X to delete, Add New across student / placement / course offering / learning activity information, drag-reorder via double-ellipses)"
+        type: "column configurator"
+        data_shown: "Column catalog is scoped to the chosen data source"
+        gates_on: ["report content"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Pivot Rows / Columns / Values configurator with nesting-by-selection-order and aggregation dropdown (Sum / Average / Minimum / Maximum / Count / Distinct Count)"
+        type: "pivot configurator"
+        data_shown: "Transcript's worked example: rows = student name + course name + program clinical settings, columns = timesheet status, values = Sum of Duration"
+        gates_on: ["what question the report answers"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.2.b/3.2.d (a settings-by-student hours pivot is the direct APPE-settings evidence artifact); ACPE Standard 3, Key Element 3.3.e (an hours-by-preceptor pivot supports the 2:1 ratio narrative)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "The distinct-count explanation in the transcript is unusually clear and worth reusing in onboarding material: three Pending Review timesheets give a count of 3 and a distinct count of 1."
+      - element: "Advanced Filters tab (student / placement / learning activity information; plus a Custom option with operator + value and a + to add alternatives; date filters offering specific Date Range or Relative Range in days/months/years)"
+        type: "filter builder"
+        data_shown: "Transcript example: operator = equals, value = 'direct patient care', + another for 'simulation'"
+        gates_on: ["reusable filtering after save"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Sharp-edged design the transcript warns about twice: 'make sure that you add all the advanced filters you would like to use when running the report' — a filter dimension not declared at build time cannot be used later without editing the report definition. A new admin building their first report will under-declare and have to rebuild."
+      - element: "Basic Filters accordion (cohort, academic year, professional year, term, course, rotations, settings, locations, sites, students) > Apply"
+        type: "runtime filter set"
+        data_shown: ""
+        gates_on: ["this run's scope"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "Inconsistent persistence across data sources in the same transcript: for timesheet/time-off reports, 'If you would like to save the basic filters for future use, click on the Edit button, apply the basic filters... These basic filters will then be saved as default'; for the student data source, 'when you save this report, these basic filters will not be saved for future use.' Two behaviors, one control."
+      - element: "Preview window / Run / Save and Run / Edit / export icon"
+        type: "action buttons"
+        data_shown: "Live preview of the report before running"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Saved-report list controls — star (Favorites tab) / pencil (edit config) / trash / name hyperlink to re-run"
+        type: "row action controls"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "No documented sharing model: nothing in the transcript says whether a saved custom report is visible to other administrators or private to its creator. For a multi-admin program standing Prism up, that is an unanswered day-one governance question."
+
+  - screen: "Competency Management — Setup tab, Add New framework wizard"
+    navigation_path: "Dashboard > Competency Management > Review tab > Configure Now — or Setup tab > Add New"
+    action: >
+      Admin creates the competency framework that turns assessment scores into
+      competency evidence. First-run onboarding is explicit: "If this is your first time
+      setting up Competency Management, a short notification will notify you that your
+      competencies are not yet configured for mapping. Click the Configure Now button."
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '15/16 Setting Up Competency Management in Exxat Prism' (lines 1617-1639)"
+    elements:
+      - element: "'Configure Now' first-run prompt on the empty Review tab"
+        type: "empty-state call to action"
+        data_shown: "Notice that competencies are not yet configured for mapping"
+        gates_on: ["entry into the setup wizard"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "One of the few purpose-built onboarding affordances anywhere in this stage — worth calling out precisely because the rest of the module assumes prior configuration."
+      - element: "Standards/competencies picker (lists all standards in the system)"
+        type: "single-select picker"
+        data_shown: "The standard sets loaded in Program Details > Standards (an earlier stage). Nursing example in the transcript uses AACN-style parent/sub/child-most structure."
+        gates_on: ["what the framework can measure"]
+        accreditation_citation: "COCA Standard 6, Element 6.4 (the seven osteopathic core competencies as a tracked taxonomy); LCME Standard 9, Element 9.4 (assessment against program objectives); CODA Standard 2, Element 2-5 (evaluation methods must measure DEFINED competencies)"
+        competitor_equivalent: "CORE ELMS's CompMS 'maps competencies to accreditation standards/domains/sub-domains' (core-elms.yaml, rated 'ahead'); one45 ships 'standardized vocabularies aligned to CanMEDS and AAMC competency frameworks' with version control (one45.yaml); LEO/DaVinci supports 'competency sets and Entrustable Professional Activities (EPAs)' (leo-davinci.yaml). This is the most competitively contested element in the stage."
+        gap_severity: "none"
+        gap_note: "Depends entirely on the standards library being populated first — a cross-stage dependency a new admin will hit if they attempt competency setup before standards setup."
+      - element: "'You will only be able to set up one competency framework at a time. However, you can create multiple frameworks for the same set of standards.'"
+        type: "system constraint"
+        data_shown: ""
+        gates_on: ["setup sequencing"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "Serialization of the wizard, not a cap on frameworks — but the phrasing is ambiguous enough that a new admin may believe they are limited to one framework."
+      - element: "Framework type selector — Experiential / Didactic / Both"
+        type: "radio"
+        data_shown: "Experiential maps competencies to assessment QUESTIONS on forms; Didactic maps competencies to COURSES; Both reports them in a single framework"
+        gates_on: ["which mapping surfaces and scoring sources are available"]
+        accreditation_citation: "LCME Standard 9, Element 9.4 (a centralized system 'employing a variety of measures' — the Both option is the closest thing in the product to that centralization); COCA Standard 11, Element 11.1"
+        competitor_equivalent: "eMedley's eCurriculum maps to 'physician competencies, EPA competencies, the USMLE Step 1 Content Outline, and program objectives' (emedley.yaml); CORE CompMS does curriculum gap assessment across courses (core-elms.yaml). Both handle didactic mapping; neither publicly documents an experiential/didactic/both framework-type switch."
+        gap_severity: "none"
+        gap_note: "The Both option is a real strength — but note the scoring stays segregated downstream: 'None of the student scores on the experiential assessment questions are taken into account in the didactic framework.'"
+      - element: "Experiential path — form/evaluation multi-select ('you can only choose from scored forms or evaluations'; multi-term forms flagged by banner)"
+        type: "multi-select picker with eligibility constraint"
+        data_shown: "Only scored forms are eligible; multi-term forms are banner-identified"
+        gates_on: ["what evidence can feed competency scores"]
+        accreditation_citation: "CODA Standard 2, Element 2-5 (assessment instruments that measure 'not just factual recall but skills, behaviors, and attitudes' — narrative-only instruments are excluded by this constraint); LCME Standard 9, Element 9.4"
+        competitor_equivalent: "one45 ships 'EPAs/WBAs' and 'question tagging' on customizable forms (one45.yaml); eMedley ships 'EPA entrustment ratings with growth-curve reporting' (emedley.yaml). Both document entrustment-scale (non-numeric-score) competency evidence, which is what Prism's scored-forms-only rule excludes."
+        gap_severity: "gap"
+        gap_note: "Scored-forms-only is the hard boundary of the competency module. Narrative evaluations, procedural sign-offs and pass/fail checklists cannot feed a framework — which lands directly on dentistry (faculty sign-off on individual procedural steps, per content/domains/dentistry.yaml) and on nursing exposure logging, where the Nursing transcript itself insists 'student exposure to the Essentials is not the same as achievement' and that qualitative assessment matters."
+      - element: "Didactic path — scoring source selector (final course grades vs question-level scores) + course-offering picker ('you will only be able to use didactic courses which have a grade book configured')"
+        type: "radio + multi-select with eligibility constraint"
+        data_shown: ""
+        gates_on: ["didactic competency score computation"]
+        accreditation_citation: "COCA Standard 11, Element 11.1 (outcomes assessment across the curriculum, not just clinical years); ACPE Standard 7, Key Element 7.5.b"
+        competitor_equivalent: "CORE CompMS 'performs curriculum gap assessments (which courses address which competencies, and to what degree)' (core-elms.yaml) — comparable didactic-side mapping, rated 'ahead' of Prism in that file."
+        gap_severity: "configure-needed"
+        gap_note: "Gradebook-configured courses only — which chains back to the weightage-summing and manual-score-entry burden two steps earlier. A program that skipped gradebook setup silently loses didactic competency reporting."
+      - element: "Scoring scale — default 1-5 with cross-form normalization, or custom scale (min/max + Apply, with real-time recalculation of ranges and threshold)"
+        type: "radio + numeric inputs"
+        data_shown: "'If there are multiple scoring scales in the forms or evaluations you selected, they will be normalized to a one to five scale.' Letter grades map A=5 down to F=1 on the didactic side. The transcript distinguishes response scale (what the evaluator sees) from scoring scale (the numeric value assigned)."
+        gates_on: ["comparability of scores across differently-scaled instruments"]
+        accreditation_citation: "COCA Standard 6, Element 6.11 / CODA Standard 2, Element 2-6 (comparable assessment across sites — normalization is what makes two differently-scaled forms comparable); LCME Standard 8, Element 8.7"
+        competitor_equivalent: "Elentra documents 'flexible grade scales' in gradebook integration (elentra.yaml); CORE ELMS documents 'automated grade calculation/conversion' (core-elms.yaml). Neither publishes a cross-instrument normalization rule, so Prism's documented normalization is at least as specific as anything found."
+        gap_severity: "none"
+        gap_note: "Genuinely sophisticated and under-marketed. The response-scale/scoring-scale distinction is a concept a new admin must grasp before mapping, and nothing on screen teaches it besides this prose."
+      - element: "Competency threshold score (plus/minus icons or slider; default 70%; auto-adjusts when a custom scale is applied; set separately for experiential and didactic)"
+        type: "slider/stepper"
+        data_shown: "'This threshold helps you identify students who fall below the expected level'"
+        gates_on: ["red-cell flagging on the Review grid and the red cutoff lines on the student dashboard"]
+        accreditation_citation: "CODA Standard 2, Element 2-2 (individual evaluation and due process for students not meeting criteria — the threshold IS the criterion); LCME Standard 9, Element 9.7 (early identification for remediation); COCA Standard 11, Element 11.1"
+        competitor_equivalent: "CORE ELMS ships 'low-score alerts' (core-elms.yaml) — same concept at instrument level rather than competency level. New Innovations' CCC Milestone Review aggregates to competency spider graphs (new-innovations.yaml) without a documented threshold control."
+        gap_severity: "configure-needed"
+        gap_note: "A threshold is a flag, not an alert. Nothing in the transcript routes a below-threshold competency score into a notification, an intervention record, or a task — the admin has to come look at the grid. Contrast the OT FWPE flow, which DOES have low-score notifications but only via a support request."
+      - element: "Summary step — framework name + review of competencies, scale, threshold, associated assessments > Save (Previous to revise)"
+        type: "review/confirm step"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "Competency Management — Map (experiential question mapping and didactic course mapping)"
+    navigation_path: "Competency Management > Setup > [framework] > Map > Experiential — or Map > Didactic"
+    action: >
+      Admin performs the one-time mapping that lets the system compute competency scores.
+      Per the Nursing transcript: "This is a one-time activity that enables the system to
+      calculate student competency achievement each time they get evaluated by their
+      preceptors, clinical instructors or faculty."
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '15/16 Setting Up Competency Management' (lines 1639-1647); framing confirmed in /Users/romitsoley/Downloads/NursingTutorialsTranscripts.md 'Streamline Transition to Competency-Based Education'"
+    elements:
+      - element: "Assessments list (left rail) > question list > Add Mapping > competency picker"
+        type: "mapping interface"
+        data_shown: "Selected forms on the left; that form's assessment questions in the working area"
+        gates_on: ["every competency score in the module"]
+        accreditation_citation: "CODA Standard 2, Element 2-5 (assessment instruments mapped to defined competencies — this screen IS that mapping); LCME Standard 9, Element 9.4; COCA Standard 6, Element 6.4"
+        competitor_equivalent: "one45 documents 'question tagging' on customizable forms (one45.yaml) — the closest documented question-to-competency mechanic. CORE CompMS maps at course/competency level rather than question level per public materials (core-elms.yaml), so Prism appears finer-grained on the experiential side."
+        gap_severity: "none"
+        gap_note: "Question-level (not form-level) mapping is a real architectural strength: it is what makes 'identify students who are struggling in a specific area' possible rather than only 'this student scored low overall'."
+      - element: "Child-most-level mapping rule"
+        type: "system constraint"
+        data_shown: "'You can only map the standards from the child most level. If you select a parent standard, all child standards will be assigned to the question.'"
+        gates_on: ["rollup arithmetic"]
+        accreditation_citation: "COCA Standard 6, Element 6.4 (the 7-competency taxonomy with sub-levels); ACPE Standard 7, Key Element 7.5.b"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Parent selection cascades to every child — a fast path that quietly inflates the denominator in the rollup average. A new admin doing bulk mapping this way will get mathematically valid but pedagogically meaningless parent scores."
+      - element: "Save as Draft vs Apply Changes"
+        type: "two-stage commit"
+        data_shown: "Per-mapping confirmation message on add/delete; Apply Changes publishes the mapping so reports can run"
+        gates_on: ["report readiness — 'You are now ready to run reports based on this competency mapping setup'"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Draft/apply separation is the right shape for a long mapping session that spans days."
+      - element: "X icon to remove a competency from a question mapping"
+        type: "destructive row control"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Configure button (edit framework config) with destructive-reconfiguration warning"
+        type: "button with stated side effect"
+        data_shown: "'If you change the selected forms or evaluations or scoring scale, you will lose the mapping you previously set up, and you will need to map the competencies to questions once again.'"
+        gates_on: ["whether a framework can evolve"]
+        accreditation_citation: "COCA Standard 11, Element 11.1 (evidence of outcomes assessment 'over the past 3 academic years' — a framework that cannot be revised without losing its mapping makes multi-year continuity fragile); LCME Standard 1, Element 1.1 (CQI)"
+        competitor_equivalent: "one45 explicitly documents 'version control and audit trail' on its curriculum/competency mapping (one45.yaml) — a direct, named capability Prism's transcript describes the absence of."
+        gap_severity: "gap"
+        gap_note: "No versioning and no migration. Adding one new evaluation form to an existing framework destroys the entire question mapping. This is the reason a new admin should be coached to finalize their form set BEFORE mapping — and it is the same 'no revision history' pattern already recorded against the standards library in competency-verification--08's flow file, recurring one layer down."
+      - element: "Didactic mapping — per-course sections, course name/number search, Add Mapping > competency picker > Save as Draft > Apply Changes"
+        type: "mapping interface (course-level)"
+        data_shown: "One section per course associated with the framework"
+        gates_on: ["didactic competency scores"]
+        accreditation_citation: "COCA Standard 11, Element 11.1; ACPE Standard 2, Key Element 2.2.d (curriculum mapping to educational outcomes)"
+        competitor_equivalent: "CORE CompMS maps courses to competencies and produces 'curriculum-effectiveness reports tying student outcomes back to the map' (core-elms.yaml) — the closest documented equivalent, and rated 'ahead' in that file."
+        gap_severity: "none"
+        gap_note: "Distinct from Curriculum Mapping (tutorial 14/16), which maps course MEASURES to standards for coverage evidence. Competency Management's didactic mapping maps courses to competencies for ACHIEVEMENT scoring. Two mapping surfaces with overlapping vocabulary is a genuine onboarding confusion risk."
+      - element: "Trash-bin icon (delete framework)"
+        type: "destructive control"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "Competency Management — Review tab (cohort grid) and Student Competency Dashboard"
+    navigation_path: "Competency Management > Review > [framework tab] > View Report (per student)"
+    action: >
+      Admin reads competency achievement at cohort level, drills into a student, and
+      decides whether to publish scores to students. This is the output the whole stage
+      exists to produce.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '15/16 Setting Up Competency Management' (lines 1647-1681)"
+    elements:
+      - element: "Cohort grid (students in rows, parent-level competencies in columns, average competency score per cell)"
+        type: "read-only matrix"
+        data_shown: "Average competency score = mean of all scores on questions mapped to child-most standards beneath that parent; column headers show parent-level competencies only"
+        gates_on: ["intervention decisions"]
+        accreditation_citation: "COCA Standard 6, Element 6.4 (osteopathic core competencies tracked per student); LCME Standard 9, Element 9.4; ACPE Standard 7, Key Element 7.3.c (student achievement — APPE-ready / Practice-ready / Team-ready); CODA Standard 2, Element 2-5"
+        competitor_equivalent: "New Innovations' 'CCC Milestone Review: Evaluation data aggregation with competency spider graphs' (new-innovations.yaml) and eMedley's 'EPA entrustment ratings with growth-curve reporting' (emedley.yaml) are the two closest shipped equivalents; both are ACGME-milestone-shaped rather than program-defined-standard-shaped."
+        gap_severity: "none"
+        gap_note: "The Nursing transcript describes the identical artifact in its own vocabulary — 'Our competency tracker provides a bird's eye view... Each row is a student and each column is an Essentials domain' — confirming the grid is standard-agnostic and reused across disciplines."
+      - element: "Red cell / subpar-performance flagging + threshold display in the table's upper right"
+        type: "conditional formatting + read-only threshold indicator"
+        data_shown: "Cell marked red when the student's score is below the framework threshold"
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-2 (identification of students not meeting criteria); LCME Standard 9, Element 9.7"
+        competitor_equivalent: "CORE ELMS 'low-score alerts' (core-elms.yaml) is the nearest named equivalent, at instrument rather than competency level."
+        gap_severity: "configure-needed"
+        gap_note: "Same limitation as the threshold itself: red is passive. No route from a red cell into the Interventions record the custom-report builder can filter on ('number of open interventions'), so the loop from detection to documented action is manual."
+      - element: "Experiential / Didactic view dropdown"
+        type: "view switch"
+        data_shown: "Didactic side aggregates converted letter grades from mapped courses; upper-left shows count of associated course offerings and the didactic cutoff"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.1 (outcomes assessment spanning the curriculum)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "Two separate views rather than one blended score — defensible methodologically (the transcript is explicit that the sides do not mix), but it means no single number answers 'is this student competent?'"
+      - element: "Search box / filter icon (by student information) / export icon"
+        type: "search, filter, export"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Student dashboard — 'Score overview per competency' bar chart (blue experiential, purple didactic, red threshold lines)"
+        type: "visualization"
+        data_shown: "Average score per competency for both sides against their thresholds"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 7, Key Element 7.3.c; LCME Standard 9, Element 9.4"
+        competitor_equivalent: "New Innovations competency spider graphs (new-innovations.yaml); LEO/DaVinci 'Insights Dashboard' (leo-davinci.yaml)."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Student dashboard — 'Score overview per course' longitudinal line chart (experiential and didactic tabs, chronological left-to-right, per-competency lines, hover-to-focus)"
+        type: "time-series visualization"
+        data_shown: "Slope interpretation stated in the transcript: positive = improving, flat = stagnating, negative = declining over the academic career"
+        gates_on: ["remediation decisions"]
+        accreditation_citation: "LCME Standard 9, Element 9.7 (formative feedback early enough to allow remediation); COCA Standard 11, Element 11.1 (three-year outcomes trend)"
+        competitor_equivalent: "eMedley's 'EPA entrustment ratings with growth-curve reporting' (emedley.yaml) is the closest documented match — a growth curve is exactly this chart."
+        gap_severity: "none"
+        gap_note: "The Nursing transcript names the same artifact: 'Longitudinal views allow you to track student progress for each Essential domain as the student moves from one course to another.'"
+      - element: "Student dashboard — 'Student vs class average' radar chart (experiential and didactic tabs)"
+        type: "visualization"
+        data_shown: "Class average = mean of all students' average competency scores; a student line closer to the origin indicates underperformance versus cohort"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.11 / CODA Standard 2, Element 2-6 (comparability framing, applied student-vs-cohort rather than site-vs-site)"
+        competitor_equivalent: "New Innovations competency spider graphs (new-innovations.yaml) — same chart form, ACGME-milestone context."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Student dashboard — 'Score summary per competency' expandable table (physician icon = experiential, notebook icon = didactic; green above / red below threshold)"
+        type: "expandable read-only table"
+        data_shown: "Parent and child competency scores with the computation rules stated per level"
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-5; LCME Standard 9, Element 9.4"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Student dashboard — bottom table of experiential courses and evaluations x competencies, expandable by course row"
+        type: "drill-down matrix"
+        data_shown: "Per-evaluation and per-course average competency scores for that student"
+        gates_on: []
+        accreditation_citation: "LCME Standard 8, Element 8.7 (comparability of education/assessment — per-evaluation traceability)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "'Download Comprehensive Report' dropdown (Experiential Report / Didactic Report)"
+        type: "export control"
+        data_shown: "Exported experiential report includes competencies x courses/evaluations, red cells for below-threshold scores, and a 'Number of Times Evaluated' column"
+        gates_on: ["accreditation evidence packaging"]
+        accreditation_citation: "COCA Standard 11, Element 11.9 and Element 11.1 (the annual/self-study evidence artifact); ACPE Standard 7, Key Element 7.3.c; CODA Standard 1, Element 1-2"
+        competitor_equivalent: "The PA help-center guide positions the equivalent Prism output against ARC-PA B3.03/B3.04 explicitly ('Competency Management > Review > Select competency > ArcPA B3.03/B3.04 outcomes'); no competitor teardown in this research documents a per-student competency export at field level. one45's LCME case study (one45.yaml) is the nearest evidence of a competitor's competency data surviving a site visit."
+        gap_severity: "configure-needed"
+        gap_note: "'Number of Times Evaluated' alongside the score is exactly the evidence-density column an accreditor asks for — but the export is per student and per side, so assembling a cohort-level submission is a manual concatenation job."
+      - element: "'Not Published' dropdown > Publish / Unpublish (green indicator on the framework tab; published state also visible on the Setup tab)"
+        type: "publish toggle"
+        data_shown: "'All students who have competency scores assigned to them in this set of competencies will be able to view their scores'"
+        gates_on: ["student-facing competency tracker"]
+        accreditation_citation: "CODA Standard 2, Element 2-2 (due process — students seeing the criteria they are judged against); LCME Standard 9, Element 9.7 (feedback must reach the student to enable remediation)"
+        competitor_equivalent: "one45 documents 'real-time student access to longitudinal feedback' as shipped (one45.yaml); LEO/DaVinci documents student self-reflection access (leo-davinci.yaml). Both make student visibility a default rather than an admin-gated publish action."
+        gap_severity: "none"
+        gap_note: "All-or-nothing per framework, with no per-student or per-cohort staging. A new admin publishing for the first time should be warned it is immediately visible to every scored student — the transcript flags this ('Please keep in mind...') but the control itself is a two-click dropdown."
+
+sources:
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — PRIMARY. '13/16 Managing Learning Activities in Exxat Prism' (lines 1289-1495); '15/16 Setting Up Competency Management in Exxat Prism' (lines 1613-1681); standalone 'Comprehensive Report for Placement Based Forms (Forms/Evaluations)' (lines 1721-1733); 'Hours Summary by Week Report in Exxat Prism (Timesheet)' (lines 1747-1757); 'Configuring Custom Reports' (lines 1759-1855); 'Forms/Evaluations Workflows in Exxat Prism' (lines 1967-1987); grading-scheme prerequisite in '1/16 Administrator Navigation in Exxat Prism' (line 41)"
+  - "/Users/romitsoley/Downloads/PTPTAVideosTranscripts.md — 'How to use the CIET v2.0 Form' (multi-term workflow, school-specific benchmarks, prerequisite training quiz, concurrent blinded student/CI completion, four-row raw report shape)"
+  - "/Users/romitsoley/Downloads/OTOTAVideosTranscripts.md — 'Fieldwork Performance Evaluation in Exxat Prism' (AOTA FWPE form family, response-based and low-score notifications requiring a Prism support request, OT 111 / OTA 91 cutoffs, four FWPE report types, 'send only to the fieldwork educator added by school')"
+  - "/Users/romitsoley/Downloads/PAVideosTranscripts.md — 'Setting up and Managing Patient Logs in Exxat Prism' (patient log templates per course/rotation, CSS-agent dependency for custom templates, Preview Layout, bulk log review)"
+  - "/Users/romitsoley/Downloads/SLPVideosTranscripts.md — 'Setting up and Reviewing Clinical Logs' (clinical-log naming, Logs Count/Hours by Status columns, Clock Hours report by age group / mode of delivery / training level / participation type)"
+  - "/Users/romitsoley/Downloads/NursingTutorialsTranscripts.md — 'Streamline Transition to Competency-Based Education' (AACN Essentials framework creation, exposure-vs-achievement distinction, competency tracker grid, longitudinal and class-comparison views, skill achievement across didactic and clinical)"
+  - "/Users/romitsoley/Downloads/TEVideosTranscripts.md — 'Setting Up and Managing Echo360 (GoReact) Assignments in Exxat Prism' (LTI section, discipline/program feature gating via support ticket, auto-provisioning and score sync)"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md — used only where the general transcript is silent: the ARC-PA telehealth 50%/20% ceilings via Timesheet Hours by Categories, and the Competency Management > Review > ArcPA B3.03/B3.04 report path"
+  - "content/accreditation/coca.yaml, coda.yaml, lcme.yaml, acpe.yaml — element IDs and required_software_behavior used for accreditation_citation"
+  - "content/competitors/core-elms.yaml, e-value.yaml, emedley.yaml, elentra.yaml, leo-davinci.yaml, medhub.yaml, new-innovations.yaml, one45.yaml, axium.yaml — competitor_equivalent claims"
+  - "content/domains/dentistry.yaml, pharmacy.yaml — discipline-specific consequences of the scored-forms-only and procedure-quota constraints"
+  - "content/flows/competency-verification--08-close-the-loop-external-validation-against.yaml — precedent for the COCA 11.9 / CODA 1-2 accreditation-record citation pattern and the 'no revision history' gap framing"
+last_verified: "2026-08-24"

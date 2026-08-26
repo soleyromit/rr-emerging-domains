@@ -1,0 +1,221 @@
+# Discipline-layer persona for the OT (Occupational Therapy) domain, covering
+# OT, OTA, MOT/MSOT, and OTD tracks. The PROGRAM is the archetype, not an individual.
+#
+# SOURCING NOTE — read before comparing to discipline-do/pharmacy/dentistry/medicine.yaml:
+# OT is NOT one of the four expansion domains. It has no ../domains/*.yaml, no
+# ../accreditation/*.yaml, and no dedicated competitor teardown. This file is grounded
+# in two sources only: the Exxat internal OT Playbook (vault mirror) and the OT/OTA
+# admin video-tutorial transcripts — i.e., Exxat's own operational knowledge of a
+# discipline it already serves, not an outside-in research pass. It is deliberately
+# shorter than the four expansion-domain personas; do not pad it to match.
+# Persona framing (persona_name, JTBD wording, switching_trigger) is Exxat-side
+# synthesis of those sources, not a claim quoted from any source.
+domain: "OT"
+persona_name: "The Lockstep ACOTE Program Running Three Different Placement Machines"
+archetype_summary: >
+  An ACOTE-accredited occupational therapy program — MOT/MSOT, entry-level OTD,
+  or an associate-level OTA program — that is always lockstep, with cohorts named
+  by graduation year and cohort movement (leave, remediation, failed experiences)
+  as the standing exception to manage. Its administrative center of gravity is the
+  fieldwork office: the Program Director plus a Director/Assistant Director of
+  Clinical Education, coordinating Fieldwork Educators (not "preceptors") and,
+  for OTD, capstone Site Mentors across sites the discipline calls Agencies.
+  What makes it distinctive is that one program runs three structurally different
+  placement processes at once: Level I fieldwork (short, exposure-focused, may be
+  delivered via simulation, standardized patients, or faculty-led visits — placed
+  via slot wishlists and Placement Assist), Level II fieldwork (a documented
+  minimum of 24 weeks full-time, formally evaluated on the AOTA FWPE — placed via
+  location-based wishlists and direct placement), and, for OTD programs, a 14-week
+  / 560-hour-minimum doctoral capstone (ACOTE D.1.3) that is explicitly NOT
+  additional fieldwork — students propose their own sites, and placement is
+  direct, mentored, and culminates in a final deliverable and dissemination
+  (D.1.6). Its site taxonomy is broad by accreditation design: the curriculum
+  must prepare generalists across the lifespan and across physical and mental
+  health (A.5.1), so the program tracks placements against a wide AOTA
+  settings list — hospital and medical, mental/behavioral health, home and
+  community-based, primary-care/emerging practice, and community/social systems
+  — roughly two dozen configured settings in a typical production tenant.
+accreditation_pressure:
+  - point: "Note: ACOTE Standard C (fieldwork) drives most of this, no dedicated file yet"
+    detail: >
+      Accreditor: ACOTE (Accreditation Council for Occupational Therapy Education),
+      2023 Standards (revised April 2025), applied per degree level (doctoral,
+      master's, baccalaureate, associate); the licensing exam is NBCOT. NOTE: a
+      dedicated ../accreditation/*.yaml file does NOT exist for this discipline yet —
+      the four files in that directory are ACPE/COCA/CODA/LCME-specific — so this
+      section cites the standards as named in the OT playbook rather than a
+      standards-level research file. The pressure clusters in Standard C (Fieldwork
+      Education), and most of it is verification-before-the-fact rather than
+      reporting-after-the-fact:
+  - point: "Fieldwork educators must be verified as licensed and experienced (C.1.13, C.1.10)"
+    detail: >
+      (1) C.1.13 requires the program to document, BEFORE Level II fieldwork begins,
+      that each student's fieldwork educator is adequately prepared, currently
+      licensed/regulated as an OT, and has at least one year of full-time practice
+      experience — for supervisors the program does not employ, at agencies it does
+      not control, including international sites with their own qualification rules.
+      C.1.10 imposes a parallel informed-and-confirmed bar on Level I educators, who
+      may not even be OTs (PTs, SLPs, social workers, teachers, and nurses qualify).
+  - point: "Schools need enough valid, varied fieldwork agreements (C.1.4, C.1.5)"
+    detail: >
+      (2) C.1.4 and C.1.5 require written fieldwork agreements that are sufficient
+      in number, varied in practice setting, valid and active throughout Level I AND
+      Level II — including field trips, observations, and service learning — with a
+      documented site-selection process.
+  - point: "Programs must prove students completed 24 weeks of fieldwork (C.1.12)"
+    detail: >
+      (3) C.1.12 requires documented proof of a 24-week full-time Level II minimum
+      (or explicit part-time equivalency), which in practice means approved,
+      educator-verified hour records per student.
+  - point: "Level II students get a graded FWPE evaluation, not pass/fail (C.1.15)"
+    detail: >
+      (4) C.1.15 requires formal, timely Level II performance evaluation by
+      qualified educators — the AOTA FWPE, a graded four-point instrument with
+      per-section subtotals, not a pass/fail checkbox.
+  - point: "Objectives, site info, ratios, and supervision checks (C.1.2, C.1.3, C.1.7, C.1.8)"
+    detail: >
+      (5) C.1.3 requires academic and fieldwork educators to AGREE on objectives
+      before each experience begins, and every fieldwork experience must carry at
+      least one psychosocial objective; C.1.2 requires documented student access to
+      site information before starting; C.1.7 requires defensible educator-to-student
+      ratios; C.1.8 requires a mechanism for evaluating supervision effectiveness
+      plus supervisory support resources.
+  - point: "Advising, curriculum, and capstone rules (A.3.5, A.5.1, A.5.4, A.5.5, D.1.3-D.1.6)"
+    detail: >
+      (6) Outside Standard C: A.3.5 requires documented faculty advising; A.5.1,
+      A.5.4, and A.5.5 require a generalist curriculum mapped to design, written
+      syllabi, and aligned assessment; and Section D makes the OTD capstone
+      (D.1.3-D.1.6) its own compliance track with distinct planning, mentorship, and
+      evaluation.
+current_tools:
+  - point: "Caveat: OT already runs on Exxat Prism, unlike other domains"
+    detail: >
+      Two honest caveats up front. First, unlike the four expansion domains, OT is a
+      discipline Exxat already serves in production — the playbook, help-center
+      folder, and video tutorials documenting it are Exxat's own — so for many OT
+      programs "current tools" IS Exxat Prism, and the interesting question is what
+      still lives outside it:
+  - point: "Formstack, offline site visits, and manual syncing are still gaps"
+    detail: >
+      the playbook itself instructs CSS to "ask the school
+      where they're tracking compliance if they don't track it on Prism," documents
+      a legacy Formstack integration for FWPE II distribution (being phased out, with
+      a hard dependency — lapsed Formstack subscription means previously pulled data
+      becomes inaccessible), notes site visits cannot be logged offline (paper notes
+      re-entered later), and notes Fieldwork Educator Detail Form data does not sync
+      into personnel records automatically.
+  - point: "Caveat: this repo's competitor research doesn't focus on OT"
+    detail: >
+      Second, the competitive landscape for OT
+      is NOT covered by this repo's competitor teardowns, which focus on the four
+      new-domain incumbents; OT appears only in passing: core-elms.yaml (CORE ELMS
+      markets to 15+ disciplines including PT, OT, PA), e-value.yaml (E*Value lists
+      PT/OT among its served disciplines), emedley.yaml (eMedley groups PT/OT under
+      one umbrella per its Capterra listing), and medhub.yaml (allied-health fields
+      in MedHub's installed-base claim).
+  - point: "Caveat: no vendor comparison exists for OT-specific features"
+    detail: >
+      No teardown assesses any of these vendors'
+      OT-specific depth — fieldwork-vs-capstone modeling, FWPE support, ACOTE
+      reporting — so no per-vendor comparison is asserted here.
+jtbd:
+  - job: >
+      When ACOTE requires me to verify, before Level II begins, that every
+      student's fieldwork educator is licensed, prepared, and has a year of
+      practice experience, I want educator credentials and licensure captured
+      against the personnel record and surfaced as a missing-licensure exception
+      list, so qualification is confirmed up front instead of reconstructed from
+      emailed CVs at self-study time.
+    evidence_or_rationale: >
+      Direct read of C.1.13 and C.1.10 as stated in the playbook, which also
+      names the supporting surfaces (personnel licensure/certification records,
+      Comprehensive Personnel Report, Licensure Missing report, electronic
+      self-verification via the Educator Verification Form) and the standing
+      gap: data collected via the Fieldwork Educator Detail Form must be
+      manually re-entered. THIS IS THE PRIMARY JOB — it recurs every placement
+      cycle across every agency.
+    related_flows:
+      - flow: "rotation-lifecycle--02-preceptor-site-faculty-credentialing-orientation-calibration.yaml"
+        step: "[PT][OT][SW] Learning Activities > Setup > Forms / Evaluations > CI Details form (PT/PTA) · Fieldwork Educator Details Form (OT/OTA) · Field Instructor Information Form (SW)"
+        element: "[OT] Fieldwork Educator Details Form — data does NOT sync to the personnel record"
+  - job: >
+      When my students rotate through dozens of agencies across Level I and
+      Level II, I want contract status, expiration, and setting variety visible
+      per site, with placement clearance checked against active agreements, so
+      sufficiency is provable and no student starts fieldwork at a site whose
+      agreement has lapsed.
+    evidence_or_rationale: >
+      C.1.4 and C.1.5 per the playbook, which maps them to contract management,
+      expiration auto-notifications, and the Placement Clearance Dashboard. The
+      playbook also records the discipline's sharpest documented product pain
+      here: not all sites require a contract, but the system assumes one and
+      flags "missing" contracts that were never needed — schools have asked for
+      a contract-not-required marker.
+  - job: >
+      When I must document that each student completed the equivalent of 24
+      weeks of full-time Level II fieldwork and evaluate them formally on the
+      FWPE, I want educator-approved hour records and graded evaluations on the
+      same placement record, with alerts when a low or failing score lands on an
+      ethics or safety item, so a struggling student is flagged mid-rotation,
+      not discovered at final review.
+    evidence_or_rationale: >
+      C.1.12 (24-week documentation via approved timesheets) and C.1.15 (FWPE)
+      per the playbook; the FWPE video transcript specifies the alert mechanics
+      — response-based notifications on any rating of 1 (and 1-2 on three
+      Fundamentals of Practice safety/ethics items) and low-score cutoffs of
+      ≤111 (OT) / ≤91 (OTA) — while noting both notification types are enabled
+      via a support request, not self-service.
+    related_flows:
+      - flow: "rotation-lifecycle--08-post-rotation-rollup-cross-site-comparability.yaml"
+        step: "OT/OTA discipline > ACOTE program-evaluation evidence assembly (Students > Reports; Learning Activities > Reports; Curriculum Mapping > Measure Attributes Usage)"
+        element: "Comprehensive Report for Placement-Based Forms, Group By selector (AOTA FWPE data)"
+  - job: >
+      When one cohort needs Level I slots requested and matched, Level II
+      placements built from location wishlists, and OTD capstone students
+      proposing their own sites and mentors, I want all three placement models —
+      and the capstone's distinct agreements, evaluations, and 560-hour track —
+      in one system of record, so the fieldwork office is not running three
+      parallel processes on three tools.
+    evidence_or_rationale: >
+      The playbook documents the three distinct placement patterns explicitly
+      (Placement Assist for Level I; location-based/direct for Level II; direct,
+      student-proposed for capstone) plus the capstone's dedicated configuration
+      sequence and named forms (Student-Mentor Agreements, MOU, supervision
+      record, midterm/final/site evaluations). The Exxat One availability-based
+      wishlist — built specifically for PT/PTA/OT/OTA — extends the Level I/II
+      side with a demand-first model per the second video transcript.
+switching_trigger: >
+  Because OT is an incumbent Exxat discipline, this cuts both ways. What opens
+  an evaluation for a program NOT yet on a purpose-built system: an approaching
+  ACOTE self-study or site visit (the verification-heavy Standard C evidence —
+  educator qualifications, active agreements, 24-week hour proof — is what
+  spreadsheets fail at); launching an entry-level OTD, which adds the capstone
+  as a third, structurally different placement track overnight; or an
+  educator-qualification or lapsed-agreement finding. What puts an EXISTING
+  Prism OT program at risk, per Exxat's own documentation: the
+  contract-not-required flagging pain, no offline site-visit logging,
+  Fieldwork Educator Detail Form data requiring manual re-entry, FWPE
+  notifications gated behind support tickets, and residual Formstack dependency
+  during the transition — each a documented irritation a competitor could
+  demo against. No competitor's OT-specific counter-offer is documented in this
+  repo (see current_tools), so treat the retention risks as internally sourced
+  and the acquisition triggers as synthesis.
+journey_crossref: >
+  ../journeys/admin-onboarding-product-setup.yaml — this discipline's
+  agreement-and-eligibility job (C.1.4/C.1.5, and the compliance documents
+  gating placement) lands directly on stage 4 (compliance template setup) and
+  stage 5 (sites, locations & personnel), where that journey records OT as
+  having the most concrete documented compliance starter taxonomy of any
+  discipline and notes ACOTE C.1.2 turns the "Show on Explore Clinical
+  Locations" toggle into a standards-relevant control.
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "/Users/romitsoley/Downloads/OTOTAVideosTranscripts.md"
+  - "https://help.exxatprism.com/hc/en-us/articles/43654179356177-OT-OTA-Videos"
+  - "https://www.acoteonline.org/"  # accreditor named in the playbook; no dedicated ../accreditation/*.yaml exists for OT yet
+  - "../competitors/core-elms.yaml"   # passing OT mention only — no OT-depth teardown
+  - "../competitors/e-value.yaml"     # passing OT mention only
+  - "../competitors/emedley.yaml"     # passing OT mention only
+  - "../competitors/medhub.yaml"      # allied-health mention only
+  - "../journeys/admin-onboarding-product-setup.yaml"
+last_researched: "2026-08-24"

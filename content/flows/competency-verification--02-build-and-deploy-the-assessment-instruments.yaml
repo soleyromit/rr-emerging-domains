@@ -1,0 +1,604 @@
+# Element-level ground truth underneath competency-verification.yaml, Stage 2:
+# "Build and deploy the assessment instruments tied to those competencies."
+# Every accreditation_citation and competitor_equivalent below traces to a real
+# source file named in confirmed_by — none are re-derived from the journey's
+# own stage-level narrative.
+#
+# SCHEMA v2 (2026-08-24): analysis fields (accreditation_citation /
+# competitor_equivalent / gap_severity / gap_note) now live on each ELEMENT
+# rather than on the step. Where the original research did not distinguish
+# between sibling elements, the same verdict is stated identically on each
+# rather than inventing artificial precision.
+
+flow_name: "Build and Deploy Competency-Linked Assessment Instruments"
+maps_to_journey: "competency-verification.yaml, stage 2"
+persona: >
+  Primary actor is the Assessment / Curriculum & Competency Director configuring
+  the Competency Management framework and the underlying Forms/Evaluations,
+  Assignment, and LTI instruments; day-to-day activation on a specific course
+  offering is typically delegated to the Clinical/Experiential Education
+  Coordinator. See ../../journeys/competency-verification.yaml persona note —
+  role files themselves are not yet written.
+
+steps:
+  - screen: "Competency Management — Setup Tab (Add New Framework)"
+    navigation_path: "Dashboard > Curriculum Management > Competency Management > Setup tab > Add New"
+    elements:
+      - element: "Add New button"
+        type: "button"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None lives on this element. It is the entry point to the framework
+          builder; the COCA 6.4 / CODA 2-5 evidence for this screen lives in
+          the assessment-association, scoring-scale, and threshold fields.
+        competitor_equivalent: >
+          Not element-matched. Neither one45's nor Leo/DaVinci's public
+          materials (one45.yaml, leo-davinci.yaml) document a framework-
+          creation entry control at this granularity.
+        gap_severity: "none"
+        gap_note: "Shipped. Part of a module the journey's original stage text did not name at all."
+      - element: "Select a Competency dropdown"
+        type: "picker"
+        data_shown: "One competency framework can be configured at a time, though multiple frameworks can exist for the same competency."
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-5 ("rolled up per student, per competency,
+          over time") — this control is where the per-competency axis of that
+          rollup is chosen.
+        competitor_equivalent: >
+          Directional only. Leo/DaVinci markets a mapping-completion Insights
+          Dashboard against tools that "only map to your assessments or your
+          content" (leo-davinci.yaml, cited at Stage 1), but its public docs do
+          not document a per-competency framework picker to match 1:1.
+        gap_severity: "none"
+        gap_note: "Shipped, and more specific than the journey's prior stage-1/stage-2 framing gave it credit for."
+      - element: "Select Course Type radio (Experiential / Didactic / Both)"
+        type: "toggle group"
+        data_shown: ""
+        gates_on: ["determines which downstream assessment pool the framework can draw from"]
+        accreditation_citation: >
+          None lives on this element directly; it is a scoping control that
+          constrains which instruments can supply COCA 6.4 / CODA 2-5 evidence
+          downstream on this same screen.
+        competitor_equivalent: >
+          Not element-matched. No competitor teardown on file documents a
+          didactic-vs-experiential scoping control on a competency framework.
+        gap_severity: "none"
+        gap_note: "Shipped."
+      - element: "Select the assessments to associate (multi-select picker)"
+        type: "filtered picker"
+        data_shown: "Only assessments with a scoring scale already configured, and matching the chosen course type (experiential vs. didactic), are shown; an eye icon previews each candidate assessment."
+        gates_on: ["assessment must already have a scoring scale configured", "assessment must be active"]
+        accreditation_citation: >
+          COCA Standard 6, Element 6.4 (competencies must be assessed, not just
+          taught) — this picker is where a competency is bound to the actual
+          instruments that assess it. CODA Standard 2, Element 2-5.
+        competitor_equivalent: >
+          Directional only. one45's Assessment and Evaluation module ships
+          customizable forms/scales and question tagging (one45.yaml), and
+          Leo/DaVinci markets competency-to-content/assessment mapping
+          (leo-davinci.yaml) — but neither vendor's public materials document
+          an assessment-association picker gated on a pre-configured scoring
+          scale, so the comparison is directional rather than element-matched.
+        gap_severity: "none"
+        gap_note: "Shipped, and the gating behaviour (scale-configured + active only) is more specific than the journey's stage text credited."
+      - element: "Scoring Scale selector"
+        type: "config field"
+        data_shown: "Default 1–5 scale or a custom scale; whatever scale the underlying instrument used, scores are converted to this unified scale."
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-5 ("rolled up per student, per competency,
+          over time") — unifying heterogeneous instrument scales onto one scale
+          is what makes that rollup arithmetically possible.
+        competitor_equivalent: >
+          Directional only. one45 ships customizable scales inside its
+          Assessment and Evaluation module (one45.yaml), but its public docs do
+          not document a framework-level scale-conversion step to compare
+          against at this granularity.
+        gap_severity: "none"
+        gap_note: "Shipped."
+      - element: "Competency Threshold field"
+        type: "input field"
+        data_shown: "Expected performance level; scores below it are flagged in reports."
+        gates_on: []
+        accreditation_citation: >
+          COCA Standard 6, Element 6.4 (assessed, not just taught) — the
+          threshold is the element that turns a recorded score into a
+          pass/fail attainment judgement surfaced in reports.
+        competitor_equivalent: >
+          Not element-matched. No competitor teardown on file documents an
+          explicit expected-performance threshold field whose breach flags the
+          student in downstream reports.
+        gap_severity: "none"
+        gap_note: "Shipped, and considerably more specific than the journey's prior stage framing gave it credit for."
+      - element: "Summary screen — Title field + Save button"
+        type: "input field / button"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None lives on this element; it commits the framework built by the
+          fields above.
+        competitor_equivalent: >
+          Not element-matched — no competitor's public docs are granular enough
+          to compare a save/commit control.
+        gap_severity: "none"
+        gap_note: "Shipped."
+    action: >
+      The Competency Director builds a competency framework by choosing which
+      already-scored assessment instruments (experiential evaluations, didactic
+      assessments, or course grades) feed a given competency, then sets the
+      scoring scale and threshold used to judge attainment.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+
+  - screen: "Competency Management — Map Competencies"
+    navigation_path: "Curriculum Management > Competency Management > Setup tab > [Framework row] > Map"
+    elements:
+      - element: "Map button (per framework row)"
+        type: "button"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None lives on this element; it opens the mapping workspace where the
+          COCA 6.4 / CODA 2-5 evidence on this screen actually lives.
+        competitor_equivalent: >
+          Not element-matched — Leo/DaVinci's public docs (leo-davinci.yaml)
+          are not granular enough to compare a per-row entry control.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Didactic / Experiential mapping-type switch"
+        type: "toggle"
+        data_shown: "Shown only if the framework was configured for Both."
+        gates_on: []
+        accreditation_citation: >
+          None lives on this element directly; it scopes which pool of mapped
+          instruments the director is working in.
+        competitor_equivalent: >
+          Not element-matched — no competitor teardown on file documents a
+          didactic-vs-experiential mapping-mode switch.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Assessment expand-arrow"
+        type: "disclosure control"
+        data_shown: "Reveals the individual questions inside a mapped assessment."
+        gates_on: ["assessment must be associated with the framework's course type"]
+        accreditation_citation: >
+          COCA Standard 6, Element 6.4 — this disclosure is what exposes
+          question-level resolution at all; without it mapping would stop at
+          the whole-instrument level.
+        competitor_equivalent: >
+          Leo/DaVinci's public description ("maps every session in every course"
+          to competency sets and EPAs, per leo-davinci.yaml) does not specify
+          whether its mapping resolves to the individual question inside an
+          assessment or only to the assessment as a whole — its public docs are
+          not granular enough to support a direct element-level comparison, so
+          this is stated explicitly rather than guessed.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Add Mapping button (per question)"
+        type: "button"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          COCA Standard 6, Element 6.4 (assessed, not just taught) — question-
+          level mapping is the strongest available resolution of this element
+          seen anywhere in this stage's research. CODA Standard 2, Element 2-5
+          (instruments "mapped to the program's defined competencies").
+        competitor_equivalent: >
+          Leo/DaVinci's public materials (leo-davinci.yaml) do not state whether
+          their mapping resolves to the individual question or only to the whole
+          assessment — not granular enough for an element-level comparison,
+          stated explicitly rather than guessed.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Competency selector + Save as Draft button"
+        type: "picker / button"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-5 (instruments "mapped to the program's
+          defined competencies") — this selector is where the question-to-
+          competency binding is actually recorded.
+        competitor_equivalent: >
+          Not element-matched — leo-davinci.yaml does not document a draft
+          state for competency mappings.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Apply Changes button"
+        type: "button"
+        data_shown: "Draft mappings do not affect scores until Apply Changes is clicked; applying triggers immediate recalculation."
+        gates_on: ["mapping must be saved as draft first"]
+        accreditation_citation: >
+          CODA Standard 2, Element 2-5 ("rolled up per student, per competency,
+          over time") — this control is the commit point where mapping changes
+          propagate into the Review Grid, Student Dashboard, and Competency
+          Reports rollups.
+        competitor_equivalent: >
+          Not element-matched — no competitor teardown on file documents a
+          draft/apply recalculation boundary for competency mappings.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Generate Assessment Map export"
+        type: "report filter + export button"
+        data_shown: "Report Anchor (Competency vs. Assessments) and Data scope (Only Mapped vs. All Data); exports to Excel."
+        gates_on: []
+        accreditation_citation: >
+          COCA Standard 6, Element 6.4 and CODA Standard 2, Element 2-5 — this
+          export is the artifact form of the mapping evidence, i.e. what a site
+          visitor would actually be handed.
+        competitor_equivalent: >
+          Directional only. Leo/DaVinci markets a mapping-completion Insights
+          Dashboard (leo-davinci.yaml) covering similar ground, but as a
+          dashboard rather than a documented Excel export with anchor/scope
+          filters, so the comparison is not element-matched.
+        gap_severity: "none"
+        gap_note: ""
+    action: >
+      The Competency Director maps individual QUESTIONS inside an already-
+      deployed instrument (not just the whole form) to a specific competency,
+      then applies the mapping so competency scores in the Review Grid, Student
+      Dashboard, and Competency Reports recalculate immediately.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+
+  - screen: "Course Learning Activities Setup — Forms/Evaluations"
+    navigation_path: "Courses > [Course] > Learning Activities > Setup > Forms/Evaluations (+ icon)"
+    elements:
+      - element: "+ icon for Forms/Evaluations"
+        type: "button"
+        data_shown: "Opens a drawer listing all standard and custom-built forms."
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 7, Key Element 7.3.c — acpe.yaml's own
+          prism_fit_rationale names this exact workflow ("Setup ->
+          Forms/Evaluations -> Add Assignment") as evidence the same form
+          object is reused per site by design; this control is that workflow's
+          entry point.
+        competitor_equivalent: >
+          Directional only. eMedley's eValuate/eValuate+ is a shipped general-
+          purpose evaluation engine with reusable question sets and rubrics
+          (emedley.yaml), but its public pages do not document a per-course-
+          offering activation drawer to compare against 1:1.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Per-form expand arrow"
+        type: "disclosure control"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None lives on this element; it exposes the per-form configuration
+          fields below, which is where the ACPE 7.3.c / CODA 2-5 evidence sits.
+        competitor_equivalent: >
+          Not element-matched — emedley.yaml is not granular enough to compare
+          a disclosure control.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Does this form require a placement? toggle"
+        type: "toggle"
+        data_shown: ""
+        gates_on: ["placement existence"]
+        accreditation_citation: >
+          ACPE Standard 7, Key Element 7.3.c — binding an instrument to a
+          placement is what makes the same form object reusable per site.
+          CODA Standard 2, Element 2-5.
+        competitor_equivalent: >
+          Not element-matched. eMedley's eValuate ships rubrics, question sets,
+          anonymous responses and dashboards (emedley.yaml), but its public
+          marketing does not document a placement-gating toggle on an
+          evaluation instrument.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Does the form contribute to the student's final score? toggle"
+        type: "toggle"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-5 — this toggle determines whether the
+          instrument's output is graded evidence or formative only.
+        competitor_equivalent: >
+          Not element-matched — emedley.yaml does not document a per-form
+          contributes-to-final-score switch at this granularity.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Publish date / Due date anchor builder"
+        type: "config field"
+        data_shown: "Not an actual calendar date — a number of days before or after a placement's start, mid, or end date."
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 7, Key Element 7.3.c — anchor-relative dating is
+          precisely the mechanic that lets one identical form definition
+          redeploy unchanged across cohorts and sites, which acpe.yaml cites as
+          evidence of by-design reuse.
+        competitor_equivalent: >
+          eMedley's eValuate/eValuate+ is a shipped evaluation engine
+          (emedley.yaml), but its public marketing pages do not document an
+          anchor-relative (days-before/after-placement) date mechanic to
+          compare against 1:1 — the comparison is directional, not
+          element-matched.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Preview button"
+        type: "button"
+        data_shown: "Shows the configured form plus its workflow, with a downloadable blank copy."
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-5 — the downloadable blank copy is a
+          usable instrument artifact for a site-visit binder.
+        competitor_equivalent: >
+          Not element-matched — emedley.yaml does not document a preview /
+          blank-copy download control.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Course Faculty / Placement Faculty / Faculty Advisor access matrix"
+        type: "permissions grid"
+        data_shown: "Edit vs. view-only access per faculty role."
+        gates_on: []
+        accreditation_citation: >
+          None lives on this element; it governs who may complete or read the
+          instrument rather than supplying assessment evidence itself.
+        competitor_equivalent: >
+          Directional only. eMedley's eValuate ships anonymous-response
+          handling (emedley.yaml), implying comparable role controls, but its
+          public pages do not enumerate a per-faculty-role edit/view matrix.
+        gap_severity: "none"
+        gap_note: ""
+    action: >
+      The Coordinator activates a specific evaluation instrument (e.g. a
+      competency-linked preceptor rating form) onto a course offering, using
+      anchor-relative rather than fixed dates so the identical instrument
+      definition redeploys unchanged across cohorts and sites.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+
+  - screen: "Course Learning Activities Setup — Add Assignment"
+    navigation_path: "Courses > [Course] > Learning Activities > Setup > Forms/Evaluations (+ icon) > Add Assignment"
+    elements:
+      - element: "Active toggle"
+        type: "toggle"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None lives on this element; it controls whether the instrument is
+          live on the offering.
+        competitor_equivalent: >
+          No competitor teardown on file (core-elms.yaml, leo-davinci.yaml,
+          emedley.yaml, elentra.yaml, one45.yaml, e-value.yaml, axium.yaml,
+          medhub.yaml, new-innovations.yaml) documents this screen at
+          field-by-field detail, so no comparison is made rather than guessed.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Title field"
+        type: "input field"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "None lives on this element."
+        competitor_equivalent: >
+          No competitor teardown on file documents this screen at field-by-
+          field detail, so no comparison is made rather than guessed.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Instructions field"
+        type: "input field"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "None lives on this element."
+        competitor_equivalent: >
+          No competitor teardown on file documents this screen at field-by-
+          field detail, so no comparison is made rather than guessed.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Is this assignment applicable for other course offerings? toggle"
+        type: "toggle"
+        data_shown: "If yes, the assignment is saved for reuse across other courses in the program."
+        gates_on: []
+        accreditation_citation: >
+          None lives on this element directly; it is the reuse mechanic that
+          parallels the form-object reuse ACPE 7.3.c credits elsewhere in this
+          flow, but no source ties this specific toggle to a standard.
+        competitor_equivalent: >
+          No competitor teardown on file documents an equivalent cross-offering
+          reuse toggle at this level of detail, so no comparison is made rather
+          than guessed.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Does this form contribute to the student's final score? toggle + weightage field"
+        type: "toggle / input field"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-5 (skills testing, broadly)."
+        competitor_equivalent: >
+          No competitor teardown on file documents an equivalent weighting
+          control at this level of field-by-field detail, so no comparison is
+          made rather than guessed.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Do you want a score associated with this assignment? toggle + out-of-score/default-score fields"
+        type: "toggle / input field"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-5 (skills testing, broadly) — scoring is
+          what makes an upload-based submission assessable evidence rather than
+          a filing cabinet.
+        competitor_equivalent: >
+          No competitor teardown on file documents an equivalent scoring
+          configuration at this level of field-by-field detail, so no
+          comparison is made rather than guessed.
+        gap_severity: "none"
+        gap_note: ""
+    action: >
+      The Coordinator builds a non-form scored instrument (e.g. an upload-
+      based skills submission) as a reusable Assignment object rather than a
+      structured evaluation form.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Assignments.md"
+
+  - screen: "Learning Tool Interoperability — GoReact Linked Assignment"
+    navigation_path: "Courses > [Course] > Learning Activities > Setup > Learning Tool Interoperability (+ icon); rubric assignment happens inside GoReact after Prism hands off"
+    elements:
+      - element: "Select LTI tool dropdown"
+        type: "picker"
+        data_shown: "GoReact is the named integration."
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-5 (OSCEs, clinical skills testing
+          measuring skills/behaviors, not recall) — this picker is where the
+          skills-demonstration capability is sourced, and it sources it
+          externally.
+        competitor_equivalent: >
+          eMedley's eValuate natively supports OSCEs and rubrics inside its own
+          evaluation engine (emedley.yaml) and Elentra's Assessment &
+          Evaluation module natively spans "formative assessments to summative
+          exams" (elentra.yaml) — neither has an analogue to this control,
+          because neither depends on a third-party LTI hand-off. A real
+          architectural difference (native vs. bolted-on), not a timing gap.
+        gap_severity: "configure-needed"
+        gap_note: >
+          The capability exists today only by selecting an external tool, so a
+          school must hold a GoReact relationship before this element does
+          anything.
+      - element: "Active toggle / Title / Description fields"
+        type: "toggle / input field"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "None lives on these fields; they identify and enable the linked instrument."
+        competitor_equivalent: >
+          Not element-matched — emedley.yaml and elentra.yaml describe native
+          OSCE/rubric engines but do not document comparable LTI-link
+          identification fields.
+        gap_severity: "none"
+        gap_note: "Shipped Prism-side configuration."
+      - element: "Requires placement toggle"
+        type: "toggle"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None lives on this element; it binds the instrument to a placement
+          context.
+        competitor_equivalent: >
+          Not element-matched — no competitor teardown on file documents a
+          placement-gating toggle on an LTI-linked instrument.
+        gap_severity: "none"
+        gap_note: "Shipped Prism-side configuration."
+      - element: "Associate a score toggle + score value field"
+        type: "toggle / input field"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-5 — scoring is what turns the video
+          submission into assessable skills evidence.
+        competitor_equivalent: >
+          Directional only. eMedley (emedley.yaml) and Elentra (elentra.yaml)
+          score OSCE/rubric work natively, but their public docs do not
+          document a score-association control on an externally delivered
+          instrument.
+        gap_severity: "none"
+        gap_note: "Shipped Prism-side configuration."
+      - element: "Contributes to final score toggle + weightage field"
+        type: "toggle / input field"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-5 — determines whether the skills result
+          carries into the graded record.
+        competitor_equivalent: >
+          Not element-matched — emedley.yaml and elentra.yaml do not document
+          per-instrument weighting at this granularity.
+        gap_severity: "none"
+        gap_note: "Shipped Prism-side configuration."
+      - element: "Visible to other faculties toggle"
+        type: "toggle"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "None lives on this element; it is a visibility control."
+        competitor_equivalent: >
+          Not element-matched — no competitor teardown on file documents a
+          cross-faculty visibility toggle at this granularity.
+        gap_severity: "none"
+        gap_note: "Shipped Prism-side configuration."
+      - element: "(inside GoReact) Scoring & Evaluation dropdown — Rubric"
+        type: "config field"
+        data_shown: "Select a rubric from the GoReact library or upload a new one; rubrics are built/held in GoReact, not Prism."
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-5 (OSCEs, clinical skills testing
+          measuring skills/behaviors, not recall) — the rubric-scored video
+          format is structurally the right shape for this element, and this is
+          the element where the rubric itself lives. Also the most plausible
+          home for a DO OMM manual-skills instrument named in this stage's
+          domain_divergence, though no source confirms OMM-specific use.
+        competitor_equivalent: >
+          eMedley's eValuate natively supports OSCEs and rubrics inside its own
+          evaluation engine (emedley.yaml) and Elentra's Assessment &
+          Evaluation module natively spans "formative assessments to summative
+          exams" (elentra.yaml) — both author and hold the rubric in-product,
+          where Prism's rubric object lives outside Prism entirely. This is the
+          sharpest element-level expression of the native-vs-bolted-on
+          architectural difference.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Functionally covers rubric-scored skills assessment today, but the
+          rubric is authored and held outside Prism — this nuances the
+          "architecturally real" framing in the journey's current_state_in_prism
+          for the specific OSCE/skills-demonstration format CODA 2-5 and COCA
+          6.4 name. Status flips Submitted -> Reviewed automatically once the
+          rubric is posted in GoReact, with no manual reconciliation back into
+          Prism.
+    action: >
+      Faculty create a rubric-scored, video-based skills-performance
+      instrument — the closest thing Prism ships today to a structured
+      OSCE/clinical-skills demonstration — by handing off from a Prism
+      Assignment object to GoReact for rubric authoring and scoring; status
+      flips Submitted -> Reviewed automatically once the rubric is posted in
+      GoReact, with no manual reconciliation back into Prism.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Set-up and Review GoReact Linked Assignment.md"
+
+  # SCHEMA v2 EXCEPTION: this step has zero elements by definition — the module
+  # does not exist in Prism, so there is no field, button, or column to attach
+  # analysis to. The analysis therefore remains at step level here rather than
+  # being deleted (which would destroy confirmed research) or attached to an
+  # invented placeholder element (which would fabricate a UI that isn't there).
+  - screen: "Exam Management (not present — roadmap module)"
+    navigation_path: "N/A — no such module exists in Prism's navigation today; help-center search for OSCE/proctor/item-bank/lockdown/psychometric terms returned zero program-administrator or faculty how-to articles."
+    elements: []
+    action: >
+      No action exists to perform: a school needing proctored, lockdown-
+      browser, item-banked, psychometrically-scored exam delivery (the
+      standardized-exam half of "assessment instruments") cannot do it inside
+      Prism today.
+    confirmed_by: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (Exam Management entry: status: roadmap, target: Q2 2027, no features listed)"
+    accreditation_citation: >
+      CODA Standard 2, Element 2-5; ACPE Standard 7, Key Element 7.3.d
+      (psychometrically valid exam scoring); LCME Standard 9, Element 9.4
+      (centralized system using a variety of measures).
+    competitor_equivalent: >
+      eMedley's ExamN is a shipped standalone exam-management product —
+      question banks, lockdown browser, eProctor webcam-proctoring add-on,
+      item analysis via algorithmic psychometrics, and a competency-tied
+      performance dashboard (emedley.yaml) — a directly comparable, fully
+      granular element-level gap. Elentra's Assessment & Evaluation module
+      ships "proctored/secured online exams" and a customizable item bank
+      today (elentra.yaml). one45 has no native exam-authoring/delivery
+      engine either — it only pulls third-party ExamSoft and NBME data into
+      an analytics dashboard (one45.yaml) — so Prism is not uniquely behind
+      here. axiUm, dentistry's entrenched incumbent, has "no exam-management
+      feature found on any public axiUm/Exan/Henry Schein One page reviewed"
+      (axium.yaml) — on this specific step Prism is at parity with the
+      dominant dental incumbent even though it trails eMedley and Elentra.
+    gap_severity: "gap"
+    gap_note: >
+      Confirmed via both an empty help-center search and the capability
+      map's own roadmap entry (zero shipped features listed) — this is not
+      an inferred gap, it is a directly confirmed absence.
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Assignments.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Set-up and Review GoReact Linked Assignment.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Understanding Forms in Learning Activities.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+last_verified: "2026-08-24"

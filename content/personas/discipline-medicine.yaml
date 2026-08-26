@@ -1,0 +1,280 @@
+# Discipline-layer persona for the Medicine (MD) domain.
+# The PROGRAM is the archetype, not an individual.
+# Grounded in ../domains/medicine.yaml, ../accreditation/lcme.yaml, and the
+# MD-serving competitor files in ../competitors/ (one45, elentra, leo-davinci,
+# medhub, e-value, emedley, new-innovations).
+domain: "MD"
+persona_name: "The Capacity-Squeezed LCME Program"
+archetype_summary: >
+  A mid-size, LCME-accredited MD-granting school (one of ~159-161 in the U.S.) that has
+  grown its class alongside the national trend — U.S. MD enrollment crossed 100,000 for
+  the first time in 2025-26 (100,723 students, +1.3% YoY; 23,440 first-year matriculants,
+  +1.2%) — without a matching expansion of clerkship capacity. Its clinical curriculum is
+  a two-phase, exam-gated structure: years 1-2 pre-clinical, years 3-4 clinical, with
+  ~48 weeks of core clerkships (IM, surgery, OB/GYN, peds, psych, family medicine,
+  neurology, often radiology) in 4-12 week blocks across a teaching hospital and a
+  widening ring of affiliated outpatient sites, then year-4 sub-internships and away
+  rotations coordinated through AAMC VSLO. Two things make it structurally unlike the
+  allied-health and nursing programs Prism serves today: supervision is multi-tiered
+  (attending -> senior/chief resident -> intern -> student) and rotates every few weeks
+  rather than being a single stable preceptor relationship; and the degree is not the end
+  of the pathway — USMLE Step 1 and Step 2 CK sit inside the clinical timeline, and the
+  NRMP Match into ACGME residency is the outcome the program is actually judged on. The
+  operational consequence: the same student is evaluated by a different supervisor at a
+  different site every 4-12 weeks, and someone centrally has to prove every required
+  experience was completed before graduation.
+accreditation_pressure:
+  - point: "Must centrally prove every student completed required rotations (Element 8.6)"
+    detail: >-
+      The accreditation liaison's anxiety is concentrated in LCME Standard 8, Element 8.6
+      (Monitoring of Completion of Required Clinical Experiences): the school must show a
+      CENTRALLY-overseen system proving every student completed every required clinical
+      experience, and that any gap was remediated BEFORE graduation — not discovered at
+      self-study.
+  - point: "Must publish required clinical experiences and prove students met them (Element 6.2)"
+    detail: >-
+      That pairs with Element 6.2, which requires a published list of patient types,
+      conditions, skills, settings, and expected level of student responsibility, plus
+      evidence students actually met it; when a cohort's encounters are spread over dozens
+      of rotating sites and supervisors, the gap between "we require it" and "we can prove
+      it" is where findings live.
+  - point: "Every clinical site must deliver equivalent training and grading (Element 8.7)"
+    detail: >-
+      Layered on top: Element 8.7 (comparability) demands the same clerkship deliver
+      equivalent experience and assessment at every site/campus, which is the hardest
+      promise to keep precisely when the program has added community sites to absorb
+      enrollment growth.
+  - point: "Each site needs enough patients and a signed affiliation agreement (Elements 5.5 & 1.4)"
+    detail: >-
+      Element 5.5 requires per-site evidence of adequate patient volume and case mix, and
+      Element 1.4 requires a current written affiliation agreement with every
+      regularly-used clinical affiliate — a lapsed agreement at a site students are
+      already rotating through is an unforced finding.
+  - point: "Midpoint feedback, six-week grading, and supervision deadlines (Elements 9.7, 9.8, 9.3)"
+    detail: >-
+      Three deadline-shaped elements generate constant administrative friction: 9.7
+      (formal formative feedback at least at each rotation's midpoint, or an alternate
+      method for experiences under four weeks), 9.8 (final grades within six weeks of a
+      clerkship ending), and 9.3 (documented appropriate supervision matched to training
+      level).
+  - point: "Must document that students worked with ACGME-accredited residents (Element 3.1)"
+    detail: >-
+      Element 3.1 additionally requires confirming each student worked with residents in
+      an ACGME-accredited program — which means the placement record has to capture
+      residents, not just attendings.
+  - point: "Continuous compliance monitoring and national outcome benchmarks (Elements 1.1 & 8.4)"
+    detail: >-
+      Above all of it sits Element 1.1's CQI duty (continuous, year-round monitoring of
+      compliance with every standard, not a self-study sprint) and Element 8.4, which
+      requires outcome data benchmarked against national norms — in practice USMLE
+      performance and Match results, data that lives outside the school's own systems.
+  - point: "Losing accreditation threatens funding, residency match, and licensure"
+    detail: >-
+      Accreditation is existential here, not cosmetic: LCME status gates federal funding,
+      ACGME residency eligibility, and state licensure for graduates.
+current_tools:
+  - point: "Most likely incumbent: one45, an MD-only platform since 2001"
+    detail: >-
+      This program almost certainly already runs an incumbent med-ed platform, not a
+      greenfield stack. The realistic set is one45 (Acuity Insights) — MD-only
+      positioning, operating since 2001, with three named rotation-lottery algorithms,
+      duty-hour/leave tracking, and a public LCME win at Medical College of Georgia;
+  - point: "Elentra: built for LCME/COCA/CACMS accreditation reporting"
+    detail: >-
+      Elentra — consortium heritage, AAMC Curriculum Inventory participating vendor,
+      native MedBiquitous support, and explicit LCME/COCA/CACMS report alignment;
+  - point: "Leo (DaVinci): Duke-born tool now merging into Elentra"
+    detail: >-
+      Leo (DaVinci Education) — Duke-born, AAMC-authorized Curriculum Inventory vendor
+      since 2013 as LCMS+, with an "Academic Portrait" record used to author MSPEs, now
+      merged into Elentra and being courted to migrate;
+  - point: "eMedley: LCME curriculum mapping plus exam and eval modules"
+    detail: >-
+      eMedley (AllofE) — LCME-tied curriculum mapping plus shipped ExamN and eValuate+
+      modules;
+  - point: "MedHub/E*Value and New Innovations: entrenched GME-office tools"
+    detail: >-
+      or MedHub/E*Value, the entrenched suite (600+ organizations, 80 of 119 U.S. academic
+      health centers at 2015 merger) that a program often inherits from its affiliated
+      academic health center's GME office, with New Innovations (now QGenda-owned) in the
+      same GME-anchored position.
+  - point: "Spreadsheets and email fill the gaps around the main system"
+    detail: >-
+      Around whichever system is in place sits the real tooling: spreadsheets for
+      clerkship lotteries and away-rotation tracking, email chasing faculty for overdue
+      midpoint feedback and grades, PDFs of affiliation agreements in a shared drive, and
+      a separate scramble to assemble self-study evidence.
+  - point: "Incumbents lack a compliance-gating module for immunizations and background checks"
+    detail: >-
+      Two consistent seams across these incumbents matter: (1) none of one45, Elentra, or
+      Leo shows public evidence of a dedicated, placement-gating compliance module for
+      immunizations, background checks, and certifications;
+  - point: "Users complain the mobile apps are slow, buggy, and hard to navigate"
+    detail: >-
+      (2) mobile and logging UX draws real complaints on the largest incumbents
+      (MedHub/E*Value evaluations that "skip fields," hours entry described as
+      "atrociously slow, buggy, laggy," patient logging called cumbersome; eMedley
+      described as "difficult to navigate on a phone or tablet"), which matters
+      disproportionately when the person entering data is an attending between patients.
+jtbd:
+  - job: >
+      When my clinical curriculum is spread across dozens of hospital and community sites
+      with supervision changing every 4-12 weeks, I want one central, program-wide view of
+      every student's required clerkship completion with automatic gap flags, so I can
+      remediate gaps before graduation instead of discovering them at self-study.
+    evidence_or_rationale: >
+      This is the literal text of LCME Element 8.6 (centrally-overseen monitoring plus
+      remediation of identified gaps before graduation) paired with 6.2's requirement to
+      evidence that students actually met the published required-experience list. It is
+      also the strongest capability fit in the whole standards set — lcme.yaml rates 8.6
+      "Transfer" against Prism's shipped Clinical & Experiential Education placement
+      engine, the highest-confidence match of any element in the document.
+    related_flows:
+      - flow: "admin-onboarding--08-learning-activities-competency-management-reporting.yaml"
+        step: "Learning Activity Review (Forms & Evaluations / Patient Log / Timesheet / Time Off review surfaces)"
+        element: "Forms & Evaluations summary grid (students in rows, forms across columns, rotation accordions)"
+  - job: >
+      When enrollment grows faster than clerkship capacity and I have to add community and
+      outpatient sites to absorb the class, I want per-site records carrying
+      affiliation-agreement status and expiration, patient volume and case mix, and
+      comparability of objectives and assessments, so I can expand capacity without
+      creating an accreditation finding.
+    evidence_or_rationale: >
+      medicine.yaml documents that clinical training-site capacity has not kept pace with
+      enrollment and that 44% of AAMC-surveyed schools feel moderate-to-severe pressure to
+      pay community physicians or clinics to host students — something most do not
+      currently do. Each new site multiplies exactly the three per-site obligations LCME
+      enforces (1.4 agreements, 5.5 volume/case mix, 8.7 cross-site comparability), which
+      is why capacity growth and accreditation risk are the same problem for this persona.
+    related_flows:
+      - flow: "rotation-lifecycle--01-site-sourcing-capacity-contracting-affiliation-agreement.yaml"
+        step: "Site — Contracts tab (Add Contract drawer)"
+        element: "Start Date / Expiration Date"
+  - job: >
+      When a rotation is only 4-12 weeks long and the supervising attending changes with
+      the service, I want midpoint formative feedback and final grades auto-triggered off
+      each placement's own start, mid, and end dates with visible non-completion tracking,
+      so I can prove feedback happened and hit the six-week grading deadline without
+      chasing faculty by email.
+    evidence_or_rationale: >
+      Elements 9.7 and 9.8 are date-anchored obligations rather than judgment calls, and
+      lcme.yaml maps 9.7 one-to-one onto Prism's confirmed anchor-relative scheduling
+      primitive (publish/due dates set N days before or after a placement's start, MID, or
+      end date) — rating it "Transfer," with 9.8 a "Configure" on the same primitive. The
+      chase-by-email status quo is the cost this replaces.
+    related_flows:
+      - flow: "admin-onboarding--08-learning-activities-competency-management-reporting.yaml"
+        step: "Forms & Evaluations — activate an existing form"
+        element: "Publish timing — 'Event Anchored' (days + before/after + anchor) vs 'Specific Date'"
+  - job: >
+      When my placement record only names one preceptor but my students are actually
+      supervised by an attending, a senior resident, and an intern, I want supervision
+      captured with named roles and levels per placement, so I can prove appropriate
+      supervision and confirm each student trained alongside residents from the same
+      record.
+    evidence_or_rationale: >
+      medicine.yaml identifies multi-tiered supervision as one of four structural
+      differences between MD education and the allied-health programs Prism serves today.
+      lcme.yaml rates 3.1 "Transfer" (add a resident/GME-trainee role to the existing
+      preceptor assignment record) and 9.3 "Configure" (a supervision-level attestation
+      field on that same record) — one data-model change answering two elements.
+  - job: >
+      When my accreditation status gates federal funding, residency eligibility, and my
+      graduates' licensure, I want compliance evidence mapped to accreditation standards
+      and monitored year-round with an auditable improvement trail, so accreditation is a
+      standing dashboard rather than a lengthy evidence-hunting project every cycle.
+    evidence_or_rationale: >
+      Element 1.1 explicitly requires ongoing monitoring of compliance with every standard,
+      not point-in-time self-study preparation over an 18-month cycle. lcme.yaml flags this
+      as the single feature that would make a platform the system of record for a
+      self-study rather than just a data source for one — and marks it "Gap" today
+      (Accreditation Management is a Q3 2027 roadmap pillar), while Elentra, Leo, eMedley,
+      MedHub/E*Value, and New Innovations all ship standard-aligned accreditation or
+      curriculum-inventory reporting now.
+    related_flows:
+      - flow: "accreditation-self-study--01-standards-intake-evidence-crosswalk-setup-cycle.yaml"
+        step: "(No screen exists) — ongoing, cross-pillar compliance-monitoring dashboard"
+        element: "N/A"
+  - job: >
+      When my program is ultimately judged on Step 1, Step 2 CK, and Match outcomes, I want
+      exam performance, student feedback, and curriculum/competency data in one cross-cohort
+      view benchmarked against national norms, so I can see a cohort trending toward a bad
+      Match year while I can still act on it.
+    evidence_or_rationale: >
+      Element 8.4 names national norms of accomplishment — in practice USMLE performance and
+      residency match outcomes — as required outcome data. The stakes are real and
+      quantified: in the largest Match on record (2025), 6.5% of U.S. MD seniors still did
+      not match to a PGY-1 position, and medicine.yaml documents that enrollment growth has
+      outpaced residency-slot growth, making the Match a structural bottleneck rather than
+      an anecdotal one. lcme.yaml rates 8.4 a "Gap" dependent on unshipped pillars
+      (Exam Management Q2 2027, Accreditation Management Q3 2027) being integrated with
+      each other, not merely shipped. Surveys & Course Evaluations, the third pillar this
+      dependency previously named, is no longer roadmap — CORRECTED 2026-08-26 per Exxat PM
+      confirmation, see ../prism/capability-map.yaml (Surveys & Course Evaluations pillar);
+      the remaining gap for 8.4 is the cross-pillar integration itself, not survey
+      non-existence.
+    related_flows:
+      - flow: "accreditation-self-study--05-external-outcome-data-ingestion-board-exams.yaml"
+        step: "Exam Management (roadmap pillar) — no shipped screen exists"
+        element: "Board-exam / licensure result ingestion — no such element exists in any shipped screen"
+  - job: >
+      When more than half of my fourth-years do away rotations at institutions my school
+      has no relationship with, I want those externally-arranged rotations tracked in the
+      same system as home clerkships, so away time still counts correctly toward required
+      experiences and does not become an evidence blind spot at the site visit.
+    evidence_or_rationale: >
+      medicine.yaml documents away rotations as a distinct structural and financial burden:
+      $2,500-$10,000+ typical total cost, 54.9% of students declining at least one away
+      rotation for cost reasons, and 75.9% saying finances influenced which offers they
+      accepted — coordinated externally through AAMC VSLO. Element 8.6's completion
+      monitoring makes no exception for rotations the school did not arrange, so any
+      rotation living only in VSLO and email is a gap in the central record. (Inferred
+      framing: no source states schools currently mistrack away rotations; the job follows
+      from combining the away-rotation prevalence with 8.6's central-oversight duty.)
+switching_trigger: >
+  Three triggers, in descending likelihood. (1) Forced migration: this persona is sticky
+  by default — years of encounter logs, evaluations, curriculum-inventory history, and
+  MSPE material sit inside the incumbent, and no program voluntarily re-platforms in the
+  window before a site visit. The exception is when the incumbent forces the move, which
+  is happening right now to Leo (DaVinci) customers, whose own post-merger parent is
+  publicly marketing migration paths onto Elentra; New Innovations customers face similar
+  roadmap uncertainty after the July 2025 QGenda acquisition. A program already being told
+  a platform change is coming will evaluate alternatives it would otherwise never open.
+  (2) An accreditation finding or a near miss on Element 8.6, 8.7, or 6.2 — being unable
+  to produce central, per-student proof of required-experience completion across sites is
+  the failure that converts "our system is fine" into a procurement. The timing is
+  counterintuitive: the evaluation happens right AFTER the survey, in the earliest part of
+  the next cycle, because that is the only window where switching cost is lowest and the
+  pain is freshest. (3) Capacity expansion breaking the current workflow — when the class
+  grows and the site network grows with it, spreadsheet-and-email coordination of
+  lotteries, affiliation-agreement renewals, midpoint feedback, and the six-week grading
+  SLA stops scaling, and the program starts pricing tools rather than hiring another
+  coordinator. Against MD incumbents specifically, the wedge is placement-gating compliance
+  (one45, Elentra, and Leo show no public evidence of a dedicated immunization/background-
+  check/certification module) and modern data-entry UX on mobile, where the largest
+  incumbents draw documented complaints — not a feature-for-feature accreditation-reporting
+  comparison, which those incumbents currently win.
+sources:
+  - "../domains/medicine.yaml"
+  - "../accreditation/lcme.yaml"
+  - "../competitors/one45.yaml"
+  - "../competitors/elentra.yaml"
+  - "../competitors/leo-davinci.yaml"
+  - "../competitors/medhub.yaml"
+  - "../competitors/e-value.yaml"
+  - "../competitors/emedley.yaml"
+  - "../competitors/new-innovations.yaml"
+  - "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf"
+  - "https://www.aamc.org/news/us-medical-schools-enroll-record-number-students-2025"
+  - "https://www.aamc.org/news/so-many-medical-students-so-few-clerkship-sites"
+  - "https://www.aamc.org/news/medical-school-enrollments-grow-residency-slots-haven-t-kept-pace"
+  - "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5109707/"
+  - "https://www.ama-assn.org/medical-students/preparing-residency/biggest-match-day-ever-here-s-what-2025-numbers-reveal"
+  - "https://acuityinsights.com/products/one45/program-scheduling/"
+  - "https://elentra.com/disciplines/medicine-undergraduate"
+  - "https://elentra.com/blog/from-davinci-to-elentra-how-institutions-are-strengthening-workflows"
+  - "https://www.davinci-ed.com/the-davinci-difference/leo-faqs"
+  - "https://emedley.com/curriculum-mapping"
+  - "https://justuseapp.com/en/app/1126919433/medhub/reviews"
+  - "https://www.qgenda.com/newsroom/qgenda-announces-acquisition-of-new-innovations/"
+last_researched: "2026-08-24"

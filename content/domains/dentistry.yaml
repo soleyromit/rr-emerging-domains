@@ -1,0 +1,81 @@
+domain: "Dentistry"
+full_name: "Dentistry (DDS/DMD)"
+credential: "DDS / DMD"
+program_length_years: 4
+market:
+  program_count: "77 CODA-accredited predoctoral (DDS/DMD) dental education programs in the U.S. and Puerto Rico as of the 2024-25 academic year (up from 73 admitting students in 2024, 67 in 2020, and 55 in 2000) [ADA HPI / ADEA Trends in Dental Education 2024-25]."
+  program_count_trend: "Growing, driven by new school openings. First-year enrollment reached 7,013 in 2024, with 25% of those enrollees at newly opened schools; total predoctoral enrollment rose to 28,925 students in 2025-26, up from 27,920 the prior year [ADEA 'New dental schools drive increasing enrollment' (ADA News, June 2025); ADEA Releases New Data on U.S. Dental School Applicants and Enrollees, 2025 Entering Class]."
+  total_enrollment: "28,925 students enrolled in predoctoral (DDS/DMD) programs in the U.S., 2025-26 academic year [ADEA Trends in Dental Education 2024-25 / ADEA 2026 enrollee data release]."
+  sources:
+    - "https://www.adea.org/detail-pages/blog/adea---news-and-events/2026/04/07/adea-releases-new-data-on-u.s.-dental-school-applicants-and-enrollees--2025-entering-class"
+    - "https://adanews.ada.org/new-dentist/2025/june/new-dental-schools-drive-increasing-enrollment/"
+    - "https://www.adea.org/docs/default-source/adea-main/publications/adea-trends/adea_trends_2024_25.pdf"
+    - "https://www.ada.org/resources/research/health-policy-institute/dental-education"
+standards_bodies:
+  - name: "CODA (Commission on Dental Accreditation)"
+    type: "institutional accreditor — accredits predoctoral (DDS/DMD), advanced/postdoctoral (specialty residency, GPR, AEGD), and allied dental education programs; recognized by the U.S. Dept. of Education."
+  - name: "JCNDE (Joint Commission on National Dental Examinations) / INBDE"
+    type: "national licensure exam board — administers the Integrated National Board Dental Examination, the written cognitive exam accepted by all U.S. states and territories for licensure."
+  - name: "ADEX / American Board of Dental Examiners (formerly CDCA-WREB-CITA)"
+    type: "regional clinical licensure exam board — administers the manikin-based clinical skills exams (e.g., CompeDont) most states require alongside the INBDE for licensure."
+  - name: "CODA-accredited GPR / AEGD / specialty residency programs"
+    type: "GME-equivalent body — postdoctoral hospital-based (GPR) or clinic-based (AEGD) general-practice residencies plus 9 recognized dental specialties, all under CODA accreditation."
+  - name: "ADA (American Dental Association)"
+    type: "professional association — national membership body for practicing dentists; sets CDT billing codes and publishes practice/licensure guidance."
+  - name: "ADEA (American Dental Education Association)"
+    type: "professional association — membership body for all 87 U.S. and Canadian dental schools plus 800+ allied/advanced programs; runs ADEA AADSAS centralized admissions and publishes the Journal of Dental Education."
+clinical_education_shape: >
+  Dental clinical education is NOT organized as short block rotations through
+  different specialty services the way nursing/allied-health clinicals are.
+  Instead it runs on a "comprehensive care" longitudinal model: starting in
+  year 1, each student is assigned their own patient panel and, in years 3-4
+  (roughly 32 hrs/week of direct patient care), acts as the primary treatment
+  provider for those patients across nearly all disciplines (restorative,
+  periodontics, endodontics, prosthodontics) for the remainder of the
+  program, with specialty "rotations" (pediatrics, oral surgery, urgent care,
+  community-based extramural clinics) layered on top rather than replacing
+  the core panel. Supervision is chairside and procedure-gated: a faculty
+  "clinical practice unit" (roughly 1 lead faculty + 1-2 additional
+  instructors per 2-student team) must inspect and sign off on each clinical
+  step (prep, impression, seating, etc.) before the student proceeds —
+  supervision is per-procedure, not per-shift or per-preceptor-assignment.
+  Progression is competency- and quota-based rather than calendar-based:
+  students must log a required number/type of completed procedures and pass
+  faculty-graded clinical competency exams, and because they are also
+  responsible for recruiting/retaining enough compliant patients to meet
+  those quotas, patient-sourcing shortfalls are a documented cause of
+  delayed graduation. Licensure adds a second structural layer allied health
+  doesn't have: beyond a written national exam (INBDE), most states also
+  require a separate hands-on clinical licensure exam administered by a
+  regional board (ADEX/CDCA-WREB), historically performed on live patients
+  and increasingly shifting to standardized manikin exams (e.g., CompeDont)
+  post-2020. Optional postdoctoral GME-equivalent training (CODA-accredited
+  GPR/AEGD residencies or 9 specialty residencies) exists but, unlike
+  medicine, is not required for general licensure to practice.
+distinctive_pain_points:
+  - claim: "Students are responsible for building and retaining their own longitudinal patient panel (not assigned rotating hospital patients), and insufficient patient volume/compliance is a documented, widespread cause of delayed graduation."
+    source: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11667986/ (Current challenges in dental education — a scoping review, PMC)"
+  - claim: "Clinical progression is gated by faculty sign-off on individual procedural steps and by quotas of completed/graded procedures and competency exams, rather than by completing a fixed-length rotation block — creating much finer-grained (and higher-volume) faculty evaluation and tracking needs than a typical nursing/allied-health preceptor model."
+    source: "https://www.dental.upenn.edu/admissions-academics/dmd-program/clinical-education/ (Penn Dental Medicine, DMD Clinical Education) and https://dental.buffalo.edu/education/dds-program1/about-the-program-dds/program-details/third-year.html (Univ. at Buffalo, D3 year clinical structure)"
+  - claim: "Beyond the national INBDE, most U.S. jurisdictions still require a separate hands-on regional clinical licensure exam (ADEX/CDCA-WREB), which was historically performed on live patients and only shifted toward standardized manikin-based testing (CompeDont) starting in 2020 — an extra licensure-exam layer with its own scheduling/logistics that allied-health licensure (e.g., NCLEX) does not have."
+    source: "https://adextesting.org/adex-dental/ and https://www.cdcaexams.org/category/dental-licensure/ (American Board of Dental Examiners / CDCA-WREB)"
+sources:
+  - "https://www.adea.org/detail-pages/blog/adea---news-and-events/2026/04/07/adea-releases-new-data-on-u.s.-dental-school-applicants-and-enrollees--2025-entering-class"
+  - "https://adanews.ada.org/new-dentist/2025/june/new-dental-schools-drive-increasing-enrollment/"
+  - "https://www.adea.org/docs/default-source/adea-main/publications/adea-trends/adea_trends_2024_25.pdf"
+  - "https://www.ada.org/resources/research/health-policy-institute/dental-education"
+  - "https://coda.ada.org/about-coda"
+  - "https://coda.ada.org/standards"
+  - "https://jcnde.ada.org/inbde"
+  - "https://jcnde.ada.org/inbde/inbde-history"
+  - "https://adextesting.org/cdca-wreb-cita-adex-finalize-merger/"
+  - "https://adextesting.org/adex-dental/"
+  - "https://www.cdcaexams.org/category/dental-licensure/"
+  - "https://www.dental.upenn.edu/admissions-academics/dmd-program/clinical-education/"
+  - "https://dental.buffalo.edu/education/dds-program1/about-the-program-dds/program-details/third-year.html"
+  - "https://dentistry.ucla.edu/academics-admissions/dds-program"
+  - "https://www.adea.org/home/about/about-adea/mission-and-vision"
+  - "https://en.wikipedia.org/wiki/American_Dental_Education_Association"
+  - "https://pmc.ncbi.nlm.nih.gov/articles/PMC11667986/"
+  - "https://pmc.ncbi.nlm.nih.gov/articles/PMC4939555/"
+  - "https://www.thescda.org/gpr-programs"

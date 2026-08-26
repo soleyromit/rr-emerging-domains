@@ -1,0 +1,213 @@
+competitor: "New Innovations"
+slug: "new-innovations"
+domains_served: ["DO", "MD"]
+category: "Residency/GME + UME management software (Graduate & Undergraduate Medical Education)"
+company:
+  founded: "1995 (per Crunchbase; not independently confirmed on new-innov.com)"
+  hq: "Uniontown, Ohio (per Crunchbase; not independently confirmed on new-innov.com)"
+  ownership: "Acquired by QGenda (a Hearst Health company) — acquisition completed July 9, 2025"
+
+# One entry per Prism pillar (see ../prism/capability-map.yaml) this competitor
+# is comparable on, plus any capability they have that Prism does not.
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: >
+      Full rotation/block/daily/clinic/on-call scheduling (desktop "MedScheduler"
+      drag-and-drop utility plus web scheduling), procedure logging with
+      supervision-level tracking and import from the ACGME Resident Case Log
+      System, continuity clinic patient-visit tracking, and a separate
+      UME clinical-scheduling module with rule-based templates and a
+      rotation lottery for 3rd/4th-year medical students.
+    depth_vs_prism: "ahead"
+    evidence: >
+      GME page lists "Rotation Scheduling," "Daily Schedule Management,"
+      "Procedure Logger" (with ACGME case-log import), and "Continuity
+      Clinic" as shipped features; UME page lists a separate clinical
+      scheduling module with rotation lottery and rule-based templates.
+    source: "https://www.new-innov.com/pub/gme_details.html"
+  - pillar: "Compliance Management"
+    competitor_capability: >
+      Dedicated "Credentialling Module" tracking licenses, certifications,
+      visas, and immunizations with expiration alerts; separate duty-hour
+      ("Work Hours Monitoring") module with violation tracking, configurable
+      rules, and automated notifications.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "Credentialling Module: Centralized tracking of licenses,
+      certifications, visas, and immunizations with expiration alerts";
+      "Work Hours Monitoring: Violation tracking, rule configuration, and
+      automated notifications for duty hour compliance."
+    source: "https://www.new-innov.com/pub/gme_details.html"
+  - pillar: "Curriculum Mapping"
+    competitor_capability: >
+      Shipped, but only on the UME (medical-school) side: define curriculum
+      objectives "across MD/DO program stages," map skills/knowledge to
+      graduation requirements, run assessment-alignment reports, and submit
+      directly to the AAMC Curriculum Inventory portal. The GME side offers
+      only "curriculum distribution" (sharing materials), not true mapping.
+    depth_vs_prism: "at-parity"
+    evidence: >
+      "Curriculum Management — Define objectives across MD/DO program
+      stages... Direct submission to AAMC Curriculum Inventory portal";
+      by contrast the GME feature list only shows "Rotation Goals &
+      Materials: Attach curriculum materials and track trainee review
+      completion," which is distribution, not mapping.
+    source: "https://www.new-innov.com/pub/ume.html"
+  - pillar: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    competitor_capability: >
+      "Evaluations Builder" for custom evaluation forms, automated 360°
+      evaluation generation for trainees/faculty/ancillary staff, anonymous
+      resident evaluations, and conference-attached surveys — all shipped
+      today, ahead of Prism's Q1 2027 roadmap target for this pillar.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "Evaluations Builder: Customizable form creation with multiple
+      question types and real-time editing capabilities"; "360° Evaluation
+      Process: Automated generation for trainees, faculty, and ancillary
+      staff"; homepage also lists "Anonymous evaluations" for UME.
+    source: "https://www.new-innov.com/pub/gme_details.html"
+  - pillar: "Exam Management (Prism roadmap Q2 2027)"
+    competitor_capability: >
+      No dedicated exam-authoring/administration module was found. The only
+      exam-adjacent capability publicly documented is distribution/tracking
+      of shelf-exam scores within the UME suite, per a customer testimonial
+      (Touro College of Osteopathic Medicine) — this is score tracking, not
+      exam creation or delivery.
+    depth_vs_prism: "unknown"
+    evidence: >
+      Testimonial from Touro College of Osteopathic Medicine: "We utilize
+      the software to receive student evaluations...distribute shelf exam
+      scores...track credentialed faculty...and maintain student
+      credentialing files." No standalone "exam management" feature or page
+      was found on new-innov.com.
+    source: "https://www.new-innov.com/pub/ume.html"
+  - pillar: "Accreditation Management (Prism roadmap Q3 2027)"
+    competitor_capability: >
+      Ships today (Prism does not until Q3 2027): "CLER Visit Management"
+      (tracking visit dates, key personnel, comments for ACGME Clinical
+      Learning Environment Review visits), "Accreditation Tools" for the
+      ACGME Next Accreditation System (NAS), "Annual Program Evaluations
+      (APE)" with trend analysis and citation/concern tracking, and "CCC
+      Milestone Review" aggregating evaluation data into competency spider
+      graphs for Clinical Competency Committees.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "CLER Visit Management," "Accreditation Tools: Next Accreditation
+      System support with problem identification and correction
+      capabilities," "Annual Program Evaluations (APE): Cross-program
+      performance review with trend analysis and citation/concern
+      tracking," "CCC Milestone Review: Evaluation data aggregation with
+      spider graphs."
+    source: "https://www.new-innov.com/pub/gme_details.html"
+
+strengths:
+  - claim: >
+      Positioned by its acquirer as "the industry's largest provider of
+      residency management software," with over 25 years serving GME
+      programs.
+    source: "https://www.qgenda.com/newsroom/qgenda-announces-acquisition-of-new-innovations/"
+  - claim: >
+      Accreditation-specific functionality (APE, NAS support, CLER visit
+      management, CCC milestone review) is already shipped, not roadmap —
+      a direct gap against Prism's own Q3 2027 target for this pillar.
+    source: "https://www.new-innov.com/pub/gme_details.html"
+  - claim: >
+      Deep financial/billing automation tied to GME funding: contract
+      configuration and Medicare Cost Report (IRIS) automation for
+      institutions managing "$6.2 billion in Medicare/CMS reimbursement"
+      annually — a workflow Prism does not appear to address at all.
+    source: "https://www.new-innov.com/pub/gme_details.html"
+  - claim: >
+      Broad, established install base spanning both UME and GME: homepage
+      cites "105,000 Residents, Fellows, & Student Trainees" and 740
+      enterprise-wide customers, including Touro College of Osteopathic
+      Medicine (a DO program) on the UME side.
+    source: "https://www.new-innov.com/pub/"
+  - claim: >
+      Now backed by QGenda / Hearst Health's healthcare workforce-management
+      scale following the July 2025 acquisition, which QGenda frames as
+      extending its scheduling platform across "the resident and fellow
+      training lifecycle."
+    source: "https://www.qgenda.com/newsroom/qgenda-announces-acquisition-of-new-innovations/"
+
+weaknesses:
+  - claim: >
+      Curriculum mapping is confined to the UME product; the GME product
+      only offers curriculum "distribution" (sharing materials and tracking
+      review), not the objective-mapping/AAMC Curriculum Inventory
+      functionality that exists on the UME side. A residency program alone
+      does not get true curriculum mapping.
+    source: "https://www.new-innov.com/pub/gme.html"
+  - claim: >
+      A third-party (competing) scheduling-software vendor's comparison blog
+      characterizes New Innovations' scheduling module as requiring manual
+      rule setup rather than an automated constraint-solving engine, saying
+      programs with complex call structures or multi-department dependencies
+      "may hit limitations quickly." This is a competitor's characterization,
+      not verified first-hand, and should be treated as directional only.
+    source: "https://schedulingwiz.com/blog/best-gme-residency-tools"
+  - claim: >
+      No dedicated, publicly documented exam-authoring/administration
+      module was found (only shelf-exam score distribution/tracking via a
+      customer testimonial) — unable to verify whether a full exam-
+      management capability exists.
+    source: "https://www.new-innov.com/pub/ume.html"
+  - claim: >
+      No public G2 or Capterra review listing could be located for
+      New Innovations, and no public pricing information is published —
+      both reduce the amount of independently verifiable buyer sentiment
+      and pricing data available for competitive comparison.
+    source: "unable to verify"
+  - claim: >
+      The company was acquired by QGenda in July 2025, which historically
+      introduces integration, roadmap, and support-continuity uncertainty
+      for existing customers during the transition period (not yet publicly
+      resolved either way).
+    source: "https://www.qgenda.com/newsroom/qgenda-announces-acquisition-of-new-innovations/"
+
+retention_anchor: >
+  Decades of accumulated resident/student performance records, procedure
+  logs, ACGME milestone and CCC evaluation history, credentialing files, and
+  institution-specific Medicare Cost Report (IRIS) / billing configurations
+  live inside New Innovations — migrating any of this, especially the
+  CMS/Medicare reimbursement workflows tied to a stated $6.2B in annual
+  processed reimbursement, carries real financial and compliance risk for a
+  GME office. A 740-customer enterprise base and 25+ years of institutional
+  process built around the tool add further switching friction.
+  (https://www.new-innov.com/pub/gme_details.html,
+  https://www.qgenda.com/newsroom/qgenda-announces-acquisition-of-new-innovations/)
+
+exxat_opportunity: >
+  New Innovations' single biggest edge is that it already ships accreditation-
+  specific tooling (APE, NAS support, CLER visit management, CCC milestone
+  review) that Prism does not plan to ship until Q3 2027 — so until Prism
+  closes that gap, New Innovations (and its GME incumbency generally) is the
+  safer choice for any DO/MD program whose buying conversation centers on
+  accreditation readiness. Prism's opening is architectural, not feature-
+  count: New Innovations' curriculum mapping only exists in its separate UME
+  product, with GME left with mere material "distribution," and its
+  scheduling is reportedly rule-based rather than constraint-solved for
+  complex call structures. Prism can position a single unified pillar set
+  (Clinical & Experiential Education, Compliance, Curriculum Mapping) that
+  already spans both the placement/rotation side and true curriculum mapping
+  in one system — rather than New Innovations' split UME/GME products — and
+  should prioritize shipping Accreditation Management (Q3 2027) with
+  DO-specific (COCA) and MD-specific (LCME/ACGME) standards built in from day
+  one, since that is the exact terrain where New Innovations currently wins
+  outright. The QGenda acquisition (July 2025) is also a live disruption
+  window worth watching: customers uneasy about product-roadmap changes
+  under new ownership are a natural displacement opportunity in the next
+  12-18 months.
+
+pricing_signal: "not publicly disclosed"
+
+last_researched: "2026-08-24"
+
+sources:
+  - "https://www.new-innov.com/pub/"
+  - "https://www.new-innov.com/pub/gme.html"
+  - "https://www.new-innov.com/pub/gme_details.html"
+  - "https://www.new-innov.com/pub/ume.html"
+  - "https://www.qgenda.com/newsroom/qgenda-announces-acquisition-of-new-innovations/"
+  - "https://www.crunchbase.com/organization/new-innovations-inc"
+  - "https://schedulingwiz.com/blog/best-gme-residency-tools"

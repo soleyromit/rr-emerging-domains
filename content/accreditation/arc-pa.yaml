@@ -1,0 +1,621 @@
+# ARC-PA (Accreditation Review Commission on Education for the Physician
+# Assistant) — PA domain.
+#
+# DOMAIN FIELD NOTE: every other file in this directory uses `domain` for one of
+# the four expansion markets (DO / Pharmacy / Dentistry / Medicine). ARC-PA is
+# NOT one of those four — PA is a discipline Exxat Prism already serves in
+# production today. `domain: "PA"` is therefore deliberate: this file is the
+# INCUMBENT baseline (what "good" looks like when Prism is genuinely built for
+# an accreditor) against which the four expansion-domain files should be read.
+# It is the only accreditation file in this repo where most elements are
+# Transfer/Configure rather than Gap, and that contrast is the point.
+#
+# Researched against the CURRENT/live 6th Edition ("6e") Standards, effective
+# September 1, 2025 — not the superseded 5th Edition. Every element_id below is
+# a 6e number verified line-by-line against the live ARC-PA PDF; where an Exxat
+# source document cited a 5e number that no longer exists in 6e, that is called
+# out explicitly in gap_notes rather than silently carried forward.
+#
+# NOTE ON SOURCE HANDLING (ARC-PA AI POLICY): unlike COCA, ARC-PA does NOT
+# prohibit entering its standards into an AI platform. It does, however, carry
+# an explicit AI policy that this workstream is squarely inside of — ARC-PA
+# Policies v14 (04.25.2026), Policy 9.5 "Use of Artificial Intelligence in
+# Accreditation-Related Processes" (p. 46): programs are "encouraged to avoid
+# any AI systems that use uploaded materials to train their models or that lack
+# strong security protections"; "the use of AI should be avoided when it
+# diminishes opportunities for reflection, dialogue, and collective ownership of
+# the accreditation process"; and "Human review and verification are expected
+# for all materials submitted to the ARC-PA." Policy 9.4 (p. 45) adds that using
+# "consultants, artificial intelligence, or materials adopted from other
+# programs does not relieve the program and sponsoring institution of" its
+# responsibility for accuracy. Two product consequences worth flagging to
+# Product/Legal BEFORE any PA-facing accreditation-AI marketing: (1) Leo AI's
+# existing opt-in consent flow, data-deletion right, and never-auto-apply
+# design are exactly the posture 9.5 asks for and should be positioned that way;
+# (2) any future "generate the self-study narrative" feature must be framed as
+# drafting-with-mandatory-human-verification, never as automated submission —
+# 9.5 explicitly disfavors AI that displaces faculty reflection and dialogue.
+# This file was built by fetching the public ARC-PA PDFs through AI-mediated
+# tools to paraphrase requirements for internal product planning; it does not
+# reproduce the standards document verbatim beyond short cited quotations.
+
+accreditor: "ARC-PA (Accreditation Review Commission on Education for the Physician Assistant, Inc.)"
+slug: "arc-pa"
+domain: "PA"
+governs: "Entry-level (and, under a separate standards set, clinical postgraduate) Physician Assistant educational programs in the United States; the sole programmatic accreditor for PA education, recognized by CHEA, and the accreditation gate on NCCPA PANCE eligibility for a program's graduates"
+standards_document:
+  title: "Accreditation Standards for PA Education, Sixth Edition"
+  version_or_year: "Sixth Edition — first published August 18, 2025; effective September 1, 2025. Cover-page change notifications run through 10/03/25 (Preamble added; C1.02 revised to remove the graduate-data requirement; C1.03 rescinded in its entirety). NOTE: the published PDF is internally inconsistent — page footers still read 'Updated September 2025' and the full text of the rescinded C1.03 still appears on p. 20 despite the cover-page rescission notice. Treat the cover-page change log as authoritative over the body text for C1.03."
+  url: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf"
+
+standards:
+  - element_id: "Standard A1, Element A1.10 a-b"
+    element_title: "Sufficiency of Clinical Sites and Preceptors; Non-U.S. Sites Restricted to Electives"
+    evidence_programs_must_produce: >
+      Proof the sponsoring institution secures clinical sites and preceptors
+      sufficient in number for ALL students to meet the program's SCPE learning
+      outcomes, plus proof that any clinical site or preceptor located outside
+      the United States is used only for ELECTIVE rotations (a 6e tightening —
+      5e had no elective-only restriction). Practically this means the number of
+      written affiliation agreements, the method used to confirm site
+      availability, and the number of students each site can accommodate, per
+      setting and per cohort, filterable by geography.
+    required_software_behavior: >
+      Confirmed-slot capacity must be a first-class field sourced from the site
+      itself rather than an admin's estimate, tagged by setting, location, state
+      or country, and cohort, and exportable in a shape that lines up row-for-row
+      with the ARC-PA Entry Level Program Portal's own SCPE data-entry screen so
+      a program can diff Prism against the portal.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Already built and named for this standard. The Clinical & Experiential
+      Education pillar's "Slot Request" feature collects confirmed availability
+      directly from site partners (site-based or preceptor-based), and those
+      responses populate the SCPE Details report (Sites > Reports > SCPE
+      Details) automatically, giving a true "slots offered" column rather than a
+      manual estimate. Exxat's own PA accreditation guide maps this report to
+      A1.10a-b and instructs programs to export to Excel and filter by state to
+      demonstrate all slots are within the United States. The playbook adds the
+      operational discipline: match site/location names in Prism exactly to the
+      ARC-PA portal ("gold in, gold out") and diff the two exports line by line.
+    gap_notes: "Sufficiency is asserted by eyeballing offered-vs-used per setting in Excel, not computed. No shipped pillar produces a pass/fail 'is capacity sufficient for this cohort' verdict, and A1.10b's non-U.S.-elective-only rule is enforced only by a manual state/country filter — a country field plus a hard validation that a non-U.S. location cannot be attached to a core-rotation slot would convert a manual audit into a system guarantee."
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 6, Standard A1.10 a-b). Report mapping and SSR Appendix 11a placement: Exxat Prism Help Center, 'Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition)', https://help.exxatprism.com/hc/en-us/articles/33318237420305"
+
+  - element_id: "Standard A2, Element A2.14"
+    element_title: "Preceptor Licensure — Valid, Unrestricted, and Unencumbered"
+    evidence_programs_must_produce: >
+      Documentation that every instructional faculty member actively serving as
+      an SCPE preceptor holds a valid, unrestricted, and unencumbered license to
+      practice. 6e added "unrestricted, and unencumbered" to the 5e wording, so
+      merely holding a license number on file is no longer the whole ask — the
+      program must be able to speak to the license's standing.
+    required_software_behavior: >
+      License number, issuing state, and expiration must live on the preceptor
+      record (not in a spreadsheet), be exportable in a single roster, and — the
+      part that actually prevents a citation — must block a student placement
+      from clearing when the assigned preceptor's license is missing or expired
+      relative to the placement dates.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      This is one of the cleanest fits in the whole file. Compliance Management's
+      Placement Clearance gate already evaluates four entities, not just the
+      student: student compliance status, site/location-specific documents,
+      active contracts, and the validity of the assigned preceptor's
+      license/board certification for their specialty. The Clearance Dashboard
+      runs a distinct three-state tracker (Missing / Exists / NA) specifically
+      for Preceptor CV, License, and Certification. Evidence comes out of the
+      Comprehensive Personnel Report (Sites > Reports > Comprehensive Personnel
+      Report), which carries Licensure Details and Certification Details per
+      preceptor.
+    gap_notes: "The three-state tracker proves a license record EXISTS; it does not encode 'unrestricted and unencumbered,' which is a status attribute (board action, probation, restriction) with no field today. For the expansion domains this is the reusable lesson: 6e-style wording changes turn a document-presence check into a document-STATUS check, and Prism's compliance taxonomy is presence-oriented."
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 8, Standard A2.14). Placement Clearance four-entity gating: /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md ('Placement Clearance Requirements')"
+
+  - element_id: "Standard A2, Elements A2.15 and A2.16 a-d"
+    element_title: "SCPE Preceptor Composition — Majority PA/Physician, and the New 10% Vetted-Clinician Allowance"
+    evidence_programs_must_produce: >
+      Proof that the MAJORITY (6e reworded 5e's "primarily" to "majority," i.e.
+      50% or more) of SCPE experiences for any INDIVIDUAL student occur with PAs
+      and physicians (A2.15), and that the SCPE instructional faculty consists
+      of PAs who hold or have held NCCPA certification, physicians who hold or
+      have held board certification, advanced practice nurses who hold or have
+      held board certification, and no more than 10% other clinicians the
+      program itself vets as qualified (A2.16 a-d). Both standards migrated from
+      5e's B3.05/B3.06a-c, and 6e dropped the requirement that certification be
+      in the area of instruction.
+    required_software_behavior: >
+      Two different computations off the same personnel data: a per-PRECEPTOR
+      credential-type roster (degree, certification body, certification status
+      including "previously certified") to compute the 10% non-PA/MD/APN
+      ceiling; and a per-STUDENT rollup across that student's completed SCPEs to
+      prove the majority-with-PAs-and-physicians test at the individual level.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The Comprehensive Personnel Report is Exxat's own named answer for both
+      A2.15 and A2.16 a-d — its Degree column is used to show most preceptors are
+      practicing physicians and PAs, and it gives a centralized exportable view
+      of licensure and board certification so programs can verify each preceptor
+      is licensed in the state where their assigned site operates. Compliance
+      Management already carries NCCPA certification details on the preceptor
+      personnel record as a documented PA-specific best practice. What is
+      missing is arithmetic, not data.
+    gap_notes: "Both thresholds are computed by hand in Excel today. A2.15's test is explicitly PER INDIVIDUAL STUDENT — it requires joining the placement roster to the preceptor credential roster and rolling up per student, which the Comprehensive Personnel Report (a preceptor-centric export) cannot do alone. A2.16d's 10% ceiling is a program-level ratio no report computes. Both are small, well-defined calculations sitting on data Prism already holds — the highest-ROI 'Configure' items in this file and a strong template for the ratio-threshold standards in ACPE/CODA."
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 9, Standards A2.15 and A2.16 a-d). 5e→6e relocation from B3.05/B3.06a-c: Exxat Prism Help Center, 'ARC-PA Standards Mapping: 5th Edition (5e) to 6th Edition (6e) Crosswalk', https://help.exxatprism.com/hc/en-us/articles/44871275606289"
+
+  - element_id: "Standard A3, Element A3.11 c"
+    element_title: "Publication of the NCCPA PANCE Exam Performance Summary Report"
+    evidence_programs_must_produce: >
+      The current annual "NCCPA PANCE Exam Performance Summary Report Last 5
+      Years," listing pass rates at each distant campus INDIVIDUALLY, provided by
+      NCCPA through its program portal, published and made readily available to
+      enrolled and prospective students when complete or no later than April 1
+      each year. 6e added the per-distant-campus breakout and the "current"
+      qualifier across all of A3.11 a-i; A3.11 i imposes the same April 1
+      deadline on the annual graduation-rate table ARC-PA provides.
+    required_software_behavior: >
+      Ingest (or accept manual entry of) NCCPA-reported five-year first-time pass
+      rates per cohort and per distant campus, hold them as structured data
+      rather than an uploaded PDF, drive a deadline/monitoring workflow against
+      the April 1 publication date, and publish to a public page.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      Nothing shipped touches licensure-exam outcome data. This is the intended
+      job of the roadmap Exam Management pillar (Q2 2027), and the shape of the
+      work is identical to COCA Element 11.4 in coca.yaml — an ingestion and
+      publication layer over an external certifying body's report, not exam
+      delivery. Prism cannot administer PANCE; NCCPA does.
+    gap_notes: "Two PA-specific wrinkles the COCA analogue does not have: the report must break out DISTANT CAMPUSES individually, so campus must be a dimension on the outcome record (Prism's campus/location modeling for PA distant campuses is already flagged as thin in admin-onboarding--03), and the April 1 deadline is a hard, recurring, publish-by date — argues for a deadline object in Accreditation Management, not just a data field."
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 10, Standard A3.11 c). NCCPA program portal and five-year pass-rate reporting: https://www.nccpa.net/pa-program-resources/"
+
+  - element_id: "Standard A3, Element A3.19 a-b"
+    element_title: "Program Records — Job Descriptions and Current CVs for PD, Medical Director, Principal Faculty"
+    evidence_programs_must_produce: >
+      For the program director, medical director, and principal faculty: a
+      current job description including duties, responsibilities, and required
+      qualifications SPECIFIC TO EACH FACULTY MEMBER (a new 6e requirement in
+      sub-standard a — a generic role description no longer satisfies it), plus
+      a current curriculum vitae. A3.20 extends the current-CV requirement to
+      every course director.
+    required_software_behavior: >
+      A structured faculty profile (education, employment, licenses,
+      certifications, awards, teaching/scholarship/service) that can emit a
+      formatted CV document on demand, with teaching history populated from the
+      courses the program actually assigned rather than self-reported — so the
+      CV cannot drift from the course record the site visitors are also reading.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      The exxat_advantage_layer "Faculty CV auto-generation" capability does
+      exactly this: faculty complete a structured profile and generate a compiled
+      .docx CV, with Teaching Details auto-populated from assigned courses and
+      broken out by academic year. Exxat's PA accreditation guide names the
+      'Generate CV' feature against A3.19b directly.
+    gap_notes: "Covers A3.19b (CV) cleanly; A3.19a (a per-person job description with individualized required qualifications) has no home — it is a document, and Compliance Management's faculty-compliance module is a document-collection mechanism that requires the paid Exxat Approve add-on to use. Worth checking whether a faculty compliance item type can hold a job description without forcing the program onto Approve Services."
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 12, Standard A3.19 a-b). 'Generate CV' mapping to A3.19b: Exxat Prism Help Center, 'Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition)', https://help.exxatprism.com/hc/en-us/articles/33318237420305"
+
+  - element_id: "Standard B1, Elements B1.01 a-d and B1.02"
+    element_title: "Curriculum Consistency with Mission, Goals, and Program Competencies; Sequencing That Builds on Prior Learning"
+    evidence_programs_must_produce: >
+      A demonstration that the curriculum is consistent with the program's
+      mission and goals, consistent with program competencies, includes core
+      knowledge about established and evolving biomedical and clinical sciences
+      and its application to patient care, and provides the breadth and depth to
+      prepare students for clinical practice (B1.01 a-d) — plus evidence that
+      course content and sequencing build on previously achieved student
+      learning (B1.02).
+    required_software_behavior: >
+      Pre-loaded, edition-correct accreditor standards as a mapping target;
+      mapping at both the whole-course and individual-course-objective grain;
+      program-authored custom standards (ILOs/PLOs) mappable alongside the
+      accreditor's; attributes that classify mapped content as knowledge-,
+      skill-, or behavior-based and at an instructional level; and exports in
+      both a standards-first and a courses-first orientation plus a coverage
+      matrix and an explicit gap list.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      The strongest incumbent evidence in this file, and the direct contrast with
+      the four expansion domains. Curriculum Mapping ships ARC-PA standards
+      PRE-LOADED, so a PA program maps on day one; it supports whole-course or
+      per-objective mapping, program-specific standards alongside accreditor
+      standards, and the confirmed PA attribute taxonomies (ARC-PA Themes, SCPE
+      settings, Lifespan, Interprofessional Education, Instructional Methods,
+      Assessment Methods). Reporting is a real suite, not a single export: Mapped
+      Standards Report, Mapped Courses Report, Cumulative Report, Heatmap Report
+      (X = ARC-PA standards, Y = course offerings), Course Attributes Usage, and
+      Mapping Attributes Usage. Most tellingly, the B2 Instructional Objectives
+      Report is an ARC-PA-FORMATTED export built specifically against 6th Edition
+      B/C/D sections — a multi-tab Excel file, one tab per standard with at least
+      one mapped objective, with sub-lettered standards such as B2.06a-f
+      consolidated onto a single tab.
+    gap_notes: "One concrete operational defect the PA playbook flags for CSS: the Heatmap Report cannot be downloaded — programs are advised to screenshot it. For a report whose entire purpose is accreditation-readiness evidence, screenshot-as-export is a real gap. Separately, B1.03 a-i (nine required syllabus elements per course) is adjacent and partially served by 'Generate Syllabus' but is not scoped as its own element here."
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 13, Standards B1.01 a-d and B1.02). Pre-loaded ARC-PA standards, attribute taxonomies, and the seven-report suite incl. the non-downloadable Heatmap: /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+
+  - element_id: "Standard B3, Element B3.01 a-e"
+    element_title: "SCPE Learning Outcomes — Telehealth Ceilings and the In-Person Direct-Patient-Care Requirement"
+    evidence_programs_must_produce: >
+      Proof the program secures a sufficient number of qualified preceptors and
+      clinical sites; that telehealth/telemedicine is limited to no more than 50%
+      of any INDIVIDUAL SCPE (behavioral health excepted); that no more than 20%
+      of the TOTAL SCPE experiences for any individual student across the
+      clinical year are telehealth; that all SCPEs require in-person, direct
+      patient care except telehealth in behavioral health; and that behavioral
+      health SCPEs may run up to 100% telehealth provided all learning outcomes
+      are met. The three numeric ceilings are entirely new in 6e.
+    required_software_behavior: >
+      A delivery-mode dimension on the unit of clinical work, aggregated two
+      different ways — per course (for the 50% single-SCPE cap) and across all
+      courses per student (for the 20% clinical-year cap) — with behavioral
+      health excluded from the first test and exempted from the second, plus a
+      way to identify which locations even offer telehealth.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Exxat has already worked this out end-to-end and documents two options with
+      an explicit recommendation. Option 1 (recommended): configure Timesheet
+      categories with the SINGLE-SELECT option and add
+      "Telehealth/Telemedicine," then run Learning Activities > Reports > Hours
+      by Categories to pull each student's telehealth hours per course (50% cap)
+      and across all courses (20% cap). Option 2, for programs not on Timesheets:
+      a Telehealth Visit indicator under the Patient Log's Clinical Setting type
+      — with Exxat's own documented caveat that patient logs count ENCOUNTERS,
+      not time, so eight 10-minute telehealth visits and two 40-minute in-person
+      visits represent equal time but wildly different encounter percentages.
+      Separately, a location-level "Telehealth/Telemedicine" tag identifies which
+      sites offer it. All of this rides on shipped Clinical & Experiential
+      Education plumbing; the work is configuration.
+    gap_notes: "Two live risks. (1) The single-vs-multi-select choice at Timesheet category setup silently breaks the percentage math if set wrong — per admin-onboarding--08 this is a day-one setup decision with accreditation consequences and no guardrail. (2) Nothing computes the 50%/20% ratios or alerts on approach — the report emits hours and a human divides. Given these are hard numeric ceilings with citation consequences, a computed ratio with a threshold alert is the obvious next increment and would generalize directly to the percentage-threshold standards in the expansion domains."
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 18, Standard B3.01 a-e). Timesheet-vs-patient-log tracking options, the encounter-vs-time caveat, and the Hours by Categories navigation: Exxat Prism Help Center, 'Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition)', https://help.exxatprism.com/hc/en-us/articles/33318237420305"
+
+  - element_id: "Standard B3, Element B3.02 a-c"
+    element_title: "Initial and Ongoing Evaluation of All SCPE Sites and Preceptors"
+    evidence_programs_must_produce: >
+      A documented process showing the INITIAL and ONGOING evaluation of every
+      site and preceptor used for SCPEs, ensuring students have access to (a) the
+      physical facilities needed to meet that specific SCPE's learning outcomes,
+      (b) the patient populations needed to meet those outcomes, and (c)
+      supervision. This is 5e C2.01 a-c renumbered into B3 — an example of why
+      citing the 5e number would be wrong here.
+    required_software_behavior: >
+      A self-service form builder producing two distinct instruments (pre-
+      placement site visit and in-rotation site visit) with the three required
+      access dimensions as explicit questions, results attributable to a named
+      site/location/preceptor, and a single cross-site report a visitor can read
+      as a trend rather than a stack of individual forms.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      The Clinical & Experiential Education pillar's Site Assessment feature is
+      built for this: a self-service Form Setup builder (Sites > Setup > Form
+      Setup, 11 question types incl. attestation and e-signature) that PA
+      programs are instructed to use to create "Initial Site Visit" and "Ongoing
+      Site Visit" forms, with results rolling into the Comprehensive Site
+      Assessment report (Sites > Reports > Comprehensive Assessment Report >
+      Select Form). Exxat's guide maps this report to B3.02 a-c and places it in
+      SSR Appendix 15. The Site Assessment feature also tags which students were
+      on rotation during a given visit.
+    gap_notes: "The three sub-standards (facilities / patient populations / supervision) are conventions the program has to remember to build into its own custom form — nothing ships a B3.02-shaped template, and nothing detects that a site has no ONGOING assessment on record within a defined interval. 'Initial and ongoing' is a recurrence obligation; the form builder has no recurrence semantics."
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 18, Standard B3.02 a-c). 5e C2.01a-c → 6e B3.02a-c renumbering: Exxat Prism Help Center, 'ARC-PA Standards Mapping: 5th Edition (5e) to 6th Edition (6e) Crosswalk', https://help.exxatprism.com/hc/en-us/articles/44871275606289"
+
+  - element_id: "Standard B3, Element B3.03 a-c"
+    element_title: "SCPE Learning Outcomes for Preventive, Acute, and Chronic Patient Encounters"
+    evidence_programs_must_produce: >
+      Evidence that SCPEs enable ALL students to meet the program's learning
+      outcomes for preventive, acute, and chronic patient encounters — three
+      separately-numbered sub-standards in 6e, where 5e had a single B3.03a.
+      Programs must define the outcomes, make stakeholders aware of them, and
+      describe the process, methods, and data showing students achieved them.
+    required_software_behavior: >
+      A competency framework whose nodes are the accreditor's own lettered
+      sub-standards, fed by scored questions on real preceptor/faculty evaluation
+      instruments, producing both a cohort-level view (did everyone clear the
+      threshold) and a per-student drill-down.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Exxat documents the exact setup recipe: create a program-specific standard
+      named "ARC-PA B3.03/B3.04 outcomes" listing sub-requirements a-c, map
+      evaluation questions to those categories, then read results at Competency
+      Management > Review > Select competency. The Competency Tracking engine
+      behind it is mature — pooled-mean parent scoring, configurable pass
+      threshold (default 70%), Student Proficiency Distribution and Score
+      Distribution box plots at cohort level, and a per-student View Report and
+      course-based report. The configuration work is authoring the framework and
+      mapping the questions.
+    gap_notes: "Two things. (1) B3.03 is Prism's own product-named framework in a PROGRAM-SPECIFIC standard, not a pre-loaded ARC-PA competency framework — the pre-loaded ARC-PA content serves Curriculum Mapping, not Competency Management, so every PA program rebuilds the same B3.03 framework by hand. Pre-shipping it is trivial content work with real onboarding value. (2) Exxat flags a live citation risk here: mid-point and end-of-rotation evaluations of the same student by the same preceptor must be substantively consistent — programs have been cited when formative mid-point feedback contradicts the summative assessment — and nothing in the product detects that divergence."
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 18, Standard B3.03 a-c). Competency framework setup recipe, SSR Appendix 14D placement, and the mid-point/end-of-rotation consistency citation risk: Exxat Prism Help Center, 'Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition)', https://help.exxatprism.com/hc/en-us/articles/33318237420305"
+
+  - element_id: "Standard B3, Element B3.04 a-d"
+    element_title: "Required SCPE Settings — Emergency Department, Inpatient, Outpatient, Operating Room"
+    evidence_programs_must_produce: >
+      Documentation that supervised clinical practice experiences occur in all
+      four named settings: emergency department, inpatient, outpatient, and
+      operating room. In practice programs demonstrate this four ways at once —
+      placement schedules per student across all four settings, logged patient
+      encounters attributed to those settings, student evaluations of sites and
+      preceptors, and school-conducted site assessments.
+    required_software_behavior: >
+      Setting must be a controlled attribute on both the location and the logged
+      encounter, so per-student exposure can be rolled up by setting and gaps can
+      be spotted mid-clinical-year while there is still time to re-place a
+      student, not at graduation.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Directly served and named for this standard. The PA best practice is to tag
+      locations with the four ARC-PA settings (Outpatient, Inpatient, Emergency
+      Department, Operating Room). Evidence comes from the Patient Log Aggregated
+      Log Details report (Learning Activities > Learning Activity Group > Reports)
+      grouped by student, or by clinical experience/site/setting; and from the
+      Comprehensive Report Patient Log, which Exxat calls one of the most
+      important patient-logging reports in Prism for exactly this standard —
+      filterable by date range, course/rotation, site, location, setting, or
+      cohort, groupable six ways, with two-level click-through drill-down from any
+      numeric cell into the underlying individual logs. Diagnosis and Procedure
+      Minimums let programs set per-rotation encounter floors so students see gaps
+      in real time.
+    gap_notes: "Per the capability map, the patient-log form is a support-configured TEMPLATE — only a standard template ships, and new templates or edits require a CSS agent, Account Manager, or support ticket. For B3.04 the template's field set IS the accreditation evidence model, and it is not admin-editable. Also note the auto-approve toggle is mutually exclusive with both preceptor review and the student attestation, so a program cannot have frictionless logging and a signed integrity attestation at once."
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 18, Standard B3.04 a-d). Four-report evidence strategy and SSR Appendix 14D: Exxat Prism Help Center, 'Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition)', https://help.exxatprism.com/hc/en-us/articles/33318237420305; ARC-PA setting tagging and Comprehensive Report Patient Log detail: PA Playbook.md"
+
+  - element_id: "Standard B3, Element B3.05 a-f"
+    element_title: "SCPE Learning-Outcome Domains (New 6e Standard)"
+    evidence_programs_must_produce: >
+      Evidence that SCPEs collectively support achievement of learning outcomes
+      across six domains: medical knowledge, interpersonal skills, clinical
+      skills, technical skills, professional behaviors, and clinical reasoning
+      and problem-solving abilities. This is a genuinely NEW 6e standard — it
+      promotes the component parts of a "learning outcome" out of the 5e glossary
+      into a standard of its own, so 5e-era self-study evidence has no direct
+      predecessor to reuse.
+    required_software_behavior: >
+      The same competency-framework mechanism as B3.03, instantiated against a
+      different six-node taxonomy, with the six domains restated in course
+      syllabi and on rotation evaluation instruments so the mapped questions and
+      the published outcomes are provably the same set.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Exxat documents the recipe explicitly: create a program-specific standard
+      named "Student Learning Outcomes" listing sub-requirements a-f, map
+      evaluation questions to those categories, and read the cohort bird's-eye
+      and per-student competency reports. The supporting best practice is that
+      those outcomes be listed in the course syllabi as well as the rotation
+      evaluations, and that syllabi be shared with students AND preceptors in
+      Prism — which the Curriculum Mapping pillar's Generate Syllabus feature and
+      the course-level "Share with Site" toggle both support.
+    gap_notes: "Because B3.05 is new in 6e, no pre-loaded framework and no legacy evidence exist — every PA program builds this six-node framework by hand right now. That makes it the single best argument in this file for shipping accreditor competency frameworks as pre-loaded content in Competency Management the way ARC-PA standards are already pre-loaded in Curriculum Mapping, and it is exactly the situation each expansion domain will be in on day one."
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 18-19, Standard B3.05 a-f). Confirmation that B3.05 a-f is a new 6e standard promoted from the glossary: Exxat Prism Help Center, 'ARC-PA Standards Mapping: 5th Edition (5e) to 6th Edition (6e) Crosswalk', https://help.exxatprism.com/hc/en-us/articles/44871275606289"
+
+  - element_id: "Standard B3, Element B3.06 a-g"
+    element_title: "Preceptor-Enabled Learning Outcomes by Specialty"
+    evidence_programs_must_produce: >
+      Three linked artifacts: a list of preceptors currently providing SCPEs and
+      their AREA OF PRACTICE; a clinical rotation schedule showing the supervising
+      preceptor's area of practice for each placement; and evaluation results
+      demonstrating students met program-defined learning outcomes after SCPEs
+      with those preceptors — across family medicine, emergency medicine
+      (including emergent care), internal medicine (including elderly patients),
+      surgery (pre-, intra-, and post-operative care), pediatrics (infants,
+      children, adolescents), women's health (prenatal and gynecologic), and
+      behavioral and mental health care.
+    required_software_behavior: >
+      Area of practice as a field on the preceptor record; a placement view keyed
+      by preceptor rather than by student or site; and an evaluation aggregate
+      that can be grouped simultaneously by student, preceptor, and setting so
+      the three artifacts join on the same keys.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      All three legs exist. The Comprehensive Personnel Report carries area of
+      practice (Exxat's documented best practice is to enter it on each
+      preceptor's personnel profile so it surfaces there). The Preceptor-Based
+      Placement Report — one of the six named Placement Reports under Placements >
+      Placement Group > Reports, built against a placement group spanning the
+      whole clinical year — shows all planned and completed placements by
+      preceptor. And the Aggregate Report for Placement-Based Forms, run on the
+      Preceptor Evaluation of Student form and grouped by student, preceptor, and
+      setting, supplies the outcome leg.
+    gap_notes: "Exxat's own documented workflow is to COPY practice settings out of the Comprehensive Personnel Report and paste them into the preceptor-based placement report — i.e. the join between preceptor credentials and placements is a manual Excel step, not a query. That copy-paste seam is the concrete, nameable thing a B3.06 report inside Accreditation Management would eliminate, and the same seam recurs in every accreditor standard that asks 'did the right kind of supervisor deliver the right kind of experience.'"
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 19, Standard B3.06 a-g). Copy-paste join workflow, report navigation, and SSR Appendix 14D: Exxat Prism Help Center, 'Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition)', https://help.exxatprism.com/hc/en-us/articles/33318237420305"
+
+  - element_id: "Standard B4, Element B4.01 a-b"
+    element_title: "Frequent, Objective, Documented Student Evaluation and Timely Identification of Deficiencies"
+    evidence_programs_must_produce: >
+      Documentation of frequent, objective, documented evaluations of student
+      performance across both didactic and SCPE components, where the evaluations
+      (a) align with what is expected and taught and (b) allow the program to
+      identify and address any student deficiencies IN A TIMELY MANNER — plus the
+      paper trail of what the program actually did once a deficiency surfaced:
+      advising meetings, remediation plans, follow-ups.
+    required_software_behavior: >
+      Two halves. A detection half that flags a struggling student DURING a
+      rotation rather than at its end, keyed to the specific evaluation question
+      tied to a program learning outcome. And a documentation half — a structured,
+      status-bearing record of the meeting, the plan, the attachments, and the
+      follow-up dates — so "timely" is provable by timestamp rather than assertion.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Both halves ship. Detection: the Intelligence layer's Low Score Threshold
+      Alerting runs two mechanisms — a form-level Low Score Notification that
+      red-highlights and auto-emails placement faculty when an evaluation's
+      overall score drops below a configured threshold, and a question-level
+      Response-Based Notification that fires on a specific question failing a set
+      criterion. Exxat's PA guide frames this explicitly as how PA programs avoid
+      an ARC-PA citation under B4.01. Documentation: Compliance Management's
+      Interventions (distinct from Communications, carrying a formal Open/Closed
+      status and structured Follow-Ups with planned vs. actual dates and
+      attachments up to 25MB), surfaced via Students > Reports > Interventions and
+      Communications — which Exxat's own report catalog names against ARC-PA
+      B4.01b.
+    gap_notes: "Two frictions. Both alert mechanisms require an Exxat Support or Account-Manager ticket naming each recipient's first name, last name, and email — not self-service — so the recipient list is a manually maintained artifact that goes stale. And per the capability map there is currently NO dedicated Interventions report for follow-up triage; the only view of interventions needing follow-up is the Sites/Locations Dashboard on a 24-hour refresh, bucketed More than 7 days / Next 7 days / Past Due. For a standard whose whole test is timeliness, a 24-hour-stale dashboard is a thin surface."
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 19, Standard B4.01 a-b). Low-score/response-based alerting framed as citation avoidance under B4.01, and the Interventions and Communications report path: Exxat Prism Help Center, 'Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition)', https://help.exxatprism.com/hc/en-us/articles/33318237420305"
+
+  - element_id: "Standard B4, Element B4.03 a-e"
+    element_title: "Summative Evaluation Within the Final Four Months"
+    evidence_programs_must_produce: >
+      A conducted and documented summative evaluation of EACH student within the
+      final four months of the program, verifying that each student meets all
+      program-defined competencies required to enter clinical practice, across
+      clinical and technical skills, clinical reasoning and problem-solving
+      abilities, interpersonal skills, medical knowledge, and professional
+      behaviors.
+    required_software_behavior: >
+      A per-student, per-competency verdict that is (a) attributable to a named
+      evaluator, (b) date-stamped inside a specific four-month window relative to
+      that student's own program end date, and (c) assembled from more than one
+      instrument — end-of-rotation evaluations, patient-log diagnosis/procedure
+      minimums, external exam scores, OSCEs, faculty rubrics.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Two documented paths. Path one: a program-specific standard named "Program
+      defined competencies" with evaluation questions mapped to it, read out of
+      Competency Management as a per-student competency report. Path two, also
+      documented by Exxat: a summative evaluation form per student attached to a
+      placeholder course or the final rotation — a milestone qualitative
+      evaluation completed by the DCE or faculty drawing on end-of-rotation
+      evaluations, patient-log diagnosis and procedure minimums, PAEA end-of-year
+      exam scores, OSCEs, and school rubrics — read out via the Evaluation
+      Aggregate Report. Both ride shipped Clinical & Experiential Education and
+      Competency Tracking machinery.
+    gap_notes: "Nothing enforces or even checks the FOUR-MONTH WINDOW, which is the operative constraint of the standard — a summative evaluation completed five months out satisfies every report in Prism and fails B4.03. Path two also depends on manually keying in PAEA exam scores, since no shipped pillar ingests external exam data (see the licensure layer below). SSR Appendix 14E."
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 19, Standard B4.03 a-e). Both documented setup paths and SSR Appendix 14E: Exxat Prism Help Center, 'Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition)', https://help.exxatprism.com/hc/en-us/articles/33318237420305"
+
+  - element_id: "Standard C1, Element C1.01 (with C1.02)"
+    element_title: "Ongoing Program Self-Assessment — the Nine Required Data Streams"
+    evidence_programs_must_produce: >
+      Documented ongoing self-assessment of the program's overall effectiveness
+      in operating the program and preparing graduates for clinical practice —
+      collecting data, using critical analysis to draw conclusions, and creating
+      self-improvement action plans — using at minimum: program-defined
+      admissions data; PANCE scores and sub-scores; didactic, clinical, and
+      overall attrition; course grades (didactic and clinical, including exam
+      scores as appropriate); course and instructor evaluations INCLUDING clinical
+      sites and preceptors; summative evaluation results; graduate/exiting student
+      evaluation of the program; program-defined measures of effectiveness of the
+      program director, principal faculty, and medical director outside of
+      teaching; and remediation. C1.02 imposes the same collect/analyse/act cycle
+      on personnel sufficiency (student/faculty/staff evaluation of sufficiency by
+      type or task, filled and vacant FTE with attrition rates, and a workload
+      calculation per faculty and staff member).
+    required_software_behavior: >
+      An evidence spine that holds nine heterogeneous data streams against one
+      standard, half of which originate outside the platform (PANCE, admissions),
+      and — the part nothing does — a closed "finding → analysis → action plan →
+      evidence-of-change" loop queryable by cycle, since the standard's verb is
+      not "collect" but "create self-improvement action plans."
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      Prism supplies inputs, not the loop. Three of the nine streams are strong
+      today (course/instructor and site/preceptor evaluations via the
+      Forms/Evaluations engine; summative results via B4.03 above; remediation via
+      Interventions). Graduate/exiting student evaluation is served by Exxat
+      Surveys, which Exxat's own guide points at this section. PANCE scores and
+      sub-scores are a hard Gap pending Exam Management (Q2 2027). Admissions data
+      and the PD/MD/principal-faculty effectiveness measures have no home at all,
+      and C1.02's FTE and per-person workload calculations are HR data Prism does
+      not model. Assembling and closing the loop across all of it is the literal
+      job description of the roadmap Accreditation Management pillar (Q3 2027).
+    gap_notes: "IMPORTANT 5e/6e CORRECTION: Exxat's own PA accreditation guide files its Exxat Surveys / Graduate Survey content under 'Accreditation Standard – C2.01 a-c', and the PA playbook repeats that citation. There is NO C2.01 in the 6th Edition — 5e C2.01 a-c was renumbered into 6e B3.02 a-c (site/preceptor evaluation), while the graduate-survey content the guide actually describes belongs under 6e C1.01's 'graduate/exiting student evaluation of the program' bullet. That is a stale 5e citation surviving inside a document titled '6th Edition' and should be reported to Exxat's content team. Note also that 6e C1.02 dropped its graduates requirement and 5e C1.03 (administrative-resource sufficiency) was rescinded entirely — though the rescinded C1.03 text still erroneously prints on p. 20 of the published PDF."
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 20, Standards C1.01 and C1.02; cover-page change notification dated 10/03/25 for the C1.02 revision and C1.03 rescission). Stale C2.01 citation: Exxat Prism Help Center, 'Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition)', https://help.exxatprism.com/hc/en-us/articles/33318237420305; renumbering confirmed in the 5e→6e Crosswalk, https://help.exxatprism.com/hc/en-us/articles/44871275606289"
+
+licensure_or_gme_layer:
+  - body: "NCCPA / PANCE (National Commission on Certification of Physician Assistants)"
+    what_it_governs: >
+      NCCPA describes itself as "the only certifying organization for PAs in the
+      United States," established as a not-for-profit in 1974, providing
+      certification programs reflecting standards for clinical knowledge, clinical
+      reasoning, and other medical skills and professional behaviors required on
+      entry into practice and throughout a PA's career. It develops and
+      administers the Physician Assistant National Certifying Examination (PANCE),
+      publishes the annual five-year first-time pass-rate data, and operates the
+      Program Portal through which PA programs retrieve their own "PANCE Exam
+      Performance Summary Report Last 5 Years." NCCPA is explicit that
+      "authorization to practice medicine and legally permitted titles are
+      governed by each jurisdiction's practice acts and by federal regulations" —
+      i.e. NCCPA certifies, individual states license.
+    relevance_to_product: >
+      NCCPA is named INSIDE the ARC-PA standards in three separate places, which
+      makes it a hard product dependency rather than adjacent context: A3.11c
+      requires programs to publish NCCPA's own five-year report with distant
+      campuses broken out individually by April 1 each year; C1.01 requires PANCE
+      scores AND SUB-SCORES as a mandatory self-assessment data stream; and
+      A2.16a defines part of the legal preceptor pool as "PAs who hold or have
+      held NCCPA certification," which is why NCCPA certification details are a
+      documented field on the Prism preceptor personnel record today. Any Exam
+      Management capability serving PA is therefore an INGESTION and reporting
+      layer over NCCPA's Program Portal outputs — not exam authoring or delivery,
+      which Prism cannot and should not attempt. The sub-score requirement in
+      C1.01 is the sharper ask: it needs blueprint-level granularity, not a single
+      pass-rate number, and it needs to survive being mapped back to curriculum
+      content areas.
+    source: "https://www.nccpa.net/ and https://www.nccpa.net/pa-program-resources/ ; five-year pass-rate data: https://www.nccpa.net/resources/pance-pass-rate/"
+  - body: "PAEA (Physician Assistant Education Association) Assessment"
+    what_it_governs: >
+      Not an accreditor or a licensing body — the PA programs' membership
+      association, and the publisher of the assessment instruments PA programs
+      actually run between admission and PANCE: PACKRAT (comprehensive
+      self-assessment, typically at the end of the didactic and clinical phases),
+      the End of Rotation exam suite (standardized evaluations of medical
+      knowledge gained during specific SCPEs), and the End of Curriculum exam (an
+      objective evaluation of general medical knowledge as one component of
+      graduation readiness, designed to be given during the LAST FOUR MONTHS of
+      the program).
+    relevance_to_product: >
+      PAEA is the reason Exam Management for PA is not simply "import PANCE."
+      End of Rotation exams are per-SCPE and therefore join naturally to the
+      rotation records Clinical & Experiential Education already holds, and the
+      End of Curriculum exam's four-month window is the SAME window as ARC-PA
+      B4.03's summative evaluation — Exxat's documented summative-evaluation
+      recipe already tells faculty to draw on "PAEA end of year exam scores"
+      alongside end-of-rotation evaluations, patient-log minimums, and OSCEs, all
+      keyed in by hand. A PAEA score-import path would light up B4.03, C1.01's
+      course-grades-including-exam-scores stream, and per-rotation curricular
+      diagnostics in one move, and is a materially smaller integration than PANCE
+      because the data is program-held rather than certifying-body-held.
+    source: "https://paeaonline.org/assessment/assessment-resources ; End of Curriculum exam scope and timing: https://paeaonline.org/wp-content/uploads/2024/08/End-of-Curriculum-Faculty-Guide-2019-updated0824.pdf"
+  - body: "ARC-PA Entry Level Program Portal (the accreditor's own submission system)"
+    what_it_governs: >
+      ARC-PA's program-facing portal, through which programs maintain their
+      accreditation record and — critically for this product — enter and update
+      SCPE site, setting, and confirmed-slot data on an ongoing basis rather than
+      only at application time, alongside the Self-Study Report and its numbered
+      appendices (11a for site/slot sufficiency, 14D for clinical-curriculum
+      effectiveness, 14E for graduate preparation, 15 for site assessment).
+    relevance_to_product: >
+      This is the one place in this entire file where Prism's output has to match
+      an external system FIELD FOR FIELD, and Exxat already treats it that way:
+      the SCPE Details report is explicitly built to mirror the ARC-PA portal's
+      format, and the documented best practice is to keep Prism site/location
+      names identical to the portal's ("gold in, gold out"), download both
+      exports, and diff them in Excel line by line. That manual diff is the single
+      most concrete, already-validated case for what Accreditation Management
+      should automate — a per-accreditor submission-format target with a
+      reconciliation view, not a generic evidence binder. It is also the strongest
+      available proof that the accreditor-formatted-export pattern (alongside the
+      B2 Instructional Objectives Report and the CAPTE dual-numbering precedent)
+      is a real, repeatable product shape rather than a one-off.
+    source: "https://www.arc-pa.org/entry-level-program/entry-level-manuals-and-guides/ ; portal manual: https://www.arc-pa.org/wp-content/uploads/2026/03/Entry-Lvl-Portal-User-Manual-SF-03-2026.pdf ; 'gold in, gold out' reconciliation workflow: /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - body: "ARC-PA Policies v14 (04.25.2026) — Policies 9.4 and 9.5 on AI use"
+    what_it_governs: >
+      ARC-PA's operating policies, separate from the Standards. Policy 9.4
+      (Accuracy of Submissions, p. 45) holds that using "consultants, artificial
+      intelligence, or materials adopted from other programs does not relieve the
+      program and sponsoring institution of" responsibility for the completeness
+      and accuracy of everything submitted. Policy 9.5 (Use of Artificial
+      Intelligence in Accreditation-Related Processes, p. 46, initially adopted
+      09.20.2025) encourages programs to consult their sponsoring institution on
+      safeguarding sensitive student, faculty, financial, and strategic data; to
+      "avoid any AI systems that use uploaded materials to train their models or
+      that lack strong security protections"; to avoid AI use that "diminishes
+      opportunities for reflection, dialogue, and collective ownership of the
+      accreditation process"; and states that "Human review and verification are
+      expected for all materials submitted to the ARC-PA."
+    relevance_to_product: >
+      Included in this layer because it governs the product's own AI surface, not
+      the student's credential. Prism's existing Leo AI posture maps to 9.5
+      almost point for point and should be positioned that way in PA sales
+      conversations: opt-in per-program AI Legal Consent recorded with policy
+      version, timestamp, and consenting user; revocable program-wide or
+      per-feature; a right to request data deletion; nothing ever auto-applied
+      (every Map-with-Leo suggestion requires an explicit "Apply Mapping" click);
+      and the Trust Portal's SOC 2 Type II / ISO 27001 / ISO 42001 / HIPAA /
+      TX-RAMP evidence answering the "strong security protections" clause. The
+      constraint to respect: 9.5 disfavors AI that displaces faculty reflection
+      and dialogue, so any future self-study-drafting feature in Accreditation
+      Management must be built and marketed as assistive drafting under mandatory
+      human verification. Worth a Legal/Compliance read before any
+      accreditation-AI messaging ships for PA.
+    source: "https://www.arc-pa.org/wp-content/uploads/2026/05/Policies-v14-2026April.pdf (Policy 9.4, p. 45; Policy 9.5, p. 46)"
+
+last_researched: "2026-08-25"

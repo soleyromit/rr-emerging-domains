@@ -1,0 +1,119 @@
+# COMPETITOR LENS — reframes ../competitors/new-innovations.yaml around roles, not features.
+# Synthesis pass over the existing teardown; no fresh research.
+competitor: "New Innovations (QGenda / Hearst Health)"
+
+how_they_implicitly_serve_roles:
+  - role: "Program Admin"
+    read: >
+      The product's center of gravity, and arguably the most completely served Program Admin
+      in this set — but only on the GME side. The admin gets rotation, block, daily,
+      clinic, and on-call scheduling, procedure logging with supervision-level tracking,
+      continuity-clinic visit tracking, work-hour monitoring, and — uniquely here —
+      contract configuration and Medicare Cost Report automation tied to GME funding,
+      making the GME admin's job partly financial in a way no other vendor addresses. The
+      limits are two. First, the split product: an admin spanning UME and GME works across
+      two separate feature sets, and true curriculum mapping exists only in the UME
+      product — the GME side gets a materials-distribution feature, not mapping. Second, a
+      competing vendor's comparison characterizes the scheduling as manual rule setup
+      rather than constraint solving, with programs hitting limits on complex call
+      structures — a directional claim from an interested party, not verified, but it
+      points at exactly where an admin's week gets eaten.
+  - role: "Clinical Coordinator"
+    read: >
+      Well-equipped on the mechanics, thin on the workflow. Daily Schedule Management,
+      rotation scheduling, the UME rotation lottery with rule-based templates, and ACGME
+      Resident Case Log import all sit squarely in the coordinator's day and are shipped.
+      What the public material does not describe is any coordinator-specific view of
+      readiness or exceptions — nothing about who cannot start a rotation on Monday and
+      why. If the scheduling engine really is rule-configured rather than
+      constraint-solved, the coordinator is the person doing that configuration and then
+      hand-resolving the conflicts it cannot express, which converts a solver problem into
+      a recurring human one every block.
+  - role: "Preceptor"
+    read: >
+      Present in the data model, largely absent from the product story. The preceptor
+      appears mostly as a target of the evaluation engine — 360° evaluation generation
+      spans trainees, faculty, and ancillary staff, and the Evaluations Builder supports
+      multiple question types with real-time editing — and as a credentialed record in the
+      Credentialling Module (a Touro College of Osteopathic Medicine testimonial cites
+      "track credentialed faculty"). Nothing public describes a preceptor-facing mobile
+      experience, no-login evaluation completion, or preceptor workload/burden visibility.
+      Notably, there is also no published third-party review presence (no G2 or Capterra
+      listing located), so unlike MedHub or eMedley there is not even negative user
+      evidence about the preceptor experience — the role is simply undocumented, which is
+      itself the finding.
+  - role: "Compliance/Accreditation Liaison"
+    read: >
+      Extremely well served, and the reason New Innovations wins accreditation-centered
+      deals outright today. The liaison gets a discrete credentialing module tracking
+      licenses, certifications, visas, and immunizations with expiration alerts; work-hour
+      violation tracking with automated notifications; site-visit tracking of dates, key
+      personnel, and comments; accreditation-cycle tooling with problem identification and
+      correction; cross-program trend and citation/concern tracking; and milestone-review
+      aggregation into competency spider graphs. That is a near-complete accreditation
+      lifecycle as shipped product. The scope limit is the same one that recurs across this
+      whole competitive set: it is ACGME-shaped. Even the UME curriculum-mapping story
+      routes to an MD-framed national curriculum inventory portal, despite objectives being
+      definable "across MD/DO program stages." No COCA-specific accreditation workflow
+      appears in the teardown.
+    related_flows:
+      - flow: accreditation-self-study--08-self-study-assembly-submission-site-visit.yaml
+        step: "No screen exists — post-visit citation / interim-report tracking"
+  - role: "Dean"
+    read: >
+      Served through institutional and financial reporting more than through an
+      academic-quality lens. The dean-adjacent assets are real: cross-program APE trend
+      analysis, citation/concern tracking across programs, milestone aggregation, an
+      installed base of 740 enterprise customers and 105,000 residents/fellows/students,
+      and the IRIS/Medicare reimbursement automation that makes the platform a
+      finance-office concern as well as an education one. What the role lacks is
+      independent signal and forward assurance: no public G2/Capterra listing, no public
+      pricing, and — most immediately — the July 2025 QGenda acquisition, which introduces
+      unresolved roadmap, integration, and support-continuity questions that land squarely
+      on the person signing a multi-year institutional commitment.
+
+gaps_prism_can_exploit:
+  - claim: "The Preceptor is the clearest unclaimed role."
+    detail: >
+      New Innovations documents the preceptor only as an evaluation target and a
+      credentialed record, with no described preceptor-facing experience at all —
+      and no third-party review presence to contradict that reading. A genuinely
+      designed preceptor surface is white space, not a parity claim.
+  - claim: "The UME/GME split hits the Program Admin and the Compliance Liaison at once."
+    detail: >
+      Curriculum mapping exists only in the UME product, so a residency program
+      alone gets material distribution and no mapping. One unified system spanning
+      placement, compliance, and true curriculum mapping is a role-level argument,
+      not a feature-count one.
+  - claim: "Coordinator-side scheduling may fall back to manual work — worth validating in a demo."
+    detail: >
+      If the rule-based (not constraint-solved) characterization holds, complex
+      call structures and multi-department dependencies fall back on the
+      coordinator. Worth validating in a demo before leading with it — the source
+      is a competing vendor.
+  - claim: "New Innovations' accreditation tooling is ACGME-shaped, not COCA-native."
+    detail: >
+      Its liaison tooling is ACGME/AAMC-shaped end to end. Prism's Q3 2027 pillar,
+      scoped for COCA from day one, competes on coverage rather than on a losing
+      feature comparison.
+    related_flows:
+      - flow: accreditation-self-study--08-self-study-assembly-submission-site-visit.yaml
+        step: "No screen exists — post-visit citation / interim-report tracking"
+  - claim: "The QGenda acquisition is a live displacement window aimed at the Dean."
+    detail: >
+      The July 2025 acquisition opens a 12-18 month window where roadmap and
+      support continuity are the Dean persona's risk specifically, not the admin's.
+  - claim: "Do NOT lead with Accreditation Management, Surveys/Evaluations, or compliance-item tracking against New Innovations."
+    detail: >
+      All three ship today and are its strongest terrain.
+
+sources:
+  - "../competitors/new-innovations.yaml"
+  - "New Innovations' named GME-admin scheduling/finance features (relocated from how_they_implicitly_serve_roles[].read, Program Admin): desktop drag-and-drop 'MedScheduler' utility alongside web scheduling; Medicare Cost Report (IRIS) automation framed around institutions managing $6.2B in CMS reimbursement."
+  - "New Innovations' named accreditation/credentialing product surfaces (relocated from how_they_implicitly_serve_roles[].read, Compliance/Accreditation Liaison): Credentialling Module; Work Hours Monitoring; CLER Visit Management; Accreditation Tools for the ACGME Next Accreditation System (NAS); Annual Program Evaluations (APE); CCC Milestone Review; UME curriculum mapping routes to the AAMC Curriculum Inventory portal."
+  - "https://www.new-innov.com/pub/"
+  - "https://www.new-innov.com/pub/gme.html"
+  - "https://www.new-innov.com/pub/gme_details.html"
+  - "https://www.new-innov.com/pub/ume.html"
+  - "https://www.qgenda.com/newsroom/qgenda-announces-acquisition-of-new-innovations/"
+  - "https://schedulingwiz.com/blog/best-gme-residency-tools"

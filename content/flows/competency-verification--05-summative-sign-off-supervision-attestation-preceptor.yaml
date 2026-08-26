@@ -1,0 +1,625 @@
+# Element-level ground truth underneath competency-verification.yaml, stage 5
+# ("5. Summative sign-off — supervision attestation, preceptor credentialing,
+# grade release"). Every accreditation_citation and competitor_equivalent
+# claim below traces to a real source file in confirmed_by — see per-step
+# citations, not the journey's own narrative. This flow builds directly on,
+# and does not re-derive, the preceptor/faculty entity-model findings already
+# established in accreditation-self-study--03-institution-side-documentation-
+# capture-sites-preceptors.yaml; where this file's steps only restate that
+# prior work it says so and cites it rather than re-verifying from scratch.
+#
+# SCHEMA v2 (2026-08-24): accreditation_citation / competitor_equivalent /
+# gap_severity / gap_note now live on each ELEMENT rather than on the step.
+# Where the underlying research genuinely did not distinguish between sibling
+# elements, the same verdict is stated identically on each rather than
+# inventing artificial precision; where the step's own action/gap_note text
+# already distinguished them, that distinction is carried down.
+flow_name: "Preceptor Credentialing and Summative Evaluation Sign-Off"
+maps_to_journey: "competency-verification.yaml, stage 5"
+persona: >
+  Primary: Preceptor / Clinical Instructor (../personas/role-preceptor.yaml),
+  the person actually completing the summative evaluation that constitutes
+  the "sign-off," and the Program Administrator
+  (../personas/role-program-admin.yaml), who configures the credentialing
+  gate and the evaluation's due-date/grading mechanics and monitors
+  completion. Secondary: school-employed teaching Faculty
+  (distinct login/entity from the Preceptor, see step 1), who may be the
+  actual signer of record for some domains/settings instead of an external
+  preceptor.
+steps:
+  - screen: "Faculty and Staff — Add Faculty/Staff drawer, vs. Sites > Personnel — Add Personnel drawer"
+    navigation_path: >
+      Faculty and Staff (dashboard or hamburger menu) > Add Faculty/Staff —
+      compared against Sites > Personnel (ribbon) > Add Personnel
+    elements:
+      - element: "Add Faculty/Staff radio (Faculty vs. Staff), Faculty/Staff ID, SSO Key, Administrative Position, Faculty Rank"
+        type: "input fields"
+        data_shown: "Identity and org-position fields for a school-employed person who logs into Prism directly with university credentials"
+        gates_on: []
+        accreditation_citation: >
+          None directly — these fields establish which entity type a person
+          is, which is the precondition for every later citation in this
+          stage, but they are not themselves evidence for a specific standard.
+        competitor_equivalent: "Not evaluated — no competitor teardown documents an internal entity-model split at this level."
+        gap_severity: "none"
+        gap_note: >
+          The school-employed Faculty entity created here is the entity that
+          Faculty Compliance (step 2) can actually point its requirement
+          groups at, and the one whose compliance status rolls up in step 8.
+          Nothing about this drawer is missing for that purpose; the finding
+          is about what the SIBLING drawer does not get, not about a defect
+          here.
+      - element: "Personnel 'Will this person serve as Clinical Instructor?' toggle, Degree, NPI, Licensure Details, Certification Details, CV upload"
+        type: "input fields (separate drawer, separate entity)"
+        data_shown: "Identity, professional-license, and credential fields for an external site person, who by default has no direct Prism login (access instead via delegator links or the separate Preceptor Module portal at instructor.exxat.com)"
+        gates_on: []
+        accreditation_citation: >
+          None directly — but this is the element that sharpens acpe.yaml's
+          3.3.a gap_notes question ("unclear whether Compliance Management
+          natively models preceptors as a trackable entity today"): the answer
+          is now more specific than "unclear."
+        competitor_equivalent: "Not evaluated — no competitor teardown documents an internal entity-model split at this level."
+        gap_severity: "none"
+        gap_note: >
+          This is the load-bearing finding for the whole stage, and it cuts in
+          a mixed direction rather than a purely reassuring one. Preceptors ARE
+          modeled, but as Personnel — flat license/certification/CV fields,
+          with no configurable item-taxonomy and no approval workflow — which
+          is a materially thinner mechanism than the Faculty entity gets via
+          Faculty Compliance (step 2). Nothing in the reviewed material shows
+          these two entity types merged, so any claim that "the preceptor side"
+          gets the same gating sophistication as the student/faculty side needs
+          that caveat attached every time.
+    action: >
+      An admin adds a school-employed teacher via the Faculty and Staff
+      module (its own section, its own invitation flow, its own
+      university-credential login) or adds an external clinical
+      instructor/preceptor via Sites > Personnel (a different section, no
+      login by default). These are two separate, independently-populated
+      entity records in Prism, not two views onto one underlying person
+      record.
+    confirmed_by: >
+      Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty
+      and Staff/Key Features for Faculty and Staff Management.md (Add
+      Faculty/Staff drawer, "Faculty & staff must be invited to Exxat Prism
+      to complete their profile"); Help for Program Administrators/Getting
+      Started for Admin (includes User Guides)/Understanding User Roles in
+      Exxat Prism.md ("Faculty: Role-based access for reviewing compliance,
+      evaluations, and communication" as a login-role category, distinct
+      from Personnel); Help for Program Administrators/Step-by-Step Guides
+      (How-tos)/Sites/Add or Edit CI - Preceptor Information.md and
+      .../Sites/Managing Personnel.md (Personnel add flow, no login
+      implied); Help for Preceptor Module/Preceptor Module Setup Guide.md
+      ("preceptor should be added as site personnel," separate
+      instructor.exxat.com portal).
+
+  - screen: "Faculty Compliance — Setup > Requirements / Requirement Groups / Faculty Association"
+    navigation_path: "Faculty Compliance (dashboard/hamburger menu) > Setup tab > Requirements, then Requirement Group, then Faculty Associations"
+    elements:
+      - element: "Add new Requirement drawer (Category, Requirement name, Short name)"
+        type: "form"
+        data_shown: "Definition of a compliance item — could model an orientation-completion or calibration-training requirement"
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.c (orientation completed before
+          accepting a student) and CODA Standard 2, Element 2-6 (faculty
+          calibration) — this is the field where such an item ("Precepting
+          Orientation Completed," a calibration training) is named into
+          existence.
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable faculty-side compliance-item builder at element level."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The item-definition mechanism is generic and shipped: a program
+          names its own requirement rather than picking from a fixed list.
+          What this element does NOT settle — and step 1 explains why — is
+          whether the item being defined can ever be pointed at a PRECEPTOR
+          as opposed to a school-employed Faculty member.
+      - element: "Requirement edit toggles: Enable, Mandatory, Requires Approve-team review, sensitive-permission flag, not-approved notification, guidelines, notes-required, documents-required, has-expiration-date"
+        type: "toggle set"
+        data_shown: "Whether/how the requirement gates and expires"
+        gates_on: ["Faculty compliance status shown on the Compliance Summary Dashboard, per-faculty"]
+        accreditation_citation: >
+          COCA Standard 5, Element 5.4 (supervision-policy distribution and
+          acknowledgment, for both students AND faculty) — the mandatory /
+          documents-required / expiration toggles are where acknowledgment and
+          re-acknowledgment behavior is actually configured.
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable faculty-side compliance-item builder at element level."
+        gap_severity: "configure-needed"
+        gap_note: >
+          This resolves coca.yaml's 5.4 gap_notes hedge ("confirm Compliance
+          Management supports document-acknowledgment item types... not just
+          checklist/expiry items") in the positive: the toggle set includes an
+          explicit mandatory flag plus (via the underlying Custom Site
+          Assessment / Attestations item types documented elsewhere in the
+          capability map) attestation and e-signature question types, so a
+          policy-acknowledgment item type is confirmed to exist generically.
+          It is configuration, not a pre-built acknowledgment object.
+      - element: "Requirement Group + Faculty Association"
+        type: "named bundle, bulk-assign control"
+        data_shown: "Which requirement bundle applies to which named faculty"
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.c and CODA Standard 2, Element 2-6
+          — assignment to a NAMED person is what turns a defined requirement
+          into per-individual orientation/calibration evidence.
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable faculty-side compliance-item builder at element level."
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is the element where step 1's entity split bites hardest: the
+          association control assigns groups to FACULTY. coda.yaml's Element
+          2-6 gap_notes ("faculty-side calibration/credential tracking is an
+          open Phase 2 question") should now read more precisely as: the
+          generic mechanism exists and is shipped for the Faculty entity;
+          whether a program can point that same mechanism at its external
+          preceptor roster is the part that remains unconfirmed, not the
+          mechanism's existence.
+    action: >
+      A Faculty Compliance admin defines a requirement (e.g., "Precepting
+      Orientation Completed" or a supervision-policy attestation), bundles
+      it into a group, and assigns the group to faculty.
+    confirmed_by: >
+      Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty
+      Compliance/Setup Faculty Compliance.md; corroborated in
+      content/prism/capability-map.yaml, "Compliance Management" pillar,
+      "Exxat Approve (managed compliance review)" feature note ("Faculty
+      Compliance is a parallel module to student compliance — same setup
+      mechanics... plus faculty-specific Compliance Groups").
+
+  - screen: "Sites > Personnel > Add/Edit CI-Preceptor — Slots tab"
+    navigation_path: "Sites > Personnel > select a person marked as Preceptor > Slots tab (also visible from Personnel > Placements tab)"
+    elements:
+      - element: "Supervision Type column"
+        type: "read-only rollup, per slot"
+        data_shown: "Direct | Indirect | other school-configured supervision types, assigned per slot"
+        gates_on: []
+        accreditation_citation: >
+          LCME Standard 9, Element 9.3 (supervision level matched to training,
+          within supervisor's scope of practice) — this field is the
+          structured supervision-level value itself.
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable per-slot supervision-type field at element level."
+        gap_severity: "configure-needed"
+        gap_note: >
+          This meaningfully tightens lcme.yaml's 9.3 gap_notes hedge
+          ("supervision-level/scope-of-practice attestation as a distinct
+          structured field is unconfirmed"): a structured Supervision Type
+          field (Direct/Indirect/school-configurable) does exist, confirmed
+          shipped. What should not be overclaimed: this is admin-set
+          configuration metadata on the slot, not a signed attestation
+          captured per student encounter confirming the assigned supervision
+          level was actually followed, and it is not itself a "scope of
+          practice" check against the supervisor's license/specialty — those
+          fields live in Personnel (step 4), unlinked from this one.
+      - element: "Associated Experiential Supervisor column"
+        type: "read-only rollup"
+        data_shown: "Which named preceptor(s) are assigned to a given slot"
+        gates_on: []
+        accreditation_citation: >
+          LCME Standard 9, Element 9.3 — this is the "named supervisor" half
+          of the supervision pairing that 9.3 presumes exists.
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable per-slot supervision-type field at element level."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The named-supervisor-to-slot binding is confirmed shipped. It is not
+          joined to the preceptor's license/certification record (step 4), so
+          naming a supervisor here asserts assignment, not verified scope of
+          practice.
+      - element: "Placements tab: Preceptors column (per placement, with email)"
+        type: "read-only rollup"
+        data_shown: "Every preceptor tied to a specific student's placement"
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.e (2:1 student-to-preceptor ratio)
+          — this column is where the underlying assignment data such a ratio
+          check would query lives.
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable per-slot supervision-type field at element level."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The Placements tab confirms the underlying assignment data
+          acpe.yaml's "Transfer" rating assumes exists, but no automatic
+          2:1-ratio alert or block was found anywhere in the reviewed
+          material — a program would need to build that check itself (e.g., a
+          saved filter/export), not rely on a pre-built warning.
+    action: >
+      Admin configures or reviews, per slot, which supervision model
+      (Direct/Indirect/etc.) applies and which named preceptor is assigned;
+      the Placements tab lets anyone reviewing a preceptor's record see
+      every student/placement they are currently tied to.
+    confirmed_by: >
+      Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing
+      Personnel.md, "Manage Slots Associated to Personnel" and "Managing
+      Placements Associated to Personnel" sections.
+
+  - screen: "Sites > Personnel > Add/Edit CI-Preceptor — Professional Details (license, certification, CV)"
+    navigation_path: "Sites > Personnel > select or add a preceptor > mark 'Will this person serve as Clinical Instructor?' = Yes > Professional Details"
+    elements:
+      - element: "Degree, Practice Settings, Designation, National Provider Identifier, Credentials"
+        type: "structured input fields"
+        data_shown: "Professional identity of the preceptor"
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a (majority U.S.-licensed
+          pharmacists) — these are the descriptive qualification fields a
+          majority-licensure count would be read from.
+        competitor_equivalent: >
+          MedHub verifies GME credentials against NPDB/NPPES (medhub.yaml);
+          NPPES is the NPI registry, so this element's NPI field is the
+          closest direct counterpart — automated third-party lookup there vs.
+          a manually-typed identifier here. medhub.yaml's public material is
+          marketing-level, not screen-by-screen, so the comparison holds at
+          "automated verification vs. manual entry," not field-for-field.
+        gap_severity: "gap"
+        gap_note: >
+          Unlike its siblings below, this group gates nothing at all — it
+          feeds no Placement Clearance Dashboard column and no sign-off check.
+          It is static, manually-entered descriptive metadata; nothing here
+          flips based on whether the preceptor has ever actually submitted an
+          evaluation.
+      - element: "Licensure Details (repeatable record)"
+        type: "input field"
+        data_shown: "License number and related detail, manually entered by the program admin"
+        gates_on: ["Preceptor License column, Placement Clearance Dashboard"]
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a (majority U.S.-licensed
+          pharmacists) — the licensure record itself.
+        competitor_equivalent: >
+          MedHub verifies GME credentials against NPDB/NPPES (medhub.yaml) — an
+          automated, third-party-verified model, versus Prism's
+          manually-entered license record here. medhub.yaml's public material
+          is marketing-level, not screen-by-screen, so the comparison holds at
+          "automated verification vs. manual entry," not field-for-field.
+        gap_severity: "gap"
+        gap_note: >
+          New finding specific to the SIGN-OFF stage: this field is read by
+          the Placement Clearance Dashboard to gate PLACEMENT START, but
+          nothing in the reviewed material shows it being re-checked at the
+          moment a preceptor actually completes and submits a summative
+          evaluation (step 6). A preceptor whose license lapses mid-rotation
+          is not shown being blocked from signing off later in that same
+          rotation — the credential gate and the sign-off action are two
+          different mechanisms that do not appear to be wired together.
+      - element: "Certification Details (repeatable record)"
+        type: "input field"
+        data_shown: "e.g. NCCPA-style certification detail"
+        gates_on: ["Preceptor Certification column, Placement Clearance Dashboard"]
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a (preceptor qualification
+          evidence) — the certification record itself.
+        competitor_equivalent: >
+          MedHub verifies GME credentials against NPDB/NPPES (medhub.yaml) — an
+          automated, third-party-verified model, versus Prism's
+          manually-entered certification record here. medhub.yaml's public
+          material is marketing-level, not screen-by-screen, so the comparison
+          holds at "automated verification vs. manual entry," not
+          field-for-field.
+        gap_severity: "gap"
+        gap_note: >
+          Same wiring gap as Licensure Details: it feeds the Placement
+          Clearance Dashboard's three-state (Missing / Exists / NA) tracker
+          before the rotation begins, and is not shown being re-evaluated at
+          summative sign-off (step 6).
+      - element: "CV document"
+        type: "file upload"
+        data_shown: "Preceptor's curriculum vitae"
+        gates_on: ["Preceptor CV column, Placement Clearance Dashboard"]
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a (preceptor qualification
+          evidence on file).
+        competitor_equivalent: >
+          Not evaluated at this granularity — medhub.yaml documents
+          NPDB/NPPES credential verification, which has no CV-document
+          counterpart, so there is no comparable competitor element to compare
+          this upload against rather than a guess.
+        gap_severity: "gap"
+        gap_note: >
+          A present/absent document check feeding the Placement Clearance
+          Dashboard, with the same sign-off wiring gap as its siblings. Note
+          separately that ACPE 3.3.a's "performance evaluations on file"
+          clause is satisfied by the submitted evaluation record (step 6), a
+          distinct object from this profile's static documents.
+    action: >
+      Admin enters or updates a preceptor's license, certification, and CV,
+      which the Placement Clearance Dashboard's three-state (Missing /
+      Exists / NA) preceptor tracker reads from.
+    confirmed_by: >
+      Already established at element level in
+      accreditation-self-study--03-institution-side-documentation-capture-sites-preceptors.yaml
+      (step "Sites > Personnel > Add/Edit Personnel — CI/Preceptor
+      Professional Details"), sourced there to Help for Program
+      Administrators/Step-by-Step Guides (How-tos)/Sites/Add or Edit CI -
+      Preceptor Information.md, .../Sites/Managing Personnel.md, and
+      Playbooks/Physician Assistant (PA) Playbook.md. Repeated here only to
+      connect it to the sign-off-specific gap below; not re-verified from
+      scratch.
+
+  - screen: "Course Offering > Learning Activities > Setup — Forms/Evaluations activation drawer"
+    navigation_path: "Courses > select Course Offering > Learning Activities > Setup > + icon for Forms/Evaluations > select a form"
+    elements:
+      - element: "Does this form require a placement? toggle"
+        type: "toggle"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None directly — a scoping toggle deciding whether the form attaches
+          to a placement; it is the precondition for the anchor-relative due
+          date below rather than grade-timeline evidence in itself.
+        competitor_equivalent: "Not evaluated — no competitor teardown documents an anchor-relative due-date configuration screen at this granularity."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Carries no gap of its own; it is the setting that makes the
+          placement-anchored due-date configuration below available.
+      - element: "Does the form contribute to the student's final score? toggle"
+        type: "toggle"
+        data_shown: "Whether this specific evaluation feeds the course's final grade computation"
+        gates_on: []
+        accreditation_citation: >
+          LCME Standard 9, Element 9.8 (final grades within six weeks of
+          course/clerkship end) — this toggle is what designates a given form
+          as part of "the grade" whose timeline 9.8 governs.
+        competitor_equivalent: "Not evaluated — no competitor teardown documents an anchor-relative due-date configuration screen at this granularity."
+        gap_severity: "configure-needed"
+        gap_note: >
+          A per-form flag, not a school-wide grade object: a program
+          designates one due-date-bearing form per course offering to stand in
+          for "the grade." Workable, but configuration rather than a
+          purpose-built grade record. Note also step 7 — flagging a form as
+          contributing to the final score does not mean Prism computes that
+          score.
+      - element: "Publish date / Due date, both anchor-relative"
+        type: "input field (N days before/after placement start/mid/end)"
+        data_shown: "When the form becomes visible, and when it is due — not a fixed calendar date"
+        gates_on: ["Overdue/Not Submitted status on the Forms/Evaluations Summary page"]
+        accreditation_citation: >
+          LCME Standard 9, Element 9.8 (final grades within six weeks) — this
+          is the element where a six-week deadline would literally be encoded.
+        competitor_equivalent: "Not evaluated — no competitor teardown documents an anchor-relative due-date configuration screen at this granularity."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Confirms, at element level, the exact mechanism lcme.yaml's 9.8
+          prism_fit_rationale asserts more generically ("the anchor-relative
+          due-date primitive... can be configured to fire a 'grade due'
+          deadline"): the due date lives on the individual evaluation FORM,
+          set as N days after placement end. This is a due-date reminder on
+          one form, not a school-wide "final grade due in 6 weeks" object.
+      - element: "Course Faculty / Placement Faculty / Faculty Advisor access controls"
+        type: "role checkboxes"
+        data_shown: "Who can edit vs. only view this activated evaluation"
+        gates_on: []
+        accreditation_citation: >
+          None directly — edit/view permissioning for the activated form, not
+          evidence for a specific standard.
+        competitor_equivalent: "Not evaluated — no competitor teardown documents an anchor-relative due-date configuration screen at this granularity."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Role-based access is configured per activated form rather than
+          inherited automatically, so who may sign or edit an evaluation is a
+          per-course-offering setup decision.
+    action: >
+      Admin activates the summative evaluation form for a course offering
+      and sets its due date as an offset from the placement's end date —
+      the literal mechanism behind the capability map's "anchor-relative
+      due-date primitive can fire a 'grade due' deadline off each
+      placement's end date."
+    confirmed_by: >
+      Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing
+      Course Activities - Activating Forms and Evaluations.md.
+
+  - screen: "Learning Activities > Forms/Evaluations Summary — Completing Evaluation"
+    navigation_path: "Learning Activities > [Course/Rotation] > Forms/Evaluations Summary > click form status to open"
+    elements:
+      - element: "Form status (In Progress by Student/Site | Pending School Review | Reviewed, etc.)"
+        type: "read-only workflow state"
+        data_shown: "Where a given student's evaluation is in the completion/review pipeline"
+        gates_on: []
+        accreditation_citation: >
+          None directly — a workflow-state display; the evidence for 3.3.a
+          lives in the submitted record itself, not in this indicator.
+        competitor_equivalent: >
+          Not supported at this granularity — e-value.yaml and axium.yaml
+          describe supervisor review only in marketing copy, with no
+          documented workflow-state vocabulary to compare these named states
+          against.
+        gap_severity: "none"
+        gap_note: >
+          A shipped, readable pipeline state (in-progress / pending review /
+          reviewed). It reports where the form is, and carries no documented
+          shortfall of its own.
+      - element: "Evaluation form body (scored rubric items, e.g. GoReact rubrics for skills labs, or PTMACS-style structured response)"
+        type: "input fields (scored/qualitative per form design)"
+        data_shown: "The actual competency/performance judgment being recorded"
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a — the completed evaluation body
+          IS the "performance evaluation on file" evidence.
+        competitor_equivalent: >
+          Not supported at this granularity — e-value.yaml and axium.yaml
+          document that a supervisor review step exists but not the structure
+          of the instrument being completed, so rubric-level comparison would
+          be a guess.
+        gap_severity: "none"
+        gap_note: >
+          Real and shipped: structured, scored competency capture. The
+          earlier stage-level hedge that supervision attestation is simply
+          "unconfirmed" is too pessimistic about this specific mechanism. The
+          resulting record is durable, timestamped, and reviewable evidence.
+      - element: "Save / Submit buttons"
+        type: "button"
+        data_shown: ""
+        gates_on: ["Form status transition; a submitted form becomes visible in the admin Review queue"]
+        accreditation_citation: >
+          LCME Standard 9, Element 9.3 — the submitting user's account
+          identity is the closest confirmed proxy for "a named supervisor tied
+          to a named student," but see gap_note; also ACPE 3.3.a, since Submit
+          is what puts the evaluation "on file."
+        competitor_equivalent: >
+          E*Value's model has "teachers review and validate logs" as a
+          first-class step (e-value.yaml) and axiUm's whole pitch in dentistry
+          is faculty "review and approve student treatments within the system"
+          (axium.yaml) — both at marketing-copy granularity in their own
+          teardowns, so this compares at the level of "does a supervisor
+          sign-off action exist" (yes, for all three) but not at the level of
+          what that action checks before it fires.
+        gap_severity: "gap"
+        gap_note: >
+          This is where the sign-off literally happens, and it falls short of
+          what LCME 9.3 asks in one specific way: nothing in the reviewed
+          material shows the submission action itself re-verifying the
+          submitter's credential/license status (step 4) or their
+          supervision-type assignment (step 3) at the moment of signing — the
+          gate is "is this form complete," not "is this signer currently
+          license-valid and properly matched to this student's training
+          level." It is an unconditional sign-off, not a
+          credential-conditioned one.
+      - element: "Review All / Publish All (admin side)"
+        type: "button"
+        data_shown: ""
+        gates_on: ["Whether completed evaluations become visible on the location/preceptor profile"]
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a — the admin review/publish step
+          is what makes the submitted evaluation visible as evidence on the
+          location/preceptor profile.
+        competitor_equivalent: >
+          E*Value's "teachers review and validate logs" (e-value.yaml) and
+          axiUm's faculty "review and approve" model (axium.yaml) are the
+          closest counterparts to this administrative review step, but both
+          are described in marketing copy rather than screen-by-screen, so the
+          comparison holds at "a review step exists" and no further.
+        gap_severity: "none"
+        gap_note: >
+          Shipped and bulk-capable (Review All / Publish All), including the
+          ability to un-submit for edits or submit on a preceptor's behalf for
+          delegated cases. No documented shortfall at this element; the
+          stage's gap sits on the Submit action's lack of credential
+          conditioning, not on the review step.
+    action: >
+      The preceptor (or faculty member) opens the evaluation, fills in the
+      rubric/scored assessment, and clicks Submit — this is the literal
+      summative sign-off action. An admin can subsequently mark it reviewed,
+      un-submit it for edits, or (for delegated cases) submit on the
+      preceptor's behalf.
+    confirmed_by: >
+      Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning
+      Activities/Distributing Evaluations- Reviewing Evaluations-
+      Completing Evaluations and Eval.md ("Completing Evaluation" and
+      "Reviewing Evaluations" sections); corroborated in
+      content/prism/capability-map.yaml's "GoReact" evaluation-with-rubrics
+      note.
+
+  - screen: "Program Details > Setup > Grading Scheme configuration"
+    navigation_path: "Program Details (school/program level) > Setup > Grading Scheme"
+    elements:
+      - element: "Grading Scheme selector (Letter Grade with configurable bands, or Pass/Fail with a single passing-score threshold)"
+        type: "configuration, school/program-level only"
+        data_shown: "e.g. Letter Grade A=90-100, B=80-<90, C=70-<80, D=0-<70"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.8 (final grades within six weeks) — this is the schema defining what the released grade means."
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable grading-scale-vs-computation split at element level."
+        gap_severity: "gap"
+        gap_note: >
+          A specific, previously-uncaptured nuance for "grade release": this
+          element provides a shared grading-scale SCHEMA (what a B or a Pass
+          means) but is explicitly confirmed NOT to calculate the grade itself
+          — a human (faculty/admin) still determines and enters the final
+          grade. "Grade release" in Prism is therefore a due-date reminder
+          (step 5) plus a manually-entered value, not an automated
+          computation-and-release pipeline, however the "grade due" deadline is
+          framed in the capability map. Worth surfacing precisely because
+          lcme.yaml's 9.8 prism_fit_rationale could otherwise be read as
+          implying more automation than exists.
+      - element: "Per-course scale choice (letter-grade vs. pass/fail only)"
+        type: "toggle"
+        data_shown: "Individual courses cannot define their own band structure — only which of the two school-level scales applies"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.8 (final grades within six weeks) — the per-course selection of which scale a clerkship's grade is expressed in."
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable grading-scale-vs-computation split at element level."
+        gap_severity: "gap"
+        gap_note: >
+          Deliberately narrow: a course may choose between the two school-level
+          scales but cannot define its own band structure, so a clerkship
+          needing bespoke bands has no in-product path. Like the selector
+          above, it records the scale and computes nothing.
+    action: >
+      Admin sets the grading scale once, at the school/program level, which
+      then flows into every course's gradebook and, where enabled, into
+      Competency Tracking's "final course grade" scoring source.
+    confirmed_by: >
+      content/prism/capability-map.yaml, Curriculum & Assessment pillar,
+      "Grading Scheme module" feature note ("CONFIRMED via Exxat help-center
+      documentation: the grading scale is configured once at the
+      school/program level... The grading scale is for record-keeping only;
+      Prism does not calculate student grades from it").
+
+  - screen: "Faculty Compliance — Compliance Summary Dashboard, By Faculty, vs. Forms/Evaluations Submission Status column"
+    navigation_path: >
+      Faculty Compliance > Compliance Summary Dashboard > By Faculty — vs.
+      Learning Activities > [Course] > Forms/Evaluations (Faculty view):
+      Submission Status column
+    elements:
+      - element: "Faculty's Compliance Status (per faculty member)"
+        type: "read-only rollup"
+        data_shown: "Aggregate compliance-item completion state for one faculty member"
+        gates_on: []
+        accreditation_citation: >
+          None directly for the 9.8 turnaround question — this column rolls up
+          the step-2 compliance items (ACPE 3.3.c orientation, CODA 2-6
+          calibration) rather than evaluation timeliness.
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable faculty compliance rollup at element level."
+        gap_severity: "gap"
+        gap_note: >
+          The rollup itself works, but it inherits step 1's entity limit and
+          that caveat must travel with it: it aggregates status for the
+          FACULTY entity. External preceptors, modeled as Personnel, have no
+          equivalent per-person compliance rollup in the reviewed material, so
+          this dashboard cannot answer "are my preceptors current?" for the
+          external roster.
+      - element: "Submission Status column"
+        type: "read-only rollup, per form"
+        data_shown: "Number of forms submitted vs. number expected/received, per evaluation form across all placements"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.8 (turnaround-time reporting against the six-week SLA)."
+        competitor_equivalent: "Not evaluated — no competitor teardown documents a comparable submission-backlog view at element level."
+        gap_severity: "gap"
+        gap_note: >
+          Confirms, rather than merely re-asserting, lcme.yaml's 9.8 gap_notes
+          hedge: a submitted-vs-outstanding COUNT exists here, but nothing in
+          the reviewed material computes elapsed time since placement end,
+          flags a specific evaluation as past the six-week SLA, or rolls up a
+          program-wide percentage-on-time metric. The anchor-relative due date
+          (step 5) makes an individual form show as overdue once its due date
+          passes, which is a usable proxy a program could build a manual
+          process around — but a purpose-built "SLA-compliance report," as
+          lcme.yaml's gap_notes already stated, is still not confirmed as a
+          shipped feature. This hedge stands.
+    action: >
+      Admin monitors either dashboard to see who has and hasn't completed
+      required compliance items or outstanding evaluations, and follows up
+      manually on outstanding rows.
+    confirmed_by: >
+      Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty
+      Compliance/Setup Faculty Compliance.md ("Disable notification for
+      Individual Faculty" section, Compliance Summary Dashboard); Help for
+      Faculty/Step-by-Step Guides (How-tos)/Courses/Distributing Forms -
+      Evaluations.md ("Submission status column shows the number of forms
+      submitted v/s the number received").
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty and Staff/Key Features for Faculty and Staff Management.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Understanding User Roles in Exxat Prism.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Add or Edit CI - Preceptor Information.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Personnel.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/Setup Faculty Compliance.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Distributing Evaluations- Reviewing Evaluations- Completing Evaluations and Eval.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Faculty/Step-by-Step Guides (How-tos)/Courses/Distributing Forms - Evaluations.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/flows/accreditation-self-study--03-institution-side-documentation-capture-sites-preceptors.yaml"
+last_verified: "2026-08-24"

@@ -1,0 +1,1193 @@
+# Element-level ground truth underneath admin-onboarding-product-setup.yaml, stage 4
+# ("4. Compliance template setup").
+#
+# SCHEMA v2: accreditation_citation / competitor_equivalent / gap_severity / gap_note
+# live on each ELEMENT, not on the step.
+#
+# SOURCING NOTE (deliberate, and the point of this file): every step below is
+# confirmed_by the raw admin tutorial transcript at
+# /Users/romitsoley/Downloads/exxat_transcripts.md with a section title and line
+# range, NOT by a help-center paraphrase of that transcript. Help-center guides are
+# cited only where they document something the transcript does not narrate at all
+# (External Trainings / ComplianceJunction vendor fields; the institution-level
+# Compliance Management screen; the enumerated auto-notification trigger list).
+#
+# SCOPE NOTE: this is DAY-ONE PRODUCT SETUP — the admin building the compliance
+# scaffolding before any student or faculty member has uploaded anything. Reviewing
+# uploaded documents, the Placement Clearance gate, and per-student due-date
+# exceptions belong to rotation-lifecycle.yaml stage 3
+# (../flows/rotation-lifecycle--03-student-readiness-compliance-clearance-pre-rotation.yaml),
+# not here. Where the same screen serves both, only the setup-time elements are
+# modeled below.
+flow_name: "Compliance Template Setup"
+maps_to_journey: "admin-onboarding-product-setup.yaml, stage 4"
+persona: >
+  Primary: Program Administrator new to Prism (../personas/role-program-admin.yaml),
+  doing first-time configuration of the Student Compliance and Faculty Compliance
+  sections for a brand-new tenant. Secondary: Compliance / Accreditation Liaison
+  (../personas/role-compliance-accreditation-liaison.yaml), who owns which items are
+  mandatory and what the item taxonomy must contain; Institutional Administrator, on
+  multi-program tenants, who reviews and can edit each program's requirements from the
+  institution-level Compliance Management section; and two off-platform actors the
+  setup genuinely depends on — the Exxat Approve review team (third-party document
+  review) and prism-support@exxat.com, who alone can toggle sensitive-document
+  protection, external-share OTP protection, and the disabling of auto-notifications.
+  Students and faculty are downstream recipients here, not actors — nothing in this
+  stage is visible to them until Publish.
+
+steps:
+  - screen: "Student Compliance – Setup tab: cohort selection and template application"
+    navigation_path: "Dashboard (or hamburger menu) > Student Compliance > Setup tab > Cohort dropdown > Select Template dropdown"
+    action: >
+      The new admin picks the first cohort to configure, then decides the single most
+      consequential thing in this stage: copy an existing cohort's compliance
+      configuration via a template, or select None and build from scratch. On a day-one
+      tenant there is by definition no prior cohort to copy from, so the first cohort is
+      always built from scratch and thereafter becomes the template for every later
+      cohort. Apply Template is confirmed once and cannot be re-applied to that cohort.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, section "4/16 Managing Student
+      Compliance in Exxat Prism", lines 275-279 ("To set up student compliance documents,
+      click on the Student Compliance section on your dashboard, then click on the Setup
+      tab. You will first need to select a cohort... A template is a pre-saved
+      configuration of compliance documentation... These templates allow you to copy the
+      compliance setup from one cohort to another... If this is the first cohort you are
+      setting up with compliance documentation, you will need to start from scratch").
+      One-way-door behavior of Apply Template ("You will not be able to apply a new
+      template as a starting point for the selected Cohort's compliance setup once
+      confirmed") is documented only in the help center:
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup
+      Student Compliance Section.md, "Select a Template to Copy From", step 5 Note.
+    elements:
+      - element: "Cohort dropdown"
+        type: "input field"
+        data_shown: "Cohorts previously created in Students > Setup > Cohort; compliance configuration is scoped per cohort, never program-wide"
+        gates_on: ["Every other element on this screen — no requirement can be configured until a cohort is chosen", "Stage 2 of this journey (cohort/group creation) must be complete first"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research.
+          content/competitors/core-elms.yaml, emedley.yaml, medhub.yaml and
+          new-innovations.yaml all document compliance-item tracking as a capability, but
+          none of their public sources state the scoping unit (cohort vs. program vs.
+          student) for compliance configuration.
+        gap_severity: "none"
+        gap_note: >
+          Worth naming for onboarding sequencing rather than as a product gap: cohort is a
+          hard prerequisite, and per
+          /Users/romitsoley/Downloads/exxat_transcripts.md section "2/16 Setting up
+          Students in Exxat Prism" line 81, groups within a cohort exist partly because "a
+          group of students have additional compliance requirements" — but the Setup tab
+          confirmed in this step selects a COHORT, not a group. Whether group-level
+          differential requirements are actually configurable here is unconfirmed by the
+          transcript.
+      - element: "Select Template dropdown"
+        type: "input field"
+        data_shown: "Existing cohort compliance configurations available to copy, or None to build from scratch"
+        gates_on: ["Whether the admin does a 10-minute copy or a multi-hour from-scratch build"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research —
+          no competitor file in content/competitors/ describes a copy-forward template
+          mechanism for compliance configuration.
+        gap_severity: "none"
+        gap_note: >
+          Real day-one asymmetry rather than a defect: the template mechanism only pays
+          off from the second cohort onward. A brand-new tenant's first admin gets zero
+          benefit from it and no starter taxonomy — contrast the Faculty Compliance side
+          (step 8), which ships pre-populated with commonly used requirements.
+      - element: "Template preview status indicators (green check = activated, green star = mandatory, green review icon = requires review on upload, green share icon = shareable via share-profile)"
+        type: "read-only rollup"
+        data_shown: "Per-requirement preview of how each item will be configured if the template is applied, before committing"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Eye icon (per-requirement template detail preview)"
+        type: "button"
+        data_shown: "Full configuration of one individual compliance document inside the template being previewed"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Apply Template button (+ Confirm)"
+        type: "button"
+        data_shown: ""
+        gates_on: ["Locks the template choice for this cohort — a different template cannot later be applied as a starting point"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: >
+          The irreversibility is real and is a classic new-admin trap, but it is disclosed
+          only in the help-center note, not in the tutorial narration — the transcript
+          reassures the opposite way ("Remember, you can change the way these compliance
+          requirements are set up after applying the template", line 277), which is true of
+          individual requirements but not of the template choice itself.
+
+  - screen: "Student Compliance – Setup tab: category and requirement scaffolding"
+    navigation_path: "Student Compliance > Setup tab > [cohort] > Add New Category / + icon on a category / Add a Requirement"
+    action: >
+      The admin builds the item taxonomy: adds categories, adds requirements inside
+      categories, deletes requirements that do not apply to this program, and saves.
+      This is the step where a discipline's actual compliance list (immunizations,
+      background check, drug screen, liability insurance, licensure, attestations) gets
+      typed in.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, section "4/16 Managing Student
+      Compliance in Exxat Prism", lines 279-281 ("If you would like to add a new
+      compliance category, click on the Add New Category button. You can then provide the
+      category with a name and add requirements to this new category... If you would like
+      to delete any requirements, you can use the trash bin icon... To add new compliance
+      documents to an existing category, click on the plus icon to the right of a category
+      name... If you would like to add multiple requirements at one time, click on the Add
+      a Requirement button... Once you are done, click the Save button"). The named default
+      category set is not enumerated in the transcript; it is confirmed by
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup
+      Student Compliance Section.md, "Compliance Requirement Categories".
+    elements:
+      - element: "Add New Category button (name + initial requirements)"
+        type: "button"
+        data_shown: "Creates a new admin-defined grouping alongside the shipped categories (Health & Immunization, Certifications & Training, Verification / Identity Documents, Insurance & Liability, Memberships & Licensure, Attestations, Additional Documents)"
+        gates_on: ["How requirements are grouped in every downstream student view, Summary table, and export"]
+        accreditation_citation: >
+          COCA Standard 5, Element 5.4 (../accreditation/coca.yaml lines 124-141) — the
+          shipped "Attestations" category is the only place a supervision-policy
+          acknowledgment item could live, and coca.yaml's own open question is precisely
+          "Confirm Compliance Management supports document-acknowledgment item types, not
+          just checklist/expiry items."
+        competitor_equivalent: >
+          eMedley (content/competitors/emedley.yaml, "Compliance Management" pillar) is the
+          only competitor whose public docs enumerate a document taxonomy at all (MMR,
+          Hepatitis, flu, PPD, Varicella, BLS/CPR/HIPAA, licenses), but that is a fixed
+          vendor-defined list; nothing in emedley.yaml describes admin-created categories.
+          Whether any competitor lets the admin invent a new category is not documented at
+          this granularity by any competitor teardown in this research.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Mechanism ships; content does not. For the four expansion domains
+          (DO/Medicine/Pharmacy/Dentistry) there is no seeded category set or requirement
+          list anywhere in the corpus — the OT/PT playbooks supply a real starter taxonomy
+          for their disciplines, the expansion domains have none.
+      - element: "+ icon on an existing category (add single requirement, free-text name)"
+        type: "input field"
+        data_shown: "New requirement name inside the chosen category"
+        gates_on: ["Whether the item exists at all for this cohort"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Free-text naming means the requirement label is whatever the admin types, with no
+          controlled vocabulary — so two cohorts (or two programs on one tenant) can end up
+          with 'Hep B' and 'Hepatitis B (HepB)' as different objects. Nothing in the
+          transcript describes a rename or merge path after the fact; line 281 confirms the
+          opposite ("You will not be able to change the name of the compliance
+          requirement", alias only).
+      - element: "Add a Requirement button (bulk add multiple requirements at once)"
+        type: "button"
+        data_shown: "Multiple requirement names entered in one pass"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Trash bin icon (delete requirement)"
+        type: "button"
+        data_shown: ""
+        gates_on: ["Removes the item from the cohort's configuration before publish"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: >
+          The transcript does not state what happens if a requirement is deleted after
+          publish and after students have uploaded against it — it only says (line 295)
+          that after publishing "there will be some configurations of specific documents
+          which you will not be able to change," without enumerating which. Unconfirmed,
+          and a question a day-one admin will hit.
+      - element: "Save button"
+        type: "button"
+        data_shown: ""
+        gates_on: ["Persists the category/requirement scaffolding; distinct from Publish, which is what exposes it to students"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "Student Compliance – individual requirement configuration drawer (pencil icon)"
+    navigation_path: "Student Compliance > Setup tab > [cohort] > [requirement] > pencil icon"
+    action: >
+      The admin configures one requirement in full: naming, activation, how much detail to
+      collect, the expiration model, whether it is mandatory, whether it is reviewed,
+      whether it can be shared externally, its due date, guidance text, and any
+      downloadable template or sample. This drawer is repeated once per requirement — it
+      is the bulk of the labor in this stage.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, section "4/16 Managing Student
+      Compliance in Exxat Prism", lines 281-293 (alias/short name, Enabled bit,
+      detailed vs. simplified collection, start/expiration date checkboxes and aliases, up
+      to two additional questions, Expires Automatically In / Expires Automatically On,
+      Expiry Renews in Days, mandatory / shared-profile / review toggles, the sensitive
+      flag and its support-only path, due date, Guidelines for Students, Guidelines for
+      Reviewers, Template and Sample uploads, Save at top of page).
+    elements:
+      - element: "Alias Name and Short Name fields (original requirement name is immutable)"
+        type: "input field"
+        data_shown: "Display name shown to students in lieu of the system requirement name, plus a short label used in the compliance section"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: >
+          Transcript line 281 is explicit: "You will not be able to change the name of the
+          compliance requirement, but you can set an alias name for it." So the underlying
+          name typed in step 2 is permanent, and every downstream correction is a display
+          alias layered over it — fine for one cohort, brittle for a tenant that will run
+          this for a decade.
+      - element: "Enabled bit (activate/deactivate the requirement)"
+        type: "toggle"
+        data_shown: "Whether this requirement is live for the cohort; the green vs. grey check indicator in the list reflects it"
+        gates_on: ["Student visibility of the item", "Inclusion in auto-notifications — the help center confirms only enabled documents are included"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Detailed vs. Simplified collection selector"
+        type: "toggle"
+        data_shown: "Simplified collects only a start date and end date plus the document; Detailed opens document-type-specific sub-fields (the transcript demonstrates with COVID-19 vaccine)"
+        gates_on: ["Which sub-fields and expiration options appear below it"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          Closest is CORE ELMS (content/competitors/core-elms.yaml, "Compliance Management",
+          rated at-parity) which publicly claims immunization/CPR/background-check/drug-check/
+          HIPAA/licensing tracking with automated expiration reminders — but the public
+          source does not describe a per-requirement detail-level switch, so this is not
+          documented at this granularity by any competitor teardown in this research.
+        gap_severity: "none"
+        gap_note: >
+          Transcript line 283 flags that available options "may vary depending on how each
+          compliance document is configured" — i.e. the sub-field set is vendor-defined per
+          document type, so a program cannot invent arbitrary structured fields, only up to
+          two free-text questions (see next element).
+      - element: "Start Date / Expiration Date checkboxes with Alias Name fields"
+        type: "input field"
+        data_shown: "Whether the student is asked for each date, and under what label"
+        gates_on: ["Expiring/Expired statuses downstream", "The Expires Automatically In calculation"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "'Do you want to collect other details?' — up to two additional free-text questions"
+        type: "input field"
+        data_shown: "Program-authored questions asked alongside the uploaded document"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          Hard cap of two, confirmed verbatim at line 285 ("It is possible to add up to two
+          additional questions"), and they are free-text, not structured/filterable. Any
+          program needing more than two structured attributes on a compliance item (e.g. a
+          dentistry program capturing both a fit-test type and a respirator model and a
+          date, or a DO program capturing an attestation version) has no configuration path
+          — it becomes a support request or a workaround requirement.
+      - element: "Expiration model: student-entered date | 'Expires Automatically In' (N days after start date) | 'Expires Automatically On' (fixed date)"
+        type: "input field"
+        data_shown: "How the expiration date for this item is derived"
+        gates_on: ["Expiring / Expired statuses, which in turn drive auto-notifications (step 6) and the Expiring or expired requirements report"]
+        accreditation_citation: >
+          none directly. Adjacent but explicitly NOT this element: CODA Standard 4, Element
+          4-6 and ACPE Standard 3, Key Element 3.5.b (../accreditation/coda.yaml lines
+          215-234, ../accreditation/acpe.yaml lines 65-73) need expiry tracking on SITE
+          affiliation agreements; coda.yaml's own gap_note says "Site-level (vs.
+          student-level) compliance item tracking is unconfirmed," and this drawer confirms
+          the mechanism exists only on student-level items.
+        competitor_equivalent: >
+          CORE ELMS (content/competitors/core-elms.yaml) and eMedley
+          (content/competitors/emedley.yaml) both publicly claim "automated expiration
+          reminders"/"automated expiration notifications", and New Innovations
+          (content/competitors/new-innovations.yaml, Credentialling Module, rated ahead)
+          claims "expiration alerts" for licenses/certifications/visas/immunizations —
+          but none of their public sources describe a configurable derivation rule
+          (start-date + N days vs. fixed date). At the rule level this is not documented at
+          this granularity by any competitor teardown in this research.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Expiry Renews in Days field"
+        type: "input field"
+        data_shown: "Number of days past expiration a newly uploaded replacement document is valid for (transcript example: 365)"
+        gates_on: ["Prevents a fresh upload near expiry from immediately entering Expiring status"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research —
+          no competitor file describes renewal-window behavior on re-upload at all. This is
+          the most differentiated single field in the whole stage and the hardest to
+          discover.
+        gap_severity: "none"
+        gap_note: >
+          Genuinely subtle, and a new admin will not know to set it. Leaving it blank
+          produces a specific, confusing downstream symptom the transcript names outright
+          (line 287): documents uploaded near expiry drop straight into Expiring status.
+      - element: "Mandatory toggle"
+        type: "toggle"
+        data_shown: "Whether this item is required (green star indicator) or optional (grey)"
+        gates_on: ["Non-compliant status rollups", "Auto-notification inclusion — mandatory items in Get Started / In Progress trigger notifications", "Placement Clearance downstream (see rotation-lifecycle stage 3)"]
+        accreditation_citation: >
+          COCA Standard 5, Element 5.4 (../accreditation/coca.yaml lines 124-141) — for an
+          attestation item, Mandatory is the field that turns "policy published" into
+          "distribution to each student proven," which is the evidence COCA 5.4 asks for.
+          coca.yaml already rates this pattern prism_fit "Configure" for exactly this
+          reason.
+        competitor_equivalent: >
+          No competitor teardown in content/competitors/ documents a per-item
+          mandatory/optional switch. eMedley's file explicitly notes the opposite kind of
+          uncertainty — whether its compliance items GATE anything "is not stated on
+          eMedley's public pages." Not documented at this granularity by any competitor
+          teardown in this research.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "'Available in the shared profile link' toggle (green share icon)"
+        type: "toggle"
+        data_shown: "Whether this document is exposed when a student shares their profile link with a site/agency"
+        gates_on: ["What a site contact can see via Profile Share", "What the OTP-protected external view exposes"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research.
+          e-Value/MedHub (content/competitors/e-value.yaml, medhub.yaml) document
+          credentials monitoring and FERPA/SOC 2 posture, but no competitor file describes
+          a per-document external-sharing switch.
+        gap_severity: "none"
+        gap_note: >
+          This is a privacy control that a new admin will treat as a convenience toggle.
+          The Social Work playbook
+          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+          Work (SW) Playbook.md, "Compliance") independently flags the same field as
+          "a privacy control worth flagging to admins configuring compliance categories."
+      - element: "'Requires review' toggle (green review icon)"
+        type: "toggle"
+        data_shown: "Whether an uploaded document enters Pending Review rather than auto-satisfying the requirement"
+        gates_on: ["Whether the item ever reaches the admin's (or the Approve team's) review queue"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          eMedley (content/competitors/emedley.yaml) is the one competitor whose public docs
+          name the equivalent choice — "manual or auto-approval workflows" — so this is a
+          genuine element-for-element match: eMedley's auto-approval ≈ this toggle off,
+          manual ≈ on. Depth beyond that (who reviews, reason codes) is not public.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Sensitive-document indicator (read-only to the admin)"
+        type: "read-only rollup"
+        data_shown: "Whether a document is restricted so only specific stakeholders can view it; excluded from download"
+        gates_on: ["Visibility of the uploaded document to faculty/site stakeholders", "Exclusion from bulk download"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          Explicitly not self-serve: "You will not be able to mark a document sensitive. If
+          you would like to make a document sensitive, contact prism-support@exat.com and
+          provide the name of the document you would like to make sensitive and the
+          stakeholders you would like to hide the document from" (transcript line 291). For
+          a day-one setup this means the privacy design of the compliance taxonomy is a
+          vendor ticket with an unknown turnaround, sitting on the critical path before
+          Publish.
+      - element: "Due Date picker"
+        type: "input field"
+        data_shown: "Cohort-level due date for this requirement (later overridable per student)"
+        gates_on: ["Red calendar icon on the Summary table when passed", "Past-due auto-notification triggers"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Guidelines for Students text area"
+        type: "input field"
+        data_shown: "Program-authored instructions shown to the student on the requirement"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Guidelines for Reviewers text area"
+        type: "input field"
+        data_shown: "Instructions to the Exxat Approve review team on what makes this document acceptable"
+        gates_on: ["Only meaningful if the program has purchased the Approve service"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          No competitor in content/competitors/ documents an outsourced human
+          document-review service at all, at any granularity — the closest analogues
+          (CORE ELMS, eMedley, New Innovations) all describe software-only tracking. This
+          field has no competitor equivalent to compare against, which is itself the
+          finding.
+        gap_severity: "none"
+        gap_note: >
+          Load-bearing for the Approve upsell: the quality of third-party review is a direct
+          function of whether the day-one admin fills this in per requirement, and the
+          transcript gates it on the service ("If you are using the EXAT Approve service",
+          line 293).
+      - element: "Template upload (Browse to Upload) and Sample upload"
+        type: "input field"
+        data_shown: "A blank form the student downloads, completes and re-uploads; and an example of a correctly completed submission"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Save button (top of page)"
+        type: "button"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "Student Compliance – Setup tab: External Trainings (third-party vendor requirements)"
+    navigation_path: "Student Compliance > Setup tab > [cohort] > External Trainings > pencil icon (e.g. HIPAA Training)"
+    action: >
+      The admin wires a vendor-delivered training in as a compliance requirement, so
+      completion syncs back into Prism as a status rather than being tracked in a
+      separate system. Configured per cohort, then published like any other requirement.
+    confirmed_by: >
+      Not narrated in /Users/romitsoley/Downloads/exxat_transcripts.md — the 4/16 tutorial
+      covers upload-based requirements only and never mentions External Trainings or a
+      vendor integration. Confirmed instead by
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup
+      HIPAA Training for Students by ComplianceJunction.md (steps 4-8), with the
+      discipline-side confirmation of which vendors are in play in
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+      Work (SW) Playbook.md, "Compliance" (CISIVE and Universal for background
+      checks/drug screenings, ComplianceJunction for HIPAA training; School Pay vs.
+      Student Pay).
+    elements:
+      - element: "Enable HIPAA Training toggle"
+        type: "toggle"
+        data_shown: "Whether the vendor-delivered training appears as a requirement for this cohort"
+        gates_on: ["Student's ability to launch the vendor course from Prism"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          eMedley (content/competitors/emedley.yaml) lists "HIPAA training" as a tracked
+          document type, but as a document to upload, not as an integrated vendor course
+          launched and status-synced from inside the platform. No competitor teardown in
+          this research documents an embedded compliance-training vendor integration.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Vendor selector (ComplianceJunction)"
+        type: "input field"
+        data_shown: "Which third-party training provider backs this requirement"
+        gates_on: ["Which course credentials fields are meaningful below"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The named vendor set (ComplianceJunction, CISIVE, Universal) is documented only in
+          the Social Work playbook and student-side help guides. Whether these integrations
+          are offered to Medicine/DO/Pharmacy/Dentistry programs, or are SW/health-professions
+          contracts, is unconfirmed anywhere in the corpus — a concrete question for
+          expansion-domain onboarding.
+      - element: "Course Id and Course Link fields (supplied by the vendor)"
+        type: "input field"
+        data_shown: "The tenant's own vendor course identifiers"
+        gates_on: ["Whether the student's launch and the completion sync-back work at all"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Off-platform dependency on the critical path: the admin cannot complete this field
+          without a signed vendor contract and credentials, so a day-one setup will
+          routinely publish the cohort with this requirement still disabled.
+      - element: "Mandatory / Review Required / Include in profile link / sensitive / 'do not review by Approve' toggles, Due date, Guidelines"
+        type: "toggle"
+        data_shown: "Same configuration surface as an upload-based requirement, applied to the vendor training"
+        gates_on: ["Same downstream statuses and notifications as any other requirement"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Notable consistency win: the vendor-backed item is configured with the same
+          controls as a document item, so the taxonomy stays uniform. Note the sensitive
+          toggle appears self-serve here in the help guide, contradicting the transcript's
+          support-only statement for document requirements (line 291) — unresolved
+          inconsistency between the two sources.
+      - element: "Confirm + Publish"
+        type: "button"
+        data_shown: ""
+        gates_on: ["Makes the training available to students in the cohort"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "Student Compliance – Setup tab: Publish"
+    navigation_path: "Student Compliance > Setup tab > [cohort] > Publish (and confirm)"
+    action: >
+      The admin publishes the finished configuration to every student in the cohort. This
+      is the moment the stage's work becomes visible outside the admin's screen, and the
+      moment some configuration choices become permanent.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, section "4/16 Managing Student
+      Compliance in Exxat Prism", line 295 ("Once you have completely configured your
+      compliance requirements for this cohort, click on the Publish button. This will
+      publish this set of documents to all the students within the selected cohort. After
+      you have published compliance documents for a cohort, you can still make some changes
+      to the published documents. However, there will be some configurations of specific
+      documents which you will not be able to change").
+    elements:
+      - element: "Publish button"
+        type: "button"
+        data_shown: ""
+        gates_on: ["Student visibility of every requirement configured in steps 2-4", "All downstream status, notification, review and reporting behavior"]
+        accreditation_citation: >
+          COCA Standard 5, Element 5.4 (../accreditation/coca.yaml lines 124-141) —
+          publication is the act that makes an attestation item distributable to each
+          student, which is the "proof those policies are distributed" half of the element.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research —
+          no competitor file describes a draft/publish boundary on compliance configuration.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Post-publish immutability (unnamed subset of configurations)"
+        type: "read-only rollup"
+        data_shown: "Which per-document settings are frozen after publish is never enumerated on-screen or in the tutorial"
+        gates_on: ["Whether a configuration error found after publish is fixable in-product or becomes a support ticket"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          The single largest day-one risk in this stage: a new admin is told some settings
+          become uneditable at publish but is told neither which ones nor where to see
+          them. Combined with the immutable requirement name (step 3) and the one-shot
+          template application (step 1), a first cohort configured wrong is expensive to
+          unwind.
+
+  - screen: "Student Compliance – Auto Notifications drawer"
+    navigation_path: "Student Compliance > Setup tab > [cohort] > Auto Notifications button"
+    action: >
+      The admin turns on weekly automated reminders to students for every document
+      requiring their attention, sets the date the reminders stop, and decides whether
+      optional requirements are included.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, section "4/16 Managing Student
+      Compliance in Exxat Prism", lines 295-299 ("We offer the option to send out weekly
+      reminders to students containing all their expiring and expired compliance
+      documents... Documents marked with statuses such as Get started, In progress, Not
+      approved, Expiring, or Expired will require an action from the student. To activate
+      these auto-notifications, click on the Auto Notifications button at the top of the
+      page, then toggle the Enable Auto Notifications option. Please note that once you
+      enable auto-notifications, you will not be able to disable them on your own... You
+      will then need to enter an end date... toggle the Disable Notifications for Optional
+      Requirements bit"). The enumerated trigger list (Not Approved / Expiring / Expired /
+      Past Due Date / Past Follow-up Date) and the "only enabled documents, only active
+      students" constraints come from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup
+      Student Compliance Section.md, "Set Up Auto-Notifications".
+    elements:
+      - element: "Enable Auto Notifications toggle"
+        type: "toggle"
+        data_shown: "Whether weekly reminder emails go out to students with outstanding items"
+        gates_on: ["All student-facing compliance nagging for the cohort"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          CORE ELMS ("automated expiration reminders"), eMedley ("automated expiration
+          notifications"), New Innovations ("expiration alerts"), and e-Value/MedHub
+          ("automated alerts for expiring credentials", "auto-alerts for late...")
+          — content/competitors/core-elms.yaml, emedley.yaml, new-innovations.yaml,
+          e-value.yaml, medhub.yaml — all publicly claim automated compliance reminders, so
+          the capability is at parity and commoditized. None of their sources describe the
+          admin-side control surface (irreversibility, end date, optional-item suppression),
+          so the toggle itself is not documented at this granularity by any competitor
+          teardown in this research.
+        gap_severity: "gap"
+        gap_note: >
+          One-way switch, stated outright in the transcript: "once you enable
+          auto-notifications, you will not be able to disable them on your own... please
+          contact prism-support@exat.com." A new admin experimenting during setup cannot
+          undo it — the worst possible property for a day-one configuration screen.
+      - element: "Notification End Date field"
+        type: "input field"
+        data_shown: "The date auto-notifications stop being sent for this cohort"
+        gates_on: ["The only in-product way to stop the notification stream, since the enable toggle cannot be reversed"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          The help guide adds a constraint the transcript does not: "This cannot be changed
+          after saving." So the end date is both the de-facto off switch AND itself
+          immutable — a day-one admin who guesses a date has locked the cohort's entire
+          reminder lifecycle in a single save.
+      - element: "Disable Notifications for Optional Requirements toggle"
+        type: "toggle"
+        data_shown: "Whether students are also nagged about non-mandatory items"
+        gates_on: ["Notification volume and perceived signal quality"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Depends entirely on the Mandatory toggle in step 3 being set correctly first — a
+          real ordering dependency inside this stage.
+      - element: "Real Time Notification when document is not approved (optional)"
+        type: "toggle"
+        data_shown: "Immediate rather than weekly notification on a rejection"
+        gates_on: ["Turnaround speed on rejected documents"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Present in the help guide's step list but not narrated in the tutorial transcript
+          — an example of setup surface a video-trained admin would never discover.
+      - element: "Save button"
+        type: "button"
+        data_shown: ""
+        gates_on: ["Commits the irreversible enable and the immutable end date together"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "One Save commits two separately irreversible decisions with no confirmation step described."
+
+  - screen: "Student Compliance – Notification tab: email template authoring"
+    navigation_path: "Student Compliance > Notification tab > select students/requirements > Compose Email > Next > Add a template"
+    action: >
+      During setup the admin builds the reusable email templates the program will send for
+      compliance chasing — either adopting the pre-made standard template or authoring
+      program-specific ones with merge fields — and can preview, send now, or schedule.
+      The History view is where delivery is later verified.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, section "4/16 Managing Student
+      Compliance in Exxat Prism", lines 323-331 ("click on the Compose Email button... You
+      will then select the template for the email you would like to send. You can select our
+      pre-made standard template or any other template you have created. Click Add a
+      template to add a new template. You can then provide a template name, subject name,
+      and header and footer layout for the email template... Be sure to use the merge fields
+      displayed in the upper right-hand corner... you can choose to send the notification now
+      or schedule it to be sent later... click on the History button... columns for the
+      student's name, the recipient's email, the subject... Dropped... Delivered... Opened").
+    elements:
+      - element: "Standard (pre-made) template"
+        type: "read-only rollup"
+        data_shown: "Vendor-supplied default compliance notification email"
+        gates_on: ["Lets a day-one admin send compliance emails without authoring anything"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Notable contrast with the compliance taxonomy itself: email gets a shipped
+          default, the requirement list does not.
+      - element: "Add a template: Template Name, Subject, Header/Footer layout, Body"
+        type: "input field"
+        data_shown: "A reusable, program-branded notification template"
+        gates_on: ["Every manual compliance notification sent thereafter"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research.
+          No competitor file in content/competitors/ documents an admin-authored
+          notification template editor; competitor claims stop at "automated alerts."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Merge fields panel"
+        type: "read-only rollup"
+        data_shown: "Tokens replaced per-recipient with that student's compliance details"
+        gates_on: ["Whether a bulk send reads as personalized"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Preview / Send now / Schedule for a later date"
+        type: "button"
+        data_shown: "Left-hand rendered preview of the notification before sending"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "History view (cohort, date range, automatic/manual filter; Delivered / Opened / Dropped statuses)"
+        type: "report filter"
+        data_shown: "Per-message delivery outcome including open timestamps on hover"
+        gates_on: ["Whether a program can prove a student was actually notified"]
+        accreditation_citation: >
+          COCA Standard 5, Element 5.4 (../accreditation/coca.yaml lines 124-141) —
+          partially. Delivery/open logs are real evidence of distribution, but coca.yaml's
+          required_software_behavior asks for tracked acknowledgment/attestation by each
+          student, and an Opened email status is weaker evidence than an attestation record.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research —
+          no competitor file describes per-message Delivered/Opened/Dropped telemetry for
+          compliance notifications.
+        gap_severity: "none"
+        gap_note: >
+          Set up during onboarding but only meaningful later; the transcript recommends
+          checking it regularly because Dropped messages otherwise fail silently
+          (line 329-331).
+
+  - screen: "Faculty Compliance – Setup: requirement library"
+    navigation_path: "Dashboard (or hamburger menu) > Faculty Compliance > Setup > [requirement] > pencil icon / Add New Requirement"
+    action: >
+      The admin configures the faculty-side compliance library — which is structured
+      completely differently from the student side: it ships pre-populated with commonly
+      used requirements, is edited per requirement rather than per cohort, and is
+      distributed by group rather than by publish.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, section "Setting Up and Reviewing
+      Faculty Compliance", lines 1935-1943 ("To get started with faculty compliance, you'll
+      need to have exs A approved as part of your services... In the faculty compliance
+      page, you'll see a list of commonly used faculty compliance requirements that have
+      already been populated for your convenience... rename the compliance requirement using
+      the document name text box... update the document category field... Create a short
+      name... activate the enabled bit... activate the mandatory bit... guidelines for
+      faculty text area... guidelines for reviewer section... browse to upload button under
+      the template section... you may choose to collect the expiration date, result date...
+      If a field is mandatory for submission activate its required toggle. You can also
+      rename the field using the label text box").
+    elements:
+      - element: "Pre-populated 'commonly used faculty compliance requirements' list"
+        type: "read-only rollup"
+        data_shown: "Vendor-seeded starter set of faculty requirements (healthcare records, identity, insurance, licensure/certification per the tutorial's framing)"
+        gates_on: ["How fast a day-one admin can stand up faculty compliance vs. student compliance"]
+        accreditation_citation: >
+          Nursing COA Standard B (faculty licensure/NBCRNA certification, several
+          sub-standards marked critical) per
+          /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
+          Playbook.md, "Compliance" and "Accreditor Standards", which names Faculty
+          Compliance as the mechanism for tracking faculty licensure/certification
+          expiration. No element in ../accreditation/coca.yaml, coda.yaml, acpe.yaml or
+          lcme.yaml addresses faculty health/credential item tracking, so for the four
+          expansion domains this is genuinely accreditation-agnostic setup.
+        competitor_equivalent: >
+          New Innovations (content/competitors/new-innovations.yaml, "Credentialling Module",
+          rated ahead of Prism) is the closest: "Centralized tracking of licenses,
+          certifications, visas, and immunizations with expiration alerts" — but its public
+          source describes tracking for trainees/staff generically, not a seeded
+          faculty-specific starter library. MedHub (content/competitors/medhub.yaml) claims
+          "automated credentials monitoring for state, DEA, and Controlled Substances
+          licenses," which is credential monitoring against external registries rather than
+          a configurable requirement library. Neither is documented at the seeded-library
+          granularity.
+        gap_severity: "none"
+        gap_note: >
+          Direct, citable inconsistency worth surfacing in onboarding design: Faculty
+          Compliance ships with a starter taxonomy and Student Compliance does not, even
+          though student compliance is the higher-volume, higher-stakes setup.
+      - element: "Document Name / Document Category / Short Name fields"
+        type: "input field"
+        data_shown: "Faculty requirement naming and categorization"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: >
+          Asymmetry with the student side: here the requirement can actually be renamed
+          ("You can rename the compliance requirement using the document name text box",
+          line 1937), whereas student requirement names are immutable and alias-only
+          (line 281). Same conceptual object, two different rules — a genuine
+          learnability cost for an admin configuring both in one sitting.
+      - element: "Enabled bit / Mandatory bit (green vs. grey checkbox, green vs. grey asterisk)"
+        type: "toggle"
+        data_shown: "Active/inactive and required/optional state per faculty requirement"
+        gates_on: ["Faculty compliant vs. non-compliant rollups on the Faculty View tab"]
+        accreditation_citation: >
+          Nursing COA Standard B via the Nursing Playbook's Faculty Compliance mapping (see
+          above). Not tied to any element in ../accreditation/*.yaml for the four expansion
+          domains.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Guidelines for Faculty / Guidelines for Reviewer text areas"
+        type: "input field"
+        data_shown: "Instructions to the submitting faculty member and to whoever reviews the submission"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "No competitor teardown in this research documents an outsourced or delegated document-review role, so there is no equivalent to compare."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Template / Sample upload (Browse to Upload)"
+        type: "input field"
+        data_shown: "Downloadable blank form and worked example for faculty"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Per-requirement collected-field configuration (e.g. titer details / declination details toggles; sub-fields for expiration date, result date, file upload, test type, notes; per-field Required toggle; per-field Label rename)"
+        type: "toggle"
+        data_shown: "Exactly which structured data a faculty submission carries and which parts are compulsory"
+        gates_on: ["What a reviewer sees at review time", "What can be exported from the Document View tab"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          The transcript is careful about a trap worth repeating to admins: the Label text
+          box "only changes the display name, not the type of data being collected"
+          (line 1941).
+      - element: "Add New Requirement button (category, requirement name, short name)"
+        type: "button"
+        data_shown: ""
+        gates_on: ["Extends the faculty library beyond the seeded set"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Exxat Approve service prerequisite"
+        type: "read-only rollup"
+        data_shown: "Faculty Compliance is gated on having Approve as part of the tenant's services"
+        gates_on: ["Whether this entire step exists for the program at all"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          No competitor teardown in this research documents a paid third-party review
+          service, let alone one that gates access to a whole module. Not comparable.
+        gap_severity: "gap"
+        gap_note: >
+          Stated flatly at line 1935: "To get started with faculty compliance, you'll need to
+          have [Exxat] Approve as part of your services." For a day-one admin scoping stage 4,
+          this means the faculty half of compliance setup may be entirely unavailable
+          depending on contract — a commercial dependency, not a configuration one, and it
+          is not signposted anywhere in the student-compliance flow.
+
+  - screen: "Faculty Compliance – Setup: Groups"
+    navigation_path: "Faculty Compliance > Setup > Group (left-hand menu) > Create Group"
+    action: >
+      The admin bundles related faculty requirements into named groups, which are the unit
+      of assignment on the faculty side — the structural equivalent of the student side's
+      per-cohort publish, but reusable and re-editable.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, section "Setting Up and Reviewing
+      Faculty Compliance", line 1945 ("Compliance groups allow you to organize related
+      compliance documents together, making it easier to assign them to faculty members.
+      Click on the group option from the left hand menu. To create a new group, click the
+      create group button. You'll be prompted to enter a name for the group and provide a
+      brief description... select the compliance documents you want to include in this
+      group... click save to finalize... simply click the pencil icon next to the group name
+      to edit it").
+    elements:
+      - element: "Create Group: Name + Description"
+        type: "input field"
+        data_shown: "A named bundle of faculty compliance documents"
+        gates_on: ["What can be assigned in the Associate Faculty step"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          This is the mechanism for differential requirements by faculty type (e.g.
+          site-facing clinical faculty vs. didactic-only faculty) — the student side has no
+          documented equivalent below cohort level, which is a real modeling asymmetry.
+      - element: "Document selection step (multi-select from the requirement library)"
+        type: "input field"
+        data_shown: "Which requirements the group contains"
+        gates_on: ["Everything a faculty member in this group is asked for"]
+        accreditation_citation: >
+          Nursing COA Standard B via
+          /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
+          Playbook.md — a licensure/certification group is how a nursing program would scope
+          the critical faculty-credential sub-standards to the right faculty population.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Review-and-Save wizard step; pencil icon to edit an existing group"
+        type: "button"
+        data_shown: "Summary of the group before commit; groups remain editable afterward"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Directly contrasts with the student side's one-shot template application and
+          partially-frozen post-publish configuration — faculty groups are freely editable.
+
+  - screen: "Faculty Compliance – Setup: Associate Faculty (bulk assignment)"
+    navigation_path: "Faculty Compliance > Setup > Associate Faculty > select faculty > Assign Group"
+    action: >
+      The admin selects faculty in bulk (with search and filters) and assigns one or more
+      compliance groups to them, choosing whether to add to or replace their existing
+      assignments.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, section "Setting Up and Reviewing
+      Faculty Compliance", line 1947 ("From the left hand menu, click on associate faculty.
+      You'll see a table displaying all the faculty members in your system. Use the search
+      box... or apply filters using the filter icon... select their names and click the
+      assign group button... choose the compliance groups you want to assign... If you'd
+      like to replace any previously assigned groups, check the override currently
+      associated groups box. If you want to keep existing assignments and simply add to
+      them, leave this box unchecked").
+    elements:
+      - element: "Faculty table with search box and filter icon"
+        type: "report filter"
+        data_shown: "All faculty records in the tenant, filterable for bulk selection"
+        gates_on: ["Depends on stage 3 of this journey — faculty must already exist in the system"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Assign Group button (multi-select of groups)"
+        type: "button"
+        data_shown: ""
+        gates_on: ["Which requirements each faculty member sees on login"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "'Override currently associated groups' checkbox"
+        type: "toggle"
+        data_shown: "Replace vs. append semantics for the bulk assignment"
+        gates_on: ["Whether an existing faculty member's prior assignments survive the operation"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research.
+          This is the kind of bulk-operation semantic (replace vs. merge) that no competitor
+          public documentation reaches; the closest comparable bulk mechanic anywhere in
+          this corpus is Prism's own student Bulk Import
+          (/Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students in
+          Exxat Prism", lines 95-99), covered in stage 2 of this journey, not a competitor.
+        gap_severity: "cosmetic"
+        gap_note: >
+          Destructive-by-checkbox: checking it silently drops prior group assignments for
+          every selected faculty member. The transcript describes the behavior clearly but
+          no undo, preview of affected assignments, or confirmation dialog is mentioned.
+
+  - screen: "Faculty Compliance – Setup: Auto Notification scheduler"
+    navigation_path: "Faculty Compliance > Setup > Auto Notification > Add Notification"
+    action: >
+      The admin creates one or more scheduled reminder campaigns for faculty, choosing
+      frequency, date window, and which requirements each campaign covers — then can later
+      deactivate, edit, or delete them.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, section "Setting Up and Reviewing
+      Faculty Compliance", lines 1957-1961 ("documents marked with statuses such as Get
+      started, in progress, not approved, expiring, or expired will require an action from
+      the faculty member... navigate to the setup section and click on the auto notification
+      section... click on the add notification button... provide a title and description...
+      enter a start date... select the frequency... For example, if you would like the
+      notifications to be sent once a week on Mondays, select the one option, then week
+      option, then select the Monday option. Lastly, provide an end date... select the
+      requirements you would like to send notifications for... click on the create
+      notification button. If you would like to deactivate a previously configured
+      notification instance, deactivate the corresponding bit... trash bin icon... pencil
+      icon").
+    elements:
+      - element: "Add Notification: Title + Description"
+        type: "input field"
+        data_shown: "Names a distinct notification campaign — multiple campaigns can coexist"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Frequency builder (every N + day/week + specific weekday) with Start and End dates"
+        type: "input field"
+        data_shown: "Arbitrary recurrence schedule, e.g. weekly on Mondays"
+        gates_on: ["Cadence of faculty reminders"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          e-Value/MedHub (content/competitors/e-value.yaml, medhub.yaml) claim "automated
+          alerts for expiring credentials" and "auto-alerts for late" items, but no
+          competitor public source describes an admin-defined recurrence schedule. Not
+          documented at this granularity by any competitor teardown in this research.
+        gap_severity: "none"
+        gap_note: >
+          Strictly more capable than the student-side equivalent, which is fixed weekly with
+          a single irreversible enable (step 6). Same product, two different notification
+          engines with different power and different reversibility — the clearest internal
+          inconsistency this stage exposes.
+      - element: "Requirement selection step (searchable multi-select)"
+        type: "input field"
+        data_shown: "Which faculty requirements this campaign nags about"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Per-campaign requirement scoping has no student-side equivalent — student
+          auto-notifications cover all enabled documents wholesale.
+      - element: "Summary + Create Notification button"
+        type: "button"
+        data_shown: "Review of the configured campaign before commit"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Deactivate bit / pencil (edit) / trash bin (delete) on an existing campaign"
+        type: "toggle"
+        data_shown: "Full lifecycle control over a configured notification"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Faculty notifications are fully reversible in-product; student notifications
+          require prism-support@exat.com to disable (step 6). Worth calling out explicitly in
+          any onboarding checklist.
+
+  - screen: "Vendor-gated setup requests (prism-support@exxat.com / Exxat Approve)"
+    navigation_path: "Off-platform — email prism-support@exxat.com; Approve is a contracted service line"
+    action: >
+      The admin submits the setup decisions that cannot be self-served: marking specific
+      documents sensitive (with the stakeholder hide-list), enabling one-time-password
+      protection on externally shared compliance information, and — separately — contracting
+      the Exxat Approve review service that Guidelines for Reviewers, Review Clarifications
+      and the whole Faculty Compliance module depend on.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, section "4/16 Managing Student
+      Compliance in Exxat Prism", lines 289-293 ("we offer the ability to protect student
+      compliance information sent within shared student profiles and when emailing compliance
+      information to experiential supervisors... please reach out to our support team at
+      prism-support@exat.com... they will be met with a screen asking them to enter the
+      one-time password sent to their school email address"; "You will not be able to mark a
+      document sensitive. If you would like to make a document sensitive, contact
+      prism-support@exat.com and provide the name of the document... and the stakeholders you
+      would like to hide the document from"), line 297 (disabling auto-notifications requires
+      support), line 313 (Review Clarifications is an Approve-services surface), and section
+      "Setting Up and Reviewing Faculty Compliance", line 1935 (Approve required for faculty
+      compliance).
+    elements:
+      - element: "Sensitive-document request (document name + stakeholders to hide from)"
+        type: "input field"
+        data_shown: "Off-platform ticket contents; the resulting flag is read-only in the product"
+        gates_on: ["Who can view the uploaded document", "Exclusion of the document from student downloads and bulk downloads"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          No competitor teardown in this research documents per-document visibility
+          restrictions. The nearest competitor claims are platform-wide security posture
+          rather than per-item: CORE ELMS "HIPAA-compliant environment"
+          (content/competitors/core-elms.yaml), MedHub "FERPA compliance, SOC 2 compliance"
+          (content/competitors/medhub.yaml), Elentra SOC 2 Type 2 / TX-RAMP
+          (content/competitors/elentra.yaml). Different granularity entirely — not comparable
+          element-for-element.
+        gap_severity: "gap"
+        gap_note: >
+          A privacy-critical configuration with no admin UI at all. On a day-one setup the
+          admin must anticipate which items are sensitive BEFORE publish, then wait on a
+          vendor turnaround they cannot see or track in-product.
+      - element: "One-time-password protection for externally shared compliance information"
+        type: "toggle"
+        data_shown: "Support-enabled tenant setting; the external recipient then verifies via an OTP emailed to the same address the link was sent to"
+        gates_on: ["Security of every profile-share and every compliance email to an experiential supervisor", "Interacts with the per-requirement 'available in the shared profile link' toggle from step 3"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research —
+          no competitor file describes an OTP-gated external view of student compliance
+          records.
+        gap_severity: "gap"
+        gap_note: >
+          Real differentiator, invisible by default: an admin who never emails support ships
+          a tenant where shared compliance links are unauthenticated. Nothing in the Setup
+          tab surfaces the setting's existence or current state.
+      - element: "Exxat Approve service contract"
+        type: "read-only rollup"
+        data_shown: "Whether third-party document review is part of the tenant's services"
+        gates_on: ["Guidelines for Reviewers (step 3)", "Review Clarifications thread on each document", "The entire Faculty Compliance module (step 8)", "Whether admins or the Approve team perform review at all"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: >
+          Unique in this competitive set: none of the nine teardowns in content/competitors/
+          documents an outsourced human document-review service. CORE ELMS, eMedley, New
+          Innovations, e-Value/MedHub all sell software-only tracking; Elentra, one45,
+          LEO/DaVinci and axiUm have no dedicated compliance-item module at all per their
+          files. The honest comparison is that there is nothing to compare to.
+        gap_severity: "none"
+        gap_note: >
+          Commercially the strongest asset in this stage and the least visible during
+          onboarding: the transcript frames the alternative plainly — "If you are currently
+          not signed up for our EXAT Approved service, program administrators and staff
+          responsible for overseeing compliance will need to review the student's compliance
+          documents" (line 271).
+
+  - screen: "Institution-level Compliance Management (multi-program tenants)"
+    navigation_path: "Institution Administrator tile > Compliance Management > Setup tab (Requirements / Auto-Notifications / Student Specific Due Date)"
+    action: >
+      On a tenant hosting several programs, the institutional administrator reviews — and
+      can edit — the requirements, auto-notification schedules, and student-specific due
+      dates defined by each individual program, plus a cross-program student status table.
+    confirmed_by: >
+      Not covered anywhere in /Users/romitsoley/Downloads/exxat_transcripts.md — the 16-part
+      admin tutorial series is written from a single-program administrator's seat and never
+      shows the institution tile. Confirmed by
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Institutional Users/Step-by-Step Guides (How-tos)/Institution Level- Compliance
+      Management.md (steps 1-9).
+    elements:
+      - element: "Cross-program student compliance table (student, program, cohort, per-item status) with funnel filter, wrench column editor, Export"
+        type: "read-only rollup"
+        data_shown: "Every student across every program on the tenant with current status for all compliance items"
+        gates_on: []
+        accreditation_citation: >
+          none directly. Worth stating precisely because a reader will expect one: this
+          screen carries no accreditor field, no standard mapping, and no evidence-binder
+          semantics. The precedent for accreditation-aware records in this corpus is the
+          Program Details > Accreditation record analyzed in
+          ../flows/competency-verification--08-close-the-loop-external-validation-against.yaml
+          (COCA Standard 11 Element 11.9 partial, CODA Standard 1 Element 1-2 background) —
+          a different screen entirely, and even there it is rated a partial/status-only fit.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research.
+          CORE ELMS's compliance module is described as institution-usable for
+          "accreditation and audits" (content/competitors/core-elms.yaml) but no competitor
+          source describes a distinct institution-vs-program administrative tier for
+          compliance oversight.
+        gap_severity: "none"
+        gap_note: >
+          For expansion-domain buyers this is a real day-one selling point (a dental school
+          with predoc + hygiene + assisting programs, or an academic health center running
+          MD and DO tracks), but it is undiscoverable from the tutorial corpus — no video
+          covers it.
+      - element: "Setup > Requirements (view and edit each program's per-cohort requirements)"
+        type: "input field"
+        data_shown: "The same requirement configuration from step 2/3, exposed across programs"
+        gates_on: ["Institutional ability to enforce a common baseline across programs"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The help guide says the institutional user can "see and edit the requirements
+          defined by each program," but nothing documents a push-down/inherit model — an
+          institution cannot define a mandatory baseline that programs inherit; it can only
+          edit each program's configuration after the fact. For a multi-program day-one
+          rollout that is the difference between one setup and N setups.
+      - element: "Setup > Auto-Notifications (view/edit each program's notification config)"
+        type: "input field"
+        data_shown: "Per-program, per-cohort auto-notification settings"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: >
+          Unresolved against the transcript: student auto-notifications cannot be disabled by
+          a program admin without support (line 297), yet this screen claims institutional
+          edit rights over the same settings. Whether institutional users can actually
+          reverse the toggle is unconfirmed in both sources.
+      - element: "Setup > Student Specific Due Date (view/edit per-student due-date exceptions)"
+        type: "input field"
+        data_shown: "Individual due-date overrides set by each program"
+        gates_on: []
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Operational rather than setup-time; included because it is a Setup-tab surface the institutional admin inherits on day one."
+      - element: "'Review Clarifications' and 'Approve' tabs"
+        type: "read-only rollup"
+        data_shown: "Present only when the tenant is signed up for Exxat's Approve service"
+        gates_on: ["Institutional visibility into third-party review threads"]
+        accreditation_citation: "none, this is a platform-mechanics element with no direct accreditor tie"
+        competitor_equivalent: "No competitor teardown in this research documents a third-party review service, so no equivalent exists."
+        gap_severity: "none"
+        gap_note: >
+          Same commercial gate as steps 3 and 8, reappearing a third time at the institutional
+          tier — Approve is the hidden spine of this whole stage.
+
+sources:
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — section '4/16 Managing Student Compliance in Exxat Prism' (lines 267-339), PRIMARY for steps 1-3, 5-7 and 12"
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — section 'Setting Up and Reviewing Faculty Compliance' (lines 1931-1965), PRIMARY for steps 8-11"
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — section '2/16 Setting up Students in Exxat Prism' (lines 73-99), cohort/group prerequisite and the Bulk Import precedent referenced in step 10"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup Student Compliance Section.md — used only for the named category list, the Apply-Template irreversibility note, the enumerated auto-notification triggers, and the immutable Notification End Date"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup HIPAA Training for Students by ComplianceJunction.md — sole source for step 4 (External Trainings), absent from the transcript"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Institutional Users/Step-by-Step Guides (How-tos)/Institution Level- Compliance Management.md — sole source for step 13, absent from the transcript"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md — 'Student Compliance' section: OT starter taxonomy (COVID-19 Test/Vaccination, Flu, HepA, HepB, TB, CPR, Physical Exam, CBC; background check, drug screening; health and professional liability insurance)"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — 'Student Compliance' section and the 'ask the school where they're tracking compliance if they don't track it on Prism' onboarding caveat"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — 'Compliance' section: CISIVE/Universal/ComplianceJunction integrations, School Pay vs. Student Pay, 'Included in Profile Link' privacy control"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — 'Compliance' section: CRNA ACLS/PALS student certifications, Faculty Compliance mapped to COA Standard B"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md — Placement Clearance requirement list and Profile Share of selected compliance documents"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — 'Open Gaps': TE compliance (background check/fingerprinting) explicitly unpopulated"
+  - "../accreditation/coca.yaml (Standard 5 Element 5.4 — supervision-policy distribution/attestation; its own open question on document-acknowledgment item types)"
+  - "../accreditation/coda.yaml (Standard 4 Element 4-6 — site-level agreement expiry, and its gap_note that site-level compliance-item tracking is unconfirmed)"
+  - "../accreditation/acpe.yaml (Standard 3 Key Element 3.5.b — affiliation agreements; noted as adjacent-not-this-screen)"
+  - "../competitors/core-elms.yaml, emedley.yaml, new-innovations.yaml, medhub.yaml, e-value.yaml, elentra.yaml, one45.yaml, leo-davinci.yaml, axium.yaml (Compliance Management pillar entries)"
+  - "../flows/rotation-lifecycle--03-student-readiness-compliance-clearance-pre-rotation.yaml (downstream consumer of everything configured here; scope boundary for this file)"
+  - "../flows/competency-verification--08-close-the-loop-external-validation-against.yaml (precedent for the Program Details Accreditation record and its COCA 11.9 / CODA 1-2 citations, cited in step 13 to explain why this stage has no accreditor tie)"
+last_verified: "2026-08-24"

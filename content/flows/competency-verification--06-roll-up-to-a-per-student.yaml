@@ -1,0 +1,152 @@
+# Element-level ground truth for journey stage:
+# competency-verification.yaml, stage 6 — "Roll up to a per-student competency
+# attainment record and gate progression"
+#
+# SCHEMA v2 (2026-08-24): accreditation_citation / competitor_equivalent /
+# gap_severity / gap_note now live on each element rather than on the step.
+flow_name: "Per-Student Competency Attainment Rollup & Progression Gate"
+maps_to_journey: "competency-verification.yaml, stage 6"
+persona: "Program Administrator (running Competency Management day-to-day; see ../personas/role-program-admin.yaml), with the Dean/Associate Dean making the actual progression/graduation-clearance decision and the Compliance/Accreditation Liaison consuming the rollup as self-study evidence (see ../personas/role-dean.yaml, ../personas/role-compliance-accreditation-liaison.yaml)"
+steps:
+  - screen: "Competency Management — Setup (framework configuration)"
+    navigation_path: "Curriculum Management > Competency Management > Setup > Add New"
+    elements:
+      - element: "Select Competency dropdown"
+        type: "input"
+        data_shown: "Names the competency/outcome the framework tracks (e.g. one ACPE 2.1.a-n element, a CODA Standard 2-24 clinical category, an LCME program objective, a COCA core competency)"
+        gates_on: []
+        accreditation_citation: "ACPE Key Element 7.3.d (individual/aggregate achievement against 2.1.a-n); LCME Element 9.4 (centralized assessment against program objectives); CODA Element 2-24 (per-category competency) — this dropdown is the specific field where the accreditor's taxonomy element is named, so it is where evidence for all three standards originates. COCA Element 6.10's underlying rotation-attribute data lives in the separate Clinical & Experiential Education pillar, not this field."
+        competitor_equivalent: "Not confirmable at element level — CORE ELMS's CompMS is described only as doing curriculum gap-assessment plus auto-built e-portfolios (core-elms.yaml); its setup screens are not documented granularly enough to compare field-by-field against this dropdown."
+        gap_severity: "configure-needed"
+        gap_note: "The field itself is confirmed shipped and mature. What is not shipped is a COCA/ACPE/CODA/LCME-specific taxonomy already loaded behind this dropdown for the four new domains; a program builds it fresh, one taxonomy element at a time. This is the exact field where that per-domain configuration cost lands."
+      - element: "Course Type selector"
+        type: "radio/select"
+        data_shown: "Experiential, Didactic, or Both — determines whether the rollup pulls from placement-based assessments, didactic course grades/assessments, or is pooled from both"
+        gates_on: []
+        accreditation_citation: "None directly — this is a data-source routing control, not the field where evidence for any named standard lives; the standards attach to the competency selection and threshold fields on this same screen."
+        competitor_equivalent: "Not confirmable at element level — CORE ELMS's CompMS setup screens are not documented granularly enough (core-elms.yaml) to establish whether an equivalent didactic/experiential routing control exists."
+        gap_severity: "none"
+        gap_note: "A fixed three-value enumeration that ships complete and needs no per-domain build. The screen's overall configure-needed verdict attaches to the taxonomy and threshold fields, not to this selector."
+      - element: "Scoring Scale + Competency Threshold config"
+        type: "input"
+        data_shown: "Standardized 1-5 scale or a custom scale, plus the expected-performance threshold used downstream to mark a student's score red/below-threshold"
+        gates_on: []
+        accreditation_citation: "ACPE Key Element 7.3.d (individual/aggregate achievement against 2.1.a-n) — 'achievement against' requires a defined expected-performance level, which is set here; LCME Element 9.4 (centralized assessment against program objectives)"
+        competitor_equivalent: "Not confirmable at element level — core-elms.yaml documents no equivalent scale/threshold configuration screen in comparable detail."
+        gap_severity: "configure-needed"
+        gap_note: "Both the scale and the threshold are confirmed shipped, but each new domain's expected-performance level must be defined here from scratch; no accreditor-specific default threshold is pre-loaded."
+    action: "Program admin defines one framework per taxonomy element the domain's accreditor requires a per-student attainment record for, and chooses which assessments/grades feed the rollup."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+
+  - screen: "Competency Management — Review Dashboard (per-student and cohort rollup)"
+    navigation_path: "Competency Management > Review > [Framework] > [Cohort] > Students in Cohort grid > View Report"
+    elements:
+      - element: "Student Proficiency Distribution chart"
+        type: "read-only chart"
+        data_shown: "Categorizes every student in the cohort as 'Meeting Threshold' (all domains at/above threshold) or 'Below Threshold' (at least one domain below) — the closest confirmed thing to a per-student pass/fail attainment state"
+        gates_on: []
+        accreditation_citation: "ACPE Key Element 7.3.d — the AGGREGATE half of 'individual and aggregate attainment against 2.1.a-n' is directly what this chart produces; LCME Element 9.4"
+        competitor_equivalent: "New Innovations' CCC Milestone Review aggregates evaluation data into competency spider graphs for Clinical Competency Committees (new-innovations.yaml) — a comparable cohort-level rollup concept — but new-innovations.yaml's source is marketing copy, not a screen-level walkthrough, so the comparison is functional, not element-by-element."
+        gap_severity: "none"
+        gap_note: "Confirmed shipped and exactly this granular (threshold-flagged, whole-cohort). Resolves the journey's hedge that nothing shipped converts logs and sign-offs into a per-competency attainment state."
+      - element: "Students Meeting Threshold by Domain chart"
+        type: "read-only chart"
+        data_shown: "Per-competency counts of students above/below threshold"
+        gates_on: []
+        accreditation_citation: "ACPE Key Element 7.3.d — aggregate attainment broken out per 2.1.a-n element, which is the form a self-study table needs; LCME Element 9.4"
+        competitor_equivalent: "New Innovations' CCC Milestone Review spider graphs are the nearest documented equivalent (new-innovations.yaml), but that source is marketing copy, so the comparison is functional (both break a cohort down by competency), not element-by-element."
+        gap_severity: "none"
+        gap_note: "Confirmed shipped. Per-domain aggregate breakout is present, not inferred."
+      - element: "Students in Cohort grid -> View Report"
+        type: "read-only grid with drilldown"
+        data_shown: "Drills from cohort view into one student's individual competency performance dashboard — the per-student attainment record itself"
+        gates_on: []
+        accreditation_citation: "ACPE Key Element 7.3.d — the INDIVIDUAL half of 'individual and aggregate attainment against 2.1.a-n'; this drilldown is the per-student attainment record the standard asks for; LCME Element 9.4"
+        competitor_equivalent: "New Innovations' CCC Milestone Review produces a comparable per-resident competency view for Clinical Competency Committees (new-innovations.yaml); the comparison is functional (both roll evaluation data into a per-student competency view), not element-by-element, because that source is marketing copy rather than a screen-level walkthrough."
+        gap_severity: "none"
+        gap_note: "This is the element that most directly resolves the journey's hedge: the per-student attainment state is confirmed shipped and live. It displays that state only — see the Publish/Unpublish step for what it does NOT do."
+      - element: "Score Distribution box plot"
+        type: "read-only chart"
+        data_shown: "Renders red when a domain's median score falls below its configured threshold"
+        gates_on: []
+        accreditation_citation: "ACPE Key Element 7.3.d (aggregate attainment); LCME Element 9.4"
+        competitor_equivalent: "Not confirmable at element level — new-innovations.yaml's spider-graph description does not establish whether a comparable distribution/median view exists."
+        gap_severity: "none"
+        gap_note: "Confirmed shipped; consumes the threshold configured in the Setup step and flags below-threshold domains visually."
+    action: "Program admin (or Dean/liaison with access) opens the Review Dashboard to see, per student and per cohort, which competencies are met vs. below threshold, ahead of an advancement or graduation decision."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md (Review Competency section)"
+
+  - screen: "Competency Management — Publish/Unpublish control (Review tab)"
+    navigation_path: "Competency Management > Review > [Framework] > Publish / Unpublish dropdown"
+    elements:
+      - element: "Publish/Unpublish dropdown"
+        type: "toggle with confirmation modal"
+        data_shown: "Controls only whether students can see their own scores in My Competency Tracker"
+        gates_on: ["Framework must be Published for the student-facing tracker to appear at all — but this is a visibility gate, not a progression gate"]
+        accreditation_citation: "None directly — this is the control the journey's pain_or_gap implicitly asks about ('nothing shipped enforces that state as a gate') and the help-center source explicitly rules out"
+        competitor_equivalent: "Not confirmable — no competitor teardown documents whether their equivalent publish/visibility control is also decoupled from any enrollment or graduation action."
+        gap_severity: "gap"
+        gap_note: "Confirms, rather than merely inferring, that no enforcement action exists in the documented Competency Management workflow: there is no field, button, or workflow step anywhere in this module's help documentation, FAQ, or troubleshooting table that blocks APPE enrollment, blocks graduation clearance, or otherwise prevents a student from advancing based on a Below-Threshold or unmet-competency state. This dropdown is the only state-changing control in the module and it changes visibility only. The module computes and displays the attainment state; a human must act on it manually outside the system. This is the real, confirmed gap behind ACPE 7.3.d's readiness gate and CODA 2-24's graduation-readiness dashboard, not an unconfirmed one."
+    action: "Admin decides when students can see their own competency scores; this is the only state-changing control anywhere in the documented Competency Management workflow."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md (Publish Competency Score for Students section, and FAQ: 'Does publishing affect competency score calculations? No. Publishing only controls visibility of competency scores to students. Competency calculations continue regardless of publication status.')"
+
+  - screen: "Placement Clearance Dashboard (nearest existing gate-pattern precedent, different pillar)"
+    navigation_path: "Placements > [Course or Placement Group] > Placement Clearance"
+    elements:
+      - element: "Compliance Status column"
+        type: "read-only status rollup"
+        data_shown: "No Docs Started / Some Action Needed / All Docs Approved, per student, for compliance-document requirements"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.10 — coca.yaml's rationale for rating this element 'Configure' is that it reuses 'the same rotation-record data model' (i.e. this pillar), adding discrete attribute fields and a completion-checklist view on top of it; this per-student status column is the checklist-view primitive that rationale points at."
+        competitor_equivalent: "Not confirmable at element level — no competitor teardown in this research documents an equivalent clearance-status column in comparable field-by-field detail."
+        gap_severity: "gap"
+        gap_note: "Read-only status only: it flags 'Action Required' for manual admin follow-up ('schools can take proactive measures, such as sending reminders') but does not block the placement from starting. The automated gate this stage needs has no confirmed precedent here."
+      - element: "Contract Status column"
+        type: "read-only status rollup"
+        data_shown: "Valid Contract / Needs Attention, per site/location"
+        gates_on: []
+        accreditation_citation: "None directly — this column is scoped to the site/location, not the student, so it is not where per-student evidence for COCA 6.10 (or any per-student progression standard) lives."
+        competitor_equivalent: "Not confirmable at element level — no competitor teardown in this research documents an equivalent site-contract status column in comparable detail."
+        gap_severity: "gap"
+        gap_note: "Same monitoring-not-enforcement limitation as its sibling columns, and additionally site-scoped rather than student-scoped, so it contributes nothing to a per-student progression gate even as a data source."
+      - element: "Requirement Upload Status column"
+        type: "read-only status rollup with admin action"
+        data_shown: "Approved / Get Started / Not Applicable / Action Required — clicking 'Get Started' lets an admin upload on the student's behalf"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.10 — the per-student completion-checklist view coca.yaml describes as the 'Configure' delta on top of the existing rotation-record data model."
+        competitor_equivalent: "Not confirmable at element level — no competitor teardown in this research documents an equivalent per-requirement upload-status column with admin-upload affordance."
+        gap_severity: "gap"
+        gap_note: "The only element on this screen with an action affordance, and it is still not a gate: 'Get Started' lets an admin upload documents on a student's behalf, i.e. it helps clear the flag manually rather than enforcing anything. Even Prism's most mature status-rollup screen for a pre-rotation checkpoint drives MANUAL admin follow-up, not a system-enforced block. Reusing this data model for COCA 6.10's rotation-attribute checklist is plausible engineering (per coca.yaml), but a true hard block for the other three domains' harder gates (ACPE APPE-ready/graduation, CODA graduation-readiness) is a heavier, unconfirmed build, not a rename of this screen."
+    action: "Admin monitors this dashboard 6-8 weeks before rotations begin and intervenes manually (reminders, direct follow-up) on any student showing 'Action Required' before the placement start date."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
+
+  - screen: "Dentistry procedure-quota rollup / graduation-readiness dashboard (searched, not found)"
+    navigation_path: "N/A — no such screen is documented anywhere in the searched source material"
+    elements:
+      - element: "N/A"
+        type: "N/A"
+        data_shown: "No CDT-coded procedure log, per-category competency taxonomy, or graduation-readiness dashboard appears in the Exxat help-center mirror, any of the seven discipline playbooks, or capability-map.yaml"
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-24"
+        competitor_equivalent: "Not applicable — nothing to compare on Prism's side."
+        gap_severity: "gap"
+        gap_note: "This stands as the journey's pain_or_gap already stated it, now confirmed by direct search rather than by absence-of-mention in capability-map.yaml alone: coda.yaml's 'Gap' rating on 2-24 is correct and unchanged by the newly available Competency Management source material, because that module's mapped-assessment scoring model has no CDT-procedure-code or quota-counting primitive. This is honestly still the single largest confirmed build gap in this stage."
+    action: "N/A — documented here as a deliberate negative-search result, not an oversight."
+    confirmed_by: "Absence confirmed by targeted search of /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides and /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks for 'quota', 'procedure log', 'graduation readiness', and 'graduation clearance' (zero matches, run 2026-08-24), cross-checked against /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Generate Assessment Map Report.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Competency Tracker/My Competency Tracker.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/new-innovations.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/dentistry.yaml"
+last_verified: "2026-08-24"

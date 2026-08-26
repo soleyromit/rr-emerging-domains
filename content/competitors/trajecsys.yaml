@@ -1,0 +1,261 @@
+# Researched 2026-08-26. Every non-trivial factual claim carries a source URL found via
+# public web search/fetch. Anything not independently verifiable is marked accordingly.
+competitor: "Trajecsys (a Portico brand)"
+slug: "trajecsys"
+domains_served: ["Nursing", "Radiologic Technology / Diagnostic Medical Imaging (incl. CT, MRI, Mammography)", "Respiratory Therapy", "Diagnostic Medical Sonography", "Surgical Technology", "Nuclear Medicine Technology", "Dental Hygiene / Dental Assisting", "Medical Laboratory Science", "EMT / Paramedic", "Nutrition and Dietetics"]   # site claims support for "well over 60" program types nationwide; the above are the ones with direct evidence (named modality pages, partner/accreditor relationships, or case studies)
+category: "Clinical recordkeeping and tracking software (narrower scope than a full ELMS platform) for nursing and allied-health programs"
+company:
+  founded: >
+    2005, founded by two clinical educators. Co-founder/President Larry Pickett, M.A.
+    (former speech pathologist) is named on the company's About page; the second
+    co-founder is not named in public materials. CEO is Brian Bright, who previously
+    held senior roles at education SaaS companies (Eduventures, Liaison International,
+    IntraLearn Software).
+    Source: https://www.trajecsys.com/about.aspx
+  hq: >
+    1800 Mendon Rd Ste E219, Cumberland, RI 02864 — per third-party business-data
+    aggregators (LeadIQ, VisualVisitor, SignalHire); not independently confirmed on
+    trajecsys.com itself, which does not publish a street address.
+    Source: https://leadiq.com/c/trajecsys-a-portico-brand/5a1dbfa22300005a00bf6a1a/employee-directory
+  ownership: >
+    Privately held. On July 29, 2025, Trajecsys merged into Portico — an education-tech
+    platform itself formed in 2025 by combining Campus Ivy, CourseKey, and Verity IQ —
+    and now operates as "Trajecsys, a Portico brand." Deal terms and any PE/investor
+    backing were not disclosed. Trajecsys CEO Brian Bright: "By joining Portico, we can
+    get to the vision faster than if we worked alone." Portico CEO Doug Kaplan described
+    the goal as "a unified solution that empowers schools at every stage of the student
+    lifecycle." A 90-day platform/team integration period was announced alongside the
+    deal. LinkedIn/ZoomInfo list the company at 51-200 employees.
+    Source: https://welcome.porticoedu.com/blog/trajecsys-joins-portico
+    Source: https://porticoedu.com/clinical-management/
+    Source: https://www.linkedin.com/company/trajecsys-corporation
+
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: >
+      Core product, and the company's entire scope. Geo-fenced time/attendance tracking
+      at clinical sites, daily activity logs, skill/competency checkoffs (supports
+      multiple linked item sets per skill, e.g. separate lab/general/final competency
+      assessments), clinical site and affiliation-agreement management, multi-site
+      rotation scheduling, and a downloadable student "Clinical Portfolio." No evidence
+      was found of an algorithmic auto-matching engine comparable to CORE ELMS's
+      SmartMatch — site/rotation assignment appears coordinator-driven rather than
+      rules-based automated matching.
+    depth_vs_prism: "behind"
+    evidence: >
+      "Geo-fenced time tracking provides instant visibility of attendance across
+      clinical sites, imaging centers, and specialty facilities." Skill checkoffs
+      support "a lab competency, a general competency, and a final competency for a
+      single skill" as separately tracked, linked item sets. No matching-algorithm
+      language appears anywhere in product marketing, unlike CORE ELMS's explicit
+      "SmartMatch Algorithm" claim.
+    source: "https://porticoedu.com/clinical-management/"
+  - pillar: "Compliance Management"
+    competitor_capability: >
+      Not a native built-in module — delivered via third-party integrations. Trajecsys
+      has partnered with Cisive (PreCheck) and separately with Corporate Screening
+      Services (VerifyStudents) so that background-check, drug-screening, and
+      immunization data from those vendors surfaces inside the Trajecsys interface as a
+      "single source of truth." Programs without one of these add-on integrations do
+      not appear to have native compliance/document tracking inside Trajecsys itself.
+    depth_vs_prism: "behind"
+    evidence: >
+      "By creating a single interface and source of truth for compliance and
+      scheduling, nursing programs can reduce administrative burden... and ensure
+      students are ready for clinical placement." Framed explicitly as an integration
+      of an external screening vendor's data into Trajecsys, not a native
+      immunization/background-check engine built by Trajecsys.
+    source: "https://welcome.porticoedu.com/blog/cisive-and-trajecsys-integration"
+  - pillar: "Curriculum Mapping"
+    competitor_capability: "not publicly disclosed / unable to verify"
+    depth_vs_prism: "unknown"
+    evidence: >
+      No page on trajecsys.com, porticoedu.com/clinical-management, or in any
+      third-party coverage found mentions curriculum mapping, gap analysis, or
+      competency-to-standard mapping comparable to CORE ELMS's CompMS module. The
+      product's own positioning ("clinical recordkeeping," not "curriculum
+      management") and its consistent framing as a lighter-weight, narrower tool than
+      full ELMS platforms make it plausible this capability is genuinely absent, but
+      that is an inference, not a confirmed gap — flagged as unable to verify.
+    source: "unable to verify — searched trajecsys.com feature pages (Reports, Checkoffs, Evals, Modalities), porticoedu.com/clinical-management, and Trajecsys news/support articles; no curriculum-mapping feature found"
+  - pillar: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    competitor_capability: >
+      Ships today, unlike Prism where this is still an unshipped Q1 2027 roadmap item.
+      The Assessments and Evaluations module supports student self-evaluations,
+      performance evaluations, and site/instructor evaluations, all program-editable
+      without vendor assistance. Admins control scoring visibility, can anonymize
+      evaluator identity, delay result release, and get submission/non-submission
+      notifications. No distinct "course evaluation" or "survey" branding comparable to
+      CORE's dedicated Survey Module was found, but the underlying customizable-form
+      capability appears to cover similar ground.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "Programs can edit evaluations or create new ones with no assistance" from
+      Trajecsys support; the system supports "student self-evaluations, performance
+      evaluations, site or instructor evaluations, and others," with configurable
+      score visibility and anonymized evaluator identity.
+    source: "https://www.trajecsys.com/Evals.aspx"
+  - pillar: "Exam Management (Prism roadmap Q2 2027)"
+    competitor_capability: "not publicly disclosed / unable to verify"
+    depth_vs_prism: "unknown"
+    evidence: >
+      No public Trajecsys page, support-article, or third-party source mentions a
+      distinct exam/testing/secure-assessment module (e.g., OSCE administration, timed
+      or proctored exams). "Evaluations" and "assessments" language on trajecsys.com
+      consistently refers to competency checkoffs and performance evaluations, not
+      formal exam delivery — the same pattern found (and flagged the same way) for
+      CORE ELMS.
+    source: "unable to verify — searched trajecsys.com product pages (Evals, Checkoffs, Reporting), porticoedu.com/clinical-management, and Trajecsys support/news content; no exam-management module found"
+  - pillar: "Accreditation Management (Prism roadmap Q3 2027)"
+    competitor_capability: >
+      Markets a branded "Systematic Plan of Evaluation (SPE) Tracker" for continuous
+      standards monitoring and generates what it calls "institutional-quality reports
+      in moments instead of months." The strongest concrete accreditor evidence found
+      is discipline-specific to respiratory therapy: Trajecsys has a support/sponsorship
+      agreement with CoARC (Commission on Accreditation for Respiratory Care), sponsoring
+      CoARC's Key Personnel Academy and an education lecture series. No equivalent
+      named-standards claim was found for JRCERT (radiography), ACEN, or CCNE (nursing)
+      despite Trajecsys's deep footprint in those disciplines — its Partners page lists
+      OADN (nursing) and SDMS (sonography) as association partners, not accreditors.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "Continuously monitor standards throughout the year and run institutional-quality
+      reports using their Systematic Plan of Evaluation (SPE) Tracker." Separately:
+      "Trajecsys Centralized Clinical Recordkeeping sponsors the Commission on
+      Accreditation for Respiratory Care (CoARC) Key Personnel Academy." No JRCERT-
+      or ACEN/CCNE-specific standards-mapping claim was found on trajecsys.com.
+    source: "https://coarc.com/news/announcement-of-the-trajecsys-support-agreement/"
+
+strengths:
+  - claim: >
+      Deep, long-standing incumbency: founded 2005, ~20 years in market, now used by
+      roughly 3,000-3,500 programs across 70+ modalities, with named case studies in
+      radiologic technology (UT MD Anderson), sonography (UAMS), and nursing (Regis
+      College).
+    source: "https://www.trajecsys.com/about.aspx"
+  - claim: >
+      Rare transparent, public per-student pricing (flat fee by program length,
+      $50-$150/student, free setup) — a stark contrast to CORE ELMS and most ELMS
+      competitors, which are quote-only.
+    source: "https://www.trajecsys.com/Pricing.aspx"
+  - claim: >
+      Real, named accreditor and association relationships beyond generic marketing:
+      a formal CoARC (respiratory therapy) support/sponsorship agreement, plus
+      association partnerships with OADN (nursing) and SDMS (sonography).
+    source: "https://coarc.com/news/announcement-of-the-trajecsys-support-agreement/"
+  - claim: >
+      Now backed by Portico's broader combined platform (Campus Ivy + CourseKey +
+      Verity IQ, merged 2025), giving Trajecsys customers a path to adjacent
+      career-focused-institution tooling (financial aid, CRM, SIS) beyond clinical
+      recordkeeping alone.
+    source: "https://welcome.porticoedu.com/blog/trajecsys-joins-portico"
+  - claim: >
+      Compliance data (background checks, drug screening, immunizations) can be
+      surfaced inside Trajecsys via integrations with two named vendors (Cisive
+      PreCheck and Corporate Screening Services' VerifyStudents), giving programs a
+      single view even though the underlying tracking is third-party.
+    source: "https://welcome.porticoedu.com/blog/cisive-and-trajecsys-integration"
+
+weaknesses:
+  - claim: >
+      No presence found on any major software review site (Capterra, G2, Software
+      Advice, GetApp, TrustRadius) — unlike CORE ELMS's 36 rated Capterra reviews,
+      there is no independently verifiable customer-satisfaction signal for Trajecsys
+      at all.
+    source: "unable to verify — searched Capterra, G2, Software Advice, GetApp, and TrustRadius directly and via site: search; no Trajecsys listing found on any of them"
+  - claim: >
+      No evidence of curriculum mapping or competency-to-accreditation-standard
+      gap-analysis tooling comparable to CORE ELMS's CompMS module, despite Trajecsys
+      serving many of the same accreditation-heavy disciplines.
+    source: "unable to verify — no curriculum-mapping feature found on trajecsys.com or porticoedu.com/clinical-management"
+  - claim: >
+      No evidence of an exam/secure-testing management capability, the same gap
+      publicly observed for CORE ELMS.
+    source: "unable to verify — no exam-management module found on trajecsys.com, porticoedu.com/clinical-management, or in Trajecsys support/news content"
+  - claim: >
+      Compliance tracking depends entirely on optional third-party integrations
+      (Cisive, Corporate Screening Services) rather than a native module — a program
+      that hasn't purchased one of those add-ons appears to have no compliance
+      tracking inside Trajecsys at all.
+    source: "https://welcome.porticoedu.com/blog/cisive-and-trajecsys-integration"
+  - claim: >
+      No algorithmic student-site-preceptor auto-matching feature found; scheduling
+      and site assignment appear to be manual/coordinator-driven, unlike CORE ELMS's
+      explicitly marketed SmartMatch algorithm.
+    source: "unable to verify — no matching-algorithm feature found on trajecsys.com or porticoedu.com/clinical-management"
+  - claim: >
+      Its one concrete named accreditation-standards relationship (CoARC's Systematic
+      Plan of Evaluation) is respiratory-therapy-specific; no equivalent JRCERT
+      (radiography), ACEN, or CCNE (nursing) standards-mapping claim was found despite
+      Trajecsys's deep footprint in those disciplines.
+    source: "https://www.trajecsys.com/Partners.aspx"
+  - claim: >
+      Recently acquired into Portico (merger closed July 29, 2025, with a stated
+      90-day platform-integration period) — introduces near-term product-roadmap and
+      support-continuity uncertainty for existing customers during that transition.
+    source: "https://welcome.porticoedu.com/blog/trajecsys-joins-portico"
+
+retention_anchor: >
+  Two decades of accumulated per-student clinical time, checkoff, and evaluation
+  records across thousands of individual programs, most of which appear to buy and
+  administer Trajecsys at the program level (per-student, per-cohort pricing) rather
+  than as an institution-wide platform decision — meaning switching requires an
+  individual program director or clinical coordinator to personally initiate a change,
+  a higher-friction path than an institution-wide procurement review. Real named
+  relationships with association and accreditor-adjacent bodies (CoARC, OADN, SDMS)
+  reinforce trust and habitual reuse at renewal time even without deep platform
+  breadth.
+
+exxat_opportunity: >
+  Trajecsys is genuinely the narrower tool it is often described as: this research
+  found no evidence of curriculum mapping, exam management, or algorithmic
+  auto-matching, and its compliance tracking is entirely dependent on optional
+  third-party integrations rather than a native module. Prism can position directly
+  as "the full platform vs. the clinical log-book" for any program that has outgrown
+  Trajecsys's recordkeeping scope, particularly once Prism ships native curriculum
+  mapping and accreditation management (Q3 2027) — a combination Trajecsys shows no
+  public evidence of matching. Trajecsys's complete absence from Capterra, G2,
+  Software Advice, and TrustRadius is a distinct opening: Prism's demonstrable,
+  independently verifiable customer reviews are a trust signal Trajecsys currently
+  cannot counter at all. The July 2025 Portico merger, still inside its announced
+  90-day integration window as of this research, is a natural moment of vendor
+  uncertainty to approach existing Trajecsys programs — especially in radiologic
+  technology/imaging and nursing, where Trajecsys has its deepest, longest-standing
+  incumbency and where a "will my recordkeeping tool still work the way it does today"
+  question is freshest.
+
+pricing_signal: >
+  Publicly disclosed and unusually transparent for this market. Per-student flat fee
+  by program duration: allied-health/non-nursing programs run $50 (under 3 months) to
+  $150 (12-24 months), plus $50 per additional 6-month period beyond 24 months.
+  Nursing, medicine, pharmacy, dental, dietetics, PT, optometry, OT, PA, and
+  speech-language-pathology programs run $100 (up to 12 months) to $150 (12-27
+  months), plus $50 per additional 6-month period. Setup is stated as free; students
+  may pay directly online, via bookstore/financial-aid rollup, or the institution can
+  be invoiced. No separate platform/subscription fee was found — cost structure is
+  purely per-student, access-duration-based.
+  Source: https://www.trajecsys.com/Pricing.aspx
+
+last_researched: "2026-08-26"
+
+sources:
+  - "https://www.trajecsys.com/"
+  - "https://www.trajecsys.com/about.aspx"
+  - "https://www.trajecsys.com/Pricing.aspx"
+  - "https://www.trajecsys.com/Modalities.aspx"
+  - "https://www.trajecsys.com/modalities_radiography"
+  - "https://www.trajecsys.com/modalities_nursing"
+  - "https://www.trajecsys.com/reporting.aspx"
+  - "https://www.trajecsys.com/Evals.aspx"
+  - "https://www.trajecsys.com/checkoffs.aspx"
+  - "https://www.trajecsys.com/Partners.aspx"
+  - "https://porticoedu.com/clinical-management/"
+  - "https://welcome.porticoedu.com/trajecsys-demo"
+  - "https://welcome.porticoedu.com/blog/trajecsys-joins-portico"
+  - "https://welcome.porticoedu.com/blog/cisive-and-trajecsys-integration"
+  - "https://www.pr.com/press-release/702865"
+  - "https://coarc.com/news/announcement-of-the-trajecsys-support-agreement/"
+  - "https://www.trajecsys.com/Article.aspx?slug=trajecsys-centralized-clinical-recordkeeping-tm-sponsors-coarc-key-personnel"
+  - "https://www.linkedin.com/company/trajecsys-corporation"
+  - "https://leadiq.com/c/trajecsys-a-portico-brand/5a1dbfa22300005a00bf6a1a/employee-directory"
+  - "https://www.healthysimulation.com/vendors/trajecsys-centralized-clinical-recordkeeping/"

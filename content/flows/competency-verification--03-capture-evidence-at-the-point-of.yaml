@@ -1,0 +1,658 @@
+# Element-level ground truth underneath competency-verification.yaml, stage 3.
+# Every accreditation_citation and competitor_equivalent claim below traces to a real source
+# file in confirmed_by — never re-derived from the journey's own narrative. This flow shares
+# underlying screens with rotation-lifecycle--05-in-rotation-capture-hours-encounters-procedures.yaml
+# (same Patient Log / Timesheet mechanism, verified independently here) but is framed around
+# the four accreditor-specific hedges named in competency-verification.yaml stage 3: CODA 2-24
+# (CDT-level dental procedure logging), ACPE 3.1.b (pharmacy hours-by-setting-category), LCME
+# 6.2 (medicine's required-patient-encounter list), and COCA 6.10 (DO rotation attributes).
+#
+# SCHEMA v2 (2026-08-24): accreditation_citation / competitor_equivalent / gap_severity /
+# gap_note are per-ELEMENT, not per-step. Where the original research did not distinguish
+# between sibling elements, the same verdict is stated identically on each rather than
+# inventing false precision.
+flow_name: "Point-of-Care Evidence Capture: Patient Log Minimums, Timesheet Categories & Rotation Attributes"
+maps_to_journey: "competency-verification.yaml, stage 3"
+persona: >
+  Multi-persona. The Student (no dedicated persona file; see role-preceptor.yaml's counterpart
+  role) is the primary capturer at the point of care. The Preceptor / Experiential Supervisor
+  (role-preceptor.yaml) reviews, requests corrections ("Needs Attention"), or approves — often
+  via an emailed delegator link rather than a full Prism login. The Program Administrator
+  (role-program-admin.yaml) does the work that turns raw logs into accreditation evidence:
+  configuring the diagnosis/procedure minimums, the lookup taxonomies (CPT/Medication/Disease
+  and Condition), the timesheet category list, and the aggregate/threshold reports.
+steps:
+  - screen: "Patient Log Activation & Review-Workflow Setup"
+    navigation_path: >
+      Courses > Course Offering > Course Name > Learning Activities (left menu) > Setup >
+      Activity Setup grid > Patient Log card > edit icon — opens the Patient Log configuration
+      drawer.
+    elements:
+      - element: "Activate toggle"
+        type: "toggle"
+        data_shown: "Whether Patient Log is live for this course/rotation."
+        gates_on: []
+        accreditation_citation: >
+          Foundational setup step underneath all four hedges this stage carries (CODA 2-24,
+          ACPE 3.1.b, LCME 6.2, COCA 6.10) — none of the accreditor-specific evidence in later
+          steps exists until this toggle is turned on.
+        competitor_equivalent: >
+          eMedley's eCLAS and E*Value both ship comparable per-course case-log activation
+          (competitors/emedley.yaml, competitors/e-value.yaml), but neither public source
+          documents the activation control itself, so the comparison holds only at the "both
+          have a config step" level, not field-for-field.
+        gap_severity: "none"
+        gap_note: "Confirmed shipped and in production use across at least two disciplines (PA, Nursing/CRNA) under one shared mechanism."
+      - element: "Log Layout dropdown"
+        type: "dropdown (template picker)"
+        data_shown: "Standard layout by default; custom layouts (e.g. a discipline-specific 'CCE Log' template) requested through a CSS Agent, Account Manager, or Exxat Support — with an eye-icon preview of the exact form students will fill in."
+        gates_on: []
+        accreditation_citation: >
+          Foundational setup step underneath all four hedges this stage carries (CODA 2-24,
+          ACPE 3.1.b, LCME 6.2, COCA 6.10); the layout chosen here determines which
+          accreditor-specific fields a student is even asked for.
+        competitor_equivalent: >
+          eMedley's eCLAS and E*Value both ship comparable per-course case-log configuration
+          (competitors/emedley.yaml, competitors/e-value.yaml), but neither public source
+          documents a layout/template picker at this granularity — not comparable
+          field-for-field.
+        gap_severity: "configure-needed"
+        gap_note: >
+          The picker itself is confirmed shipped, but the element's own documentation states
+          that anything beyond the Standard layout is produced via a CSS Agent, Account Manager,
+          or Exxat Support rather than self-service — a real but more expensive path than the
+          other controls in this drawer.
+      - element: "Rules — late-entry limit"
+        type: "input (Yes/No + number of days)"
+        data_shown: "Whether students can be blocked from logging an encounter after N days have passed since the encounter date."
+        gates_on: ["Encounter date + configured day limit determines whether the student can still submit"]
+        accreditation_citation: >
+          Foundational setup step underneath all four hedges this stage carries (CODA 2-24,
+          ACPE 3.1.b, LCME 6.2, COCA 6.10); contemporaneity of logging is what makes the
+          resulting evidence point-of-care rather than reconstructed.
+        competitor_equivalent: >
+          No competitor teardown in this research documents a configurable late-entry day limit
+          on case-log submission (competitors/emedley.yaml, competitors/e-value.yaml describe
+          case-log capture and approval, not submission-window rules) — not comparable at
+          element level.
+        gap_severity: "none"
+        gap_note: "Confirmed shipped; the gating behaviour is documented explicitly (see also the Encounter date element in the Patient Log Entry step)."
+      - element: "Grading section"
+        type: "input fields (max score, weightage %, grading type)"
+        data_shown: "Whether the log counts toward the course grade and how."
+        gates_on: []
+        accreditation_citation: >
+          Foundational setup step underneath all four hedges this stage carries (CODA 2-24,
+          ACPE 3.1.b, LCME 6.2, COCA 6.10) — no accreditor-specific claim rests on this
+          element directly.
+        competitor_equivalent: >
+          No public competitor source documents grade-weighting of case logs at element level —
+          not comparable.
+        gap_severity: "none"
+        gap_note: "Confirmed shipped and in production use across at least two disciplines (PA, Nursing/CRNA)."
+      - element: "Review and Approval — Automatic Approval Enabled"
+        type: "toggle"
+        data_shown: "Yes auto-approves on submission and disables preceptor review; No exposes a further choice of whether a preceptor reviews before approval."
+        gates_on: []
+        accreditation_citation: >
+          Foundational setup step underneath all four hedges this stage carries (CODA 2-24,
+          ACPE 3.1.b, LCME 6.2, COCA 6.10); this toggle is what determines whether logged
+          evidence carries a preceptor attestation at all.
+        competitor_equivalent: >
+          eMedley's eCLAS ships preceptor approval of case logs and E*Value ships teacher
+          review/validation (competitors/emedley.yaml, competitors/e-value.yaml) — comparable
+          at the concept level, but neither public source documents an auto-approve switch, so
+          the comparison is not field-for-field.
+        gap_severity: "none"
+        gap_note: "Confirmed shipped and in production use across at least two disciplines (PA, Nursing/CRNA)."
+      - element: "Customize Review Columns (wrench icon)"
+        type: "column picker (add/remove/reorder)"
+        data_shown: "Which log fields faculty/preceptors see on the review grid; first four columns are fixed, the rest are configurable."
+        gates_on: []
+        accreditation_citation: >
+          Foundational setup step underneath all four hedges this stage carries (CODA 2-24,
+          ACPE 3.1.b, LCME 6.2, COCA 6.10) — no accreditor-specific claim rests on this
+          element directly.
+        competitor_equivalent: >
+          No public competitor source documents a review-grid column picker at element level —
+          not comparable.
+        gap_severity: "none"
+        gap_note: "Confirmed shipped; first four columns fixed, remainder configurable."
+    action: >
+      Admin activates Patient Log for the course/rotation and sets the capture parameters:
+      template, late-entry limit, grading weight, and whether a preceptor must review before a
+      log is approved.
+    confirmed_by: >
+      Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA
+      Discipline/Setting Up and Managing Patient Log - PA.md (steps 1-11); cross-confirmed
+      as the identical underlying mechanism, just retitled for a different discipline, by
+      Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/Nursing/Help
+      Guides for Nursing/CCE Log in Exxat Prism.md ("Patient Log is the standard terminology
+      used in Exxat Prism. CCE Logs are configured and managed in the Patient logs.")
+
+  - screen: "Configuring Minimum Diagnosis & Procedure Requirements"
+    navigation_path: >
+      Collected via CSS-agent-run Excel intake ("PA Patient Log V4 Setup updated.xlsx",
+      Diagnosis Minimums and Procedure Minimums on separate tabs) during onboarding, then
+      built into the course's Patient Log configuration; not a single self-service admin
+      screen for the minimums themselves.
+    elements:
+      - element: "Diagnosis Minimums list"
+        type: "configured taxonomy (rotation-scoped)"
+        data_shown: "Which diagnoses students must encounter, minimum encounter count per diagnosis, and which rotations/settings each applies to (e.g. hypertension, diabetes, asthma minimums per rotation's learning outcomes)."
+        gates_on: []
+        accreditation_citation: >
+          This element is what resolves lcme.yaml's Standard 6, Element 6.2 hedge ("No confirmed
+          out-of-the-box 'required patient encounter' tracking distinct from general placement/
+          rotation completion") from Gap-leaning-Configure to Configure-with-a-confirmed-
+          mechanism: a program-defined, per-diagnosis minimum-encounter list is exactly LCME
+          6.2's required_software_behavior, and it ships today (for PA) rather than being
+          hypothetical.
+        competitor_equivalent: >
+          eMedley's eCLAS logs ICD-10 diagnoses with competency mastery tracking
+          (competitors/emedley.yaml) and Leo/DaVinci's Patient Encounter Tracking ties
+          diagnoses to the curriculum map (competitors/leo-davinci.yaml) — granular enough to
+          say they cover the same diagnosis-minimum concept, though neither public source
+          documents a minimum-count-enforcement UI, so the comparison is conceptual, not
+          field-for-field.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Confirmed as a real, shipped mechanism for PA; using it for Medicine's
+          required-encounter list is a configuration exercise (define the list), not a build.
+          Not self-service: the list is collected via CSS-agent-run Excel intake, per this
+          step's navigation_path.
+      - element: "Procedure Minimums list"
+        type: "configured taxonomy (rotation-scoped)"
+        data_shown: "Which procedures students must observe/assist/perform, minimum completion counts, and applicable rotations (e.g. suturing, venipuncture, EKG interpretation, wound care, joint injections)."
+        gates_on: []
+        accreditation_citation: >
+          Partially reaches CODA Standard 2, Element 2-24 — this is the right shape for
+          per-category procedure-count evidence — and supports LCME 6.2 alongside the Diagnosis
+          Minimums list. See the Forms & Lookups step for what it does NOT confirm (CDT coding,
+          tooth/surface granularity).
+        competitor_equivalent: >
+          eMedley's eCLAS logs CPT procedures with competency mastery tracking
+          (competitors/emedley.yaml) and Leo/DaVinci ties procedures to the curriculum map
+          (competitors/leo-davinci.yaml) — conceptually comparable, not field-for-field. axiUm
+          (competitors/axium.yaml) is the CODA-relevant incumbent but its public materials
+          describe chairside scheduling/grading only at a marketing level (axium.yaml itself
+          rates "depth_vs_prism: unknown") — not comparable at element level.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Shipped for PA; re-pointing it at another discipline's procedure list is
+          configuration, not a build. Weaker fit for Pharmacy's hours-by-setting-category
+          requirement — it counts procedures, not clock hours (see the Timesheet step for the
+          hour-based mechanism). Whether it extends to CDT-coded, tooth/surface-level dental
+          procedures is addressed, and not resolved, in the Forms & Lookups step.
+      - element: "Student-facing real-time progress"
+        type: "read-only rollup (surfaced via Patient Log Aggregate Report, next steps)"
+        data_shown: "Progress against each configured minimum, visible to the student before rotation end."
+        gates_on: []
+        accreditation_citation: >
+          The second half of LCME 6.2's required_software_behavior: real-time student progress
+          and pre-graduation gap surfacing, not just a defined list. Confirmed shipped for PA.
+        competitor_equivalent: >
+          Neither eMedley's eCLAS (competitors/emedley.yaml) nor Leo/DaVinci
+          (competitors/leo-davinci.yaml) publicly documents a student-facing live
+          progress-against-minimums rollup at this granularity — the comparison is conceptual
+          only.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Read-only surface over whatever minimums are configured in the two elements above —
+          it inherits their configuration state rather than needing its own build. Confirmed
+          shipped for PA.
+    action: >
+      Admin (via CSS-led intake, not a self-service form) defines the required diagnosis/
+      procedure list and per-item minimum counts a student must log; students then see live
+      progress and faculty see gaps before the rotation closes rather than only at the end.
+    confirmed_by: >
+      Playbooks/Physician Assistant (PA) Playbook.md, "Configuring Minimum Diagnosis &
+      Procedure Requirements" section (lines 215-224).
+
+  - screen: "Patient Log Setup: Forms & Lookups"
+    navigation_path: "Courses > Setup > Learning Activity > Patient Log > Lookups tab"
+    elements:
+      - element: "Lookup Category list"
+        type: "list, some rows tagged 'Standard'"
+        data_shown: "System-provided ('Standard') lookup categories confirmed: CPT, Medication, Disease and Condition."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-24."
+        competitor_equivalent: >
+          axiUm is the structurally dominant CODA-specific incumbent (~90% of U.S. dental
+          schools per competitors/axium.yaml) but axium.yaml explicitly rates "depth_vs_prism:
+          unknown" and describes only chairside scheduling/sign-off at a marketing level — no
+          public source documents axiUm's procedure-coding lookup-category schema, so no
+          element-level comparison is possible here.
+        gap_severity: "gap"
+        gap_note: >
+          This is the element that sharpens coda.yaml's 2-24 hedge rather than resolving it:
+          the only "Standard" (system-provided) procedure-coding lookup category documented
+          anywhere is CPT, not CDT — no dental code set ships out of the box in this list.
+      - element: "Add New Lookup panel"
+        type: "form (Excel .xlsx upload)"
+        data_shown: "Upload a lookup-value spreadsheet (a sample/template file is downloadable), select the Lookup Category it belongs to, optionally attach one or more Participation Levels."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-24."
+        competitor_equivalent: >
+          No public source documents axiUm's (competitors/axium.yaml, "depth_vs_prism:
+          unknown") or any other competitor's lookup-import mechanism, so no element-level
+          comparison is possible here.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is the de-risking element: the generic Excel-upload mechanism means a CDT lookup
+          category IS buildable without new architecture — real, useful de-risking versus
+          coda.yaml's original framing of "not evidenced anywhere in the capability map." But
+          "buildable via a generic mechanism" is not the same as "exists"; per coda.yaml the
+          recommendation stands that any dental procedure log "should speak CDT natively rather
+          than inventing a parallel taxonomy."
+      - element: "Setup Logs tab — form builder"
+        type: "table + method picker"
+        data_shown: "Existing forms (Form Name, Draft/Published status, Last Updated By); new forms created Using Template, From Document, Create from JSON, or From Scratch."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-24."
+        competitor_equivalent: >
+          No public source documents a competitor's case-log form builder at element level —
+          axium.yaml rates "depth_vs_prism: unknown" and describes chairside workflow only at a
+          marketing level — so no element-level comparison is possible here.
+        gap_severity: "gap"
+        gap_note: >
+          This is where a tooth-numbering or tooth-surface field would live, and no such field
+          appears in any source read. The builder's From Scratch / From JSON methods make one
+          constructible without new architecture, but tooth/surface-level granularity remains
+          unconfirmed rather than shipped.
+    action: >
+      Admin manages the coded lookup lists (diagnosis/procedure/medication) a student picks
+      from when logging an encounter, and can add a wholly new lookup category via Excel upload
+      if none of the three Standard categories fit.
+    confirmed_by: >
+      Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/
+      Course Setup.md (Learning Activity section, "Lookups" subsection, lines 279-361).
+
+  - screen: "Patient Log Entry (Student, point of care)"
+    navigation_path: >
+      Dashboard > My Placements > [placement card] > Patient Log > Add Patient Log — or —
+      Coursework > [course requiring placement] > View Details > Patient Logs section > +
+    elements:
+      - element: "Patient demographics / chief complaint / diagnosis / procedure fields"
+        type: "mixed (typeahead lookups + free text), per the Log Layout configured in step 1"
+        data_shown: "Values drawn from the course's configured lookup categories (step 3) plus any free-text fields the layout includes."
+        gates_on: []
+        accreditation_citation: >
+          CODA Standard 2, Element 2-9 (adequate patient experiences — Transfer per
+          coda.yaml). This is the element that actually produces the encounter record every
+          later rollup counts.
+        competitor_equivalent: >
+          eMedley's eCLAS is documented as mobile iOS/Android case-log capture of encounters,
+          ICD-10 diagnoses and CPT procedures (competitors/emedley.yaml) — granular enough to
+          support a like-for-like comparison of what gets captured, though not of the exact
+          field layout.
+        gap_severity: "none"
+        gap_note: "Core capture mechanism ships and is in production use."
+      - element: "Encounter date"
+        type: "date picker"
+        data_shown: "Date of the logged encounter."
+        gates_on: ["Submission window is a hard constraint tied to the placement's start/end dates — logs cannot be entered after a rotation closes; a further late-entry day-limit can restrict submission even within an open placement (step 1)."]
+        accreditation_citation: >
+          CODA Standard 2, Element 2-9 (adequate patient experiences — Transfer per
+          coda.yaml); the date is also what makes the record contemporaneous enough to defend
+          at self-study.
+        competitor_equivalent: >
+          No competitor teardown in this research documents submission-window or late-entry
+          rules on case-log entry (competitors/emedley.yaml covers capture, not windowing) —
+          not comparable at element level.
+        gap_severity: "none"
+        gap_note: "Submission-window and late-entry gating both confirmed; hard placement-window constraint plus the optional day limit from step 1."
+      - element: "Clinical Setting type (In-Person Visit / Telehealth Visit)"
+        type: "toggle/dropdown, optional"
+        data_shown: "Lets a program using Patient Log (rather than Timesheet) tracking flag each encounter's delivery mode for telehealth-percentage evidence."
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.1.b — but this is the weaker of the two documented
+          options, per the PA Playbook's own caveat that encounter counts do not reliably
+          represent time; see the Timesheet step for the recommended hour-based path.
+        competitor_equivalent: >
+          No competitor teardown in this research documents a per-encounter telehealth /
+          in-person delivery-mode flag at element level — not comparable.
+        gap_severity: "none"
+        gap_note: >
+          The field itself ships and is confirmed. The caveat is fit, not existence: for ACPE
+          3.1.b, encounter counts captured here do not reliably represent hours, so this
+          element is a fallback to the Timesheet category mechanism rather than the primary
+          evidence path.
+    action: "Student documents a single patient encounter at or near the point of care and submits it for review."
+    confirmed_by: >
+      Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA
+      Discipline/Setting Up and Managing Patient Log - PA.md (Overview section); Playbooks/
+      Physician Assistant (PA) Playbook.md (submission-window note, line 341; Telehealth Visit
+      Clinical Setting type, line 240).
+
+  - screen: "Timesheet Category Configuration & Hours by Category Report"
+    navigation_path: >
+      Setup: Courses > Setup > Learning Activity > Timesheet > edit icon (or program-default
+      Timesheet settings, overridable per course). Reporting: Learning Activities > Reports >
+      Hours by Category.
+    elements:
+      - element: "'Do you want students to categorize each Timesheet entry?' toggle"
+        type: "toggle (Yes/No)"
+        data_shown: ""
+        gates_on: ["If No, students submit hours with no category at all"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.1.b; Key Elements 3.2.b/3.2.d."
+        competitor_equivalent: >
+          MedHub/E*Value (competitors/medhub.yaml, competitors/e-value.yaml) describe hour
+          tracking with reminders/GPS, not category-tagging configuration — not comparable at
+          element level.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Shipped, but it is the on/off gate for the entire ACPE evidence path: left at No,
+          hours arrive uncategorised and no setting-category aggregation is possible.
+      - element: "Category Alias"
+        type: "text field"
+        data_shown: "Label shown to students (e.g. 'Category', 'Activity Type', 'Setting')."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.1.b; Key Elements 3.2.b/3.2.d."
+        competitor_equivalent: >
+          No competitor teardown in this research documents a relabellable category field for
+          hour entries (competitors/medhub.yaml, competitors/e-value.yaml cover hour tracking
+          only) — not comparable at element level.
+        gap_severity: "configure-needed"
+        gap_note: "Shipped; cosmetic-but-useful for ACPE, since it lets the student-facing label read 'Setting' to match the accreditor's vocabulary."
+      - element: "Type (Single-select / Multi-select)"
+        type: "radio"
+        data_shown: "Whether a student can tag one or multiple categories per entry."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.1.b; Key Elements 3.2.b/3.2.d."
+        competitor_equivalent: >
+          No competitor teardown in this research documents single- vs multi-select category
+          tagging on hour entries — not comparable at element level.
+        gap_severity: "configure-needed"
+        gap_note: "Shipped; a per-program configuration decision, not a build."
+      - element: "Category List builder"
+        type: "nested list editor (+, Delete, Expand All, Add Category)"
+        data_shown: "Admin-defined category list with subcategories; Exxat's own documented example is Simulation, Patient Care Hours, Direct, Indirect, Available."
+        gates_on: ["Configured at the program-default level, overridable per course."]
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.1.b; Key Elements 3.2.b/3.2.d. This element is the
+          half of acpe.yaml's 3.1.b hedge that is now CONFIRMED: a custom setting-category
+          taxonomy exists and is admin-configurable.
+        competitor_equivalent: >
+          No competitor teardown in this research documents a comparably granular,
+          admin-configurable category-taxonomy builder for hour entries (nested subcategories,
+          per-course override). MedHub/E*Value (competitors/medhub.yaml,
+          competitors/e-value.yaml) describe hour tracking with reminders/GPS, not a
+          category-builder screen — not comparable at element level.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Confirmed shipped and self-service; defining a discipline's setting list (e.g. ACPE's
+          four required APPE settings) is a configuration exercise here, not a build.
+      - element: "Hours by Category report filters"
+        type: "filter controls (Rotations, Settings, Status, Student)"
+        data_shown: "'Settings' is a distinct, first-class filter alongside Category — confirmed in production use for an ARC-PA telehealth-hours worked example."
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.1.b; Key Elements 3.2.b/3.2.d. Precedent is direct:
+          this filter set is documented in live use for an accreditor-mandated percentage check
+          (the ARC-PA telehealth example), so setting-category aggregation is not hypothetical.
+        competitor_equivalent: >
+          MedHub/E*Value (competitors/medhub.yaml, competitors/e-value.yaml) describe hour
+          tracking but no dedicated category-filtered report at this level of detail — not
+          comparable at element level.
+        gap_severity: "none"
+        gap_note: >
+          Ships as-is with 'Settings' as a first-class filter dimension; confirmed in
+          production use for an accreditor-mandated percentage check. Nothing to configure on
+          the filter itself beyond the taxonomy defined above.
+      - element: "Report grid"
+        type: "read-only rollup, exportable"
+        data_shown: "Total (approved) hours broken out by category, per student/course."
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.1.b; Key Elements 3.2.b/3.2.d — this grid is where the
+          hours-by-setting-category evidence is actually produced and exported.
+        competitor_equivalent: >
+          MedHub/E*Value (competitors/medhub.yaml, competitors/e-value.yaml) describe hour
+          tracking with reminders/GPS, not a category-broken-out rollup grid at element level —
+          not comparable.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Aggregation is CONFIRMED shipped, but this is where the unresolved half of
+          acpe.yaml's 3.1.b hedge sits: enforcement of ACPE's specific hard sub-thresholds
+          (75-hour community, 75-hour hospital, 300-hour total; four required APPE settings at
+          ≥160 hours each) is NOT confirmed as self-service. capability-map.yaml separately
+          documents "per-participation-type hour thresholds on the Clinical Log Report" as a
+          real, shipped feature, but one gated behind a support ticket or Account Manager, not
+          exposed as an admin-configurable rule here. Net: reporting is Configure; automated
+          threshold gating is Configure-via-Exxat-Support, a real but more expensive path.
+    action: >
+      Admin defines the hour-category taxonomy students tag every timesheet entry with; admin
+      or student then runs Hours by Category to see cumulative hours per category.
+    confirmed_by: >
+      Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/
+      Course Setup.md (Timesheet section, lines 363-427); Exxat-Help-Guides/Help for Program
+      Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Timesheets Management-
+      Reviewing- Editing and Reports.md (Hours by Category, lines 78-100); Exxat-Help-Guides/
+      Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism
+      Reports to Support PA Accreditation (ARC-PA 6th Edition).md (Standard B3.01b/B3.01c
+      worked example: "add 'Telehealth/Telemedicine' as a category... Use the Timesheet Hours
+      by Category report to calculate each student's total... hours").
+
+  - screen: "Patient Log Review, Approval, Deletion & Reopening"
+    navigation_path: >
+      Learning Activities > Course Offerings > Course Name > Learning Activities - Patient Log
+      (or Learning Activity Group > Rotations > Rotation Name > Learning Activities - Patient
+      Log); select a status value in a student row, then a Log ID to open the review drawer.
+    elements:
+      - element: "Status pipeline"
+        type: "read-only status badge (Pending Review / Needs Attention / Approved)"
+        data_shown: "Pending Review (yellow) awaiting review; Needs Attention (red) returned to student for correction with a mandatory feedback reason; Approved (green)."
+        gates_on: []
+        accreditation_citation: >
+          General evidentiary-integrity trail underneath every accreditor standard this stage
+          touches — a visible approval state is what makes a logged encounter defensible at
+          Stage 8 (self-study/site-visit) rather than just recorded.
+        competitor_equivalent: >
+          eMedley's eCLAS ships preceptor time-approval of case logs
+          (competitors/emedley.yaml); E*Value ships teacher review/validation of logs
+          (competitors/e-value.yaml) — both granular enough to support a like-for-like
+          comparison of the review-and-approve concept.
+        gap_severity: "none"
+        gap_note: "Mature, role-gated, audited workflow; no unconfirmed piece found."
+      - element: "Review-drawer actions (Download, Delete, Update, Needs Attention, Approve)"
+        type: "buttons, role-gated"
+        data_shown: "School admins and faculty can edit or delete a log at any status; preceptors can mark Needs Attention/Approved but cannot delete; students can edit/delete only while In Progress or Pending Review, never after Approved."
+        gates_on: ["Deletion requires the deleting role to type a reason."]
+        accreditation_citation: >
+          General evidentiary-integrity trail underneath every accreditor standard this stage
+          touches — role-gated edit/delete rights are what stop a logged encounter from being
+          silently altered after attestation.
+        competitor_equivalent: >
+          eMedley's eCLAS ships preceptor time-approval and E*Value ships teacher
+          review/validation (competitors/emedley.yaml, competitors/e-value.yaml) — comparable
+          on review-and-approve, but neither public source documents a typed-reason deletion
+          requirement the way Prism's does.
+        gap_severity: "none"
+        gap_note: "Mature, role-gated, audited workflow; no unconfirmed piece found."
+      - element: "Reopen (Approved -> Needs Attention)"
+        type: "admin-only action"
+        data_shown: "Admins can reopen an Approved log, which auto-emails the student — approval is not a one-way action."
+        gates_on: []
+        accreditation_citation: >
+          General evidentiary-integrity trail underneath every accreditor standard this stage
+          touches — the ability to correct an approved record without deleting it is what keeps
+          a late-discovered error from becoming an unfixable evidence hole.
+        competitor_equivalent: >
+          Neither eMedley's eCLAS nor E*Value (competitors/emedley.yaml,
+          competitors/e-value.yaml) publicly documents a reopen-after-approval action — Prism
+          is ahead here on the documented record, though absence of documentation is not proof
+          of absence.
+        gap_severity: "none"
+        gap_note: "Mature, role-gated, audited workflow; no unconfirmed piece found."
+      - element: "History icon"
+        type: "read-only audit trail"
+        data_shown: "Full status-change history for the selected log."
+        gates_on: []
+        accreditation_citation: >
+          General evidentiary-integrity trail underneath every accreditor standard this stage
+          touches — this is the element a site visitor would actually be shown to prove the
+          approval chain.
+        competitor_equivalent: >
+          No competitor teardown in this research documents a per-log status-change audit trail
+          at element level (competitors/emedley.yaml, competitors/e-value.yaml cover review and
+          validation only) — not comparable.
+        gap_severity: "none"
+        gap_note: "Mature, role-gated, audited workflow; no unconfirmed piece found."
+    action: "Faculty/admin/preceptor review a submitted log and move it through the approval pipeline, or an admin reopens/deletes it when a correction is needed after the fact."
+    confirmed_by: >
+      Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA
+      Discipline/Setting Up and Managing Patient Log - PA.md (Reviewing Patient Log section);
+      content/prism/capability-map.yaml ("Patient Log review, deletion, and reopening
+      workflow," itself CONFIRMED via Exxat help-center documentation).
+
+  - screen: "CCE Log 'Student Activity Insights' Benchmark Report"
+    navigation_path: >
+      Dashboard > Learning Activities > [course offering] > Reports (Action column) > Student
+      Activity Insights.
+    elements:
+      - element: "Filters (Rotation, Program Clinical Settings, Sites, Location, Status, Student)"
+        type: "filter controls"
+        data_shown: "Confirms 'Settings' as a filter dimension here too, alongside Rotation/Site/Location."
+        gates_on: []
+        accreditation_citation: >
+          Supports ACPE 3.1.b by confirming 'Settings' as a first-class filter dimension on a
+          second, independent report (the Timesheet Hours by Category report being the first).
+        competitor_equivalent: >
+          No competitor teardown in this research documents case-log report filtering by
+          clinical setting at element level — not comparable from public docs.
+        gap_severity: "none"
+        gap_note: "Generic, shipped filter controls; the 'Settings' dimension is confirmed here as well as on the Hours by Category report."
+      - element: "Color-coded benchmark indicator"
+        type: "read-only cell shading (Green / Amber / Yellow / Red)"
+        data_shown: >
+          Green = value between the program's minimum and preferred benchmark (on track);
+          Amber/Yellow = approaching the minimum; Red = below the program's minimum benchmark
+          or competency threshold (needs improvement).
+        gates_on: []
+        accreditation_citation: >
+          Directly relevant precedent for CODA Standard 2, Element 2-24 (per-category
+          competency roll-ups against ~15 clinical categories) and ACPE 3.1.b (threshold-based
+          hour alerting): a real, shipped example of color-coded minimum/preferred-benchmark
+          rollups already exists — it is not a hypothetical pattern.
+        competitor_equivalent: >
+          No competitor teardown in this research documents a comparably specific
+          benchmark-threshold color-coding mechanism at screen-element level; not comparable
+          from public docs.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Useful precedent, not a resolved gap: the benchmark-coloring logic is documented as
+          configured specifically for CRNA/NBCRNA's case taxonomy. No source confirms whether
+          the same mechanism is a generic, reusable report type an admin can repoint at another
+          accreditor's category set (e.g. CODA's ~15 categories, or ACPE's four APPE settings)
+          versus a bespoke build done once for Nursing/CRNA. Treat as "the pattern exists and
+          Prism has built it before," not "available off-the-shelf for a new discipline."
+      - element: "NBCRNA Transcript report (sibling report, same course)"
+        type: "generate-on-demand report"
+        data_shown: "Case-log statistics per student across courses/rotations, formatted to a specific accreditor's (NBCRNA) requirements."
+        gates_on: []
+        accreditation_citation: >
+          Precedent only — it is formatted to NBCRNA's requirements, not CODA 2-24's or ACPE
+          3.1.b's. Its value to this stage is as proof that Prism has produced an
+          accreditor-specific case-count transcript before.
+        competitor_equivalent: >
+          No competitor teardown in this research documents an accreditor-specific case-log
+          transcript report at element level; not comparable from public docs.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Documented as built for one named accreditor (NBCRNA) in one discipline. Whether it
+          generalises to another accreditor's category set is unconfirmed in the source
+          material — the same caveat that applies to the benchmark-coloring element above, and
+          the reason this step is precedent rather than resolution.
+    action: >
+      Admin/faculty runs a benchmark-threshold view of student case/encounter counts, color-
+      coded against program-defined minimum and preferred values, to catch under-exposed
+      students before certification eligibility is at risk.
+    confirmed_by: >
+      Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/Nursing/Help
+      Guides for Nursing/CCE Log in Exxat Prism.md ("View CCE Log Reports" section).
+
+  - screen: "Location Tags & Comprehensive Personnel Report (Degree field)"
+    navigation_path: >
+      Location tags: Sites > Locations > Explore Locations (map view) filter panel. Personnel
+      degree/credential: Sites > Reports > Comprehensive Personnel Report.
+    elements:
+      - element: "Custom location tags"
+        type: "school-defined tags, filterable"
+        data_shown: "School-added tags on a Location record (documented example: 'Telehealth/Telemedicine'), usable to filter the Explore Locations map and, per the ARC-PA telehealth-tracking guide, to scope reports."
+        gates_on: []
+        accreditation_citation: >
+          COCA Standard 6, Element 6.10 — specifically the "setting is inpatient/outpatient"
+          attribute, which maps naturally onto this tag / 'Setting' dimension (also confirmed
+          shipped in the Timesheet and Patient Log steps above).
+        competitor_equivalent: >
+          No competitor teardown in this research documents COCA-specific rotation-attribute
+          filtering (resident presence, DO-supervisor status, inpatient/outpatient) at any
+          level of detail — not applicable/not comparable from public docs.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Inpatient/outpatient is Configure-with-precedent: the tag mechanism ships and is used
+          in production for an analogous attribute (Telehealth/Telemedicine). The limit of this
+          element is that tags are per-LOCATION. COCA 6.10's third attribute, "residents
+          present at this specific rotation," has no confirmed existing field anywhere in the
+          source material — it would most plausibly reuse this same generic custom-tag
+          mechanism, but as a per-rotation attribute, which is a genuinely new field rather
+          than a re-pointing of this one, and remains an open build item.
+      - element: "Degree column (Comprehensive Personnel Report)"
+        type: "read-only report column, filterable"
+        data_shown: "Each preceptor/supervisor's degree — used in production to prove a program's preceptors are 'practicing physicians and PAs' for an ARC-PA standard."
+        gates_on: []
+        accreditation_citation: >
+          COCA Standard 6, Element 6.10 — specifically the "supervising physician is a DO"
+          attribute: supervisor credential type is already a tracked, filterable Personnel
+          field used for exactly this kind of licensure/credential proof today (ARC-PA
+          A2.15/A2.16).
+        competitor_equivalent: >
+          No competitor teardown in this research documents COCA-specific rotation-attribute
+          filtering or a preceptor-credential report column at element level — not
+          applicable/not comparable from public docs.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Configure-with-precedent, not a build: the field exists, is filterable, and is in
+          production use for a credential-proof claim under a different accreditor; pointing it
+          at COCA's DO-vs-MD distinction is a configuration/reporting exercise. Together with
+          the location-tag element above, this moves two of coca.yaml's three 6.10 attributes
+          (previously blank/unconfirmed) to Configure-with-precedent.
+    action: >
+      Admin tags locations with custom attributes and/or filters the Comprehensive Personnel
+      Report by preceptor degree to build a claim about the kind of site or supervisor a
+      placement involved.
+    confirmed_by: >
+      Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/
+      Exploring Locations.md (location-tag filtering, line 18); Exxat-Help-Guides/Help for
+      Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to
+      Support PA Accreditation (ARC-PA 6th Edition).md (Standard A2.15/A2.16, Comprehensive
+      Personnel Report "Degree" column used to demonstrate preceptors are practicing
+      physicians/PAs).
+
+sources:
+  - "Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Setting Up and Managing Patient Log - PA.md"
+  - "Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/Nursing/Help Guides for Nursing/CCE Log in Exxat Prism.md"
+  - "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Course Setup.md"
+  - "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Timesheets Management- Reviewing- Editing and Reports.md"
+  - "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Timesheets.md"
+  - "Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md"
+  - "Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Planned Communication for PA/Get the most out of the new Patient Log Aggregate Report-.md"
+  - "Exxat-Help-Guides/Help for Program Administrators/Planned Communications/You Can Now Delete Patient Log.md"
+  - "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Exploring Locations.md"
+  - "Playbooks/Physician Assistant (PA) Playbook.md"
+  - "content/prism/capability-map.yaml"
+  - "content/accreditation/acpe.yaml"
+  - "content/accreditation/coda.yaml"
+  - "content/accreditation/lcme.yaml"
+  - "content/accreditation/coca.yaml"
+  - "content/competitors/axium.yaml"
+  - "content/competitors/emedley.yaml"
+  - "content/competitors/e-value.yaml"
+  - "content/competitors/leo-davinci.yaml"
+  - "content/competitors/medhub.yaml"
+  - "content/domains/dentistry.yaml"
+  - "content/domains/pharmacy.yaml"
+  - "content/domains/do.yaml"
+last_verified: "2026-08-24"

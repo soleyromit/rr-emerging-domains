@@ -1,0 +1,315 @@
+# One file per journey stage: content/flows/<journey-slug>--<NN>-<short-stage-slug>.yaml
+# Element-level ground truth that journeys/*.yaml cites. Journeys are the cross-domain
+# comparative narrative; flows are the single-product, screen-by-screen verification layer
+# underneath a specific journey stage. Every accreditation_citation and competitor_equivalent
+# claim below must trace to a real source file in `confirmed_by` — never re-derive from the
+# journey's own narrative, which would be citing our own synthesis as ground truth.
+#
+# SCHEMA v2 (2026-08-24): analysis fields (accreditation_citation / competitor_equivalent /
+# gap_severity / gap_note) live on each ELEMENT, not on the step. `action` and `confirmed_by`
+# stay at step level. Where the underlying research does not distinguish between sibling
+# elements, the same verdict is stated identically on each rather than inventing precision.
+flow_name: "Site, Contract, and Preceptor/Faculty Documentation Capture"
+maps_to_journey: "accreditation-self-study.yaml, stage 3"
+persona: "Program Administrator (role-program-admin.yaml), with the Compliance / Accreditation Liaison (role-compliance-accreditation-liaison.yaml) as the accountable reviewer of what this flow produces"
+
+steps:
+  - screen: "Sites > [Site] > Contracts tab — Add Contract drawer"
+    navigation_path: "Sites > select Site > Contracts (ribbon) > + icon"
+    elements:
+      - element: "Contract name"
+        type: "input field (mandatory)"
+        data_shown: "Free-text agreement name"
+        gates_on: []
+        accreditation_citation: "None directly — identifying label on the agreement record, not itself the evidence any standard asks for."
+        competitor_equivalent: "CORE ELMS' public marketing copy claims 'affiliation agreement tracking with expiration alerts' (core-elms.yaml), but CORE ELMS' public docs stop at that marketing-copy level of granularity — no field-by-field screen documentation is publicly available, so no element-level comparison can be made for this field."
+        gap_severity: "none"
+        gap_note: "Mandatory field, works as documented. Part of the confirmed contract object that resolves the prior 'unconfirmed whether the entity model extends past the student' hedge for the contract/agreement object specifically."
+      - element: "Contract number"
+        type: "input field (auto-generated, editable)"
+        data_shown: "System-assigned number, overridable"
+        gates_on: []
+        accreditation_citation: "None directly — administrative identifier, not the evidence locus for any standard."
+        competitor_equivalent: "CORE ELMS' public docs are marketing-copy level only; no element-level comparison possible for this field."
+        gap_severity: "none"
+        gap_note: "Works as documented. Auto-generation with an editable override means schools carrying legacy agreement numbering are not forced into the system's scheme."
+      - element: "Start date / Expiration date"
+        type: "date fields (mandatory)"
+        data_shown: "Agreement effective window"
+        gates_on: ["Contract Status column on Placement Clearance Dashboard"]
+        accreditation_citation: "ACPE Standard 3, KE 3.5.b; LCME Standard 1, Element 1.4; COCA Standard 6, Element 6.9; CODA Standard 4, Element 4-6 — this is the field the 'agreement is current, not expired' half of each of those standards actually reads from."
+        competitor_equivalent: "CORE ELMS markets 'affiliation agreement tracking with expiration alerts' (core-elms.yaml), which is the closest public claim to this field pair, but CORE ELMS publishes no field-level documentation — so the comparison holds only at the level of 'both products track an expiration date', not field-by-field."
+        gap_severity: "none"
+        gap_note: "CONFIRMED as a live gate, not a passive date: this field pair is what drives the Contract Status column's Valid Contract vs. Needs Attention (expiring during placement) states on the Placement Clearance Dashboard."
+      - element: "Contract template"
+        type: "dropdown (mandatory)"
+        data_shown: "Program's saved contract template, used to auto-generate a downloadable document"
+        gates_on: []
+        accreditation_citation: "None directly — template selection produces the document, but no standard asks which template was used."
+        competitor_equivalent: "CORE ELMS' public docs are marketing-copy level only; no element-level comparison possible for this field."
+        gap_severity: "none"
+        gap_note: "Works as documented. Note that the generated document is an opaque artifact from this screen's perspective — the clause-content limitation is recorded on the Contract About tab step below, where the agreement text is what the standard actually asks about."
+      - element: "Status (Active/Inactive) and contract status label"
+        type: "toggle + dropdown (mandatory)"
+        data_shown: "Active by default; institutional-level instances also expose a configurable status taxonomy (Fully Executed, Awaiting Signoff, Draft, Finalized, In Development, On Hold, Terminated per the OT playbook)"
+        gates_on: ["Contract Status column"]
+        accreditation_citation: "ACPE Standard 3, KE 3.5.b; LCME Standard 1, Element 1.4; COCA Standard 6, Element 6.9; CODA Standard 4, Element 4-6 — the 'a signed agreement is in force' half of each standard reads from this field."
+        competitor_equivalent: "CORE ELMS' 'affiliation agreement tracking' marketing claim implies some status concept, but nothing in CORE ELMS' public material documents a configurable status taxonomy, so whether they match this field's Fully Executed / Awaiting Signoff / Draft granularity is genuinely unknown from public sources rather than confirmed absent."
+        gap_severity: "none"
+        gap_note: "CONFIRMED and feeding a real gate. The institutional-level configurable taxonomy is a stronger finding than the program-level Active/Inactive toggle alone, and is documented in the OT playbook."
+      - element: "Locations covered"
+        type: "multi-select association"
+        data_shown: "Which of the site's locations this one contract covers"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, KE 3.5.b; LCME Standard 1, Element 1.4; COCA Standard 6, Element 6.9; CODA Standard 4, Element 4-6 — scope-of-coverage is what makes an agreement count as covering the specific site a student was placed at."
+        competitor_equivalent: "CORE ELMS' public docs do not document a one-agreement-to-many-locations association at all; whether they model it is unknown from public sources, not confirmed absent."
+        gap_severity: "none"
+        gap_note: "Works as documented, and is what makes the one-agreement-covers-multiple-sites case (via the chain icon) representable without duplicating the record."
+      - element: "Contract documents"
+        type: "file upload"
+        data_shown: "The signed PDF/document itself, with archive of prior versions"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, KE 3.5.b; LCME Standard 1, Element 1.4; COCA Standard 6, Element 6.9; CODA Standard 4, Element 4-6 — the signed artifact a reviewer would ask to see lives here."
+        competitor_equivalent: "CORE ELMS' public docs are marketing-copy level only; no element-level comparison possible for this field."
+        gap_severity: "none"
+        gap_note: "CONFIRMED, including version archiving of prior documents — the signed artifact is retained, not overwritten. Scope note: this element is confirmed as document *storage*; the separate question of whether the document's clause content is inspectable is recorded on the Contract About tab step below."
+      - element: "Programs covered (if common contract sharing is enabled)"
+        type: "multi-select"
+        data_shown: "Which of the institution's other Prism-hosted programs this same agreement also covers"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, KE 3.5.b; LCME Standard 1, Element 1.4; COCA Standard 6, Element 6.9; CODA Standard 4, Element 4-6 — relevant where a single institutional agreement is the evidence multiple programs' self-studies each rely on."
+        competitor_equivalent: "CORE ELMS' public docs are marketing-copy level only; no element-level comparison possible for this field."
+        gap_severity: "none"
+        gap_note: "Conditional on common contract sharing being enabled at the institutional level; confirmed in the Institutional Level - Contracts and Sites Management guide."
+      - element: "Notes"
+        type: "free-text field"
+        data_shown: "Unstructured internal notes"
+        gates_on: []
+        accreditation_citation: "None — unstructured internal notes are not evidence for any standard, and nothing reads from this field."
+        competitor_equivalent: "CORE ELMS' public docs are marketing-copy level only; no element-level comparison possible for this field."
+        gap_severity: "none"
+        gap_note: "Works as documented. Unstructured by design — it is not a substitute for the structured clause-level fields the Contract About tab step below records as absent."
+    action: "Program admin (or, at the institutional/tenant level, a central contracts administrator) records a new affiliation agreement against a site, optionally linking one signed agreement to multiple sites via the chain icon rather than duplicating it."
+    confirmed_by: "Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md; Help for Institutional Users/Step-by-Step Guides (How-tos)/Institutional Level- Contracts and Sites Management.md"
+
+  - screen: "Placement Clearance Dashboard — Contract Status column"
+    navigation_path: "Placements > [Course or Placement Group] > Placement Clearance"
+    elements:
+      - element: "Contract Status column"
+        type: "read-only rollup, per student/location row"
+        data_shown: "Valid Contract | Needs Attention (expiring during placement, missing, or otherwise non-compliant) | Needs Attention (Missing Contracts); multi-contract-per-location cases are labeled distinctly"
+        gates_on: ["Whether the placement is cleared to start/continue"]
+        accreditation_citation: "ACPE Standard 3, KE 3.5.b; LCME Standard 1, Element 1.4; COCA Standard 6, Element 6.9"
+        competitor_equivalent: "Not comparable at element level from public sources — see the note on the Add Contract drawer step above."
+        gap_severity: "none"
+        gap_note: "CONFIRMED, not just claimed: the Valid Contract / Needs Attention / Missing Contracts logic, including multi-contract-per-location handling, is spelled out in help-center documentation in enough detail to trust this is a real gate with enforcement teeth, not a status label."
+      - element: "Requirement Upload Status column"
+        type: "read-only rollup"
+        data_shown: "Approved | Get Started | NA | Action Required, for site/location document requirements"
+        gates_on: ["Placement clearance"]
+        accreditation_citation: "ACPE Standard 3, KE 3.5.b"
+        competitor_equivalent: "Not comparable at element level from public sources — see the note on the Add Contract drawer step above."
+        gap_severity: "none"
+        gap_note: "One of the four columns making up the confirmed multi-entity clearance gate ('student compliance + site documents + active contract + valid preceptor license/certification'); this column carries the site/location document half of that gate."
+      - element: "Compliance Status column"
+        type: "read-only rollup"
+        data_shown: "No Docs Started | Some Action Needed | All Docs Approved, for student compliance items"
+        gates_on: ["Placement clearance"]
+        accreditation_citation: "ACPE Standard 3, KE 3.5.b"
+        competitor_equivalent: "Not comparable at element level from public sources — see the note on the Add Contract drawer step above."
+        gap_severity: "none"
+        gap_note: "The student-compliance half of the confirmed multi-entity clearance gate. This is the longest-standing, least-contested part of the gate — student compliance items were never the open question; the site/contract/preceptor entities were."
+      - element: "Preceptor CV / Preceptor License / Preceptor Certification columns"
+        type: "read-only three-state tracker, per preceptor"
+        data_shown: "Missing | Exists | NA"
+        gates_on: ["Placement clearance, per the capability map's 'valid preceptor license/certification' gate"]
+        accreditation_citation: "ACPE Standard 3, KE 3.3.a (majority U.S.-licensed pharmacists, performance evaluations on file)"
+        competitor_equivalent: "Not comparable at element level from public sources — see the note on the Add Contract drawer step above."
+        gap_severity: "none"
+        gap_note: "CONFIRMED as part of the real gate, documented in both the PA and OT playbooks. Scope note: this column's three states are confirmed; whether an *expired* license auto-flips the state is the open question recorded on the Personnel step below, against the source field rather than against this rollup."
+    action: "Program admin monitors this dashboard starting 6-8 weeks before rotations begin (Exxat's documented best practice), intervening on any row showing Needs Attention or Missing before the placement start date."
+    confirmed_by: "Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md; Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md (Contract Status on Clearance Dashboard section)"
+
+  - screen: "Sites > Contract [About tab]"
+    navigation_path: "Sites > select Site > Contracts > select Contract > About tab"
+    elements:
+      - element: "Basic details, contact details, categories, locations covered, routing checklist, contract documents"
+        type: "structured metadata fields + one file-upload slot for the agreement PDF"
+        data_shown: "Everything about the agreement as an administrative record — who signed it, what it covers, when it expires"
+        gates_on: []
+        accreditation_citation: "LCME Standard 1, Element 1.4 (clause-level: school authority over education/assessment, resource access, faculty appointment role, occupational-exposure follow-up, shared learning-environment responsibility)"
+        competitor_equivalent: "Not comparable at element level from public sources."
+        gap_severity: "gap"
+        gap_note: "CONFIRMED gap, not merely unconfirmed: the contract object's structured fields are administrative metadata (name, dates, status, template, categories, notes) plus one opaque PDF upload. There is no clause-level field, checklist, or extraction of agreement content anywhere in the Contracts screens documented in the help center. LCME 1.4's 'these five clauses exist in this PDF' evidence bar is not met by anything visible in the product today — it would require either a custom checklist item per contract or a genuinely new capability. This tightens the journey's prior hedge from 'unverified whether the extension exists' to a specific, confirmed absence for the clause-content sub-requirement specifically (the contract-exists-and-hasn't-expired part is, by contrast, resolved as working — see the two steps above)."
+    action: "Program admin or accreditation liaison opens a contract record to answer 'is this agreement still valid and does it cover this site' — the question the LCME/COCA/CODA standards actually ask goes further: does the agreement's *text* contain specific required clauses."
+    confirmed_by: "Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md"
+
+  - screen: "Sites > Personnel > Add/Edit Personnel — CI/Preceptor Professional Details"
+    navigation_path: "Sites > Personnel (ribbon) > select or add a person > mark 'Will this person serve as Clinical Instructor?' = Yes"
+    elements:
+      - element: "Degree, Practice Settings, Designation, National Provider Identifier, Credentials"
+        type: "structured input fields"
+        data_shown: "Professional identity of the preceptor"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, KE 3.3.a (majority U.S.-licensed pharmacists) — these fields carry the preceptor's professional identity that the standard's qualification test is applied to."
+        competitor_equivalent: "MedHub verifies credentials against NPDB/NPPES for GME faculty/residents (medhub.yaml), which covers this same identity/credential data automatically where Prism collects it as manual entry. The comparison holds at the 'automated third-party verification vs. manual entry' level only — medhub.yaml's public material does not go screen-by-screen, so no field-by-field mapping is possible."
+        gap_severity: "none"
+        gap_note: "CONFIRMED that Compliance Management models the preceptor as a trackable entity with structured professional-identity fields — this resolves the acpe.yaml hedge 'unclear whether Compliance Management natively models preceptors as a trackable entity today versus only students' in the direction of yes, it does. These identity fields are descriptive and gate nothing, so no expiry question arises for them."
+      - element: "Licensure details"
+        type: "repeatable record (+ icon to add entries, pencil to edit)"
+        data_shown: "License number and related detail, entered by the program admin"
+        gates_on: ["Preceptor License column on Placement Clearance Dashboard"]
+        accreditation_citation: "ACPE Standard 3, KE 3.3.a (majority U.S.-licensed pharmacists)"
+        competitor_equivalent: "MedHub verifies credentials against NPDB/NPPES for GME faculty/residents (medhub.yaml) — a more automated, third-party-verified model than this manually-entered license field; a real capability gap, not just a documentation gap, though the comparison is at the 'automated verification vs. manual entry' level rather than field-by-field."
+        gap_severity: "configure-needed"
+        gap_note: "The field exists and feeds a real dashboard gate. What remains UNCONFIRMED is whether license validity is enforced against an expiration date the way student compliance items and contracts are — i.e., whether an expired preceptor license auto-flips the dashboard column to Missing, or whether it is a static Exists/Missing/NA state an admin must manually re-check. The help-center material describes the column's three states but not an expiry-driven state transition for this specific field."
+      - element: "Certification details"
+        type: "repeatable record"
+        data_shown: "Certification detail (e.g., NCCPA certification for PA preceptors, per the PA playbook)"
+        gates_on: ["Preceptor Certification column on Placement Clearance Dashboard"]
+        accreditation_citation: "ACPE Standard 3, KE 3.3.a (preceptor qualification); PA-discipline equivalent tracked per the PA playbook (NCCPA certification)."
+        competitor_equivalent: "MedHub verifies credentials against NPDB/NPPES for GME faculty/residents (medhub.yaml) — a more automated, third-party-verified model than this manually-entered certification field; the comparison is at the 'automated verification vs. manual entry' level, not field-by-field."
+        gap_severity: "configure-needed"
+        gap_note: "Same open question as Licensure details, and for the same reason: the field and its dashboard column are confirmed, but nothing in the source material shows an expiry-driven transition to Missing when a certification lapses. Certifications like NCCPA are explicitly time-limited, so this matters at least as much here as it does for licensure."
+      - element: "CV document"
+        type: "file upload"
+        data_shown: "Preceptor's curriculum vitae"
+        gates_on: ["Preceptor CV column on Placement Clearance Dashboard"]
+        accreditation_citation: "ACPE Standard 3, KE 3.3.a (preceptor qualification evidenced by CV on file)"
+        competitor_equivalent: "Not comparable at element level from public sources — medhub.yaml's public material documents credential *verification* against NPDB/NPPES, not CV document storage, so there is no documented equivalent to compare this upload slot against."
+        gap_severity: "none"
+        gap_note: "A document upload with no validity window, so the expiry-enforcement question that qualifies the Licensure and Certification fields does not apply here — the Missing/Exists/NA states are a complete description of what a CV on file can be."
+    action: "Program admin enters or updates a preceptor's licensure, certification, and CV on their Personnel record, which is what the Placement Clearance Dashboard's three-state Preceptor CV/License/Certification columns read from."
+    confirmed_by: "Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Add or Edit CI - Preceptor Information.md; Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Personnel.md; Playbooks/Physician Assistant (PA) Playbook.md (lines ~184-192, Licensure Details and Certification Details tracked per preceptor)"
+
+  - screen: "Comprehensive Assessment Report (Site/Location rollup)"
+    navigation_path: "Sites > Reports > Comprehensive Assessment Report (or equivalent Placements-side aggregate report), grouped by Site > Location"
+    elements:
+      - element: "Preceptor Is Qualified"
+        type: "read-only Yes/No rollup, per site/location"
+        data_shown: "Whether the assigned preceptor meets the program's qualification bar"
+        gates_on: []
+        accreditation_citation: "ARC-PA (PA discipline) Standard B3.02 a-c (initial/ongoing evaluation of sites and preceptors)"
+        competitor_equivalent: "Not comparable at element level from public sources."
+        gap_severity: "configure-needed"
+        gap_note: "Confirmed as a tracked, reportable field sourced from the custom Site/Location Assessment forms (the 'Initial Site Visit'/'Ongoing Site Visit' form-builder documented in the capability map and PA playbook). Like Is Oriented and Is Aware, and unlike the license/certification rollups below, nothing in the source material shows this field blocking a preceptor from being assigned a student — it is after-the-fact reporting, and turning it into a pre-assignment gate would be configuration work on top of a confirmed data source."
+      - element: "Preceptor Holds a Valid [License]"
+        type: "read-only Yes/No rollup"
+        data_shown: "License validity, per site/location"
+        gates_on: []
+        accreditation_citation: "ARC-PA (PA discipline) Standard B3.02 a-c (initial/ongoing evaluation of sites and preceptors)"
+        competitor_equivalent: "Not comparable at element level from public sources."
+        gap_severity: "none"
+        gap_note: "This rollup reports on data that IS backed by a real pre-placement gate elsewhere — the Preceptor License column on the Placement Clearance Dashboard, sourced from Sites > Personnel. So unlike Is Oriented / Is Aware / Is Qualified, its self-study value does not depend on configuration work; the enforcement already exists upstream. (The separate expiry-enforcement question is recorded against the source Licensure field, not against this rollup.)"
+      - element: "Preceptor Holds Valid [Certification]"
+        type: "read-only Yes/No rollup"
+        data_shown: "Certification validity, per site/location"
+        gates_on: []
+        accreditation_citation: "ARC-PA (PA discipline) Standard B3.02 a-c (initial/ongoing evaluation of sites and preceptors)"
+        competitor_equivalent: "Not comparable at element level from public sources."
+        gap_severity: "none"
+        gap_note: "As with the license rollup: backed upstream by the Preceptor Certification column on the Placement Clearance Dashboard, so this is reporting on top of a real gate rather than reporting in place of one. (The expiry-enforcement question is recorded against the source Certification field.)"
+      - element: "Preceptor Is Oriented"
+        type: "read-only Yes/No rollup"
+        data_shown: "Whether the preceptor completed program orientation"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, KE 3.3.c (preceptor orientation before accepting a student); ARC-PA (PA discipline) Standard B3.02 a-c"
+        competitor_equivalent: "Not comparable at element level from public sources."
+        gap_severity: "configure-needed"
+        gap_note: "This is the single most important resolution in this flow file: the journey's pain_or_gap previously treated preceptor orientation-gating (ACPE 3.3.a/3.3.c) as an open question with no confirmed home in Prism. It is now confirmed that this exists as a tracked, reportable Yes/No field per site/location, sourced from the custom Site/Location Assessment forms (the same 'Initial Site Visit'/'Ongoing Site Visit' form-builder documented in the capability map and the PA playbook). What is NOT confirmed is that it is a hard gate — nothing in the source material shows this field blocking a preceptor from being assigned a student before Oriented=Yes, the way contract/license status blocks placement clearance. So this is real, reportable self-study evidence, but it reads as after-the-fact reporting rather than the pre-assignment block ACPE 3.3.c actually asks for; building that gate would be configuration work on top of an existing, confirmed data source rather than new architecture."
+      - element: "Preceptor Is Aware [of program expectations]"
+        type: "read-only Yes/No rollup"
+        data_shown: "Whether the preceptor has confirmed awareness of syllabus/program expectations"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, KE 3.3.c (preceptor orientation before accepting a student); ARC-PA (PA discipline) Standard B3.02 a-c"
+        competitor_equivalent: "Not comparable at element level from public sources."
+        gap_severity: "configure-needed"
+        gap_note: "Same finding and same limitation as Preceptor Is Oriented, from the same source: confirmed to exist as a tracked, reportable Yes/No field fed by the custom Site/Location Assessment forms, but not confirmed to gate anything. Real evidence for the self-study; not the pre-assignment block ACPE 3.3.c asks for without configuration work on top."
+    action: "Program admin or accreditation liaison pulls this report to assemble self-study evidence that preceptors were qualified, licensed, certified, oriented, and aware of expectations before supervising a student."
+    confirmed_by: "Playbooks/Occupational Therapy (OT) Playbook.md, line ~577 (Comprehensive Assessment Report columns: Preceptor Is Qualified, Preceptor Holds a Valid [License], Preceptor Holds Valid [Certification], Preceptor Is Oriented, Preceptor Is Aware [of program expectations])"
+
+  - screen: "Faculty Compliance — Setup > Requirements / Requirement Groups / Faculty Association"
+    navigation_path: "Faculty Compliance > Setup > Requirements (then Requirement Group, then Faculty Associations)"
+    elements:
+      - element: "Add New Requirement drawer"
+        type: "form (Category, Requirement name, Short name)"
+        data_shown: "Definition of a faculty compliance item — e.g., could model a calibration-training or program-orientation requirement"
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-6 (faculty calibration across sites); COCA Standard 5, Element 5.4 (supervision-policy distribution/attestation)"
+        competitor_equivalent: "Not comparable at element level from public sources."
+        gap_severity: "configure-needed"
+        gap_note: "Confirmed-generic rather than confirmed-specific: a real, shipped form (also independently confirmed in capability-map.yaml via tutorial transcripts and help-center docs) that CAN define a calibration or supervision-policy requirement, but nothing ships pre-modeled for CODA 2-6 or COCA 5.4 — a school defines it themselves."
+      - element: "Requirement edit toggles"
+        type: "toggle set: Enable requirement, Make it mandatory, sensitive-requirement flag, notification-on-not-approved flag, notes-required, documents-required, has-expiration-date"
+        data_shown: "Configuration of whether/how a requirement gates and expires"
+        gates_on: ["Faculty compliance status shown on the Compliance Summary Dashboard"]
+        accreditation_citation: "CODA Standard 2, Element 2-6 (faculty calibration across sites); COCA Standard 5, Element 5.4 (supervision-policy distribution/attestation)"
+        competitor_equivalent: "Not comparable at element level from public sources."
+        gap_severity: "configure-needed"
+        gap_note: "This toggle set is what makes the module genuinely load-bearing rather than a document locker: mandatory, expiring, document-backed requirements are all confirmed configurable here. Notably, has-expiration-date is an explicit, confirmed toggle at this level — which is exactly the enforcement question left open for preceptor licensure on the Sites > Personnel step, where no equivalent expiry control is documented. Still configure-needed because the requirement itself must be authored by the school."
+      - element: "Requirement Group"
+        type: "named bundle of requirements, assignable to faculty"
+        data_shown: "e.g., a 'Site Faculty Calibration' group bundling calibration-training + orientation-attestation requirements"
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-6 (faculty calibration across sites); COCA Standard 5, Element 5.4 (supervision-policy distribution/attestation)"
+        competitor_equivalent: "Not comparable at element level from public sources."
+        gap_severity: "configure-needed"
+        gap_note: "Confirmed as a real grouping mechanism a school would build the calibration bundle on. The bundle is defined over requirements and assigned to people — it has no site dimension, which is the shape of the CODA 2-6 miss recorded on Faculty Association below."
+      - element: "Faculty Association"
+        type: "bulk-assign control"
+        data_shown: "Which faculty are subject to which requirement group"
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-6 (faculty calibration across sites)"
+        competitor_equivalent: "Not comparable at element level from public sources."
+        gap_severity: "configure-needed"
+        gap_note: "This element is where CODA 2-6's specific ask goes unmet: Faculty Compliance's confirmed unit of tracking is the faculty PERSON, and this control assigns groups to named faculty. CODA 2-6 asks for a per-CLINICAL-SITE rollup with alerts when a site (not an individual) falls out of calibration, and nothing in the source material shows a site-level calibration rollup analogous to the Contract Status or Preceptor CV/License/Certification columns on the Placement Clearance Dashboard. So the mechanism to configure on top of is confirmed; the site-level aggregation view is not, and remains a real open question. Also unconfirmed: whether Faculty Compliance, built for institution-employed faculty, is the same object site-based preceptors are enrolled in, or whether preceptors stay purely in the Sites > Personnel + Placement Clearance Dashboard track described above — the two mechanisms are documented separately and nothing in the source material states they are unified."
+    action: "A Faculty Compliance-enabled admin defines a requirement (e.g., calibration training completion), bundles it into a group, and assigns that group to the relevant faculty."
+    confirmed_by: "Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/Setup Faculty Compliance.md"
+
+  - screen: "Sites > [Site] > About — 'contract not required' handling (known limitation)"
+    navigation_path: "Sites > select Site > About tab"
+    elements:
+      - element: "Contract requirement assumption"
+        type: "implicit system behavior, not a visible toggle"
+        data_shown: "Every newly added site is treated as requiring a contract; there is no field to mark a site as not needing one"
+        gates_on: ["Contract Status column will show Missing/Needs Attention even for sites that legitimately never need a signed agreement"]
+        accreditation_citation: "None directly — this is a workflow-noise issue, not an accreditation-evidence gap."
+        competitor_equivalent: "Not comparable at element level from public sources."
+        gap_severity: "cosmetic"
+        gap_note: "A real, named pain point from the OT playbook, not a synthesized inference — worth flagging because it is exactly the kind of false-positive noise that erodes trust in the Contract Status column being used as autopilot evidence for LCME/COCA/CODA reviewers; it does not block or misrepresent genuine agreement lapses, so it stays cosmetic rather than a gap."
+    action: "Program admin adds a site that, in practice, does not need a formal affiliation agreement (e.g., an observation-only site), and the Placement Clearance Dashboard flags it as a missing-contract exception anyway, requiring a manual workaround or an explanatory note to avoid false-positive citation risk in an internal audit."
+    confirmed_by: "Playbooks/Occupational Therapy (OT) Playbook.md, line ~424 ('Not all sites require a contract, but the system assumes a contract is required when a site is added... Schools have requested a way to mark a site as \"contract not required\"')"
+
+  # SCHEMA v2 exception: this step has no elements to attach analysis to (nothing was found in
+  # the product to document). The analysis fields are therefore retained at step level here
+  # rather than dropped — inventing a placeholder element to hang them on would fabricate UI
+  # that does not exist, which is the opposite of what this confirmed-absence finding records.
+  - screen: "COCA 6.9 contingency plan for lost rotation capacity — searched, not found"
+    navigation_path: "N/A — no screen located"
+    elements: []
+    action: "N/A"
+    confirmed_by: "No source located. Searched Exxat-Help-Guides (site/contract/personnel/faculty-compliance guides), the PA and OT playbooks, and capability-map.yaml for any planning, capacity-contingency, or 'replacement site' artifact type; none exists in the material reviewed."
+    accreditation_citation: "COCA Standard 6, Element 6.9 (contingency plan for replacing lost rotation capacity)"
+    competitor_equivalent: "Not comparable — no Prism-side artifact to compare against a competitor."
+    gap_severity: "gap"
+    gap_note: "Honest non-resolution: this hedge stands exactly as the journey file already states it. No planning-artifact object exists anywhere in the reviewed source material, in Prism or in any competitor teardown. Confirming an absence across a much wider set of sources than the original synthesis had access to still leaves this a Gap, not a lower-severity finding."
+
+sources:
+  - "Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
+  - "Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md"
+  - "Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md"
+  - "Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Add or Edit CI - Preceptor Information.md"
+  - "Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Personnel.md"
+  - "Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/Setup Faculty Compliance.md"
+  - "Help for Institutional Users/Step-by-Step Guides (How-tos)/Institutional Level- Contracts and Sites Management.md"
+  - "Help for Preceptor Module/Preceptor Module Setup Guide.md"
+  - "Playbooks/Physician Assistant (PA) Playbook.md"
+  - "Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "content/prism/capability-map.yaml (Compliance Management pillar)"
+  - "content/accreditation/acpe.yaml"
+  - "content/accreditation/lcme.yaml"
+  - "content/accreditation/coca.yaml"
+  - "content/accreditation/coda.yaml"
+  - "content/competitors/core-elms.yaml"
+  - "content/competitors/medhub.yaml"
+last_verified: "2026-08-24"

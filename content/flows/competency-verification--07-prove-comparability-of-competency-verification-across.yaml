@@ -1,0 +1,471 @@
+# Element-level ground truth underneath competency-verification.yaml, stage 7
+# ("Prove comparability of competency verification across sites and campuses").
+# See _TEMPLATE.yaml for field conventions. Every accreditation_citation and
+# competitor_equivalent claim below traces to a real source file in
+# confirmed_by — none is re-derived from the journey's own synthesis, and none
+# is re-derived from the closely related flow files for accreditation-self-study
+# stage 6 or rotation-lifecycle stage 8 (both cover adjacent ground) — each
+# screen below was independently re-verified against its primary source.
+#
+# SCHEMA v2 (2026-08-24): accreditation_citation / competitor_equivalent /
+# gap_severity / gap_note now live on each element rather than on the step.
+# Where the underlying research genuinely did not differentiate between sibling
+# elements, the same verdict is stated identically on each — no artificial
+# precision has been introduced during the migration.
+flow_name: "Competency-Verification Comparability Across Sites"
+maps_to_journey: "competency-verification.yaml, stage 7"
+persona: >
+  Compliance / Accreditation Liaison (content/personas/role-compliance-accreditation-liaison.yaml),
+  reviewing competency-verification comparability at self-study or mid-cycle-report time. The
+  Competency Management Review Dashboard and report-pulling steps below are day-to-day owned by
+  whoever runs Learning Activities/Competency Management — typically the Program Administrator or
+  a Clinical/Assessment Coordinator — with the Liaison consuming the output. The Faculty Compliance
+  setup step is admin-only (Program Super Administrator-tier access).
+steps:
+  - screen: "Competency Management — Cohort's Review Dashboard"
+    navigation_path: "Competency Management > Review tab > [select Competency Framework] > [click Cohort name]"
+    elements:
+      - element: "Course Type dropdown (Didactic / Experiential)"
+        type: "toggle"
+        data_shown: "Switches all four charts below between didactic and experiential competency data for the selected cohort; does not add or remove any grouping dimension."
+        gates_on: []
+        accreditation_citation: >
+          None directly — this is a grouping control, not a place where evidence for a standard
+          lives. It is material to COCA Standard 6, Element 6.11 and LCME Standard 8, Element 8.7
+          only in the negative: it is the one dimension control on this screen, and the dimension
+          those standards need (Site / Location / Campus) is not among its options.
+        competitor_equivalent: >
+          Not comparable at element level. New Innovations' "CCC Milestone Review"
+          (new-innovations.yaml, sourced from new-innov.com/pub/gme_details.html) is the closest
+          named analog to this screen, but its public page names only the feature and its output
+          format — it does not disclose any filter or grouping dimensions, so whether it offers a
+          site-level cut where this dropdown does not is not confirmable from public docs.
+        gap_severity: "gap"
+        gap_note: >
+          This dropdown is the specific element that resolves — narrows, not just re-hedges — the
+          journey's "no shipped pillar does outcome analytics" framing for the one screen in Prism
+          actually named for competency review. Its only axis is Didactic vs. Experiential; combined
+          with the fixed Cohort selection, that is the complete set of grouping dimensions on this
+          dashboard. There is no Site, Location, Campus, or clinical-setting option here — confirmed,
+          not inferred, from the help article's own field-by-field walkthrough and FAQ.
+      - element: "Domain Scores chart"
+        type: "read-only rollup"
+        data_shown: "Average competency score per domain, computed within the selected cohort only."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.11; LCME Standard 8, Element 8.7; ACPE Standard 7, Key Element 7.3.c"
+        competitor_equivalent: >
+          New Innovations' "CCC Milestone Review" renders aggregated evaluation data as competency
+          spider graphs (new-innovations.yaml, new-innov.com/pub/gme_details.html) — the same class
+          of per-domain competency rollup as this chart, and marketed as shipped rather than roadmap.
+          The comparison holds only at output-format level: New Innovations' public page does not
+          disclose the fields, statistics, or grouping dimensions behind the graph, and the feature is
+          explicitly ACGME/GME-shaped (residency milestones), not this journey's UME/clinical-rotation
+          competency-verification shape.
+        gap_severity: "gap"
+        gap_note: >
+          Averages here are computed within the selected cohort only. A program cannot use this chart,
+          as shipped, to ask "is Site A's competency attainment comparable to Site B's" — that
+          comparison would require exporting per-student competency scores and rejoining them against
+          a site tag from a different module (see the next two steps), which this chart does not do
+          natively.
+      - element: "Student Proficiency Distribution chart"
+        type: "read-only rollup"
+        data_shown: "Student counts in two categories: Meeting Threshold (all domains) vs. Below Threshold (at least one domain), cohort-wide."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.11; LCME Standard 8, Element 8.7; ACPE Standard 7, Key Element 7.3.c"
+        competitor_equivalent: >
+          Not comparable at element level. New Innovations' CCC Milestone Review
+          (new-innovations.yaml) is the closest named analog to this screen overall, but its public
+          material documents only spider-graph output and names no threshold-attainment distribution
+          equivalent to this chart at field granularity.
+        gap_severity: "gap"
+        gap_note: >
+          Counts are cohort-wide, with no Site/Location breakdown of who is meeting threshold —
+          confirmed from the help article's field-by-field walkthrough, not inferred. Cross-site
+          comparability of threshold attainment would require exporting per-student results and
+          rejoining a site tag from a different module.
+      - element: "Students Meeting Threshold by Domain chart"
+        type: "read-only rollup"
+        data_shown: "Per-competency counts of students meeting vs. below the configured threshold."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.11; LCME Standard 8, Element 8.7; ACPE Standard 7, Key Element 7.3.c"
+        competitor_equivalent: >
+          Not comparable at element level. New Innovations' CCC Milestone Review (new-innovations.yaml)
+          names no per-domain threshold-attainment count in its public docs, so no field-for-field
+          comparison to this chart is supportable.
+        gap_severity: "gap"
+        gap_note: >
+          Groups by competency domain within the cohort only. The threshold comparison an accreditor
+          would want — attainment per domain per delivery site — is not available here; there is no
+          site dimension anywhere in this dashboard's documented feature set.
+      - element: "Score Distribution by Domain (box plot)"
+        type: "read-only rollup"
+        data_shown: "Min/max/average/median score per domain; the box for a domain renders red when its median falls below the configured Competency Threshold."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.11; LCME Standard 8, Element 8.7; ACPE Standard 7, Key Element 7.3.c"
+        competitor_equivalent: >
+          Not comparable at element level. No competitor teardown in this research set documents a
+          score-distribution box plot with threshold-based flagging at field granularity; New
+          Innovations' CCC Milestone Review (new-innovations.yaml) discloses only spider-graph output.
+        gap_severity: "gap"
+        gap_note: >
+          The nearest thing on this dashboard to a "band flag" — the red box when a domain median
+          falls below the configured Competency Threshold — is per domain, never per site. It is a
+          spread display, not an inferential comparison: the dimension being flagged is competency
+          domain, so it cannot answer whether one site's distribution differs from another's.
+      - element: "Students in Cohort grid"
+        type: "read-only rollup"
+        data_shown: "Every student in the selected cohort, with a View Report drill-down to that student's individual competency performance dashboard."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.11; LCME Standard 8, Element 8.7; ACPE Standard 7, Key Element 7.3.c"
+        competitor_equivalent: >
+          Not comparable at element level. New Innovations' CCC Milestone Review (new-innovations.yaml)
+          is committee-facing and its public page does not document a per-student roster or drill-down
+          at field granularity.
+        gap_severity: "gap"
+        gap_note: >
+          The grid lists students by cohort with a per-student drill-down but carries no site,
+          location, or campus column, so it cannot be used to segment below-threshold students by
+          where they trained. This grid plus the four charts above is the whole dashboard, and none of
+          them has a site dimension.
+
+    action: >
+      The liaison (or delegate) opens the framework's Review tab, selects a cohort, and reads the
+      four charts plus the Below-Threshold student list as the program's competency-attainment
+      picture for that cohort — the closest thing Prism has today to a purpose-built
+      "competency verification" analytics screen.
+    confirmed_by: >
+      "Competency Framework Configuration and Management.md" (sections "Review Competency,"
+      "Access the Review Dashboard," "Cohort's Review Dashboard," and its own FAQ "What
+      information is available on the Review Dashboard?"), at
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md
+
+  - screen: "Aggregate Report for Placement-Based Forms"
+    navigation_path: "Learning Activities > Learning Activity Group > Reports tab > Aggregate Report for Placement-Based Forms > [select scoring form] > Group By"
+    elements:
+      - element: "Group By selector"
+        type: "report filter"
+        data_shown: "Groups scored evaluation responses by Course, Rotation, Site, Preceptor, or Student, combinable."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.11; LCME Standard 8, Element 8.7; ACPE Standard 7, Key Element 7.3.c"
+        competitor_equivalent: >
+          Not comparable at element level. MedHub/E*Value's "Accreditation Automation" page
+          (e-value.yaml) names benchmarking and program scorecards as shipped, but does not disclose
+          any grouping-dimension picker or its options, so no field-for-field comparison to this
+          selector is supportable.
+        gap_severity: "none"
+        gap_note: >
+          This selector is the element that most tightens the stage's existing "Gap" framing: Site is
+          a first-class grouping option here, shipped today, confirmed across two independent
+          discipline playbooks and an official help article rather than "plausibly has it" as the
+          journey text currently hedges. For the site-dimension half of the comparability ask, this
+          element is complete as shipped.
+      - element: "Average score per scoring question column"
+        type: "read-only rollup"
+        data_shown: "Mean score for each evaluation question, computed within whatever grouping is currently selected."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.11; LCME Standard 8, Element 8.7; ACPE Standard 7, Key Element 7.3.c"
+        competitor_equivalent: >
+          MedHub/E*Value markets "benchmarking against national/institutional trends" as a shipped,
+          purpose-built deliverable (e-value.yaml) versus this column, which an admin must group by
+          hand each time. MedHub's page does not disclose its underlying field or statistic set, so
+          this stays a process-level (automated vs. manually-grouped) comparison, not a field-level one.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Grouped by Site, this column is a real, shipped, cross-site descriptive comparison of
+          assessment scores. What it does not compute — per capability-map.yaml and coca.yaml — is the
+          inferential layer COCA 6.11 explicitly asks for: the statistic here is a mean and nothing
+          else, with no variance or effect size, so any statistical claim must be computed outside
+          Prism from the export.
+      - element: "Class average benchmark"
+        type: "read-only rollup"
+        data_shown: "The same average computed across the whole class/cohort, shown alongside the grouped value for visual comparison."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.11; LCME Standard 8, Element 8.7; ACPE Standard 7, Key Element 7.3.c"
+        competitor_equivalent: >
+          MedHub/E*Value's program scorecards and trend benchmarking (e-value.yaml) are the closest
+          named analog to this benchmark column, but MedHub does not publish the fields or statistics
+          behind them, so the comparison holds only at the process level: their benchmark is presented
+          as automated output, this one as a side-by-side an admin reads.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is the element where a "comparable-outcomes band" flag would live, and it has none: the
+          class average is shown next to the grouped value for a human to eyeball for outliers, and no
+          site is automatically flagged as outside a band. Nothing here is a "statistical-analysis
+          report" in the accreditor's sense.
+      - element: "Export to Excel"
+        type: "button"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None directly — the export is not itself evidence for a standard, but it is the documented
+          path by which the COCA Standard 6, Element 6.11 statistical layer must be produced, since no
+          statistic beyond the mean is computed in-product.
+        competitor_equivalent: "Not confirmed at element level for any competitor in this research set — no competitor teardown documents its export mechanics at field granularity."
+        gap_severity: "none"
+        gap_note: >
+          The export works as an export; it is flagged here only because it is the hand-off point where
+          the missing inferential work (variance, effect size, outlier flagging) has to happen in a
+          spreadsheet outside Prism.
+
+    action: >
+      Grouping by Site, the admin reads average scores per evaluation question against the class
+      average and visually scans for a site whose numbers diverge — the PA and OT playbooks and the
+      ARC-PA help-center report guide independently describe the identical mechanic ("comparing
+      Fall vs. Spring rotation performance across sites... spotting outliers/patterns"; "Group by
+      student, preceptor, and setting").
+    confirmed_by: >
+      "Occupational Therapy (OT) Playbook.md" (Reports Walkthrough Scripts, "Aggregate Report for
+      Placement-Based Forms (OT)"), at
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md;
+      cross-confirmed in "Physician Assistant (PA) Playbook.md" ("Group By" functionality, line 253)
+      and "Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md" ("Aggregate
+      report for placement-based forms > Preceptor Evaluation of Student > Group by student,
+      preceptor, and setting"), at
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md
+
+  - screen: "Custom Report Builder — Forms and Evaluations data source"
+    navigation_path: "Learning Activities > Reports > Custom tab > Create New Report > Forms and Evaluations data source > Pivot Report"
+    elements:
+      - element: "Pivot Report toggle"
+        type: "toggle"
+        data_shown: "Switches the report between Raw Data and Pivot modes."
+        gates_on: []
+        accreditation_citation: >
+          None directly — a mode switch, not a place where evidence for a standard lives; it is the
+          entry point to the pivot configuration that serves LCME Standard 8, Element 8.7 and ACPE
+          Standard 7, Key Element 7.3.c.
+        competitor_equivalent: >
+          Not comparable at element level. axiUm markets a "Custom Query Engine" and "Info Manager"
+          for ad hoc reporting (axium.yaml), but its public material names no pivot mode or equivalent
+          control, so the comparison holds only at "both vendors offer some ad hoc query tool."
+        gap_severity: "none"
+        gap_note: "The mode switch itself is shipped and complete; the limitations of this screen sit in the Values aggregation set, not here."
+      - element: "Rows / Columns / Values pickers"
+        type: "report filter / pivot config"
+        data_shown: "Any of Clinical Setting, Site, Location, Rotation, Course, or Program can be placed in Rows/Columns; Score can be placed in Values with Average/Min/Max aggregation — the documented 'Performance by Clinical Setting' scenario is Rows: Clinical Setting, Columns: Form Name, Values: Score (Average)."
+        gates_on: []
+        accreditation_citation: "LCME Standard 8, Element 8.7; ACPE Standard 7, Key Element 7.3.c"
+        competitor_equivalent: >
+          Not comparable at element level. axiUm's "Custom Query Engine" / "Info Manager"
+          (axium.yaml) is the closest functional analog, but axiUm's public material names no specific
+          fields, pivot mechanics, or Site/Clinical-Setting dimension, so this can only be compared at
+          "both vendors offer some ad hoc query tool."
+        gap_severity: "configure-needed"
+        gap_note: >
+          This element splits cleanly in two. The dimension half is complete: Site, Location, and
+          Clinical Setting are all placeable in Rows/Columns, so an ad hoc site cut is genuinely
+          available with configuration. The aggregation half is where the confirmed absence lives —
+          the Values picker offers only Sum/Average/Min/Max/Earliest-Latest and plain counts. Per this
+          guide, that limit holds across every Custom Report data source, not just Forms and
+          Evaluations: no variance, standard deviation, confidence interval, or threshold-band flag
+          exists anywhere in the reporting layer. This is direct confirmation, not inference, that the
+          statistical layer COCA 6.11 requires does not exist as a primitive in the product today.
+      - element: "Basic / Advanced Filters accordion"
+        type: "report filter"
+        data_shown: "Course, Rotation, Academic Year, Evaluation Status, Site, and every evaluation question as a filterable field."
+        gates_on: []
+        accreditation_citation: "LCME Standard 8, Element 8.7; ACPE Standard 7, Key Element 7.3.c"
+        competitor_equivalent: >
+          Not comparable at element level. axiUm (axium.yaml) publishes no filter-field inventory for
+          its Custom Query Engine, so its filtering granularity cannot be set against this accordion's
+          named fields.
+        gap_severity: "none"
+        gap_note: >
+          Site is a named filter field alongside Course, Rotation, Academic Year, Evaluation Status,
+          and every evaluation question — for the scoping half of a cross-site comparison, this element
+          is complete as shipped.
+      - element: "Save and Run / Export"
+        type: "button"
+        data_shown: "Persists the report to the Custom tab; exports the resulting grid to Excel."
+        gates_on: []
+        accreditation_citation: >
+          None directly — persistence and export are not themselves evidence for a standard, though
+          saving a report is what makes an LCME 8.7 cut repeatable cycle over cycle.
+        competitor_equivalent: "Not confirmed at element level for any competitor in this research set — axiUm (axium.yaml) documents no save/export mechanics at field granularity."
+        gap_severity: "none"
+        gap_note: "Saving and exporting work as documented; as with the Aggregate Report, the export is where any statistical work must move to a spreadsheet outside Prism."
+
+    action: >
+      When the pre-built Aggregate Report's fixed groupings aren't the cut needed (e.g. a specific
+      date range, or Site x Form Name rather than Site x Question), an admin builds an ad hoc pivot
+      here instead — a self-service, general-purpose report builder, not a purpose-built
+      comparability tool.
+    confirmed_by: >
+      "Generating and Managing Custom Reports.md" (Forms and Evaluations section, named scenario
+      "Performance by Clinical Setting"), at
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md
+
+  - screen: "Curriculum Mapping — Course Offering site-sharing & Heatmap Report"
+    navigation_path: "Curriculum Mapping > Course Information > Share with Site toggle; and Curriculum Mapping > [Curriculum] > Mapping Reports > [Standard] > Other Reports > Heatmap Report"
+    elements:
+      - element: "Share with Site toggle (Course Information)"
+        type: "toggle"
+        data_shown: "Whether a course's curriculum-mapping data is exposed to the clinical partner site it is shared with."
+        gates_on: ["Controls clinical-site visibility of mapping data, not a per-site outcome tag"]
+        accreditation_citation: "LCME Standard 8, Element 8.7"
+        competitor_equivalent: "Not confirmed at element level for any competitor in this research set — no competitor teardown documents an equivalent per-site mapping-visibility toggle at field granularity."
+        gap_severity: "gap"
+        gap_note: >
+          This toggle is the specific element that resolves the journey's "Curriculum Mapping can tag
+          objectives to sites" framing as an overstatement. It is a visibility control — does this site
+          see the mapping? — and not a per-site outcome or comparability tag. Flipping it changes who
+          can read the mapping, never how objectives or assessment instruments are attributed per
+          delivery site.
+      - element: "Heatmap grid"
+        type: "read-only rollup, cross-tabulation"
+        data_shown: "X-axis = accreditation standards, Y-axis = course offering name/number, cell = count of mapped course measures."
+        gates_on: []
+        accreditation_citation: "LCME Standard 8, Element 8.7"
+        competitor_equivalent: "Not confirmed at element level for any competitor in this research set — no competitor teardown documents an equivalent course-by-standard heatmap at field granularity."
+        gap_severity: "gap"
+        gap_note: >
+          The grid's two axes are Course Offering and Accreditation Standard, with no Site/Location
+          dimension anywhere in the documented report structure. For LCME 8.7's actual ask — tagging
+          objectives and assessment instruments per delivery site within one course — this report
+          cannot express the question; it would need new configuration or a data-model addition, not
+          just filtering.
+      - element: "Hover tooltip"
+        type: "read-only detail"
+        data_shown: "Standard code, course details, total measures mapped for that cell."
+        gates_on: []
+        accreditation_citation: "LCME Standard 8, Element 8.7"
+        competitor_equivalent: "Not confirmed at element level for any competitor in this research set — no competitor teardown documents heatmap drill-down detail at field granularity."
+        gap_severity: "gap"
+        gap_note: >
+          The tooltip surfaces standard code, course details, and mapped-measure count — the cell's
+          full documented payload, which carries no site attribution. It inherits the grid's limit
+          exactly: no per-site view of which objectives or instruments are mapped where.
+
+    action: >
+      An admin checks curriculum-to-standard coverage in the Heatmap Report and controls whether a
+      course's mapping data is visible to a given site via the sharing toggle — the two mechanisms
+      closest to "tagging objectives and assessment instruments by site" in LCME 8.7's language.
+    confirmed_by: >
+      "Heatmap Report.md" (Help for Program Administrators > Step-by-Step Guides > Curriculum
+      Mapping Reports), at
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Heatmap Report.md;
+      Share with Site toggle confirmed in ../prism/capability-map.yaml (Curriculum Mapping pillar,
+      "Program-Specific Standards vs. Accreditation Standards" feature entry)
+
+  - screen: "Faculty Compliance — Setup: Requirements, Requirement Group, Compliance Review dashboard"
+    navigation_path: "Faculty Compliance > Setup tab > Requirements | Requirement Group | Faculty Associations; and Faculty Compliance > Compliance Review dashboard (By Group / By Faculty / By Document)"
+    elements:
+      - element: "Add New Requirement drawer"
+        type: "input field"
+        data_shown: "Category (free dropdown), Requirement name, Short name, and whether the requirement requires a document upload."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-6"
+        competitor_equivalent: "Not confirmed at element level for any competitor in this research set — no competitor teardown in this workstream documents an equivalent faculty-compliance requirement definition at field granularity."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Shipped today, not roadmap — this resolves coda.yaml's "faculty-side calibration/credential
+          tracking is an open Phase 2 question" hedge. The fields are generic (Category, name, short
+          name, document-required flag) with no calibration-specific type, so a "Calibration Training"
+          requirement and its document evidence are representable by configuration alone, without new
+          engineering.
+      - element: "Requirement expiration toggle"
+        type: "toggle"
+        data_shown: "Whether the requirement has an expiration date, with configurable expiration settings — the mechanism that would model a calibration-training recertification cycle."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-6"
+        competitor_equivalent: "Not confirmed at element level for any competitor in this research set — no competitor teardown in this workstream documents an equivalent expiration/recertification setting at field granularity."
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is the element that carries CODA 2-6's periodic-monitoring half: expiration settings are
+          general-purpose enough to model a calibration recertification cycle, so lapsed calibration is
+          caught before a site visit. It needs configuring per requirement, but nothing needs building.
+      - element: "Requirement Group"
+        type: "input field"
+        data_shown: "A named bundle of enabled requirements, assignable to faculty by role/program."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-6"
+        competitor_equivalent: "Not confirmed at element level for any competitor in this research set — no competitor teardown in this workstream documents an equivalent requirement-bundling construct at field granularity."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Assignment is by role/program, which is the documented axis — it is not assignable by site or
+          location. That is workable for defining who must be calibrated, and it is the point at which
+          the site dimension is first absent from this module's data model.
+      - element: "Compliance Review dashboard views"
+        type: "read-only rollup"
+        data_shown: "Compliance status per requirement group, per individual faculty member, or per document type — three views, no fourth 'by site/location' view."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-6"
+        competitor_equivalent: "Not confirmed at element level for any competitor in this research set — no competitor teardown in this workstream documents an equivalent faculty-compliance review dashboard at field granularity."
+        gap_severity: "gap"
+        gap_note: >
+          This is the element where the genuinely unconfirmed part of the step sits, and it is worse
+          than configure-needed: the dashboard ships exactly three views (By Group / By Faculty / By
+          Document) and no Site/Location grouping, so "which sites currently have calibrated faculty"
+          is not a native view. Answering it means a manual join against a site-tagged personnel
+          export, and the documented Faculty custom-report data source does not list a Site Name
+          column — so even that join is not confirmed straightforward.
+
+    action: >
+      An admin creates a requirement (e.g. "Calibration Training") with an expiration date, bundles
+      it into a Requirement Group, and assigns it to relevant faculty so lapsed calibration is
+      caught before a site visit — the CODA 2-6 evidence trail (calibration training, periodic
+      monitoring, participation documentation) built on a generic compliance-item mechanism, not a
+      calibration-specific one.
+    confirmed_by: >
+      "Setup Faculty Compliance.md" and "Review Faculty Compliance Document.md" (Help for Program
+      Administrators > Step-by-Step Guides > Faculty Compliance), at
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/
+
+  - screen: "Accreditation Management pillar (not yet built)"
+    navigation_path: "N/A — no shipped screen; roadmap item, target Q3 2027"
+    elements:
+      - element: "Cross-site statistical comparability engine (variance / effect-size by site, comparable-outcomes-band flagging)"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.11; LCME Standard 8, Element 8.7; ACPE Standard 7, Key Element 7.3.c"
+        competitor_equivalent: >
+          No competitor teardown in this research documents a shipped cross-site statistical
+          comparability engine either (see journey competitor_comparison) — this remains the clearest
+          white space in the journey, not a Prism-specific deficit against a named competitor
+          capability.
+        gap_severity: "gap"
+        gap_note: >
+          No change from the journey's existing synthesis on this specific point: the inferential-
+          statistics layer itself remains an honest, confirmed Gap, and nothing surfaced in this
+          research narrows it. The steps above establish which pieces of the eventual build already
+          have a working, shipped analog — site-groupable descriptive averaging, generic ad hoc
+          pivoting, a competency-review dashboard, a faculty-calibration compliance mechanism — versus
+          which have none at all: statistical flagging, and a site dimension inside competency review.
+      - element: "Accreditor-formatted comparability-report export"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.11; LCME Standard 8, Element 8.7; ACPE Standard 7, Key Element 7.3.c"
+        competitor_equivalent: >
+          No competitor teardown in this research documents a shipped accreditor-formatted
+          comparability report either (see journey competitor_comparison) — white space rather than a
+          Prism-specific deficit against a named competitor capability.
+        gap_severity: "gap"
+        gap_note: >
+          Nothing in the five shipped steps above produces an accreditor-formatted comparability
+          deliverable; the closest available output is a hand-grouped Excel export. This is the second
+          of the two capabilities in this journey with no shipped analog anywhere in the product.
+
+    action: "N/A"
+    confirmed_by: "../prism/capability-map.yaml, 'Accreditation Management' pillar entry (status: roadmap, target Q3 2027); ../accreditation/coca.yaml, Standard 6 Element 6.11 prism_fit_rationale"
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Heatmap Report.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/Setup Faculty Compliance.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/Review Faculty Compliance Document.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/new-innovations.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+last_verified: "2026-08-24"

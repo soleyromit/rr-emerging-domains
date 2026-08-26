@@ -1,0 +1,507 @@
+# Element-level ground truth underneath preceptor-site-onboarding.yaml, stage 1
+# ("Site identification, capacity negotiation & contingency planning"). See
+# _TEMPLATE.yaml for field meanings. Every accreditation_citation and
+# competitor_equivalent claim below traces to a real source file in
+# confirmed_by — never to this journey's own narrative. Note: affiliation
+# CONTRACT execution/lifecycle is this journey's stage 2, not this file — the
+# Sites/Slots screens below are scoped strictly to identifying a site and
+# negotiating/proving its student capacity, not to the agreement paperwork.
+#
+# SCHEMA v2 (2026-08-24): analysis fields (accreditation_citation /
+# competitor_equivalent / gap_severity / gap_note) now live on each ELEMENT
+# rather than on the step. Where the original research did not distinguish
+# between sibling elements, the same verdict is stated identically on each
+# rather than inventing false precision.
+flow_name: "Site Identification, Slot Capacity Negotiation & Contingency Planning"
+maps_to_journey: "preceptor-site-onboarding.yaml, stage 1"
+persona: >
+  Primary: Clinical/Experiential Education Coordinator (../personas/_TEMPLATE_role.yaml) —
+  creates the Site/Location record, negotiates and enters slot counts per rotation, and is the
+  one who would have to assemble a COCA 6.9-style rolling-average capacity table today.
+  Tertiary consumer: the Compliance/Accreditation Liaison, who pulls the capacity/slot reports
+  below as site-visit evidence.
+
+steps:
+  - screen: "Sites — Add Site drawer (About tab: Settings & Categories)"
+    navigation_path: "Sites (left menu/dashboard) > + Add Site > About tab > Settings / Categories sections"
+    elements:
+      - element: "Name / Alias Name / Active toggle"
+        type: "input fields + toggle"
+        data_shown: "Official site name (mandatory), one optional short alias, and whether the site is available for new placements"
+        gates_on: ["eligibility for new placement/slot creation"]
+        accreditation_citation: "COCA Standard 6, Element 6.9; LCME Standard 5, Element 5.5; ACPE Standard 3, Key Element 3.1.a — this is the element that establishes the clinical site as an identifiable record at all, the precondition for any site-adequacy evidence"
+        competitor_equivalent: >
+          Not comparable at element level — eMedley's and CORE ELMS's public pages
+          (../competitors/emedley.yaml, core-elms.yaml) describe "site/student/preceptor
+          management" as a named feature category but publish no field-level view of a
+          site-creation screen to compare a name/alias/active-toggle field set against.
+        gap_severity: "none"
+        gap_note: >
+          Resolves the object-model part of the journey's hedge: a site is a real, structured
+          record with an explicit active/inactive state gating new placements, not a bare
+          name-and-address stub.
+      - element: "Settings"
+        type: "multi-select list, applies to all locations under the site"
+        data_shown: "The slot-availability settings (e.g. inpatient/outpatient-type categories) this site offers"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9; LCME Standard 5, Element 5.5; ACPE Standard 3, Key Element 3.1.a — carries the site-characteristic tags a capacity/variety-of-sites narrative would reference"
+        competitor_equivalent: >
+          Not comparable at element level — neither ../competitors/emedley.yaml nor
+          core-elms.yaml publishes a field-level view of site-classification settings to compare
+          against.
+        gap_severity: "none"
+        gap_note: >
+          Structured, program-controlled tagging that a capacity negotiation can match against
+          (e.g. "accepts off-cycle rotations"); shipped, no accreditation gap at this element.
+      - element: "Categories"
+        type: "tag multi-select, program-curated"
+        data_shown: "Program-defined labels used to classify/filter sites"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9; LCME Standard 5, Element 5.5; ACPE Standard 3, Key Element 3.1.a — carries the site-characteristic tags a capacity/variety-of-sites narrative would reference"
+        competitor_equivalent: >
+          Not comparable at element level — neither ../competitors/emedley.yaml nor
+          core-elms.yaml publishes a field-level view of site-classification tagging to compare
+          against.
+        gap_severity: "none"
+        gap_note: >
+          Structured, program-controlled tagging that a capacity negotiation can match against;
+          shipped, no accreditation gap at this element.
+      - element: "Requirements / Student Requirement Upload"
+        type: "list + document-upload config"
+        data_shown: "What this site asks of students before a placement starts; propagates to every location under the site"
+        gates_on: ["Requirement Upload Status column on Placement Clearance Dashboard (stage 3/4 territory)"]
+        accreditation_citation: >
+          None at this element for stage 1 — this configures downstream student-clearance
+          documentation (Requirement Upload Status, stage 3/4 territory), not site-capacity
+          evidence, so the COCA 6.9 / LCME 5.5 / ACPE 3.1.a citations carried by the sibling
+          elements do not land here.
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a per-site student
+          requirement/document-upload configuration at this granularity.
+        gap_severity: "none"
+        gap_note: >
+          Shipped and propagates site-wide to every location; its accreditation weight is carried
+          in the placement-clearance stages of this journey, not here.
+    action: >
+      Coordinator creates the Site record as the first step of identifying a new clinical
+      partner, tags it with the Settings/Categories a placement negotiation would need to match
+      against (e.g. "accepts off-cycle rotations"), and records what documentation the site will
+      require of students — all before any slot-count conversation happens.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md
+      (steps 1-14 of "Adding Sites")
+
+  - screen: "Sites — Setup > Slots Setup (Slot Type / Supervision Type configuration)"
+    navigation_path: "Sites > Setup (top menu) > Slots Setup"
+    elements:
+      - element: "Slot Type grid"
+        type: "editable list (pencil icon), reorderable via drag/up-down"
+        data_shown: "The program-defined slot-type options (e.g. rotation categories) that will populate the Slot Type dropdown when adding/editing a slot"
+        gates_on: ["Slot Type dropdown options on the Add Slot drawer"]
+        accreditation_citation: "COCA Standard 6, Element 6.9 (rotation-type comparability underlying the rolling-average calculation — the controlled vocabulary a three-rotation-type breakdown would have to group on)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a slot-type
+          taxonomy configuration screen at this granularity.
+        gap_severity: "none"
+        gap_note: "Straightforward, already-shipped configuration; no accreditation gap at this element."
+      - element: "Supervision Type grid"
+        type: "editable list (pencil icon)"
+        data_shown: "Program-defined supervision-model options for a slot"
+        gates_on: ["Supervision Type dropdown options on the Add Slot drawer"]
+        accreditation_citation: "COCA Standard 6, Element 6.9 (rotation-type comparability underlying the rolling-average calculation)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a supervision-type
+          taxonomy configuration screen at this granularity.
+        gap_severity: "none"
+        gap_note: "Straightforward, already-shipped configuration; no accreditation gap at this element."
+      - element: "New Option / Deactivate label / Reactivate label"
+        type: "buttons"
+        data_shown: ""
+        gates_on: ["A deactivated option disappears from future slot creation but slots already using it keep it until edited"]
+        accreditation_citation: >
+          None at this element — these are lifecycle controls over the taxonomy the sibling grids
+          define; the COCA 6.9 comparability citation lives on the Slot Type / Supervision Type
+          grids themselves.
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents taxonomy
+          activate/deactivate controls at this granularity.
+        gap_severity: "none"
+        gap_note: >
+          Already-shipped configuration. Worth noting for historical reporting: deactivation is
+          non-retroactive (existing slots retain a deactivated option until edited), so a
+          multi-year capacity table can legitimately contain retired slot-type values.
+    action: >
+      Before negotiating capacity numbers with a site, the coordinator configures the controlled
+      vocabulary (slot type, supervision type) the negotiation will be recorded against, so every
+      site's offered slots are comparable across the program.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md
+      ("Configure Slots Setup" section)
+
+  - screen: "Site/Location — Slots tab (Add Slot drawer)"
+    navigation_path: "Sites > [Site or Location] > Slots > + Add Slot"
+    elements:
+      - element: "Location"
+        type: "select (prefilled/locked when adding from a Location; open list, including 'Location not known,' when adding from a Site)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None at this element — it scopes which site/location a negotiated count belongs to; the
+          COCA 6.9 demonstrated-capacity citation lives on Number of Offers, the field that holds
+          the count itself.
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a capacity/slot
+          data model at this granularity.
+        gap_severity: "none"
+        gap_note: >
+          Shipped and adequate for its purpose; note the permitted 'Location not known' value
+          means a slot can be recorded before the specific location is pinned down.
+      - element: "Rotation"
+        type: "select, restricted to current and future rotations only"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None at this element — it scopes which rotation a negotiated count belongs to; the COCA
+          6.9 demonstrated-capacity citation lives on Number of Offers.
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a capacity/slot
+          data model at this granularity.
+        gap_severity: "none"
+        gap_note: >
+          Shipped. The current-and-future-rotations-only restriction is a forward-entry
+          constraint, not a reporting one — historical slot records already entered remain
+          readable by the reports in the steps below.
+      - element: "Number of Offers"
+        type: "input field (mandatory), locked to Start/End Date/Notes-only edits once a student is placed against it"
+        data_shown: "A single static integer for how many students this slot batch can take"
+        gates_on: ["how many students Placement Assist or manual placement can assign against this slot"]
+        accreditation_citation: "COCA Standard 6, Element 6.9 (per-site demonstrated capacity — this specific field is the input to the 3-year rolling average)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a per-slot capacity
+          integer or its edit-locking behavior at this granularity.
+        gap_severity: "gap"
+        gap_note: >
+          Confirms rather than merely repeats the journey's hedge: Number of Offers is a manually
+          entered, static per-slot-batch count with no forward-looking demand-forecast field
+          anywhere in this drawer. Nothing here computes a rolling average or compares an intake
+          number against a documented "adequate capacity" threshold — that math has to happen
+          outside this screen (see the Custom Report step below). Compounding this, the field
+          cannot be incremented in place once a student is placed against it: adding capacity
+          mid-year (e.g. the site agrees to take 2 more students) requires a brand-new slot
+          record, so a single negotiated capacity ends up split across multiple rows.
+      - element: "Start Date / End Date / Notes"
+        type: "input fields"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: >
+          None at this element — dates/notes bound and annotate a slot batch; the COCA 6.9
+          demonstrated-capacity citation lives on Number of Offers.
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a capacity/slot
+          data model at this granularity.
+        gap_severity: "none"
+        gap_note: >
+          Shipped, and notably these remain editable after a student is placed (unlike Number of
+          Offers), so a renegotiated date range can be corrected in place; Notes is free text, not
+          a structured negotiation record.
+    action: >
+      This is where a negotiated capacity number actually lands in Prism: the coordinator
+      manually types in how many students a site/location agreed to take for a given rotation.
+      To add capacity beyond an existing batch (e.g. the site agrees to take 2 more students
+      mid-year), a brand-new slot record must be added — the original Number of Offers cannot be
+      incremented in place.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md
+      ("Adding Slots by Site" / "Adding Slots by Location" sections)
+
+  - screen: "PA-discipline Max Placement Limit (Slot Offering drawer, step 2)"
+    navigation_path: "Sites/Locations/Placements > Slots > [Offer/Add Slot drawer, step 2] — PA lockstep domains only"
+    elements:
+      - element: "Placement Limit field"
+        type: "input field, shown only when the tenant has enabled the feature"
+        data_shown: "Max number of students a preceptor will accept across a Location+Setting+Cohort combination, independent of how many individual monthly/rotation slots were offered"
+        gates_on: ["warning (non-blocking) shown to schedulers once the limit is reached or exceeded"]
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents an equivalent
+          negotiated-ceiling-vs-nominal-slots mechanic.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is a real, shipped answer to exactly the kind of capacity-negotiation nuance this
+          stage is about (a site's stated slot count is not the same as its true intake ceiling),
+          but it is explicitly gated: "exclusive to the PA discipline" and "can only be enabled
+          for lockstep-based clients/domains" — the help doc states this in its own words, not
+          this journey's inference. It is NOT confirmed available to DO, Medicine, Dentistry, or
+          standard (non-lockstep) Pharmacy configurations; whether it could be extended to those
+          domains is an open product question this research does not resolve. Also, when reached,
+          the limit only produces a warning schedulers can override — it does not hard-block a
+          placement.
+      - element: "Total slots offered for this cohort/setting"
+        type: "read-only display alongside the limit field"
+        data_shown: "Running total the limit is checked against"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents an equivalent
+          nominal-slots-vs-ceiling display.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Read-only companion to the Placement Limit field and inherits the same gating: it is
+          only visible in PA lockstep-enabled tenants, so the nominal-vs-negotiated comparison it
+          makes legible is unavailable to DO, Medicine, Dentistry, and non-lockstep Pharmacy.
+          Being read-only, it adds no capability of its own beyond surfacing the running total.
+      - element: "'Limit Exists' label"
+        type: "read-only tag in the Slots List View"
+        data_shown: "Flags which Location/Cohort/Setting groups already carry a negotiated cap"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents an equivalent
+          list-view flag for a negotiated cap.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Same PA-lockstep gating as the sibling elements. It is a presence flag only — it marks
+          that a cap exists but does not surface the cap's value or whether it has been reached,
+          so the list view alone cannot be used as capacity evidence.
+    action: >
+      A PA preceptor who offers many nominal slots (e.g. one per month) but will only actually
+      host a smaller total number of students across the year sets that real ceiling once, here,
+      rather than the coordinator manually reconciling slot count against a verbal understanding.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Discipline Specific Guides/PA Discipline/Max Placement Limit
+      (MAX Slot Limit).md
+
+  - screen: "Placements > Reports — Distribution of Slots Across Settings / Across Locations"
+    navigation_path: "Placements > [Course/Placement Group] > Reports > Distribution of Slots Across Settings; Distribution of Slots Across Locations"
+    elements:
+      - element: "Distribution of Slots Across Settings report"
+        type: "downloadable report, scoped to selected rotations, refreshed weekly"
+        data_shown: "How many slots were offered vs. filled per rotation, broken out by setting"
+        gates_on: []
+        accreditation_citation: >
+          For PT/PTA specifically this report is literally named after CAPTE Standard 8F ("Number
+          and Variety of Clinical Slots") per ../prism/capability-map.yaml. For
+          DO/Pharmacy/Dentistry/Medicine the underlying report exists but is NOT re-labeled to
+          COCA 6.9 / LCME 5.5 / ACPE 3.1.a — capability-map.yaml is explicit that "the equivalent
+          reports for every other discipline are generically named with no standard citation...
+          currently PT/PTA- and PA-specific, not yet generalized."
+        competitor_equivalent: >
+          eMedley's public page names "site capacity management" as a feature of eduSched
+          (../competitors/emedley.yaml, clinical.emedley.com/features/) and CORE ELMS names
+          centralized "site/student/preceptor management" feeding SmartMatch
+          (../competitors/core-elms.yaml), but neither publishes a weekly-refresh-cadence,
+          offered-vs-filled report spec granular enough to compare field-for-field against this
+          report; capability parity at the marketing-claim level is the most that can honestly be
+          said.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Tightens (does not fully resolve) the journey's hedge: a slots-offered-vs-filled report
+          exists and is real, shipped, weekly-refreshed evidence of current capacity utilization.
+          What remains genuinely unconfirmed is the standard-citation naming/mapping work for the
+          four new domains, and — separately — that this is a snapshot report, not the 3-year
+          rolling-average calculation COCA 6.9 specifically asks for (see the Custom Report step).
+      - element: "Distribution of Slots Across Locations report"
+        type: "downloadable report, scoped to selected rotations, refreshed weekly"
+        data_shown: "How many slots were offered for each rotation, broken out by location"
+        gates_on: []
+        accreditation_citation: >
+          For PT/PTA specifically this report is literally named after CAPTE Standard 2C ("Number
+          and Variety of Clinical Sites") per ../prism/capability-map.yaml. For
+          DO/Pharmacy/Dentistry/Medicine the underlying report exists but is NOT re-labeled to
+          COCA 6.9 / LCME 5.5 / ACPE 3.1.a — capability-map.yaml is explicit that "the equivalent
+          reports for every other discipline are generically named with no standard citation...
+          currently PT/PTA- and PA-specific, not yet generalized."
+        competitor_equivalent: >
+          eMedley's public page names "site capacity management" as a feature of eduSched
+          (../competitors/emedley.yaml) and CORE ELMS names centralized
+          "site/student/preceptor management" feeding SmartMatch (../competitors/core-elms.yaml),
+          but neither publishes a per-location, weekly-refresh offered-vs-filled report spec
+          granular enough to compare field-for-field; capability parity at the marketing-claim
+          level is the most that can honestly be said.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Same verdict as the Settings variant: real, shipped, weekly-refreshed current-cycle
+          evidence, but the standard-citation naming/mapping for the four new domains is
+          unconfirmed and this is a point-in-time snapshot, not COCA 6.9's 3-year rolling average.
+          Note this variant shows offered counts per location without the filled comparison the
+          Settings variant carries.
+      - element: "Rotation selector"
+        type: "multi-select filter"
+        data_shown: "Which rotations from the selected course/placement group to include"
+        gates_on: []
+        accreditation_citation: >
+          None at this element — it scopes the two reports above; the CAPTE 2C/8F naming (and the
+          absent COCA/LCME/ACPE equivalents) attaches to the reports themselves.
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents report-filtering
+          controls at this granularity.
+        gap_severity: "none"
+        gap_note: >
+          Shipped. Its scope is the selected course/placement group's rotations, which is the
+          structural reason these reports are current-offering views rather than multi-year trends.
+    action: >
+      Coordinator downloads a point-in-time (weekly-refreshed) slots-offered-vs-filled view per
+      rotation/setting/location to check whether current-cycle capacity is being fully utilized —
+      the closest built-in report to "prove capacity was adequate," but for the current course
+      offering, not a multi-year trend.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Accessing Placement
+      Reports.md
+
+  - screen: "Sites > Reports > Custom > Create New Report (Slot Sufficiency Report pattern)"
+    navigation_path: "Sites > Reports > Custom tab > Create New Report > select 'Sites' or 'Slot' data source > Pivot Report"
+    elements:
+      - element: "Data Source card (Sites / Slot / Placements)"
+        type: "selectable card, each carrying its own refresh-frequency badge"
+        data_shown: "Sites, Slot, Locations, Contracts, Personnel, and Faculty data sources refresh every 24 hours (not live); Placements has both a live and a 24-hour variant"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9; LCME Standard 5, Element 5.5 [Configure — Sites and Slot being shared, named data sources is what makes a capacity-adequacy report buildable at all for the new domains]"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a named
+          multi-data-source report catalog at this granularity.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is the load-bearing confirmation for the whole flow: per
+          ../prism/capability-map.yaml, Sites/Slot/Placements are three of the ten shared Custom
+          Report data sources spanning all programs, so the mechanism is not Nursing-specific. The
+          caveat lives on this element specifically: Sites and Slot refresh on a 24-hour cadence,
+          not live, so any capacity-adequacy report built here is a day-stale view.
+      - element: "Raw Data / Pivot Report toggle"
+        type: "toggle"
+        data_shown: "Pivot mode supports group-by row/column with Sum/Average/Earliest-Latest-date aggregation"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9 [Configure — Sum/Average aggregation is the only available path to a rolling-average-style calculation]"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a raw-vs-pivot
+          report mode or its aggregation functions at this granularity.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Pivot with Sum/Average aggregation is real and shipped, but it is generic
+          group-by math: there is no native "3-year rolling average of
+          first-time/repeat/off-cycle students vs. capacity" calculation. Whoever configures the
+          report must express COCA 6.9's specific three-rotation-type, three-year math as pivot
+          groupings themselves.
+      - element: "Column add/remove/reorder"
+        type: "editable column list"
+        data_shown: "e.g. Total Slots Offered, Total Placements, Completed Placements Count, by Site"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9; LCME Standard 5, Element 5.5 [Configure — this is where the capacity-evidence field set is actually assembled]"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a self-service
+          column-selection surface at this granularity.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Strongest single piece of evidence here: the exact field set (Total Slots Offered /
+          Total Placements / Completed Placements Count, by Site) is confirmed already built and
+          used as accreditor-facing capacity-adequacy evidence for Nursing/CCNE. What is NOT
+          confirmed is that any such report exists pre-built for DO, Medicine, Pharmacy, or
+          Dentistry — only the mechanism and the one cross-discipline precedent are confirmed, so
+          each new domain would have to assemble these columns itself.
+      - element: "Basic Filters / Advanced Filters"
+        type: "filter accordion"
+        data_shown: "e.g. filter by cohort, rotation, date range"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9 [Configure — the date-range/cohort filtering a multi-year capacity view would be built from]"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents report filter
+          construction at this granularity.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Date-range and cohort filters are what would have to carry COCA 6.9's three-year window
+          and its first-time/repeat/off-cycle rotation-type split. They are general-purpose
+          filters, not a purpose-built accreditation filter set; the mapping is manual
+          configuration work, unconfirmed as done for any of the four new domains.
+      - element: "Save and Run"
+        type: "button"
+        data_shown: "Persists the report definition under the Custom tab for reuse"
+        gates_on: []
+        accreditation_citation: >
+          None at this element — the standard-mapping work lives in the columns and filters above;
+          this only persists whatever was configured.
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents report persistence
+          behavior at this granularity.
+        gap_severity: "none"
+        gap_note: >
+          Shipped, and materially important for accreditation use: a configured capacity report is
+          a saved, re-runnable definition rather than a one-off export, which is what makes it
+          usable as "ongoing, data-driven evidence" across site-visit cycles.
+    action: >
+      A coordinator (or, per the Nursing/CCNE guide's naming, the specific report a program
+      builds and calls its "Slot Sufficiency Report") self-assembles a pivot of Total Slots
+      Offered / Total Placements / Completed Placements by Site to produce ongoing,
+      data-driven evidence of clinical-site adequacy — the general-purpose mechanism this would
+      require for a DO, Medicine, Pharmacy, or Dentistry program too, since Sites and Slot are
+      named, shared data sources in the same cross-module report builder, not a Nursing-specific
+      feature.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and
+      Managing Custom Reports.md (general cross-module mechanics: data sources, pivot,
+      filters); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Discipline Specific Guides/Nursing/Accreditation Guides/CCNE
+      Accreditation Standards Support Guide.md (the named "Custom Slot Sufficiency Report" example
+      and its Total Slots Offered/Total Placements/Completed Placements Count field set, mapped
+      explicitly to CCNE clinical-site-adequacy evidence); ../prism/capability-map.yaml (Program
+      Quality Analytics entry, confirming Sites/Slot/Placements as three of the ten shared Custom
+      Report data sources spanning all programs)
+
+  - screen: "(No screen exists) — contingency-plan object"
+    navigation_path: "N/A — searched across the full help-center mirror and all discipline playbooks"
+    elements:
+      - element: "Contingency plan / backup-site / waitlist object"
+        type: "not found"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9 (written contingency plan for replacing lost rotation capacity)"
+        competitor_equivalent: >
+          Not comparable — no cited competitor file (eMedley, CORE ELMS, one45, axiUm, MedHub,
+          New Innovations, e-Value, Elentra, Leo/DaVinci) documents a contingency-planning or
+          backup-site feature either; this appears to be an unaddressed need across the category,
+          not a Prism-specific shortfall, but that absence-across-competitors claim rests on the
+          same public-marketing-page-level sources already cited elsewhere in ../competitors/, not
+          a systematic audit of every competitor's full feature set.
+        gap_severity: "gap"
+        gap_note: >
+          This resolves the hedge as honestly as it can be resolved: it was already correctly
+          stated as a gap, and this pass confirms it is a total absence, not a partially-built or
+          mis-documented feature — a negative result across 322 help-center documents and 7
+          playbooks is about as close to "confirmed absent" as this research method can get, short
+          of a live product walkthrough. A coordinator needing COCA 6.9's written contingency plan
+          has no in-Prism object to attach it to or generate it from; it would be an external
+          document uploaded as a general Site "Document" at best.
+    action: >
+      A coordinator who needs to produce COCA 6.9's "written contingency plan for replacing lost
+      rotation capacity" has no in-Prism object to attach it to or generate it from; this would be
+      an external document uploaded as a general Site "Document" at best.
+    confirmed_by: >
+      Negative-result search performed directly for this flow file: `grep -rli "contingency"` and
+      `grep -rli "waitlist\|backup site\|back-up"` across the entire Exxat-Help-Guides mirror (322
+      documents) and all seven discipline Playbooks returned zero matches for any contingency-plan,
+      backup-site, or waitlist feature.
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Max Placement Limit (MAX Slot Limit).md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Accessing Placement Reports.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Slots by Placements.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/Nursing/Accreditation Guides/CCNE Accreditation Standards Support Guide.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Institutional Users/Step-by-Step Guides (How-tos)/Institutional Level- Placement Report.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/do.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/medicine.yaml"
+last_verified: "2026-08-24"

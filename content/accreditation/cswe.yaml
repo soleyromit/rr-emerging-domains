@@ -1,0 +1,587 @@
+# CSWE (Council on Social Work Education) — Social Work
+#
+# DOMAIN FIELD NOTE: every other file in this directory sets `domain` to one of
+# the four expansion markets (DO | Pharmacy | Dentistry | Medicine). CSWE is
+# NOT one of those four — Social Work is an EXISTING Exxat Prism discipline
+# with a shipped discipline playbook, six help-center guides, and a live
+# CSWE-specific accreditation support guide. Using the discipline name
+# "Social Work" in `domain` here is deliberate: this file is a
+# proven-implementation reference point against which the four expansion
+# accreditors can be benchmarked, not a fifth expansion market.
+#
+# NOTE ON SOURCE HANDLING: unlike COCA (see coca.yaml lines 1-17), the CSWE
+# 2022 EPAS PDF carries NO artificial-intelligence usage restriction. Its
+# front matter states only "Copyright © 2022 Council on Social Work Education"
+# plus the COA/COEP approval dates, and the live cswe.org standards page
+# carries only a standard "Copyright 2026 Council on Social Work Education.
+# All Rights Reserved." footer. Both were checked directly during this
+# research (2026-08-25). No COCA-style AI disclaimer is therefore warranted
+# for CSWE; standard copyright care (paraphrase, do not republish the
+# standards document verbatim) still applies to any customer-facing use.
+#
+# EDITION NOTE: the 2022 EPAS is the CURRENT and only operative edition.
+# CSWE's own transition schedule required all new submissions to use it from
+# August 1, 2024, and required ALL accredited programs to operate under it by
+# July 1, 2025. The superseded 2015 EPAS is no longer in force. CSWE bylaws
+# mandate EPAS review "at periodic intervals not to exceed 7 years," so a
+# successor edition should be expected in the 2029 window — worth carrying
+# into any Accreditation Management scoping, since Prism already demonstrates
+# edition-crosswalk handling for CAPTE (2016/2024 numbering side by side in
+# report metadata).
+#
+# CORRECTION CARRIED INTO THIS FILE: "SEFWE" is NOT a Social Work instrument.
+# The vault's SEFWE help guides sit under the OT/OTA discipline folder and
+# describe SEFWE I (Site Evaluation) and SEFWE II (Educator Evaluation) as
+# Occupational Therapy Level II Fieldwork forms. Social Work's equivalent
+# field-placement instrument in Prism is the LEARNING CONTRACT / LEARNING
+# AGREEMENT (plus the field evaluation forms mapped to it), which is what
+# this file cites. Do not attribute SEFWE to CSWE anywhere downstream.
+
+accreditor: "CSWE (Council on Social Work Education), Commission on Accreditation (COA)"
+slug: "cswe"
+domain: "Social Work"
+governs: "Baccalaureate (BSW) and master's (MSW) degree programs in social work in the United States and its territories, including every 'program option' a program offers (campus, online, part-time, advanced standing). CSWE's COA is recognized by the Council for Higher Education Accreditation (CHEA), not by the U.S. Department of Education, and administers a multistep peer-review process of program self-studies and benchmarks, site visits, and COA review. CSWE does not accredit doctoral (DSW/PhD) social work programs."
+standards_document:
+  title: "2022 Educational Policy and Accreditation Standards for Baccalaureate and Master's Social Work Programs (EPAS)"
+  version_or_year: "2022 (educational policy approved by the CSWE Board June 3, 2022; accreditation standards approved by COA June 9, 2022, amended September 1, 2022). Mandatory for all new submissions from August 1, 2024 and for all accredited programs from July 1, 2025."
+  url: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf"
+
+standards:
+  - element_id: "Accreditation Standard 3.1, AS 3.1.1"
+    element_title: "Generalist Practice — Curriculum Integrates Classroom and Field"
+    evidence_programs_must_produce: >
+      A rationale for the generalist practice curriculum design; a narrative
+      description of how the generalist curriculum integrates classroom and
+      field; a description of how the curriculum is informed by the
+      professional practice community; and all of the above addressed
+      separately for every program option (campus, online, part-time,
+      advanced standing).
+    required_software_behavior: >
+      Hold the curriculum as structured data rather than prose — courses
+      sequenced term by term, course objectives mapped to a competency
+      framework, and the SAME framework reachable from field-education
+      learning activities — so the classroom/field integration claim can be
+      evidenced by an exported map instead of asserted narratively. Must
+      report per program option, since CSWE evaluates each option separately.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Already in production for this exact standard. Curriculum Mapping
+      (shipped) supplies the mapping screen, the Curriculum Grid term-by-term
+      sequencing view, and the Cumulative Report (dual anchor modes — by
+      course offering or by standards set); the Clinical & Experiential
+      Education pillar supplies the field side, and the Competency Tracking
+      engine in the intelligence layer ties Learning Contracts and field
+      evaluation forms configured as Learning Activities back to the same
+      nine-competency framework. Exxat publishes a CSWE-specific
+      "Social Work Accreditation Standards" guide naming this standard and
+      these screens directly.
+    gap_notes: "The 'informed by the professional practice community' compliance statement (c) has no product hook at all — that is advisory-board minutes and practice-community consultation records living outside Prism. Also note the confirmed one-grid-per-report limit: a program running separate curriculum grids per program option cannot produce a single cross-option coverage report."
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 18, AS 3.1.1); cross-checked against Exxat Prism Help Center, 'Social Work Accreditation Standards' (help.exxatprism.com/hc/en-us/articles/50129217588241)"
+
+  - element_id: "Accreditation Standard 3.1, AS 3.1.2"
+    element_title: "Generalist Curriculum Content Implements the Nine Social Work Competencies"
+    evidence_programs_must_produce: >
+      Any additional program-added competencies and their corresponding
+      behaviors; completed Form AS 3.1.2; and a syllabus in Volume 2 of the
+      self-study for EVERY course listed on Form AS 3.1.2, illustrating how
+      course content implements the nine competencies — for all program
+      options.
+    required_software_behavior: >
+      A configurable competency framework (CSWE's nine competencies plus
+      program-added ones) usable as the mapping dimension; course-measure
+      objects so individual core assignments — not just whole courses — can be
+      mapped to competencies; per-course and per-measure attribute taxonomies;
+      and a central syllabus repository that keeps each mapped course tied to
+      the exact syllabus the self-study will submit.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Curriculum Mapping's "Program Specific Standards" builder holds the nine
+      CSWE competencies (plus program additions) as a custom standard set with
+      real hierarchy; Course Measures carry core assignments into the mapping
+      screen; "Dimensions of Learning" (measure-level) and "Client System
+      Levels" (course-level) run on the existing configurable attribute
+      mechanism — the same mechanism that serves PANCE Topics for PA and ACOTE
+      Instructional Methods for OT. Generate Syllabus and the Course Database
+      cover the Volume 2 syllabus evidence.
+    gap_notes: "Prism produces the underlying coverage evidence but does not emit CSWE's Form AS 3.1.2 itself — the program transcribes Cumulative Report output into CSWE's form. Form generation in an accreditor's own layout is exactly the pattern already proven for ARC-PA (the B2 Instructional Objectives Report) and should be the template when Accreditation Management is scoped."
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 18, AS 3.1.2)"
+
+  - element_id: "Accreditation Standard M3.2, AS M3.2.1 (with M3.2.2 and M3.2.4)"
+    element_title: "Specialized Practice — Extended and Enhanced Competencies (MSW only)"
+    evidence_programs_must_produce: >
+      At least one declared area of specialized practice; for each area, the
+      extended and enhanced version of all nine competencies with their
+      corresponding specialized behaviors; an explanation of how each
+      specialization builds on generalist practice (M3.2.2); Form AS M3.2.4
+      plus a Volume 2 syllabus for every specialized-phase course; and the
+      relevant client system level(s) for each area, kept consistent across
+      AS M3.2.1, AS M3.2.4, and AS 5.0.1(a).
+    required_software_behavior: >
+      Support MULTIPLE parallel competency frameworks per program — one
+      generalist, one per specialization — with generalist-phase course
+      measures mapping to the first and specialized-phase measures to the
+      second, plus a shared attribute vocabulary (the five system levels) that
+      stays identical across three different standards so the self-study does
+      not self-contradict.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      This dual-framework shape is already a solved problem in Curriculum
+      Mapping: multiple custom standard sets coexist under Program Details >
+      Standards, and the Nursing AACN Essentials implementation proves Prism
+      can run one accreditor framework with level-conditional sub-scopes
+      (entry-level maps to sub-competencies A/B/C, advanced to E/F/G). The
+      "Client System Levels" course attribute is the cross-standard
+      consistency mechanism.
+    gap_notes: "Nothing in the product ENFORCES the cross-standard consistency CSWE audits (that the system levels named in M3.2.1 match those in M3.2.4 and 5.0.1(a)) — it is an attribute a human must apply identically in three places. A validation rule flagging divergence would be a small, high-credibility Accreditation Management feature. Separately, the per-grid reporting limit bites hardest here: generalist grid and specialization grids cannot be unioned into one report."
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 19, AS M3.2.1, M3.2.2, M3.2.4)"
+
+  - element_id: "Accreditation Standard 3.3, AS 3.3.1 (with M3.3.2)"
+    element_title: "Field Education — Competency Opportunities Across All Five System Levels"
+    evidence_programs_must_produce: >
+      A description of how the field education program ensures ALL students
+      get generalist practice opportunities to demonstrate the nine
+      competencies in field settings with each of the five system levels —
+      individuals, families, groups, organizations, and communities — and, for
+      master's programs (M3.3.2), the same for one or more relevant system
+      levels within each area of specialized practice; addressed for all
+      program options. Programs routinely submit de-identified sample
+      completed Learning Agreements as proof.
+    required_software_behavior: >
+      Agency/site records carrying setting type, population served, and
+      services offered as structured fields; placement records tagged to the
+      system level(s) they exercise; Learning Contracts whose goals and
+      activities are mapped to the nine competencies; and a bulk export of
+      completed field forms that can be de-identified for submission.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Clinical & Experiential Education holds this as the Agencies module
+      (Social Work's discipline term for Sites/Locations), and the
+      Forms/Evaluations engine holds the Learning Contract as a placement-based
+      Learning Activity mapped to the competency framework. Exxat's own CSWE
+      guide names the Comprehensive Report for Placement Based Form as the
+      export used to produce CSWE's de-identified sample agreements.
+    gap_notes: "De-identification is a manual post-export step — the documented workflow is 'export to Excel, then delete the identifying columns.' A native de-identified export mode would remove a real FERPA foot-gun on an artifact that goes to an external review body. System-level tagging also currently rides on generic placement/agency tags rather than a first-class CSWE system-level field."
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 20, AS 3.3.1; p. 21, AS M3.3.2)"
+
+  - element_id: "Accreditation Standard 3.3, AS 3.3.3"
+    element_title: "Minimum Field Education Hours — 400 (BSW) / 900 (MSW)"
+    evidence_programs_must_produce: >
+      A description of how the program ensures accrual of at least 400 hours
+      of field education for baccalaureate students or at least 900 hours for
+      master's students; a description of how the field hour requirement is
+      articulated to students and field personnel; addressed for all program
+      options.
+    required_software_behavior: >
+      Student-entered hour logging with date, activity description, site, and
+      a program-configurable category; a supervisor approval chain; automatic
+      deduction of breaks and time off from logged totals; and per-student and
+      per-cohort accrual reporting against the 400/900 threshold.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Straight out of Clinical & Experiential Education's Timesheet learning
+      activity, already running for Social Work today: students log in-person
+      and virtual hours, choose the Field Instructor or the Task Supervisor as
+      reviewer (admins can also approve), the customizable Category field
+      separates individual/group/seminar hours, and entered break time is
+      auto-deducted — which the help guide explicitly ties to CSWE's rule that
+      breaks and time off cannot count toward field hours. Hours by Category
+      (Learning Activities > Reports) and the Students > Overview dashboard
+      supply the accrual evidence.
+    gap_notes: "The 400/900 threshold itself is not a configured, alerting minimum — nothing red-flags a student tracking short of the CSWE floor the way SLP's support-configured min/max hour thresholds red-flag Clinical Log shortfalls. That SLP pattern is the closest shipped analogue and the obvious thing to extend here. Compliance statement (b), articulation to students and field personnel, is served only by uploading the Field Manual to the Resources / Site Resources sections — a document library, not tracked acknowledgment."
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 21, AS 3.3.3)"
+
+  - element_id: "Accreditation Standard 3.3, AS 3.3.4"
+    element_title: "Identifying/Approving Field Settings; Orienting Field Instructors; Evaluating Effectiveness"
+    evidence_programs_must_produce: >
+      Three separate documented processes — (i) identifying, approving, and
+      engaging with field education settings, (ii) orienting and engaging with
+      field instructors, and (iii) evaluating field instructor and field
+      setting EFFECTIVENESS — plus how those processes are articulated to
+      students and field personnel, for all program options.
+    required_software_behavior: >
+      A site-vetting form family (new-site approval, ongoing monitoring, and
+      in-placement site visits) with a rollup report; a field-instructor
+      registry recording orientation completion as a tracked, gating artifact;
+      and recurring post-placement evaluation instruments whose results
+      aggregate BY AGENCY and BY FIELD INSTRUCTOR so a program can defend
+      renew/re-approve/sunset decisions with data.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Parts (i) and (ii) are Configure work on shipped capability: the Agency
+      Assessments feature (a self-service 11-question-type form builder) covers
+      new-site vetting, ongoing monitoring, and site-visit logging with an
+      Assessment Details rollup report, and orientation certificates stored in
+      the Agencies > Personnel Certification section surface on the Placement
+      Clearance Dashboard — i.e. Compliance Management's multi-entity gate is
+      already doing field-instructor orientation tracking. Part (iii) is the
+      weak leg: agency- and instructor-level effectiveness analytics depend on
+      post-placement survey aggregation.
+    gap_notes: "Split verdict — parts (i) and (ii) are Configure, part (iii) is a Gap; the element-level rating reflects the majority. Site/instructor effectiveness evaluation is the natural job of the Surveys & Course Evaluations pillar. CORRECTED 2026-08-26, per Exxat PM confirmation (see content/prism/capability-map.yaml, Surveys & Course Evaluations pillar): this pillar is shipped, not roadmap Q1 2027 as previously stated here — the shipped Exxat Surveys module and the Forms/Evaluations Graphical Report already cover more than the old roadmap label implied. What is genuinely missing for part (iii) is longitudinal, agency-scoped and instructor-scoped effectiveness trending that supports a documented sunset decision; today that is assembled by hand from Interventions & Communications and Learning Activities reports. Element-level rating (Configure, majority of parts i/ii) is unaffected by this correction; part (iii)'s status is worth a fresh look now that Surveys is confirmed shipped, since some of the trending gap may be closer to Configure-with-reporting-work than previously assumed."
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 21, AS 3.3.4)"
+
+  - element_id: "Accreditation Standard 3.3, AS 3.3.5"
+    element_title: "Orienting, Placing, Monitoring, Safety Protocols, and Evaluating Students in Field"
+    evidence_programs_must_produce: >
+      Documented processes for five distinct activities — orienting students,
+      placing students, monitoring and supporting student learning,
+      implementing student SAFETY PROTOCOLS, and evaluating student learning
+      congruent with the nine competencies — plus how they are articulated to
+      students and field personnel, for all program options.
+    required_software_behavior: >
+      An auditable placement pipeline from student application through
+      confirmed placement; a pre-placement readiness gate covering background
+      checks, drug screening, and required trainings (the operational form
+      "safety protocols" takes in practice); an incident/concern log with
+      follow-up states; and competency-aligned evaluation at midterm and final.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      The deepest-covered field standard in the set, and the one that carries
+      Social Work's signature Prism workflow. Clinical & Experiential
+      Education's Multi-Location Field Application Form (up to 10 placement
+      suggestions per form) with its Interview Status ladder — Interview
+      Pending -> Interview Scheduled -> Placement Offered -> Placement Accepted
+      (terminal, one per student) / Not Offered / Declined — was built
+      specifically to replace the temporary-placements-and-spreadsheets
+      workaround SW programs used for multi-agency interviewing. Compliance
+      Management supplies the readiness gate, and Social Work is the ONE
+      discipline with named third-party integrations behind it: CISIVE and
+      Universal Background Screening for background checks and drug screening,
+      and ComplianceJunction for HIPAA training (one-time account tied to the
+      student's university email, completion syncing back to Prism as
+      Approved). Communications vs. Interventions covers monitoring and
+      support; the Comprehensive Placement Report is the evidence export.
+    gap_notes: "'Student safety protocols' as CSWE means it — safety in a field agency, incident escalation, lone-visit protocols — is not modeled as its own object. It is currently approximated by compliance items plus the Interventions log, and Interventions notably still has NO dedicated report (the only view of interventions needing follow-up is the Sites/Locations Dashboard on a 24-hour refresh). Whether the CISIVE/Universal/ComplianceJunction integrations extend beyond SW and the health professions to the four expansion domains is unconfirmed anywhere in this corpus and is a live commercial question."
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 22, AS 3.3.5)"
+
+  - element_id: "Accreditation Standard 3.3, AS B3.3.6 / M3.3.6"
+    element_title: "Field Instructor Qualification — Degree From a CSWE-Accredited Program Plus Two Years' Post-Degree Practice"
+    evidence_programs_must_produce: >
+      A documented process ensuring every student's field supervision comes
+      from someone holding a BSW/MSW (baccalaureate students) or an MSW
+      (master's students) FROM A CSWE-ACCREDITED PROGRAM — or an ISWDRES-
+      recognized or MOU-covered international equivalent — with at least two
+      years of post-degree social work practice experience; plus a documented
+      process for assigning a qualified field instructor when no such person
+      exists in the field setting; plus articulation of both to students and
+      field personnel.
+    required_software_behavior: >
+      Field instructor credentials must be STRUCTURED and QUERYABLE, not
+      free-text or PDF attachments: degree type, degree-granting program,
+      whether that program is CSWE-accredited, and years of post-degree
+      experience — so a program can produce a single report proving every
+      active placement's supervisor clears the bar. The system must also model
+      a two-supervisor placement (on-site Task Supervisor plus off-site
+      qualified Field Instructor) as a first-class arrangement.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Most of the machinery exists. Agencies > Personnel stores degree,
+      licensure, and experience with document uploads; the Experiential
+      Supervisor Intake Form (Clinical & Experiential Education) collects and
+      syncs supervisor credentials via an encrypted delegator link with a
+      diffed review drawer; the Comprehensive Personnel Report exports
+      credentials at scale; and Compliance Management's Placement Clearance
+      Dashboard runs its Missing/Exists/NA tracker over supervisor CV, License,
+      and Certification. The two-supervisor arrangement is supported directly
+      on the Placement Record.
+    gap_notes: "The specific fact CSWE actually audits — 'the degree is from a CSWE-ACCREDITED program' and 'two years POST-DEGREE' — is not a structured attribute anywhere; Placement Clearance reports only that a CV/license/certification document EXISTS, not that its contents clear the standard. This is already logged as a Social Work finding in flows/admin-onboarding--05-sites-locations-personnel-management.yaml and this standard is the accreditor citation for it. Two small structured fields on the Personnel record (accredited-program boolean, degree-conferral date) would convert an existence check into a compliance check."
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 22, AS B3.3.6 and M3.3.6; accredited-program footnote 1 covering ISWDRES and international MOUs)"
+
+  - element_id: "Accreditation Standard 3.3, AS 3.3.7"
+    element_title: "Field Placement in a Student's Own Place of Employment"
+    evidence_programs_must_produce: >
+      A written policy stating whether the program permits field placement at
+      an organization where the student is also employed. If permitted, the
+      policy must document how student assignments are directly linked to the
+      nine competencies and the level of practice, how field education
+      supervision is kept DISTINCT from employment supervision (even when the
+      same person provides both), and how the program helps a student continue
+      or change field education if they lose that job mid-placement.
+    required_software_behavior: >
+      Flag employment-based placements as a distinct placement type; keep field
+      supervision hours and interactions separable from employment supervision
+      within the same supervisor-student pair; and support a mid-placement
+      transfer workflow when the employment relationship ends.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      No shipped pillar models this. Clinical & Experiential Education can
+      approximate the flag with a placement tag and the separation with
+      Timesheet Categories, but "employment-concurrent placement" is not a
+      placement attribute, nothing enforces the supervision-time distinction
+      the standard exists to police, and mid-placement transfer on job loss is
+      an unmodelled event (note the confirmed behavior that deleting a
+      placement sends NO automatic notification to student or preceptor).
+    gap_notes: "Genuinely social-work-specific — no other discipline in this research has an accreditor standard governing employment-based placements — and therefore a real differentiator if built, but it should be scoped as a placement-model extension inside Clinical & Experiential Education rather than deferred to Accreditation Management, because the evidence it produces is operational placement data, not self-study assembly."
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 23, AS 3.3.7)"
+
+  - element_id: "Accreditation Standard 4.2, AS B4.2.1 / M4.2.1"
+    element_title: "Faculty Headcount and Degree Thresholds"
+    evidence_programs_must_produce: >
+      Form AS 4.2.1 plus a Faculty Data Form for every full- and part-time
+      program faculty member; the total count of full-time faculty whose
+      principal assignment is to the program (minimum two for BSW, minimum
+      four for MSW); and the count of those holding an MSW from a
+      CSWE-accredited program (BSW) or both an MSW from a CSWE-accredited
+      program and a doctoral degree (MSW) — with the majority threshold met,
+      inclusive of all program options.
+    required_software_behavior: >
+      Faculty records carrying degree(s), degree-granting institution,
+      CSWE-accreditation status of that institution, full-time/part-time
+      status, principal-assignment program, and program-option coverage — with
+      an aggregate that computes the headcount and majority tests CSWE applies.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      Exxat's own CSWE guide is candid here, and this file preserves that
+      candor: the Faculty and Staff module stores degree qualifications, role,
+      FT/PT status, and uploaded CVs, and shows course/field/evaluation/
+      advising assignments as INDIRECT evidence of engagement — but Form AS
+      4.2.1 and the per-faculty Faculty Data Forms "must be completed outside
+      Exxat Prism," and Prism "does not generate or validate required faculty
+      data fields." No shipped pillar computes the headcount or majority-degree
+      tests.
+    gap_notes: "The most useful element in this file for Accreditation Management scoping precisely BECAUSE it is a disclosed gap. It is the template for how the Q3 2027 pillar should represent partial coverage honestly — 'supports the narrative, does not produce the form' — rather than overstating. It also mirrors the faculty-credential shape that COCA, LCME, ACPE, and CODA all ask for, so a structured faculty-credential object built once serves five accreditors."
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 28, AS B4.2.1 and M4.2.1)"
+
+  - element_id: "Accreditation Standard 5.0, AS 5.0.1(a)"
+    element_title: "Systematic Assessment Plan — Two Instruments Per Competency, One Field-Based"
+    evidence_programs_must_produce: >
+      Form AS 5.0.1(a) plus a plan describing at least TWO instruments
+      assessing EACH of the nine competencies, at least one of which is based
+      in real or simulated demonstration in field education; how each
+      instrument is implemented; when each competency is assessed; by whom;
+      the expected level of achievement per instrument and per competency and
+      how each is calculated; and copies of every instrument including
+      assignment descriptions and scoring rubrics. Student competence must be
+      assessed by program faculty or field personnel.
+    required_software_behavior: >
+      Multiple instrument types per competency (field evaluation,
+      course-embedded assignment, custom form) with rubrics; assignment of
+      each instrument to the correct evaluator role (faculty, agency
+      personnel, or student self-evaluation); scheduling at defined curricular
+      points (midterm/final, per course/term); a transparent, explainable
+      score-rollup method per instrument and per competency; and durable
+      storage of the instruments themselves for submission.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      The strongest fit in this file, and Exxat's CSWE guide calls it strong
+      too. Learning Activities > Setup deploys the instrument mix; the
+      Forms/Evaluations engine assigns them to faculty, agency personnel, or
+      the student as self-evaluation with configurable multi-step review; and
+      the Competency Tracking engine (intelligence layer, confirmed shipped)
+      supplies the scoring model — 1-5 or custom scale, configurable pass
+      threshold defaulting to 70%, and parent-level scores computed as a
+      POOLED MEAN across all child competencies' mapped questions rather than
+      an average of averages. That last detail matters here specifically:
+      5.0.1(a)(v) requires the program to explain HOW achievement is
+      calculated, so the pooled-mean method is the answer to a compliance
+      statement, not a footnote.
+    gap_notes: "One structural caution: Competency Tracking maps experiential assessment questions at the child-most standard level only. A program that configures its nine competencies without behavior-level children will have nowhere to attach questions. Set the framework depth before field season — this is already the SW playbook's stated best practice."
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (pp. 36-37, AS 5.0.1(a))"
+
+  - element_id: "Accreditation Standard 5.0, AS 5.0.1(b)"
+    element_title: "Method of Analyzing Competency Outcomes"
+    evidence_programs_must_produce: >
+      Form AS 5.0.1(b) reporting the most recent year of outcomes from the
+      5.0.1(a) plan; the calculations for all nine competencies across ALL
+      instruments; those outcomes stated against the program's own expected
+      level of achievement for each competency; and outcomes broken out for
+      each program option AND in aggregate.
+    required_software_behavior: >
+      Aggregate competency scores across heterogeneous instruments into one
+      per-competency figure; compare each against a configured benchmark;
+      and slice the same result set by program option and in aggregate from
+      a single data set.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Competency Tracking's Review Dashboard already renders the four views
+      this standard needs — Domain Scores, Student Proficiency Distribution
+      (Meeting Threshold vs. Below Threshold), Students Meeting Threshold by
+      Domain, and a Score Distribution box plot that turns red when a domain's
+      median falls below its configured threshold — and Competency Management
+      > Review > View Report is the export Exxat's CSWE guide names for this
+      standard.
+    gap_notes: "The per-program-option AND aggregate requirement is the friction point: option-level segmentation depends on how cohorts, groups, and campuses were configured at onboarding, and the confirmed one-grid-per-report limit means a program using separate grids per option cannot produce the aggregate view from the product. This is a configuration decision made months before anyone reads AS 5.0.1(b), which is exactly why it should be called out during SW implementation."
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 37, AS 5.0.1(b))"
+
+  - element_id: "Accreditation Standard 5.0, AS 5.0.1(c) and 5.0.1(d)"
+    element_title: "Formal Review of Assessment Outcomes, Curricular Change, and Public Posting"
+    evidence_programs_must_produce: >
+      (c) A description of the formal process used to review the assessment
+      plan and outcomes, plus SPECIFIC CHANGES made to the explicit curriculum
+      based on the most recent outcomes WITH CLEAR LINKS TO THE DATA; and
+      (d) Form AS B5.0.1(d) or M5.0.1(d) posted publicly on the program's own
+      webpage with the assessment plan and summary outcomes, updated at least
+      every two years, with a hyperlink provided to CSWE.
+    required_software_behavior: >
+      A closed-loop "finding -> decision -> curricular change -> evidence"
+      object that binds a specific outcome data point to the specific
+      curricular change made in response, queryable by review cycle; plus a
+      publish-to-public-page path with a recurring two-year staleness alert.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      Curriculum Mapping has a lightweight approximation — colored tags such
+      as "Needs Review" / "Reviewed" on measures and standard mappings, used as
+      a curriculum-committee QA queue — but nothing binds an assessment OUTCOME
+      to the curricular CHANGE it caused, and nothing publishes to a public
+      page or watches a two-year clock. This is the not-yet-shipped
+      Accreditation Management pillar's core job (roadmap Q3 2027).
+    gap_notes: "Identical in shape to COCA Element 11.1 (see coca.yaml) — the same closed-loop finding-to-action pattern recurs across every accreditor in this workstream, which is the argument for making it a first-class object type in Accreditation Management rather than bolting it onto Curriculum Mapping. CSWE 5.0.1(d) adds something COCA does not: a PUBLIC-facing, program-owned webpage artifact on a fixed two-year refresh cadence — a concrete, checkable deliverable that a publish-and-remind feature could own outright."
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 38, AS 5.0.1(c) and 5.0.1(d))"
+
+  - element_id: "Accreditation Standard 5.0, AS 5.0.2(a) and 5.0.2(b)"
+    element_title: "Assessment of Anti-Racism, Diversity, Equity, and Inclusion (ADEI) in the Implicit Curriculum"
+    evidence_programs_must_produce: >
+      (a) A systematic plan to assess at least one ADEI effort in the implicit
+      curriculum as reported under AS 2.0.2, naming the stakeholders involved,
+      the data collection procedures, and copies of all instruments used; and
+      (b) the most recent year's ADEI outcomes, the formal review process for
+      both plan and outcomes, and specific changes made to the IMPLICIT
+      curriculum based on those outcomes with clear links to the data — all
+      addressed for every program option.
+    required_software_behavior: >
+      Climate/experience survey distribution to students, faculty, field
+      instructors, and other stakeholders with genuine anonymity; longitudinal
+      aggregation of results; and the same closed-loop link from an ADEI
+      finding to a documented change — this time to the implicit curriculum
+      (environment, policy, governance), which is not curriculum-mapped data.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      Two things are missing, not one. The instrument side is closer than the
+      old roadmap label suggested — Exxat Surveys ships today with 14 question
+      types, an anonymous public link/QR channel, and per-channel response
+      analytics. CORRECTED 2026-08-26, per Exxat PM confirmation (see
+      content/prism/capability-map.yaml, Surveys & Course Evaluations
+      pillar): the Surveys & Course Evaluations pillar is shipped, not
+      roadmap Q1 2027 as previously stated here — it does not merely
+      "formalize" the instrument side in the future, it already covers it.
+      But that correction does not close this element: the implicit
+      curriculum is not modelled anywhere in Prism — there is no object for
+      program environment, climate, or governance to attach an ADEI finding or
+      an implicit-curriculum change to, so the closed loop 5.0.2(b) demands has
+      no home in any shipped pillar (and Accreditation Management, the natural
+      candidate, is still roadmap Q3 2027).
+    gap_notes: "The single most CSWE-distinctive standard in this file — ADEI as its own assessed domain (EPAS 2.0, assessed under 5.0.2) is the 2022 edition's headline change and has no analogue in COCA, LCME, ACPE, or CODA. Worth flagging as a deliberate scoping decision rather than an oversight: if Accreditation Management models only curriculum-linked evidence, it structurally cannot serve CSWE's implicit-curriculum standards, and Social Work is a live existing-customer discipline, not a prospective one. Rating note: the Gap here was never solely about Surveys & Course Evaluations being roadmap — that framing is corrected above (shipped, per content/prism/capability-map.yaml, CORRECTED 2026-08-26) — the binding constraint is the missing implicit-curriculum object, which is unaffected by this correction. Left as Gap; still worth a fresh read given the corrected input fact."
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 38, AS 5.0.2(a); pp. 38-39, AS 5.0.2(b); AS 2.0.2 at p. 16)"
+
+  - element_id: "Accreditation Standard 5.0, AS 5.0.3"
+    element_title: "Program Outcomes — Graduation Rates Plus At Least One Additional Outcome"
+    evidence_programs_must_produce: >
+      Form AS 5.0.3; identification of the additional program outcome(s)
+      monitored (CSWE names employment rates, higher education acceptance
+      rates, and time to program completion as examples); the
+      program-determined benchmark for graduation rates and each chosen
+      outcome, with a rationale; the calculation method; a MINIMUM OF THREE
+      MOST RECENT YEARS of data; results by program option and in aggregate;
+      and an explanation of how the data drive continuous program improvement.
+    required_software_behavior: >
+      Track cohort progression to graduation and at least one post-graduation
+      outcome as structured, multi-year data; compute rates against
+      program-set benchmarks; retain a three-year rolling history; and slice
+      by program option and in aggregate.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      No shipped pillar tracks graduation rates or post-graduation outcomes.
+      Prism's student records stop at the program boundary — the closest thing
+      to a cohort-progression construct is the "decelerated" academic-status
+      flag used to keep annual-report headcounts accurate. Employment rates and
+      higher-education acceptance sit entirely outside the system, and the
+      three-year rolling history requirement means this cannot be
+      back-filled at self-study time.
+    gap_notes: "Structurally identical to COCA Element 11.5 (GME placement rates) — both are post-graduation outcome tracking against a benchmark with a multi-year rolling window, and neither has a home today. Building one post-graduation outcome object serves both, and would also cover ACPE and CODA's equivalent outcome standards. Note that CSWE lets the PROGRAM set its own benchmark, so the feature is 'track and compare against a configured target,' not 'compare against a national threshold' as COCA 11.4/11.5 require."
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 39, AS 5.0.3)"
+
+licensure_or_gme_layer:
+  - body: "ASWB (Association of Social Work Boards)"
+    what_it_governs: >
+      The nonprofit association of the social work regulatory boards across
+      the U.S. and Canada. ASWB develops and administers the social work
+      licensing examinations in four categories — Bachelors, Masters, Advanced
+      Generalist, and Clinical. As of the 2026 blueprint published in the ASWB
+      Examination Guidebook, all four exams test three content areas and
+      contain 122 questions (110 scored, 12 unscored). Critically, ASWB does
+      NOT set eligibility: candidates must apply to their state or provincial
+      board FIRST and be approved by that board before they can register with
+      ASWB. Which exam category a graduate sits for, and whether they may sit
+      at all, is a jurisdiction decision.
+    relevance_to_product: >
+      This is the structural opposite of the DO domain's COMLEX-USA
+      relationship. COCA Element 11.4 REQUIRES COMs to publish NBOME pass
+      rates, which makes licensure-exam data an accreditation obligation. CSWE
+      EPAS contains no equivalent standard: no accreditation standard in the
+      2022 EPAS requires programs to report ASWB pass rates. Programs may
+      elect ASWB pass rates as their "at least one additional outcome" under
+      AS 5.0.3, but nothing compels it. Practical consequence for scoping: an
+      Exam Management pillar (roadmap Q2 2027) is a NICE-TO-HAVE for Social
+      Work and a MUST-HAVE for the DO/Medicine/Pharmacy domains — do not let
+      the CSWE fit assessment inflate the Exam Management business case, and
+      do not let the DO case set the requirements for what SW programs would
+      actually buy.
+    source: "https://www.aswb.org/exam/"
+  - body: "State and provincial social work regulatory boards (jurisdiction-level licensure)"
+    what_it_governs: >
+      Actual authority to practice. Every U.S. state, D.C., the territories,
+      and the Canadian provinces license social workers independently, and the
+      variation is unusually wide even by health-professions standards: license
+      TITLES differ (LBSW, LSW, LMSW, LCSW, LICSW, LISW, LCSW-C and others are
+      not interchangeable across state lines), the required ASWB exam category
+      per license level differs, required post-degree SUPERVISED CLINICAL
+      HOURS differ, continuing-education obligations differ, and a number of
+      jurisdictions add a state-specific jurisprudence exam on top of the ASWB
+      exam. Scope of protection also differs in kind, not just degree: many
+      states protect the TITLE "social worker" while extending PRACTICE
+      protection only to clinical social work, so the same activity can be
+      lawful for an unlicensed person in one state and not in another. A BSW or
+      MSW from a CSWE-accredited program is the near-universal educational
+      prerequisite, which is the single dependable constant across
+      jurisdictions.
+    relevance_to_product: >
+      Two concrete product implications. First, any "licensure readiness" or
+      graduate-outcome feature CANNOT assume one national pathway the way a
+      COMLEX/USMLE-shaped feature can — the jurisdiction is a required
+      dimension of the data model, not a display attribute. Second, this is a
+      real reason the CSWE-accredited-program qualification in AS B3.3.6 /
+      M3.3.6 deserves to be a structured field rather than a document upload:
+      the same accredited-degree fact that CSWE audits for field instructors is
+      the fact every jurisdiction keys licensure eligibility off, so it earns
+      its place in the Personnel and student records independently of any one
+      standard.
+    source: "https://www.aswb.org/exam/ (jurisdiction boards set eligibility and approve candidates before ASWB registration); https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 22 footnote 1, CSWE-accredited-degree definition including ISWDRES and international MOUs)"
+  - body: "Social Work Licensure Compact (SWLC) / Compact Commission"
+    what_it_governs: >
+      An interstate compact creating a multistate license that would let a
+      social worker practice across member states without separate licensure
+      in each. As of July 2026 the compact has been enacted in 35 states with
+      legislation pending in 3 more. It is activated — the Compact Commission
+      exists and implementation is under way — but NOT yet operational:
+      multistate licenses cannot yet be applied for, the Commission's data
+      system (partnership with Inspiring Apps) is estimated for completion in
+      Spring 2027, and the stated runway is roughly 18-24 months before
+      applications open.
+    relevance_to_product: >
+      A dated, checkable fact rather than a stable one — recheck before any
+      customer-facing use. Two things follow. Operationally, once multistate
+      licensure goes live, cross-state FIELD PLACEMENT becomes materially
+      easier to justify and SW programs' placement geography widens, which is a
+      demand-side tailwind for the Agencies/placement engine and for Exxat
+      One's availability-based marketplace. Structurally, the compact will NOT
+      collapse the jurisdictional variation described above in the near term —
+      titles, supervised-hour requirements, and jurisprudence exams remain
+      state-set — so nothing here justifies simplifying the licensure data
+      model to a single national pathway.
+    source: "https://swcompact.org/2026/07/07/social-work-compact-enacted-in-35-states/"
+  - body: "NASW (National Association of Social Workers)"
+    what_it_governs: >
+      The profession's membership association. Not an accreditor and not a
+      regulator, but its Code of Ethics is named directly INSIDE the EPAS: the
+      first behavior under Competency 1 requires social workers to make ethical
+      decisions by applying the standards of the NASW Code of Ethics, relevant
+      laws and regulations, and models for ethical decision making.
+    relevance_to_product: >
+      Worth knowing because it is one of the few places an external body's
+      document is load-bearing inside the competency framework a program will
+      configure in Curriculum Mapping — programs commonly map ethics coursework
+      and field ethics attestations to Competency 1(a) specifically. NASW is
+      also a primary go-to-market channel for reaching SW program buyers, in
+      the way AACOM is for DO programs.
+    source: "https://www.cswe.org/sites/default/files/2026-07/2022_EPAS.pdf (p. 8, Competency 1, behavior a)"
+
+last_researched: "2026-08-25"

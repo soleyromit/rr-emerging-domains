@@ -1,0 +1,38 @@
+domain: "Medicine"
+pillars:
+  - pillar: "Clinical & Experiential Education"
+    status: leading
+    leader: null
+    summary: "LCME Element 8.6 (central monitoring of required-experience completion) is rated Transfer and called \"the strongest fit of any standard in this document.\" Prism's anchor-relative scheduling primitive also maps almost 1:1 onto LCME 9.7's midpoint-feedback requirement — no competitor documents an equivalent primitive. Placement Assist (confirmed in the PA/OT playbooks) is also a real weighted allocation engine, closing the away-rotation matching gap this domain's cost-sensitive VSLO process needs most."
+    opportunity: "Build the one small reportable that proves 9.7 — \"% of student/rotation pairs with midpoint feedback delivered on time\" — and cite the standard number directly in the sales motion."
+    sources: ["content/accreditation/lcme.yaml (8.6, 9.7)"]
+  - pillar: "Compliance Management"
+    status: opportunity
+    leader: "CORE ELMS, eMedley (affiliation-agreement expiry only), New Innovations (supervision attestation)"
+    summary: "Affiliation-agreement tracking is covered, and New Innovations leads on supervision-level attestation. But the six-week grade-release SLA (9.8) has no vendor reporting on the SLA itself, only reminding about it."
+    opportunity: "SLA-level compliance reporting (not just item tracking) is unclaimed."
+    sources: ["content/accreditation/lcme.yaml (9.3, 9.8)"]
+  - pillar: "Curriculum Mapping"
+    status: opportunity
+    leader: "Leo (AAMC Curriculum Inventory vendor since 2013), eMedley, Elentra"
+    summary: "Leo has one-click AAMC CI submission with business rules that flag data errors pre-submission — an eleven-year head start. eMedley and Elentra both ship LCME-aligned mapping."
+    opportunity: "Model Leo's validate-before-submit pattern against AAMC's own business rules, not a generic export."
+    sources: ["content/accreditation/lcme.yaml (6.2)", "content/competitors/leo-davinci.yaml"]
+  - pillar: "Surveys & Course Evaluations"
+    status: opportunity
+    leader: "All 6 MD-serving competitors — for comparison; Prism now ships this pillar too"
+    summary: "CORRECTED 2026-08-26 (per Exxat PM confirmation): this pillar is shipped, not roadmap — Prism ships a placement-evaluation Forms engine plus a separate general-purpose 'Exxat Surveys' builder (14 question types, multi-channel distribution, full analytics). See content/prism/capability-map.yaml's 'Surveys & Course Evaluations' pillar. The prior 'the pillar hasn't shipped' framing was wrong and is retired."
+    opportunity: "Re-verify Prism's shipped Surveys/Evaluations depth against LCME 8.5's medical-student feedback requirement (courses, clerkships, teachers) specifically — the platform-level gap is closed; what remains, if anything, is instrument-level coverage, not availability."
+    sources: ["content/accreditation/lcme.yaml (8.5)", "content/prism/capability-map.yaml (Surveys & Course Evaluations pillar)"]
+  - pillar: "Exam Management"
+    status: behind
+    leader: "MedHub/E*Value, one45 (USMLE/Match ingestion); CORE, New Innovations, eMedley (assessment)"
+    summary: "MedHub/E*Value imports ACGME and ERAS data; one45 ingests NBME CBSE/CCSE. Separately, CORE/New Innovations/eMedley all ship centralized, competency-tied assessment systems (9.4) Prism doesn't have yet."
+    opportunity: "Scope as ingestion (USMLE, Match, ERAS) — building exam authoring/delivery would fight a battle nobody needs Prism to fight."
+    sources: ["content/accreditation/lcme.yaml (8.4, 9.4)"]
+  - pillar: "Accreditation Management"
+    status: behind
+    leader: "Elentra, Leo, one45, MedHub, eMedley"
+    summary: "LCME Element 1.1 (strategic planning & CQI) is the sharpest convergent gap in the entire research set — five separate competitor files independently confirm they're ahead here, including one45's verified real-world outcome: Augusta University credited its evaluation system in earning full 8-year LCME accreditation."
+    opportunity: "Cross-site comparability analytics (8.7) is the one piece nobody has built — the strongest differentiation target within an otherwise crowded pillar."
+    sources: ["content/accreditation/lcme.yaml (1.1, 8.7)", "content/competitors/one45.yaml"]

@@ -1,0 +1,347 @@
+# COCA (Commission on Osteopathic College Accreditation) — DO domain
+# Researched against the CURRENT/live standards document (COCA 2026 COM
+# Continuing Accreditation Standards, effective July 1, 2026), not the
+# superseded 2023 version, since this is the standard active COMs are held to.
+#
+# NOTE ON SOURCE HANDLING: the COCA 2026 standards PDF carries an explicit
+# notice on its copyright page: "No COCA-owned data or information, including
+# COCA Standards, policies, or forms, may be submitted (copied, typed,
+# uploaded, or otherwise entered) into an artificial intelligence (AI)
+# platform without the written permission of the COCA." This file was built
+# by fetching that PDF through AI-mediated tools (WebFetch / PDF extraction)
+# to research and paraphrase element requirements for internal product
+# planning, and does not reproduce the standards document verbatim. Flag this
+# to Legal/Compliance before this content (or any COCA standards excerpting)
+# is used in customer-facing materials, and consider requesting COCA's
+# written permission if AI-assisted use of the standards text is going to be
+# an ongoing part of this workstream.
+
+accreditor: "COCA (Commission on Osteopathic College Accreditation)"
+slug: "coca"
+domain: "DO"
+governs: "Colleges of Osteopathic Medicine (COMs) granting the D.O. degree in the United States, including additional locations and branch campuses; operates as a programmatic accreditor chartered by the American Osteopathic Association (AOA) and recognized by the U.S. Department of Education"
+standards_document:
+  title: "Accreditation of Colleges of Osteopathic Medicine: COM Continuing Accreditation Standards"
+  version_or_year: "February 1, 2026 (effective July 1, 2026, for the 2026-2027 academic year; applies to reviews occurring after February 1, 2027)"
+  url: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf"
+
+standards:
+  - element_id: "Standard 6, Element 6.9"
+    element_title: "Clinical Education (CORE)"
+    evidence_programs_must_produce: >
+      Defined core rotations (family medicine, internal medicine, general
+      surgery, pediatrics) and required rotations (psychiatry, OB/GYN,
+      emergency medicine) at a minimum 4 weeks each with in-person patient
+      care; syllabi for every core/required rotation; a 3-year rolling
+      average of students eligible for first-time, repeat, and off-cycle
+      rotations matched against demonstrated adequate faculty/capacity at
+      each site; executed affiliation agreements for every contracted
+      clinical site; and a contingency plan for replacing lost rotation
+      capacity.
+    required_software_behavior: >
+      Model core vs. required rotation types as structured records tied to
+      placements and sites; auto-calculate a 3-year rolling average of
+      students-per-rotation-type against each site's stated capacity to
+      demonstrate adequacy; maintain a document library linking every
+      clinical site to its executed affiliation agreement with
+      expiration/renewal alerts; support one-click export of the rotation
+      roster and capacity table a site visit team would request.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The Clinical & Experiential Education pillar's rotation/placement
+      engine (Courses -> Learning Activities -> Setup, per the confirmed
+      "Managing Course Activities" workflow) already models rotations and
+      sites; the rolling-average capacity math and affiliation-agreement
+      expiry tracking are configuration/light-build work on that existing
+      data model, not new architecture.
+    gap_notes: "Confirm whether Compliance Management's item-expiry tracking (used for student immunizations/certs) can be repointed at site-level contracts, or whether contract lifecycle needs a new object type."
+    source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 43-44, Element 6.9 and Submission 6.9)"
+
+  - element_id: "Standard 6, Element 6.10"
+    element_title: "Clinical Experience"
+    evidence_programs_must_produce: >
+      De-identified, system-generated proof that every student, before
+      fourth-year clinical clerkships, completed at least one rotation
+      alongside GME resident physicians, at least one under an osteopathic
+      physician's supervision, and more than one in an inpatient setting.
+    required_software_behavior: >
+      Rotation records need discrete, filterable attributes — "residents
+      present at site," "supervising physician is a DO," "setting is
+      inpatient/outpatient" — that roll up automatically into a per-student
+      completion checklist the program can query before clerkships begin.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Same rotation-record data model inside Clinical & Experiential
+      Education; this is adding a small, fixed set of metadata fields and a
+      completion-checklist view, not new capability.
+    gap_notes: ""
+    source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 45, Element 6.10 and Submission 6.10)"
+
+  - element_id: "Standard 6, Element 6.11"
+    element_title: "Comparability Across Clinical Education Sites"
+    evidence_programs_must_produce: >
+      A policy describing how student outcomes at each clinical site are
+      reviewed for comparability, plus the most recent statistical-analysis
+      report comparing student outcomes across all core/required sites and a
+      description of plans to address any gaps found.
+    required_software_behavior: >
+      Tag every assessment/evaluation record by clinical site, then roll
+      those scores into a recurring cross-site statistical comparison
+      (e.g., variance/effect-size by site) that flags sites falling outside
+      the comparable-outcomes band.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      This needs inferential statistics across site-tagged outcome data.
+      Curriculum Mapping can tag objectives to sites, but no shipped pillar
+      does outcome analytics; Exam Management (roadmap Q2 2027) and
+      Accreditation Management (roadmap Q3 2027) are the natural homes and
+      neither has shipped yet.
+    gap_notes: "Statistical cross-site comparability reporting should be scoped explicitly into the Accreditation Management build rather than assumed to fall out of the rotation engine."
+    source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 46, Element 6.11 and Submission 6.11)"
+
+  - element_id: "Standard 6, Element 6.4"
+    element_title: "Osteopathic Core Competencies (CORE)"
+    evidence_programs_must_produce: >
+      A curriculum map showing where each of the seven osteopathic core
+      competencies (medical knowledge, patient care, communication,
+      professionalism, practice-based learning, systems-based practice, and
+      OPP/OMM) is taught and assessed, plus a narrative of how the
+      curriculum delivers them.
+    required_software_behavior: >
+      Curriculum mapping must support a configurable competency framework
+      (the 7 COCA competencies) as a tagging dimension across courses,
+      activities, and rotations, exportable as a coverage map for a site
+      visit.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Squarely the Curriculum Mapping pillar's job — mapping courses and
+      activities to a curriculum structure — and just needs the COCA
+      7-competency taxonomy (including OPP/OMM, which is DO-specific)
+      configured as the mapping dimension.
+    gap_notes: ""
+    source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 38, Element 6.4 and Submission 6.4)"
+
+  - element_id: "Standard 5, Element 5.4"
+    element_title: "Patient Care Supervision (CORE)"
+    evidence_programs_must_produce: >
+      Published policies (including telemedicine) requiring direct
+      supervision of students by a licensed health care professional in all
+      patient-care learning situations, plus proof those policies are
+      distributed to students, faculty, and staff.
+    required_software_behavior: >
+      A version-controlled policy library that publishes to a public page
+      and tracks acknowledgment/attestation of the supervision policy by
+      each student and faculty member.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Compliance Management already gates placement start/continuation on
+      completed student items; a "policy attestation" item type fits that
+      same gating model for both students and faculty.
+    gap_notes: "Confirm Compliance Management supports document-acknowledgment item types, not just checklist/expiry items — already an open question in the Prism capability map."
+    source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 34, Element 5.4 and Submission 5.4)"
+
+  - element_id: "Standard 11, Element 11.1"
+    element_title: "Program Assessment (CORE)"
+    evidence_programs_must_produce: >
+      The guiding program-review document/manual; a list of every learning
+      outcomes assessment run over the past 3 academic years (including
+      assessment of the osteopathic core competencies); and concrete
+      examples of curriculum, pedagogy, counseling, or other changes made as
+      a direct result of those reviews.
+    required_software_behavior: >
+      A closed-loop "finding -> action -> evidence" workflow that logs each
+      assessment cycle's outcome data and links it to the specific
+      curricular/programmatic change made in response, queryable by
+      academic year for the self-study.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      This is continuous-improvement/self-study workflow tracking — exactly
+      the job description of the not-yet-shipped Accreditation Management
+      pillar (roadmap Q3 2027). No shipped pillar currently closes the
+      finding-to-action evidence loop.
+    gap_notes: "This closed-loop pattern recurs across most 'continuous improvement' standards from every accreditor in this workstream — it should be a first-class object type in Accreditation Management, not bolted onto Curriculum Mapping."
+    source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 74, Standard 11 and Element 11.1/Submission 11.1)"
+
+  - element_id: "Standard 11, Element 11.2"
+    element_title: "Student Evaluation of Instruction"
+    evidence_programs_must_produce: >
+      Policies/process for collecting confidential student evaluations of
+      courses, clerkships, faculty, and other experiences; proof of
+      confidentiality; copies of the evaluation forms used; and a flowchart
+      showing how evaluation data drives curricular improvement.
+    required_software_behavior: >
+      Configurable evaluation forms tied to specific courses, clerkships,
+      and faculty; anonymized aggregation of results; and a visible,
+      auditable link from evaluation results to logged curricular changes.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Directly the "Surveys & Course Evaluations" pillar. CORRECTED
+      2026-08-26, per Exxat PM confirmation (see
+      content/prism/capability-map.yaml, Surveys & Course Evaluations pillar):
+      this pillar is shipped, not roadmap as previously stated here —
+      course/clerkship/faculty evaluation collection can be built today via
+      the Exxat Surveys builder (14 question types, multi-channel
+      distribution, full analytics) alongside the Forms/Evaluations engine.
+    gap_notes: "CORRECTED 2026-08-26: previously read 'Once Surveys & Course Evaluations ships, this becomes a clean Configure; until then it is a hard Gap.' That pillar is now confirmed shipped per Exxat PM (content/prism/capability-map.yaml), so the element moves to Configure now rather than waiting on a future release. Remaining work is configuring the specific course/clerkship/faculty evaluation instruments and wiring the evaluation-to-curricular-change link, not building net-new capability."
+    source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 75, Element 11.2 and Submission 11.2)"
+
+  - element_id: "Standard 11, Element 11.4"
+    element_title: "COMLEX-USA"
+    evidence_programs_must_produce: >
+      COM policies on the exam; the last four years of first-time COMLEX-USA
+      Level 1/2/3 pass rates published on a public webpage within 30 days of
+      each NBOME annual update; and, for any cohort falling more than 2
+      standard deviations below the mean and under 90%, an improvement plan
+      (three years of sustained shortfall triggers an out-of-compliance
+      finding).
+    required_software_behavior: >
+      Ingest NBOME-reported pass-rate data per cohort/level (or support
+      manual entry), auto-publish it to a public page, and trigger a
+      monitoring/improvement-plan workflow the moment a cohort crosses the
+      compliance threshold.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      Depends on exam outcome data from an external body (NBOME) — the
+      intended job of the roadmap Exam Management pillar (Q2 2027). Nothing
+      shipped today ingests or reports licensure-exam results.
+    gap_notes: "Scope this as an NBOME data-import/reporting integration, not as exam delivery — Prism does not and cannot administer COMLEX-USA itself; NBOME proctors it."
+    source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 77, Element 11.4 and Submission 11.4)"
+
+  - element_id: "Standard 11, Element 11.5"
+    element_title: "GME Placement Rates"
+    evidence_programs_must_produce: >
+      Public, continually updated 4-year PGY-1 placement rate (PGY-1
+      entrants ÷ PGY-1 applicants) by residency program; a required
+      improvement plan if the rate falls below 95% (out-of-compliance after
+      three consecutive years below threshold).
+    required_software_behavior: >
+      Track each graduating student's residency application and Match
+      outcome as structured data, auto-compute the placement-rate formula,
+      and publish/export the result by cohort and program.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      No shipped pillar tracks post-graduation Match/placement outcomes.
+      It's adjacent to Clinical & Experiential Education's rotation
+      records but sits past graduation, which that pillar doesn't currently
+      cover; natural home is Accreditation Management (Q3 2027).
+    gap_notes: "Could reuse the student/rotation record model if extended to track post-graduation outcomes, but that extension doesn't exist today."
+    source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 78, Element 11.5 and Submission 11.5)"
+
+  - element_id: "Standard 11, Element 11.8"
+    element_title: "Student Survey"
+    evidence_programs_must_produce: >
+      Proof the COM actively promoted and supported completion of the
+      mandatory COCA student survey, plus a report of the COM's review of
+      findings with planned actions to address noted concerns (500-word
+      cap).
+    required_software_behavior: >
+      Survey distribution/reminder tooling to drive participation, plus a
+      results-review workflow that logs planned actions against specific
+      findings for the self-study record.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Direct fit for the Surveys & Course Evaluations pillar. CORRECTED
+      2026-08-26, per Exxat PM confirmation (see
+      content/prism/capability-map.yaml, Surveys & Course Evaluations pillar):
+      this pillar is shipped, not roadmap as previously stated here — the
+      Exxat Surveys builder (multi-channel distribution including
+      anonymous public link/QR code, response-rate analytics) can drive
+      COCA's mandatory student survey and the findings-to-planned-action
+      review workflow today.
+    gap_notes: "CORRECTED 2026-08-26: previously rated Gap on the assumption that Surveys & Course Evaluations was roadmap Q1 2027 and unavailable. That pillar is confirmed shipped per Exxat PM (content/prism/capability-map.yaml), so the rating moves to Configure. Remaining work is configuring the survey distribution/reminder flow and the results-review-to-planned-action logging, not waiting on a future release."
+    source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 81, Element 11.8 and Submission 11.8)"
+
+  - element_id: "Standard 11, Element 11.9"
+    element_title: "COCA Annual and Mid-Cycle Reports (CORE)"
+    evidence_programs_must_produce: >
+      Timely, complete submission of COCA's own required annual and
+      mid-cycle reports for every COM holding accreditation status.
+    required_software_behavior: >
+      A structured, standard-aligned evidence repository that maps
+      individual data points (rotation counts, COMLEX pass rates, GME
+      placement rates, survey results, etc.) directly to COCA's specific
+      report fields, with deadline and submission-status tracking.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      This is the literal definition of the roadmap "Accreditation
+      Management" pillar (Q3 2027) — standard-level evidence aggregation and
+      report generation — and is the single highest-leverage element in
+      this document for that pillar's business case.
+    gap_notes: "This element alone argues for scoping Accreditation Management around COCA's exact report structure and field taxonomy, not a generic evidence binder."
+    source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 82, Element 11.9 and Submission 11.9)"
+
+  - element_id: "Standard 10, Element 10.2"
+    element_title: "Accredited GME"
+    evidence_programs_must_produce: >
+      A policy and described mechanism for helping affiliated GME programs
+      meet ACGME accreditation requirements; a table of affiliated ACGME
+      programs the COM has supported in achieving accreditation; and the
+      count of PGY-1 positions supported since the last accreditation cycle.
+    required_software_behavior: >
+      A registry of affiliated GME programs with accreditation status and
+      dates, linked to which COM resources (faculty time, funding) supported
+      each program, and a running PGY-1 position counter over time.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Compliance Management's status-tracking model could be repurposed to
+      monitor affiliated-program accreditation status as an
+      institution-level tracked item rather than a student-level one.
+    gap_notes: "Compliance Management's confirmed taxonomy is student-level items only; tracking an affiliated GME program as the tracked entity is a new object type, not just a new item."
+    source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 72, Element 10.2 and Submission 10.2)"
+
+licensure_or_gme_layer:
+  - body: "AOA (American Osteopathic Association)"
+    what_it_governs: >
+      The parent body that charters COCA as its programmatic accreditor for
+      Colleges of Osteopathic Medicine; also co-administers "Osteopathic
+      Recognition" for ACGME residency programs jointly with ACGME, and
+      governs osteopathic board certification and continuing medical
+      education for practicing DOs.
+    relevance_to_product: >
+      COCA's own standards (Element 10.3, Osteopathic Recognition of GME)
+      require a COM to prove it helps affiliated GME programs earn this
+      AOA/ACGME joint credential — any GME-tracking feature for the DO
+      domain has to model "Osteopathic Recognition" as its own status, not
+      collapse it into generic ACGME accreditation.
+    source: "https://osteopathic.org/accreditation/"
+  - body: "NBOME / COMLEX-USA"
+    what_it_governs: >
+      National Board of Osteopathic Medical Examiners; develops and
+      administers the Comprehensive Osteopathic Medical Licensing
+      Examination (COMLEX-USA) Level 1/2/3 series, the required exam
+      sequence every DO student must pass for licensure, and is the sole
+      source of the pass-rate data COCA Element 11.4 requires COMs to
+      publish.
+    relevance_to_product: >
+      Any "Exam Management" capability serving the DO domain is not an
+      exam-authoring tool — it has to be an integration/reporting layer that
+      ingests NBOME's official score and pass-rate reports and republishes
+      them against COCA's compliance thresholds. Prism cannot administer
+      COMLEX-USA itself.
+    source: "https://www.nbome.org/"
+  - body: "ACGME (Accreditation Council for Graduate Medical Education)"
+    what_it_governs: >
+      Since the 2020 Single GME Accreditation System merger, the sole
+      accreditor of all U.S. residency and fellowship programs, including
+      formerly AOA-approved programs; the body whose Match/placement data
+      COCA Standard 10-11 requires COMs to track and report.
+    relevance_to_product: >
+      COCA's GME placement-rate, GME accreditation-support, and Osteopathic
+      Recognition elements all key off ACGME status and outcome data that
+      lives outside the COM's own systems — the product needs a clean way to
+      record and report against ACGME program status and residency
+      placement it does not directly control.
+    source: "https://www.acgme.org/"
+  - body: "AACOM (American Association of Colleges of Osteopathic Medicine)"
+    what_it_governs: >
+      Membership/trade association for all U.S. COMs; runs the centralized
+      application service (AACOMAS) and publishes aggregate applicant,
+      enrollment, and workforce benchmarking data used across the DO field.
+    relevance_to_product: >
+      Not an accreditor, but COMs routinely cite AACOM benchmarking data in
+      self-studies to argue comparability and outcomes (echoing COCA 6.11),
+      and AACOM's annual meeting is a primary go-to-market channel for
+      reaching DO-program buyers.
+    source: "https://www.aacom.org/"
+
+last_researched: "2026-08-24"

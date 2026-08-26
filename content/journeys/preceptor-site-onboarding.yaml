@@ -1,0 +1,811 @@
+# Preceptor & Site Onboarding — cross-domain journey map.
+# Follows content/journeys/_TEMPLATE.yaml. Every stage's current_state_in_prism is
+# grounded in ../prism/capability-map.yaml; accreditation_link cites the actual
+# numbered element researched in ../accreditation/; competitor_comparison cites
+# the specific claim + source recorded in ../competitors/.
+#
+# One addition beyond the bare template: a `domain_structural_differences` block
+# at the end, because this journey does not have the same SHAPE in all four
+# domains (a DO school recruits hundreds of independent community preceptors; a
+# dental school mostly onboards its own chairside faculty). Stage-level domain
+# notes are folded into pain_or_gap; the block summarizes the structural split.
+
+journey_name: "Preceptor & Site Onboarding"
+domain_scope: ["DO", "Pharmacy", "Dentistry", "Medicine"]
+persona: >
+  Primary: Clinical/Experiential Education Coordinator (see ../personas/_TEMPLATE_role.yaml
+  — the role that recruits sites, chases contracts and credentials, and assigns students).
+  Secondary: the Preceptor themself, who is almost always an unpaid or lightly-paid
+  volunteer clinician with no institutional identity, and whose tolerance for
+  administrative friction is the real constraint on this journey. Tertiary consumer:
+  the Compliance/Accreditation Liaison, who must reproduce every artifact this journey
+  generates as site-visit evidence years later.
+
+stages:
+  - stage: "1. Site identification, capacity negotiation & contingency planning"
+    current_state_in_prism: >
+      The shipped Clinical & Experiential Education pillar models sites and placements
+      as structured records (Courses -> Learning Activities -> Setup -> Forms/Evaluations
+      -> Add Assignment, confirmed from the internal "Managing Course Activities" doc),
+      so a site can exist as an entity and hold placements. What is NOT confirmed is any
+      forward-looking capacity object: a stated slots-per-rotation-type figure per site,
+      a demand forecast against it, or the rolling-average math an accreditor asks for.
+      Program Quality Analytics (intelligence layer) is the plausible home but its depth
+      against site-capacity data is unconfirmed.
+    pain_or_gap: >
+      Coordinators negotiate capacity verbally and track it in spreadsheets, then get
+      asked at a site visit to prove — arithmetically, over three years — that capacity
+      was adequate. COCA 6.9 wants a 3-year rolling average of students eligible for
+      first-time, repeat, AND off-cycle rotations matched against each site's
+      demonstrated faculty/capacity, plus a written contingency plan for replacing lost
+      rotation capacity. Nothing in Prism computes that today; it is configuration/light
+      build on an existing data model (COCA 6.9 is rated "Configure"), but it is not
+      free. This stage is also where the domain split is most severe: per
+      ../domains/do.yaml and ../domains/medicine.yaml, DO and MD programs must manage
+      hundreds of independently-recruited community preceptor relationships against a
+      documented, worsening site-capacity bottleneck (44% of AAMC-surveyed schools feel
+      moderate-to-severe pressure to start PAYING community physicians to host students),
+      whereas a dental school's "capacity" is mostly its own chair count in an in-house
+      teaching clinic.
+    accreditation_link: >
+      COCA Standard 6, Element 6.9 (Clinical Education, CORE) — demonstrated adequate
+      faculty/capacity per site via 3-year rolling average, plus a contingency plan for
+      lost capacity [Configure]. LCME Standard 5, Element 5.5 (Resources for Clinical
+      Instruction) — evidence that each site offers adequate numbers and types of
+      patients (acuity, case mix, age, gender) [Configure; aggregate case-mix reporting
+      across sites is not a confirmed built-in report]. ACPE Standard 3, Key Element
+      3.1.a — per-site practice-model type must be documented in the IPPE curriculum map
+      [Transfer].
+    competitor_comparison: >
+      eMedley's eduSched ships "rotation scheduling with site capacity management" as a
+      named feature (https://clinical.emedley.com/features/). CORE ELMS centralizes
+      "site/student/preceptor management" and feeds SmartMatch from it
+      (https://services.corehighered.com/elms/pharmacy-experiential-learning-management-software).
+      one45 offers three named allocation algorithms (Stream Lottery, Rotation Lottery,
+      Randomized Stream Lottery) explicitly framed as feeding accreditation reporting
+      (https://acuityinsights.com/products/one45/program-scheduling/). Conversely, axiUm
+      — at ~90% of U.S. dental schools — has no external-placement engine at all; its
+      scheduling is chair/operatory-based for an in-house clinic
+      (https://www.axiumacademic.com/platform/practice-management/), which is precisely
+      why the dental multi-site story is the weakest-defended terrain in this journey.
+    key_findings:
+      - subject: "DO"
+        headline: "No capacity object exists, so COCA 6.9's rolling-average proof is unbuildable"
+        severity: "gap"
+        detail: "Sites hold placements, but there is no stated slots-per-rotation-type figure, no demand forecast against it, and no 3-year rolling average of students eligible for first-time, repeat and off-cycle rotations. COCA 6.9 also wants a written contingency plan for lost rotation capacity; nothing in Prism computes either today."
+      - subject: "Medicine"
+        headline: "44% of AAMC-surveyed schools feel pressure to pay community preceptors"
+        severity: "gap"
+        detail: "DO and MD programs recruit hundreds of independent community preceptors against a documented, worsening site-capacity bottleneck. Coordinators negotiate that capacity verbally and track it in spreadsheets, then are asked at a site visit to prove adequacy arithmetically over three years."
+      - subject: "Medicine"
+        headline: "Aggregate case-mix reporting across sites is not a confirmed built-in report"
+        severity: "configure-needed"
+        detail: "LCME 5.5 wants evidence that each site offers adequate numbers and types of patients by acuity, case mix, age and gender. The element is rated Configure, but rolling that up across sites is not something Prism is confirmed to ship."
+      - subject: "Dentistry"
+        headline: "axiUm holds ~90% of dental schools and ships no external-placement engine"
+        severity: "gap"
+        detail: "Its scheduling is chair/operatory-based for an in-house clinic, so a dental school's capacity is largely its own chair count rather than a network of negotiated sites. That mismatch is why the dental multi-site story is the weakest-defended terrain in this journey."
+      - subject: "Pharmacy"
+        headline: "Per-site practice-model type has to live in the IPPE curriculum map"
+        severity: "configure-needed"
+        detail: "ACPE 3.1.a is rated Transfer: Curriculum Mapping already exists as a primitive, so documenting each site's practice-model type is a content and configuration task rather than a build — but it is not captured by default today."
+
+  - stage: "2. Affiliation agreement execution & contract lifecycle management"
+    current_state_in_prism: >
+      CORRECTION: this stage is not unowned. A live Contracts feature sits under the Sites
+      module, separate from Compliance Management. Prism's help docs define "Site" as "the
+      entity with which a contractual relationship is established" (Understanding Site vs.
+      Location.md), and Contract is a first-class object (name, number, tax ID,
+      start/expiration, template, status, routing checklist, linked documents) that can be
+      linked across multiple sites, tracked for expiry via auto-notifications, and rolled
+      up at the institutional cross-program level (Managing Contracts.md; Institutional
+      Level- Contracts and Sites Management.md). A computed Contract Status (Valid
+      Contract / Needs Attention / Needs Attention-Missing Contracts) already surfaces on
+      the Placement Clearance Dashboard at the location level, not the student level
+      (Adding and Managing Sites.md, "Contract Status on Clearance Dashboard"). This
+      resolves the prior "whether a site/facility can be the tracked entity at all is
+      unconfirmed" hedge. What remains unconfirmed is whether "Needs Attention" is a hard
+      scheduling block or an advisory flag — no sourced doc uses "block"/"prevent" for it,
+      unlike the Active/Inactive Site toggle, which is confirmed to block new placements.
+      See
+      flows/preceptor-site-onboarding--02-affiliation-agreement-execution-contract-lifecycle-management.yaml.
+    pain_or_gap: >
+      REVISED: this is no longer the journey's flat Gap-state stage. Element-level tracing
+      (see the new flow file) confirms a mature, shipped, site-scoped Contracts object —
+      cross-site linking, expiry alerts, a routing checklist for negotiation/sign-off,
+      template-based generation, institutional rollup — in production use by PA/OT
+      schools. ACPE 3.5.b's flat "Gap" rating in ../accreditation/acpe.yaml is superseded
+      by this evidence; COCA 6.9/LCME 1.4/CODA 4-6's "Configure" ratings undersold how
+      much is already built. What genuinely remains open: (1) whether "Needs Attention"
+      hard-blocks scheduling or is only advisory is unconfirmed anywhere in the sourced
+      material; (2) OT programs have a confirmed production friction point relevant to
+      CODA/LCME's owned-site carve-out — the system assumes every site needs a contract
+      with no "contract not required" flag, so a dental school's in-house owned teaching
+      clinic (its dominant CODA site type, ../domains/dentistry.yaml) would generate
+      false-positive missing-contract flags; (3) whether a shared agreement's TEXT names
+      the correct discipline's students is a confirmed manual legal-review step (PA
+      playbook, ARC-PA B3.01), not a system gap. The stage-1 domain split persists: DO/MD
+      programs' hundreds of independently-recruited sites carry this burden at far higher
+      volume than a dental school's mostly-owned clinic.
+    accreditation_link: >
+      ACPE Standard 3, Key Element 3.5.b — fully executed agreement per practice facility
+      [../accreditation/acpe.yaml still rates this a flat "Gap," but element-level tracing
+      now shows that rating outdated: Contracts, linking, expiry alerts, and
+      location-level status gating are already shipped under Sites — should be re-rated
+      Configure like the other three accreditors, pending a formal file update]. COCA
+      Standard 6, Element 6.9 — executed agreements with renewal alerts [Configure; the
+      prior open question of repointing Compliance Management's expiry tracking at sites
+      is resolved — Contracts is its own already-site-scoped object, not Compliance
+      Management]. LCME Standard 1, Element 1.4 — agreements with renewal alerts and
+      blocking of lapsed sites [Configure; renewal-alert and site-record halves confirmed
+      shipped — hard-block behavior remains unconfirmed]. CODA Standard 4, Element 4-6 —
+      agreement for non-owned sites [Configure; site-level tracking confirmed, but the
+      confirmed "contract not required" gap is a real friction point for exactly the
+      owned-clinic pattern CODA programs hit most].
+    competitor_comparison: >
+      REVISED: the prior "Prism is behind two direct competitors" framing does not hold up
+      under element-level verification. CORE ELMS (../competitors/core-elms.yaml) and
+      eMedley's eKeeper (../competitors/emedley.yaml) both advertise affiliation-agreement
+      tracking with expiration alerts, but neither publishes field/screen-level detail —
+      no visible equivalent to Prism's confirmed chain-icon multi-site linking, routing
+      checklist, template generation, or institutional rollup — so comparison cannot go
+      past "both claim to have alerts," a limitation emedley.yaml's own compliance row
+      independently admits for its adjacent module. MedHub's public Compliance Management
+      pillar (../competitors/medhub.yaml) names only state-license/DEA monitoring, not
+      affiliation-agreement tracking — Prism may be ahead here specifically, contrary to
+      medhub.yaml's general "ahead" pattern elsewhere. Leo (DaVinci) remains the confirmed
+      wedge: no public evidence of any placement-gating compliance module
+      (../competitors/leo-davinci.yaml). Whether any competitor's contract-status flag is
+      a hard block versus advisory is unaddressed in every competitor's public docs, so it
+      cannot be resolved as a comparative claim in either direction.
+    key_findings:
+      - subject: "Pharmacy"
+        headline: "ACPE 3.5.b's flat Gap rating is outdated — Contracts already ships"
+        severity: "none"
+        detail: "Element-level tracing confirms a mature, site-scoped Contract object: name, number, tax ID, start/expiration, template-based generation, routing checklist, cross-site linking, expiry auto-notifications and institutional rollup, in production use by PA and OT schools."
+      - subject: "Dentistry"
+        headline: "No contract-not-required flag, so owned teaching clinics look non-compliant"
+        severity: "gap"
+        detail: "OT programs hit a confirmed production friction point: the system assumes every site needs a contract. A dental school's in-house owned teaching clinic — its dominant CODA 4-6 site type — would therefore generate false-positive missing-contract flags."
+      - subject: "Medicine"
+        headline: "Whether Needs Attention hard-blocks scheduling or only advises is unconfirmed"
+        severity: "configure-needed"
+        detail: "LCME 1.4 asks for lapsed sites to be blocked. Contract Status surfaces on the Placement Clearance Dashboard at location level, but no sourced doc uses block or prevent for it, unlike the Active/Inactive Site toggle, which is confirmed to block new placements."
+      - subject: "DO"
+        headline: "Hundreds of independently recruited sites multiply the same contract burden"
+        severity: "configure-needed"
+        detail: "COCA 6.9's executed-agreement-plus-renewal-alert requirement is rated Configure and the primitives are shipped, but DO and MD programs run this loop at a volume no other domain faces, which is where administrative cost actually lands."
+      - subject: "Medicine"
+        headline: "MedHub publishes no affiliation-agreement tracking, so Prism may be ahead"
+        severity: "none"
+        detail: "MedHub's public Compliance Management pillar names only state-license and DEA monitoring. Leo (DaVinci) shows no public evidence of any placement-gating compliance module at all, which keeps it the confirmed wedge for this stage."
+
+  - stage: "3. Preceptor recruitment, credential verification & licensure gating"
+    current_state_in_prism: >
+      The placement engine already models the student-preceptor-placement relationship, so
+      a preceptor exists as an assignable party. But Compliance Management's confirmed
+      scope is student-level items; whether a preceptor can be a first-class TRACKED entity
+      carrying a license number, status, and expiration that gates their eligibility to
+      supervise is explicitly unconfirmed (flagged in ACPE 3.3.a's gap_notes and CODA 2-6's
+      gap_notes). Same pattern as Stage 2: the right primitive exists, pointed at the wrong
+      entity.
+    pain_or_gap: >
+      Every domain needs a different credential predicate on the same record, and none of
+      them are generic: ACPE needs "is a U.S.-licensed pharmacist" plus a roster-level
+      calculation that the MAJORITY of a given student's assigned preceptors clear that bar;
+      COCA needs "supervising physician is a DO" as a filterable rotation attribute so a
+      program can prove, before fourth-year clerkships, that every student had at least one
+      DO-supervised rotation; LCME needs the supervisor's role/level captured so supervision
+      can be shown to match training level and scope of practice. These are not three
+      configurations of one field — the DO one is an attribute of the ROTATION record
+      (COCA 6.10 rolls up into a per-student completion checklist), while the pharmacy one
+      is a ratio computed across a student's whole preceptor roster. Getting this modeling
+      wrong once means re-deriving it per domain forever.
+    accreditation_link: >
+      ACPE Standard 3, Key Element 3.3.a (Preceptor criteria) — documented quality criteria
+      at recruitment, licensure record per preceptor, majority-U.S.-licensed-pharmacist
+      reporting per student [Configure; "unclear whether Compliance Management natively
+      models preceptors as a trackable entity today versus only students"].
+      COCA Standard 6, Element 6.10 (Clinical Experience) — de-identified, system-generated
+      proof each student had ≥1 rotation under an osteopathic physician's supervision, ≥1
+      alongside GME residents, and >1 inpatient [Configure].
+      LCME Standard 9, Element 9.3 (Clinical Supervision) — named supervisor with role/level
+      tied to a named student and encounter [Configure; supervision-level/scope-of-practice
+      attestation as a structured field is unconfirmed].
+      LCME Standard 3, Element 3.1 (Resident Participation) — capture supervising residents
+      alongside attending preceptors [Transfer].
+    competitor_comparison: >
+      This is the most crowded stage in the competitive set. New Innovations ships a
+      dedicated "Credentialling Module: centralized tracking of licenses, certifications,
+      visas, and immunizations with expiration alerts"
+      (https://www.new-innov.com/pub/gme_details.html) — rated "ahead" of Prism.
+      MedHub/E*Value ships "Automated Credentials Monitoring ... real-time tracking of
+      state, DEA, and Controlled Substances licenses, alerting the GME Office to any
+      changes," plus NPDB/NPPES verification
+      (https://www.medhub.com/software/residency-management-software/). CORE ELMS ships
+      "preceptor license tracking" as a named line item. Against that, Prism's advantage is
+      not the tracker — it is that Prism's compliance items GATE placement
+      start/continuation, a behavior eMedley's public docs notably do NOT claim
+      (../competitors/emedley.yaml: "Whether eMedley's compliance items actually GATE
+      placement start/continuation ... is not stated on eMedley's public pages"). Gating,
+      not listing, is the defensible claim — provided it can point at a preceptor.
+    key_findings:
+      - subject: "Pharmacy"
+        headline: "The majority-licensed-pharmacist test needs a roster-level calculation Prism lacks"
+        severity: "gap"
+        detail: "ACPE 3.3.a requires documented quality criteria at recruitment, a licensure record per preceptor, and proof that the majority of a given student's assigned preceptors are U.S.-licensed pharmacists. Compliance Management's confirmed scope is student-level items only."
+      - subject: "DO"
+        headline: "DO supervision must be a filterable rotation attribute, not a preceptor field"
+        severity: "gap"
+        detail: "COCA 6.10 rolls up into a per-student completion checklist, so supervising-physician-is-a-DO is an attribute of the rotation record rather than a configuration of one preceptor field. Getting this modeling wrong once means re-deriving it per domain forever."
+      - subject: "Medicine"
+        headline: "Supervision level and scope of practice have no structured field"
+        severity: "configure-needed"
+        detail: "LCME 9.3 needs a named supervisor with role and level tied to a named student and encounter, and LCME 3.1 adds supervising residents alongside attendings. The placement relationship exists, but the attestation field is explicitly unconfirmed."
+      - subject: "Dentistry"
+        headline: "Faculty-side credential tracking is an open Phase 2 question"
+        severity: "gap"
+        detail: "CODA 2-6's gap notes state that Compliance Management's item taxonomy is confirmed for students only, so calibration and credential tracking for chairside faculty has no confirmed home in the shipped product."
+      - subject: "Medicine"
+        headline: "New Innovations and MedHub both ship credential monitoring rated ahead of Prism"
+        severity: "gap"
+        detail: "New Innovations ships a dedicated Credentialling Module covering licenses, certifications, visas and immunizations with expiration alerts; MedHub adds real-time state, DEA and Controlled Substances tracking plus NPDB/NPPES verification. CORE ELMS names preceptor license tracking outright."
+      - subject: "Pharmacy"
+        headline: "Prism's edge is gating placements, not listing credentials"
+        severity: "configure-needed"
+        detail: "eMedley's public docs never claim its compliance items gate placement start or continuation, so enforcement is the defensible differentiator — but only once a compliance item can point at a preceptor rather than only at a student."
+
+  - stage: "4. Preceptor orientation, training & policy attestation (the pre-assignment gate)"
+    current_state_in_prism: >
+      Prism's confirmed gating pattern — a checklist item whose incompletion blocks a
+      placement from starting — is architecturally the exact right shape for this stage.
+      Two things are unconfirmed and both matter: (a) whether Compliance Management supports
+      a document-ACKNOWLEDGMENT / attestation item type as opposed to only
+      checklist-and-expiry items (raised in COCA 5.4's gap_notes and already an open
+      question in the capability map), and (b) whether the gate can be hung on the
+      preceptor-to-placement assignment rather than the student-to-placement assignment
+      (raised in ACPE 3.3.c's gap_notes).
+    pain_or_gap: >
+      ACPE 3.3.c is unusually prescriptive about sequence: a preceptor must complete
+      orientation to the program's mission, the SPECIFIC syllabus expectations for that
+      experience, and effective evaluation technique BEFORE accepting a student. That is a
+      per-preceptor, per-course gate, not a once-ever onboarding — and it must coexist with
+      an ongoing professional-development activity log queryable for accreditation
+      reporting. Dentistry needs the same primitive under a different name: CODA 2-6
+      requires documented, recurring FACULTY CALIBRATION across every site, with periodic
+      monitoring and evidence of participation, so a dental program needs alerts when a
+      faculty member falls OUT of calibration — a recurring-expiry gate, not a one-time
+      checkbox. The practical pain is that coordinators run this in email and a shared
+      drive, then cannot produce per-preceptor completion evidence at a site visit without
+      manual reconstruction.
+    accreditation_link: >
+      ACPE Standard 3, Key Element 3.3.c (Preceptor education and development) — orientation
+      completion gating the ability to be assigned a student, plus a development-activity
+      log [Configure; requires confirming preceptor-to-placement gating exists].
+      CODA Standard 2, Element 2-6 (Comparable instruction across all clinical sites) —
+      ongoing faculty calibration training, calibration manuals, periodic monitoring, and
+      documented participation [Configure; "Compliance Management's item taxonomy is
+      confirmed for students only; faculty-side calibration/credential tracking is an open
+      Phase 2 question"].
+      COCA Standard 5, Element 5.4 (Patient Care Supervision, CORE) — published supervision
+      policy (including telemedicine) with proof of distribution to and attestation by
+      students, faculty AND staff [Configure; document-acknowledgment item type unconfirmed].
+    competitor_comparison: >
+      MedHub/E*Value ships "automated document collection for incoming and returning
+      trainees, including contracts, health records, and training documents" via dynamic
+      forms during onboarding (https://www.medhub.com/software/residency-management-software/)
+      — collection, though, not documented gating. New Innovations' Credentialling Module
+      covers certifications with expiration alerts, which maps onto CODA's recurring
+      calibration need. No competitor in the set publicly documents a preceptor-orientation
+      gate that BLOCKS student assignment the way ACPE 3.3.c literally requires — the
+      closest public claims are all collection-and-reminder, not enforcement. That is a
+      narrow but genuinely provable white-space claim for Prism, and it is reachable by
+      extending a shipped pillar rather than waiting on a 2027 roadmap item.
+    key_findings:
+      - subject: "Pharmacy"
+        headline: "Orientation must gate assignment per preceptor, per course, before any student"
+        severity: "gap"
+        detail: "ACPE 3.3.c requires orientation to mission, the specific syllabus expectations for that experience, and effective evaluation technique BEFORE a preceptor accepts a student. Prism's confirmed gate hangs on the student-to-placement assignment; hanging it on the preceptor-to-placement assignment is unconfirmed."
+      - subject: "Dentistry"
+        headline: "Faculty calibration is a recurring-expiry gate, not a one-time checkbox"
+        severity: "gap"
+        detail: "CODA 2-6 requires ongoing calibration across every site with calibration manuals, periodic monitoring and documented participation, so programs need alerts when a faculty member falls OUT of calibration. Compliance Management's item taxonomy is confirmed for students only."
+      - subject: "DO"
+        headline: "Document-acknowledgment item type is unconfirmed, blocking COCA 5.4 attestation"
+        severity: "configure-needed"
+        detail: "COCA 5.4 wants a published supervision policy, telemedicine included, with proof of distribution to and attestation by students, faculty AND staff. Prism's confirmed item types are checklist-and-expiry; attestation as an item type is an open capability-map question."
+      - subject: "Pharmacy"
+        headline: "No competitor documents an orientation gate that blocks student assignment"
+        severity: "none"
+        detail: "MedHub collects onboarding documents via dynamic forms and New Innovations alerts on certification expiry, but every public claim in the set is collection-and-reminder, not enforcement. That is narrow but provable white space, reachable by extending a shipped pillar."
+      - subject: "Dentistry"
+        headline: "New Innovations' expiring-certification alerts are the closest analog to calibration"
+        severity: "gap"
+        detail: "Its Credentialling Module maps onto CODA's recurring calibration need, a shape Prism has not confirmed for faculty. Today coordinators run calibration in email and a shared drive, then cannot produce per-preceptor completion evidence at a site visit without manual reconstruction."
+
+  - stage: "5. Access provisioning — getting the preceptor into the system at all"
+    current_state_in_prism: >
+      Not addressed as a distinct capability anywhere in the capability map. The Exxat
+      Advantage ring names LMS/SIS Integration and WCAG AA compliance, which speak to
+      institutional identity and accessibility, but the preceptor is an EXTERNAL,
+      non-institutional user with no SIS record and typically no university credential.
+      Prism's integration story (Canvas, Banner — partner list itself an open Phase 2
+      question) is a student/faculty story, not an external-supervisor story.
+    pain_or_gap: >
+      The volunteer preceptor is the lowest-tolerance user in the entire product surface:
+      they are unpaid or nominally paid, they supervise one or two students, and every
+      login wall is a reason to stop hosting students — which, per ../domains/do.yaml and
+      ../domains/medicine.yaml, feeds directly back into the site-capacity bottleneck in
+      Stage 1. A preceptor who cannot easily get in also cannot complete the evaluations
+      Stage 7 depends on, so friction here silently degrades the accreditation evidence
+      three stages downstream. This is the least-standards-driven stage in the journey and
+      the most product-quality-driven one.
+    accreditation_link: >
+      No element requires a login method directly, but two depend on preceptor reachability:
+      ACPE Standard 3, Key Element 3.3.a requires preceptor performance evaluations on file,
+      and ACPE Standard 7, Key Element 7.3.c requires standardized, versioned evaluation
+      forms deployed IDENTICALLY to every site offering the same course [Transfer] — both
+      are unachievable if a meaningful share of preceptors never successfully authenticate.
+      COCA Standard 5, Element 5.4 also requires proof the supervision policy was
+      distributed to faculty, which presumes a working channel to them.
+    competitor_comparison: >
+      Leo (DaVinci) sets the benchmark and it is worth copying outright: "on-demand
+      evaluation links can be emailed to clinical faculty with NO LOGIN required"
+      (https://www.davinci-ed.com/the-davinci-difference/leo-faqs). CORE ELMS demonstrates
+      the anti-pattern its own users complain about — reviewers report that changing a
+      preceptor's employer "requires a new account rather than an update," alongside a
+      platform that "feels disjointed across modules"
+      (https://www.capterra.com/p/265422/CORE-ELMS/reviews/). Given that a community
+      preceptor changing practices is a routine event, that is a real and repeatable
+      failure mode Prism can beat by modeling preceptor identity independently of employer.
+      Prism's WCAG AA compliance and 24/7 support (Exxat Advantage ring) are credible
+      differentiators here specifically, where MedHub carries documented public complaints
+      of "atrociously slow, buggy, laggy" mobile workflows
+      (https://apps.apple.com/us/app/medhub/id1126919433).
+    key_findings:
+      - subject: "Medicine"
+        headline: "External preceptors have no SIS record and no confirmed access path"
+        severity: "gap"
+        detail: "Access provisioning is not addressed as a distinct capability anywhere in the capability map. Prism's LMS/SIS integration story (Canvas, Banner) is a student and faculty story; the volunteer supervisor has no institutional identity or university credential to integrate."
+      - subject: "DO"
+        headline: "Every login wall is a reason to stop hosting students"
+        severity: "gap"
+        detail: "The unpaid preceptor is the lowest-tolerance user in the entire product surface, and drop-off feeds directly back into the Stage 1 site-capacity bottleneck. Friction here also silently degrades the Stage 7 evaluation evidence three stages downstream."
+      - subject: "Medicine"
+        headline: "Leo emails on-demand evaluation links with no login required"
+        severity: "gap"
+        detail: "Leo (DaVinci) sets the benchmark for reaching an uncredentialed clinical faculty member, and this stage names it as worth copying outright. Prism's confirmed integration story here is institutional-identity-based, with no external-supervisor equivalent recorded."
+      - subject: "Pharmacy"
+        headline: "Preceptors who cannot authenticate silently break ACPE's evaluation evidence"
+        severity: "gap"
+        detail: "ACPE 3.3.a needs preceptor performance evaluations on file and 7.3.c needs standardized, versioned forms deployed identically to every site offering the same course. Both are unachievable if a meaningful share of preceptors never successfully authenticate."
+      - subject: "DO"
+        headline: "Modeling preceptor identity apart from employer beats a known CORE ELMS defect"
+        severity: "none"
+        detail: "Reviewers report CORE ELMS requires a new account rather than an update when a preceptor changes employer — a routine event for community preceptors. Prism's WCAG AA compliance and 24/7 support are credible differentiators where MedHub carries public complaints of slow, buggy mobile workflows."
+
+  - stage: "6. Student assignment — ratio, capacity and eligibility checks at match time"
+    current_state_in_prism: >
+      The strongest-fit stage in the journey, though element-level tracing
+      (preceptor-site-onboarding--06-student-assignment-ratio-capacity-and-eligibility.yaml)
+      sharpens what "strongest fit" means today. The Clinical & Experiential Education
+      pillar already models the student-preceptor-placement relationship, and every
+      ratio/capacity number in the system currently rolls up to one confirmed field — a
+      human-declared "# of offers" count on a Site/Location Slot — which the COA
+      Accreditation Standards Support Guide confirms already stands in, for nurse
+      anesthesia today, as the documented evidence for a live 2:1 supervision-ratio
+      standard (COA F.7). The one confirmed instance anywhere in the sourced material of a
+      ratio/capacity signal actually surfacing to a coordinator at the moment of matching
+      a student is the PA-exclusive Max Placement Limit warning banner, and it is
+      advisory, not blocking — so ACPE 3.3.e's "Transfer" rating describes how close the
+      underlying data model is, not a confirmed real-time block that exists today. The
+      anchor-relative scheduling primitive (publish/due dates set N days before/after a
+      placement's start, MID, or end date) remains a confirmed architectural fact and the
+      piece most likely to transfer into any new domain's rotation model unchanged.
+    pain_or_gap: >
+      The gap is not the mechanism, it is that the CONSTRAINT is different in every domain
+      and each one is a hard rule, not a preference. Pharmacy: no more than 2 students per
+      precepting pharmacist in most situations, with documented exceptions (ACPE 3.3.e) —
+      a real-time block is what the standard requires, but the one confirmed analogous
+      mechanism today (PA's Max Placement Limit) only warns at the moment of assignment,
+      it does not block. DO: the assignment must simultaneously satisfy per-student
+      rotation-attribute requirements (DO-supervised, resident-present, inpatient) that
+      only resolve correctly if Stage 3's metadata was captured — element tracing found a
+      real, existing filter for one of these three ("Setting," on the Placement Clearance
+      Dashboard) but confirmed that the same screen's "Student Attributes" filter refers
+      to enrollment status, not clinical eligibility flags, so the other two
+      (DO-supervised, resident-present) still have no field to attach to. Medicine: per
+      ../domains/medicine.yaml, supervision is a TEAM (attending → fellow → resident →
+      intern) and the evaluating site can change mid-clerkship — tracing resolves part of
+      this: Prism's placement record already supports associating multiple preceptors with
+      one placement and adding or swapping preceptors/faculty after the placement is
+      published (confirmed via the Program Administrator FAQ), so "the preceptor is not a
+      single record for the duration" is less of a data-model gap than previously framed.
+      What remains unconfirmed anywhere in the sourced material is any supervision
+      HIERARCHY — the multi-preceptor list is flat and unordered, with no evidence of
+      attending/fellow/resident/intern role-tagging — and fourth-year away rotations at
+      institutions with no prior relationship to the home school remain an unresolved
+      onboarding-chain problem this stage's tracing did not touch. Dentistry breaks the
+      model outright: per ../domains/dentistry.yaml, supervision is per-PROCEDURE by a
+      faculty "clinical practice unit" (~1 lead + 1-2 instructors per 2-student team)
+      signing off each clinical step, and progression is competency-/quota-based rather
+      than calendar-based — a 2:1 preceptor-assignment ratio primitive has nothing to bind
+      to, confirmed architecturally (not just conceptually) since no procedure/quota-based
+      progression model was found anywhere across the sourced Placements, Sites, or
+      Curriculum Mapping documentation.
+    accreditation_link: >
+      ACPE Standard 3, Key Element 3.3.e (Student-to-preceptor ratio, 2:1 maximum)
+      [Transfer] — element tracing confirms the underlying data model exists
+      (Site/Location Slots) and that an identically-shaped 2:1 standard is already
+      satisfied in production for a different discipline (COA Standard F.7, nurse
+      anesthesia), but the only confirmed match-time surfacing mechanism (PA's Max
+      Placement Limit banner) warns rather than blocks, so "Transfer" describes the data
+      model's readiness, not a live real-time block that exists today. COCA Standard 6,
+      Element 6.10 — filterable rotation attributes rolling up into a per-student
+      pre-clerkship completion checklist [Configure] — the Placement Clearance Dashboard's
+      existing filter bar (Rotation, Setting) is a confirmed real analog for one of the
+      three required attributes ("setting is inpatient/outpatient"); "residents present at
+      site" and "supervising physician is a DO" still have no confirmed field to attach
+      to. ACPE Standard 3, Key Elements 3.2.b & 3.2.d — four required APPE settings plus
+      the 1,440-hour / 160-hour-minimum rules gating graduation clearance [Configure].
+      LCME Standard 8, Element 8.6 (Monitoring of Completion of Required Clinical
+      Experiences) — a single program-wide view of every student's required rotation
+      completion status [Transfer; "the strongest fit of any standard in this document"].
+    competitor_comparison: >
+      Competitors are at parity or ahead on matching mechanics and behind on gating logic.
+      CORE ELMS SmartMatch "auto-matches students to sites/preceptors using customizable
+      rules and preferences with instant results," independently corroborated by reviewers
+      ("cut down matching time significantly") — but the same reviewers say SmartMatch's
+      "extensive settings lack clear setup documentation/checklists"
+      (https://www.capterra.com/p/265422/CORE-ELMS/reviews/). one45, eMedley (eduSched),
+      Elentra and Leo all ship lottery/preference-based allocation. Two domain-relevant
+      competitors name something closer to this stage's actual constraint, though neither
+      publishes screen-level detail to compare against: axiUm — the dominant dental
+      academic system (~90% U.S. dental-school share) — markets "student-patient matching
+      based on graduation requirements" as a shipped Practice Management feature, the
+      right general shape for Dentistry's quota-based model; and MedHub (via eValue, UME)
+      names "site eligibility verification" as a shipped feature for DO/MD programs.
+      Neither claim can be verified past marketing language, so the core comparison still
+      holds: no competitor in this research publicly documents an accreditor-specific hard
+      constraint enforced at assignment time with enough detail to compare
+      element-by-element (the ACPE 2:1 block, the COCA DO-supervision checklist). Prism's
+      differentiated claim in this stage is therefore rule ENFORCEMENT tied to a named
+      standard, not matching throughput — and it should be built once, parameterized per
+      accreditor, rather than per customer.
+    key_findings:
+      - subject: "Pharmacy"
+        headline: "ACPE's 2:1 cap requires a real-time block; Prism only warns"
+        severity: "gap"
+        detail: "The one confirmed instance of a ratio signal surfacing to a coordinator at match time is the PA-exclusive Max Placement Limit banner, and it is advisory. ACPE 3.3.e allows no more than two students per precepting pharmacist in most situations, with documented exceptions."
+      - subject: "Pharmacy"
+        headline: "An identical 2:1 standard already passes in production for nurse anesthesia"
+        severity: "none"
+        detail: "The human-declared number-of-offers count on a Site/Location Slot is confirmed by the COA Accreditation Standards Support Guide as the documented evidence for COA F.7's live 2:1 supervision-ratio standard, so the underlying data model is proven rather than hypothetical."
+      - subject: "DO"
+        headline: "Two of COCA 6.10's three rotation attributes have no field to attach to"
+        severity: "gap"
+        detail: "Element tracing found a real Setting filter on the Placement Clearance Dashboard covering inpatient versus outpatient, but the same screen's Student Attributes filter refers to enrollment status, not clinical eligibility — leaving DO-supervised and residents-present uncapturable."
+      - subject: "Medicine"
+        headline: "Multiple preceptors per placement, and post-publish swaps, are already confirmed"
+        severity: "none"
+        detail: "The Program Administrator FAQ confirms a placement can associate several preceptors and that preceptors or faculty can be added or swapped after the placement is published, so a mid-clerkship change of supervisor is less of a data-model gap than previously framed."
+      - subject: "Medicine"
+        headline: "The multi-preceptor list is flat — no attending/fellow/resident hierarchy exists"
+        severity: "gap"
+        detail: "Medicine supervises by team, but nothing in the sourced material shows role-tagging or ordering across supervisors. Fourth-year away rotations at institutions with no prior relationship to the home school also remain an unresolved onboarding-chain problem."
+      - subject: "Dentistry"
+        headline: "No procedure- or quota-based progression model exists in any sourced doc"
+        severity: "gap"
+        detail: "Dental supervision is per-procedure by a clinical practice unit (roughly one lead plus one to two instructors per two-student team) and progression is competency- and quota-gated, so a 2:1 ratio primitive has nothing to bind to. axiUm markets graduation-requirement-based student-patient matching, the right general shape."
+
+  - stage: "7. Activating the preceptor in the assessment workflow (forms, midpoint feedback, grade SLA)"
+    current_state_in_prism: >
+      Half shipped, and the shipped half is now element-verified rather than
+      architecturally inferred. The preceptor-facing direction traces down to real
+      screens: the confirmed Setup -> Forms/Evaluations -> Add Assignment workflow means
+      the same evaluation object is reused per site by design, a no-login "delegator link"
+      lets an uncredentialed preceptor open and complete a form straight from an email
+      (confirmed for PA; structurally mirrored by OT's link-based FWPE flow), and the PT
+      playbook's CIET v2.0 instrument shows the exact midpoint-plus-final mechanics
+      (in-product training-quiz gate, anchor-relative Due Date on the Middle anchor,
+      one-click "Copy Responses" into the final) that anchor-relative scheduling maps
+      almost one-to-one onto LCME 9.7's midpoint-formative-feedback requirement (rated
+      Transfer; see
+      flows/preceptor-site-onboarding--07-activating-the-preceptor-in-the-assessment.yaml).
+      The student-facing direction is no longer accurately described as wholly blocked:
+      student evaluation OF the preceptor and site already ships today inside that same
+      Forms/Evaluations engine — PT-PTA's PTSE 1 (site) and PTSE 2 (Clinical Instructor)
+      are in production now, and the Nursing playbook independently confirms an equivalent
+      "Student Evaluation of Preceptor" custom-form pair outside PT — so this half was never
+      actually gated behind the Surveys & Course Evaluations pillar; that separate pillar
+      has itself since shipped too (CORRECTED 2026-08-26 per Exxat PM confirmation — see
+      ../prism/capability-map.yaml, Surveys & Course Evaluations pillar), so the "roadmap
+      Q1 2027" framing no longer applies either way;
+      what's unconfirmed is only whether an equivalent validated instrument exists yet for
+      DO/Pharmacy/Dentistry/Medicine, a configuration/content-build task on a proven
+      engine rather than a wait for an unshipped pillar. The program-facing direction is
+      the piece that stays genuinely unresolved: no purpose-built six-week grade-SLA
+      compliance report exists — Custom Reports' Forms-and-Evaluations data source does
+      expose the raw Due Date/Submitted Date/Evaluator Role fields a coordinator would
+      need, but nobody ships the rollup pre-built.
+    pain_or_gap: >
+      A preceptor who is credentialed, oriented, and assigned is still not ONBOARDED until
+      they are reliably producing assessment data on schedule — that data is the only
+      durable evidence that any of the preceding six stages happened. The first of the two
+      originally-named misses is smaller than it looked:
+      student-evaluation-of-preceptor/site does not require an external survey tool the
+      way it first appeared — for PT-PTA and Nursing it already runs inside Prism's own
+      Forms/Evaluations engine (PTSE 1/2; Nursing's custom-form pair), publishable to a
+      site's Location Evaluations tab or routed to the CI directly (see
+      flows/preceptor-site-onboarding--07-activating-the-preceptor-in-the-assessment.yaml).
+      What is still a real miss is that no equivalent instrument is confirmed to exist yet
+      for the four target new domains, and that "share with students" for any non-PT form
+      requires an ad hoc Exxat support ticket rather than a self-service toggle. The
+      second named miss narrows but does not close: turnaround-time compliance reporting
+      against LCME 9.8's six-week grade SLA is still not a confirmed out-of-the-box report
+      — the anchor-relative primitive can fire the grade-due deadline and Auto
+      Notifications can remind the preceptor as it approaches, but the only way to see
+      whether the program AS A WHOLE is meeting the SLA is to hand-build a pivot report
+      against Due Date and Submitted Date in Custom Reports; no purpose-built compliance
+      dashboard exists. Dentistry again differs structurally: CODA 3-4 requires objective,
+      recurring evaluation of each FACULTY member across teaching, patient care,
+      scholarship, and service — a faculty-facing evaluation workflow that a targeted
+      keyword search across all seven discipline playbooks and the full help-center mirror
+      still did not surface, so this remains honestly unconfirmed rather than resolved,
+      though the Forms/Evaluations mechanism is architecturally reusable for it.
+    accreditation_link: >
+      LCME Standard 9, Element 9.7 (Formative Assessment and Feedback) — formal feedback
+      at least at the rotation midpoint, with compliance tracking per student/rotation
+      pair [Transfer — now confirmed concretely via the CIET v2.0 midterm-plus-final
+      workflow and its anchor-relative Due Date, not just the general scheduling
+      primitive]. LCME Standard 9, Element 9.8 (Fair and Timely Summative Assessment) —
+      final grades within six weeks of course/clerkship end [Configure; automatic
+      deadline-approach alerting to the preceptor is now confirmed via Auto Notifications,
+      but program-wide turnaround-time compliance reporting is still not a confirmed
+      out-of-the-box report]. ACPE Standard 3, Key Element 3.3.a — preceptor performance
+      evaluations on file [Configure; PTSE 2's school-reviewed "Student Evaluation of
+      Clinical Instructor" is a concrete, in-production instance of an evaluation-on-file,
+      though confirmed only for PT-PTA today]. ACPE Standard 7, Key Element 7.3.c —
+      standardized components and consistent student assessment across all sites offering
+      the same course [Transfer]. CODA Standard 3, Element 3-4 (Faculty evaluation
+      process) [Configure; faculty-facing evaluation workflow still unconfirmed after a
+      targeted search of all seven discipline playbooks and the help-center mirror]. LCME
+      Standard 8, Element 8.5 and COCA Standard 11, Element 11.2 (student evaluation of
+      instruction) — for the clerkship/preceptor/site slice these elements cover, no
+      longer accurately rated **Gap**-blocked-on-roadmap: PTSE 1/2 (PT-PTA) and an
+      equivalent Nursing custom-form pair confirm this already ships inside the shipped
+      Clinical & Experiential Education pillar today, not the Surveys & Course Evaluations
+      pillar — which has itself since shipped too (CORRECTED 2026-08-26 per Exxat PM
+      confirmation, see ../prism/capability-map.yaml) — downgraded to **Configure**, pending
+      an equivalent validated instrument for DO/Pharmacy/Dentistry/Medicine.
+    competitor_comparison: >
+      Every major competitor ships the survey half today, so Prism is racing here rather
+      than leading. CORE ELMS ships a survey module for "students, preceptors, or sites"
+      plus student evaluations of preceptors/sites with low-score alerts
+      (https://www.capterra.com/p/265422/CORE-ELMS/reviews/). E*Value creates evaluation
+      forms "for students, educators, activities, and sites" with automated low-score
+      alerts and forced comments (https://www.medhub.com/software/evalue/). eMedley's
+      eValuate+ covers clinical/preceptor/site evaluations, OSCEs and 360-degree feedback.
+      Leo, Elentra, one45 and New Innovations all ship evaluations today as well. This
+      pass found one genuine element-level parity point: Leo's public docs are granular
+      enough to confirm it ships the same no-login, on-demand evaluation-link mechanism
+      Prism uses to activate a preceptor who has no portal account
+      (davinci-ed.com/resources/leos-on-demand-evaluations) — the one place in this
+      stage's competitive landscape where a screen-level, not just feature-level,
+      comparison is possible. Beyond that, Prism's remaining edge in this stage is still
+      timing-independent: the anchor-relative scheduling primitive is not publicly
+      documented at any competitor (checked explicitly for eMedley and Leo, and E*Value's
+      own marketing copy is not independently verifiable on this point), so "midpoint
+      feedback fires automatically off each placement's own mid date" is a claim only
+      Prism can currently make — and it is exactly what LCME 9.7 asks for.
+    key_findings:
+      - subject: "Medicine"
+        headline: "CIET v2.0's midterm-plus-final workflow maps almost one-to-one onto LCME 9.7"
+        severity: "none"
+        detail: "The PT playbook shows an in-product training-quiz gate, an anchor-relative Due Date set on the Middle anchor, and one-click Copy Responses into the final — midpoint formative feedback firing automatically off each placement's own mid date, a claim no competitor publicly documents."
+      - subject: "Medicine"
+        headline: "No out-of-the-box report proves the six-week grade SLA program-wide"
+        severity: "configure-needed"
+        detail: "Auto Notifications can remind a preceptor as the LCME 9.8 deadline approaches and Custom Reports exposes the raw Due Date, Submitted Date and Evaluator Role fields, but whole-program turnaround compliance requires hand-building a pivot; no purpose-built dashboard ships."
+      - subject: "Pharmacy"
+        headline: "Student evaluation of preceptor ships today, but not for the target domains"
+        severity: "configure-needed"
+        detail: "PT-PTA's PTSE 1 and PTSE 2 plus an equivalent Nursing custom-form pair already run inside the shipped Forms/Evaluations engine, so this was never blocked on Surveys, which has itself shipped too (see capability-map.yaml). Missing: a validated instrument for DO, Pharmacy, Dentistry, Medicine."
+      - subject: "DO"
+        headline: "COCA 11.2 and LCME 8.5 should be re-rated from Gap to Configure"
+        severity: "configure-needed"
+        detail: "For the clerkship, preceptor and site slice these elements cover, student evaluation of instruction already ships inside the Clinical & Experiential Education pillar rather than waiting on the Surveys & Course Evaluations pillar — which has itself since shipped too (CORRECTED 2026-08-26 per Exxat PM confirmation, see ../prism/capability-map.yaml)."
+      - subject: "Dentistry"
+        headline: "CODA 3-4's faculty-facing evaluation workflow surfaced in no search"
+        severity: "gap"
+        detail: "A targeted keyword sweep across all seven discipline playbooks and the full help-center mirror failed to find recurring objective evaluation of each faculty member across teaching, patient care, scholarship and service, though the Forms/Evaluations mechanism is architecturally reusable for it."
+      - subject: "Pharmacy"
+        headline: "Sharing a non-PT form with students requires an ad hoc Exxat support ticket"
+        severity: "configure-needed"
+        detail: "There is no self-service share-with-students toggle outside PT, so every new domain's student-evaluation instrument carries a support dependency on top of the content build itself."
+
+  - stage: "8. Ongoing site/preceptor quality review, agreement renewal & offboarding"
+    current_state_in_prism: >
+      Split verdict on element-level inspection, not a flat Gap. The ongoing-review
+      DATA-CAPTURE layer is real and shipped end to end — a self-service Form Setup
+      builder, a per-site/per-location Assessment-logging drawer, and a Comprehensive
+      Assessment Report roll-up, confirmed screen-by-screen in
+      preceptor-site-onboarding--08-ongoing-site-preceptor-quality-review-agreement.yaml —
+      but that report is a per-site Yes/No compliance rollup, not the statistical
+      comparison ACROSS sites the standards ask for; Curriculum Mapping can tag objectives
+      to sites but no SHIPPED pillar performs outcome analytics, and the natural homes —
+      Exam Management (Q2 2027) and Accreditation Management (Q3 2027) — are both
+      unshipped, per ../prism/capability-map.yaml. The renewal half of this stage needed
+      correcting rather than re-hedging: a Contract object DOES exist and IS the
+      terminating/recurring edge this stage was said to lack — Sites > Contracts, tied to
+      the Site entity, with mandatory start/expiration dates, template-based generation,
+      and Auto Notification alerts before expiry (same flow file) — so "no contract
+      object, nothing to renew" was false, not merely unconfirmed. What remains genuinely
+      unconfirmed is a distinct RENEWAL action: nothing in the help documentation versions
+      or supersedes an expiring contract with its replacement — renewal today is manually
+      adding a new Contract record before the old one lapses, not a tracked lifecycle
+      transition.
+    pain_or_gap: >
+      This stage is where onboarding stops being a one-time task and becomes a standing
+      obligation, and it is the stage most likely to be discovered as a finding rather
+      than managed. COCA 6.11 asks for a statistical comparison of student outcomes across
+      all core/required sites plus plans to address gaps found — that is
+      variance/effect-size analysis by site, flagging sites outside the
+      comparable-outcomes band, not a report that falls out of the rotation engine (its
+      gap_notes say exactly that: it "should be scoped explicitly into the Accreditation
+      Management build"). The same shape recurs as ACPE 7.3.c's cross-site grading-drift
+      detection, LCME 8.7's comparability reporting, and CODA 5-3's
+      chart-audit-and-corrective-action loop — and element-level tracing confirms
+      Interventions, the closest existing primitive to a CODA 5-3 corrective-action
+      tracker, is a free-text mode/details log with a follow-up date and, per the help
+      center's own words, no report built on top of it at all. Offboarding is not the
+      silent exposure it first looks like at the Site level — Prism explicitly blocks
+      Delete Site once any placement history exists and documents marking a site Inactive
+      as the sanctioned path specifically to preserve past data — but that same tracing
+      found no documented guard rail stopping Delete Personnel on a departing preceptor
+      with placement/evaluation history, unlike the Site-level protection, so what
+      actually gets retained can depend on which button an individual coordinator reaches
+      for. And per ../accreditation/lcme.yaml's FSMB note the retention horizon runs well
+      past graduation, while nothing confirms Prism enforces a retention DURATION even
+      where deletion is blocked — that half of the hedge stands.
+    accreditation_link: >
+      COCA Standard 6, Element 6.11 (Comparability Across Clinical Education Sites) —
+      policy plus most-recent statistical-analysis report comparing outcomes across all
+      core/required sites [Gap]. ACPE Standard 7, Key Element 7.3.c —
+      cross-site/cross-preceptor drift analytics [Transfer on forms, but drift analytics
+      itself "is not confirmed as an existing report"]. LCME Standard 8, Element 8.7
+      (Comparability of Education/Assessment) [Configure]. CODA Standard 5, Element 5-3
+      (CQI for the patient care program) — chart-audit sampling, deficiency coding,
+      root-cause analysis and corrective-action tracking [Gap]. CODA Standard 1, Element
+      1-2 (Institutional Effectiveness) — continuous, broad-based aggregation of evidence
+      rather than a one-time pre-site-visit compilation [Gap]. ACPE Standard 3, Key
+      Element 3.5.b again, for agreement currency at renewal — element-level verified in
+      preceptor-site-onboarding--08-ongoing-site-preceptor-quality-review-agreement.yaml
+      as two real, shipped screens (Contract Auto Notifications; the Contract Status
+      column on the Placement Clearance Dashboard), with the alerting and per-placement
+      currency check both confirmed shipped and only the distinct renewal/versioning
+      action unconfirmed.
+    competitor_comparison: >
+      The most exposed stage competitively. MedHub/E*Value ships a named "Accreditation
+      Automation" product with customizable Annual Program Evaluation forms, program
+      scorecards, CLER visit/letter/response-action tracking, ADS-formatted report
+      generation, and benchmarking against national/institutional trends
+      (medhub.com/accreditation-automation) — recorded in ../competitors/e-value.yaml as
+      "the single biggest publicly-verifiable gap found in this research." New Innovations
+      ships CLER Visit Management, NAS Accreditation Tools, APE with trend and
+      citation/concern tracking, and CCC Milestone Review. axiUm markets "CODA-Ready
+      Reporting" for dentistry today. Leo has been an AAMC-authorized Curriculum Inventory
+      vendor since 2013. The strategic read is consistent: MedHub's and New Innovations'
+      accreditation tooling is documented as GME/ACGME-specific, so a site- and
+      preceptor-level comparability capability scoped natively against COCA 6.11 and ACPE
+      7.3.c is the openable seam, and it argues for building cross-site comparability INTO
+      the Accreditation Management pillar (Q3 2027) rather than assuming it emerges from
+      the rotation engine. Element-level tracing in
+      preceptor-site-onboarding--08-ongoing-site-preceptor-quality-review-agreement.yaml
+      confirms this asymmetry holds only at the marketing-claim level, not the screen
+      level: none of MedHub/E*Value's, New Innovations', or axiUm's public documentation
+      is granular enough to compare field-for-field against Prism's own Comprehensive
+      Assessment Report or Interventions log, so every comparison above should be read as
+      claim-vs-claim, not screen-vs-screen, on both sides.
+    key_findings:
+      - subject: "DO"
+        headline: "COCA 6.11's cross-site statistical comparison has no shipped home"
+        severity: "gap"
+        detail: "It requires variance/effect-size analysis by site, flagging sites outside the comparable-outcomes band, plus plans to address gaps found. Its own gap notes say it should be scoped explicitly into the Accreditation Management build — a pillar not shipping until Q3 2027."
+      - subject: "Pharmacy"
+        headline: "Cross-site grading-drift analytics is not confirmed as an existing report"
+        severity: "gap"
+        detail: "ACPE 7.3.c rates Transfer on the forms themselves, but drift detection across sites and preceptors is a separate analytic layer, and no shipped pillar performs outcome analytics — the natural homes, Exam Management (Q2 2027) and Accreditation Management (Q3 2027), are both unshipped."
+      - subject: "Dentistry"
+        headline: "Interventions is a free-text log with no report built on top of it"
+        severity: "gap"
+        detail: "It is the closest existing primitive to CODA 5-3's corrective-action tracker but captures only mode, details and a follow-up date, and the help center itself states no report sits on it. CODA 5-3 needs chart-audit sampling, deficiency coding and root-cause analysis."
+      - subject: "Medicine"
+        headline: "The Comprehensive Assessment Report is a per-site Yes/No rollup, not a comparison"
+        severity: "configure-needed"
+        detail: "Form Setup, the per-site assessment-logging drawer and the roll-up report are confirmed shipped end to end, so the data-capture layer is real. It just stops short of the cross-site statistical comparison LCME 8.7 asks for."
+      - subject: "Medicine"
+        headline: "Delete Site is blocked with placement history; Delete Personnel is not"
+        severity: "gap"
+        detail: "Prism documents marking a site Inactive as the sanctioned path specifically to preserve past data, but tracing found no equivalent guard rail on deleting a departing preceptor carrying placement or evaluation history, and no confirmed enforced retention duration."
+      - subject: "Pharmacy"
+        headline: "Contracts alert before expiry, but renewal means manually adding a new record"
+        severity: "configure-needed"
+        detail: "ACPE 3.5.b at renewal is element-verified as two shipped screens — Contract Auto Notifications and the Contract Status column on the Placement Clearance Dashboard. Nothing in the help documentation versions or supersedes an expiring contract, so renewal is not a tracked lifecycle transition."
+
+# Where this journey structurally differs by domain. The stages above are the same
+# spine everywhere; these are the places where the same stage means a different thing.
+domain_structural_differences:
+  DO: >
+    Highest-volume, most-distributed version of this journey. Per ../domains/do.yaml, a COM
+    must manage HUNDREDS of independently-recruited community preceptor relationships across
+    many unaffiliated sites, rather than a handful of institutionally-contracted affiliates —
+    so Stages 2-4 (contract, credential, orientation) repeat at a scale no other domain
+    faces, against a documented and worsening site-capacity bottleneck. Two DO-specific data
+    requirements ride on the preceptor record: the supervising physician's DO status
+    (COCA 6.10) and OMM/OMT manual-skills competency assessed DURING clerkships (200-500
+    hours, no MD or allied-health analog), which means site and preceptor records must carry
+    a manipulative-medicine competency dimension in addition to the usual case-log/EPA data.
+  Pharmacy: >
+    The most RULE-DENSE version. Supervision is a clean one-to-one preceptor model, which
+    makes the data model simplest, but ACPE attaches hard numeric constraints at nearly
+    every stage: a 2:1 student-to-preceptor cap enforced in real time (3.3.e), a
+    majority-U.S.-licensed-pharmacist test across each student's preceptor roster (3.3.a),
+    per-course orientation completed BEFORE a student is accepted (3.3.c), and hour/setting
+    thresholds (300 IPPE hours with two 75-hour minimums; 1,440 APPE hours across four
+    required settings). The two-tier IPPE/APPE split also means the same site may be
+    onboarded twice under different expectations — a longitudinal IPPE site woven through
+    the didactic years versus an APPE site in the coursework-free capstone year.
+  Dentistry: >
+    Structurally the OUTLIER, and the reason this journey cannot be modeled once and
+    replicated. Per ../domains/dentistry.yaml, most clinical education happens in the
+    school's OWN teaching clinic on a longitudinal comprehensive-care model, with
+    extramural/community sites layered on top rather than forming the backbone.
+    Supervision is per-PROCEDURE by a faculty "clinical practice unit" (~1 lead + 1-2
+    instructors per 2-student team) signing off each clinical step, and progression is
+    quota- and competency-gated rather than calendar-gated — so "preceptor onboarding"
+    largely becomes FACULTY CALIBRATION (CODA 2-6) and recurring faculty evaluation
+    (CODA 3-4), not external-site contracting. Stage 6's ratio primitive has nothing to
+    bind to. Note the competitive corollary from ../competitors/axium.yaml: axiUm holds
+    ~90% of U.S. dental schools but has no external-placement engine, so Prism's realistic
+    dental entry point for THIS journey is dental-adjacent allied programs (dental hygiene,
+    dental assisting) that genuinely route students to external sites — plus the extramural
+    community-clinic slice of predoctoral programs.
+  Medicine: >
+    The version where "the preceptor" is least stable as a record. Per
+    ../domains/medicine.yaml, supervision is a TEAM (attending → fellow → resident → intern),
+    not a single named supervisor, so LCME 9.3's attestation and LCME 3.1's
+    resident-participation requirement both need multiple supervisor roles on one placement.
+    The evaluating site can change mid-clerkship as students rotate services, and a
+    meaningful share of fourth-year rotations are AWAY rotations at institutions with no
+    prior relationship to the home school — meaning Stage 2's affiliation agreement and
+    Stage 5's access provisioning must sometimes be executed for a single student, once,
+    at an institution the program will never use again. That is the most demanding possible
+    test of a lightweight site/preceptor onboarding path, and the one most likely to be
+    handled entirely off-system today.
+
+sources:
+  - "../prism/capability-map.yaml (Exxat PRISM Academic Suite infographic v7_FNL; internal 'Managing Course Activities – Activating Assignments (Prism)' doc)"
+  - "../accreditation/acpe.yaml — ACPE Standards 2025, Key Elements 3.1.a, 3.2.b/3.2.d, 3.3.a, 3.3.c, 3.3.e, 3.5.b, 7.3.c, 7.5.a"
+  - "../accreditation/coca.yaml — COCA 2026 COM Continuing Accreditation Standards, Elements 5.4, 6.9, 6.10, 6.11, 11.2"
+  - "../accreditation/lcme.yaml — Functions and Structure of a Medical School, Elements 1.4, 3.1, 5.5, 8.5, 8.6, 8.7, 9.3, 9.7, 9.8"
+  - "../accreditation/coda.yaml — CODA Accreditation Standards for Dental Education Programs, Elements 1-2, 2-6, 3-4, 4-6, 5-3"
+  - "../domains/do.yaml, ../domains/pharmacy.yaml, ../domains/dentistry.yaml, ../domains/medicine.yaml (clinical_education_shape + distinctive_pain_points)"
+  - "../competitors/core-elms.yaml — affiliation agreement + preceptor license tracking, SmartMatch, survey module, preceptor-employer account defect"
+  - "../competitors/emedley.yaml — eKeeper affiliation agreements with auto-expiration + preceptor pay; eduSched site capacity management"
+  - "../competitors/e-value.yaml — automated onboarding document collection, Automated Credentials Monitoring, Accreditation Automation (ACGME NAS/CLER/ADS)"
+  - "../competitors/new-innovations.yaml — Credentialling Module; CLER Visit Management, NAS tools, APE"
+  - "../competitors/leo-davinci.yaml — no-login on-demand evaluation links; no public compliance/credentialing module"
+  - "../competitors/axium.yaml — in-house teaching-clinic model, no external placement engine, CODA-Ready Reporting"
+  - "../competitors/one45.yaml, ../competitors/elentra.yaml, ../competitors/medhub.yaml — allocation/lottery tooling and shipped evaluation modules"
+  - "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf"
+  - "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf"
+  - "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf"
+  - "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf"
+  - "https://www.aamc.org/news/so-many-medical-students-so-few-clerkship-sites"
+  - "../flows/preceptor-site-onboarding--02-affiliation-agreement-execution-contract-lifecycle-management.yaml"
+  - "../flows/preceptor-site-onboarding--06-student-assignment-ratio-capacity-and-eligibility.yaml"
+  - "../flows/preceptor-site-onboarding--07-activating-the-preceptor-in-the-assessment.yaml"
+  - "../flows/preceptor-site-onboarding--08-ongoing-site-preceptor-quality-review-agreement.yaml"
+
+last_researched: 2026-08-24

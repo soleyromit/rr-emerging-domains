@@ -1,0 +1,204 @@
+# Element-level ground truth underneath accreditation-self-study.yaml, stage 8.
+# See _TEMPLATE.yaml for field meanings. Every accreditation_citation and
+# competitor_equivalent claim below traces to a real source file in confirmed_by.
+# SCHEMA v2 (2026-08-24): analysis fields migrated from step level down to each element.
+flow_name: "Self-Study Evidence Assembly, Submission Export & Site Visit Support"
+maps_to_journey: "accreditation-self-study.yaml, stage 8"
+persona: "Compliance / Accreditation Liaison (see ../personas/role-compliance-accreditation-liaison.yaml)"
+
+steps:
+  - screen: "Standards (Curriculum Mapping setup)"
+    navigation_path: "Program Details > Standards"
+    elements:
+      - element: "Accreditation Standards list (left panel)"
+        type: "read-only hierarchical list, pre-populated per configured domain"
+        data_shown: "The program's accreditor standard tree (confirmed pre-loaded today for ARC-PA and ACOTE by degree level; CAPTE and CCNE/CCNE-Master's/COA appear as later-confirmed pre-loaded sets in the Nursing/PT accreditation guides)"
+        gates_on: []
+        accreditation_citation: "Foundational to every standard cited elsewhere in this journey (COCA 11.9, ACPE 7.5.b, LCME 1.1, CODA 1-2, and everything mapped in stages 2-7) — none of those standards can accumulate evidence anywhere in Prism until they exist as an entry in THIS list."
+        competitor_equivalent: "Elentra's Curriculum Explorer/Search/Matrix uses 'tag management/mapping' to link standards (elentra.yaml) — directionally the same pre-loaded-standard-set pattern, but Elentra's public marketing pages do not enumerate which accreditor trees ship pre-loaded, so no element-level comparison of coverage is supportable from public material."
+        gap_severity: "configure-needed"
+        gap_note: "This is the element where the pre-load gap actually lives. ARC-PA, ACOTE, and (per the Nursing/PT accreditation guides) CAPTE/CCNE/COA are confirmed pre-loaded. COCA, LCME, ACPE 2025, and CODA standard trees are NOT confirmed pre-loaded anywhere in the source material, so for the four new domains this list starts empty."
+      - element: "Activate / Deactivate toggle (edit-pencil drawer)"
+        type: "toggle"
+        data_shown: ""
+        gates_on: ["Whether the standard is selectable for course/objective mapping elsewhere in the product; deactivating a standard that already has mappings CASCADES to delete those mappings, with no separate confirmation of what is lost."]
+        accreditation_citation: "Gating control for every standard cited in this journey (COCA 11.9, ACPE 7.5.b, LCME 1.1, CODA 1-2) — a standard that is not activated here cannot be mapped or reported on downstream. Not itself an evidence source."
+        competitor_equivalent: "Elentra's 'tag management/mapping' (elentra.yaml) implies an equivalent enable-for-mapping concept, but Elentra's public pages do not expose screen-level admin mechanics — specifically no activate toggle and no cascade-on-deactivate behavior is described — so no element-exact comparison is possible."
+        gap_severity: "configure-needed"
+        gap_note: "Functional and domain-agnostic, but there is nothing to toggle for COCA/LCME/ACPE/CODA until the standards exist (see the Standards list and the +Add drawer on this same screen). Documented rough edge that applies to all domains equally: deactivating a mapped standard cascade-deletes its mappings without confirming what is lost."
+      - element: "+Add <Standard> drawer — Standard code / Standard description / Annotations fields"
+        type: "input fields in a drawer"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "For COCA 11.9, ACPE 7.5.b, LCME 1.1, and CODA 1-2 this is currently the ONLY entry point by which those standards can come to exist in Prism at all — every downstream mapping and report in this flow depends on data typed into these three fields."
+        competitor_equivalent: "No competitor teardown reviewed (elentra.yaml, one45.yaml, axium.yaml, e-value.yaml) documents a manual standard-authoring form at field level, so whether competitors require the same manual entry for an unsupported accreditor is unconfirmed rather than known-better or known-worse."
+        gap_severity: "configure-needed"
+        gap_note: "The sharpest configuration cost on this screen: for the four new domains, every standard code, description, and annotation would have to be entered once through this drawer as a configuration project before mapping (or this stage's later reports) can begin."
+      - element: "6-dot drag handle (reorder)"
+        type: "drag-to-reorder control"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "None — display-ordering control only; no standard's evidence lives here."
+        competitor_equivalent: "Not comparable from public material: no reviewed competitor file describes list-ordering controls at all."
+        gap_severity: "none"
+        gap_note: "Shipped, domain-invariant UI affordance. Nothing accreditor-specific needs to change for the four new domains."
+      - element: "Delete (vertical-ellipsis menu on the standard drawer)"
+        type: "button, with a confirmation dialog"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "None — record-management control; no standard's evidence lives here."
+        competitor_equivalent: "Not comparable from public material: no reviewed competitor file describes standard-record deletion at all."
+        gap_severity: "none"
+        gap_note: "Shipped, domain-invariant, and unlike the Activate/Deactivate toggle it does present a confirmation dialog."
+    action: "Program admin activates the pre-loaded standard set for an already-supported discipline, or manually enters standard code/description/annotation for each element of a not-yet-preloaded accreditor (this is the screen every downstream mapping, report, and export in this flow depends on)."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
+
+  - screen: "Curriculum Mapping > Mapping Reports (Heatmap, Mapped Standards, Cumulative)"
+    navigation_path: "Dashboard > Curriculum Mapping > Mapping Reports > [Heatmap Report | Mapped Standards Report | Cumulative Report]"
+    elements:
+      - element: "Heatmap Report grid"
+        type: "read-only cross-tab report"
+        data_shown: "X-axis = accreditation standards, Y-axis = course offerings, cell = count of mapped course measures — the direct 'where are our gaps' view for self-study drafting."
+        gates_on: []
+        accreditation_citation: "Directly evidences COCA 11.9, ACPE 7.5.b, LCME 1.1, and CODA 1-2 IF the underlying standard tree from step 1 is COCA/LCME/ACPE/CODA-loaded rather than the currently-confirmed ARC-PA/CAPTE/ACOTE/CCNE/COA sets."
+        competitor_equivalent: "Elentra claims 'more than 40% of the Data Collection Instrument (DCI) for CACMS' coverage and native MedBiquitous support (elentra.yaml) — a comparable coverage-visualization claim, but Elentra's public pages do not expose grid mechanics (axes, cell semantics), so the comparison holds at the coverage-claim level, not the element level."
+        gap_severity: "configure-needed"
+        gap_note: "The grid itself is shipped and proven for 5+ accreditors (ARC-PA, CAPTE, ACOTE, CCNE, COA per capability-map.yaml) and is accreditor-agnostic — it renders whatever standard tree exists. What it needs for the four new domains is the step-1 configuration layer, not new engineering."
+      - element: "Mapped Standards Report — Directly vs. Indirectly Mapped column"
+        type: "column in an exportable report"
+        data_shown: "Classifies each mapping as Directly Mapped (created on the item itself) or Indirectly Mapped (inherited via parent-child standard hierarchy)."
+        gates_on: []
+        accreditation_citation: "Directly evidences COCA 11.9, ACPE 7.5.b, LCME 1.1, and CODA 1-2 IF the step-1 standard tree is loaded for those accreditors; the direct/indirect distinction is what lets a self-study narrative claim coverage without overstating inherited mappings."
+        competitor_equivalent: "Not supportable at element level: no reviewed competitor file (elentra.yaml, one45.yaml, axium.yaml, e-value.yaml) describes a direct-vs-inherited mapping classification by name, so this column has no confirmed counterpart rather than a known-equivalent one."
+        gap_severity: "configure-needed"
+        gap_note: "Shipped and accreditor-agnostic; the classification depends on the parent-child hierarchy entered in step 1, which for the four new domains does not exist yet."
+      - element: "Cumulative Report anchor selector (Course Offerings vs. Standards set)"
+        type: "report filter / anchor-mode toggle"
+        data_shown: "One sheet per course (every mapping as a row) if anchored by Course Offerings, or one sheet per standard list (every course-mapping instance for that list, cross-referenced to linked standards) if anchored by Standards."
+        gates_on: []
+        accreditation_citation: "Supports COCA 11.9, ACPE 7.5.b, LCME 1.1, and CODA 1-2 evidence assembly in the standards-anchored mode (one sheet per standard list is the self-study-shaped output), conditional on the step-1 tree being loaded for those accreditors."
+        competitor_equivalent: "Not supportable at element level: Elentra's public material names DCI coverage but no anchor-mode or per-sheet export structure; no other reviewed competitor file describes report anchoring at all."
+        gap_severity: "configure-needed"
+        gap_note: "Shipped and accreditor-agnostic; the standards-anchored mode has nothing to anchor to for COCA/LCME/ACPE/CODA until step 1 is configured."
+      - element: "B2 Instructional Objectives Report (ARC-PA-formatted export)"
+        type: "report / multi-tab Excel export"
+        data_shown: "One tab per standard with >=1 mapped objective; sub-lettered standards (e.g. B2.06a-f) consolidated onto one tab — an edition-specific, accreditor-formatted export, not a generic coverage matrix."
+        gates_on: []
+        accreditation_citation: "ARC-PA 6th Edition Standard B2 only. No COCA 11.9 / ACPE 7.5.b / LCME 1.1 / CODA 1-2 equivalent of this element exists — this is the one element on this screen that is accreditor-specific rather than accreditor-agnostic."
+        competitor_equivalent: "Elentra's '40% of the CACMS DCI' claim (elentra.yaml) is the closest documented analogue of an accreditor-formatted export, but it is a coverage percentage for a different accreditor, not a per-standard tab structure, so this is a directional comparison only."
+        gap_severity: "gap"
+        gap_note: "Unlike its three siblings on this screen, this element does not generalize by configuration — it is hard-shaped to ARC-PA's 6th Edition B2 structure. No COCA/LCME/ACPE/CODA-formatted export template is confirmed anywhere in the source material, so for the four new domains this element has no counterpart to configure."
+    action: "Liaison (or a delegate faculty member) pulls the standard-by-standard evidence view — visually via the Heatmap, or as a downloadable, accreditor-formatted spreadsheet via Mapped Standards/Cumulative/B2 — to compile into the narrative sections of the self-study."
+    confirmed_by: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (Curriculum Mapping pillar, 'Mapping report suite' and 'Heatmap Report' features, lines ~444-461); navigation confirmed via /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/Nursing/Accreditation Guides/CCNE Accreditation Standards Support Guide.md (lines 224-329, 'Dashboard -> Curriculum Mapping -> Mapping Reports -> Heatmap Report' / 'Cumulative Report')"
+
+  - screen: "Site Assessment Form Setup + Comprehensive Assessment Report"
+    navigation_path: "Sites > Setup > Form Setup (build the form) / Sites > Reports > Comprehensive Assessment Report (pull results)"
+    elements:
+      - element: "'Create New Form' builder"
+        type: "form builder (sections + configurable question elements)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "ARC-PA Standard B3.02 a-c ('Can be included in Appendix 15 of the SSR') per /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md, lines 293-319 — this builder is where the questions that satisfy B3.02 are authored. No equivalent COCA/LCME/ACPE/CODA element-to-appendix mapping is confirmed."
+        competitor_equivalent: "None nameable: no reviewed competitor file (elentra.yaml, one45.yaml, axium.yaml, e-value.yaml) describes a site-visit form builder by name, so no element-level comparison is possible from public sources — stated explicitly rather than guessed."
+        gap_severity: "none"
+        gap_note: "Shipped and domain-invariant. Because the form is fully custom-built, adapting it to a COCA/LCME/ACPE/CODA site-visit expectation is authoring work inside a shipped tool, not a product gap."
+      - element: "'Add assessment' action (per Site/Location > Assessments tab)"
+        type: "button"
+        data_shown: "Ties a completed assessment to a specific site/location record."
+        gates_on: []
+        accreditation_citation: "ARC-PA Standard B3.02 a-c (same SSR Appendix 15 lineage) — the site-to-assessment binding is what makes the resulting evidence attributable to a named clinical site. No COCA/LCME/ACPE/CODA appendix mapping confirmed."
+        competitor_equivalent: "None nameable: no reviewed competitor file describes attaching a site-visit assessment to a site record, so no element-level comparison is possible from public sources."
+        gap_severity: "none"
+        gap_note: "Shipped and domain-invariant; nothing accreditor-specific about it."
+      - element: "Comprehensive Assessment Report — 'Select Form' filter"
+        type: "report filter"
+        data_shown: "Aggregates assessment responses across sites/locations for a chosen custom form; can be scoped to initial site visit vs. in-rotation assessment."
+        gates_on: []
+        accreditation_citation: "ARC-PA Standard B3.02 a-c ('Can be included in Appendix 15 of the SSR') per the ARC-PA 6th Edition report guide, lines 293-319 — this filter produces the actual appendix-ready artifact. No equivalent COCA/LCME/ACPE/CODA element-to-appendix mapping is confirmed for it."
+        competitor_equivalent: "None nameable: no reviewed competitor file describes an aggregate site-assessment report, so the form-builder-plus-aggregate-report pair has no confirmed counterpart in public competitor material."
+        gap_severity: "none"
+        gap_note: "This is the element that makes the screen the one genuinely shipped, discipline-agnostic evidence producer in this flow, mapping cleanly onto an accreditor's own SSR appendix structure today for a discipline (PA) that already has an accreditor-specific guide. Whether that pattern has been documented for COCA/LCME/ACPE/CODA appendix structures is unconfirmed, but the underlying report is domain-invariant Prism functionality."
+    action: "Program builds a custom site-assessment form aligned to accreditor site-visit expectations, program faculty/admin complete it for each clinical site, and the liaison pulls the Comprehensive Assessment Report as evidence that sites were formally evaluated (used directly in the ARC-PA B3.02 a-c self-study appendix)."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Configuring custom site assessment form in Exxat Prism-.md; site-visit tracking confirmed via /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/FAQs for PA.md (Q13-14, 'Site visits or surveys can be managed under the Assessment section... program-specific site visit forms can be configured')"
+
+  - screen: "Program Details > Setup > School Profile > Accreditation"
+    navigation_path: "Program Details > Setup > School Profile > Accreditation"
+    elements:
+      - element: "Accreditation entry drawer (+ icon to add / pencil icon to edit)"
+        type: "structured, repeatable record form"
+        data_shown: "Name of accrediting body, Accreditation status, Type of accreditation, Accreditation details (free text), Next accreditation date, Most recent accreditation date."
+        gates_on: []
+        accreditation_citation: "Generic status/date record only — does not map to a specific standard/element for any of the four accreditors; useful for scheduling/reminders, not evidence."
+        competitor_equivalent: "MedHub's Accreditation Automation ships 'automated alerts for accreditation tasks and policy expirations' (e-value.yaml) on top of an equivalent status record — a comparable field set, but whether MedHub's alerting is wired to this kind of date field specifically isn't confirmed in the teardown, so the comparison is directional, not element-exact."
+        gap_severity: "cosmetic"
+        gap_note: "Repeatable and structured, but passive — the source material confirms no deadline-reminder automation tied to the Next accreditation date field (unlike MedHub's confirmed 'automated alerts for accreditation tasks' per e-value.yaml), so today it functions as a status log, not the deadline-tracking capability accreditation_link calls for. The gap is on this element specifically, in the Next accreditation date field."
+      - element: "Delete (vertical-ellipsis on the edit drawer)"
+        type: "button, with confirmation"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "None — record-management control; no accreditor standard or date evidence depends on it."
+        competitor_equivalent: "Not comparable from public material: no reviewed competitor file describes deletion of an accreditation status record."
+        gap_severity: "none"
+        gap_note: "Shipped, domain-invariant, and does present a confirmation. None of this screen's automation gap attaches here — it attaches to the date fields in the entry drawer."
+    action: "Liaison records the program's accreditation status and next/most-recent cycle dates as a structured, program-level fact — the one place in Prism that stores 'when is our next site visit' as data rather than a spreadsheet note."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Details via Setup.md (Accreditation section, lines 69-86)"
+
+  - screen: "Read-only accreditation site-visit account (Support-provisioned)"
+    navigation_path: "Not self-service — requested from Exxat Support/Account Manager, no in-product admin screen confirmed."
+    elements:
+      - element: "Dedicated read-only account type"
+        type: "account/role provisioned by Exxat Support on request"
+        data_shown: "Scoped, read-only visibility across the program's data for the duration of a site visit."
+        gates_on: []
+        accreditation_citation: "Supports the site-visit phase of every accreditor's cycle (COCA 11.9, ACPE 7.5.b, LCME 1.1, CODA 1-2) as an access-control convenience, not an evidence source."
+        competitor_equivalent: "No competitor teardown in this research names an equivalent purpose-built site-visitor account type — stated explicitly rather than guessed, since none of the reviewed competitor files (elentra.yaml, one45.yaml, e-value.yaml, axium.yaml) discuss visitor-account provisioning at all."
+        gap_severity: "configure-needed"
+        gap_note: "Confirmed to exist, but only as a support ticket, not a self-service admin toggle — a liaison cannot provision this themselves inside Prism the way they can toggle a Standard active/inactive in step 1."
+    action: "Liaison contacts Exxat Support ahead of a scheduled site visit to have a purpose-built read-only account provisioned for the visiting accreditation team, rather than sharing or repurposing a standard admin login."
+    confirmed_by: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml, 'Read-only accreditation site-visit accounts' feature, line 820-821"
+
+  # SCHEMA v2 NOTE: this step has no elements — the finding IS the absence of the whole
+  # screen, not a verdict on any field/button/column. The analysis therefore stays at step
+  # level; distributing it would require inventing elements that do not exist in the product.
+  - screen: "No screen exists — accreditor submission portal (PHARMS / COCA report fields / AAMC CI) is externally owned"
+    navigation_path: "N/A — the deliverable leaves Prism as an exported file (e.g. the Excel exports confirmed in steps 1-2) and is then manually re-entered or uploaded into the accreditor's own system."
+    elements: []
+    action: "Liaison manually transcribes or re-uploads Prism-exported evidence (Excel reports, SSR appendix attachments) into ACPE's PHARMS platform, COCA's annual/mid-cycle report fields, or the AAMC Curriculum Inventory portal — there is no confirmed direct-submission integration from Prism into any of these systems."
+    confirmed_by: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml, Standard 7 Key Element 7.5.b (gap_notes, lines 116, on PHARMS as ACPE's own submission platform replacing AAMS as of July 2025); /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml, Standard 11 Element 11.9 (lines 244-261, on COCA's own report-field taxonomy)"
+    accreditation_citation: "ACPE Standard 7, Key Element 7.5.b; COCA Standard 11, Element 11.9 — both explicitly named as GAP (prism_fit: Gap) in their respective accreditation files, not merely unconfirmed."
+    competitor_equivalent: "Leo/DaVinci is the one competitor with a confirmed, named integration at this exact seam: 'one-click CI submission with AAMC business rules built in to flag data errors pre-submission,' and has been an AAMC-authorized Curriculum Inventory vendor since 2013 (leo-davinci.yaml, lines 96-108) — the single best-documented model in this research for what 'feeds the accreditor's system' should look like. No equivalent PHARMS- or COCA-report-field-specific integration is claimed by any competitor reviewed; this appears to be an open integration opportunity for every vendor in the set, not just a Prism gap."
+    gap_severity: "gap"
+    gap_note: "Confirmed gap, not a hedge — both acpe.yaml and coca.yaml rate their respective elements 'Gap' outright, and no source material (help-center, playbooks, or competitor teardowns other than Leo's AAMC-CI precedent) shows any product in this space with a direct-submission API into PHARMS or COCA's report fields specifically."
+
+  # SCHEMA v2 NOTE: as above — no elements exist to attach element-level analysis to, so the
+  # screen-absence verdict remains at step level rather than being assigned to invented fields.
+  - screen: "No screen exists — post-visit citation / interim-report tracking"
+    navigation_path: "N/A"
+    elements: []
+    action: "After a site visit produces a citation or the accreditor requests an interim/annual report (COCA 11.9's annual + mid-cycle cadence, ACPE 7.5.b's interim reporting), the liaison needs to track the citation, the corrective action taken, and the evidence that the action closed the finding — none of which has a confirmed home in Prism today."
+    confirmed_by: "This is the same confirmed gap documented one journey stage earlier: accreditation-self-study.yaml stage 7 ('Closing the CQI loop') traces the finding-to-action-to-evidence object as unshipped; corroborating accreditor-file citations: /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml Standard 11 Element 11.9 and /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml Standard 7 Key Element 7.5.b"
+    accreditation_citation: "COCA Standard 11, Element 11.9 (annual + mid-cycle reports); ACPE Standard 7, Key Element 7.5.b (interim reporting on request)."
+    competitor_equivalent: "E*Value/MedHub ships CLER visit/letter/response-action tracking and automated alerts for accreditation tasks (e-value.yaml); New Innovations ships CLER Visit Management plus APE with named citation/concern tracking (per accreditation-self-study.yaml stage 7's citation of new-innovations.yaml — both are ACGME-shaped GME products, so the object exists in that adjacent market but is not confirmed to have any COCA/ACPE/LCME/CODA-specific counterpart on either side."
+    gap_severity: "gap"
+    gap_note: "Fully confirmed gap — same underlying missing object (finding -> action -> evidence, with a citation/interim-report variant) already identified at stage 7 of this journey, resurfacing here because stage 8 is where that object would actually be consumed (a citation response IS a finding-to-action-to-evidence record, just accreditor-triggered instead of internally-triggered)."
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/CAPTE (Commission on Accreditation in Physical Therapy Education) Reports.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/Nursing/Accreditation Guides/CCNE Accreditation Standards Support Guide.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/Nursing/Accreditation Guides/COA Accreditation Standards Support Guide.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/FAQs for PA.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Configuring custom site assessment form in Exxat Prism-.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Details via Setup.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+last_verified: "2026-08-24"

@@ -1,0 +1,163 @@
+# Cross-cutting ROLE persona (not a per-domain program archetype — see
+# _TEMPLATE_discipline.yaml for the discipline layer).
+# Titles vary: Dean of the College of Pharmacy / Dental Medicine, Dean of the
+# COM, Vice Dean or Associate Dean for Academic Affairs, Program Director. This
+# is the economic buyer and the person who signs the accreditation submission.
+role_name: "Dean / Program Director"
+applies_across_domains: ["DO", "Pharmacy", "Dentistry", "Medicine"]
+
+day_in_the_life_summary: >
+  The person whose name is on the accreditation submission and on the outcome
+  numbers the public sees. They spend very little time in the software and a
+  great deal of time on the consequences of what it does or does not capture:
+  board pass rates and residency placement rates that must be published and
+  that trigger mandatory improvement plans if they slip; enrollment and
+  applicant trends that determine whether the program is financially viable;
+  clinical capacity that caps how many students can actually be admitted; and
+  faculty and preceptor supply that caps everything else. Their calendar is
+  committee meetings, university leadership, donors and health-system partners,
+  and a standing rhythm of program-review and CQI meetings where they are shown
+  data assembled by hand. They approve the ed-tech budget, and they approve it
+  roughly once every five to seven years, usually triggered by an accreditation
+  cycle, a vendor acquisition, or a bad site-visit outcome — not by a feature
+  release. The question they are actually asking any vendor is narrow and
+  brutal: will this reduce the probability that my program receives a citation,
+  and will it tell me a cohort is in trouble while I can still do something
+  about it?
+
+top_tasks:
+  - "Own the accreditation outcome — approve and sign the self-study, host the site visit, respond to citations, and carry the consequences of an adverse action."
+  - "Watch the published outcome metrics that carry compliance thresholds — first-time board pass rates and residency placement rates by cohort."
+  - "File and fund improvement plans when a metric crosses a threshold, before three consecutive years turn a monitoring trigger into an out-of-compliance finding."
+  - "Set and defend enrollment targets against clinical capacity, faculty supply, and financial viability."
+  - "Secure and maintain clinical capacity at the institutional level — health-system affiliations, hospital partnerships, and, increasingly, decisions about whether to pay sites to host students."
+  - "Recruit and retain faculty and preceptors, and evaluate faculty performance in teaching, patient care, scholarship, and service."
+  - "Chair or convene the program-review and CQI cycle, and demonstrate that data actually changed decisions."
+  - "Approve the ed-tech stack and its budget; own vendor selection and the risk of a mid-cycle migration."
+  - "Represent the program externally — to the university, the accreditor, the professional association, prospective students, and donors."
+
+top_pains:
+  - pain: >
+      The metrics the dean is judged on are computed outside their systems,
+      reported late, and carry automatic escalation — nothing shipped today
+      ingests or reports licensure-exam results, so they learn their number
+      from the board's annual release at the same time as everyone else, with
+      the compliance clock already running.
+    accreditation_link: >
+      COCA Standard 11, Elements 11.4 (COMLEX-USA) and 11.5 (GME placement
+      rate); LCME Standard 8, Element 8.4; ACPE Standard 7, Key Element 7.3.d.
+    source: "../accreditation/coca.yaml (11.4, 11.5 — both prism_fit 'Gap'; 'No shipped pillar tracks post-graduation Match/placement outcomes'; requires the last four years of first-time COMLEX-USA Level 1/2/3 pass rates published on a public webpage within 30 days of each NBOME annual update, an improvement plan for any cohort more than 2 standard deviations below the mean and under 90%, three years of sustained shortfall triggering out-of-compliance, and a continually updated four-year PGY-1 placement rate with a 95% floor and the same three-year rule); ../accreditation/lcme.yaml (8.4 — 'Gap', dependent on three roadmap pillars, requires outcome data benchmarked against national norms including USMLE performance and match outcomes); ../accreditation/acpe.yaml (7.3.d and licensure_or_gme_layer — NABP/NAPLEX, aligns Standards 2025 to the NAPLEX competency statements and treats pass rate as a headline program-quality metric); ../prism/capability-map.yaml (Exam Management roadmap Q2 2027)"
+    related_flows:
+      - flow: "accreditation-self-study--05-external-outcome-data-ingestion-board-exams.yaml"
+
+  - pain: >
+      Clinical capacity, not classroom capacity, is the real ceiling on the
+      program, and it's tightening across every domain at once — this is a
+      strategic and financial decision the dean has to make, from a capacity
+      picture the tools don't give them.
+    accreditation_link: >
+      COCA Standard 6, Element 6.9 (three-year rolling average of eligible
+      students against demonstrated site capacity, plus a contingency plan for
+      replacing lost rotation capacity); LCME Standard 5, Element 5.5 (adequate
+      numbers and types of patients at every site used for required
+      instruction).
+    source: "../domains/do.yaml (distinctive_pain_points — community hospitals increasingly reserve rotation slots for affiliated MD programs, and since the 2020 AOA-ACGME merger DO students compete directly with MD students for the same away-rotation slots, with peer-reviewed evidence of a cost and access gap in competitive specialties, https://thedo.osteopathic.org/2023/11/to-solve-the-problem-of-too-few-clinical-rotation-sites-leaders-in-medicine-consider-business-solutions/, https://pmc.ncbi.nlm.nih.gov/articles/PMC11984451/); ../domains/medicine.yaml (distinctive_pain_points — 44% of AAMC-surveyed medical schools report moderate-to-severe pressure to pay community physicians and clinics to host students, something most do not currently do, and MD enrollment growth has outpaced growth in residency positions, leaving 6.5% of U.S. MD seniors unmatched even in the record 2025 Match, https://www.aamc.org/news/so-many-medical-students-so-few-clerkship-sites, https://www.aamc.org/news/medical-school-enrollments-grow-residency-slots-haven-t-kept-pace, https://www.ama-assn.org/medical-students/preparing-residency/biggest-match-day-ever-here-s-what-2025-numbers-reveal); ../accreditation/coca.yaml (6.9); ../accreditation/lcme.yaml (5.5)"
+    related_flows:
+      - flow: "preceptor-site-onboarding--01-site-identification-capacity-negotiation-contingency-planning.yaml"
+
+  - pain: >
+      Program viability is a live question in at least one domain and a
+      growth-management question in the others, and the dean is managing both
+      kinds of risk with lagging data — opposite problems, same missing
+      instrument: an early, trustworthy read on cohort health.
+    accreditation_link: >
+      ACPE Standard 7, Key Element 7.5.a and CODA Standard 1, Element 1-2 —
+      both require program effectiveness to be assessed continuously against
+      stated goals, which is the same data a viability decision needs.
+    source: "../domains/pharmacy.yaml (market and distinctive_pain_points — PharmD applicant volume fell more than 60% from 106,815 in fall 2011 to 40,552 in fall 2021 while accredited programs nearly doubled from 78 in 2000 to 142 by 2022; national PharmD enrollment fell from 44,403 in 2023 to 42,312 in 2024, and the University of Charleston School of Pharmacy closed in December 2024 citing declining enrollment, though applications have since risen two consecutive years, up 6% into fall 2025, https://www.drugtopics.com/view/number-one-no-longer, https://wvutoday.wvu.edu/stories/2024/12/19/wvu-school-of-pharmacy-offers-support-to-university-of-charleston-students-affected-by-program-closure, https://www.aacp.org/article/pharmacy-school-interest-rises-applications-jump-6); ../domains/do.yaml (market — DO enrollment hit an all-time high of 40,905); ../domains/medicine.yaml (market — MD crossed 100,000 for the first time); ../domains/dentistry.yaml (market — dental predoctoral enrollment reached 28,925 with 25% of 2024 first-year enrollees at newly opened schools); ../accreditation/acpe.yaml (7.5.a); ../accreditation/coda.yaml (1-2)"
+
+  - pain: >
+      Early-warning on a struggling student or a drifting site arrives too
+      late to act on — a formal case-management and due-process trail
+      distinct from a simple compliance checklist item isn't a confirmed
+      capability, so the dean finds out at the progression committee, or at
+      graduation clearance.
+    accreditation_link: >
+      CODA Standard 2, Elements 2-2 and 2-9; LCME Standard 8, Element 8.6;
+      ACPE Standard 7, Key Element 7.3.d.
+    source: "../accreditation/coda.yaml (2-2 — 'Case-management/due-process documentation (vs. simple compliance gating) is an open question'; requires an individual evaluation and a documented due-process decision when a student fails to meet published didactic, behavioral, or clinical criteria; 2-9); ../accreditation/lcme.yaml (8.6 — requires a centrally-overseen system that not only monitors completion of required clinical experiences but remedies identified gaps before graduation); ../accreditation/acpe.yaml (7.3.d — readiness gate blocking APPE enrollment until pre-APPE competency thresholds are verified); ../domains/dentistry.yaml (distinctive_pain_points — patient-sourcing shortfalls are a documented, widespread cause of delayed graduation, a leading indicator visible in procedure-log data the systems do not aggregate, https://pmc.ncbi.nlm.nih.gov/articles/PMC11667986/); ../prism/capability-map.yaml (intelligence_layer — Early-risk Alerts, Competency Tracking)"
+    related_flows:
+      - flow: "competency-verification--04-formative-mid-point-feedback-and-early.yaml"
+        step: "Student 360 — Interventions tab (Add Intervention drawer)"
+        element: "Make this intervention visible to student"
+
+  - pain: >
+      Faculty performance and calibration is a standard the dean must
+      evidence and a workflow no product owns — faculty-facing (versus
+      student-facing) evaluation is explicitly unconfirmed, so the dean's
+      faculty-review evidence is assembled per cycle rather than accumulated
+      continuously.
+    accreditation_link: >
+      CODA Standard 3, Element 3-4 and Standard 2, Element 2-6; COCA Standard
+      11, Element 11.2 (student evaluation of faculty feeding curricular
+      improvement).
+    source: "../accreditation/coda.yaml (3-4 — 'Faculty-facing (vs. student-facing) evaluation workflow is unconfirmed', requires a defined process ensuring objective measurement of each faculty member's performance in teaching, patient care, scholarship, and service; 2-6 — 'faculty-side calibration/credential tracking is an open Phase 2 question', requires documented faculty calibration across every site where required activity occurs, with periodic monitoring and participation records); ../accreditation/coca.yaml (11.2)"
+    related_flows:
+      - flow: "admin-onboarding--05-sites-locations-personnel-management.yaml"
+        step: "Faculty profile — Contact Sharing, Associations, View As, Generate CV, Bulk Update"
+        element: "Generate CV button"
+
+  - pain: >
+      Vendor selection is a multi-year bet made under acquisition churn, and
+      switching costs are concentrated exactly where the dean is most exposed
+      — the accreditation cycle, where years of history can't be
+      reconstructed elsewhere and pricing is opaque across the entire field.
+    accreditation_link: >
+      COCA Standard 11, Element 11.9 and ACPE Standard 7, Key Element 7.5.b —
+      continuity of reporting across the full accreditation term is itself the
+      requirement a migration threatens.
+    source: "../competitors/core-elms.yaml (retention_anchor, pricing_signal — CORE has merged into PeopleGrove); ../competitors/new-innovations.yaml (QGenda acquisition July 2025, retention_anchor); ../competitors/leo-davinci.yaml (DaVinci/Leo merged into Elentra May 2024, Elentra now publicly markets migration paths off Leo); ../competitors/e-value.yaml (retention_anchor — 'switching mid-cycle risks losing continuity in accreditation-facing reporting'; MedHub and E*Value sit under Ascend Learning, which added myTIPreport in May 2025); ../competitors/one45.yaml (sits under Acuity Insights); ../competitors/axium.yaml (sits under Henry Schein One); not a single competitor researched publishes list pricing; ../accreditation/coca.yaml (11.9); ../accreditation/acpe.yaml (7.5.b)"
+
+  - pain: >
+      The domain-specific structural work is real and unglamorous, and a
+      generic platform makes the dean's problem worse, not better — a dean
+      evaluating a vendor is testing whether it understands their discipline
+      specifically, and generic answers read as risk.
+    accreditation_link: >
+      COCA Standard 6, Element 6.4 (seven osteopathic core competencies
+      including OPP/OMM); CODA Standard 2, Element 2-24 (roughly fifteen
+      clinical competency categories); ACPE Key Elements 3.1.b and 3.2.d
+      (setting-category hour minimums and the NTPD equivalent pathway).
+    source: "../domains/do.yaml (distinctive_pain_points — DO students complete 200-500 hours of hands-on OMM/OMT training assessed during clinical clerkships with no analog in MD or allied-health curricula, https://www.aacom.org/become-a-doctor/about-osteopathic-medicine/omm-explained); ../accreditation/coca.yaml (6.4 — requires OPP/OMM mapped as one of seven core competencies); ../accreditation/coda.yaml (2-24 — 'Likely the single largest dentistry-specific build'; dentistry needs CDT-coded, tooth- and surface-level procedure logging rolled up across roughly fifteen competency categories; ADA CDT code set); ../accreditation/acpe.yaml (3.1.b, 3.2.d — NTPD 'formalized faculty assessment' as a non-standard record type; pharmacy needs hour aggregation by setting category with sub-minimums, plus an alternate assessed-equivalent record type for Nontraditional PharmD students)"
+    related_flows:
+      - flow: "competency-verification--01-define-the-competency-framework-and-map.yaml"
+        step: "Competency Management > Setup > Add New (4-step drawer: Select Competency > Course Type > Scoring Source/Assessments > Summary)"
+        element: "Course Type selector — Experiential / Didactic / Both"
+
+tools_touched:
+  - "Executive dashboards and board/committee decks — usually PowerPoint built from hand-assembled exports, not a live system view"
+  - "The institution's BI/IR layer (Tableau, Power BI, institutional research office reports) — enrollment, retention, financials"
+  - "National board and association data releases — NBOME COMLEX, NBME/FSMB USMLE, NABP NAPLEX/MPJE, JCNDE INBDE, NRMP Match results, ACGME program data"
+  - "Association benchmarking data — AACOM (DO applicant/enrollment/workforce), AAMC (MD enrollment, curriculum, workforce), AACP vital statistics, ADEA/ADA HPI trends"
+  - "The accreditor's own portal and correspondence — ACPE PHARMS, COCA annual/mid-cycle reports, LCME, CODA"
+  - "The clinical-ed platform, mostly secondhand — read as reports produced by the program admin, clinical coordinator, and accreditation liaison rather than used directly"
+  - "The university's budget, procurement, and contracting systems — where the ed-tech decision actually gets made"
+  - "Email and standing meetings — the real interface to everything above"
+
+sources:
+  - "../accreditation/coca.yaml (Elements 6.4, 6.9, 11.1, 11.2, 11.4, 11.5, 11.9)"
+  - "../accreditation/lcme.yaml (Elements 1.1, 5.5, 8.4, 8.6)"
+  - "../accreditation/acpe.yaml (Key Elements 3.1.b, 3.2.d, 7.3.d, 7.5.a, 7.5.b; NABP/NAPLEX and ASHP residency layers)"
+  - "../accreditation/coda.yaml (Elements 1-2, 2-2, 2-6, 2-9, 2-24, 3-4)"
+  - "../domains/pharmacy.yaml (applicant collapse, program closure, early reversal)"
+  - "../domains/do.yaml (record enrollment; rotation capacity; OMM hours)"
+  - "../domains/medicine.yaml (record enrollment; clerkship site shortage; Match bottleneck)"
+  - "../domains/dentistry.yaml (enrollment growth via new schools; patient-sourcing delays to graduation)"
+  - "../competitors/core-elms.yaml, ../competitors/e-value.yaml, ../competitors/medhub.yaml, ../competitors/new-innovations.yaml, ../competitors/elentra.yaml, ../competitors/leo-davinci.yaml, ../competitors/one45.yaml, ../competitors/axium.yaml, ../competitors/emedley.yaml (ownership churn, retention anchors, universally opaque pricing)"
+  - "../prism/capability-map.yaml (intelligence layer; Exam Management Q2 2027; Accreditation Management Q3 2027)"
+  - "https://www.aamc.org/news/medical-school-enrollments-grow-residency-slots-haven-t-kept-pace"
+  - "https://www.drugtopics.com/view/number-one-no-longer"
+  - "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf"
+  - "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf"
+
+last_researched: "2026-08-24"

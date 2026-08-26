@@ -1,0 +1,217 @@
+# Researched 2026-08-24. Every non-trivial factual claim carries a source URL found via
+# public web search/fetch. Anything not independently verifiable is marked accordingly.
+competitor: "CORE ELMS (CORE Higher Ed)"
+slug: "core-elms"
+domains_served: ["Pharmacy", "Dentistry"]   # also serves broad "allied health" (nursing, PT, OT, PA, social work, etc.) but not DO/Medicine-specific per template categories
+category: "Experiential/clinical education management (ELMS) across health sciences + broader experiential-ed disciplines"
+company:
+  founded: "2006, per Crunchbase acquisition profile summary of CORE Higher Education Group (not independently confirmed on corehighered.com itself)"
+  hq: "1 Coastway Blvd, Suite 101, Warwick, RI 02886 (also referenced as West Warwick, RI in secondary sources)"
+  ownership: >
+    Acquired by / merged with PeopleGrove. As of Dec 2025 the companies rebranded as one
+    unified entity ("PeopleGrove + CORE"), with Dawn Hiles as CEO of the combined
+    organization and Sumit Nijhawan (described as an "Operating Partner" / "CEO at
+    PE-Backed Companies") as Board Chair, indicating private-equity involvement. CORE ELMS
+    is now also listed as a PeopleGrove product line.
+    Source: https://corehighered.com/one-company.-more-impact-what-the-peoplegrovecore-merger-means-for-you
+    Source: https://www.peoplegrove.com/products/core-elms/
+    Source: https://www.crunchbase.com/acquisition/peoplegrove-acquires-core-higher-education-group--ebf5c3c9
+
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: >
+      Core product strength. "SmartMatch" algorithm auto-matches students to sites/preceptors
+      using customizable rules with instant results; centralized site/student/preceptor
+      management; scheduling, timesheet/hours tracking with optional GPS, absence tracking,
+      case logging and reflections. Over 30 modules total across the ELMS platform, applied
+      to 15+ disciplines including pharmacy, dental, nursing, PT, OT, PA, veterinary, social
+      work, and undergraduate medicine.
+    depth_vs_prism: "at-parity"
+    evidence: >
+      "SmartMatch Algorithm: Automated student-site-preceptor matching using customizable
+      rules and preferences with instant results, eliminating wait times." Capterra
+      reviewers independently confirm: "The ability to collect student requests for
+      rotations easily and match them to experiences has cut down matching time
+      significantly."
+    source: "https://services.corehighered.com/elms/pharmacy-experiential-learning-management-software"
+  - pillar: "Compliance Management"
+    competitor_capability: >
+      Tracks immunizations, CPR certification, background checks, drug checks, HIPAA
+      training, and licensing requirements, with automated expiration reminders; preceptor
+      license tracking; affiliation agreement tracking with expiration alerts; HIPAA-
+      compliant document storage; incident report tracking.
+    depth_vs_prism: "at-parity"
+    evidence: >
+      "Compliance Management: Monitor compliance data such as immunizations, background
+      checks, drug checks, and licensing requirements... Document management in
+      HIPAA-compliant environment." Reviewers cite this module for "larger requirements
+      such as accreditation and audits."
+    source: "https://services.corehighered.com/student-clinical-experential-education"
+  - pillar: "Curriculum Mapping"
+    competitor_capability: >
+      Delivered via a distinct add-on module called "CompMS" (Competency Management
+      System), not bundled into core ELMS. Performs curriculum gap assessments (which
+      courses address which competencies, and to what degree), maps competencies to
+      accreditation standards/domains/sub-domains, generates auto-built assessment
+      e-portfolios, and produces curriculum-effectiveness reports tying student outcomes
+      back to the map.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "CORE CompMS enables institutions to simplify and strengthen curriculum mapping with
+      real-time visibility, gap analysis, and connected outcomes that ensure alignment
+      across your program." It is unclear from public materials whether CompMS ships
+      free with ELMS or is priced/sold separately — treat "ahead" as provisional pending
+      pricing/bundling confirmation.
+    source: "https://corehighered.com/competency-management"
+  - pillar: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    competitor_capability: >
+      Ships today, unlike Prism where this is still an unshipped Q1 2027 roadmap item.
+      Includes a dedicated survey module (customizable surveys to students/preceptors/
+      sites), plus student self-evaluations, preceptor assessments of students, and
+      student evaluations of preceptors/sites — all with customizable forms, automated
+      grade calculation/conversion, low-score alerts, and due-date reminders.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "Survey Module: The system allows users to create customizable surveys to administer
+      to students, preceptors, or sites." Capterra rates the product 4.7/5 overall (36
+      reviews) and specifically calls out "Document Library and Requirements" and
+      evaluation-related features as strengths; ease-of-use scores lower (4.3/5) with a
+      "reporting suite lacks depth and consistency" complaint.
+    source: "https://www.capterra.com/p/265422/CORE-ELMS/reviews/"
+  - pillar: "Exam Management (Prism roadmap Q2 2027)"
+    competitor_capability: "not publicly disclosed / unable to verify"
+    depth_vs_prism: "unknown"
+    evidence: >
+      No public CORE marketing page, help doc, or review mentions a distinct
+      exam/testing/secure-assessment module (e.g., OSCE administration, timed/proctored
+      exams). CORE's "evaluation" and "assessment" language consistently refers to
+      preceptor/site/student performance evaluations and competency assessments (via
+      CompMS), not formal exam delivery. This may be a genuine capability gap for CORE, or
+      simply undocumented publicly — flagged as unable to verify rather than assumed absent.
+    source: "unable to verify — searched CORE ELMS product pages, PeopleGrove product page, and Capterra/G2 reviews; no exam-management module found"
+  - pillar: "Accreditation Management (Prism roadmap Q3 2027)"
+    competitor_capability: >
+      CompMS explicitly markets accreditation-standards mapping and reporting: "stay
+      aligned with competencies, and accreditation standards with smarter mapping and
+      continuous improvement tools." For pharmacy specifically, CORE claims its solutions
+      "meet and exceed ACPE Pharmacy Standards and CAPE Outcomes." No equivalent CODA
+      (dental accreditor) mention was found on CORE's dental-specific page.
+    depth_vs_prism: "ahead"
+    evidence: >
+      Pharmacy page: "Our in-house development team regularly reviews client feedback to
+      ensure our technology remains ahead of the curve with market needs and ACPE
+      accreditation standards." Dental page makes no discipline-specific accreditor
+      (CODA) claim — accreditation depth appears stronger for pharmacy than for dentistry.
+    source: "https://services.corehighered.com/elms/pharmacy-experiential-learning-management-software"
+
+strengths:
+  - claim: >
+      Very high customer-service satisfaction and strong overall review rating (4.7/5
+      across 36 Capterra reviews, with Customer Service rated 4.9/5).
+    source: "https://www.capterra.com/p/265422/CORE-ELMS/reviews/"
+  - claim: >
+      Broad discipline coverage (15+ programs: pharmacy, dental, nursing, PT, OT, PA,
+      veterinary, social work, law, undergraduate medicine, etc.) from one platform,
+      positioned explicitly against "unique solutions" per program.
+    source: "https://services.corehighered.com/student-clinical-experential-education"
+  - claim: >
+      Deep incumbency in pharmacy specifically — CORE claims 90% of U.S. pharmacy programs
+      partner with them.
+    source: "https://corehighered.com/core-for-pharmacy"
+  - claim: >
+      Ships curriculum-to-accreditation-standard mapping (CompMS gap analysis + ACPE
+      standards alignment) today, a capability Prism has only as a Q3 2027 roadmap item.
+    source: "https://corehighered.com/competency-management"
+  - claim: >
+      Now backed by PeopleGrove's broader engagement/career-readiness platform following
+      the 2024/2025 merger, giving CORE customers adjacent product lines (career services,
+      mentoring) beyond clinical placement.
+    source: "https://corehighered.com/one-company.-more-impact-what-the-peoplegrovecore-merger-means-for-you"
+
+weaknesses:
+  - claim: >
+      Steep learning curve for new users despite "intuitive" marketing claims — a
+      repeated theme across independent reviews.
+    source: "https://www.capterra.com/p/265422/CORE-ELMS/reviews/"
+  - claim: >
+      Reporting suite is called out by reviewers as lacking depth and consistency, and
+      SmartMatch's extensive settings lack clear setup documentation/checklists.
+    source: "https://www.capterra.com/p/265422/CORE-ELMS/reviews/"
+  - claim: >
+      Platform feels "disjointed" across modules per reviewers, with limited connectivity
+      between elements, and awkward user-account handling (e.g., changing a preceptor's
+      employer requires a new account rather than an update).
+    source: "https://www.capterra.com/p/265422/CORE-ELMS/reviews/"
+  - claim: >
+      No public evidence of a formal exam/secure-testing management capability — unlike
+      Prism's named Exam Management roadmap pillar, CORE's public materials only describe
+      evaluation/competency-assessment forms, not exam delivery.
+    source: "unable to verify — no exam-management module found on corehighered.com, peoplegrove.com/products/core-elms, or in Capterra reviews"
+  - claim: >
+      Curriculum mapping and accreditation-standards mapping (CompMS) appears to be a
+      separately branded/positioned module rather than a bundled ELMS feature, and its
+      accreditation-body coverage looks uneven across disciplines (explicit ACPE claims
+      for pharmacy; no equivalent CODA claim found for dental).
+    source: "https://corehighered.com/core-for-dental"
+  - claim: >
+      No specific LMS/SIS integration partners are named publicly (Canvas, Banner, etc.)
+      — only generic SSO/LTI standards support is described, making integration depth
+      hard to evaluate against Prism without a demo/RFP.
+    source: "https://corehighered.com/core-for-pharmacy"
+  - claim: >
+      Pricing is fully opaque — no public pricing tiers, per-student cost, or list price
+      found anywhere; quote-only sales process.
+    source: "https://www.capterra.com/p/265422/CORE-ELMS/"
+
+retention_anchor: >
+  Multi-year data lock-in from 30+ modules of historical placement, compliance,
+  evaluation, and competency records per student cohort, plus deep integration into
+  program-specific accreditation reporting workflows (ACPE for pharmacy in particular).
+  Switching costs are compounded by CORE's very high customer-service satisfaction score
+  (4.9/5), which raises the bar competitors must clear on service quality, not just
+  features, to win a displacement. The PeopleGrove merger also bundles CORE into a wider
+  suite (career services, mentoring), adding a second reason for an institution to keep
+  the vendor relationship even if the ELMS product itself has rough edges.
+
+exxat_opportunity: >
+  CORE's own users flag exactly the two things Prism should lead with: reporting depth
+  and platform cohesion. Reviewers explicitly say CORE's "reporting suite lacks depth
+  and consistency" and that modules "seem disjointed from each other" — Prism's unified
+  "Courses / Faculty / Students" core-ring architecture (per capability-map.yaml) is a
+  direct answer to the disjointedness complaint, and Prism's Program Quality Analytics /
+  AI Insights layer can be positioned as the reporting-depth answer. CORE also has no
+  public evidence of an Exam Management capability at all, so when Prism ships its Q2
+  2027 Exam Management pillar it will be filling a gap CORE has not publicly claimed to
+  cover — a genuine white-space claim, not just a parity claim. The one area where Prism
+  is currently behind is accreditation-standards mapping: CORE's CompMS module already
+  ships ACPE-aligned curriculum gap analysis for pharmacy today, so Prism's Q3 2027
+  Accreditation Management pillar needs to launch with pharmacy (ACPE) and dental (CODA)
+  standards mapped explicitly, since CORE's own dental page conspicuously does not make
+  a CODA-specific claim the way its pharmacy page makes an ACPE-specific one — that is a
+  specific, provable gap in CORE's dental depth Prism can target first.
+
+pricing_signal: >
+  Not publicly disclosed. No pricing page, tier list, or per-student rate was found on
+  corehighered.com, peoplegrove.com, or third-party listing sites (Capterra, GetApp,
+  Software Advice, SoftwareFinder, Tekpon) — all describe pricing as quote-only /
+  "contact for pricing." CompMS appears to be a separately positioned module, suggesting
+  add-on pricing beyond base ELMS, but no figures are public.
+
+last_researched: "2026-08-24"
+
+sources:
+  - "https://services.corehighered.com/"
+  - "https://corehighered.com/"
+  - "https://corehighered.com/elms"
+  - "https://services.corehighered.com/elms/pharmacy-experiential-learning-management-software"
+  - "https://services.corehighered.com/elms/dental-clinical-education-management-software"
+  - "https://corehighered.com/core-for-dental"
+  - "https://corehighered.com/core-for-pharmacy"
+  - "https://corehighered.com/competency-management"
+  - "https://services.corehighered.com/student-clinical-experential-education"
+  - "https://corehighered.com/one-company.-more-impact-what-the-peoplegrovecore-merger-means-for-you"
+  - "https://www.peoplegrove.com/products/core-elms/"
+  - "https://www.crunchbase.com/acquisition/peoplegrove-acquires-core-higher-education-group--ebf5c3c9"
+  - "https://www.crunchbase.com/organization/core-higher-education-group"
+  - "https://www.capterra.com/p/265422/CORE-ELMS/reviews/"
+  - "https://www.capterra.com/p/265422/CORE-ELMS/"

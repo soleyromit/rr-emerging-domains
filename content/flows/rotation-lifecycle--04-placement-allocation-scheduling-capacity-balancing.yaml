@@ -1,0 +1,1935 @@
+# Element-level ground truth underneath rotation-lifecycle.yaml, stage 4.
+# Every accreditation_citation and competitor_equivalent claim below traces to a real
+# source file in confirmed_by — see content/flows/_TEMPLATE.yaml for the contract.
+# SCHEMA v2 (2026-08-24): analysis fields live on each element, not on the step.
+#
+# SCOPE EXTENSION (2026-08-25): this file originally covered only the four EXPANSION
+# domains (DO/COCA, Pharmacy/ACPE, Dentistry/CODA, Medicine/LCME). It now also covers the
+# eight disciplines Exxat/Prism ALREADY serves today — PT/PTA, OT/OTA, PA, SLP, Nursing,
+# Social Work, Teacher Education, and CRNA — because placement allocation is the one stage
+# where "we already serve this discipline" and "we satisfy this discipline's accreditor"
+# come apart most sharply. Discipline-specific material is either a new element, a new step,
+# or a clause explicitly flagged with the discipline name; nothing in the original
+# four-domain analysis was deleted.
+#
+# COMPETITOR-COMPARISON NOTE, and it materially changes the honesty of this file: for the
+# four expansion domains, the recurring "not comparable at element level" verdict is
+# unavoidable, because no competitor publishes admin-side screens. For these EIGHT existing
+# disciplines the situation is different in one specific way — the competitors are provably
+# selling into the SAME disciplines, not adjacent ones. CORE ELMS markets SmartMatch across
+# "15+ disciplines including pharmacy, dental, nursing, PT, OT, PA, veterinary, social work,
+# and undergraduate medicine" (content/competitors/core-elms.yaml), and MedHub/E*Value
+# markets across "24+ named disciplines (GME, UME, nursing, PT/OT, pharmacy, dentistry,
+# osteopathic medicine, PA, athletic training, social work, and more)"
+# (content/competitors/e-value.yaml). So the comparison is head-to-head on MARKET even where
+# it remains asymmetric on EVIDENCE: we can read Prism's own tutorials and only competitors'
+# marketing pages. Every competitor_equivalent below says which of those two things it is.
+flow_name: "Placement Allocation, Scheduling & Capacity Balancing"
+maps_to_journey: "rotation-lifecycle.yaml, stage 4"
+persona: >
+  Primary: Clinical Coordinator / Program Administrator
+  (see ../personas/role-clinical-coordinator.yaml, ../personas/role-program-admin.yaml).
+  Discipline title varies and the variance is not cosmetic — it changes who owns the
+  allocation decision. PT: Director of Clinical Education (DCE) / ADCE, with an SCCE on the
+  site side who receives slot requests and assigns the CI after the student is placed.
+  OT: same DCE-equivalent, with Fieldwork Educators (Level I/II) and Site Mentors (capstone).
+  PA: program admin working against a site-based OR preceptor-based slot model.
+  Social Work: Director of Field Education / Field Placement Coordinator, whose real job at
+  this stage is tracking student-run agency interviews rather than running an allocator.
+  Teacher Education: placement coordinator working against district partners and
+  school-based cooperating teachers (CAEP's "clinical educators").
+  CRNA: CRNA Program Administrator, whose binding constraint is a per-preceptor supervision
+  ratio rather than a per-site slot count.
+steps:
+  - screen: "Rotation Setup"
+    navigation_path: "Placements > [Course or Placement Group] > Rotation Setup > + Add rotation"
+    elements:
+      - element: "Title, Start Date, End Date"
+        type: "input fields"
+        data_shown: "Rotation identity and the calendar window it occupies."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.1.a (IPPE structure/sequencing) — the dated rotation shell is the structural unit that sequencing would be built on top of; sequence order itself is not expressed here, only the window each rotation occupies."
+        competitor_equivalent: "Not comparable at element level — no competitor's public docs expose a rotation-setup screen with this field-level detail (start/end date granularity); comparison would require a competitor demo environment or admin-side screenshots, neither of which exist in the current source set."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Minimum recommended duration / Time Segment"
+        type: "input field + toggle (weeks/days/hours)"
+        data_shown: "The minimum attendance threshold a placement inside this rotation must meet, expressed in the unit the program chooses."
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.1.a (IPPE structure) — this is the duration-floor half
+          of the structural unit, not the sequencing half; it sets a minimum-hours/weeks
+          threshold but does not itself carry a required-hours accreditor figure.
+          EXISTING-DISCIPLINE CLAUSE, and this is where the four-domain reading understates the
+          problem: for six of the eight served disciplines the accreditor DOES publish a hard
+          numeric floor that this exact field is the natural home for, and in every case the
+          floor is conditional on something the field cannot see. CAPTE Standard 6, Element 6A
+          requires a minimum of 30 weeks of FULL-TIME clinical education at a minimum of 32
+          hours/week, which means only terminal experiences count and Integrated Clinical
+          Experience (ICE) weeks must be excluded. ACOTE Standard C.1.12 sets 24 weeks full-time
+          Level II for OT (doctoral/master's) but 16 weeks for OTA (baccalaureate/associate) —
+          one standard number, two thresholds, split by degree level. ACOTE Standard D.1.5 sets a
+          third figure for the OTD doctoral capstone: 14 weeks at a minimum of 32 hours/week.
+          CSWE Accreditation Standard 3.3, AS 3.3.3 sets 400 hours (BSW) / 900 hours (MSW).
+          CAA Standard 3.0B/3.1B sets the 400 supervised clinical practice hours for SLP.
+          CCNE Standard III, Key Element III-H sets DNP 1,000 hours and NP 500 direct hours.
+          COA Standard E.2.3 sets 2,000 clinical hours plus roughly 60 case-category thresholds
+          for CRNA.
+        competitor_equivalent: "Not comparable at element level — no competitor's public docs expose a duration-floor field with a selectable time-segment unit at this granularity. Worth stating plainly that this is a documentation asymmetry rather than a demonstrated Prism advantage."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The field holds one number with no notion of what the number is FOR. Per
+          ../accreditation/capte.yaml (Element 6A) there is no "counts toward the CAPTE
+          full-time minimum" flag on rotation setup, so the ICE-vs-terminal split rides entirely
+          on naming convention; per ../accreditation/acote.yaml (C.1.12) nothing enforces the
+          degree-level-conditional 24-vs-16-week threshold, which matters because one university
+          commonly runs OTD/MSOT and OTA in the same Prism tenant; and per the same file (D.1.5)
+          the 14-week/32-hour capstone rule is a two-part rule (duration AND weekly intensity)
+          that no report evaluates. In every case the rollup is a report an admin reads, not a
+          rule the system checks.
+      - element: "Setup Advanced Schedule (slider)"
+        type: "toggle + sub-block form"
+        data_shown: "Splits one rotation into smaller dated sub-blocks (e.g. AM/PM shifts, or specific weekdays); slots and placements can then be managed at the sub-block level."
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.1.a (IPPE structure/sequencing) — sub-blocks are the
+          finest structural grain the rotation shell supports, and are the level at which shift-
+          or weekday-level sequencing would be built.
+          EXISTING-DISCIPLINE CLAUSE: this is the mechanism three served disciplines depend on
+          for their part-time experience types. PT's Integrated Clinical Experience is explicitly
+          "part of a day, one day a week for several weeks"; OT's Level I fieldwork runs in short
+          bursts alongside didactic work; and CAEP Standard R2, Component R2.3 requires a
+          sequenced multi-experience model (early field observation hours -> practicum ->
+          culminating student teaching) rather than a single terminal placement, which is the
+          same sub-block shape at semester scale.
+        competitor_equivalent: "Not comparable at element level — no competitor's public docs describe sub-block/advanced-schedule decomposition of a rotation at this granularity."
+        gap_severity: "none"
+        gap_note: >
+          PT-specific operational pain point recorded verbatim in the PT playbook's own Pain
+          Points list: \"Management of slot request, wishlist, and Placement Assist for 'split'
+          terminal rotations.\" So the sub-block primitive exists, but the allocation machinery
+          built on top of it is documented as hard to use for exactly the case sub-blocks were
+          meant to serve. That is a usability gap inside a shipped capability, not a missing
+          capability.
+      - element: "Linked course + cohort scope (lockstep vs. non-lockstep program model)"
+        type: "picker + inherited program-model constraint"
+        data_shown: >
+          Which course offering and which cohort the rotation belongs to. Not a cosmetic
+          association: the program's lockstep-vs-non-lockstep model, set far upstream, decides
+          which allocation features are even available at this stage.
+        gates_on:
+          - "The PA-exclusive Max Placement Limit (see the Max Placement Limit step) is documented as available only to LOCKSTEP-based domains — so this upstream program model, not a per-rotation setting, is what gates the only shipped intake cap."
+        accreditation_citation: >
+          None directly — program-structure modelling carries no accreditor evidence requirement
+          of its own. Indirectly relevant to ACOTE Standard C.1.12 and CAPTE Standard 6, Element
+          6A, since both thresholds are per-cohort progressions that only make sense inside a
+          declared cohort model.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research. The
+          nearest public analogue is eMedley's eduSched, described as "track/path-based"
+          scheduling (content/competitors/emedley.yaml) — the same idea of a program-model
+          dimension above the rotation — but with no field-level detail to compare.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Confirmed lockstep disciplines: PT ("PT programs are always Lock Step") and OT ("OT
+          programs are always Lock Step") per their playbooks; PA per the Max Placement Limit
+          documentation. Social Work is explicitly NOT modelled that way — its playbook gives two
+          competing cohort conventions (by student enrollment date, or by practicum start date)
+          and adds Groups/Campuses/Categories for Foundation Year, Advanced Standing, and
+          full-time/part-time tracks. Nursing configures a separate Curriculum Grid per
+          degree/track (ADN/BSN/MSN/DNP/APRN certificate/CRNA), so one Nursing tenant can hold
+          several structurally different progressions at once. The practical consequence is
+          concrete and worth naming: the only shipped intake cap in this stage is unavailable to
+          Social Work and to most of Nursing, including CRNA — the discipline with the single
+          hardest capacity cap in this entire research set (COA Standard F.7).
+      - element: "Rotation-level visibility toggles: 'show other students placed' and 'show on the Site Resources page'"
+        type: "two toggles on the rotation record"
+        data_shown: "Whether students placed in this rotation can see who else is placed there, and whether the rotation appears on the site-facing Site Resources page"
+        gates_on:
+          - "The first decides whether a cohort can self-organise around a placement (housing, carpooling, peer support) or discovers their co-placements only on arrival."
+          - "The second decides whether the site sees the rotation at all on the surface Prism gives site personnel."
+        accreditation_citation: >
+          ACOTE Standard C.1.2 (../accreditation/acote.yaml) — student access to fieldwork site
+          information. The Site Resources toggle is the same surface rotation-lifecycle--02
+          documents as the preceptor-facing handbook/orientation library, so this toggle is what
+          puts a rotation in front of the audience that standard cares about.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research — no
+          competitor's public materials describe per-rotation visibility controls, in either the
+          student or the site direction.
+        gap_severity: "none"
+        gap_note: >
+          ADDED 2026-08-25 from a full read of the PT playbook, whose rotation-setup field
+          enumeration (Physical Therapy (PT) Playbook.md line 71) is the only source in this corpus
+          that lists these two options: "option to show other students placed, option to show on the
+          Site Resources page." Small and worth having because both are silent-by-default decisions
+          with downstream consequences this journey documents elsewhere. The Site Resources toggle
+          in particular connects a scheduling screen to the under-adoption finding
+          ../accreditation/acote.yaml records against Site Resources ("CSS is told to proactively
+          promote it") — a program that never turns this on has a Site Resources page with nothing
+          rotation-specific on it, which is part of why the surface is hard to find.
+      - element: "Special-case rotation types: Integrated Clinical Experience, Directed Practice Experience, and residency/fellowship"
+        type: "ordinary rotation records used for three structurally different experience types; no dedicated type field"
+        data_shown: >
+          Per Physical Therapy (PT) Playbook.md lines 73-77 three special cases are set up as
+          rotations. INTEGRATED CLINICAL EXPERIENCE (ICE): part-time, completed early in the program
+          during didactic learning (year 1 or 2), typically at local sites such as the institution's
+          partner hospital, "often in short bursts (part of a day, one day a week for several weeks)."
+          DIRECTED PRACTICE EXPERIENCE (DPE): "exposure to a specialty area of practice beyond
+          entry-level exposure/knowledge a student would ordinarily receive," typically occurring
+          during a terminal clinical experience. RESIDENCIES & FELLOWSHIPS: recorded as an active
+          pilot with Mercer University's Residency & Fellowship Programs, with forms, workflows and
+          placement requirements still being analysed.
+        gates_on: []
+        accreditation_citation: >
+          CAPTE Standard 6, Element 6A (../accreditation/capte.yaml) — the 30-weeks-of-full-time
+          minimum at 32 hours/week counts terminal experiences and must EXCLUDE ICE weeks, so the
+          ICE-versus-terminal distinction is the load-bearing one and capte.yaml records that
+          rotation setup has no "counts toward the CAPTE full-time minimum" flag to express it.
+          The APTA-side body for the third case is ABPTRFE (American Board of PT Residency &
+          Fellowship Education, named at PT playbook line 37), which has no registry file in
+          ../accreditation/ — recorded as a coverage gap rather than cited as though it did.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research. Adjacent
+          and worth noting: five of the nine competitor files are GME-first products
+          (content/competitors/new-innovations.yaml, medhub.yaml, e-value.yaml, one45.yaml,
+          leo-davinci.yaml), i.e. post-graduate residency IS their native market — so on the third
+          case specifically, the competitive set is stronger than Prism and this repo's teardowns
+          are aimed at the wrong half of their product to prove it either way.
+        gap_severity: "gap"
+        gap_note: >
+          ADDED 2026-08-25. This file already documented ICE in passing on the Advanced Schedule
+          element; naming all three together turns a scheduling note into a structural finding.
+          Three experience types with three different accreditation consequences ride on ONE
+          undifferentiated rotation record: ICE must be excluded from the CAPTE 6A count, DPE is
+          explicitly ABOVE entry level and therefore should not be evidencing an entry-level
+          competency standard at all, and residency/fellowship sits under a different accrediting
+          body entirely. Nothing in rotation setup distinguishes them, so the distinction lives in
+          the rotation's NAME — which is exactly the naming-convention dependency capte.yaml flags
+          for the ICE/terminal split, generalised to three cases instead of two.
+          The residency/fellowship pilot is worth carrying for a separate reason: it is the only
+          confirmed instance in this corpus of Prism being trialled for POST-graduate experiential
+          education, which is the segment every GME-first competitor in ../competitors/ already
+          occupies. Recorded as a pilot, not as a capability — the playbook itself says forms,
+          workflows and requirements are still being analysed.
+      - element: "Off-track and cohort-moving students within a lockstep program"
+        type: "absent as a modelled state — handled by cohort reassignment and remediation rotations"
+        data_shown: >
+          Per Physical Therapy (PT) Playbook.md lines 49-53: PT programs "are always Lock Step";
+          cohort movement "is common when students withdraw and later return, go on leave, fail
+          experiences, etc."; and students "can also fall off-track with clinical experiences and
+          still maintain their original cohort — via remediation experiences, retaking failed
+          clinicals, or completing clinical experiences out of sequence." The playbook's stated best
+          practice is that "if the student is NOT changing cohorts and NOT completing a special
+          remediation experience, recommend their placements be made in the original course/rotation
+          with the rest of their cohort."
+        gates_on:
+          - "Cohort is the partition key for the Max Placement Limit and for shared-rotation slot deduction, so moving a student between cohorts moves them between two independent capacity pools."
+        accreditation_citation: >
+          CAPTE Standard 1, Element 1C2 (../accreditation/capte.yaml) — the graduation-rate
+          computation, whose denominator control is the "decelerated" student flag the PT playbook
+          documents at line 232 and which capte.yaml calls "precisely the denominator control an
+          ultimate-pass-rate calculation needs." CAPTE Standard 2, Element 2D4 also reads on this,
+          since a retaken failed clinical is the mechanism a program uses when CI assessment
+          suggests less than entry-level performance.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research — no
+          competitor file describes cohort reassignment, deceleration, or an out-of-sequence
+          placement. one45's "multi-layered concurrent schedules" claim
+          (content/competitors/one45.yaml) implies some tolerance for learners on divergent paths
+          but publishes nothing about how a learner leaves and rejoins a lockstep progression.
+        gap_severity: "configure-needed"
+        gap_note: >
+          ADDED 2026-08-25. The lockstep model is already recorded on the element above; what was
+          missing is that lockstep programs routinely contain students who are NOT in step, and
+          that Prism handles them by convention rather than by structure. Three distinct situations
+          share one mechanism (put them in a different cohort, or place them in a different
+          rotation) and each carries a different downstream meaning: a student on leave, a student
+          repeating a failed clinical, and a student taking clinicals out of sequence are not the
+          same case, but the placement record cannot tell them apart. The playbook's own best
+          practice is a mitigation for exactly that ambiguity — keep the student in the original
+          course/rotation UNLESS they genuinely changed cohorts or are on a remediation experience,
+          precisely so the cohort roster stays a meaningful denominator.
+          The connection to rotation-lifecycle--08 is direct and worth making: the AAR pull sequence
+          depends on the decelerated flag being set correctly, and this element is where that flag's
+          correctness is actually determined — at the moment a coordinator decides whether an
+          off-track student moves cohorts or stays put. That decision is made in a placement screen
+          and consumed in an accreditation report, with nothing joining the two.
+      - element: "Course-container model choice — the three documented Social Work course-setup patterns"
+        type: "absent as a product affordance — a documented implementation decision with no in-product guidance"
+        data_shown: >
+          Nothing in-product. The SW playbook records three named models a program chooses between
+          at implementation (Social Work (SW) Playbook.md lines 63-67): a COMBINED course covering
+          multiple practicum pathways, "useful when combining a Learning Contract & Evaluation
+          across terms"; ONE COURSE OFFERING PER ACADEMIC YEAR with rotations for each student
+          pathway; and ONE COURSE PER TERM, "ideal for schools using automated student-registration
+          feeds."
+        gates_on:
+          - "Which rotation/cohort scoping is even expressible downstream — a combined course spanning terms cannot carry per-term rotation dates, and a per-term course cannot carry one Learning Contract across the year."
+        accreditation_citation: >
+          CSWE Accreditation Standard 3.3, AS 3.3.3 (../accreditation/cswe.yaml) — the 400 BSW /
+          900 MSW minimum is a PROGRAM total accrued across every field experience, so whether
+          field hours live in one course or in three decides whether the accrual rollup is a
+          single report or a manual merge. Also CSWE Accreditation Standard 5.0, AS 5.0.1(b),
+          which requires outcomes broken out for each program option AND in aggregate — the
+          per-option/aggregate collision recorded in rotation-lifecycle--08 originates in exactly
+          this choice.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research. CORE ELMS
+          and MedHub/E*Value both sell into social work (content/competitors/core-elms.yaml,
+          content/competitors/e-value.yaml) but neither publishes a course-container model at all,
+          so there is nothing to compare three named patterns against.
+        gap_severity: "gap"
+        gap_note: >
+          NEW 2026-08-25, from a full read of the SW playbook rather than a per-stage sample. This
+          is the same shape of finding already recorded for wishlist types on the next step —
+          discipline defaults documented in an internal playbook and absent from the product — but
+          it bites harder, because the course-container decision is made ONCE at implementation and
+          determines what every later stage of this journey can express. The playbook's own third
+          option is explicitly conditional on an infrastructure fact ("ideal for schools using
+          automated student-registration feeds"), i.e. the right answer depends on whether the
+          school has a banner/SIS feed, which is not a question the rotation-setup screen asks.
+          Read together with the cohort-naming element below and the Learning Contract split model
+          in rotation-lifecycle--07, Social Work is the discipline where the largest share of the
+          real configuration decisions live in a playbook and none of them live in the UI.
+      - element: "Cohort-naming convention (two named Social Work options, neither defaulted)"
+        type: "absent as a product affordance — a documented naming convention"
+        data_shown: >
+          Per Social Work (SW) Playbook.md lines 41-44 there is no single house standard for SW,
+          "unlike PT's graduation-year default." Option 1 names cohorts BY STUDENT ENROLLMENT DATE
+          (e.g. "Traditional Fall 2025", "Advanced Standing Fall 2025") and suits schools with a
+          banner/automated data feed; Option 2 names them BY PRACTICUM START DATE (e.g. "Generalist
+          Fall 2025", "Specialization Spring 2026") and suits schools that manually upload student
+          data. Groups carry the academic track (Foundation Year, Advanced Standing, Clinical
+          Practice, Macro Practice, Behavioral Health, School Social Work), Campuses carry
+          Main/Satellite/Online/Regional, and Categories carry Full-Time, Part-Time, Traditional,
+          Advanced Standing, Behavioral Science Track, Child Welfare Specialization (lines 48-50).
+        gates_on:
+          - "The cohort is the partition key for the Max Placement Limit and for shared-rotation slot deduction (see the Max Placement Limit step) — but SW is excluded from that feature anyway on lockstep grounds, so for SW the cohort's practical role is reporting segmentation."
+        accreditation_citation: >
+          CSWE Accreditation Standard 5.0, AS 5.0.1(b) (../accreditation/cswe.yaml) — outcomes
+          reported for each PROGRAM OPTION and in aggregate. Whether "Generalist" and
+          "Specialization" are Cohorts, Groups, or Categories decides whether that break-out is a
+          filter or a rebuild, and ../accreditation/cswe.yaml already records that this "is a
+          configuration decision made months before anyone reads AS 5.0.1(b)."
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research — no
+          competitor file describes a cohort-naming or program-option segmentation model.
+        gap_severity: "configure-needed"
+        gap_note: >
+          SHARPENED 2026-08-25: this file previously recorded that SW "gives two competing cohort
+          conventions" without naming them or citing where. Both are now named with line-level
+          citations, and the operative detail is the one the summary lost — the choice is driven by
+          whether the school has an automated registration feed, not by pedagogy. Practical
+          consequence for this stage: Option 2 (by practicum start date) makes the cohort a
+          placement-season object and therefore aligns cleanly with rotation scoping; Option 1 (by
+          enrollment date) makes it an admissions object, and a program on Option 1 running
+          part-time and full-time tracks will have students from one cohort placed across two
+          practicum seasons. Nothing in rotation setup warns about that.
+      - element: "CEU Credits / thank-the-supervisor-with-credit-for-hours (fixed hours or approved-timesheet hours)"
+        type: "numeric input + source toggle"
+        data_shown: "Continuing-education credit the site supervisor earns for taking the student, either as a fixed figure or derived from approved timesheet hours."
+        gates_on: []
+        accreditation_citation: "None — supervisor incentive/recognition mechanics carry no accreditor evidence requirement in any of the twelve standards files in ../accreditation/."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor's public materials describe supervisor CEU crediting as a rotation-setup field."
+        gap_severity: "none"
+        gap_note: >
+          PT/OT-specific and included here because it is a real capacity lever the four-domain
+          reading missed: in a market where the PT playbook records \"national competition for IP
+          and Acute care slots\" as an industry-level problem, CEU credit is part of what keeps a
+          site offering slots at all. Both the PT and OT playbooks record the same operational
+          wrinkle — CEUs vary by state, so many programs deliberately leave the CEU total blank
+          and list supervision hours instead, letting the CI/educator or their state APTA or
+          IACET chapter do the conversion.
+    action: "Admin defines the rotation shell (dates, duration floor, optional sub-blocks, cohort scope) that supply (slots) and demand (students) will later be matched into."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Adding and Deleting Rotations.md;
+      discipline-specific rotation-setup fields and lockstep model from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      — read IN FULL 2026-08-25; lines 43 (the PT settings taxonomy), 45-53 (cohort by graduation
+      year, "PT programs are always Lock Step", cohort movement on withdrawal/leave/failure, the
+      off-track-but-same-cohort cases, and the keep-them-in-the-original-rotation best practice),
+      55-60 (Groups, Student Categories, Announcements, Resources, Attestations, and per-setting
+      Program Requirements), 68-71 (placement course names and the full rotation-setup field list
+      incl. the two visibility toggles and the CEU/thank-the-CI options), 73-77 (the three special
+      cases: ICE, DPE, and the Mercer residency/fellowship pilot), 115-123 (placement-notification
+      lead times, the student-contacts-CI-at-2-3-months convention, and the
+      schools-provide-documentation norm), 182-188 (Pain Points) and
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+      (sections 9-10, "Cohort", "Rotation Setup"); cohort/track variance from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md
+      (lines 41-44 the two named cohort-naming conventions and the infrastructure condition behind
+      each; lines 48-50 Groups/Campuses/Categories value sets; lines 63-67 the three course-setup
+      models) and
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md
+      ("Program Details & Curriculum Setup"); accreditor duration floors from
+      ../accreditation/capte.yaml (Standard 6, Element 6A), ../accreditation/acote.yaml
+      (Standards C.1.12 and D.1.5), ../accreditation/cswe.yaml (AS 3.3.3),
+      ../accreditation/caa-asha.yaml (Standard 3.0B/3.1B), ../accreditation/nursing.yaml
+      (CCNE Standard III, Key Element III-H), ../accreditation/coa.yaml (Standard E.2.3),
+      ../accreditation/caep.yaml (Standard R2, Component R2.3).
+
+  - screen: "Slots Dashboard / Managing Slots by Placements"
+    navigation_path: "Placements > [Course or Placement Group] > Slots"
+    elements:
+      - element: "Slots by Setting / by Rotation / by Type / by Status (bar & pie charts)"
+        type: "read-only rollup, clickable-to-filter"
+        data_shown: "Count of open capacity broken out by clinical setting, rotation, slot type, and status."
+        gates_on: []
+        accreditation_citation: >
+          COCA Standard 6, Element 6.9 (site capacity feeds the 3-year rolling-average
+          calculation) — this rollup aggregates capacity by setting/rotation/type/status, but no
+          time-series or rolling-average dimension exists in it anywhere in the sourced docs.
+          EXISTING-DISCIPLINE CLAUSE: the same "counts, not adequacy" shortfall recurs verbatim
+          for four served disciplines. CAPTE Standard 2, Element 2D8 wants number AND variety of
+          sites against required capacity, including a forward-looking 150%-of-charter-class-size
+          projection for developing programs. ARC-PA Standard A1, Element A1.10 a-b wants
+          confirmed capacity per setting per cohort, filterable by geography. CCNE Standard II,
+          Key Element II-C wants a periodically-run sufficiency process, not a snapshot.
+          COA Standard F.1 with Standard A.10 (both CRITICAL) wants sufficiency of clinical
+          resources for the size and scope of the program.
+        competitor_equivalent: >
+          Not comparable at element level — CORE ELMS and one45 marketing pages describe
+          slot/site management only in generic terms ("centralized site/student/preceptor
+          management"), with no dashboard-level breakdown to compare against. Note that CORE ELMS
+          sells that same generic claim into PT, OT, PA, nursing, social work, pharmacy and
+          dental (content/competitors/core-elms.yaml), so the disciplines overlap head-to-head
+          even though the evidence does not.
+        gap_severity: "configure-needed"
+        gap_note: >
+          A read-only aggregation of the current capacity number only; the COCA 6.9 3-year
+          rolling-average adequacy view is not one of the documented breakouts, and neither is
+          CAPTE 2D8's required-vs-contracted projection. Per ../accreditation/arc-pa.yaml the
+          honest summary for PA is that "sufficiency is asserted by eyeballing offered-vs-used per
+          setting in Excel, not computed" — which is the same verdict, reached independently, for
+          a discipline Prism has served for years.
+      - element: "+ Add Slot drawer — Site, Location, # of offers per rotation"
+        type: "input fields"
+        data_shown: "The raw supply-side capacity number a site is making available for a given rotation."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9 (site capacity feeds the 3-year rolling-average calculation) — this is the element where the underlying capacity number is actually captured, so it is the input any rolling-average computation would have to be built on. Also the capture point ARC-PA Standard A1, Element A1.10 a-b depends on: that standard's evidence is 'the number of students each site can accommodate,' which is literally this field."
+        competitor_equivalent: "Not comparable at element level — CORE ELMS and one45 marketing pages describe slot/site management only in generic terms, with no field-level slot-entry detail to compare against."
+        gap_severity: "configure-needed"
+        gap_note: "Captures a plain per-rotation capacity number, not a rolling-average adequacy figure — COCA 6.9's specific 3-year computation would need to be built on top of this data, not just read off it."
+      - element: "Supervision Type selector on the slot (student-to-supervisor ratio)"
+        type: "single-select drawn from a program-editable controlled vocabulary"
+        data_shown: >
+          The declared supervision ratio for the capacity being offered. Value sets are
+          discipline-shaped: the OT production value set is fixed at 1 Student:1 CI, 1 Student:2
+          CIs, 2 Students:1 CI, 2 Students:2 CIs; PT/OT programs edit their own labels under
+          Sites and Locations > Setup > Slot Setup.
+        gates_on:
+          - "Selected per slot, carried onto every placement made from that slot, and exposed as a filter on the site-facing slot-offering form."
+          - "Does NOT gate the placement action itself — nothing computes a live ratio from it or blocks on it."
+        accreditation_citation: >
+          This one field is the sole ratio capture point for three separate served disciplines,
+          and it satisfies none of them the same way.
+          ACOTE Standard C.1.7 (ratio of fieldwork educators to students) is the closest to
+          satisfied: per ../accreditation/acote.yaml, Exxat's own ACOTE guide names C.1.7 against
+          exactly this field plus the Placements by Educator report, and the OT playbook confirms
+          the pairing (Sites > Location > Slots > Supervision Type).
+          COA Standard F.7 (CRITICAL) is not satisfied: it caps supervision at a hard 2:1 and its
+          unit of enforcement is preceptor-shift, not slot.
+          CCNE Standard II, Key Element II-F is not satisfied either: its recommended 1:8
+          faculty-to-student ratio for indirect NP-track supervision is a faculty-workload figure
+          that never touches a slot record at all.
+          ACPE Standard 3, Key Element 3.3.e (Pharmacy, an expansion domain) fails for the same
+          structural reason as COA F.7.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research, and the
+          absence is symmetric and worth stating as such: none of the nine competitor files
+          (CORE ELMS, one45, Elentra, eMedley, MedHub, E*Value, LEO/DaVinci, New Innovations,
+          axiUm) documents a supervision-ratio field on a capacity record, and none documents a
+          ratio constraint inside its matching engine. This looks like an industry-wide gap
+          rather than a Prism-specific deficit — which is a genuine product opportunity, not
+          merely a defensive talking point.
+        gap_severity: "gap"
+        gap_note: >
+          The ratio is descriptive metadata, not a constraint, and the failure mode is concrete:
+          a program can label a slot "1 Student:1 CI" and then place three students against that
+          same supervisor through three separate slots without the system objecting. For OT this
+          is survivable because ACOTE C.1.7 asks for evidence the ratio "enables proper
+          supervision" rather than a numeric cap; for CRNA it is disqualifying, because COA F.7
+          states a hard number and flags the standard critical. Two secondary defects carry over
+          from ../accreditation/acote.yaml: the Placements by Educator report explicitly EXCLUDES
+          placements with no assigned educator (so incomplete educator assignment silently shrinks
+          the denominator and under-reports the program's own ratios), and planned Supervision
+          Type and realized ratio live in two views with no reconciliation, so nothing flags a
+          slot set up as 1:1 that actually ran 2:1.
+      - element: "Slot Type = First Come First Serve (FCFS), and the early-publication practice built on it"
+        type: "controlled-vocabulary label on the slot"
+        data_shown: >
+          Marks capacity that is claimed on a first-come basis rather than held for the
+          program's allocation run. Shipped default Slot Type set (confirmed identically in the
+          OT playbook): FCFS, Resume Required, Interview Required, Must Be Filled, Requested By
+          Student — the OT playbook adds that "schools typically don't change these."
+        gates_on:
+          - "Usable as a weighted priority inside Placement Assist, and as a filter on the student-facing wishlist."
+        accreditation_citation: "None directly — a market-timing label, not accreditor evidence. Indirectly upstream of CAPTE Standard 2, Element 2D8 and ARC-PA Standard A1, Element A1.10 a-b, since FCFS slots claimed early are still capacity that must appear in the sufficiency count."
+        competitor_equivalent: >
+          Partially comparable, and only for this one value. LEO/DaVinci's Clerkship Lottery
+          documents an "optional first-come-first-serve mode" as a LOTTERY-LEVEL setting
+          (content/competitors/leo-davinci.yaml) — a mode the whole allocation run operates in.
+          Prism instead models FCFS as a per-slot label the allocator can weight, which is the
+          finer grain and the one PT's actual practice needs, since a single M1M response mixes
+          reserved and FCFS slots. No other competitor file documents an FCFS primitive at all.
+        gap_severity: "none"
+        gap_note: >
+          PT-specific and strategically significant: the PT playbook records that "the % of slots
+          offered as FCFS is climbing" and that PT schools respond by publishing FCFS slots to
+          students early "to avoid 'losing out' on these slots to other schools competing for
+          them" — i.e. a share of capacity is deliberately routed AROUND the allocation engine as
+          a competitive response. Any claim that Placement Assist governs PT allocation should be
+          qualified accordingly: it governs the reserved half.
+      - element: "Slot Status: Confirmed / Tentative / Cancelled"
+        type: "radio + conditional cancellation-attribution fields"
+        data_shown: "Whether the offered capacity is actually committed by the site, and — when cancelled — whether the school or the site cancelled it."
+        gates_on:
+          - "Wishlist setup exposes Confirmed and Tentative as separate include-checkboxes, so status decides what students can rank."
+          - "Placement Assist can be configured to weight slots by status (see the Advanced Options step)."
+        accreditation_citation: "COCA Standard 6, Element 6.9 (contingency planning for lost rotation capacity) and CCNE Standard II, Key Element II-C (a defined, periodically-run process for determining site availability, and the modifications made as a result) — the Cancelled + cancelled-by-Site combination is the closest structured lost-capacity event in the product, and it is exactly what a contingency narrative is written against."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Lost-capacity events are recorded but not aggregated — no documented report counts
+          site-initiated cancellations per site per year. PT practice puts a sharper point on it:
+          the PT playbook treats confirming a slot (a confirmation email to the site contact and
+          CI the moment a slot is received, BEFORE any student is placed) and releasing an unused
+          slot back to the market as the two operationally critical moves of the season, because
+          an unreleased slot is capacity a competing program cannot use and goodwill the program
+          loses. Neither move is modelled as a tracked event here; both are email conventions.
+    action: "Admin (or site personnel via a delegated Slot Request link) records how many placement openings exist, at what declared supervision ratio, broken out by setting/rotation/type — the supply side that allocation later consumes."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Slots by Placements.md;
+      Supervision Type / Slot Type vocabularies and the OT fixed ratio value set from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+      (section 8 slot setup; "C.1.7: Ratio of Fieldwork Educators to Students") and
+      ../accreditation/acote.yaml (Standard C.1.7); FCFS market behavior and slot
+      confirmation/cancellation practice from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      ("Slot Request"; "Slot Confirmation and Cancellation Emails"; "Pain Points"); ratio
+      standards from ../accreditation/coa.yaml (Standard F.7) and ../accreditation/nursing.yaml
+      (CCNE Standard II, Key Element II-F).
+
+  - screen: "Max Placement Limit (Slot Cap) — Slot Offering Drawer, step 2"
+    navigation_path: "Site/Delegator slot-offering link, or Placements > Slots > Offer Availability > (edit pencil) — step 2 of the Slot Offering Drawer"
+    elements:
+      - element: "Placement Limit field (per Location + Setting + Cohort)"
+        type: "input field"
+        data_shown: "Maximum total student intake for a Location/Setting/Cohort combination, independent of how many individual monthly/weekly slots are listed as offered (e.g. 12 slots offered, intake capped at 7)."
+        gates_on:
+          - "Must be explicitly enabled in Slot Request Configuration to expose the limit field on the site/delegator-side slot-offering link; if disabled, site personnel never see a limit option."
+          - "If a slot is created without an assigned Setting, the limit falls back to the Location + Cohort level."
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.e (2:1 student-to-preceptor cap) — this field is the
+          closest confirmed capacity-cap mechanism anywhere in the sourced material, and it
+          resolves (not just re-hedges) the prior "neither is confirmed to exist" language: a real
+          cap exists, but its unit of account is Location+Setting+Cohort, not the individual
+          precepting person. The same unit mismatch defeats COA Standard F.7 (CRITICAL) for CRNA
+          and ACOTE Standard C.1.7 for OT.
+        competitor_equivalent: "Not comparable at element level — no competitor's public docs describe an equivalent configurable intake-cap field at this granularity. The nearest public claim is Elentra's 'learner-driven elective selection within admin-set capacity rules' (content/competitors/elentra.yaml), which is the same shape — self-service bounded by an admin cap — but exposes no field-level detail."
+        gap_severity: "gap"
+        gap_note: >
+          Delta (1) from ACPE 3.3.e: the cap is scoped to Location+Setting+Cohort, not to an
+          individual preceptor's concurrent caseload across placements. Also, as documented,
+          PA-exclusive and available only for lockstep-based domains today — extending it to
+          Pharmacy (or any of the four new domains) would itself require product work, not just
+          configuration. EXISTING-DISCIPLINE CONSEQUENCE, and it is the sharpest availability
+          finding in this stage: the lockstep restriction excludes Social Work (whose playbook
+          documents enrollment-date or practicum-start-date cohorts plus full-time/part-time
+          Categories rather than a lockstep progression) and most of Nursing, including CRNA —
+          the one discipline in this entire research set whose accreditor states a hard numeric
+          supervision cap and flags the standard critical. The only shipped intake cap is
+          unavailable to the discipline that needs a cap most.
+      - element: "Shared-rotation, per-cohort slot deduction with independent limits"
+        type: "documented allocation behavior of the limit field"
+        data_shown: >
+          When one physical rotation slot is shared across cohorts (the playbook's worked example:
+          an overlapping rotation slot serving both Class of 2024 and Class of 2025), slots
+          offered and slots available are tracked and deducted SEPARATELY per cohort, and each
+          cohort's placement limit stays fully independent of the other's and of the shared-slot
+          consumption.
+        gates_on:
+          - "Cohort is the partition key for both the availability count and the cap; the two cohorts do not compete for a shared pool."
+        accreditation_citation: >
+          ARC-PA Standard A1, Element A1.10 a-b — that standard's evidence is "the number of
+          students each site can accommodate, per setting and per cohort," and per-cohort is
+          exactly the partition this behavior implements. Also relevant to COCA Standard 6,
+          Element 6.9, whose rolling-average computation is inherently multi-cohort.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor's public materials describe cohort-partitioned capacity accounting on a shared rotation."
+        gap_severity: "none"
+        gap_note: >
+          Genuinely subtle and correct behavior, and the strongest single piece of evidence that
+          Prism's capacity model is more than a counter — it is the kind of thing that only gets
+          built after a real customer hit the cross-cohort double-count bug. Worth surfacing in
+          the four-domain pitch, since every one of those domains runs overlapping cohorts. Note
+          the reporting consequence recorded in the PA playbook: a single Location/Cohort/Setting
+          combination can span MULTIPLE rows in the Slots List View (differing rotation or
+          preceptor), so the "Limit Exists" LABEL — not the row — is the unit that maps to the
+          limit. An admin reading the grid row-by-row will miscount.
+      - element: "\"Limit Exists\" label (Slots List View)"
+        type: "read-only rollup"
+        data_shown: "Flags which rows in Placements > Slots / Sites > Slots / Locations > Slots carry a configured limit."
+        gates_on: []
+        accreditation_citation: "None directly — this is a passive indicator that a limit was configured elsewhere; no ACPE 3.3.e evidence lives here."
+        competitor_equivalent: "Not comparable at element level — no competitor's public docs describe a slot-list indicator of this kind."
+        gap_severity: "none"
+        gap_note: "A read-only surfacing element; neither of the two documented ACPE 3.3.e deltas (wrong cap unit, advisory-not-blocking) originates here, though it inherits the same PA-exclusive availability as the field it reflects."
+      - element: "Warning banner (Location-view Select Student screen; Make Placement drawer — Place Individually and Place as a Group; Student-view placement)"
+        type: "non-blocking alert"
+        data_shown: "Shown once the limit is reached or exceeded at the point of placement."
+        gates_on: ["informational only — does not gate or block the placement action"]
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.e (required to be a *blocking* check) — this is the
+          enforcement point for the cap, and it is documented as advisory rather than blocking.
+          EXISTING-DISCIPLINE CLAUSE: advisory-not-blocking is survivable under ACOTE Standard
+          C.1.7, which asks for evidence the ratio "enables proper supervision" rather than a hard
+          number, but not under COA Standard F.7, whose text is "at no time does the number of
+          students directly supervised by one clinical preceptor exceed 2:1" and which permits
+          exceedance only with a documented extenuating-circumstance justification and a
+          contingency record. A soft warning produces neither the block nor the exception record.
+        competitor_equivalent: "Not comparable at element level — no competitor's public docs describe an equivalent soft-cap warning mechanism at this granularity."
+        gap_severity: "gap"
+        gap_note: "Delta (2) from ACPE 3.3.e: it warns rather than blocks, so a non-compliant assignment can still be completed. Same PA-exclusive, lockstep-only availability as the limit field itself."
+    action: "Site or admin caps total student intake for a location/setting/cohort combination; staff are warned but not stopped when a placement would exceed that cap."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Max Placement Limit (MAX Slot Limit).md;
+      corroborated in detail (enablement dependency, no-Setting fallback, Limit-Exists label
+      semantics, shared-rotation per-cohort deduction) by
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md
+      ("Max Placement Limit (Slot Cap) — PA-Exclusive Feature"); ratio standards from
+      ../accreditation/coa.yaml (Standard F.7) and ../accreditation/acote.yaml (Standard C.1.7).
+
+  - screen: "Wishlist Setup"
+    navigation_path: "Placements > [Course or Placement Group] > Wishlist > + Create wishlist"
+    elements:
+      - element: "Wishlist type selector"
+        type: "dropdown / radio selection"
+        data_shown: "One of nine documented types: Slot, Location, Setting, Location Area, Questionnaire, Address Preference, My Request, Rotation Preference, and Setting-and-Rotation-Preference [Nested]; plus a distinct ExxatOne Availability-Based type for PT/OT/Nursing, and a support-configured Field Application Form type used by Social Work."
+        gates_on:
+          - "Type is IMMUTABLE after save — changing it means deleting and rebuilding the wishlist (confirmed in ../flows/admin-onboarding--07-wishlists-slot-requests-placement-assist.yaml against the admin tutorial transcript)."
+        accreditation_citation: "None directly — this is preference intake, not an accreditor evidence requirement."
+        competitor_equivalent: >
+          One45 markets three named allocation methods (Stream Lottery, Rotation Lottery,
+          Randomized Stream Lottery); MedHub's UME module offers "Schedule Lottery: create
+          lotteries based on custom rules and preferences" plus course waitlists; LEO/DaVinci's
+          Clerkship Lottery lets students rank-order course preferences with a random tiebreak;
+          Elentra advertises a "leading edge lottery system"; eMedley's eduSched is
+          "preference-, lottery-, track/path-based"; New Innovations offers a rotation lottery for
+          3rd/4th-year medical students. Every one of these ranks a SINGLE object type — courses
+          or rotations. None documents ranking against slots, locations, settings, location areas,
+          addresses, or nested setting-then-rotation. Prism's own help documentation is more
+          granular here than any competitor's public materials, which is a real but asymmetric
+          comparison (we cannot see behind any competitor's login wall). One directional caution:
+          five of those six competitors are med-ed-first products, so their single-object model
+          may reflect their market rather than their ceiling.
+        gap_severity: "none"
+        gap_note: "This element alone resolves the journey's prior 'no preference-ranking... engine is documented' language — a documented, multi-type preference system exists and feeds directly into Placement Assist."
+      - element: "Discipline-default wishlist type mapping (a practice convention, NOT a product feature)"
+        type: "absent — configuration knowledge that lives only in the playbooks"
+        data_shown: >
+          Nothing in-product. The type-to-discipline mapping the playbooks record:
+          PT — slot-based most common, location-based (reverse wishlist) as the documented
+          fallback "for schools that don't receive enough slots offered in their M1M," MyRequest
+          used sparingly (e.g. one student-recommended new site per program).
+          OT — Level I: slot-based or location-based; Level II: typically location-based (reverse)
+          or setting-based; Capstone: questionnaire-based plus MyRequest to gather site details.
+          PA — slot-based for Core courses, setting-based for Electives, location-based rarely.
+          Social Work — Multi-Location Field Application Form (support-configured), My Requests,
+          and course-specific Wishlist Questionnaires; SW's playbook explicitly frames this as
+          "location/agency-based rather than reserved-slot-based."
+          SLP, Nursing, Teacher Education — no documented wishlist pattern exists in any source.
+        gates_on: []
+        accreditation_citation: "None — preference-instrument selection carries no accreditor evidence requirement in any of the twelve standards files in ../accreditation/."
+        competitor_equivalent: "Not applicable — this element documents an absence in Prism, not a feature, so there is nothing for a competitor to be compared against."
+        gap_severity: "gap"
+        gap_note: >
+          The gap is the combination of (a) twelve unfamiliar wishlist types, (b) an immutable
+          type choice, and (c) discipline defaults that exist in internal playbooks but nowhere in
+          the product. A new PT program picks among twelve types with no in-product guidance and
+          cannot change its mind after save. Explicitly logged as an absence for SLP: the SLP
+          playbook's own gap list states there is "no SLP-specific slot-request cycle, wishlist
+          pattern, or Placement Assist usage notes" and flags this as a DOCUMENTATION gap rather
+          than a confirmed product gap — that distinction should be preserved and not quietly
+          upgraded into a product claim in either direction. Same for Nursing, whose playbook
+          gap list names "slot-request cadence/seasonality (Nursing's equivalent of PT's March 1
+          M1M), wishlist behavior, Placement Assist adoption" as undocumented.
+      - element: "Min/Max selections, Open/Close/View-only dates"
+        type: "input fields"
+        data_shown: "How many preferences a student must submit and the submission window."
+        gates_on: []
+        accreditation_citation: "None directly — submission-window administration, not an accreditor evidence requirement."
+        competitor_equivalent: "Not comparable at element level — neither one45's lottery documentation nor CORE ELMS's SmartMatch marketing exposes preference-count or submission-window configuration fields."
+        gap_severity: "none"
+        gap_note: >
+          The window is where discipline cadence actually lives, and the two documented cadences
+          are almost opposites. PT runs an annual industry-synchronized cycle: the M1M slot
+          request goes out March 1 for the FOLLOWING calendar year, and the wishlist follows the
+          responses. PA's playbook recommends the opposite compression — open the wishlist 2-4
+          months before the first rotation start date but keep it open only briefly (its worked
+          example is Friday to Monday) to force a decision. Neither cadence is expressible as a
+          template or a default; both are typed in by hand every cycle.
+      - element: "Student-facing rank UI (up/down arrows or drag-and-drop; Reason for Selection field)"
+        type: "ranking control"
+        data_shown: "Ordered preference list a student builds before allocation runs."
+        gates_on: []
+        accreditation_citation: "None directly — this is preference intake, not an accreditor evidence requirement."
+        competitor_equivalent: "Both one45's lottery methods and CORE ELMS's SmartMatch imply some rank-order or preference intake upstream, and LEO/DaVinci explicitly documents student rank-ordering with a random tiebreak, but no competitor's public materials document the student-side ranking control itself, so the comparison is asymmetric rather than element-to-element."
+        gap_severity: "none"
+        gap_note: "The concrete rank-order mechanism the journey's earlier hedge said was undocumented; it produces the ordered list Placement Assist consumes."
+    action: "Admin configures which preference-collection instrument to use; students rank locations, settings, slots, or rotations before Placement Assist runs."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Wishlists for Student Rotations.md;
+      student-side steps confirmed via
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Coursework/Completing a Wishlist.md;
+      discipline defaults and cadence from the PT playbook ("Wishlist"; "Slot Request" M1M),
+      the OT playbook ("Wishlist Setup"), the PA playbook ("Wishlist"; "Best Practice"), and the
+      SW playbook ("My Requests (parallel/alternate workflow)"); documented absences from the
+      SLP playbook ("Gaps vs. PT/OT/PA Playbooks") and the Nursing playbook ("Gaps / Not Yet
+      Documented"); immutability behavior corroborated by
+      ../flows/admin-onboarding--07-wishlists-slot-requests-placement-assist.yaml.
+
+  - screen: "Placement Assist — Setup"
+    navigation_path: "Placements > [Course or Placement Group] > Placement Assist"
+    elements:
+      - element: "Basic Setup — Courses, Rotations/Advanced Schedules, Wishlist(s) to include"
+        type: "multi-select checkboxes"
+        data_shown: "Scopes which population and which submitted wishlist(s) the algorithmic run will consider."
+        gates_on: []
+        accreditation_citation: "None directly at this element."
+        competitor_equivalent: "Not comparable at element level — CORE ELMS and one45 public pages describe outcomes (\"instant results\", named lottery types) but not a run-scoping screen with this level of field detail."
+        gap_severity: "none"
+        gap_note: "Full self-service access to Placement Assist is documented as limited to PT-PTA and OT-OTA programs today (per content/prism/capability-map.yaml, itself sourced from this same help-center doc); every other discipline — including all four target domains (Pharmacy, DO, Dentistry, Medicine) — must contact Exxat support to have it enabled, and the docs describe 'limited functionality' outside PT/OT. The sourced docs do not distinguish this element from its sibling on that point."
+      - element: "Select Students (#) drawer — filter by Placement Assignment Status / Wishlist Submission status"
+        type: "filterable student picker"
+        data_shown: "Which registered students are included in this run; students can be run even without a wishlist (randomized placement into open slots)."
+        gates_on: []
+        accreditation_citation: "None directly at this element."
+        competitor_equivalent: "Not comparable at element level — CORE ELMS and one45 public pages describe outcomes (\"instant results\", named lottery types) but not a student-selection workflow with this level of field detail."
+        gap_severity: "none"
+        gap_note: "Same discipline-specific rollout limitation as the Basic Setup element: full self-service Placement Assist is documented for PT-PTA and OT-OTA only, with support enablement and 'limited functionality' elsewhere. This is a real rollout gap distinct from the matching algorithm's own capability, and the docs apply it to the feature as a whole rather than to individual fields."
+      - element: "Placement-mode selection is upstream of this screen and varies WITHIN a discipline"
+        type: "absent — a decision made by convention before the run is scoped"
+        data_shown: >
+          Nothing in-product. The documented reality is that Placement Assist is one of several
+          co-existing placement modes and is not the default for most experience types even in
+          the two disciplines that have full self-service access.
+          OT states the split explicitly: "For Level II, schools prefer direct and slot-based
+          placements. For capstone, direct placement is preferred. For Level I, schools prefer
+          Placement Assist." So within ONE discipline the algorithmic run governs one of three
+          experience types.
+          PT records four co-existing modes: wishlist + Placement Assist (very common); early
+          FCFS publication outside the run (very common); pre-matching students to
+          application/interview sites ahead of the school's common match day (common); and
+          location-based wishlist + direct placement + Email>Publish slot requests (fairly common).
+          PA runs it, despite not having self-service access, via a documented staged-batch
+          strategy (see the Advanced Options and Results steps).
+        gates_on: []
+        accreditation_citation: "None — mode selection carries no accreditor evidence requirement."
+        competitor_equivalent: >
+          Directionally comparable and unflattering to the marketing framing on both sides. CORE
+          ELMS sells SmartMatch as the way students get matched ("automated student-site-preceptor
+          matching... with instant results, eliminating wait times"), into the same PT, OT, PA,
+          nursing and social work market. The observed Prism reality is that the algorithm handles
+          a minority of experience types even where it is fully available. Whether CORE ELMS's
+          customers behave differently is unknowable from marketing copy — but the honest read is
+          that "we have a matching engine" is a weaker claim than either vendor's materials imply,
+          for structural reasons (FCFS competition, interview-mediated placements, capstones)
+          rather than product ones.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Worth carrying into the four-domain plan as a scoping correction: enabling Placement
+          Assist for Pharmacy/DO/Dentistry/Medicine does not mean those programs will run their
+          placements through it. The PT and OT evidence says a large share of capacity is routed
+          around the allocator for reasons the allocator cannot fix.
+    action: "Admin scopes and launches an algorithmic matching run against a defined student population, rotation set, and preference source (or none, for randomized placement)."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Using Placement Assist.md;
+      placement-mode split from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+      ("Placements", section 10, including the explicit Level I / Level II / capstone preference
+      note) and
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      ("Placements"); self-service scope from /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml.
+
+  - screen: "Placement Assist — Advanced Options"
+    navigation_path: "Placements > [Course or Placement Group] > Placement Assist > Setup > Advanced Option"
+    elements:
+      - element: "Set Maximum Placements per Student for Courses/Rotations/Settings — Add Rule (Rule Application Type: IN EACH / IN COMBINED; Apply Limit To: Course/Rotation/Setting)"
+        type: "rule builder"
+        data_shown: "A per-student cap, applied individually per selection (IN EACH) or shared across a selected group (IN COMBINED) — e.g. capping a student to exactly one of four elective courses, or preventing placement in two consecutive rotation terms."
+        gates_on: ["students exceeding the configured max are excluded from that rule's slots in the run"]
+        accreditation_citation: >
+          ACPE Standard 3, Key Elements 3.2.b/3.2.d (all four required APPE settings per student)
+          — the "IN EACH"/"IN COMBINED" rule is a directly applicable mechanism for enforcing a
+          fixed required-setting quota per student.
+          EXISTING-DISCIPLINE CLAUSE: the identical mechanism maps cleanly onto ARC-PA Standard
+          B3, Element B3.04 a-d, which names four required SCPE settings (emergency department,
+          inpatient, outpatient, operating room) — the same shape of requirement as ACPE's four
+          APPE settings, for a discipline Prism already serves. It maps less cleanly onto CSWE
+          Accreditation Standard 3.3, AS 3.3.1, which requires opportunities across five SYSTEM
+          LEVELS (individuals, families, groups, organizations, communities) — per
+          ../accreditation/cswe.yaml, system-level tagging "currently rides on generic
+          placement/agency tags rather than a first-class CSWE system-level field," so the rule
+          builder has no clean attribute to constrain on.
+        competitor_equivalent: >
+          Not comparable at element level in the direction that matters most: this is the single
+          richest piece of element-level evidence in the entire research set, and it directly
+          contradicts the journey's prior framing of Prism as "behind on building" an allocation
+          engine — capability-map.yaml explicitly flags this as a correction to an earlier reading
+          of the competitive research. But the comparison is asymmetric: CORE ELMS's SmartMatch
+          ("customizable rules and preferences"), one45's three lottery types, MedHub's "lotteries
+          based on custom rules and preferences," and New Innovations' "rule-based templates" are
+          known only from marketing pages that do not expose rule-builder-level detail. The one
+          third-party signal available cuts Prism's way and is worth citing carefully: a competing
+          scheduling vendor's comparison blog characterizes New Innovations' scheduling as
+          requiring manual work and being rule-based rather than constraint-solved
+          (content/competitors/new-innovations.yaml) — a self-interested source, but the only
+          non-marketing read on any competitor's allocator in this research.
+        gap_severity: "none"
+        gap_note: "The mechanism ships; the specific four-setting ACPE taxonomy (or ARC-PA's four SCPE settings, or CSWE's five system levels) would still need to be configured into the rules. This element is the concrete resolution of the journey's 'no constraint-solving engine is documented' hedge."
+      - element: "Restrict Placements in Overlapping Rotations (toggle)"
+        type: "toggle + auto-generated overlap-group list"
+        data_shown: "System-detected groups of rotations with overlapping dates; a student can be placed in only one rotation per overlap group."
+        gates_on: ["prevents double-booking a student into date-clashing rotations"]
+        accreditation_citation: >
+          None directly — schedule-integrity enforcement, not an accreditor evidence requirement
+          in the sourced standards. Architecturally significant for CRNA all the same: per
+          ../accreditation/coa.yaml (Standard F.7), this toggle is "already a concurrency check,
+          just on the wrong axis" — it detects two placements colliding on ONE STUDENT'S calendar,
+          where COA F.7 needs the same detection on ONE PRECEPTOR'S calendar. It is named there as
+          one of two adjacent precedents worth reusing rather than rebuilding.
+        competitor_equivalent: "Not comparable at element level — neither CORE ELMS's nor one45's public materials describe an overlap-detection or double-booking-prevention control, though one45's 'multi-layered concurrent schedules' claim (content/competitors/one45.yaml) implies some concurrency model exists behind it."
+        gap_severity: "none"
+        gap_note: "A genuine hard constraint (it excludes, not merely down-weights), and one of the rules that makes this a real constraint solver rather than a preference sorter. The concurrency machinery for a preceptor-side ratio check therefore already exists in some form — the missing piece is the axis, not the algorithm."
+      - element: "Pair courses with program clinical settings (toggle)"
+        type: "toggle + mapping"
+        data_shown: "Restricts a course's eligible slots to only those tagged with the linked setting(s)."
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Elements 3.2.b/3.2.d (all four required APPE settings per student)
+          — setting-pairing is the eligibility half of enforcing a required-setting mix.
+          COCA Standard 6, Element 6.10 (rotation records need discrete, filterable attributes
+          queryable before clerkships begin) — this mapping is exactly that kind of pre-clerkship
+          scheduling input, not after-the-fact metadata.
+          EXISTING-DISCIPLINE CLAUSE, and this is the highest-value multi-discipline element on
+          the screen because setting eligibility is the ONE accreditor-shaped constraint the
+          allocator can actually enforce at match time. It is the enforcement half of ARC-PA
+          Element B3.04 a-d (four required SCPE settings; the PA best practice is to tag locations
+          with exactly those four), of CAPTE Standard 6, Element 6H (experiences across practice
+          settings representative of PT practice — the PT playbook's live taxonomy is Acute, SNF,
+          TCU, Neuro IP/OP, OP Mix, OP Peds, Pediatrics, EDS, Wound Care and more), of CAA
+          Standard 3.0B/3.6B (variety of settings, populations and age groups for SLP), and of
+          CAEP Standard R2, Component R2.3's "Breadth" attribute (variety of settings observed and
+          practiced in).
+        competitor_equivalent: >
+          Not comparable at element level — CORE ELMS's SmartMatch and one45's lottery marketing
+          do not expose setting-eligibility mapping, so no element-to-element claim can be made in
+          either direction. MedHub's UME page mentions "site eligibility verification"
+          (content/competitors/medhub.yaml), which is the nearest named public analogue, but with
+          no indication whether it is a match-time constraint or a pre-flight check.
+        gap_severity: "configure-needed"
+        gap_note: >
+          The accreditor taxonomies must be configured as program clinical settings before this
+          mapping can enforce anything, and the configuration is not one-to-one for every
+          discipline. ARC-PA's four settings map cleanly. CAPTE 6H does not: per
+          ../accreditation/capte.yaml the shipped 6H evidence is retrospective and self-reported
+          (derived from the student's PTSE 1 answers AFTER an experience ends), while the
+          forward-looking gap view lives in Program Requirements — "a separate object with a
+          separate taxonomy," reconciled by hand. CAEP R2.3 is worse: its Breadth and Diversity
+          attributes are partly properties of the PARTNER SCHOOL'S student body, and per
+          ../accreditation/caep.yaml Prism's site/location record has no confirmed field for
+          partner-school demographics.
+      - element: "Consider Distance for Placements (toggle; student address vs. school address)"
+        type: "toggle + scoring input"
+        data_shown: "Weights closer-distance slots more favorably in the match."
+        gates_on: []
+        accreditation_citation: >
+          None directly — a student-experience optimization, not an accreditor evidence
+          requirement. Adjacent for two served disciplines: CCNE Standard II, Key Element II-C
+          names ACCESSIBILITY as one of the four properties a program must periodically evaluate
+          its clinical sites on, and CAEP Standard R2, Component R2.1 frames clinical arrangements
+          as co-constructed with geographically bounded district partners.
+        competitor_equivalent: "Not comparable at element level — no competitor's public docs describe a distance-weighting input for matching."
+        gap_severity: "none"
+        gap_note: >
+          A soft weighting, not a constraint — it biases the match rather than excluding slots.
+          Discipline note worth recording: for Social Work this weight applies to the wrong
+          workflow entirely, because SW students travel to agency INTERVIEWS before any placement
+          exists (see the Field Application Form step), and the interview travel burden is
+          invisible to a weight applied at match time.
+      - element: "Customization based on Slot Type / Slot Settings / Slot Status (weighted checklists)"
+        type: "weighted inclusion/exclusion list"
+        data_shown: "Per-category custom weightings (higher number = higher priority) and the ability to exclude a category from the run entirely."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.10 (discrete, filterable rotation attributes usable before clerkships begin) — the per-category weightings and exclusions are pre-clerkship scheduling inputs against exactly those discrete attributes."
+        competitor_equivalent: "Not comparable at element level, and asymmetric in the same way as the rule builder: per capability-map.yaml and the PA Playbook, runs execute in staged batches with weighted difficulty scores on hard-to-fill specialties (Women's Health = 10, Pediatrics = 9) so scarce slots are placed first — no competitor's public marketing exposes weighting behavior at all, so it cannot be said whether CORE ELMS or one45 does more or less behind their login walls."
+        gap_severity: "none"
+        gap_note: "Weights are documented as manually configured per category; the staged-batch difficulty scoring is described as a best practice to set up, not an automatically derived scarcity metric."
+      - element: "No supervision-ratio constraint anywhere in the rule set"
+        type: "absent — negative finding, verified against the full documented Advanced Options list"
+        data_shown: >
+          Nothing. The documented rule set is: per-student max placements (IN EACH / IN COMBINED),
+          overlapping-rotation exclusion, course-to-setting pairing, distance weighting, and
+          slot-type/setting/status weighting. Supervision Type — captured on every slot — appears
+          nowhere among the constraints or the weights.
+        gates_on: []
+        accreditation_citation: >
+          ACOTE Standard C.1.7 (fieldwork-educator-to-student ratio), COA Standard F.7 (CRITICAL;
+          hard 2:1 cap, enforced per preceptor per moment), CCNE Standard II, Key Element II-F
+          (recommended 1:8 faculty-to-student for indirect NP-track supervision), and ACPE
+          Standard 3, Key Element 3.3.e (2:1, Pharmacy). Four accreditors across three served
+          disciplines and one expansion domain state a supervision-ratio expectation; the
+          allocation engine consumes none of them.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research, and the
+          absence is genuinely symmetric — no competitor file describes a ratio constraint in a
+          matching engine either. State this as an industry gap rather than a Prism deficit, and
+          note the strategic read: because the ratio field ALREADY EXISTS on the Prism slot and
+          the concurrency machinery ALREADY EXISTS in the overlapping-rotation guard, Prism is
+          closer to shipping this than any competitor's public materials suggest they are.
+        gap_severity: "gap"
+        gap_note: >
+          Per ../accreditation/coa.yaml this should be scoped as a new derived object —
+          "supervision assignment (preceptor x date x students)" sitting between Slot and
+          Placement — plus a structured exception log (date, reason, contingency action, approver)
+          to satisfy F.7's documented-exceedance allowance. Explicitly NOT as a slot-capacity
+          validation: a slot cap constrains how many students a SITE takes over a rotation,
+          whereas F.7 constrains how many students one PERSON supervises at one moment, and a site
+          with ample slots can still breach F.7 on a short-staffed day. The two reusable
+          precedents named there are both in this file: the overlapping-rotation guard (already a
+          concurrency check, wrong axis) and the geolocated Faculty Timesheet (already ties a
+          named supervising faculty member to a time-bounded clinical shift).
+      - element: "No per-student exposure/coverage balancing weight (setting, population, age group, system level)"
+        type: "absent — negative finding"
+        data_shown: >
+          Nothing. Course-to-setting PAIRING restricts which slots a course may draw from, and
+          slot-setting WEIGHTING biases the pool, but neither reads a given student's
+          already-completed exposure history to steer them toward a category they still lack.
+        gates_on: []
+        accreditation_citation: >
+          CAA Standard 3.0B/3.6B is the clearest statement of the requirement: per
+          ../accreditation/caa-asha.yaml the required software behavior is a per-student
+          distribution view showing "where a student's exposure is thin BEFORE the student
+          graduates — not a retrospective total." The same forward-looking framing appears in
+          CAPTE Standard 6, Element 6H ("how the program MONITORS that each student has the
+          required experiences"), ARC-PA Element B3.04 a-d ("gaps can be spotted mid-clinical-year
+          while there is still time to re-place a student, not at graduation"), CSWE AS 3.3.1 (all
+          five system levels for ALL students), ACOTE Standard C.1.11 (all students get comparable
+          Level I experiences), and CAEP Component R2.3 (Breadth and Diversity per candidate).
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. CORE ELMS's 'customizable rules' and MedHub's 'lotteries based on custom rules and preferences' could in principle include a coverage rule; nothing public says whether they do."
+        gap_severity: "gap"
+        gap_note: >
+          This is the single most repeated multi-discipline finding in this stage: six accreditors
+          across six served disciplines all ask the same forward-looking question, and in every
+          case Prism answers it retrospectively, from a REPORT built on completed experiences,
+          rather than as an INPUT to the next allocation run. The data exists (clinical logs,
+          setting tags, patient-log aggregates); it simply does not flow back into the matcher.
+          Two operational caveats from ../accreditation/caa-asha.yaml worth carrying if this is
+          ever pitched as real-time: the SLP Statistics tab refreshes only at 6am EST daily, and
+          reports cap at 50 course offerings per run.
+      - element: "No duty-hour or rest-period feasibility check in the rule set"
+        type: "absent — negative finding, CRNA-specific"
+        data_shown: >
+          Nothing. Rotation dates and sub-blocks are the only temporal objects the allocator
+          reasons about, and the only temporal rule is the student-level overlap exclusion.
+        gates_on: []
+        accreditation_citation: >
+          COA Standard F.9 (CRITICAL) — student time commitment must not exceed 64 hours per week
+          summed across class AND clinical hours, AVERAGED OVER 4 WEEKS; students must have a
+          10-hour rest period between scheduled clinical duty periods; and at no time may a
+          student provide direct patient care for longer than 16 continuous hours.
+        competitor_equivalent: >
+          The one place in this stage where competitors are demonstrably ahead in a NAMED,
+          shipped capability. MedHub ships GME duty-hour tracking with "auto-alerts for
+          violations" on a timesheet interface (content/competitors/medhub.yaml); one45 ships
+          "duty-hours and leave-time tracking at the event level" for accreditation reporting
+          (content/competitors/one45.yaml); LEO/DaVinci documents duty-hour logging in detail
+          (content/competitors/leo-davinci.yaml). All three are ACGME-shaped rather than
+          COA-shaped, and all three are RETROSPECTIVE violation detection rather than a scheduling
+          constraint — no competitor is documented as refusing to build a schedule that would
+          breach a rest rule. So the honest comparison is: three competitors detect violations
+          after the fact, Prism does not detect them at all, and nobody prevents them at
+          allocation time.
+        gap_severity: "gap"
+        gap_note: >
+          Per ../accreditation/coa.yaml, F.9 needs a duty-hour ENGINE, not a timesheet total —
+          every rule it states is a temporal-adjacency computation (rest gap between shifts,
+          continuous-span ceiling, 4-week rolling average), and the shipped custom report builder
+          only aggregates by Sum/Average over a date range. The didactic half is harder still:
+          class hours live in Courses and clinical hours in Timesheet/CCE log, and nothing sums
+          across the two into the single figure F.9 caps. That file's own recommendation is to
+          scope it once as a reusable rules layer over timestamped duty periods, since Medicine
+          and any GME-adjacent product need the same engine — which makes this a CRNA-triggered
+          build with four-domain payoff rather than a one-discipline feature.
+    action: "Admin encodes the actual constraint-solving rules — caps, overlap exclusion, setting-eligibility, distance weighting, category weighting — that the algorithm applies across a run; per capability-map.yaml, runs execute in staged batches with weighted difficulty scores assigned to hard-to-fill specialties (e.g. Women's Health = 10, Pediatrics = 9) so scarce slots are placed first."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Advanced Options in Placement Assist.md;
+      staged-batch/weighted-difficulty behavior corroborated by
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml
+      and by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md
+      ("Best Practices — Placement Assist", same Women's Health=10/Pediatrics=9 example);
+      negative findings verified against that same Advanced Options doc and against the
+      accreditor requirements in ../accreditation/coa.yaml (Standards F.7 and F.9),
+      ../accreditation/acote.yaml (Standards C.1.7 and C.1.11), ../accreditation/nursing.yaml
+      (CCNE Key Element II-F), ../accreditation/caa-asha.yaml (Standard 3.6B),
+      ../accreditation/capte.yaml (Element 6H), ../accreditation/arc-pa.yaml (Element B3.04 a-d),
+      ../accreditation/cswe.yaml (AS 3.3.1), and ../accreditation/caep.yaml (Component R2.3).
+
+  - screen: "Placement Assist — Results & Batch Review"
+    navigation_path: "Placements > [Course or Placement Group] > Placement Assist > Run Placement Assist > History tab > View Results"
+    elements:
+      - element: "Summary tab — Run Setup, Run Outcome, Match Distribution, Preference Match Analysis"
+        type: "read-only rollup"
+        data_shown: "What % of students got their 1st/2nd/3rd/4th wishlist choice, and how many students were matched vs. unmatched."
+        gates_on: []
+        accreditation_citation: "None directly — run-quality statistics, not accreditor evidence."
+        competitor_equivalent: "Not comparable at element level — neither CORE ELMS nor one45 publishes match-quality or preference-satisfaction reporting from their allocation runs."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Results tab — per-student Place button; bulk 'select students + Create placements'"
+        type: "button / bulk action"
+        data_shown: "Converts an algorithm-suggested match into a real placement record; the Action column shows 'Placement Created' once done."
+        gates_on: ["suggestions are never auto-committed — an admin must explicitly convert each one"]
+        accreditation_citation: "None directly."
+        competitor_equivalent: "Directional contrast only, not element-level: CORE ELMS's public marketing describes 'instant results, eliminating wait times,' which reads as a more automated/less human-review-gated flow than this explicit suggest-then-admin-commits button — but CORE ELMS's own admin screens are not documented publicly, so this is a marketing-language contrast, not a screen-by-screen one."
+        gap_severity: "none"
+        gap_note: "The human-in-the-loop commit step is where the contrast with CORE ELMS's 'instant results' framing actually lives; it is a deliberate control, not a missing capability."
+      - element: "Staged multi-batch run sequencing (scarcity-first), configured as placement groups rather than as a run setting"
+        type: "operating procedure built on Placement Groups, not a shipped run mode"
+        data_shown: >
+          The documented PA best practice: identify the courses/settings with the fewest slots
+          offered, create placement groups around which courses must be placed FIRST, run
+          Placement Assist for the hard-to-place courses, commit those placements, then move to
+          the next group. The scarce capacity is consumed before the abundant capacity is
+          allocated against it.
+        gates_on:
+          - "Sequencing is entirely manual — the admin decides the order, runs each batch, and commits between batches. Nothing computes which courses are scarce."
+        accreditation_citation: "None directly — an allocation-quality technique. Upstream of ARC-PA Standard A1, Element A1.10 a-b and CAPTE Standard 2, Element 2D8 only in the sense that a badly sequenced run wastes scarce contracted capacity the sufficiency evidence depends on."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. No competitor's public materials describe multi-batch or scarcity-first allocation sequencing at all."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Real, effective, and entirely tribal knowledge — it lives in the PA playbook, not in the
+          product, and the scarcity ranking that drives it is eyeballed. The same underlying
+          problem is documented independently for PT as a market condition rather than a
+          technique: "national competition for IP and Acute care slots (industry problem, not
+          necessarily an Exxat problem)." A shipped scarcity metric (offers vs. demand per
+          course/setting, computed) would convert the PA best practice into a default and would
+          serve PT's hardest allocation problem directly.
+      - element: "No accreditor-coverage verdict on the committed result set"
+        type: "absent — negative finding"
+        data_shown: >
+          The run reports preference satisfaction (1st/2nd/3rd/4th choice percentages) and
+          matched-vs-unmatched counts. It does not report whether the committed matches leave any
+          student short of a required setting, system level, or exposure category.
+        gates_on: []
+        accreditation_citation: >
+          ARC-PA Element B3.04 a-d (all four SCPE settings per student), ACPE Key Elements
+          3.2.b/3.2.d (all four APPE settings), CSWE AS 3.3.1 (all five system levels for ALL
+          students), CAPTE Element 6H (required experiences FOR EACH STUDENT), ACOTE Standard
+          C.1.11 (comparable Level I experiences for all students), CAEP Component R2.3 (every
+          candidate in diverse settings). Six accreditors, six served or expansion disciplines,
+          one shared question the results screen does not answer.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor publishes any post-run reporting at all, let alone a compliance verdict on a run."
+        gap_severity: "gap"
+        gap_note: >
+          A high-preference-satisfaction run and an accreditation-compliant run are different
+          things, and this screen only measures the first. The gap is narrow and tractable: the
+          per-student cap rule builder already knows how to reason about required setting quotas,
+          so the same rule definitions could be evaluated against the committed set and rendered
+          as a per-student coverage column beside the preference column. That would close the
+          forward-looking half of the exposure gap recorded on the Advanced Options step without
+          building a new constraint engine.
+    action: "Admin reviews the algorithm's proposed matches and preference-satisfaction statistics, then selectively (or in bulk) converts suggestions into real placements — typically one scarcity-ordered batch at a time."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Using Placement Assist.md;
+      staged-batch sequencing from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md
+      ("Best Practices — Placement Assist", items 1-2); scarcity market conditions from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      ("Pain Points").
+
+  - screen: "Manual / Direct Placement"
+    navigation_path: "Placements > [Course] > Location view (Slots > Students Interested drawer) or Student view > Make Placement drawer"
+    elements:
+      - element: "Interested Students drawer — Send interest to location / Place button"
+        type: "list + action buttons"
+        data_shown: "Students who expressed interest in a location outside the algorithmic run."
+        gates_on: []
+        accreditation_citation: "None directly."
+        competitor_equivalent: "Not comparable at element level — no competitor's public docs describe an interest-expression or manual-placement fallback list in this detail."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Make Placement drawer — Place / Place and Publish Now (Place Individually or Place as a Group)"
+        type: "buttons"
+        data_shown: "Commits a manual placement; 'Publish' is a distinct, separate action from creating the match itself."
+        gates_on: ["Max Placement Limit warning banner surfaces here if configured (non-blocking, per the Max Placement Limit step above)"]
+        accreditation_citation: "None directly at this element, though it is one of the surfaces where the ACPE 3.3.e-adjacent Max Placement Limit warning appears — and, as documented there, the warning does not block this button."
+        competitor_equivalent: "Not comparable at element level — no competitor's public docs describe a manual-placement commit action, or a separate publish step, in this detail."
+        gap_severity: "none"
+        gap_note: "Publish is a distinct action from creating the match, so a created placement is not necessarily student-visible. Any cap non-compliance surfaced here is advisory only — see the Max Placement Limit warning-banner element."
+      - element: "Placement-notification lead time and the student-to-CI contact convention (PT/PTA)"
+        type: "operating convention on top of the Publish action; no lead-time field or reminder exists"
+        data_shown: >
+          Nothing in-product. The documented PT practice (Physical Therapy (PT) Playbook.md lines
+          115-123) is that placement notifications go to sites "several months ahead of a clinical
+          experience (more than 1 year in advance is quite common)"; Share Profile may be used at
+          that point; STUDENTS typically contact the CI themselves 2-3 MONTHS ahead of the
+          experience; compliance documents and site/location-required documents may be included;
+          it is "more common for schools to provide documentation than students"; and onboarding
+          and orientation information is conveyed to the student at this time.
+        gates_on: []
+        accreditation_citation: >
+          ACOTE Standard C.1.10 (../accreditation/acote.yaml) requires the Level I educator be
+          informed of the curriculum and fieldwork design PRIOR TO the start of the experience, and
+          ACPE Standard 3, Key Element 3.3.c requires preceptor orientation "before accepting a
+          student" — both of which are lead-time requirements that this convention satisfies in
+          practice and that nothing in the product measures. CAPTE Standard 4, Element 4P's "how
+          clinical education sites are INFORMED of those expectations" clause reads on the same
+          moment.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research. Directly
+          relevant, though, is the model the four unresearched marketplace competitors use: per the
+          PT playbook (line 184) mCE, Clinician Nexus, ACEMAPP and CastleBranch Bridges require
+          STUDENT account registration and payment for onboarding, i.e. in their model the
+          student-to-site onboarding handshake is a product surface rather than an email
+          convention. None of the four has a teardown in content/competitors/, so this is recorded
+          as the sharpest place the missing research would change the analysis.
+        gap_severity: "configure-needed"
+        gap_note: >
+          ADDED 2026-08-25 from a full read of the PT playbook. Three findings, none of them
+          previously in this file. (1) The lead times are extreme by the standards of every other
+          discipline documented here — notifications more than a YEAR ahead are called "quite
+          common," which means a PT placement record is created, published and acted on long before
+          the compliance and contract states this journey's stage 3 evaluates are anywhere near
+          current. The 6-8-week-before-start Placement Clearance monitoring cadence documented in
+          rotation-lifecycle--03 is therefore a SECOND, much later checkpoint over a placement that
+          has been live for a year, not the first look at it. (2) The student contacts the CI
+          directly 2-3 months out — a real, expected, out-of-product interaction that no placement
+          record captures, so a program cannot tell which students have actually made contact. (3)
+          The documentation-provision norm cuts against the self-service framing used elsewhere in
+          this repo: it is "more common for schools to provide documentation than students," which
+          is the opposite of the student-registers-with-the-vendor model the competing marketplaces
+          run on, and is worth stating in any positioning conversation about who bears onboarding
+          burden.
+      - element: "Direct placement as the PRIMARY mode for OT capstone and Level II, not a fallback"
+        type: "same Make Placement drawer, used as the default path for a whole experience type"
+        data_shown: >
+          The same commit action, reached without any allocation run. The OT playbook states the
+          preference explicitly: "For Level II, schools prefer direct and slot-based placements.
+          For capstone, direct placement is preferred." Capstone students propose their own site
+          (gathered through a questionnaire-based or MyRequest wishlist) and the admin places them
+          directly.
+        gates_on:
+          - "Inherits the same clearance gating as any other placement (contracts, student compliance, preceptor credentials) — see rotation-lifecycle stage 3."
+        accreditation_citation: >
+          ACOTE Standard D.1.5 (with D.1.4) — the OTD doctoral capstone requires a valid written
+          agreement in effect before and throughout, an individualized capstone plan signed by all
+          parties, and a hard prerequisite that the capstone begin only AFTER all coursework and
+          Level II fieldwork are complete.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor's public materials distinguish a capstone-type placement from a rotation placement."
+        gap_severity: "gap"
+        gap_note: >
+          Per ../accreditation/acote.yaml the "must start after completion of all coursework and
+          Level II fieldwork" prerequisite is NOT enforceable: Placement Clearance gates on
+          compliance, contracts, and preceptor credentials, not on prior-placement completion, so
+          a capstone starting before Level II finishes is caught by a human or not at all. This is
+          a prerequisite-graph gap, structurally distinct from every other gap in this stage
+          (which are capacity or coverage gaps), and it is the same class of gap CSWE AS 3.3.7
+          exposes from another angle. Everything else the capstone needs is confirmed configurable
+          — a dedicated Capstone Site/Location Category with Site Mentors as Personnel, a CAPSTONE
+          Student Category applied in bulk, Capstone as both a Term and a Professional Year value,
+          and a multi-party signed MOU as a custom form (Student > Site Mentor Review > Faculty
+          Review > Admin Review).
+      - element: "Pre-matching to application/interview-gated sites ahead of the program's common match day"
+        type: "operating procedure using the same manual-placement path"
+        data_shown: >
+          PT practice recorded in the playbook: schools notify students of sites that require an
+          application or interview and that may have deadlines BEFORE the school's common match
+          day for that experience; the school gauges student interest in those slots and may
+          pre-match those students. The Slot Type vocabulary supports this directly with "Requires
+          the student to submit a resume" and "Requires the student to interview" values.
+        gates_on: []
+        accreditation_citation: "None directly — an out-of-band allocation path, not accreditor evidence. Relevant to CAPTE Standard 2, Element 2D8 only insofar as pre-matched capacity is still capacity the sufficiency count must include."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Second documented path (after FCFS early publication) by which PT capacity is allocated
+          outside Placement Assist, driven by external deadlines the program does not control. The
+          Slot Type labels record that a site requires an interview but nothing tracks the
+          interview's outcome or its deadline — which is precisely the tracking Social Work got as
+          a first-class feature (Interview Statuses; see the Field Application Form step) and PT
+          did not. Cross-discipline reuse opportunity, not a new build.
+    action: "Admin manually places students who were not matched by Placement Assist, hand-places into an experience type that does not use the allocator at all (OT capstone, OT Level II), or pre-matches students to interview-gated slots ahead of the common match day."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Slots by Placements.md;
+      publish-as-a-distinct-step behavior corroborated by
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml;
+      OT capstone/Level II direct-placement preference and capstone configuration sequence from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+      ("Placements", section 10; capstone setup section) and ../accreditation/acote.yaml
+      (Standard D.1.5 with D.1.4); PT pre-matching practice from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      lines 99-108 (the four co-existing placement modes) and lines 115-123 (the
+      placement-notification step: multi-month to multi-year lead times, Share Profile, the
+      student-contacts-CI-at-2-3-months convention, compliance and site-required documents
+      travelling with the notification, the schools-rather-than-students documentation norm, and
+      onboarding/orientation information conveyed to the student at this point).
+
+  # ---------------------------------------------------------------------------
+  # NEW STEP (2026-08-25): Social Work's placement mechanic is structurally different
+  # from every other discipline in this file — the student, not the program, runs the
+  # search, and the unit of allocation is an interview outcome rather than a slot.
+  - screen: "Multi-Location Field Application Form & Interview-Status-Driven Placement Creation (Social Work)"
+    navigation_path: "Dashboard/hamburger > Process Field Application Forms > All Requests tab > View by Rotations: Upcoming and Current > [Submitted] > View"
+    elements:
+      - element: "Placement suggestion rows (up to 10 per form) — Location, Supervisor/Preceptor, Interview Status, interview schedule, student comments"
+        type: "student-submitted repeating record set"
+        data_shown: >
+          Each row is one candidate agency the student intends to interview with, carrying its own
+          interview status and schedule. Ten suggestions per form is the documented ceiling. This
+          replaces the slot-ranking model entirely: there is no reserved capacity to rank, because
+          the placement does not exist until an agency offers it.
+        gates_on:
+          - "Locations selected directly from Prism records need no mapping; manually typed locations must be mapped by an admin before a placement can be created from them."
+        accreditation_citation: >
+          CSWE Accreditation Standard 3.3, AS 3.3.4 requires documented processes for identifying,
+          approving, and engaging with field education settings — a student-proposed agency is
+          exactly the case that process exists to govern. CSWE AS 3.3.1 (with M3.3.2) requires
+          opportunities across all five system levels for ALL students, which is a property of the
+          resulting placement MIX and therefore of what these suggestions collectively produce.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research, and the
+          absence is meaningful rather than merely unproven: both CORE ELMS and MedHub/E*Value
+          explicitly sell into social work (content/competitors/core-elms.yaml,
+          content/competitors/e-value.yaml), and both describe their clinical-placement capability
+          purely in matching-engine terms (SmartMatch; "evaluation-driven rotation/site/educator
+          scheduling"). Neither describes an interview-mediated, student-run placement search.
+          Since that IS the social-work workflow, either their public materials understate what
+          they do for the discipline, or SW customers are being sold a med-ed-shaped matcher.
+        gap_severity: "none"
+        gap_note: >
+          Genuinely strong, and the clearest evidence in this stage that Prism models discipline
+          variance rather than papering over it. The SW playbook records what this replaced:
+          before Multi-Location Field Application Forms existed, programs requiring multi-agency
+          interviews tracked interview activity via TEMPORARY PLACEMENTS or outside spreadsheets —
+          and the troubleshooting guidance still names that as a live anti-pattern ("use Interview
+          Statuses to track interview progress instead of creating temporary placements"). One
+          availability caveat carried from ../flows/admin-onboarding--07-wishlists-slot-requests-placement-assist.yaml:
+          the Field Application Form wishlist type is "configured by the Exxat Prism team and is
+          not available for self-setup."
+      - element: "Interview Status lifecycle (Interview Pending > Interview Scheduled > Placement Offered > Placement Accepted / Placement Not Offered / Placement Declined)"
+        type: "student-maintained state machine, reportable as a column"
+        data_shown: >
+          Where each candidate agency stands in the student's search. Student-maintained and
+          self-service until a placement is created. Placement Accepted is terminal AND exclusive:
+          only one suggestion per student can hold it.
+        gates_on:
+          - "The single-Accepted constraint is the allocation invariant of this whole workflow — it is what prevents a student from holding two agency offers, and it is the SW analogue of the overlapping-rotation guard in Placement Assist."
+          - "When a Placement Accepted suggestion exists, the Create Placement flow skips location selection entirely and goes straight to placement details."
+        accreditation_citation: "CSWE AS 3.3.5 (orienting, placing, monitoring, safety protocols, and evaluating students in field) — the interview record is the documented placement trail that standard's evidence rests on, and per ../accreditation/cswe.yaml the centralized placement record plus the Comprehensive Placement Report is the named artifact."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor's public materials model an interview outcome as a placement precursor state."
+        gap_severity: "none"
+        gap_note: >
+          Worth reading as a design pattern with cross-discipline reuse value rather than an SW
+          curiosity: it is the same problem PT solves informally when pre-matching students into
+          interview-required slots ahead of match day (see the Manual/Direct Placement step), and
+          the same problem the shipped Slot Type values "requires the student to submit a resume"
+          and "requires the student to interview" gesture at without tracking. SW is the only
+          discipline where the outcome is a first-class, reportable state.
+      - element: "Location and supervisor mapping rules (admin-side reconciliation of student free-text entries)"
+        type: "admin mapping form with hard uniqueness constraints"
+        data_shown: >
+          Admin maps each manually entered location and supervisor onto an existing Prism record.
+          Documented rules: a location can be mapped ONLY ONCE and is thereafter unavailable to
+          other submissions; supervisor mapping requires the location to be mapped first; and the
+          admin may edit or correct a student's typed response (the playbook's example: an
+          abbreviated agency name) before mapping.
+        gates_on:
+          - "Create Placement is unavailable for an unmapped suggestion. Mapping is therefore the real gate on this workflow, and it is manual work proportional to how many students typed rather than picked."
+        accreditation_citation: "CSWE AS 3.3.4 — the vetting/approval process the standard requires is enforced here by construction: a student-proposed agency cannot become a placement until an admin has resolved it onto an approved Agency record."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The mapping burden is the discipline's real operational cost at this stage, and the SW
+          playbook's stated best practices are all mitigations for it: encourage students to
+          select existing locations rather than typing, review manual entries promptly, monitor
+          Placement Accepted statuses to spot students ready for placement creation, and verify
+          mappings before creating placements. The once-only mapping constraint is correct but
+          unforgiving — two students who both typed the same agency name slightly differently
+          create a reconciliation problem the product does not detect.
+      - element: "Create Placement — the three documented conversion scenarios"
+        type: "branching commit flow off a mapped suggestion"
+        data_shown: >
+          Per Social Work (SW) Playbook.md lines 107-111 the Create Placement action behaves three
+          different ways depending on the state of the student's suggestions. ONE MAPPED LOCATION:
+          location and supervisor auto-populate. MULTIPLE MAPPED LOCATIONS: the admin is prompted
+          to choose which mapped location to use. A "PLACEMENT ACCEPTED" SUGGESTION EXISTS: the
+          location-selection step is skipped entirely and the flow goes straight to placement
+          details.
+        gates_on:
+          - "The third branch is the one that makes Interview Status load-bearing rather than decorative: the terminal, exclusive Placement Accepted state is what suppresses the location picker, so a student who never updates their status forces the admin through a manual choice they did not need to make."
+        accreditation_citation: >
+          CSWE Accreditation Standard 3.3, AS 3.3.5 (../accreditation/cswe.yaml) — the documented
+          placement trail. The branch that matters for evidence is the second one: where the admin
+          picks among several mapped locations, the reason for that choice is not captured anywhere,
+          so the placement record shows the outcome and not the decision.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research — no
+          competitor's public materials model a placement created FROM an interview outcome, so
+          there is nothing to compare its branching against.
+        gap_severity: "none"
+        gap_note: >
+          NEW 2026-08-25 from a full read of the SW playbook. Recorded because it is the concrete
+          mechanism behind a claim this file already made in the abstract ("When a Placement
+          Accepted suggestion exists, the Create Placement flow skips location selection entirely")
+          — the full three-branch behaviour shows that the SAME student can hit any of three
+          different flows depending only on how diligently they maintained a self-service status
+          field. That is a real adoption dependency, and it is the mechanical reason the playbook's
+          best-practice list leads with "monitor Placement Accepted statuses to identify students
+          ready for placement creation" (lines 121-127).
+      - element: "Field Application Form 'Download Raw Response' export, with Interview Status and Schedule Date as added columns"
+        type: "report export off the form itself, distinct from the Comprehensive Placement Report"
+        data_shown: >
+          Every submitted Field Application Form response as raw rows, with Interview Status and
+          Interview Schedule Date carried as ADDITIONAL columns beyond the form's own answers
+          (Social Work (SW) Playbook.md line 183). Interview progress is separately described as
+          remaining visible "in requests, grids, and reports" with Interview Status and Schedule
+          Date as reportable columns (line 95).
+        gates_on: []
+        accreditation_citation: >
+          CSWE Accreditation Standard 3.3, AS 3.3.4 (../accreditation/cswe.yaml) — the documented
+          process for IDENTIFYING and APPROVING field settings. This export is the only confirmed
+          artifact in the product that evidences the identification half as a process rather than
+          as an outcome: it shows which agencies were approached, which interviewed, which offered,
+          and which declined, per student.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research, and the
+          absence is structural rather than evidentiary: no competitor file models an interview
+          outcome as a placement precursor state at all, so none can export one.
+        gap_severity: "configure-needed"
+        gap_note: >
+          NEW 2026-08-25. This closes a real hole in this file's SW coverage — the Interview Status
+          lifecycle was documented as a state machine with no named export behind it, which left
+          "reportable" as an assertion. It is a raw-response dump rather than an analysis, so the
+          funnel question a Director of Field Education actually asks (how many interviews per
+          placement, which agencies decline most often, which students are stalled at Interview
+          Pending) is an Excel exercise on top of it. Read against the "No capacity report exists
+          for Social Work or Teacher Education" element in the reports step below, this is the
+          nearest thing SW has to a capacity signal: interview volume per secured placement is a
+          demand-side measure of agency scarcity, and nothing computes it.
+      - element: "No employment-concurrent placement flag"
+        type: "absent — negative finding, social-work-specific"
+        data_shown: >
+          Nothing. A placement at the student's own employer is created exactly like any other
+          placement; nothing marks it, and nothing separates field supervision from employment
+          supervision when the same person provides both.
+        gates_on: []
+        accreditation_citation: >
+          CSWE Accreditation Standard 3.3, AS 3.3.7 — programs must have a written policy on field
+          placement at a student's place of employment and, if permitted, must document how
+          assignments link to the nine competencies, how field supervision is kept DISTINCT from
+          employment supervision even when the same person provides both, and how the program
+          helps a student continue or change field education if they lose that job mid-placement.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. No other accreditor in ../accreditation/ governs employment-based placements at all, so there is no cross-discipline precedent for a competitor to have built."
+        gap_severity: "gap"
+        gap_note: >
+          Verdict carried from ../accreditation/cswe.yaml, which rates AS 3.3.7 an outright Gap:
+          the flag can be approximated with a placement tag and the supervision split with
+          Timesheet Categories, but "employment-concurrent placement" is not a placement attribute,
+          nothing enforces the supervision-time distinction the standard exists to police, and
+          mid-placement transfer on job loss is an unmodelled event — made worse by the confirmed
+          behavior that DELETING a placement sends no automatic notification to student or
+          preceptor. That file's recommendation is to scope it as a placement-model extension
+          inside Clinical & Experiential Education rather than deferring it to Accreditation
+          Management, because the evidence it produces is operational placement data. Genuinely
+          social-work-specific, and therefore a real differentiator if built.
+    action: "Student runs their own multi-agency interview search and reports its state; admin reconciles the student's typed entries onto real Agency/Personnel records and converts an accepted offer into a placement. No allocation algorithm participates."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md
+      (lines 84-96 the Multi-Location Field Application Form workflow steps 1-6 and the ten-suggestion
+      ceiling; line 95 Interview Status and Schedule Date as reportable columns; line 99 the
+      Interview Status lifecycle with Placement Accepted terminal and exclusive; lines 101-105 the
+      location/supervisor mapping rules incl. map-only-once; lines 107-111 the three Create Placement
+      scenarios; lines 113-115 My Requests and course-specific Wishlist Questionnaires; lines 117-119
+      the Process Field Application Forms navigation; lines 121-127 the best-practice list; line 183
+      the "Download Raw Response" export with Interview Status and Schedule Date as added columns;
+      lines 185-189 the temporary-placement/spreadsheet anti-pattern this workflow replaced);
+      accreditor requirements from
+      ../accreditation/cswe.yaml (AS 3.3.1, AS 3.3.4, AS 3.3.5, AS 3.3.7); Field Application Form
+      support-configuration dependency from
+      ../flows/admin-onboarding--07-wishlists-slot-requests-placement-assist.yaml.
+
+  # ---------------------------------------------------------------------------
+  # NEW STEP (2026-08-25): CRNA's binding constraint is not slot capacity but a
+  # per-preceptor, per-moment supervision ratio, plus a duty-hour ceiling. Neither is
+  # a matching input today. Distinct from stage 2's credentialing angle on the same
+  # preceptor record.
+  - screen: "Ratio- and Duty-Hour-Constrained Assignment (CRNA / Nurse Anesthesia)"
+    navigation_path: "Sites > [site] > Locations > [location] > Slots (ratio capture) — then Placements > [Course or Placement Group] > Make Placement (the assignment the ratio should constrain)"
+    elements:
+      - element: "Sites > Slots supervision-ratio entry as the only COA F.7 input"
+        type: "declared value on a capacity record"
+        data_shown: >
+          The Nursing playbook names this path explicitly: \"Sites > Slots — for CRNA programs,
+          this is where the student-to-preceptor supervision ratio is assigned and monitored
+          against COA's hard 2:1 cap (Standard F.7, critical).\" It is a number an admin or site
+          types against a location's capacity offer for a rotation.
+        gates_on:
+          - "Nothing. It is monitored by reading, not enforced by the system."
+        accreditation_citation: >
+          COA Standard F.7 (CRITICAL) — at no time may the number of students directly supervised
+          by one clinical preceptor exceed 2:1 (no more than 2 students to 1 CRNA, or 2 students
+          to 1 physician anesthesiologist if no CRNA is involved), and the ratio must additionally
+          account for anesthetic/surgical complexity, the student's knowledge and ability, and
+          patient comorbidities. Brief exceedances are tolerated only for extenuating circumstances
+          and only with a demonstration that the event was rare AND that contingency plans existed.
+          The program must also show students know who is supervising them at any given time.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research. Worth
+          being precise about the market: none of the nine competitor files documents a
+          CRNA-specific capability at all, and the two that name nurse anesthesia adjacently
+          (MedHub/E*Value's 24-discipline list includes nursing; CORE ELMS's 15+ list includes
+          nursing) describe generic nursing placement, not COA-shaped supervision accounting. The
+          conclusion is symmetric: nobody in this research ships COA F.7 compliance.
+        gap_severity: "gap"
+        gap_note: >
+          The unit of account is wrong, and per ../accreditation/coa.yaml the mismatch is
+          load-bearing rather than cosmetic: a slot count constrains how many students a SITE takes
+          over a rotation; F.7 constrains how many students one PERSON supervises at one moment. A
+          site with ample slots can still breach F.7 on a short-staffed day, and a program with a
+          perfectly configured slot ratio has no record that would detect it. Prism holds every
+          input (preceptor entity, credential check, capacity field) and computes none of the
+          output — that file's verdict is "Build," not "Configure."
+      - element: "No supervision-assignment object (preceptor x date x students) between Slot and Placement"
+        type: "absent — negative finding, the core COA F.7 gap"
+        data_shown: >
+          Nothing. A placement associates a student with a location and dates; the preceptor
+          appears on the placement and on the CCE/patient log, but no record answers "which named
+          supervising CRNA is responsible for which students on which clinical day."
+        gates_on: []
+        accreditation_citation: >
+          COA Standard F.7 (CRITICAL), whose required software behavior per ../accreditation/coa.yaml
+          is four-part: (1) record per clinical day which named supervising CRNA or physician
+          anesthesiologist is responsible for which students; (2) compute the OBSERVED concurrent
+          ratio from that assignment data rather than trusting a declared capacity number; (3)
+          block or hard-warn at assignment time when a third student would land on the same
+          preceptor on the same day; and (4) provide a structured exception record (date, reason,
+          contingency action taken, approver) that aggregates into the "this is rare and planned
+          for" narrative COA demands. Because supervision is also capped to credentialed
+          CRNAs/anesthesiologists under COA Standard F.5 (CRITICAL), the preceptor referenced by
+          the ratio must be the same credentialed personnel record the clearance gate validates —
+          which is where this stage meets rotation-lifecycle stage 2.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. The nearest structural analogue anywhere in the competitor set is New Innovations' GME 'Daily Schedule Management' and on-call scheduling (content/competitors/new-innovations.yaml), which does model per-day staffing — but for residents' own duty schedules, not for supervisor-to-learner ratio enforcement, and with no public evidence of a ratio rule."
+        gap_severity: "gap"
+        gap_note: >
+          The two reusable precedents named in ../accreditation/coa.yaml both live in this same
+          flow: the Placement Assist overlapping-rotation guard (already a concurrency check, just
+          on the student axis instead of the preceptor axis) and the geolocated Faculty Timesheet
+          (already ties a named supervising faculty member to a time-bounded clinical shift). That
+          file also cross-references ../journeys/preceptor-site-onboarding.yaml, which reached the
+          same conclusion independently — that the declared "# of offers" count is the only
+          evidence for a live 2:1 standard, and PA's Max Placement rule is the only match-time
+          surfacing mechanism in the product. Since Max Placement Limit is lockstep-only and
+          PA-exclusive, CRNA cannot use even that.
+      - element: "CRNA program-administrator tutorials contain no placement, scheduling, or capacity content"
+        type: "absent — sourcing finding, recorded so the absence is not mistaken for coverage"
+        data_shown: >
+          All three published CRNA administrator videos were read end to end. Video 1 (lines 15-37)
+          is the Daily Clinical Evaluation Report. Video 2 (lines 43-89) is the Clinical Case
+          Experience / Patient Log — its only preceptor mention is as a log REVIEWER ("you must
+          specify whether a preceptor should review the student's patient log", line 67), and its
+          reporting walkthrough aggregates by STUDENT ("select the Student Activity Insights
+          report", line 83), never by preceptor. Video 3 (lines 95-117) is the Echo360/GoReact LTI
+          integration. Zero mentions of slots, wishlists, Placement Assist, capacity, allocation,
+          matching, or duty hours across all three.
+        gates_on: []
+        accreditation_citation: "None — this element records a source-coverage fact, not a product behavior. It is the evidentiary basis for treating COA F.7 and F.9 as Build rather than Configure: there is no CRNA placement documentation that could contain an undiscovered mechanism."
+        competitor_equivalent: "Not applicable — an absence in the source set, not a product surface."
+        gap_severity: "none"
+        gap_note: >
+          Stated explicitly to prevent a false inference in either direction. The absence of CRNA
+          placement tutorials does NOT prove CRNA programs lack placement functionality — they use
+          the same generic Placements module as everyone else. It proves only that no
+          CRNA-SPECIFIC placement mechanic is documented, which is why the COA F.7 and F.9 verdicts
+          rest on the standards text and the Nursing playbook rather than on a CRNA product surface.
+          Same treatment the SLP and Nursing playbooks apply to their own gap lists.
+      - element: "No duty-hour feasibility check at assignment time"
+        type: "absent — negative finding; see the parallel Advanced Options element"
+        data_shown: >
+          Nothing at the point of assignment. Timesheets exist for CRNA programs (confirmed present
+          alongside Forms and Evaluations and Patient Logs in Learning Activities > Setup,
+          /Users/romitsoley/Downloads/CRNAVideosTranscripts.md line 103), and the CCE log captures
+          anesthesia time and clinical hours per encounter — but both are retrospective capture, and
+          neither is consulted when a placement is created.
+        gates_on: []
+        accreditation_citation: >
+          COA Standard F.9 (CRITICAL) — 64 hours per week summed across class AND clinical hours and
+          averaged over 4 weeks; a 10-hour rest period between scheduled clinical duty periods; and
+          no direct patient care exceeding 16 continuous hours. Total clinical hours must also be
+          greater than or equal to total anesthesia time for the same student.
+        competitor_equivalent: >
+          Three competitors ship duty-hour tracking and all three are retrospective: MedHub
+          ("intuitive timesheet interface with auto-alerts for violations"), one45 ("duty-hours and
+          leave-time tracking at the event level"), and LEO/DaVinci (duty-hour logging documented in
+          detail). None is documented as a scheduling CONSTRAINT that refuses to build a violating
+          schedule, and all three are ACGME-shaped rather than COA-shaped. So competitors detect
+          after the fact, Prism does not detect, and nobody prevents at allocation time.
+        gap_severity: "gap"
+        gap_note: >
+          Per ../accreditation/coa.yaml this is the closest thing in the four-domain workstream to
+          ACGME duty-hour tracking and is a genuinely reusable build — Medicine and any GME-adjacent
+          product need the same engine. Scope it once as a rules layer over timestamped duty
+          periods, not as a CRNA report. Note the architectural constraint that file names: F.9's
+          figure spans didactic AND clinical, so the engine cannot live wholly inside the placement
+          module.
+    action: "Coordinator assigns CRNA students to sites and preceptors using the generic placement machinery, with the 2:1 supervision cap and the duty-hour ceiling enforced by human vigilance rather than by the system."
+    confirmed_by: >
+      ../accreditation/coa.yaml (Standard F.7 — CRITICAL, including the four-part required software
+      behavior and the Build verdict; Standard F.9 — CRITICAL; Standard F.5 — CRITICAL, for the
+      credentialed-supervisor link; Standard F.1 with A.10 for resource sufficiency);
+      Sites > Slots as the CRNA ratio-capture path from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md
+      ("Clinical Sites, Contracts & Placements"); source-coverage finding verified line by line
+      against /Users/romitsoley/Downloads/CRNAVideosTranscripts.md (video 1 at lines 15-37, video 2
+      at lines 43-89 with the preceptor-as-reviewer text at line 67 and the student-scoped report at
+      line 83, video 3 at lines 95-117 with the Timesheets presence confirmation at line 103);
+      cross-referenced against ../journeys/preceptor-site-onboarding.yaml.
+
+  # ---------------------------------------------------------------------------
+  # NEW STEP (2026-08-25): Teacher Education's placement model — a cooperating teacher
+  # at a partner school under a district MOU — has no Prism-specific documentation at
+  # all. This step records the CAEP-required behavior against the generic machinery and
+  # is explicit about which claims are unverified.
+  - screen: "Partner-School Placement & Cooperating-Teacher Assignment (Teacher Education)"
+    navigation_path: "Placements > [Course or Placement Group] > Slots / Make Placement, against Locations representing partner schools and Personnel representing cooperating teachers — NO TE-specific navigation path is documented in any source in this research"
+    elements:
+      - element: "Cooperating teacher / university supervisor modelled as site Personnel on a partner-school Location"
+        type: "inferred use of the generic personnel-on-location model — NOT confirmed for TE"
+        data_shown: >
+          By construction the same mechanism every other discipline uses: a Location record for the
+          partner school, Personnel records for the school-based cooperating teacher and (per CAEP's
+          usage) the provider-based university supervisor, with the supervisor selected on the
+          placement. No TE source in this research confirms this is how TE tenants are actually
+          configured.
+        gates_on:
+          - "Placement Clearance runs a Missing/Exists/NA tracker on Preceptor CV, License, and Certification — so the placement is already gated on the supervisor's credentials, which is structurally what CAEP co-selection criteria need."
+        accreditation_citation: >
+          CAEP Standard R2, Component R2.2 — the EPP and its P-12 partners must jointly develop
+          criteria for CO-SELECTING clinical educators (CAEP's term covers both university
+          supervisors and school-based cooperating/mentor teachers), including demonstrated positive
+          impact on candidate and/or P-12 student learning; both parties must design and deliver
+          clinical-educator training; and clinical educators must have the opportunity to RECEIVE
+          feedback on their own experience.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research, and here
+          the market gap is real rather than evidentiary: none of the nine competitor files lists
+          teacher education among its disciplines at all. CORE ELMS's 15+ and MedHub/E*Value's 24+
+          discipline lists are health-professions lists. TE's actual competitive set is educator-
+          preparation software outside this research's scope, which is a stated limitation of this
+          analysis rather than a finding about TE competitors.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Per ../accreditation/caep.yaml the multi-entity gating is already real, and the
+          Experiential Supervisor Intake Form is the ready-made mechanism for capturing a
+          cooperating teacher's credentials AND their feedback. Two costs that scale badly at TE
+          volumes are named in that file: PIF bulk sending is not yet supported (one supervisor at a
+          time), which is materially worse for a TE program onboarding several hundred cooperating
+          teachers a semester than for a PA or OT program onboarding preceptors; and Faculty
+          Compliance, the parallel track for university supervisors, requires the paid Exxat Approve
+          add-on.
+      - element: "Grade band / school demographic profile as allocation-time attributes"
+        type: "absent — negative finding"
+        data_shown: >
+          Nothing confirmed. Setting, Location Category, Location Area, and Location Tag exist as
+          generic slot/location attributes and could carry grade band, but per ../accreditation/caep.yaml
+          Prism's site/location record has NO confirmed field for partner-school student demographics.
+        gates_on: []
+        accreditation_citation: >
+          CAEP Standard R2, Component R2.3 requires documented evidence on six named attributes —
+          Depth, Breadth (variety of settings), Diversity (opportunities with students of varied
+          learning needs and backgrounds), Coherence, Duration, and Modality (virtual/hybrid/
+          face-to-face) — and requires showing every candidate had active clinical experiences in
+          diverse settings with diverse P-12 students. CAEP names a "Tracking system of
+          placements/experiences" outright as a possible source of evidence, which is precisely this
+          product category.
+        competitor_equivalent: "Not applicable — no competitor in this research serves teacher education, so there is no equivalent to compare against in either direction."
+        gap_severity: "gap"
+        gap_note: >
+          The structural problem, quoted from ../accreditation/caep.yaml: CAEP's diversity attribute
+          "is a property of the SCHOOL's student body, not of the placement or the candidate," so
+          demographic-diversity evidence would today be a manual crosswalk against state
+          report-card data. That is a different shape of gap from every health-discipline setting
+          taxonomy in this file — those tag the experience, this one must tag the partner
+          institution's population — and it is why the setting-pairing rule in Placement Assist
+          cannot be repointed at it without a new location-level attribute.
+      - element: "Sequenced multi-experience progression (early field hours > practicum > student teaching)"
+        type: "inferred from the generic rotation/sub-block model — placement-model variant for TE is UNDOCUMENTED"
+        data_shown: >
+          The confirmed Rotation Readiness sequence (Courses/Course Offerings > Student Registration
+          > Duration Blocks/Rotations > Slots > Assign Students > Publish Placements) already models
+          a multi-stage sequence of dated placements at named locations, and Advanced Schedule
+          sub-blocks already model part-of-a-day recurring attendance — which is the shape of early
+          field observation hours.
+        gates_on: []
+        accreditation_citation: "CAEP Standard R2, Component R2.3 — the required evidence is a scope-and-sequence chart of every clinical experience from early field experience through the culminating student teaching/internship, with Coherence assessed as a deliberate, purposeful, sequential order."
+        competitor_equivalent: "Not applicable — no competitor in this research serves teacher education."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Honest unknown recorded rather than papered over, quoting ../accreditation/caep.yaml:
+          Prism's placement model is confirmed to DIVERGE by discipline (PT/OT/Nursing model a
+          Course as a Timeframe with each rotation its own course; PA models a Course as the clinical
+          Setting), and "TE's early-field-hours-plus-semester-of-student-teaching shape matches
+          neither cleanly, and which variant TE programs are provisioned on is undocumented in this
+          corpus." That is the first question to answer before scoping anything TE-specific here.
+      - element: "District-level MOU covering many partner-school locations (linked-contract model)"
+        type: "existing contract mechanism, structurally well matched to the TE partnership shape"
+        data_shown: >
+          One executed agreement chain-linked across many locations, so a district MOU covers every
+          school in the district without duplication, with expiry tracked and surfaced on the
+          Placement Clearance Dashboard as Valid Contract / Needs Attention / Missing Contracts.
+        gates_on:
+          - "Contract status gates placement clearance at every partner school covered by the district agreement."
+        accreditation_citation: >
+          CAEP Standard R2, Component R2.1 — partners must CO-CONSTRUCT clinical arrangements, not
+          merely have placements secured; CAEP names MOUs, Advisory Boards, and documentation of
+          collaboration (meeting decisions, agenda topics) as its three possible evidences.
+        competitor_equivalent: "Not applicable — no competitor in this research serves teacher education."
+        gap_severity: "gap"
+        gap_note: >
+          The document half is a near-exact structural match (per ../accreditation/caep.yaml the
+          chain-icon linked-contract model is "a near-exact structural match for a district MOU
+          covering many partner schools"), but CAEP wants the RELATIONSHIP record, not the signed
+          document. Communications/Interventions records are loggable against Sites and Locations,
+          yet per the capability map there is currently NO dedicated Interventions/Communications
+          report — the only view is the Sites/Locations Dashboard on a 24-hour refresh bucketed by
+          follow-up urgency. Assembling "here is three years of co-construction with District X" for
+          a self-study is manual collation today.
+    action: "Placement coordinator assigns candidates to partner-school locations and cooperating teachers under district-level agreements — using generic placement machinery, since no TE-specific placement configuration is documented anywhere in this research."
+    confirmed_by: >
+      ../accreditation/caep.yaml (Standard R2, Components R2.1, R2.2, and R2.3 — including the
+      placement-model divergence warning, the absent partner-school demographics field, the PIF
+      bulk-send limitation, the Faculty Compliance add-on cost, and the missing
+      Interventions/Communications report);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md
+      — read IN FULL 2026-08-25 and cited here specifically for what it does NOT contain. Line 12
+      records that TE has no dedicated internal help-center playbook article and no CSS discipline
+      playbook PDF, and that the entire note is built from ONE program-administrator video tutorial
+      covering the GoReact/Echo360 LTI integration. Lines 63-73 are the Open Gaps list, of which
+      line 67 states TE terminology — the Rotation/Placement, Cohort and cooperating-teacher/mentor-
+      teacher/university-supervisor equivalents — is "not confirmed by the current source and should
+      not be treated as Exxat-specific until verified"; line 68 states program and setup patterns
+      (course and rotation naming conventions, cohort structure, program requirements) are
+      unavailable; line 70 states "Placements/slot workflows — how TE placement requests, wishlists,
+      and confirmations compare to PT/OT/PA patterns" are unavailable; and line 72 warns against
+      citing specific CAEP standard numbers "in customer conversations until confirmed against a
+      TE-specific source." Every inferred element above is flagged accordingly.
+
+  # ---------------------------------------------------------------------------
+  # NEW STEP (2026-08-25): an availability-FIRST matching mechanic, structurally inverted
+  # from the request-then-wait slot model, and available only to PT/PTA and OT/OTA.
+  - screen: "Exxat One Availability-Based Wishlist & Import Schedules (PT/PTA, OT/OTA)"
+    navigation_path: "Placements > [Course offering] > Wishlist tab > Create Wishlist > 'Exxat One Availability Based Wishlist' — then Exxat One's View and Track Request screen, then Placements > Import Schedules"
+    elements:
+      - element: "Availability-based wishlist setup — rotation scope, state / experience-type / specialization filters, required min-max number of ranked availabilities"
+        type: "wishlist type with an external data source"
+        data_shown: >
+          Students rank REAL Exxat One partner availabilities rather than program-held slots or
+          abstract location preferences. Setup fields: name, view date, close date, type selection,
+          rotation, the three filters, min and max availabilities a student must rank, instructions
+          text, student selection (with an option to auto-add newly registered students), and
+          open / 24-hours-before-close / closed notifications.
+        gates_on:
+          - "Discipline-gated: documented as designed for PT, PTA, OT and OTA programs, and requires Exxat One access."
+          - "Type is immutable after save, like every other wishlist type."
+        accreditation_citation: >
+          None directly — preference intake carries no accreditor evidence requirement. Upstream of
+          CAPTE Standard 2, Element 2D8 and ACOTE Standard C.1.5 in that availabilities ranked here
+          become placements that must appear in the sufficiency count and must carry a valid written
+          agreement.
+        competitor_equivalent: >
+          The competitive frame here is not the med-ed vendors at all — it is the third-party slot
+          marketplaces the PT playbook names as direct competitors of Exxat One:
+          myClinicalExchange (mCE), Clinician Nexus, ACEMAPP, and CastleBranch Bridges. The playbook
+          records two facts that matter more than any feature comparison: those vendors "require
+          student account registration and payments for slot requests or onboarding," and "these
+          competitors will not integrate with us." So the competition at this element is over who
+          owns the availability marketplace, not over who has the better ranking UI — and the
+          integration door is closed by the counterparty, not by Prism.
+        gap_severity: "none"
+        gap_note: >
+          Structurally inverted from every other mechanic in this file: demand-first / availability-
+          driven instead of request-then-wait. Debuted March 2024 and, unlike the PT M1M cycle, can
+          be run year-round with no March 1 restriction — which is a direct answer to the seasonal
+          bottleneck the PT playbook describes. Also the documented remedy when an M1M underdelivers
+          (the other being a location-based reverse wishlist).
+      - element: "Student ranking flow — routed into Exxat One, privacy-policy acceptance for non-SSO users"
+        type: "cross-system student workflow"
+        data_shown: "Students reach it from the Prism dashboard's Needs Attention section, are routed into Exxat One (accepting its privacy policy if they are not SSO users), rank their choices, and submit back."
+        gates_on:
+          - "A non-SSO student who declines the Exxat One privacy policy cannot complete the wishlist — a consent gate with no in-Prism fallback documented."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. The named marketplace competitors go further in the same direction — mCE, Clinician Nexus, ACEMAPP and CastleBranch Bridges are documented as requiring student ACCOUNT REGISTRATION AND PAYMENT, where Exxat One requires consent but no student payment."
+        gap_severity: "cosmetic"
+        gap_note: "The consent gate is the only student-facing friction documented in the flow, and it is a real one for a lockstep cohort where a single unsubmitted wishlist stalls a batch. No documented admin remedy short of placing that student manually."
+      - element: "Admin Request Slot against a specific availability (slot count, specialization, graduation date, message to site)"
+        type: "outbound request form scoped to one ranked availability"
+        data_shown: "Reviewing submitted rankings in Prism shows 'View Request' before submission and 'Request Slot' after; requesting opens the availability detail page where the admin enters slot count, specialization, graduation date, and a message, then clicks Request Now."
+        gates_on:
+          - "The request is made against a specific ranked availability, so the student's ranking is the input to the ask — the inverse of ranking against capacity the program already holds."
+        accreditation_citation: "None directly. The graduation-date and specialization fields are the same attributes CAPTE Element 6H and ACOTE Standard C.1.11 care about downstream, captured here as a request parameter rather than as a placement attribute."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Notable as the only mechanic in this stage where a student preference directly parameterises an outbound capacity request rather than being consumed by an internal allocator."
+      - element: "Track Request on Exxat One, then Import Schedules back into Prism as placements"
+        type: "cross-system status tracking + bulk import"
+        data_shown: "Admins track request status on Exxat One's View and Track Request screen; once a site approves and schedules, the Import Schedules feature pulls the approved slot back into Prism as a placement."
+        gates_on:
+          - "Import Schedules is the documented mechanism that avoids manual re-entry; without it the approved schedule would be re-keyed by hand."
+        accreditation_citation: "ACOTE Standard C.1.5 and CAPTE Standard 2, Element 2D9 — an imported placement is still subject to the same written-agreement requirement, and the imported record must land on a location whose contract is valid for the placement dates."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file describes importing externally negotiated schedules back into the system of record."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Nothing in the sourced documentation states whether Import Schedules enforces contract
+          validity at the destination location, or whether an imported placement can land at a
+          location with no executed agreement — which matters because Exxat One partners are
+          sourced outside the program's own contracting process. Flag as a question to verify
+          rather than a confirmed gap; it is the one place in this stage where placements enter
+          Prism without passing through a documented program-side gate.
+    action: "Students rank real partner availabilities; the admin converts a ranking into a targeted slot request to that partner, tracks it in Exxat One, and imports the approved schedule back into Prism as a placement."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+      ("Exxat One Availability-Based Wishlist (PT/PTA/OT/OTA)" — setup fields, admin flow, and
+      closing-the-loop via Import Schedules);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      ("Additional Confirmed Detail — Exxat One Availability-Based Wishlist"; "Slot Request" for the
+      March-2024 debut and year-round cadence; "Pain Points" for the mCE / Clinician Nexus / ACEMAPP
+      / CastleBranch Bridges marketplace competitors and the no-integration finding);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/ExxatOne Availability based Wishlist.md.
+
+  - screen: "Placement Capacity & Utilization Reports"
+    navigation_path: "Placements > [Course or Placement Group] > Reports; plus Sites > Reports for the discipline-specific sufficiency reports"
+    elements:
+      - element: "Distribution of Slots Across Settings / Number and Variety of Clinical Sites (Standard 2C)"
+        type: "report, weekly refresh"
+        data_shown: "Slots offered vs. filled, by rotation/setting. (Report name itself embeds a discipline-specific accreditor standard label — 'Standard 2C' — for the OT/PT audience it is built for, which is direct evidence Prism has precedent for standard-labeled reports, though no equivalent named report exists for ACPE/COCA/LCME standards today.)"
+        gates_on: []
+        accreditation_citation: >
+          Ships against an OT/PT "Standard 2C" label — direct precedent for accreditor-named
+          reports — but not against ACPE Standard 3, Key Element 3.3.e (real-time student-to-
+          preceptor ratio) or COCA Standard 6, Element 6.9 (3-year rolling-average adequacy),
+          neither of which is confirmed to exist as a report here.
+          CORRECTION FLAGGED BY THE PT/CAPTE RESEARCH, and it is a live product defect rather than
+          an analysis note: per ../accreditation/capte.yaml the sites/slots content now lives at
+          CAPTE Standard 2, Element 2D8, and there IS NO Standard 8 in the 2024 PT or PTA documents
+          (they stop at Standard 7), while 2024's "2C" is program assessment, not sites. The "2C"
+          and "8F" labels on these two shipped reports are 2016 numbering that has not been
+          renumbered, even though Prism's other five CAPTE reports already carry dual "2024 X /
+          2016 Y" labels. Fix before a 2024-cycle self-study.
+        competitor_equivalent: "Not comparable at element level, and notably not a Prism-specific competitive gap: no competitor source in this research (CORE ELMS, one45, Elentra, eMedley, MedHub, E*Value, LEO/DaVinci, New Innovations) publicly documents a ratio-compliance or rolling-average report either."
+        gap_severity: "gap"
+        gap_note: >
+          Offered-vs-filled counts refreshed weekly — the right shape for a standard-labeled report,
+          but no equivalent exists for the four target domains' accreditors, a weekly refresh cannot
+          satisfy a real-time ratio requirement, and the standard label on the report itself is two
+          editions out of date. Separately, per ../accreditation/capte.yaml, CAPTE 2D8's
+          150%-of-charter-class capacity projection for developing programs has no shipped
+          equivalent: "Placement Assist allocates against actual slots, it does not model required-
+          versus-contracted capacity ahead of a cohort existing."
+      - element: "Distribution of Slots Across Locations / Number and Variety of Clinical Slots (Standard 8F)"
+        type: "report, weekly refresh"
+        data_shown: "Slots offered per rotation, broken out by location. Has a checkbox to include cancelled slots."
+        gates_on: []
+        accreditation_citation: "Same OT/PT-labeled precedent ('Standard 8F') and the same two-edition numbering defect described on the sibling element — the 2024 home for this content is CAPTE Standard 2, Element 2D8. Does not address ACPE 3.3.e (real-time ratio) or COCA 6.9 (3-year rolling average), neither of which is confirmed to exist as a report in this list. Also serves ARC-PA Standard B3, Element B3.01 a-e sufficiency claims: per the PA playbook both Distribution reports run from Placements > Placement Group > Reports and are named as direct evidence for B3.01a-e, complementing rather than duplicating the SCPE Details report."
+        competitor_equivalent: "Not comparable at element level — and, as above, the accreditor-specific computed-adequacy report looks like an industry-wide gap across all researched vendors rather than something a competitor already ships and Prism lacks."
+        gap_severity: "gap"
+        gap_note: "Location-level offered counts on a weekly refresh; no ratio and no rolling-average computation is layered on them."
+      - element: "SCPE Details report (Sites > Reports > SCPE Details) — PA"
+        type: "report shaped to mirror an external accreditor portal"
+        data_shown: >
+          Cohort, site name, affiliation status, setting, slots offered, and slots used — filterable
+          by "Written Agreements = Yes" and comparable offered-vs-used per setting. Deliberately
+          mirrors the ARC-PA Entry Level Program Portal's own SCPE data-entry screen so a program
+          can diff Prism against the portal line by line.
+        gates_on:
+          - "Slot Request responses populate 'true slots offered' automatically, so the number is site-attested rather than an admin estimate — even where some slots are still collected manually."
+        accreditation_citation: >
+          ARC-PA Standard A1, Element A1.10 a-b — the program must document the number of written
+          affiliation agreements, the method used to confirm site availability, and the number of
+          students each site can accommodate; and under 6e, any site or preceptor outside the United
+          States may be used only for ELECTIVE rotations. Per the PA playbook the 6e portal
+          requirement is that confirmed slots per location/setting are updated on an ONGOING basis,
+          not just annually.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research, and this is
+          the strongest single competitive artifact in the stage: no competitor's public materials
+          describe a report shaped to an accreditor's own data-entry screen for reconciliation
+          purposes. CORE ELMS and MedHub/E*Value both sell into PA, and neither names an ARC-PA
+          portal reconciliation report.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Per ../accreditation/arc-pa.yaml the honest limit: "sufficiency is asserted by eyeballing
+          offered-vs-used per setting in Excel, not computed. No shipped pillar produces a pass/fail
+          'is capacity sufficient for this cohort' verdict, and A1.10b's non-U.S.-elective-only rule
+          is enforced only by a manual state/country filter." The named fix is small and concrete —
+          a country field plus a hard validation that a non-U.S. location cannot be attached to a
+          core-rotation slot would convert a manual audit into a system guarantee. The playbook's
+          operational discipline is also worth carrying: match site/location names in Prism exactly
+          to the ARC-PA portal ("gold in, gold out"), then diff both exports in Excel.
+      - element: "Slot Sufficiency Report (Sites > Reports, custom) — Nursing"
+        type: "custom report"
+        data_shown: "Total Slots Offered / Total Placements / Completed Placements, by site."
+        gates_on: []
+        accreditation_citation: >
+          CCNE Standard II, Key Element II-C — documentation that clinical sites are sufficient,
+          appropriate and available, PLUS evidence of a DEFINED, periodically-run process for
+          determining site currency, availability, accessibility and adequacy AND the modifications
+          made as a result. CCNE's supporting-documentation list also asks for "evidence of how the
+          program is responsible for obtaining clinical placements" — i.e. the program, not the
+          student, must own site sourcing and must prove it.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. CORE ELMS and MedHub/E*Value both sell into nursing; neither names a site-sufficiency report."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Per ../accreditation/nursing.yaml the report "shows volume, not a judgment of adequacy
+          against a defined threshold — the 'defined process' narrative and the modifications-made
+          record are still assembled by hand outside the product." Note also that the CCNE
+          program-owns-sourcing expectation sits in tension with the student-led placement models
+          this stage documents for Social Work (Field Application Forms) and OT capstone; a Nursing
+          program leaning on student self-placement would be evidencing against its own standard.
+      - element: "Placements by Educator report — OT"
+        type: "report"
+        data_shown: "How many students each named fieldwork educator supervised, across locations and rotations — the realized (as opposed to declared) student-per-educator picture."
+        gates_on: []
+        accreditation_citation: "ACOTE Standard C.1.7 — Exxat's own ACOTE guide names C.1.7 against this report paired with the slot-level Supervision Type field, making this the only place in the product where a REALIZED supervision ratio is rendered at all."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor publishes a per-supervisor caseload report."
+        gap_severity: "gap"
+        gap_note: >
+          Two defects carried from ../accreditation/acote.yaml, and both matter more for CRNA than
+          for OT. (1) The report explicitly EXCLUDES placements with no assigned educator, so a
+          program with incomplete educator assignment silently under-reports its own ratios — the
+          denominator quietly shrinks. (2) Planned Supervision Type and realized ratio live in two
+          different views with no reconciliation, so nothing flags a slot set up as 1:1 that actually
+          ran 2:1. Even so, this is the nearest existing artifact to what COA F.7 needs, and it is
+          rotation-scoped rather than day-scoped — which is exactly the axis change that build
+          requires.
+      - element: "Comprehensive Placement Report (Live) / Program Level Comprehensive Report (Live)"
+        type: "report, real-time refresh"
+        data_shown: >
+          Full placement detail (student, site, setting, rotation, dates, publish status, faculty,
+          notes) updated in real time, at the course or whole-program level. The OT playbook adds
+          that it covers roughly the past 3 years of rotations and includes educator licensure and
+          both internal and student placement notes.
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.e (real-time student-to-preceptor ratio) — this is the
+          only real-time-refresh report in the list and carries faculty/preceptor detail, so it is
+          the nearest substrate for a ratio figure, but it ships as placement detail, not as a
+          computed ratio. It is also the documented data source for two PT/OT accreditation
+          procedures: the CAPTE Annual Accreditation Report's unique-sites-with-at-least-one-
+          placement count (filtered and sorted by Location Name, with duplicate locations removed by
+          hand), and the OT practice of downloading placement reports per site for the past 2-3 years
+          to identify champion educators and sites for future placements.
+        competitor_equivalent: "Not comparable at element level — no competitor source (CORE ELMS, one45, Elentra, eMedley, MedHub, E*Value, LEO/DaVinci, New Innovations) publicly documents a live comprehensive placement export or a ratio-compliance view to compare against."
+        gap_severity: "gap"
+        gap_note: >
+          This remains the one piece of the stage that is a genuine, unresolved gap after
+          element-level tracing: the data refreshes live and includes faculty, but no rolling-average
+          or live ratio-compliance computation exists in the sourced documentation, for Prism or for
+          any traced competitor. The de-duplication detail is a small but telling instance of the
+          same pattern — the report is the substrate for an accreditation figure, and the figure
+          itself is produced in Excel by a human.
+      - element: "No capacity report exists for Social Work or Teacher Education"
+        type: "absent — coverage finding"
+        data_shown: >
+          Nothing. The SW playbook's report inventory names Comprehensive Placement Report,
+          Placement Clearance, Assessment Details, Comprehensive Personnel Report, Hours by
+          Category, and the competency reports — no slot, capacity, or sufficiency report appears,
+          which is consistent with SW having no reserved-slot model to count. For TE, no report of
+          any kind is documented in any source.
+        gates_on: []
+        accreditation_citation: >
+          CSWE Accreditation Standard 3.3, AS 3.3.4 requires documented processes for identifying
+          and approving field settings and for evaluating field-setting EFFECTIVENESS; CAEP Standard
+          R2, Component R2.1 requires evidence of periodically reviewed partnership co-construction.
+          Both are capacity-adjacent standards with no capacity report behind them.
+        competitor_equivalent: "Not applicable for TE (no competitor in this research serves it). For SW, not documented at this granularity by any competitor teardown, though both CORE ELMS and MedHub/E*Value list social work among their disciplines."
+        gap_severity: "gap"
+        gap_note: >
+          For Social Work the absence is arguably correct — with no reserved slots there is no fill
+          rate to report — but per ../accreditation/cswe.yaml the thing that IS missing is real:
+          "longitudinal, agency-scoped and instructor-scoped effectiveness trending that supports a
+          documented sunset decision," today assembled by hand from Interventions & Communications
+          and Learning Activities reports. For Teacher Education the absence is unqualified, and per
+          ../accreditation/caep.yaml the parallel hole is the missing Interventions/Communications
+          report needed for R2.1 partnership evidence. Both point at the same unbuilt object: a
+          longitudinal, partner-scoped relationship-and-effectiveness view, which is the natural home
+          for capacity evidence in disciplines that have no slot to count.
+    action: "Coordinator monitors fill rates, realized supervision ratios, and placement status across the program; exports data for planning, for accreditor-portal reconciliation, or for accreditation self-study."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Accessing Placement Reports.md;
+      CAPTE report inventory, the 2C/8F numbering defect, and the AAR pull sequence from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      ("CAPTE-Mapped Reports"; "AAR (Annual Accreditation Report) Data Gathering") and
+      ../accreditation/capte.yaml (Standard 2, Element 2D8);
+      SCPE Details from /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md
+      ("SCPE Details — Tracking Sufficiency of Sites and Slots (ARC-PA 6th ed. A1.10 a-b, B3.01 a)";
+      "Distribution of Slots Across Settings and Distribution of Slots by Location") and
+      ../accreditation/arc-pa.yaml (Element A1.10 a-b);
+      Slot Sufficiency Report from /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md
+      ("Clinical Sites, Contracts & Placements") and ../accreditation/nursing.yaml (CCNE Key Element II-C);
+      Placements by Educator and the 2-3 year per-site download practice from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+      ("C.1.7: Ratio of Fieldwork Educators to Students"; "Placement Reports") and
+      ../accreditation/acote.yaml (Standard C.1.7);
+      SW and TE report inventories (and their absences) from the SW and TE playbooks plus
+      ../accreditation/cswe.yaml (AS 3.3.4) and ../accreditation/caep.yaml (Component R2.1).
+
+sources:
+  # --- Prism help-center: core placement workflow (four-domain baseline, unchanged) ---
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Dashboard.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Using Placement Assist.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Advanced Options in Placement Assist.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Slots by Placements.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Adding and Deleting Rotations.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Wishlists for Student Rotations.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Accessing Placement Reports.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/ExxatOne Availability based Wishlist.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Max Placement Limit (MAX Slot Limit).md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Coursework/Completing a Wishlist.md"
+  # --- Discipline playbooks: the eight disciplines Prism already serves ---
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — READ IN FULL 2026-08-25 (previously consulted per-stage). Lines cited in this file: 43 (the clinical-settings taxonomy that populates Setting tags), 45-53 (graduation-year cohorts, always Lock Step, cohort movement, off-track students and the keep-them-in-the-original-rotation best practice), 55-60 (Groups, Categories and per-setting Program Requirements), 68-71 (the full rotation-setup field list incl. the two visibility toggles), 73-77 (ICE, DPE and the Mercer residency/fellowship pilot), 79-85 (the March 1 M1M cycle, the climbing FCFS share, and Exxat One as the year-round alternative), 87-91 (slot-based and location-based wishlists, Placement Assist, limited MyRequest), 99-108 (the four co-existing placement modes), 110-113 (slot confirmation and cancellation emails), 115-123 (placement-notification lead times and the student-contacts-CI convention), 184-188 (pain points incl. split terminal rotations, the four marketplace competitors, and national IP/acute-slot competition), 279-281 (the Exxat One availability-based wishlist)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — read IN FULL 2026-08-25 (previously consulted per-stage). Lines cited across this journey: 12 (the playbook's own data-quality caveat — it is synthesized from eight thin feature-specific artifacts, not a CSS playbook, so silence is documentation absence rather than product absence), 18-21 (ASHA / CAA / CFCC / KASA, and the nine KASA competencies a.k.a. nine service-delivery areas, whose individual names that source never enumerates), 25-35 (Course Offering, Rotation, Learning Activity Group, Clinical Log, Clinical Educator, Student Participation Type, Practice Type, Mode of Delivery, Training Level, Placement Setting, Age Group), 37 (no DCE/ACCE/SCCE-equivalent role terms are documented for SLP), 41-49 (CAA + CFCC curriculum mapping, the Mapped Standards Report, the beyond-KASA CSS dependency, the CFCC V-E attestation hook and its navigation, affiliation agreements in the Sites module, and the 400-hour tracking on the Clinical Clock Hours Report (Cumulative)), 53-67 (per-course-offering Clinical Log setup: template preview, activate toggle, the N-day submission window, grading, the wrench column customization with the first four columns fixed, clinical-educator review routing with a previewable email template, the attestation, and the support-gated min/max hour thresholds), 71-84 (the review workflow: the Logs Count / Log Hours by Status columns, Last Encounter and Last Update, the three-status colour model, the mandatory school-feedback note on Needs Attention, bulk approve and Approve All Logs, the 6am EST Statistics refresh, three export levels, and the filter set incl. Placement Faculty / Clinical Educator), 88-100 (no free off-the-shelf standard instruments; the configured toolkit — KASA Summary Forms, Clinical Supervisor Evaluations (Midterm & Final), Student Self-Assessments, Student Evaluations of Clinical Sites, Student Evaluations of Clinical Supervisors, Site Assessments aligned to program goals and accreditation standards, and custom forms — all support-gated to create; and the student-facing Student Performance Report across all nine service delivery areas), 104-105 (surveys buildable in Prism from December 2025), 109-114 (advisement via Communications & Interventions or custom workflow-based advisement forms with signature, plus profile-level and course-level attestations with their navigation paths), 118 (question-based early-alert notifications configured by support), 120-138 (the report suite, the shared filter set, the 50-course-offering cap, and the broader capability list incl. trend/exposure analysis, low-performance indicators and placement-readiness metrics), 142-149 (the discipline's own gap list — explicitly a DOCUMENTATION gap, plus the recurring self-service gap for SLP). In THIS file the load-bearing lines are 142-149 — the playbook's own gap list, which states there is no SLP-specific slot-request cycle, wishlist pattern or Placement Assist usage note, and frames that as a documentation gap rather than a confirmed product gap. That distinction is preserved on the wishlist-defaults element and must not be upgraded into a product claim in either direction."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — READ IN FULL 2026-08-25 (previously consulted per-stage). Lines cited in this file: 26-28 (Field Application Form / Placement Suggestion / Learning Contract terminology), 41-50 (the two cohort-naming conventions and the Groups/Campuses/Categories value sets), 63-67 (the three course-setup models), 84-127 (the whole Field Application Forms, Interview Statuses and Placement Creation section — the ten-suggestion ceiling, the six workflow steps, the status lifecycle, the mapping rules, the three Create Placement branches, My Requests and course-specific Wishlist Questionnaires, the navigation path and the best-practice list), 183 (the Download Raw Response export with Interview Status and Schedule Date as added columns), 185-189 (the temporary-placement anti-pattern this workflow replaced), 197 (expect Field Application Forms and My Requests to be used more heavily and iteratively than a single-wishlist PT/OT slot process)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — READ IN FULL 2026-08-25 (73 lines). It is the thinnest discipline source in this corpus and its own line 12 says why: TE has no dedicated internal help-center playbook article and no CSS discipline playbook PDF, so the note is built from ONE program-administrator video tutorial covering the GoReact/Echo360 LTI integration, transcribed from auto-generated Vimeo captions. Substantive content: lines 19-26 (LTI integration with GoReact, now part of Echo360; assignments, student submissions and scores/status updates sync automatically; described as a genuinely connected two-way workflow in which administrators are not expected to recreate assignments in GoReact), 28-31 (activation is discipline/program-gated — if the Learning Tool Interoperability section is absent from Learning Activities > Setup the feature is not activated, and activation requires an Exxat support ticket), 33-45 (the administrator setup sequence: create at Learning Activities > Setup > Learning Tool Interoperability > +, configure LTI tool, title, description, placement-based vs. didactic, publish and due dates, grading and score settings and faculty visibility; activate and save; Prism auto-creates the matching GoReact activity on first save; GoReact-specific settings are then configured in GoReact and the activity marked Done, at which point the assignment becomes available to students), 47-52 (student workflow from My Coursework: redirect into GoReact, record directly, upload a video file, or submit other supported media, with status syncing back), 54-57 (faculty/reviewer workflow: timestamped comments, feedback, evaluations and scores, syncing back with no reconciliation step), 61 (further GoReact-side configuration is documented in GoReact's help centre, not Exxat's), and 63-73 (the Open Gaps list — TE terminology, program/setup patterns, compliance, placement and slot workflows, standard evaluation forms and reports, accreditor standards, and pain points are ALL explicitly unpopulated, with a standing instruction not to treat field-standard TE terms or CAEP standard numbers as Exxat-specific until confirmed against a TE-specific source). EVERY TE claim in this file that is not about the LTI integration is therefore reasoned from ../accreditation/caep.yaml and carries that caveat inline. In THIS file the load-bearing lines are 67 (TE terminology — the Rotation/Placement, Cohort and cooperating-teacher equivalents — is unconfirmed for Exxat and must not be treated as Exxat-specific) and 70 (placement and slot workflows, incl. how TE placement requests, wishlists and confirmations compare to PT/OT/PA patterns, are explicitly unavailable), which together are why every element in the TE placement step is marked inferred."
+  # --- Raw transcripts (CRNA: read in full; contains NO placement/capacity content — see the CRNA step) ---
+  - "/Users/romitsoley/Downloads/CRNAVideosTranscripts.md"
+  # --- Prism internal synthesis ---
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  # --- Accreditor registries: four expansion domains ---
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  # --- Accreditor registries: the eight served disciplines ---
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/capte.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acote.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/arc-pa.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caa-asha.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/nursing.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coa.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/cswe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caep.yaml"
+  # --- Competitor teardowns (all nine reviewed for placement-matching granularity) ---
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/new-innovations.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+  # --- Sibling flow files cross-referenced (not re-derived from) ---
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/flows/admin-onboarding--07-wishlists-slot-requests-placement-assist.yaml"
+last_verified: "2026-08-25"

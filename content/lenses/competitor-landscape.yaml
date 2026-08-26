@@ -1,0 +1,185 @@
+# Level 2 reframing — cites content/competitors/*.yaml by name; never asserts a new
+# competitive fact not already grounded there. `threat` is a synthesis judgment (not a
+# field that exists in the source files), derived from: explicit market-share/
+# incumbency claims where a competitor file states one (rated "high"), otherwise from
+# how many pillars that competitor's feature_teardown rates "ahead"/"at-parity" vs
+# Prism for the domains it serves (rated "medium"), with "low" reserved for a
+# competitor confirmed active in the domain but with a clearly narrower/weaker
+# footprint there. Competitor `domains_served` uses "MD" for Medicine, matching the
+# field name used in content/competitors/*.yaml itself — the app normalizes this.
+last_updated: "2026-08-26"
+
+domains:
+  # ---- 4 expansion domains ----
+  - domain: "DO"
+    competitors:
+      - competitor: "Elentra"
+        slug: "elentra"
+        threat: "high"
+        rationale: "Ahead on Curriculum Mapping, Exam Management, and Accreditation Management per its own feature_teardown; the one competitor whose accreditation story already names COCA explicitly."
+      - competitor: "New Innovations"
+        slug: "new-innovations"
+        threat: "medium"
+        rationale: "Active UME+GME vendor serving DO; acquired by QGenda July 2025, ownership churn is a real switching-cost trigger."
+      - competitor: "MedHub"
+        slug: "medhub"
+        threat: "medium"
+        rationale: "Active UME+GME vendor for DO; part of the combined MedHub/E*Value suite."
+      - competitor: "eMedley"
+        slug: "emedley"
+        threat: "medium"
+        rationale: "Active curriculum/clinical-education vendor for DO/MD."
+      - competitor: "Leo (DaVinci Education)"
+        slug: "leo-davinci"
+        threat: "medium"
+        rationale: "Active across DO/MD/Pharmacy/Dentistry; acquired by Elentra May 2024, itself a churn signal."
+      - competitor: "one45 (Acuity Insights)"
+        slug: "one45"
+        threat: "low"
+        rationale: "domains_served lists MD only, not DO specifically — narrower footprint in this domain than the others."
+    sources: ["../competitors/elentra.yaml", "../competitors/new-innovations.yaml", "../competitors/medhub.yaml", "../competitors/emedley.yaml", "../competitors/leo-davinci.yaml", "../competitors/one45.yaml"]
+
+  - domain: "Pharmacy"
+    competitors:
+      - competitor: "CORE ELMS (CORE Higher Ed)"
+        slug: "core-elms"
+        threat: "high"
+        rationale: "CORE claims 90% of U.S. pharmacy programs partner with them — the single strongest incumbency claim in this repo's whole competitor set."
+      - competitor: "E*Value (MedHub)"
+        slug: "e-value"
+        threat: "medium"
+        rationale: "Active in Pharmacy per domains_served, part of the combined MedHub/E*Value suite."
+      - competitor: "Leo (DaVinci Education)"
+        slug: "leo-davinci"
+        threat: "medium"
+        rationale: "Active in Pharmacy per domains_served."
+    sources: ["../competitors/core-elms.yaml", "../competitors/e-value.yaml", "../competitors/leo-davinci.yaml"]
+
+  - domain: "Dentistry"
+    competitors:
+      - competitor: "axiUm (Exan / Henry Schein One)"
+        slug: "axium"
+        threat: "high"
+        rationale: "~90% of U.S. dental schools, per its own file — the dominant incumbent, though it competes on the clinic-operations side (patient/treatment management), not the university-enrollment side; see the 2026-08-22 Wilson call for that distinction."
+      - competitor: "CORE ELMS (CORE Higher Ed)"
+        slug: "core-elms"
+        threat: "medium"
+        rationale: "Active in Dentistry per domains_served, but no CODA-specific accreditation claim found on its dental page (unlike its explicit ACPE claim for pharmacy) — a real, provable depth gap."
+      - competitor: "Leo (DaVinci Education)"
+        slug: "leo-davinci"
+        threat: "low"
+        rationale: "Active in Dentistry per domains_served, narrower footprint than axiUm/CORE here."
+    sources: ["../competitors/axium.yaml", "../competitors/core-elms.yaml", "../competitors/leo-davinci.yaml", "../interviews/2026-08-22-wilson-market-penetration.md"]
+
+  - domain: "Medicine"
+    competitors:
+      - competitor: "Leo (DaVinci Education)"
+        slug: "leo-davinci"
+        threat: "high"
+        rationale: "AAMC Curriculum Inventory vendor since 2013 — an eleven-year head start on one-click AAMC CI submission with pre-submission validation."
+      - competitor: "Elentra"
+        slug: "elentra"
+        threat: "medium"
+        rationale: "Active in MD per domains_served, ahead on Curriculum Mapping/Exam Management/Accreditation Management generally."
+      - competitor: "eMedley"
+        slug: "emedley"
+        threat: "medium"
+        rationale: "Active in MD per domains_served."
+      - competitor: "MedHub"
+        slug: "medhub"
+        threat: "medium"
+        rationale: "Active in MD per domains_served, combined MedHub/E*Value suite."
+      - competitor: "New Innovations"
+        slug: "new-innovations"
+        threat: "medium"
+        rationale: "Active in MD per domains_served."
+      - competitor: "one45 (Acuity Insights)"
+        slug: "one45"
+        threat: "medium"
+        rationale: "MD-focused vendor; a verified real-world outcome exists (Augusta University credited it in earning full 8-year LCME accreditation)."
+    sources: ["../competitors/leo-davinci.yaml", "../competitors/elentra.yaml", "../competitors/emedley.yaml", "../competitors/medhub.yaml", "../competitors/new-innovations.yaml", "../competitors/one45.yaml"]
+
+  # ---- 8 existing disciplines ----
+  # None of the 9 originally-researched competitor files (all researched for the 4
+  # expansion domains) list any of these 8 disciplines in domains_served. The 4
+  # competitors researched 2026-08-26 specifically for this gap — CastleBranch,
+  # Typhon, Trajecsys, and Experiential Learning Cloud (Lumivero) — are the first
+  # real coverage here. Genuinely thin/absent coverage for the other 5 disciplines
+  # below is the honest finding, not a placeholder to be filled with guesses.
+  - domain: "Nursing"
+    competitors:
+      - competitor: "Typhon Group"
+        slug: "typhon"
+        threat: "medium"
+        rationale: "Confirmed required system in multiple nursing-school catalogs (Rutgers, UNM, Bellin College, Ohio State DNP) — real, cited institutional adoption. But it's a narrower tracking-first tool (patient encounters, hours, competencies) with no algorithmic placement-matching engine and no named-accreditor (CCNE/ACEN) standards claim — CORE Higher Ed's own sales deck states 70%+ of its new clients switched from EValue, PharmAcademic, Typhon, or Exxat, real evidence of attrition toward richer platforms."
+      - competitor: "Trajecsys (a Portico brand)"
+        slug: "trajecsys"
+        threat: "medium"
+        rationale: "Named case studies at Regis College (nursing) show real depth; merged into Portico July 2025 (itself formed 2025 from three companies) — ownership churn similar to the pattern already seen with CORE/PeopleGrove and New Innovations/QGenda. No curriculum mapping, exam management, or auto-matching found; zero presence on any review site."
+      - competitor: "CastleBranch (DISA Healthcare Technology)"
+        slug: "castlebranch"
+        threat: "low"
+        rationale: "Not a clinical-placement competitor — a compliance/background-screening point solution. Its own clinical-placement product (CB Bridges/Bridges EXP) was DISCONTINUED effective 2026-06-30 after a March 2024 acquisition carve-out — a live, time-sensitive white-space opening for displaced nursing/allied-health programs heading into fall rotations, not a competitive threat."
+    note: "This is the discipline Wilson prioritized first for the standards crosswalk precisely because it's the least documented (5-8% penetration vs. ~50% for PA/OT)."
+    sources: ["../competitors/typhon.yaml", "../competitors/trajecsys.yaml", "../competitors/castlebranch.yaml", "../interviews/2026-08-26-wilson-nursing-crosswalk.md"]
+
+  - domain: "Physician Assistant"
+    competitors:
+      - competitor: "Typhon Group"
+        slug: "typhon"
+        threat: "medium"
+        rationale: "PA (PAST) is Typhon's second most explicitly documented product line after Nursing."
+      - competitor: "CastleBranch (DISA Healthcare Technology)"
+        slug: "castlebranch"
+        threat: "low"
+        rationale: "Evidenced compliance/screening use at UNC-Chapel Hill's PA program specifically — a compliance point solution, not a placement-platform competitor."
+    sources: ["../competitors/typhon.yaml", "../competitors/castlebranch.yaml"]
+
+  - domain: "Teacher Education"
+    competitors:
+      - competitor: "Experiential Learning Cloud (Lumivero)"
+        slug: "experiential-learning-cloud"
+        threat: "high"
+        rationale: "CAEP-named accreditor claim, 120,000+ students placed annually across 300+ institutions (formed from the 2025 Sonia + Tevera merger) — this is a genuine, well-resourced incumbent in this domain specifically, unlike its unconfirmed footprint in the 4 expansion domains."
+    sources: ["../competitors/experiential-learning-cloud.yaml"]
+
+  - domain: "Social Work"
+    competitors:
+      - competitor: "Experiential Learning Cloud (Lumivero)"
+        slug: "experiential-learning-cloud"
+        threat: "high"
+        rationale: "CSWE-named accreditor claim — same platform as Teacher Education above, real footprint here specifically."
+    sources: ["../competitors/experiential-learning-cloud.yaml"]
+
+  - domain: "Occupational Therapy"
+    competitors:
+      - competitor: "CastleBranch (DISA Healthcare Technology)"
+        slug: "castlebranch"
+        threat: "low"
+        rationale: "Evidenced compliance/screening use at Minnesota West's OTA program specifically — a compliance point solution, not a placement-platform competitor."
+    sources: ["../competitors/castlebranch.yaml"]
+
+  - domain: "Physical Therapy"
+    competitors: []
+    note: "No competitor researched 2026-08-26 named PT/PTA specifically in domains_served, though Typhon's broad AHST tier is confirmed used by PT/PTA programs per its own file — not yet promoted to a domains_served entry there, flagged as an open follow-up rather than assumed absent."
+    sources: []
+
+  - domain: "Speech-Language Pathology"
+    competitors: []
+    note: "No competitor researched to date names SLP specifically in domains_served — genuinely undocumented, not a placeholder."
+    sources: []
+
+  - domain: "CRNA"
+    competitors: []
+    note: "Typhon has a dedicated nurse-anesthesia product (NAST) per its own file, but its domains_served entry lists only Nursing and Physician Assistant as the disciplines with strongest direct evidence — CRNA-specific depth not yet independently confirmed enough to add here."
+    sources: ["../competitors/typhon.yaml"]
+
+  # ---- named on the 2026-08-26 call but not tracked as one of this repo's 12 disciplines ----
+  - domain: "Counseling"
+    competitors:
+      - competitor: "Experiential Learning Cloud (Lumivero)"
+        slug: "experiential-learning-cloud"
+        threat: "high"
+        rationale: "CACREP-named accreditor claim — real, confirmed footprint in exactly the discipline Wilson flagged as untracked in this repo. This finding is itself evidence that Counseling is a live, resourced market with at least one real incumbent, not an empty gap."
+    note: "See the 'Counseling' entry in lenses/accreditor-tiers.yaml — this discipline has no persona, accreditation, or feature-map research anywhere else in this repo."
+    sources: ["../competitors/experiential-learning-cloud.yaml", "../interviews/2026-08-26-wilson-nursing-crosswalk.md"]

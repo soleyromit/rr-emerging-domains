@@ -1,0 +1,212 @@
+competitor: "Leo (DaVinci Education)"
+slug: "leo-davinci"
+domains_served: ["MD", "DO", "Pharmacy", "Dentistry"]
+category: "Med-ed management (curriculum, clinical, assessment & accreditation) for medical/health-science schools"
+company:
+  founded: "2011 (as LCMS+, a spin-out of Duke School of Medicine; rebranded 'Leo' under DaVinci Education in 2019)"
+  hq: "Chapel Hill, NC (510 Meadowmont Village Circle #129)"
+  ownership: >
+    Merged with Elentra on 2024-05-28 under the portfolio of Achieve Partners (a New York
+    private-equity firm); JD White, Ph.D. (ex-Chief Product Officer, Anthology) leads the
+    combined entity. DaVinci Education co-founder/CEO Allison Wood remains quoted in the
+    merger announcement. Elentra's own site is now actively marketing migration paths for
+    "programs using DaVinci Leo" onto the Elentra platform.
+    Sources: https://elentra.com/elentra-news/better-together-elentra-and-davinci-education-combine-to-drive-transformation-in-healthcare-education ,
+    https://elentra.com/blog/from-davinci-to-elentra-how-institutions-are-strengthening-workflows
+
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: >
+      Patient Encounter Tracking (PET): mobile-friendly logging of diagnoses, procedures,
+      observed conditions, and duty hours per student, with each encounter as a single record
+      and diagnoses/procedures as report columns; encounter history remains accessible even
+      after a clinical course is no longer active on a student's schedule; themes can be mapped
+      directly to encounter logs; duty hours are downloadable as a spreadsheet. A separate
+      Clerkship Lottery module lets students rank-order course preferences, auto-allocates
+      seats by rank (random tiebreak on oversubscription), with an optional first-come-first-serve
+      mode. A per-user central calendar surfaces rotation/session details (location, materials,
+      mandatory status, real-time iCal feed).
+    depth_vs_prism: "unknown"
+    evidence: >
+      Public materials document duty-hour/encounter logging and rotation-lottery allocation in
+      detail, but do not describe anchor-relative (N-days-before/after placement start/mid/end)
+      scheduling, which Prism's internal docs confirm as its architecture. No public source lets
+      us compare placement-gating or scheduling depth directly.
+    source: "https://www.davinci-ed.com/resources/track-patient-encounters-more-efficiently-with-leo"
+
+  - pillar: "Compliance Management"
+    competitor_capability: >
+      No dedicated module for placement-gating compliance items (immunizations, background
+      checks, certifications) was found on DaVinci Education's public site after checking the
+      FAQ, "Standout Features," "Solving Challenges in Healthcare Education," and "How We Help
+      Staff" pages. The only public uses of "compliance" describe (a) evaluation-completion
+      tracking/reminders and (b) FERPA-scoped advisor visibility (advisors see only their own
+      advisees).
+    depth_vs_prism: "behind"
+    evidence: >
+      Absence of any public marketing content on immunization/background-check/credentialing
+      tracking, despite those pages covering nearly every other capability area in detail —
+      treated here as evidence of a likely gap, not a confirmed one. Could not verify via
+      G2/Capterra (no listings found for this product).
+    source: "https://www.davinci-ed.com/the-davinci-difference/leo-faqs"
+
+  - pillar: "Curriculum Mapping"
+    competitor_capability: >
+      Maps "every session in every course — didactic or clinical," plus cross-course themes,
+      diagnoses, and procedures tied to patient encounter logs; supports mapping to multiple
+      competency sets and Entrustable Professional Activities (EPAs). An "Insights Dashboard"
+      shows real-time mapping-completion status (green checkmarks for finished mappings,
+      flags for gaps) against program objectives.
+    depth_vs_prism: "ahead"
+    evidence: >
+      Marketing explicitly contrasts Leo's scope against "other tools" that "only map to your
+      assessments or your content": "What about the rest of your curriculum?" Prism's internal
+      capability map describes curriculum mapping only as "maps courses/activities to a
+      curriculum structure," with no dashboard or EPA-mapping documented.
+    source: "https://www.davinci-ed.com/programs/curriculum-management-for-medical-education"
+
+  - pillar: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    competitor_capability: >
+      Shipped today: scheduled and on-demand 360-degree evaluations for courses, students, and
+      faculty (including clinical assessments), with configurable anonymity, peer review, and
+      self-reflection; on-demand evaluation links can be emailed to clinical faculty with no
+      login required; results can be reviewed, modified, summarized, and exported to gradebooks;
+      administrators get completion/reminder tracking reports.
+    depth_vs_prism: "ahead"
+    evidence: >
+      Prism's own roadmap lists this pillar as unshipped, targeted Q1 2027. Leo has a shipped,
+      named evaluations module today.
+    source: "https://www.davinci-ed.com/the-davinci-difference/leo-faqs"
+
+  - pillar: "Exam Management (Prism roadmap Q2 2027)"
+    competitor_capability: >
+      Shipped today: faculty-authored, searchable question banks (true/false, multiple choice,
+      matching, essay, short answer); real-time student-progress monitoring dashboards during
+      exams; point-biserial item analysis and customizable feedback; a "super-immediate
+      feedback" mode that shows correct answers during the exam; electronic scratch-off forms
+      for team-based learning events.
+    depth_vs_prism: "ahead"
+    evidence: >
+      Prism's own roadmap lists Exam Management as unshipped, targeted Q2 2027. Leo has a
+      shipped exam engine with item analysis today.
+    source: "https://www.davinci-ed.com/the-davinci-difference/leo-faqs"
+
+  - pillar: "Accreditation Management (Prism roadmap Q3 2027)"
+    competitor_capability: >
+      Shipped today, with over a decade of track record: an AAMC-authorized vendor for the
+      Curriculum Inventory (CI) "since the inception of the CI project" (company history dates
+      this to 2013, under the LCMS+ name). One-click CI submission with AAMC business rules
+      built in to flag data errors pre-submission. The Insights Dashboard aggregates curriculum
+      mapping, faculty workload, and evaluation-completion status to keep programs
+      "accreditation-ready always" for LCME/COCA site visits.
+    depth_vs_prism: "ahead"
+    evidence: >
+      Prism's own roadmap lists Accreditation Management as unshipped, targeted Q3 2027 — the
+      single most load-bearing gap per Prism's internal capability map. Leo has been an
+      AAMC-authorized CI vendor since 2013, over a decade of accreditation-reporting history at
+      flagship academic medical centers.
+    source: "https://www.davinci-ed.com/resources/mapping-for-curriculum-inventory-accreditation-insight-dashboard"
+
+strengths:
+  - claim: >
+      AAMC-authorized vendor for the Curriculum Inventory since 2013 (as LCMS+), giving Leo a
+      decade-plus track record on the exact accreditation-reporting workflow Prism does not
+      ship until Q3 2027.
+    source: "https://www.davinci-ed.com/the-davinci-difference/leo-faqs"
+  - claim: >
+      Ships Surveys & Course Evaluations and Exam Management today as full, named modules —
+      two entire pillars Prism's own roadmap does not target until Q1 2027 and Q2 2027
+      respectively.
+    source: "https://www.davinci-ed.com/the-davinci-difference/standout-features"
+  - claim: >
+      Originated at Duke School of Medicine (2011) and built "in conjunction with Duke School
+      of Medicine," lending deep clinical-education domain credibility, reinforced by an
+      enterprise client list including Duke, Yale, Wake Forest, Florida Atlantic, and New York
+      Medical College.
+    source: "https://www.davinci-ed.com/resources/meet-leo"
+  - claim: >
+      Positions as a true single-platform consolidation play spanning course management,
+      curriculum mapping, assessment/evaluations, patient-encounter logs, clerkship lotteries,
+      faculty-contribution tracking, and a longitudinal "Academic Portrait" student record used
+      to help author MSPEs — reducing the number of point tools a program office must run.
+    source: "https://www.davinci-ed.com/"
+
+weaknesses:
+  - claim: >
+      No public evidence of a dedicated Compliance Management capability (immunizations,
+      background checks, certifications gating clinical-placement start) — the only public uses
+      of "compliance" refer to evaluation-completion tracking and FERPA-scoped advisor access,
+      not student credentialing.
+    source: "https://www.davinci-ed.com/the-davinci-difference/leo-faqs"
+  - claim: >
+      The company is mid-merger: DaVinci Education combined with Elentra on 2024-05-28 under
+      Achieve Partners, and Elentra's own site now actively courts "programs using DaVinci Leo"
+      to migrate onto the Elentra platform — a signal of product-continuity risk for existing
+      Leo customers from their own parent company.
+    source: "https://elentra.com/blog/from-davinci-to-elentra-how-institutions-are-strengthening-workflows"
+  - claim: >
+      No listing found on G2 or Capterra for Leo/DaVinci Education, and pricing is not public —
+      the FAQ describes only a single, undifferentiated "Enterprise license" bundling all
+      modules, with no tiers or per-module pricing disclosed — making it hard for a prospect to
+      benchmark cost against Prism without a sales call.
+    source: "https://www.davinci-ed.com/the-davinci-difference/leo-faqs"
+  - claim: >
+      Public program pages confirm DO, Medicine, Pharmacy, PA, and Dentistry as served domains,
+      but no dedicated nursing program page was found — suggesting less direct overlap with
+      Prism's current nursing/allied-health customer base than the MD/DO overlap implies.
+    source: "https://www.davinci-ed.com/"
+
+retention_anchor: >
+  Deep, decade-plus institutional data lock-in at flagship academic medical centers (Duke, Yale,
+  Wake Forest): curriculum maps, AAMC Curriculum Inventory history dating to 2013, patient
+  encounter/duty-hour logs, and longitudinal "Academic Portrait" student records used for MSPE
+  authoring are all hard to migrate. The single bundled "Enterprise license" model (per the FAQ)
+  also means a customer cannot unbundle just one module to switch away — leaving is an
+  all-or-nothing curriculum-inventory and accreditation-history migration project, which raises
+  switching cost regardless of satisfaction. Source: https://www.davinci-ed.com/the-davinci-difference/leo-faqs
+
+exxat_opportunity: >
+  The clearest wedge is timing, not features: the Elentra/DaVinci merger (announced 2024-05-28
+  under Achieve Partners) has put Leo's own future in the hands of a new parent that is now
+  publicly marketing migration paths off of Leo and onto Elentra — meaning MD/DO/Pharmacy/
+  Dentistry programs currently on Leo are being told by their own vendor that a platform switch
+  is coming one way or another. Prism can approach these accounts during that forced transition
+  window with a single, stable, purpose-built roadmap rather than asking them to bet on which
+  post-merger platform survives. Feature-wise, Prism should not lead with Surveys/Exam/
+  Accreditation Management against this specific competitor — Leo already ships all three today,
+  well ahead of Prism's Q1/Q2/Q3 2027 targets — and should instead lead with (a) Compliance
+  Management, where Leo shows no public evidence of a placement-gating credentialing module, and
+  (b) Prism's anchor-relative (N-days from placement start/mid/end) clinical-scheduling
+  architecture, which has no public Leo equivalent. Prism's own accreditation and exam/survey
+  roadmap items should be resequenced or at least message-tested against Leo's decade-long,
+  already-shipped AAMC Curriculum Inventory relationship, since "ahead-on-roadmap-date" claims
+  will not hold up against a competitor who has been AAMC-authorized since 2013.
+
+pricing_signal: >
+  Not publicly disclosed. The Leo FAQ describes a single, undifferentiated "Enterprise license"
+  covering all modules together ("all the modules are built to work together") with no
+  published tiers, per-seat, or per-module pricing. No G2 or Capterra listing was found for
+  Leo or DaVinci Education to cross-reference market pricing signals.
+  Source: https://www.davinci-ed.com/the-davinci-difference/leo-faqs
+
+last_researched: "2026-08-24"
+sources:
+  - "https://www.davinci-ed.com/"
+  - "https://www.davinci-ed.com/resources/meet-leo"
+  - "https://www.davinci-ed.com/resources/leo-a-platform-for-healthcare-education"
+  - "https://www.davinci-ed.com/programs/curriculum-management-for-medical-education"
+  - "https://www.davinci-ed.com/programs/curriculum-management-for-osteopathic-medicine"
+  - "https://www.davinci-ed.com/the-davinci-difference/standout-features"
+  - "https://www.davinci-ed.com/the-davinci-difference/leo-faqs"
+  - "https://www.davinci-ed.com/the-davinci-difference/leo-integrations"
+  - "https://www.davinci-ed.com/resources/mapping-for-curriculum-inventory-accreditation-insight-dashboard"
+  - "https://www.davinci-ed.com/resources/track-patient-encounters-more-efficiently-with-leo"
+  - "https://www.davinci-ed.com/resources/run-your-clerkship-lotteries-in-leo"
+  - "https://www.davinci-ed.com/resources/evaluations-with-leo"
+  - "https://www.davinci-ed.com/resources/leos-on-demand-evaluations"
+  - "https://www.davinci-ed.com/resources/solving-challenges-in-healthcare-education-with-leo"
+  - "https://www.davinci-ed.com/how-we-help/staff"
+  - "https://www.davinci-ed.com/about-us/our-story"
+  - "https://elentra.com/elentra-news/better-together-elentra-and-davinci-education-combine-to-drive-transformation-in-healthcare-education"
+  - "https://elentra.com/blog/from-davinci-to-elentra-how-institutions-are-strengthening-workflows"
+  - "https://www.g2.com/products/leo-1/reviews"

@@ -1,0 +1,356 @@
+# CODA (Commission on Dental Accreditation) — predoctoral dental education standards.
+# Researched from the actual published standards PDF (not a summary page).
+accreditor: "CODA (Commission on Dental Accreditation)"
+slug: "coda"
+domain: "Dentistry"
+governs: >
+  Predoctoral dental education programs leading to the D.D.S. or D.M.D. degree
+  at U.S. and Canadian dental schools (this file covers the "DEP Standards" —
+  Accreditation Standards for Dental Education Programs). CODA separately
+  accredits allied dental programs (dental hygiene, dental assisting, dental
+  therapy) and postdoctoral/advanced dental education programs (General
+  Practice Residency, AEGD, and the dental specialties) under their own
+  standards documents — see licensure_or_gme_layer below for how the
+  postdoctoral layer relates.
+standards_document:
+  title: "Accreditation Standards for Dental Education Programs"
+  version_or_year: >
+    Current version, reflecting the August 8, 2025 Commission action
+    (Standards 1-4 and 4-4 suspended indefinitely; Standard 1-3 Intent
+    Statement and Examples of Evidence revised). Copyright 2025.
+  url: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf?rev=20eabc229d4c4c24a2df5f65c5ea62c8&hash=B812B8A2FAF6D99F37703EE081B48E58"
+
+standards:
+  - element_id: "Standard 1, Element 1-2"
+    element_title: "Institutional Effectiveness — ongoing planning, assessment, improvement"
+    evidence_programs_must_produce: >
+      Evidence that planning for, assessment of, and improvement of
+      educational quality and program effectiveness is broad-based,
+      systematic, and continuous — tied to institutional goals spanning
+      institutional effectiveness, student achievement, patient care,
+      research, and service. In practice this is the backbone of the
+      self-study report CODA reviews before every site visit.
+    required_software_behavior: >
+      A system that continuously aggregates outcomes evidence (board
+      pass rates, competency attainment, patient-care QI findings, faculty
+      evaluations) against stated program goals year-round, rather than
+      requiring a one-time manual compilation before a site visit, and can
+      export that evidence in a self-study-ready format.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      This is exactly the job description of the "Accreditation Management"
+      pillar, which the capability map lists as roadmap Q3 2027 (not yet
+      shipped). "Program Quality Analytics" in the intelligence layer is
+      adjacent but its depth against this kind of continuous, multi-source
+      evidence rollup is unconfirmed.
+    gap_notes: >
+      No shipped pillar today assembles cross-pillar evidence into an
+      ongoing, exportable self-study narrative. This is the single item the
+      capability map itself calls the most load-bearing gap for the whole
+      domain-expansion thesis.
+    source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 1, p.21)"
+
+  - element_id: "Standard 2, Element 2-1"
+    element_title: "Instruction — advance course information"
+    evidence_programs_must_produce: >
+      Written information provided to students in advance of each course
+      covering goals/requirements, content, method(s) of evaluation, and how
+      grades and competency are determined.
+    required_software_behavior: >
+      A system to publish and version-control syllabus-level course
+      information — goals, evaluation methods, competency criteria — tied to
+      the curriculum map, accessible to students before each course starts.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      The "Curriculum Mapping" pillar is shipped and already structures
+      courses/activities against a curriculum; publishing syllabus content
+      tied to that structure is a direct use of an existing pillar, not new
+      construction.
+    gap_notes: ""
+    source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 2, p.24)"
+
+  - element_id: "Standard 2, Element 2-2"
+    element_title: "Individual evaluation and due process for students not meeting criteria"
+    evidence_programs_must_produce: >
+      Documentation that when a student fails to meet published didactic,
+      behavioral, and/or clinical criteria, an individual evaluation was
+      performed leading to a decision made in accordance with institutional
+      due-process policy.
+    required_software_behavior: >
+      A workflow that flags a student falling below a defined
+      didactic/clinical threshold, opens a case record, and tracks the
+      remediation/due-process decision trail with timestamps and outcomes —
+      not just the triggering data point.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Partially covered: "Compliance Management" already gates
+      placement start/continuation on student-level items, and "Early-Risk
+      Alerts" (intelligence layer) can plausibly surface the trigger — but a
+      formal due-process case-management trail distinct from a compliance
+      checklist item is not confirmed in the capability map.
+    gap_notes: >
+      Case-management/due-process documentation (vs. simple compliance
+      gating) is an open question per the capability map's Phase 2 items.
+    source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 2, p.24)"
+
+  - element_id: "Standard 2, Element 2-5"
+    element_title: "Student evaluation methods must measure defined competencies"
+    evidence_programs_must_produce: >
+      Assessment instruments (narrative evaluations, OSCEs, clinical skills
+      testing) that measure not just factual recall but skills, behaviors,
+      and attitudes, mapped to the program's defined competencies, applied
+      as an ongoing process across the curriculum.
+    required_software_behavior: >
+      Configurable, competency-linked assessment forms and rubrics (OSCE
+      checklists, clinical skills evaluations) captured at point of
+      instruction/care and rolled up per student, per competency, over time.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      "Clinical & Experiential Education" already supports Forms/Evaluations
+      as assignments attached to placements (confirmed from the internal
+      "Managing Course Activities" doc), and "Competency Tracking"
+      (intelligence layer) is the natural aggregation layer — but true
+      exam-style delivery (e.g., a proctored OSCE) overlaps with "Exam
+      Management," which is roadmap Q2 2027.
+    gap_notes: "Exam-grade assessment delivery is not yet shipped (Q2 2027 roadmap)."
+    source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 2, p.25)"
+
+  - element_id: "Standard 2, Element 2-6"
+    element_title: "Comparable instruction and assessment across all clinical sites"
+    evidence_programs_must_produce: >
+      Evidence of faculty calibration across every site where required
+      educational activity occurs — ongoing faculty training, calibration
+      training manuals, periodic monitoring for compliance, and
+      documentation of faculty participation in calibration activities.
+    required_software_behavior: >
+      Tracking of faculty calibration certification/training completion
+      per clinical site, with alerts when a site or faculty member falls out
+      of calibration, layered on top of the multi-site placement structure.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      "Clinical & Experiential Education" already models multi-site
+      placements with anchor-relative scheduling (confirmed architectural
+      fact per the capability map). Extending "Compliance Management" item
+      tracking to faculty (not just students) would deliver this, but that
+      extension is unconfirmed.
+    gap_notes: >
+      Compliance Management's item taxonomy is confirmed for students only;
+      faculty-side calibration/credential tracking is an open Phase 2
+      question per the capability map.
+    source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 2, p.25)"
+
+  - element_id: "Standard 2, Element 2-8"
+    element_title: "Curriculum management plan — ongoing review and evaluation"
+    evidence_programs_must_produce: >
+      A documented, ongoing curriculum review process with input from
+      faculty/students/administration, evaluation of every course against
+      defined competencies (including student evaluation of instruction),
+      removal of outdated content, and incorporation of emerging
+      didactic/clinical technologies.
+    required_software_behavior: >
+      A versioned course-to-competency crosswalk that supports ongoing
+      review cycles, ingests student evaluation-of-instruction data, and
+      surfaces gaps or redundancies across the curriculum map.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      This is squarely the shipped "Curriculum Mapping" pillar's job —
+      mapping courses/activities to a curriculum structure is exactly what
+      this element requires evidence of maintaining.
+    gap_notes: ""
+    source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 2, p.24-25)"
+
+  - element_id: "Standard 2, Element 2-9"
+    element_title: "Adequate patient experiences to achieve competency"
+    evidence_programs_must_produce: >
+      Evidence that every student has access to sufficient comprehensive
+      patient-care experiences to achieve every stated competency within a
+      reasonable time.
+    required_software_behavior: >
+      Real-time tracking of clinical patient-encounter volume and breadth
+      per student, mapped against required competencies, with pacing alerts
+      when a student is falling behind the volume needed to graduate on
+      schedule.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      This is the strongest fit in the entire standards set: it is the core
+      job of the shipped "Clinical & Experiential Education" placement engine
+      (assignment scheduling, forms/evaluations tied to placements), combined
+      with "Competency Tracking" from the intelligence layer for the
+      per-competency rollup.
+    gap_notes: ""
+    source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 2, p.25)"
+
+  - element_id: "Standard 2, Element 2-24"
+    element_title: "Minimum competencies within the scope of general dentistry"
+    evidence_programs_must_produce: >
+      Documentation that every graduate is competent across a defined list
+      of ~15 clinical categories (a–o): patient assessment/diagnosis/
+      treatment planning, screening for head-and-neck cancer, referral
+      judgment, caries/disease prevention, local anesthesia and pain/anxiety
+      control, restorations, dental lab coordination, fixed/removable/
+      implant prosthodontics, periodontal therapy, pulpal therapy, oral
+      mucosal/TMJ/osseous disorders, hard/soft tissue surgery, dental
+      emergencies, malocclusion/space management, and outcomes evaluation —
+      each typically evidenced by procedure-level logs.
+    required_software_behavior: >
+      Granular clinical-procedure logging (by procedure category/tooth/
+      CDT-style code) tied to a competency rubric for each of the ~15
+      categories, rolling up into a per-student graduation-readiness
+      dashboard across all categories.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      The confirmed "Clinical & Experiential Education" primitives (anchor-
+      relative scheduling, forms/evaluations as assignments) do not confirm
+      CDT-code-level procedure logging or per-category competency roll-ups.
+      This granularity is closer to what dedicated dental clinic-management
+      systems provide and is not evidenced anywhere in the capability map.
+    gap_notes: >
+      No confirmed dental-procedure-code-level logging or per-category
+      competency taxonomy in Prism today. Likely the single largest
+      dentistry-specific build if Prism enters this domain — a dental
+      "procedure log" data model (CDT-coded, tooth/surface-level) feeding
+      Competency Tracking.
+    source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 2, p.29-30)"
+
+  - element_id: "Standard 4, Element 4-6"
+    element_title: "Written agreements for sites not owned by the sponsoring institution"
+    evidence_programs_must_produce: >
+      A written agreement clearly defining roles and responsibilities of
+      all parties for any site not owned by the institution where required
+      educational activity occurs (e.g., community clinics, off-campus
+      rotation sites).
+    required_software_behavior: >
+      A contract/affiliation-agreement repository linked to each clinical
+      site record, with expiration and renewal tracking so an agreement
+      cannot lapse while students are actively placed there.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      "Compliance Management" already tracks gating items that block
+      placement start/continuation; extending its item taxonomy to
+      site-level affiliation agreements (rather than only student-level
+      items like immunizations) is a configuration extension of an existing
+      pillar, not new construction.
+    gap_notes: "Site-level (vs. student-level) compliance item tracking is unconfirmed."
+    source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 4, p.34)"
+
+  - element_id: "Standard 5, Element 5-3"
+    element_title: "Continuous quality improvement for the patient care program"
+    evidence_programs_must_produce: >
+      A formal CQI system for patient care showing: written, measurable
+      standards of care; ongoing review/analysis of compliance with those
+      standards; ongoing review of a representative sample of patients and
+      records for appropriateness/necessity/quality of care; root-cause
+      analysis of treatment deficiencies; and implemented corrective
+      measures.
+    required_software_behavior: >
+      A chart-audit/sampling workflow over patient-care records with
+      deficiency coding, trend analytics across standards of care, and a
+      closed-loop corrective-action tracker linking findings back to
+      curriculum or supervision changes.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      This is quality-improvement analytics over patient-care outcomes —
+      closest to "Program Quality Analytics" (intelligence layer, whose
+      depth against structured chart-audit data is unconfirmed) and overlaps
+      with the roadmap "Accreditation Management" pillar (Q3 2027). No
+      shipped pillar confirms a chart-audit/corrective-action workflow.
+    gap_notes: >
+      No confirmed patient-record sampling, deficiency-coding, or
+      corrective-action-tracking capability exists today.
+    source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 5, p.37)"
+
+  - element_id: "Standard 3, Element 3-4"
+    element_title: "Faculty evaluation process"
+    evidence_programs_must_produce: >
+      A defined evaluation process ensuring objective measurement of each
+      faculty member's performance in teaching, patient care, scholarship,
+      and service.
+    required_software_behavior: >
+      Structured, recurring faculty-evaluation forms (teaching, clinical
+      supervision, scholarship, service) captured on a schedule, with
+      historical trend views per faculty member available for program
+      review and the self-study.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Not a named pillar in the capability map, but the same
+      Forms/Evaluations mechanism confirmed for student assignments under
+      "Clinical & Experiential Education" is architecturally reusable for
+      recurring faculty evaluations; would need a faculty-facing evaluation
+      template, not a new module.
+    gap_notes: "Faculty-facing (vs. student-facing) evaluation workflow is unconfirmed."
+    source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 3, p.32)"
+
+licensure_or_gme_layer:
+  - body: "JCNDE (Joint Commission on National Dental Examinations)"
+    what_it_governs: >
+      An independent agency of the American Dental Association that
+      develops and administers the national dental licensure examinations:
+      the INBDE (Integrated National Board Dental Examination — the written
+      cognitive exam accepted by all U.S. states/territories as fulfilling
+      all or part of the written licensure requirement, replacing the old
+      NBDE Part I/II) and the DLOSCE (Dental Licensure Objective Structured
+      Clinical Examination, a standardized clinical-competency exam some
+      states accept in place of a traditional manikin/patient-based clinical
+      licensure exam).
+    relevance_to_product: >
+      Program-level INBDE/DLOSCE pass rates are a standard outcomes metric
+      programs report in their CODA self-study (feeds Standard 1-2's
+      continuous-assessment requirement). More directly, the DLOSCE is an
+      OSCE-format, rubric-scored clinical competency exam — the same
+      assessment shape as Standard 2-5's evidence requirement — so any
+      OSCE/competency-assessment tooling Prism builds for Standard 2-5 is
+      structurally the same tooling that could help a program prepare
+      students for DLOSCE-style assessment.
+    source: "https://jcnde.ada.org/"
+
+  - body: "State Dental Boards / regional clinical licensure examinations (e.g., ADEX)"
+    what_it_governs: >
+      Individual state dental boards grant the license to practice; many
+      still require (or accept) a regional clinical licensure examination
+      (administered by consortia such as ADEX) in addition to or instead of
+      DLOSCE, typically involving live-patient or manikin-based clinical
+      procedures.
+    relevance_to_product: >
+      State-by-state licensure-exam pass rates are another outcomes measure
+      programs must track and report as part of ongoing self-assessment
+      (Standard 1-2) — a multi-jurisdiction outcomes rollup is a natural
+      extension of whatever the Accreditation Management pillar eventually
+      aggregates.
+    source: "https://www.ada.org/en/education-and-careers/licensure"
+
+  - body: "CODA — Advanced/Postdoctoral Dental Education accreditation (GPR, AEGD, specialties)"
+    what_it_governs: >
+      CODA is also the accreditor of postdoctoral dental training — General
+      Practice Residency (GPR, hospital-based with medical-management
+      emphasis), Advanced Education in General Dentistry (AEGD, clinical-
+      dentistry emphasis), and the recognized dental specialties — under
+      their own separate standards documents. This is dentistry's structural
+      analog to ACGME residency accreditation for MD/DO, except the same
+      single body (CODA) accredits both the predoctoral degree and the
+      postdoctoral residency.
+    relevance_to_product: >
+      Because one accreditor spans both DDS/DMD school and postdoctoral
+      residency, the same Clinical & Experiential Education rotation engine
+      built for predoctoral clinical placements is architecturally the
+      right foundation to extend into postdoctoral residency rotation
+      tracking later — a single-accreditor, two-stage continuum unlike the
+      MD/DO split between LCME/COCA and the separate ACGME.
+    source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/general_practice_residency_standards.pdf"
+
+  - body: "ADA (American Dental Association) — CDT code set"
+    what_it_governs: >
+      The ADA is CODA's parent organization and separately maintains
+      Current Dental Terminology (CDT) — the standard code set used
+      industry-wide to document dental procedures (the taxonomy any
+      procedure-level clinical log, insurance claim, or chart audit uses).
+    relevance_to_product: >
+      Standard 2-24's per-category competency evidence and Standard 5-3's
+      chart-audit evidence are both naturally expressed in CDT codes. Any
+      dental-specific procedure-logging capability Prism builds (the
+      Standard 2-24 gap noted above) should speak CDT natively rather than
+      inventing a parallel taxonomy, since programs' existing clinic
+      systems, insurance workflows, and CODA site-visit reviewers all
+      already think in CDT.
+    source: "https://www.ada.org/publications/cdt"
+
+last_researched: "2026-08-24"

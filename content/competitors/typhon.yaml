@@ -1,0 +1,286 @@
+# Researched 2026-08-26. Every non-trivial factual claim carries a source URL found via
+# public web search/fetch. Anything not independently verifiable is marked accordingly.
+# Identified as a competitor via an internal Exxat competitive-intelligence spreadsheet
+# (not previously researched in this repo).
+competitor: "Typhon Group"
+slug: "typhon"
+domains_served: ["Nursing", "Physician Assistant"]  # strongest and most explicitly documented; also serves nurse anesthesia (dedicated NAST product) and a broad "any health program" tier (AHST) confirmed used by audiology, PT/PTA, and OT/OTA programs — see feature_teardown and sources
+category: >
+  Clinical/practicum student-tracking system — a narrower, logging-first point tool
+  (patient encounters, hours, competencies, evaluations) rather than a full
+  experiential-learning-management suite. Five branded products share eight core
+  modules; deepest incumbency is in nursing (pre-licensure through DNP) and advanced
+  practice/NP programs.
+company:
+  founded: >
+    1995, per Typhon Group's own copyright notice ("© 1995-2026 Typhon Group, LLC")
+    and corroborated by third-party business-directory search results (Dun &
+    Bradstreet / RocketReach listings). No dedicated "our history" page with a
+    founding narrative was found on typhongroup.com.
+    Source: https://typhongroup.com/why-typhon/
+  hq: >
+    Metairie, Louisiana — address given in third-party business-directory search
+    results as 1750 Clearview Pkwy #201, Metairie, LA 70001. Direct fetch of the
+    Dun & Bradstreet and RocketReach profile pages returned HTTP 403 (blocked), so
+    this address is sourced from search-result snippets of those pages, not a
+    directly verified page load — treat the exact suite number as provisional.
+    Source: search snippet of https://www.dnb.com/business-directory/company-profiles.typhon_group_llc.b9d4871128094f2fb7a9919a83a42777.html
+  ownership: >
+    Not publicly disclosed / unable to verify. No acquisition, funding, or private-
+    equity news was found (searched Crunchbase, PitchBook, and general news search;
+    Crunchbase and PitchBook profile pages returned HTTP 403 on direct fetch).
+    Third-party business-directory listings (Dun & Bradstreet, RocketReach,
+    Datanyze) consistently show a very small headcount (1-10 employees), consistent
+    with a small, privately held, likely founder- or family-owned company rather
+    than a VC/PE-backed one — but this is an inference from headcount data, not a
+    confirmed ownership structure.
+    Source: search snippets of https://www.datanyze.com/companies/typhon-group/1154680826 and https://rocketreach.co/typhon-group-llc-profile_b452f5b6fc8ce775
+
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: >
+      Core product strength across all five Typhon products: single-page patient-
+      encounter logging (demographics, ICD/CPT codes, skills, medications, clinical
+      notes), cumulative case logs and procedure totals, shift/time logging, and
+      scheduling with conflict-checking and automated student placement. No
+      algorithmic placement-matching engine (comparable to CORE's SmartMatch or
+      Prism's Placement Assist) is documented publicly — scheduling is described as
+      "conflict-checking," not constraint-solving across weighted specialty demand.
+    depth_vs_prism: "behind"
+    evidence: >
+      A third-party clinical-placement-software comparison guide explicitly frames
+      Typhon as "tracking-first," stating: "Building rotation schedules across
+      competing schools and sites, coordinating with hospital placement offices, and
+      automating credential compliance workflows are not what it was designed
+      around." This lines up with Typhon's own marketing, which describes
+      scheduling only as "conflict-checking" and automated placement, with no
+      mention of a weighted matching algorithm — a materially shallower engine than
+      Prism's confirmed Placement Assist (staged batches, per-specialty difficulty
+      weighting, distance scoring, overlap guards).
+    source: "https://rotationmanager.com/best-clinical-placement-software-2026/"
+  - pillar: "Compliance Management"
+    competitor_capability: >
+      Stores and tracks date-sensitive compliance documents (licenses,
+      immunizations, administrative comments) natively, or outsources background
+      checks, drug screenings, and immunization monitoring to a named third-party
+      partner, DISA Healthcare Technology (formerly Complio & CastleBranch). No
+      public documentation of a multi-entity placement-blocking gate (student +
+      site + contract + preceptor license, the way Prism's Placement Clearance
+      works) or of automated contract-expiration alerting.
+    depth_vs_prism: "behind"
+    evidence: >
+      "Store and track date-sensitive compliance documents... or use their partners
+      at DISA Healthcare Technology... to outsource and integrate background
+      checks, drug screenings, and immunization monitoring." This is real
+      compliance functionality but reads as document storage plus an outsourced
+      vendor handoff, not a native multi-entity clearance-gating system.
+    source: "https://www.typhongroup.com/nursing/"
+  - pillar: "Curriculum Mapping"
+    competitor_capability: >
+      One of eight core modules shared across all Typhon products: "organize
+      program objectives aligned with accreditation requirements," import
+      courses/rosters, pre-loaded accreditation standards linkable to course
+      objectives, and reports on target achievement. Real, shipped functionality,
+      but described in a single short feature list — no AI-assisted mapping, no
+      named per-discipline attribute taxonomy, and no accreditor-specific export
+      formats were found in public materials.
+    depth_vs_prism: "behind"
+    evidence: >
+      "Curriculum Mapping: Organize program objectives aligned with accreditation
+      requirements... Pre-loaded accreditation standards linkable to course
+      objectives... Generates reports on target achievement." No named accreditor
+      (CCNE, ACEN, ARC-PA, CAPTE) appears attached to this module in any Typhon
+      marketing page found.
+    source: "https://typhongroup.com/advanced-practice/"
+  - pillar: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    competitor_capability: >
+      Ships today as one of the eight shared core modules: "Evaluations & Surveys"
+      — custom survey/evaluation creation (course, site, preceptor, student-
+      focused), administration to internal users and external participants,
+      scheduled future invitations, and export to Word/PDF/Excel. Real, in-
+      production functionality, unlike Prism's still-unshipped Q1 2027 roadmap
+      item, though no named validated instruments (comparable to CORE's or Prism's
+      CIET/PTSE/FWPE-style standard forms) were found publicly documented for
+      Typhon.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "Create custom surveys and evaluations (course, site, preceptor, student-
+      focused). Administer to internal users and external participants. Schedule
+      future survey invitations. Export results to Word, PDF, or Excel formats."
+      Ships today across all five products, per PAST and NPST product pages.
+    source: "https://typhongroup.com/physician-assistant/"
+  - pillar: "Exam Management (Prism roadmap Q2 2027)"
+    competitor_capability: "not publicly disclosed / unable to verify"
+    depth_vs_prism: "unknown"
+    evidence: >
+      No Typhon marketing page, product list, or module description mentions exam
+      administration, secure/timed/proctored testing, or OSCE delivery. Searched
+      typhongroup.com's homepage, "Why Typhon," Products, Nursing, Advanced
+      Practice, and Physician Assistant pages directly (including a targeted
+      re-fetch asking specifically about exam/testing/OSCE language) — none found
+      it. Typhon's "evaluation" language consistently refers to preceptor/site/
+      student performance evaluations and competency assessment, the same pattern
+      documented for CORE ELMS. This may be a genuine capability gap or simply
+      undocumented publicly; flagged as unable to verify rather than assumed
+      absent.
+    source: "unable to verify — searched typhongroup.com product pages (Nursing, Advanced Practice, Physician Assistant, All-Health, Products, Why Typhon) and web search for Typhon + exam/testing/OSCE; no exam-management module found"
+  - pillar: "Accreditation Management (Prism roadmap Q3 2027)"
+    competitor_capability: >
+      The Curriculum Mapping module claims "accreditation standards" import and
+      linking, and the Competency Tracking module states it "supports accreditation
+      requirements with performance data and approval workflows." Both claims are
+      generic — no marketing page found names a specific accreditor (CCNE, ACEN,
+      ARC-PA, CAPTE, ACOTE) the way CORE's pharmacy page names ACPE by name.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "Support accreditation requirements with performance data and approval
+      workflows" (Competency Tracking, NSST page) and "Organize program objectives
+      aligned with accreditation requirements... Pre-loaded accreditation
+      standards" (Curriculum Mapping, NPST/PAST pages). Ships today, ahead of
+      Prism's unshipped Q3 2027 pillar, but the complete absence of any named-
+      accreditor claim across every product page checked suggests this is a
+      thinner, more generic capability than CORE's discipline-specific
+      accreditation positioning.
+    source: "https://www.typhongroup.com/nursing/"
+
+strengths:
+  - claim: >
+      Long-tenured incumbent with real scale: "30+ years of excellence" (in
+      business since 1995), over 1,100 health education programs nationwide, and
+      more than 7 million evaluations completed to date.
+    source: "https://typhongroup.com/"
+  - claim: >
+      Budget-friendly positioning relative to enterprise platforms — a 2022
+      accreditation-conference presentation cites pricing around $350/program plus
+      $100/student, and multiple university pages independently confirm a
+      one-time ~$100 per-student fee model, well below enterprise ELMS pricing.
+    source: "https://rotationmanager.com/best-clinical-placement-software-2026/"
+  - claim: >
+      Deep incumbency specifically in nursing and advanced-practice/NP programs —
+      named as the required clinical-tracking system in multiple nursing school
+      catalogs and handbooks (Rutgers, University of New Mexico, Bellin College,
+      Ohio State DNP program), independent of Typhon's own marketing.
+    source: "https://catalog.bellincollege.edu/typhon-nurse-practitioner-student-tracking-system"
+  - claim: >
+      Broad discipline reach through five branded products (Nursing, Advanced
+      Practice/NP, Physician Assistant, Nurse Anesthesia) plus an "All Health"
+      product confirmed in use by audiology, PT/PTA, and OT/OTA programs at
+      individual universities — one platform spanning many allied-health programs.
+    source: "https://sphsc.washington.edu/sites/default/files/clinical_educators/audiology/Introduction%20to%20Typhon%20Systems_forSupervisors.pdf"
+  - claim: >
+      Positive, specific customer testimonials citing pricing value and customer
+      service responsiveness, e.g. "The Typhon platform is fantastic, and the
+      pricing is unbeatable for the quality we receive" and "The customer service
+      team at Typhon is top-notch."
+    source: "https://typhongroup.com/"
+
+weaknesses:
+  - claim: >
+      No presence found on any major software review site (Capterra, G2, Software
+      Advice) — searched directly and via site-restricted queries with no results.
+      This makes independent, quantified customer-satisfaction comparison
+      impossible, unlike CORE ELMS's public 4.7/5 Capterra rating.
+    source: "unable to verify — searched capterra.com, g2.com, and softwareadvice.com for a Typhon Group listing; none found"
+  - claim: >
+      Described by a third-party comparison guide as "tracking-first," explicitly
+      lacking robust cross-school rotation scheduling, hospital placement-office
+      coordination, and automated credential-compliance workflows — the exact areas
+      Prism's Placement Assist and Placement Clearance are built around.
+    source: "https://rotationmanager.com/best-clinical-placement-software-2026/"
+  - claim: >
+      No public evidence of a formal exam/secure-testing management capability —
+      same gap independently documented for CORE ELMS — despite Prism naming Exam
+      Management as a dedicated (if still roadmap) pillar.
+    source: "unable to verify — no exam-management module found on typhongroup.com across all product pages checked"
+  - claim: >
+      No accreditor named by name anywhere in Typhon's public marketing (no CCNE,
+      ACEN, ARC-PA, CAPTE, or ACOTE claim found), despite nursing being its deepest
+      discipline — a materially weaker accreditation-positioning story than CORE's
+      explicit ACPE claim for pharmacy.
+    source: "https://www.typhongroup.com/nursing/"
+  - claim: >
+      Very small company footprint — third-party business directories consistently
+      show only 1-10 employees — with no public leadership names, ownership
+      structure, or headquarters details disclosed on typhongroup.com itself.
+    source: "search snippet of https://www.datanyze.com/companies/typhon-group/1154680826"
+  - claim: >
+      CORE Higher Education Group's own sales materials state "Over 70% of our
+      clients switched to CORE after using EValue, PharmAcademic, Typhon, or
+      Exxat" — direct third-party evidence of customer attrition from Typhon
+      toward richer competitor platforms.
+    source: "https://corehighered.com/hubfs/CORE%20UME%20PDFs/Copy%20of%20CORE%20vs%20Competition%20Overview.pdf"
+  - claim: >
+      Pricing remains only loosely public — the ~$350/program + $100/student
+      figure traces to a 2022 accreditation-conference presentation, not a current
+      Typhon-published rate; typhongroup.com itself has no visible pricing page.
+    source: "https://rotationmanager.com/best-clinical-placement-software-2026/"
+
+retention_anchor: >
+  Retention looks driven mostly by inertia and price rather than deep data lock-in:
+  nursing and NP programs frequently name Typhon as their required tracking system
+  in student handbooks and course catalogs, so switching means re-training an entire
+  cohort pipeline plus re-negotiating the one-time per-student fee model students
+  already pay directly. Typhon also extends student access for 5 years
+  post-graduation as a portfolio/credentialing tool, giving alumni a reason the
+  institution keeps paying attention to the platform even after a cohort graduates.
+  But because the platform itself is comparatively shallow (logging-first, no
+  algorithmic matching, no named-accreditor claims), the lock-in is weaker than
+  CORE's 30+-module system or Prism's deep placement/compliance data model — CORE's
+  own sales materials citing 70% of its new clients as ex-Typhon customers is direct
+  evidence that this inertia-based retention is beatable once a program needs more
+  than tracking.
+
+exxat_opportunity: >
+  Typhon's own third-party description as "tracking-first" is close to a direct
+  admission of the gap Prism should press: Typhon has no documented algorithmic
+  placement-matching engine, no multi-entity compliance-clearance gate, and no
+  named-accreditor curriculum-mapping story — three areas where Prism's Placement
+  Assist, Placement Clearance, and AACN Essentials pipeline (confirmed shipped, not
+  roadmap) are materially deeper today. Because Typhon's deepest footprint is
+  nursing and NP/APRN programs, this is a direct opening for Prism's nursing-
+  specific depth (CBE transition tooling, Essentials pre-population) to win
+  programs that have simply outgrown a logging tool. CORE's own materials already
+  prove this migration pattern is real (70% of its new clients came from EValue,
+  PharmAcademic, Typhon, or Exxat), so Prism can position the same displacement
+  motion rather than invent one. The one place Typhon is not an easy target is
+  price — its ~$100/student, ~$350/program model is far cheaper than an enterprise
+  ELMS, so the pitch to a Typhon program has to sell capability upgrade (placement
+  automation, compliance gating, accreditation-readiness reporting) rather than
+  compete on cost. Exam Management is a clean white-space claim exactly as it is
+  for CORE: no public evidence either competitor has it.
+
+pricing_signal: >
+  Not fully public. A 2022 accreditation-conference presentation (cited by a
+  third-party comparison site) puts pricing around $350/program plus $100/student,
+  explicitly flagged there as dated and needing vendor confirmation. Independently,
+  several university financial/handbook pages (Sonoma State, SUNY Downstate, APUS)
+  confirm a one-time ~$100 per-student fee paid directly to Typhon, consistent
+  across institutions and years (2021-2025 sources), suggesting the per-student
+  component is a stable, standardized rate even though the per-program base fee is
+  not independently confirmed current. No pricing page exists on typhongroup.com.
+
+last_researched: "2026-08-26"
+
+sources:
+  - "https://typhongroup.com/"
+  - "https://typhongroup.com/why-typhon/"
+  - "https://www.typhongroup.com/about-us/"
+  - "https://typhongroup.com/products/"
+  - "https://www.typhongroup.com/nursing/"
+  - "https://typhongroup.com/advanced-practice/"
+  - "https://typhongroup.com/physician-assistant/"
+  - "https://typhongroup.com/anesthesia/"
+  - "https://www.typhongroup.com/all-health/"
+  - "https://sphsc.washington.edu/sites/default/files/clinical_educators/audiology/Introduction%20to%20Typhon%20Systems_forSupervisors.pdf"
+  - "https://catalog.bellincollege.edu/typhon-nurse-practitioner-student-tracking-system"
+  - "https://nursing.rutgers.edu/typhon/"
+  - "https://hsc.unm.edu/nursing/practice/support/typhon.html"
+  - "https://u.osu.edu/dnpnursinghandbook2024/typhon/"
+  - "https://apus.libanswers.com/coursematerials/faq/336643"
+  - "https://nursing.sonoma.edu/what-does-program-cost"
+  - "https://www.downstate.edu/education-training/college-of-nursing/_documents/fees/2021-22-graduate-program-fees.pdf"
+  - "https://rotationmanager.com/best-clinical-placement-software-2026/"
+  - "https://corehighered.com/hubfs/CORE%20UME%20PDFs/Copy%20of%20CORE%20vs%20Competition%20Overview.pdf"
+  - "search snippet of https://www.dnb.com/business-directory/company-profiles.typhon_group_llc.b9d4871128094f2fb7a9919a83a42777.html"
+  - "search snippet of https://www.datanyze.com/companies/typhon-group/1154680826"
+  - "search snippet of https://rocketreach.co/typhon-group-llc-profile_b452f5b6fc8ce775"

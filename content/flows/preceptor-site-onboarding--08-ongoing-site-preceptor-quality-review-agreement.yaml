@@ -1,0 +1,292 @@
+# Element-level ground truth underneath preceptor-site-onboarding.yaml, stage 8
+# ("Ongoing site/preceptor quality review, agreement renewal & offboarding"). See
+# _TEMPLATE.yaml for the contract this file follows: every accreditation_citation
+# and competitor_equivalent below traces to a real source in confirmed_by, never
+# back to the journey's own synthesis. Two things are bundled in this stage's
+# title and are tracked separately below because their Prism-fit differs sharply:
+# (1) ongoing site/preceptor QUALITY REVIEW and AGREEMENT RENEWAL, where the
+# per-site/per-preceptor data-capture and contract-currency machinery is real and
+# shipped, and (2) CROSS-SITE COMPARABILITY analytics and OFFBOARDING'S retention
+# guarantee, where the shipped machinery stops short of what COCA 6.11, ACPE
+# 7.3.c, LCME 8.7, and CODA 5-3/1-2 actually ask for.
+#
+# SCHEMA v2 (2026-08-24): analysis fields (accreditation_citation /
+# competitor_equivalent / gap_severity / gap_note) now live on each ELEMENT rather
+# than on the step. Where this file's original research did not distinguish between
+# sibling elements, the same verdict is stated identically on each rather than
+# inventing artificial precision.
+
+flow_name: "Site/Preceptor Quality Review, Contract Renewal & Offboarding"
+maps_to_journey: "preceptor-site-onboarding.yaml, stage 8"
+persona: >
+  Primary: Clinical/Experiential Education Coordinator (../personas/role-clinical-coordinator.yaml),
+  who builds and logs site assessments, monitors contract-expiration alerts, and
+  flips a departing site/preceptor to Inactive. Secondary: Compliance/Accreditation
+  Liaison (../personas/role-compliance-accreditation-liaison.yaml), who is the one
+  actually on the hook for COCA 6.11/ACPE 7.3.c/LCME 8.7 comparability evidence and
+  CODA 5-3 CQI evidence that this stage's shipped screens do not produce. Tertiary:
+  Institutional Administrator (../personas/role-program-admin.yaml, institutional
+  tier), who owns cross-program contract categories and routing checklists reused
+  at renewal.
+
+steps:
+  - screen: "Site Assessment Form Setup"
+    navigation_path: "Sites > Setup > Form Setup"
+    elements:
+      - element: "Create New Form button; Form Name; 11 question types (single/multiple choice, short/long answer, title, dropdown, date picker, toggle, attestation, e-signature, divider, text editor)"
+        type: "self-service form builder"
+        data_shown: "Per-question Help Information, Comments toggle, Make This Mandatory toggle, Character Limit, Enable E-sign"
+        gates_on: []
+        accreditation_citation: "Data-capture layer only for COCA Standard 6, Element 6.11; ACPE Standard 7, Key Element 7.3.c; LCME Standard 8, Element 8.7 — this builder is where a program defines what gets asked at each site visit, but none of the three standards' evidence requirement is about the form existing; it is about a recurring statistical comparison ACROSS sites, which nothing in this builder produces (see the Comprehensive Assessment Report step below)."
+        competitor_equivalent: "Not comparable at element level — MedHub/E*Value's and New Innovations' public marketing pages name 'Annual Program Evaluation forms' and 'APE' as customizable, but neither publishes the underlying form-builder's question-type palette, so a question-type-for-question-type comparison would be guessing."
+        gap_severity: none
+        gap_note: ""
+      - element: "Status column (Draft / Published) and Action menu (Clone, Publish, Edit, Delete)"
+        type: "read-only status + row actions"
+        data_shown: "Once Published a form cannot be unpublished; Exxat-standard forms cannot be edited/deleted; custom forms can only be deleted with zero responses"
+        gates_on: ["which form template is available under Assessments > +Add Assessment for a given Site/Location"]
+        accreditation_citation: "Data-capture layer only for COCA Standard 6, Element 6.11; ACPE Standard 7, Key Element 7.3.c; LCME Standard 8, Element 8.7 — the Draft/Published state model is what makes a given instrument the one actually in use for a site visit, but instrument availability is not the evidence any of the three standards asks for."
+        competitor_equivalent: "Not comparable at element level — neither MedHub/E*Value nor New Innovations publishes a draft/publish state model or row-action set for their evaluation forms the way Prism's help center does."
+        gap_severity: none
+        gap_note: ""
+    action: >
+      Coordinator builds (or clones) the accreditation-facing assessment instrument
+      itself — e.g. the PA-discipline pattern of a named "Initial Site Visit" form
+      and a named "Ongoing Site Visit" form — before any actual site visit is logged.
+    confirmed_by: "Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Configuring custom site assessment form in Exxat Prism-.md; Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md (\"Creating Custom Site Assessment forms\" section); Playbooks/Physician Assistant (PA) Playbook.md line 160 (\"Initial Site Visit\" and \"Ongoing Site Visit\" custom forms)"
+
+  - screen: "Add Site/Location Assessment drawer"
+    navigation_path: "Sites > [select Site or Location] > Assessments > + Add Assessment"
+    elements:
+      - element: "3-step drawer: Basic Details (visit info, placement details, file upload) -> Form Details (renders the published assessment form) -> Summary & Follow-Up"
+        type: "multi-step form, save-in-progress"
+        data_shown: "Summary & Follow-Up captures a final assessment plus a follow-up flag"
+        gates_on: []
+        accreditation_citation: "ACPE 6th ed. Standard B3.02.a-c, per Playbooks/Physician Assistant (PA) Playbook.md — a per-visit qualitative evaluation of whether a site offers the facilities/patient population/supervision an SCPE requires; this is a genuinely confirmed accreditor-mapped use of this exact screen (not one of this journey's four target accreditors, but the closest element-level precedent for what COCA/ACPE/LCME's own ongoing-site-review expectations would look like inside Prism)."
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in ../competitors/ documents a multi-step site-visit logging drawer at this granularity."
+        gap_severity: cosmetic
+        gap_note: "Playbooks/Occupational Therapy (OT) Playbook.md line 287 records a real field-usability limitation: the site-visit form 'cannot be logged offline,' so a coordinator without connectivity at a remote site takes paper notes and re-enters them later, duplicating effort. Cosmetic/workflow friction, not a compliance gap — the data still lands in the same place."
+    action: >
+      Coordinator logs a completed site visit against one specific Site or
+      Location, filling the published assessment form and flagging whether the
+      visit requires follow-up.
+    confirmed_by: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md (\"Adding assessments for Sites\" / \"Adding assessments for Location\" sections)"
+
+  - screen: "Comprehensive (Site/Location) Assessment Report"
+    navigation_path: "Sites > Reports > Comprehensive Assessment Report (Site and Locations Report category); also Location Reports > Assessment Details and Location Assessment Status"
+    elements:
+      - element: "Rolled-up assessment responses across all sites/locations, with last-assessment-date column, export, filter, and edit-columns"
+        type: "cross-entity read-only report"
+        data_shown: "Per Playbooks/Occupational Therapy (OT) Playbook.md line 577, an OT-configured version of this report surfaces Yes/No rollup columns per Site/Location: Preceptor Is Qualified, Preceptor Holds a Valid [License], Preceptor Holds Valid [Certification], Preceptor Is Oriented, Preceptor Is Aware [of program expectations]"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.11 [rated 'Gap' in ../accreditation/coca.yaml: 'no shipped pillar does outcome analytics']; ACPE Standard 7, Key Element 7.3.c [rated 'Transfer' on the underlying forms but 'Cross-site consistency/drift analytics is not confirmed as an existing report' per ../accreditation/acpe.yaml]; LCME Standard 8, Element 8.7 [rated 'Configure' — 'a purpose-built cross-site comparability report is not confirmed to exist out of the box' per ../accreditation/lcme.yaml]. This report confirms exactly what those three ratings describe at the element level: it is a per-site/per-location rollup with a Yes/No compliance flavor (is the preceptor qualified/licensed/oriented), not the variance/effect-size statistical comparison across core/required sites that COCA 6.11 explicitly asks for, and there is no filter or view in this report that groups by rotation/course to compare Site A's outcomes against Site B's."
+        competitor_equivalent: "MedHub/E*Value's 'Accreditation Automation' page (https://www.medhub.com/accreditation-automation/) advertises 'benchmarking against national/institutional trends' and program scorecards, which is language for the exact capability missing here, but the page does not expose report columns, filters, or drill-down structure — not comparable at element level, only at the marketing-claim level already captured in ../competitors/e-value.yaml."
+        gap_severity: gap
+        gap_note: "This is the report a coordinator would actually open when asked 'are all our sites comparable,' and it cannot answer that question today."
+    action: >
+      Coordinator or Liaison reviews assessment history per site to spot
+      individual sites that look weak — a qualitative, one-site-at-a-time read,
+      not a comparison across sites.
+    confirmed_by: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/View Site- Location- and Personnel Reports.md; Playbooks/Occupational Therapy (OT) Playbook.md line 577"
+
+  - screen: "No screen exists — Exam Management and Accreditation Management pillars (roadmap, unshipped)"
+    navigation_path: "N/A — targeted Q2 2027 (Exam Management) and Q3 2027 (Accreditation Management) per the product roadmap; no current navigation path"
+    elements:
+      - element: "N/A"
+        type: "N/A"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.11 [Gap]; ACPE Standard 7, Key Element 7.3.c [gap layer on top of Transfer-rated forms]; LCME Standard 8, Element 8.7 [Configure ceiling — Curriculum Mapping can tag objectives/instruments per site, but the comparison report itself is unbuilt]"
+        competitor_equivalent: "MedHub/E*Value ships this class of capability today as GME/ACGME-specific tooling (../competitors/e-value.yaml calls it 'the single biggest publicly-verifiable gap found in this research' for Prism); New Innovations' CLER Visit Management and APE trend/citation tracking is the same shape, also ACGME-specific (../competitors/new-innovations.yaml)."
+        gap_severity: gap
+        gap_note: "Restates the journey's existing Gap rating with the specific pillar names and target dates that make it traceable rather than a general assertion."
+    action: >
+      The statistical cross-site comparison itself — the actual required_software_behavior
+      for COCA 6.11 ('variance/effect-size by site... flags sites falling outside the
+      comparable-outcomes band') — has no home in any shipped pillar.
+    confirmed_by: "../prism/capability-map.yaml lines 702-711 (Exam Management: status roadmap, target Q2 2027; Accreditation Management: status roadmap, target Q3 2027)"
+
+  - screen: "Contracts tab — renewal via Add Contract"
+    navigation_path: "Sites > [select Site] > Contracts (ribbon) > + icon"
+    elements:
+      - element: "Contract name, start date, expiration date, contract template, status (mandatory); Active/Inactive toggle; Contract Generation tab (template-based document generator)"
+        type: "input fields + document generator"
+        data_shown: "A brand-new Contract record with its own dates; there is no 'Renew' action that links this record to the expiring one it replaces or carries its history forward"
+        gates_on: ["Contract Status on the Placement Clearance Dashboard, next step"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.5.b (Affiliation agreements with practice facilities) — agreement currency at renewal."
+        competitor_equivalent: "CORE ELMS ships 'affiliation agreement tracking with expiration alerts' per the Stage 2 flow file's citation of ../competitors/core-elms.yaml, but that page does not describe whether CORE has an explicit renewal/versioning action either — not comparable beyond the shared 'expiration alert' claim."
+        gap_severity: configure-needed
+        gap_note: >
+          This resolves the journey's prior hedge that 'with no contract object, there is
+          nothing to renew' — that premise is false. A Contract object exists, is tied to
+          the Site entity, and has start/expiration dates (confirmed here and in
+          preceptor-site-onboarding--02-affiliation-agreement-execution-contract-lifecycle-management.yaml).
+          What remains genuinely unconfirmed is a distinct RENEWAL workflow: nothing in
+          the help documentation describes carrying forward the old contract's Routing
+          Checklist, Categories, or linked Locations onto its replacement, or marking the
+          old record as superseded-by-renewal rather than simply expired — renewal today
+          is "add a new contract and let the old one lapse," not a tracked lifecycle
+          transition.
+    action: >
+      When a contract nears expiration, the coordinator's actual renewal
+      mechanism is to add a new Contract record for the same Site (optionally
+      generating the document from a saved template) — not to click a distinct
+      'Renew' button that versions or supersedes the old one.
+    confirmed_by: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md (\"Adding Contracts\" and \"Contract Generation tab\" sections)"
+
+  - screen: "Contract Auto Notifications setup"
+    navigation_path: "Sites > Setup > Auto Notifications > Add Notifications"
+    elements:
+      - element: "Notification schedule (days/weeks/months before contract end date); Notification Type (only 'Expiring Contract' is available); Frequency (Daily/Weekly/Monthly/Yearly); Recipients tab (named users + additional email addresses)"
+        type: "scheduled email alert configuration"
+        data_shown: "The doc explicitly recommends configuring alerts at 90 days, 6 months, etc. rather than waiting for a 30-day warning"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.5.b — the proactive half of 'agreement currency at renewal.'"
+        competitor_equivalent: "Not comparable at element level — competitor teardowns in ../competitors/ do not document a notification-scheduling UI (frequency options, recipient list) at this granularity for any affiliation-agreement feature."
+        gap_severity: none
+        gap_note: ""
+    action: >
+      Coordinator configures a proactive reminder so a contract's approaching
+      expiration surfaces as an email before a placement is scheduled against a
+      lapsing agreement, rather than being discovered manually.
+    confirmed_by: "Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Manage Contract Expirations Easily with Exxat Prism.md; Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md (\"Creating and Managing Auto Notifications\" section)"
+
+  - screen: "Contract Status column — Placement Clearance Dashboard"
+    navigation_path: "Placements > [Course or Placement Group] > Placement Clearance"
+    elements:
+      - element: "Contract Status column"
+        type: "computed read-only status"
+        data_shown: "Valid Contract (fully executed, active, valid through placement dates or open-ended); Needs Attention (Expiring During Placement); Needs Attention (general); Needs Attention (Missing Contracts); a distinct label appended when a location has multiple contracts"
+        gates_on: ["placement clearance / scheduling readiness for that student-site pairing"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.5.b — this is the concrete instantiation of the required behavior described in ../accreditation/acpe.yaml ('blocking new placement scheduling at a site whose agreement has lapsed'), confirmed as a real, computed, multi-state column rather than a single boolean."
+        competitor_equivalent: "Not comparable at element level — no competitor page in ../competitors/ documents a computed multi-state contract-status column tied to placement dates."
+        gap_severity: none
+        gap_note: ""
+    action: >
+      At the moment a placement is actually being scheduled — which recurs every
+      term for the same sites — the coordinator sees a live currency check against
+      that specific placement's dates, not just a static expiration date on file.
+    confirmed_by: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md (\"Contract Status on Clearance Dashboard\" section, full status-logic enumeration)"
+
+  - screen: "Personnel profile — Status toggle (offboarding a preceptor)"
+    navigation_path: "Sites > Personnel > [select Name] > About > pencil icon > Edit Profile drawer"
+    elements:
+      - element: "Status (Active / Inactive)"
+        type: "toggle"
+        data_shown: "Inactive personnel marked for email communication are no longer pre-selected as Location Contacts for new placements"
+        gates_on: ["whether the person is offered as a Location Contact / included in slot-request or notification emails going forward"]
+        accreditation_citation: "Supports the retention concern in this journey's pain_or_gap, sourced from ../accreditation/lcme.yaml's FSMB note (state licensure documentation can be required 'years after graduation' — 'a longer data-retention horizon than typical academic-term thinking assumes')."
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in ../competitors/ documents a personnel-level active/inactive status model or its downstream effects on notification eligibility."
+        gap_severity: none
+        gap_note: "This is the confirmed, non-destructive offboarding path: flipping Status to Inactive stops future communications and slot inclusion while leaving the record and its history (Slots tab, Placements tab, Interventions, Communications) intact, which is what the retention concern requires."
+      - element: "Delete Personnel button (Association tab)"
+        type: "destructive action"
+        data_shown: "No confirmed restriction preventing deletion of a preceptor with placement history, unlike Delete Site (blocked once slots/placements exist)"
+        gates_on: []
+        accreditation_citation: "Supports the retention concern in this journey's pain_or_gap, sourced from ../accreditation/lcme.yaml's FSMB note (state licensure documentation can be required 'years after graduation' — 'a longer data-retention horizon than typical academic-term thinking assumes'); this is the element where that retention concern is actually at risk."
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in ../competitors/ documents deletion guard-rails on a preceptor/personnel record."
+        gap_severity: configure-needed
+        gap_note: >
+          Unlike Sites (see next step), the Managing Personnel guide does NOT confirm
+          that Delete Personnel is blocked when the person has placement/evaluation
+          history — the guide's own instruction to "click Delete Personnel" carries no
+          stated guard-rail. If that is accurate, an admin who reaches for the more
+          familiar "delete" action instead of "mark inactive" when offboarding a
+          preceptor could destroy exactly the retrievable historical evidence (past
+          evaluations, placements) the accreditation retention concern depends on —
+          the safety net documented for Sites is unconfirmed for Personnel.
+    action: >
+      When a preceptor stops precepting, the coordinator's confirmed offboarding
+      action is flipping Status to Inactive on their Personnel profile, which stops
+      future communications/slot inclusion while leaving the record and its history
+      (Slots tab, Placements tab, Interventions, Communications) intact.
+    confirmed_by: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Personnel.md (\"Basic Details\" Status field; \"Deleting Personnel\" section)"
+
+  - screen: "Marking a Site Inactive (offboarding a site)"
+    navigation_path: "Sites > [select Site] > pencil icon > Edit Site Information > Active/Inactive"
+    elements:
+      - element: "Active/Inactive radio; apply-to-all-locations confirmation popup"
+        type: "toggle + cascading confirmation"
+        data_shown: "Inactive sites remain in the system but cannot be used for new placements; the site name displays an '-inactive' caption"
+        gates_on: ["eligibility for new placement scheduling at that site or its locations"]
+        accreditation_citation: "Directly relevant to CODA Standard 1, Element 1-2 (Institutional Effectiveness) and the LCME/FSMB retention concern in this journey's pain_or_gap: confirms Prism does not destroy a site's historical record on offboarding — Inactive preserves the record while removing the site from new-placement eligibility."
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents an offboarding/deactivation model with this level of before/after behavior."
+        gap_severity: configure-needed
+        gap_note: >
+          Data preservation on offboarding is confirmed; a specific RETENTION-DURATION
+          policy is not. Nothing in the help documentation ties Inactive status to an
+          enforced retention horizon (e.g. a lock preventing full deprovisioning before
+          N years post-last-placement, matching FSMB's post-graduation licensure
+          timeline) — "the record isn't deleted" and "the record is retained for
+          exactly as long as the accreditor could ask for it" are different claims, and
+          only the first is confirmed. The journey's existing FSMB-retention hedge
+          correctly stands unresolved on this narrower point.
+      - element: "Delete Site button"
+        type: "destructive action, explicitly blocked"
+        data_shown: "'If there are any slots and placements added for this site, you will not be able to delete the site' — deletion requires contacting Exxat support"
+        gates_on: []
+        accreditation_citation: "Directly relevant to CODA Standard 1, Element 1-2 (Institutional Effectiveness) and the LCME/FSMB retention concern in this journey's pain_or_gap: this element is where Prism makes destruction structurally hard, blocking deletion outright once any placement history exists."
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents deletion guard-rails on a site record."
+        gap_severity: none
+        gap_note: "The guard-rail is documented and unconditional once slots/placements exist, which is the confirmed half of the retention story (contrast the unguarded Delete Personnel button in the previous step)."
+    action: >
+      Coordinator offboards a site by marking it Inactive rather than deleting it,
+      explicitly to preserve past data; deletion is a separate, guarded action the
+      product itself blocks once any placement history exists.
+    confirmed_by: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md (\"Deleting Site\" and \"Marking a Site Inactive\" sections)"
+
+  - screen: "Interventions log (Site / Location / Personnel)"
+    navigation_path: "Sites > [Site, Location, or Personnel] > Interventions > + icon"
+    elements:
+      - element: "Mode of intervention; Details of intervention; Add Follow Up (planned follow-up date)"
+        type: "free-text incident log with follow-up scheduling"
+        data_shown: "Same form regardless of whether logged against a Site, Location, or Personnel record"
+        gates_on: []
+        accreditation_citation: "CODA Standard 5, Element 5-3 (CQI for the patient care program) [rated Gap in ../accreditation/coda.yaml: 'No confirmed patient-record sampling, deficiency-coding, or corrective-action-tracking capability exists today']; CODA Standard 1, Element 1-2 [Gap] for the same reason at the institutional-effectiveness level."
+        competitor_equivalent: "Not comparable at element level — MedHub/E*Value's CLER 'citation/concern tracking' (../competitors/e-value.yaml) names a comparable concept but its public documentation does not expose field-level structure to compare against these fields."
+        gap_severity: gap
+        gap_note: >
+          The capture side of CODA 5-3 is free text: a Mode field, a Details field, and
+          a follow-up date. CODA 5-3's required behavior is materially more structured —
+          a chart-audit/sampling workflow, deficiency CODING rather than free text, and
+          root-cause analysis. This form is the closest existing primitive but confirms
+          none of the coding, sampling, or root-cause layers CODA 5-3 asks for.
+      - element: "Interventions Needing Follow Up (Site and Locations Dashboard)"
+        type: "read-only queue, refreshed every 24 hours"
+        data_shown: "Bucketed More than 7 days / Next 7 days / Past Due"
+        gates_on: []
+        accreditation_citation: "CODA Standard 5, Element 5-3 (CQI for the patient care program) [rated Gap in ../accreditation/coda.yaml: 'No confirmed patient-record sampling, deficiency-coding, or corrective-action-tracking capability exists today']; CODA Standard 1, Element 1-2 [Gap] for the same reason at the institutional-effectiveness level."
+        competitor_equivalent: "Not comparable at element level — MedHub/E*Value's CLER 'citation/concern tracking' (../competitors/e-value.yaml) names a comparable concept but its public documentation does not expose queue/report structure to compare against this dashboard."
+        gap_severity: gap
+        gap_note: >
+          The follow-up side of CODA 5-3 is a date-bucketed overdue queue and nothing
+          else — the help center itself states 'we currently do not have reports for
+          Interventions.' That leaves no trend analytics across defined standards of
+          care and no closed-loop corrective-action tracker linking findings back to
+          curriculum or supervision changes, both of which CODA 5-3 requires.
+    action: >
+      Coordinator logs a quality incident (e.g. a preceptor concern, a site
+      capacity problem) and, if needed, a follow-up date; the dashboard surfaces
+      what is overdue.
+    confirmed_by: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Interventions for Site- Location and Personnel.md (including the explicit line: 'we currently do not have reports for Interventions')"
+
+sources:
+  - "Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Configuring custom site assessment form in Exxat Prism-.md"
+  - "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md"
+  - "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md"
+  - "Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Manage Contract Expirations Easily with Exxat Prism.md"
+  - "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Personnel.md"
+  - "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Interventions for Site- Location and Personnel.md"
+  - "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/View Site- Location- and Personnel Reports.md"
+  - "Playbooks/Physician Assistant (PA) Playbook.md"
+  - "Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "../prism/capability-map.yaml"
+  - "../accreditation/coca.yaml"
+  - "../accreditation/acpe.yaml"
+  - "../accreditation/lcme.yaml"
+  - "../accreditation/coda.yaml"
+  - "../competitors/e-value.yaml"
+  - "../competitors/new-innovations.yaml"
+  - "../competitors/core-elms.yaml"
+  - "preceptor-site-onboarding--02-affiliation-agreement-execution-contract-lifecycle-management.yaml"
+last_verified: "2026-08-24"

@@ -1,0 +1,650 @@
+# CAA (Council on Academic Accreditation in Audiology and Speech-Language
+# Pathology, ASHA) — SLP.
+#
+# DOMAIN FIELD NOTE: the other files in this directory use `domain` for the four
+# expansion markets (DO / Pharmacy / Dentistry / Medicine). The CAA is NOT one of
+# those four — SLP is an EXISTING Exxat discipline with shipped, SLP-specific
+# product surface (Clinical Log, Clock Hours reports, CFCC V-E attestation). Using
+# the discipline name "SLP" in `domain` here is deliberate: this file is the
+# existing-discipline control case the four expansion files get compared against,
+# not a fifth expansion market.
+#
+# Researched against the CURRENT/live standards document — "Standards for
+# Accreditation of Graduate Education Programs in Audiology and Speech-Language
+# Pathology," approved February 2016, last updated October 2025, effective
+# October 2025 (footer on every page reads "August 2017, rev. October 2025").
+# The CAA has separately adopted a revised set of standards announced on
+# caa.asha.org as the "2027 Standards for Accreditation," effective August 1,
+# 2027, following public comment periods held March-April 2026. Those are NOT
+# yet in force, so every element below cites the October 2025 revision, which is
+# what SLP programs are actually held to today. Re-research this file against the
+# 2027 standards before August 2027 — the numbering is expected to change.
+#
+# NOTE ON SOURCE HANDLING: unlike the COCA 2026 standards PDF, the CAA standards
+# PDF carries NO explicit AI-usage restriction notice — it carries only a
+# citation block ("Cite as: Council on Academic Accreditation in Audiology and
+# Speech-Language Pathology..."). However, the ASHA site-wide Terms of Use that
+# govern caa.asha.org (https://www.asha.org/sitehelp/terms_of_use/) do restrict
+# this material in two ways relevant to how this file was built: they prohibit
+# accessing or copying site content "using any 'robot', 'spider', 'deep link',
+# 'scraper' or other automated means, methodology, algorithm or device," and they
+# prohibit creating "derivative works from" ASHA content "without the prior
+# written permission of ASHA." All content is "Copyright (c)1997-2026 ASHA. All
+# rights reserved." This file was built by fetching the public standards PDF
+# through AI-mediated tools (WebFetch / PDF text extraction) and paraphrasing
+# element requirements for internal product planning; it does not reproduce the
+# standards document verbatim. Flag this to Legal/Compliance before this content
+# (or any CAA/ASHA standards excerpting) is used in customer-facing materials,
+# and consider requesting ASHA's written permission if AI-assisted use of CAA
+# standards text becomes an ongoing part of this workstream. The same caution
+# applies to the CFCC certification standards cited in licensure_or_gme_layer,
+# which live on asha.org under the same Terms of Use.
+
+accreditor: "CAA (Council on Academic Accreditation in Audiology and Speech-Language Pathology, ASHA)"
+slug: "caa-asha"
+domain: "SLP"
+governs: "Graduate (master's and clinical doctoral) education programs in speech-language pathology and in audiology in the United States, including programs delivered via distance education and at satellite campuses; established by and operating autonomously within the American Speech-Language-Hearing Association (ASHA), recognized by the U.S. Secretary of Education and by the Council for Higher Education Accreditation (CHEA) for accreditation and pre-accreditation (accreditation candidacy) of programs leading to the first professional or clinical degree"
+standards_document:
+  title: "Standards for Accreditation of Graduate Education Programs in Audiology and Speech-Language Pathology"
+  version_or_year: "Approved February 2016; last updated October 2025; effective October 2025 (page footers read 'August 2017, rev. October 2025'). A separately adopted '2027 Standards for Accreditation' takes effect August 1, 2027 and is not yet in force."
+  url: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf"
+
+standards:
+  - element_id: "Standard 3.0B, Standard 3.1B"
+    element_title: "Curriculum (Academic and Clinical Education) in Speech-Language Pathology — breadth, depth, and the 400 supervised clinical practice hours"
+    evidence_programs_must_produce: >
+      Proof that the master's program provides each student the opportunity to
+      complete a minimum of 400 supervised clinical practice hours, of which up
+      to 25 may be clinical observation and at least 325 must be attained at the
+      graduate level, with the supervised clinical experiences distributed
+      throughout the program of study rather than concentrated at the end. Also
+      a stated set of program goals/objectives students must meet, a described
+      process for evaluating student achievement against them, and a plan of
+      study covering the five named domains (professional practice competencies;
+      foundations of practice; identification and prevention; assessment; and
+      intervention for speech, language, and swallowing disorders and
+      differences).
+    required_software_behavior: >
+      Accumulate supervised clinical hours per student as a running, auditable
+      total that separates observation hours from direct-contact hours and
+      graduate-level from undergraduate-level hours, so the 400 / 25 / 325 split
+      can be evidenced per student rather than reconstructed from spreadsheets;
+      show distribution of those hours across the terms of the program (not just
+      a final total); and export a per-student and per-cohort hours report a site
+      visitor can read without a login.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Already shipped and SLP-specific inside the Clinical & Experiential
+      Education pillar. Prism's "Clinical Log" is a distinct Learning Activity
+      type from the Patient Log used by PA programs, and its unit of record is
+      TIME, not encounter count — every entry captures the clinical educator,
+      encounter date, patient demographics, and the minutes split between
+      intervention and evaluation. The Clinical Clock Hours Report (Cumulative)
+      explicitly tracks progress toward the 400-hour requirement, and the report
+      family filters on Training Level (graduate vs. undergraduate) and Student
+      Participation Type (direct contact vs. observation) — exactly the three
+      axes CAA 3.1B splits the 400 hours along. Setup path: Courses -> Course
+      Offerings -> Learning Activities -> Setup -> Clinical Log (pencil icon).
+    gap_notes: "Prism reports the three axes separately but the source material does not confirm a single view that asserts the composite '400 total / <=25 observation / >=325 graduate' rule as a pass/fail per-student flag. The min/max hour thresholds that red-flag under-logged students are configurable only by prism-support@exxat.com, not self-service — so a program cannot set its own 400/325 gate without a ticket. Confirm whether the 400-hour tracking is a hardcoded SLP default or a support-configured threshold before promising it as out-of-box."
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (p. 17, Standard 3.1B and its Requirement for Review)"
+
+  - element_id: "Standard 3.1B, Sub-elements 3.1.1B - 3.1.6B"
+    element_title: "Professional Practice Competencies, Foundations, Identification/Prevention, Evaluation, Intervention, and General Knowledge and Skills"
+    evidence_programs_must_produce: >
+      Demonstration that program content and learning opportunities cover, and
+      that each student can demonstrate, six named clusters: professional
+      practice competencies (accountability incl. HIPAA/FERPA compliance,
+      effective communication, evidence-based practice, professional duty
+      including interprofessional practice and the role of clinical
+      teaching/supervision); foundations of SLP practice across the nine
+      communication and swallowing elements (articulation; fluency; voice and
+      resonance; receptive and expressive language; hearing; swallowing;
+      cognitive aspects; social aspects; AAC); identification and prevention;
+      evaluation across the lifespan for those same elements; intervention for
+      those same elements; and general professional knowledge and skills (ethical
+      conduct, self-assessment, clinical education and supervision, counseling,
+      interprofessional teamwork).
+    required_software_behavior: >
+      A curriculum-mapping layer that carries the CAA element taxonomy as a
+      first-class mapping dimension, lets every course objective and clinical
+      learning activity be mapped to one or more elements, and reports coverage
+      and — critically for 3.1.4B/3.1.5B — coverage BY DISORDER AREA AND
+      LIFESPAN/AGE GROUP, since CAA asks for assessment and intervention across
+      the lifespan for each of the nine elements.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The Curriculum Mapping pillar already supports mapping course objectives to
+      CAA Standards and CFCC Standards alongside program outcomes and additional
+      competencies, and the SLP report suite already cross-tabulates clinical
+      hours by the nine KASA service-delivery areas broken out by patient age
+      group (Clinical Log Report — Type of Services by Age Group). That is the
+      didactic side (Curriculum Mapping) and the clinical side (Clinical &
+      Experiential Education) of the same requirement, both shipped. What remains
+      is loading and maintaining the specific CAA element taxonomy per program.
+    gap_notes: "Mapping frameworks BEYOND KASA (professional practice competencies, university learning outcomes) requires CSS/Account Manager assistance rather than self-service — a real configuration-cost line item for 3.1.1B and 3.1.6B specifically, which sit outside the nine service-delivery areas. Also confirm whether the pre-loaded standards library carries the October 2025 CAA revision or an older edition; Prism does ship edition-specific accreditor sets elsewhere (e.g. ARC-PA 6th Edition for PA), so edition currency is a live question, not a hypothetical."
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (pp. 17-20, Sub-elements 3.1.1B through 3.1.6B)"
+
+  - element_id: "Standard 3.0B, Standard 3.6B"
+    element_title: "Clinical Education — access to a sufficient base of individuals served, across a variety of settings, populations, and age groups"
+    evidence_programs_must_produce: >
+      Evidence of mechanisms that build comprehensive plans of clinical education
+      so each student has the opportunity to experience the breadth and depth of
+      clinical practice, obtain experiences with diverse populations, obtain a
+      variety of clinical experiences in different work settings, work with
+      appropriate equipment and resources, and learn from experienced
+      speech-language pathologists serving as effective clinical educators.
+      Comprehensive clinical experience must include direct contact, consultation,
+      recordkeeping, and administrative duties.
+    required_software_behavior: >
+      Every logged clinical hour must be tagged with setting, patient age group,
+      service/disorder type, and supervising clinical educator, and those tags
+      must roll up into a per-student distribution view that shows where a
+      student's exposure is thin BEFORE the student graduates — not a
+      retrospective total.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      This is the single best-served CAA element in shipped Prism. The Clinical &
+      Experiential Education pillar's SLP clinical-log report family
+      cross-tabulates hours across exactly these axes: Clinical Log Report
+      (Multiple Attributes by Age Group) distributes hours across Mode of
+      Delivery, Student Participation, and Training Level by age group; Clinical
+      Log Report (Type of Services by Age Group) distributes across the nine
+      service-delivery areas by age group; and all reports filter on Setting,
+      Site, Location, and Clinical Educator. Configured min/max thresholds flag
+      under-logged students in red directly on the Clinical Log Report — the
+      "find the gap before graduation" behavior 3.6B is asking for.
+    gap_notes: "The Statistics tab that shows per-student stats by Setting and Rotation refreshes only at 6am EST daily, so same-day entries lag — a caveat if the pitch is real-time gap detection. Reports also cap at 50 course offerings per run, which matters for a large program assembling a full-cohort self-study exhibit."
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (p. 22, Standard 3.6B and its Requirement for Review)"
+
+  - element_id: "Standard 3.0B, Standard 3.8B"
+    element_title: "Clinical education protects the welfare of each person served by the student and clinical educator team"
+    evidence_programs_must_produce: >
+      Demonstration that supervision provided to each student is ADJUSTED to
+      ensure the specific needs of each individual receiving services are met;
+      that clinical-education procedures protect the welfare of each person
+      served by the student/clinical-educator team; that services comply with
+      recognized standards of ethical practice and relevant federal and state
+      regulations; and that students have the opportunity to understand and
+      practice universal precautions.
+    required_software_behavior: >
+      Record the supervising clinical educator on every clinical encounter, hold
+      a reviewable supervision trail signed by that educator, compute supervision
+      intensity as a proportion of the student's client contact (the operative
+      metric behind CFCC Standard V-E's 25% direct-supervision floor), and gate
+      the student's presence at the site on completed universal-precautions /
+      infection-control training.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Two shipped pillars cover most of this. Clinical & Experiential Education
+      captures the supervising clinical educator on every clinical log and
+      supports an SLP-specific attestation the CLINICAL EDUCATOR signs when
+      reviewing logs — the attested statements and the hours each supervisor
+      reviewed print at the bottom of the Clock Hours report, which is a real
+      supervisor-level sign-off trail (Learning Activities -> Setup -> Clinical
+      Log pencil -> Attestation; Exxat's own FAQ names this as the CFCC V-E
+      hook). Compliance Management's Placement Clearance separately gates the
+      placement on student compliance items, so infection-control/universal-
+      precautions training is an existing item type.
+    gap_notes: "The supervision PERCENTAGE is the gap. Prism aggregates hours by clinical educator and by student, but no source confirms a computed 'direct supervision as a percent of this student's total contact with each client' figure, which is the form CFCC V-E actually takes. Scope that ratio as a derived metric on the Clinical Log data model — it is the difference between 'we recorded who supervised' and 'we can prove the supervision floor was met.'"
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (pp. 22-23, Standard 3.8B and its Requirement for Review)"
+
+  - element_id: "Standard 3.0B, Standard 3.9B"
+    element_title: "Clinical education in external placements is governed by agreements and monitored by program faculty"
+    evidence_programs_must_produce: >
+      Evidence of valid written or electronic agreements with ALL active external
+      facilities where students are placed for clinical practicum; written
+      policies on the role of students in selecting externship sites and on how
+      students are placed; written policies and procedures describing how the
+      program determines whether a clinical site has the appropriate clinical
+      population and personnel to provide an appropriate experience; and
+      processes ensuring external clinical education is monitored by the program
+      to verify educational objectives are met.
+    required_software_behavior: >
+      A contract repository linking each executed affiliation agreement to the
+      site(s) it covers, with automated validity checking against actual
+      placement date ranges (not just an expiry date on a calendar); a structured
+      site-suitability assessment that records the population and personnel
+      finding per site; and a monitoring record tying each external placement
+      back to the objectives it was meant to satisfy.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Compliance Management already stores affiliation agreements under Contracts
+      linked to Locations, and the Placement Clearance Dashboard runs an
+      automated Contract Status check that evaluates each location's contracts
+      against the specific placement dates — surfacing Valid Contract vs. Needs
+      Attention (contract expires before placement end) vs. Missing Contracts.
+      The SLP FAQ confirms this is the documented SLP answer: agreements are
+      stored, viewed, and monitored in the Sites module for contract oversight
+      and accreditation documentation. Site suitability is covered by the Clinical
+      & Experiential Education pillar's Site Assessment forms (Initial and
+      Ongoing Site Visit), which roll into a Comprehensive Site Assessment report.
+    gap_notes: "The 'monitored by program faculty to verify educational objectives are met' clause is the softest part of the fit. The Site Assessment form builder is self-service under Sites -> Setup -> Form Setup, but per the SLP playbook new custom forms for SLP specifically require a prism-support@exxat.com ticket — so an SLP program cannot author its own 3.9B site-suitability instrument without support involvement, unlike PT."
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (p. 23, Standard 3.9B and its Requirement for Review)"
+
+  - element_id: "Standard 3.0B, Standard 3.10B"
+    element_title: "Students know program expectations for academic and clinical integrity"
+    evidence_programs_must_produce: >
+      Written policies and procedures describing program expectations of student
+      behavior regarding academic and clinical conduct, and written policies and
+      procedures describing the processes used to address violations — explicitly
+      including plagiarism, dishonesty, all aspects of cheating, and violations of
+      ethical practice.
+    required_software_behavior: >
+      A policy library students must actively acknowledge, with the
+      acknowledgment retained as a timestamped, per-student record; plus a
+      structured, retrievable log of conduct violations and the process steps
+      taken in response.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Compliance Management's two-tier Attestations model fits this exactly:
+      profile-level attestations (Students -> Set-up -> Attestations) for a
+      program-wide integrity policy and course-level attestations (Courses ->
+      Course Offering -> Attestation -> Set-up) for course-specific conduct
+      expectations, with every agreed attestation retained with a timestamp in
+      the student's Profile -> Academics tab. The violations side is served by the
+      Interventions record type, which carries a formal Open/Closed status and
+      structured Follow-Ups (planned vs. actual date, notes) and is explicitly
+      scoped to academic/professionalism issues.
+    gap_notes: "There is currently no dedicated Interventions report in Prism — the only surface listing interventions needing follow-up is the Sites/Locations Dashboard on a 24-hour refresh, bucketed More than 7 days / Next 7 days / Past Due. For a self-study exhibit proving 'policies are applied consistently,' a program needs a queryable intervention register, not a dashboard bucket."
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (p. 23, Standard 3.10B and its Requirement for Review)"
+
+  - element_id: "Standard 2.0, Standard 2.3"
+    element_title: "All faculty members, including all individuals providing clinical education, are qualified and competent"
+    evidence_programs_must_produce: >
+      Demonstration that qualifications and competence to teach graduate courses
+      and to provide clinical education are evident in degree level, practical or
+      educational experience specific to program responsibilities, and other
+      indicators of competence; that ALL individuals providing didactic and
+      clinical education — both ON-SITE AND OFF-SITE — have appropriate experience
+      and qualifications for the professional area in which they teach; that
+      faculty expertise covers the depth and breadth required by Standard 3; and
+      that the majority of academic content is taught by doctoral faculty holding
+      the appropriate terminal degree (PhD, EdD).
+    required_software_behavior: >
+      A personnel record for every off-site clinical educator carrying degree,
+      credential (CCC-SLP), license, and supervision-specific professional
+      development, collected directly from the educator, kept current, and
+      gating placement assignment on validity — plus a program-level roll-up
+      showing terminal-degree composition of academic faculty.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Compliance Management already tracks preceptor/clinical-educator
+      certification and license number on the personnel record, and the Placement
+      Clearance Dashboard runs a three-state tracker (Missing / Exists / NA) for
+      Preceptor CV, License, and Certification as a gate on placement. Clinical &
+      Experiential Education's Experiential Supervisor Intake Form (PIF) collects
+      this directly from the supervisor via an encrypted no-login delegator link
+      with engagement tracking, and Exxat markets it specifically to close
+      "accreditation audit gaps" via timestamped sync history. Faculty Compliance
+      is a parallel module to student compliance with its own templates and
+      Compliance Groups.
+    gap_notes: "Two real constraints. (1) Faculty Compliance requires the paid Exxat Approve add-on to use — this element is not free-tier. (2) CAA 2.3's 'majority of academic content taught by doctoral faculty (PhD, EdD)' is a workload-weighted composition calculation across the curriculum; nothing in the shipped personnel or curriculum data model computes that ratio. PIF bulk sending is also not yet supported (one supervisor at a time), which is painful for a program onboarding a full cohort's off-site clinical educators."
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (p. 8, Standard 2.3 and its Requirement for Review)"
+
+  - element_id: "Standard 4.0, Standard 4.3"
+    element_title: "Policies and procedures for identifying students needing intervention in the academic and clinical components"
+    evidence_programs_must_produce: >
+      Policies and procedures for identifying students needing intervention in
+      the ACADEMIC component and, separately, in the CLINICAL component; policies
+      and procedures for implementing and DOCUMENTING all forms of intervention
+      used to facilitate each student's success; and demonstration that those
+      policies are applied CONSISTENTLY across all students identified as needing
+      intervention.
+    required_software_behavior: >
+      An early-warning signal fired from live performance data (low clinical-log
+      hours, low evaluation ratings, failed competencies) that opens a structured
+      intervention record with an owner, planned follow-up dates, and a
+      close-out; and a register that lets the program prove consistent treatment
+      across every flagged student.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Compliance Management formally separates Communications (neutral advising
+      contacts) from Interventions (documented concerns requiring monitoring or
+      remediation, with Open/Closed status and structured Follow-Ups) — a data
+      model that matches 4.3's "implementing and documenting all forms of
+      intervention" language closely. The trigger side exists too: the SLP
+      Clinical Log Report supports configured min/max hour thresholds that flag
+      under-logged students in red, and question-based email notifications
+      support real-time monitoring of student performance for early alerts.
+    gap_notes: "Both trigger mechanisms are support-gated for SLP: the min/max hour thresholds AND the question-based early-alert notifications must be configured by prism-support@exxat.com, not by the program. Combined with the missing Interventions report noted under 3.10B, the 'applied consistently across all students' proof for 4.3 is assemblable but not queryable today. This is the clearest SLP-specific self-service gap in the whole file."
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (p. 24, Standard 4.3 and its Requirement for Review)"
+
+  - element_id: "Standard 4.0, Standard 4.6"
+    element_title: "Students receive regular advising on academic and clinical performance and progress"
+    evidence_programs_must_produce: >
+      Maintained records of advisement for EACH student; records demonstrating
+      students are advised on a timely and continuing basis regarding academic
+      AND clinical progress; and records demonstrating that any concerns about a
+      student's performance in meeting program requirements — including language
+      proficiency — are addressed with the student.
+    required_software_behavior: >
+      A per-student advising log with date, mode, participants, and content,
+      access-controlled to the assigned advisor, with a student-visible toggle
+      so the program can prove the concern was actually communicated to the
+      student rather than only recorded internally.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Directly served by Compliance Management's Communications record type
+      (Students -> select student -> Communication -> Add Communication, the
+      navigation Exxat's own SLP FAQ gives for documenting advisement), including
+      a "Make visible to student" publish toggle requiring explicit confirmation
+      — which is what converts a private note into evidence the concern was
+      addressed WITH the student. RBAC restricts advisement/intervention notes to
+      assigned faculty/advisors only.
+    gap_notes: "Exxat's SLP FAQ offers a second path — custom workflow-based advisement forms with signature capability — but routes it through CSS/Account Manager rather than self-service. Signature-backed advising records are the stronger 4.6 artifact, so this is a configuration/services cost, not a product gap."
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (p. 25, Standard 4.6 and its Requirement for Review)"
+
+  - element_id: "Standard 4.0, Standard 4.7 (with 4.8)"
+    element_title: "The program documents student progress toward the graduate degree AND professional credentialing requirements"
+    evidence_programs_must_produce: >
+      Complete and accurate records of every student's progress for the entire
+      time of matriculation, and per-student documentation demonstrating that
+      the student has met ALL academic, clinical, and other requirements for the
+      degree AND for the credential(s) the program identifies in its mission and
+      goals. Standard 4.8 additionally requires the program to make that
+      documentation available to the student — and to graduates and non-completing
+      attendees — to assist them in qualifying for the credential.
+    required_software_behavior: >
+      A single per-student transcript-of-record combining coursework completion,
+      cumulative supervised clinical hours against the credentialing threshold,
+      and competency sign-offs — retained beyond graduation per institutional
+      retention policy, and exposed to the student directly rather than mediated
+      by a staff request.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Two shipped pieces cover most of it. On the student-facing side (4.8), the
+      Clinical Clock Hours Report (By Student) is explicitly available to
+      STUDENTS, not just admins, and exports to PDF — the credentialing-hours
+      half of the record, self-service. On the competency side, the Student
+      Performance Report tracks competencies and learning qualities across all
+      nine service-delivery areas with individual and aggregate scores. Both sit
+      in Clinical & Experiential Education; Curriculum Mapping holds the
+      coursework side.
+    gap_notes: "No single artifact combines coursework, hours, and competency sign-off into one per-student credentialing dossier — a program assembles it from two or three reports. Retention/post-graduation access is the harder half of 4.8: nothing in the sources confirms that a graduate or a non-completing attendee retains access to their own Prism record, and the CCC-SLP application (see licensure_or_gme_layer) is filed AFTER graduation, which is exactly when the student needs the hours verification. Worth scoping an alumni/verification export."
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (pp. 25-26, Standards 4.7 and 4.8 and their Requirements for Review)"
+
+  - element_id: "Standard 5.0, Standard 5.2"
+    element_title: "Ongoing and systematic formative and summative assessment of student performance"
+    evidence_programs_must_produce: >
+      A written assessment plan used throughout the program for each student,
+      stating the purpose of the assessments and using a VARIETY of techniques
+      including both formative and summative methods; proof that assessments are
+      administered by MULTIPLE academic and clinical faculty members; a
+      demonstration of how assessment results are used to evaluate and enhance
+      student progress; and proof that assessment is applied consistently and
+      systematically. The Praxis examination explicitly CANNOT be used to satisfy
+      this standard as a form of summative assessment.
+    required_software_behavior: >
+      Configurable formative (midterm) and summative (final) evaluation
+      instruments deployable per placement and per course, completed by multiple
+      distinct roles (student self-assessment, clinical educator, academic
+      faculty), with results aggregated per student across the program and
+      exportable as the assessment-plan evidence trail.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The Forms/Evaluations engine inside Clinical & Experiential Education
+      already runs the multi-role, midterm/final pattern this element describes,
+      via its Single-Term / Multi-Term / Standard / Custom form archetype
+      taxonomy with configurable multi-step review workflows. For SLP
+      specifically the documented instrument set is KASA Summary Forms, Clinical
+      Supervisor Evaluations (Midterm and Final), Student Self-Assessments,
+      Student Evaluations of Clinical Sites, and Student Evaluations of Clinical
+      Supervisors — which is precisely 5.2's "variety of techniques" administered
+      by "multiple academic and clinical faculty members." Results roll up in the
+      Student Performance Report across the nine service-delivery areas.
+    gap_notes: "SLP has NO free, validated, off-the-shelf standard instruments the way PT does (CIET v2, PTMACS/PTAMACS, SCIPAI) or OT does (AOTA FWPE family). Every SLP instrument above is a configured form, and creating new forms is NOT self-service — it requires a prism-support@exxat.com ticket. That makes 5.2 a Configure-with-services-attach for SLP where it would be closer to Transfer for PT/OT. A validated SLP-specific standard instrument (a KASA Summary Form shipped as a Standard form type) is the obvious product gap to close for this discipline."
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (p. 27, Standard 5.2 and its Requirement for Review)"
+
+  - element_id: "Standard 5.0, Standard 5.3"
+    element_title: "Regular and ongoing assessment protocols evaluating program quality and facilitating continuous quality improvement"
+    evidence_programs_must_produce: >
+      Assessment protocols covering the academic AND clinical aspects of the
+      ENTIRE program; data collected from MULTIPLE SOURCES — the standard names
+      alumni, faculty, employers, off-site clinical educators, community members,
+      and individuals receiving services — allowing evaluation of the program's
+      success against its goals, objectives, and student learning outcomes;
+      systematically collected evaluations of the academic and clinical aspects
+      of the program FROM STUDENTS; and evidence the results are used to refine
+      program goals and objectives and to keep them aligned with measured
+      student learning outcomes.
+    required_software_behavior: >
+      Survey authoring and distribution reaching populations that mostly do NOT
+      have platform logins (alumni, employers, community members, clients) —
+      i.e. email/CSV and anonymous public-link distribution, not just in-app
+      assignment — with response-rate tracking and aggregate analytics per
+      stakeholder group, and a durable year-over-year series a self-study can
+      trend.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Better served than the pillar name previously suggested. CORRECTED
+      2026-08-26, per Exxat PM confirmation (see
+      content/prism/capability-map.yaml, Surveys & Course Evaluations pillar):
+      "Surveys & Course Evaluations" is shipped, not roadmap as this entry
+      formerly stated — Prism ships both the placement-evaluation Forms engine
+      and a separate general-purpose Exxat Surveys builder. Exxat Surveys is a
+      first-party survey builder — 14 question types, three distribution
+      channels (in-Prism by persona, additional email/CSV upload, and an
+      anonymous public link/QR code), and full analytics including status
+      overview, weekly response rates, per-channel breakdown, and Raw vs.
+      Aggregate exports — explicitly marketed to remove the need for third-party
+      survey tools in accreditation/outcomes/CQI use cases. It was extended to
+      SLP as of December 2025 with named Graduating Student Survey and Clinical
+      Supervisor Survey templates, which are two of 5.3's named source groups.
+      The email/CSV and public-link channels are what make alumni, employers, and
+      community members reachable.
+    gap_notes: "Two of 5.3's six named source groups have no template today (employers, individuals receiving services), and the shipped SLP templates are recent (Dec 2025), so most SLP programs will not yet have the multi-year series a self-study wants to trend. CORRECTED 2026-08-26: the roadmap ambiguity previously flagged here is resolved — per Exxat PM confirmation, 'Surveys & Course Evaluations' is a shipped pillar encompassing both the already-shipped Exxat Surveys builder and the Forms/Evaluations engine, not a separate future item layered on top of them (see content/prism/capability-map.yaml). Configure remains the right rating: the gap is the two missing source-group templates and template recency, not a roadmap dependency."
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (p. 27, Standard 5.3 and its Requirement for Review)"
+
+  - element_id: "Standard 5.0, Standard 5.4 (with 5.8)"
+    element_title: "Using programmatic assessment results for continuous quality improvement — and evaluating the improvements"
+    evidence_programs_must_produce: >
+      A description of how the program uses programmatic assessment data to
+      promote continuous quality improvement, and a description of the processes
+      it uses to EVALUATE those improvements for congruence with its stated
+      mission and goals. Standard 5.8 layers on the same closed loop specifically
+      for the CAA threshold measures: the program must demonstrate its analysis
+      process for determining whether it meets each established CAA threshold, and
+      how it uses those analyses to ensure continuous quality improvement.
+    required_software_behavior: >
+      A closed-loop "finding -> action -> re-measurement -> evidence" object
+      linking a specific assessment result to the specific programmatic change
+      made in response and then to the later data showing whether the change
+      worked, queryable by academic year and by the standard it supports.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      No shipped pillar closes the finding-to-action-to-re-measurement loop.
+      Curriculum Mapping's colored Tags ("Needs Review" / "Reviewed") give a
+      lightweight curriculum-committee QA workflow, and Exxat Surveys produces
+      the finding data, but neither records the ACTION taken or evaluates the
+      improvement afterward. This is the job description of the not-yet-shipped
+      Accreditation Management pillar (roadmap Q3 2027).
+    gap_notes: "Identical in shape to COCA Element 11.1 and to the equivalent CQI elements in every other accreditor file in this directory — which is the argument for making 'finding -> action -> evidence' a first-class object type in Accreditation Management rather than bolting it onto Curriculum Mapping. CAA 5.4 adds a demand the COCA analogue does not make as explicitly: the program must evaluate the IMPROVEMENT, not just log it, so the object needs a re-measurement field, not just a close-out."
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (p. 28, Standards 5.4 and 5.8 and their Requirements for Review)"
+
+  - element_id: "Standard 5.0, Standards 5.5 and 5.6"
+    element_title: "CAA thresholds — program completion rate and Praxis Subject Assessment pass rate"
+    evidence_programs_must_produce: >
+      Proof that at least 80% of students enrolled on the first census date
+      complete the program within the program's published time frame (number of
+      academic terms), averaged over the 3 most recently completed academic
+      years (5.5); and that at least 80% of the program's Praxis Subject
+      Assessment test-takers pass, averaged over the same 3 years, counting a
+      repeat test-taker only once per examination reporting period (5.6). If
+      either 3-year average falls below threshold, the program must supply an
+      explanation and a plan for improving the results.
+    required_software_behavior: >
+      Ingest external ETS/Praxis pass-rate data per cohort (or accept structured
+      manual entry), track enrollment from a defined first census date through
+      on-time completion, compute both 3-year rolling averages against the 80%
+      threshold with the correct denominators and the repeat-test-taker
+      deduplication rule, and trigger an improvement-plan workflow automatically
+      when either average crosses below threshold.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      Nothing shipped ingests or reports licensure/certification exam results —
+      that is the intended job of the Exam Management pillar (roadmap Q2 2027).
+      The completion-rate half is equally unserved: Clinical & Experiential
+      Education's records end at the placement, and no shipped pillar models
+      census-date enrollment or on-time completion as a cohort-level computed
+      metric. The triggered improvement plan belongs to Accreditation Management
+      (roadmap Q3 2027).
+    gap_notes: "Scope this as an ETS/Praxis data-IMPORT and reporting integration, not exam delivery — Prism does not and cannot administer the Praxis; ETS does. Note the deliberate asymmetry with COCA Element 11.4: CAA sets a flat 80% floor rather than COCA's standard-deviation-based band, and CAA 5.2 explicitly FORBIDS using the Praxis as summative student assessment — so the Praxis data model here is purely a programmatic outcome measure and must never be wired into per-student competency roll-ups."
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (p. 28, Standards 5.5 and 5.6 and their Requirements for Review)"
+
+  - element_id: "Standard 1.0, Standard 1.9"
+    element_title: "Public disclosure of accreditation status and Student Achievement Data"
+    evidence_programs_must_produce: >
+      Publication on the program's public website of its CAA accreditation status
+      in the exact language specified in the Public Notice of Accreditation Status
+      in the CAA Accreditation Handbook, in a clearly visible and readily
+      accessible location; the number of expected terms for program completion
+      for full-time and part-time students; and, for the 3 most recently completed
+      academic years, the number and percentage of students completing within the
+      published time frame and the number and percentage of test-takers passing
+      the Praxis Subject Assessment — posted via a clearly visible link and
+      labeled exactly "Student Achievement Data" or "Student Outcome Data." If
+      both the audiology and SLP programs are accredited, separate tables are
+      required for each; if the program has a distance-education component or a
+      satellite campus, data must be presented per modality.
+    required_software_behavior: >
+      Generate the required 3-year table from tracked cohort data and publish it
+      to a public, unauthenticated web page in the CAA-mandated label and format,
+      segmented by program and by delivery modality, and keep it current as each
+      academic year closes — plus feed the same numbers into the CAA annual
+      report submission due February 1 or August 1 depending on the program's
+      reporting cycle.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      This is downstream of the 5.5/5.6 data that no shipped pillar computes, and
+      it additionally requires public, unauthenticated publication in a
+      prescribed format — a capability nothing in Clinical & Experiential
+      Education, Compliance Management, or Curriculum Mapping provides. Prism
+      does have real precedent for accreditor-format-matched exports (the ARC-PA
+      6th Edition B2 report for PA, the AACN Essentials Toolkit-formatted
+      crosswalk for Nursing), which is the right pattern to extend — but into the
+      Accreditation Management pillar (roadmap Q3 2027), not the shipped three.
+    gap_notes: "Highest-leverage CAA element for the Accreditation Management business case, and the one that argues for scoping that pillar around each accreditor's EXACT report structure and submission calendar rather than a generic evidence binder. Two specifics to capture: the required verbatim label ('Student Achievement Data' / 'Student Outcome Data') and the per-modality segmentation for distance education and satellite campuses, which forces modality to be a first-class attribute on the cohort record."
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (p. 6, Standard 1.9 and its Requirement for Review); submission calendar: https://caa.asha.org/reporting/submission-dates-and-timelines/"
+
+licensure_or_gme_layer:
+  - body: "CFCC (Council for Clinical Certification in Audiology and Speech-Language Pathology) / CCC-SLP"
+    what_it_governs: >
+      The ASHA body that sets and administers the standards for the Certificate
+      of Clinical Competence in Speech-Language Pathology (CCC-SLP) — the national
+      credential the great majority of SLP graduates pursue and that most state
+      licensure boards and school-system certification routes key off. The 2020
+      SLP certification standards require, among other things: a graduate degree
+      from a CAA-accredited program or one holding candidacy (Standard II); a
+      minimum of 36 graduate semester credit hours (Standard III); and, under
+      Standard V, a minimum of 400 clock hours of supervised clinical experience
+      of which 25 must be guided clinical observation and 375 direct
+      client/patient contact, with at least 325 completed during graduate study
+      and a minimum of 250 acquired through on-site, in-person direct contact.
+      Standard V-E requires clinical supervision by an ASHA-certified
+      professional who holds the CCC, has a minimum of 9 months of full-time
+      clinical experience, and has completed a minimum of 2 hours of professional
+      development in clinical instruction/supervision — and requires that direct
+      supervision "must not be less than 25% of the student's total contact with
+      each client/patient."
+    relevance_to_product: >
+      This is why SLP hour tracking is structurally different from PA
+      encounter-count tracking and why Prism's SLP Clinical Log records TIME
+      rather than cases. Three product consequences. (1) The certification
+      thresholds are stricter and more dimensional than CAA 3.1B alone: CCC-SLP
+      adds a 250-hour on-site/in-person floor and a 375-hour direct-contact
+      floor on top of the 400/25/325 split, which means telepractice hours are
+      capped in effect and mode of delivery must be a hard-typed attribute on
+      every log entry — which it is, as a filter dimension on every SLP clinical
+      log report. (2) V-E's 25% direct-supervision floor is a per-client RATIO,
+      not a total; Prism records the supervising clinical educator on every log
+      and supports a clinical-educator attestation at review time (the FAQ names
+      this as the V-E hook), but the ratio itself is not a confirmed computed
+      metric — see the gap note on CAA 3.8B. (3) A student's hours record is
+      needed AFTER graduation to file the CCC application, which makes graduate
+      access to the Clinical Clock Hours Report a certification-critical, not
+      merely convenient, feature.
+    source: "https://www.asha.org/certification/2020-slp-certification-standards/"
+  - body: "ASHA Clinical Fellowship (CF) — CCC-SLP Standard VII"
+    what_it_governs: >
+      A mandatory, mentored, POST-GRADUATION supervised-practice period that sits
+      between the CAA-accredited degree and full certification — the SLP analogue
+      to residency, and the most distinctive structural feature of this
+      discipline's credentialing path. The CF must comprise no fewer than 36
+      weeks of full-time professional experience (defined as 35 hours per week),
+      culminating in a minimum of 1,260 hours, completed within 48 months of the
+      start date, with at least 5 hours per week worked for time to count. At
+      least 80% of the Clinical Fellow's major responsibilities must be in direct
+      client/patient contact. The CF is divided into three segments, each
+      representing one-third of the experience and at least 12 weeks long. The
+      mentor must hold a current CCC-SLP throughout, have 9 months of full-time
+      post-certification clinical experience, have completed 2 hours of
+      professional development in supervision, and must not be related to the
+      Fellow. The mentor must conduct no fewer than 36 supervisory activities
+      across the CF — 18 on-site observations of direct client contact and 18
+      other monitoring activities — with at least 6 of each per segment, and the
+      Fellow must achieve a score of 2 or better on all skills on the Clinical
+      Fellowship Skills Inventory during the final segment.
+    relevance_to_product: >
+      The CF is a genuine product-boundary question, not just background. It is
+      an hours-and-supervision-tracking problem structurally IDENTICAL to what
+      Prism's SLP Clinical Log already solves — segmented hours, a ratio floor
+      (80% direct contact), a countable supervisory-activity quota split into
+      direct vs. indirect, a per-segment distribution rule, and a final skills
+      inventory — but the Fellow is no longer a student and the mentor is not a
+      program clinical educator, so it falls outside every shipped pillar's
+      entity model. It is the closest SLP analogue to the post-graduation
+      GME/Match tracking gap flagged in coca.yaml (COCA Element 11.5). Two ways
+      to read it: as out of scope, in which case programs should not be told
+      Prism "covers ASHA certification end to end"; or as an adjacency worth
+      scoping, since the underlying hour/supervision data model already exists
+      and a CF module would extend the customer relationship past graduation.
+      Either way, note that CAA does NOT accredit or evaluate the CF — no CAA
+      standard in this file depends on CF data — so this is a market-expansion
+      question, not an accreditation-compliance one.
+    source: "https://www.asha.org/certification/clinical-fellowship/"
+  - body: "ETS / Praxis Subject Assessment in Speech-Language Pathology"
+    what_it_governs: >
+      The national examination developed and administered by Educational Testing
+      Service that serves as the assessment requirement for the CCC-SLP (2020
+      certification Standard VI, which requires the score be submitted no earlier
+      than 5 years prior to and no later than 2 years following receipt of the
+      certification application) and is separately the sole source of the
+      pass-rate data CAA Standards 5.6, 5.8, and 1.9 require programs to compute,
+      act on, and publish.
+    relevance_to_product: >
+      Any Exam Management capability serving SLP is an ingestion-and-reporting
+      layer against ETS score reports, not an exam-authoring or delivery tool —
+      the same conclusion reached for NBOME/COMLEX in coca.yaml. One SLP-specific
+      constraint that must be encoded in the data model: CAA Standard 5.2
+      explicitly states the Praxis "cannot be used to meet this standard as a
+      form of summative assessment," so Praxis results must be modeled strictly
+      as a programmatic outcome measure and must be firewalled from per-student
+      competency roll-ups — a rule with no equivalent in the other accreditor
+      files in this directory.
+    source: "https://caa.asha.org/siteassets/files/accreditation-standards-for-graduate-programs.pdf (p. 28, Standard 5.6)"
+  - body: "ASHA (American Speech-Language-Hearing Association)"
+    what_it_governs: >
+      The parent professional association that established the CAA and authorized
+      it to function autonomously in setting standards and awarding accreditation,
+      and that separately houses the CFCC certification function. ASHA is not
+      itself the accreditor, but it owns the copyright on both the CAA standards
+      and the certification standards, publishes the KASA (Knowledge and Skills
+      Acquisition) framework SLP programs use to organize competency tracking,
+      and runs the ASHA Convention — the primary field-wide channel for reaching
+      SLP program buyers.
+    relevance_to_product: >
+      Two practical consequences. (1) Because CAA accreditation and CFCC
+      certification are separate ASHA functions with separate standard sets that
+      overlap heavily on clinical hours and supervision, Prism's Curriculum
+      Mapping correctly treats "CAA Standards" and "CFCC Standards" as two
+      distinct mappable standard sets rather than one merged list — programs map
+      course objectives to both. Any pre-loaded SLP standards library must carry
+      both, versioned independently, since they revise on different cycles (CAA
+      standards revised October 2025 with a 2027 edition adopted; CFCC standards
+      last revised for 2020). (2) The ASHA site-wide Terms of Use governing both
+      caa.asha.org and asha.org restrict automated access and derivative works —
+      see the source-handling note at the top of this file before any of this
+      content moves into customer-facing material.
+    source: "https://caa.asha.org/reporting/standards/"
+
+last_researched: "2026-08-25"

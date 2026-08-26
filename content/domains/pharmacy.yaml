@@ -1,0 +1,77 @@
+domain: "Pharmacy"
+full_name: "Doctor of Pharmacy"
+credential: "PharmD"
+program_length_years: 4
+market:
+  program_count: "142 ACPE-accredited colleges and schools of pharmacy in the U.S. as of 2022, up from 78 in 2000 (nearly doubling in two decades)"
+  program_count_trend: >
+    Number of programs grew rapidly (78 in 2000 -> 142 by 2022) but student
+    demand fell sharply in the same window: total applicants to PharmD
+    programs dropped from 106,815 (fall 2011) to 40,552 (fall 2021), a
+    decline of over 60%, and national PharmD enrollment fell from 44,403
+    (2023) to 42,312 (2024). At least one program (University of Charleston
+    School of Pharmacy) closed in December 2024 citing declining enrollment.
+    The trend has since shown early signs of reversal: applications rose for
+    a second consecutive year, up 6% from fall 2024 to fall 2025.
+  total_enrollment: "42,312 students enrolled across PharmD programs, Fall 2024 (AACP)"
+  sources:
+    - "Drug Topics, 'Number One No Longer' (142 accredited schools by 2022, growth from 78 in 2000, application decline 2011-2021): https://www.drugtopics.com/view/number-one-no-longer"
+    - "AACP, 'Academic Pharmacy's Vital Statistics' (enrollment figures): https://www.aacp.org/article/academic-pharmacys-vital-statistics"
+    - "AACP, 'Pharmacy School Interest Rises as Applications Jump 6%': https://www.aacp.org/article/pharmacy-school-interest-rises-applications-jump-6"
+    - "WVU Today, University of Charleston pharmacy program closure (Dec 2024): https://wvutoday.wvu.edu/stories/2024/12/19/wvu-school-of-pharmacy-offers-support-to-university-of-charleston-students-affected-by-program-closure"
+standards_bodies:
+  - name: "ACPE"
+    type: "institutional accreditor"
+  - name: "NABP"
+    type: "licensure exam board"
+  - name: "ASHP"
+    type: "GME/residency body"
+  - name: "APhA"
+    type: "professional association"
+clinical_education_shape: >
+  PharmD experiential education runs on a two-tier structure that is
+  structurally distinct from Prism's existing allied-health domains. Tier
+  one is the Introductory Pharmacy Practice Experience (IPPE): ACPE requires
+  a minimum of 300 hours (including at least 150 hours split across
+  community pharmacy and hospital/health-system settings), completed as
+  short, recurring placements woven concurrently through the first two
+  didactic years alongside coursework. Tier two is the Advanced Pharmacy
+  Practice Experience (APPE): a minimum of 36 weeks (1,440 hours), delivered
+  as a block of roughly six to seven rotations of four-to-six weeks each,
+  full-time, with no concurrent coursework -- most programs devote the
+  entire final (4th) professional year exclusively to APPE rotations. Four
+  rotation types are mandatory (community pharmacy, institutional/health-
+  system pharmacy, general medicine/inpatient, and ambulatory care), with
+  the remainder as electives across community, hospital, ambulatory-care,
+  and specialty sites. Supervision is a one-to-one preceptor model (a
+  licensed pharmacist precepting one or a small number of students at a
+  site) rather than a large clinical-teaching-team model. What differs most
+  from a typical allied-health program (Prism's current base) is the
+  dedicated, coursework-free capstone year of full-time block rotations
+  (APPE) sitting on top of a separate, much shorter longitudinal IPPE
+  requirement earlier in the curriculum -- allied-health programs more
+  commonly interleave shorter clinical rotations with coursework across the
+  full length of the program rather than culminating in one uninterrupted
+  rotations-only year. Rotation blocks (4-6 weeks) also run longer than
+  typical allied-health clinical rotations, and licensure requires clearing
+  two distinct national exams (NAPLEX for clinical competence, MPJE for
+  jurisprudence) plus state-tracked intern hours, on top of program
+  completion.
+distinctive_pain_points:
+  - claim: "PharmD applicant volume fell over 60% from fall 2011 (106,815) to fall 2021 (40,552), even as the number of accredited programs nearly doubled since 2000, straining program viability and driving at least one program closure in Dec 2024."
+    source: "Drug Topics, 'Number One No Longer': https://www.drugtopics.com/view/number-one-no-longer; WVU Today (University of Charleston closure): https://wvutoday.wvu.edu/stories/2024/12/19/wvu-school-of-pharmacy-offers-support-to-university-of-charleston-students-affected-by-program-closure"
+  - claim: "The 4th professional year is typically 100% experiential (36 weeks / 1,440 hours of APPE block rotations, 4-6 weeks each, no concurrent didactic coursework), a structurally different capstone-rotation model than programs that interleave clinical time with coursework throughout."
+    source: "University of Texas College of Pharmacy, IPPE/APPE overview: https://pharmacy.utexas.edu/programs/pharmd/experiential/ippe-appe; Noodle.com, 'How Do Pharmacy School Rotations Work?': https://resources.noodle.com/articles/pharmacy-rotation/"
+  - claim: "Licensure requires passing two separate national exams administered by NABP -- NAPLEX (clinical competence) and MPJE (state-specific pharmacy law) -- plus state-tracked supervised intern hours, in addition to APPE completion."
+    source: "NABP, NAPLEX/MPJE Candidate Application Bulletin: https://read.nxtbook.com/nabp/bulletin/naplex_mpje_bulletin/what_is_the_naplex.html and https://read.nxtbook.com/nabp/bulletin/naplex_mpje_bulletin/what_is_the_mpje.html"
+sources:
+  - "ACPE, PharmD Program Accreditation: https://www.acpe-accredit.org/pharmd-program-accreditation/"
+  - "Drug Topics, 'Number One No Longer': https://www.drugtopics.com/view/number-one-no-longer"
+  - "AACP, 'Academic Pharmacy's Vital Statistics': https://www.aacp.org/article/academic-pharmacys-vital-statistics"
+  - "AACP, 'Pharmacy School Interest Rises as Applications Jump 6%': https://www.aacp.org/article/pharmacy-school-interest-rises-applications-jump-6"
+  - "WVU Today, University of Charleston pharmacy program closure: https://wvutoday.wvu.edu/stories/2024/12/19/wvu-school-of-pharmacy-offers-support-to-university-of-charleston-students-affected-by-program-closure"
+  - "University of Texas College of Pharmacy, IPPE/APPE structure: https://pharmacy.utexas.edu/programs/pharmd/experiential/ippe-appe"
+  - "Noodle.com, 'How Do Pharmacy School Rotations Work?': https://resources.noodle.com/articles/pharmacy-rotation/"
+  - "NABP, NAPLEX/MPJE Candidate Application Bulletin: https://read.nxtbook.com/nabp/bulletin/naplex_mpje_bulletin/what_is_the_naplex.html"
+  - "ASHP, Accreditation Standard for Postgraduate Residency Programs (PGY1/PGY2): https://www.ashp.org/-/media/assets/professional-development/residencies/docs/examples/ASHP-Accreditation-Standard-for-Postgraduate-Residency-Programs.pdf"
+  - "American Pharmacists Association (APhA), history and membership: https://en.wikipedia.org/wiki/American_Pharmacists_Association"

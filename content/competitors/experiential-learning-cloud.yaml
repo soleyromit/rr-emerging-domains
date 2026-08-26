@@ -1,0 +1,230 @@
+# Researched 2026-08-26. Every non-trivial factual claim carries a source URL found via
+# public web search/fetch. Anything not independently verifiable is marked accordingly.
+competitor: "Experiential Learning Cloud (Lumivero)"
+slug: "experiential-learning-cloud"
+domains_served: ["Education/Teacher Prep", "Social Work", "Counseling"]   # NOT primarily a health-sciences ELMS per Prism's template categories — see note below; some institutions also route "healthcare professional" field placements through it (South Alabama case study), but no discipline-specific health-sciences marketing page or named health-sciences accreditor (ACEN, CCNE, CAPTE, ACPE, ARC-PA) was found
+category: "Field placement + assessment/accreditation management for experiential learning programs (originally teacher-prep/social-work/counseling-focused, not built as a clinical/health-sciences ELMS the way Prism, CORE ELMS, or Exxat are)"
+company:
+  founded: >
+    The product itself is a 2025 merger of two older products, not a new company: Sonia
+    (placement software) and Tevera (assessment/accreditation software) were combined
+    into "Experiential Learning Cloud," effective May 30, 2025, under parent company
+    Lumivero. Lumivero acquired Tevera on April 19, 2023. Lumivero itself was formed
+    October 4, 2022, by combining QSR International (NVivo), Palisade, and Addinsoft
+    under private-equity backing — QSR International's own history traces to 1995, but
+    that predates both Tevera and the "Experiential Learning Cloud" product name.
+    Source: https://www.prweb.com/releases/lumivero-announces-acquisition-of-tevera-to-data-solutions-portfolio-852423662.html
+    Source: https://education.hanover.edu/resources/tevera.php
+    Source: https://www.ta.com/news/lumivero-a-new-market-leading-data-insight-platform-strategically-combines-qsr-international-palisade-and-addinsoft/
+  hq: "1331 17th St Ste 404, Denver, CO 80202 (Lumivero corporate HQ)"
+  ownership: >
+    Lumivero is a portfolio company of TA Associates, a global growth private-equity
+    firm; TA backed the October 2022 combination of QSR International, Palisade, and
+    Addinsoft that created Lumivero. Experiential Learning Cloud is one product line
+    within Lumivero's broader portfolio (alongside NVivo, @RISK, XLSTAT). Gareth Morrison
+    (previously CEO of QSR International) is CEO of Lumivero. ~200-300 employees across
+    six continents per company/press sources.
+    Source: https://www.ta.com/news/lumivero-a-new-market-leading-data-insight-platform-strategically-combines-qsr-international-palisade-and-addinsoft/
+    Source: https://www.businesswire.com/news/home/20250521708677/en/Lumivero-Launches-Experiential-Learning-Cloud-to-Empower-Career-Readiness-and-Institutional-Success
+
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: >
+      Core product strength, inherited from Sonia. Student-to-site placement matching
+      and coordination, affiliation-agreement tracking, mobile hour/time logging with
+      faculty and supervisor approvals, and real-time placement dashboards. Marketing
+      claims 120,000+ students placed annually across 300+ institutions and 800+
+      placement programs, with case-study claims of "80% reduction in student placement
+      time" (UT Arlington) and "75% reduction in manual effort" (Central Michigan
+      University). Discipline framing is explicitly teacher-education / social-work /
+      counseling, not the pharmacy/nursing/PT/OT/PA framing Prism and CORE ELMS use.
+    depth_vs_prism: "unknown"
+    evidence: >
+      "Use Experiential Learning Cloud to manage field placements and internships,
+      match students with sites, track hours and competencies, coordinate supervisors,
+      and generate accreditation-ready reports." No independent (non-vendor) review
+      evidence was found to corroborate placement-matching quality against Prism's
+      SmartMatch-equivalent workflows, so depth is marked unknown rather than assumed.
+    source: "https://lumivero.com/products/experiential-learning-cloud/"
+  - pillar: "Compliance Management"
+    competitor_capability: >
+      Not marketed as a named, distinct module the way CORE ELMS or Exxat frame
+      immunization/background-check/licensing tracking. Public materials describe
+      "customizable documentation workflows," FERPA/GDPR compliance of the platform
+      itself, and SOC Type II-certified hosting — this is data-security compliance, not
+      a health-sciences clinical-compliance tracker (no explicit immunization, CPR,
+      background-check, or drug-screen tracking language found).
+    depth_vs_prism: "unknown"
+    evidence: >
+      "Adheres to FERPA, GDPR, and other data privacy standards with robust controls
+      for data access and security." No page found describing immunization/background-
+      check/license-expiration tracking specifically, unlike CORE ELMS's explicit
+      "Compliance Management" module language.
+    source: "https://lumivero.com/products/experiential-learning-cloud/"
+  - pillar: "Curriculum Mapping"
+    competitor_capability: "not publicly disclosed / unable to verify"
+    depth_vs_prism: "unknown"
+    evidence: >
+      No public Experiential Learning Cloud, Sonia, or Tevera page describes a distinct
+      curriculum-to-standards gap-analysis module comparable to CORE ELMS's CompMS.
+      "Competency tracking aligned with accreditation standards" is described, but that
+      is student-level competency assessment, not course/curriculum-level gap mapping.
+      Flagged unable to verify rather than assumed absent.
+    source: "unable to verify — searched lumivero.com product, use-case, and solutions pages; no curriculum-mapping module found"
+  - pillar: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    competitor_capability: >
+      Ships today, inherited from Tevera's assessment heritage. Customizable rubrics
+      and evaluation/feedback forms, video-enabled assessments with contextualized
+      feedback, supervisor evaluations of students, and asynchronous video review.
+      This is the product's strongest documented pillar relative to Prism's still-
+      unshipped roadmap item.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "Advanced competency tracking aligned with accreditation standards. Video-enabled
+      assessments with contextualized feedback. Customizable rubrics, evaluations, and
+      feedback forms." No independent review-site rating was found to corroborate
+      real-world quality (see strengths/weaknesses note on absent third-party reviews).
+    source: "https://lumivero.com/products/experiential-learning-cloud/"
+  - pillar: "Exam Management (Prism roadmap Q2 2027)"
+    competitor_capability: "not publicly disclosed / unable to verify"
+    depth_vs_prism: "unknown"
+    evidence: >
+      No public page mentions formal exam/secure-testing delivery (e.g., proctored or
+      timed exams, OSCE administration). All "assessment" language across product,
+      use-case, and solutions pages refers to competency rubrics, evaluations, and
+      portfolios, not exam delivery — the same pattern found for CORE ELMS in this
+      repo's core-elms.yaml. Flagged unable to verify rather than assumed absent.
+    source: "unable to verify — searched lumivero.com/products/experiential-learning-cloud/, /use-cases/field-placement/, and /solutions/tracking-feedback-loop/field-based-education/; no exam-management feature found"
+  - pillar: "Accreditation Management (Prism roadmap Q3 2027)"
+    competitor_capability: >
+      Explicitly markets accreditation-ready reporting mapped to three named
+      accreditors: CAEP (teacher education), CSWE (social work), and CACREP
+      (counseling). Real-time dashboards for accreditation reporting and audit-ready
+      documentation are described. No health-sciences accreditor (ACEN, CCNE, CAPTE,
+      ACPE, ARC-PA, etc.) is named anywhere in public materials found — accreditation
+      depth is real but concentrated entirely outside Prism's core health-sciences
+      accreditor set.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "Experiential Learning Cloud supports accreditation workflows for CSWE, CAEP,
+      CACREP, and other discipline-specific standards through centralized competency
+      tracking, evaluations, supervisor credentialing, and reporting." South Alabama
+      case study: each program (teaching, counseling, healthcare) was "configured to
+      match its own accreditation standards," but no specific health-sciences
+      accreditor name is given even there.
+    source: "https://lumivero.com/use-cases/field-placement/"
+
+strengths:
+  - claim: >
+      Built on two mature, previously independent products (Sonia for placement,
+      Tevera for assessment/accreditation) rather than a single-purpose tool, giving
+      Experiential Learning Cloud a claimed combined base of 300+ institutions and
+      120,000+ students placed annually — a large, pre-existing installed base to
+      migrate rather than a greenfield product.
+    source: "https://lumivero.com/products/experiential-learning-cloud/"
+  - claim: >
+      Named, specific accreditor alignment for its three core disciplines (CAEP for
+      teacher ed, CSWE for social work, CACREP for counseling), each with its own
+      dedicated messaging about competency/hours/reporting mapped to that accreditor's
+      standards, rather than generic "accreditation-ready" language.
+    source: "https://lumivero.com/use-cases/field-placement/"
+  - claim: >
+      Backed by a well-capitalized, diversified parent (Lumivero/TA Associates) with
+      ~200-300 employees across six continents, giving it more balance-sheet stability
+      than a single-product startup, and won "Student Engagement Solution of the Year"
+      (2026) and "Experiential Education Solution of the Year" (2025) at the EdTech
+      Breakthrough Awards.
+    source: "https://lumivero.com/resources/newsroom/experiential-learning-cloud-named-student-engagement-solution-of-the-year-2026/"
+  - claim: >
+      Case-study evidence of real consolidation wins: University of South Alabama
+      replaced 15+ separate logins/tools with one platform across teaching, counseling,
+      and healthcare-adjacent programs supporting 2,000+ learners, cutting placement
+      upload time from days to seconds via bulk spreadsheet import.
+    source: "https://lumivero.com/resources/case-studies/south-alabama-experiential-learning/"
+
+weaknesses:
+  - claim: >
+      No independent, third-party review-site data (G2, Capterra, TrustRadius) with a
+      star rating or review count was found for Tevera, Sonia, or Experiential
+      Learning Cloud despite active searching — unlike CORE ELMS's public 4.7/5
+      Capterra rating, this product's real-world user sentiment is currently
+      unverifiable from public sources.
+    source: "unable to verify — searched capterra.com, g2.com, trustradius.com, and softwareadvice.com directly and via web search; no accessible product review page found for Tevera or Experiential Learning Cloud"
+  - claim: >
+      Discipline focus is narrow relative to Prism/CORE ELMS's health-sciences breadth
+      — public marketing centers on teacher education, social work, and counseling,
+      with no dedicated page, named health-sciences accreditor, or marketing language
+      for nursing, pharmacy, PT, OT, PA, or medicine. "Healthcare professionals" appear
+      only incidentally in one case study, not as a named product line.
+    source: "https://lumivero.com/resources/case-studies/south-alabama-experiential-learning/"
+  - claim: >
+      No exam-management or curriculum-to-standards gap-mapping capability found in
+      any public material, similar to the gap found for CORE ELMS in this repo, so it
+      offers no evident white-space advantage over Prism on those two pillars either.
+    source: "unable to verify — see feature_teardown Exam Management and Curriculum Mapping rows"
+  - claim: >
+      Mid-migration friction risk: the product underwent two brand changes in roughly
+      two years (Tevera acquired by Lumivero April 2023; renamed Experiential Learning
+      Cloud May 2025, with customers migrated from *.tevera.app to *.lumivero-elc.app
+      domains), which is the kind of disruption that can unsettle institutional
+      customers regardless of underlying product quality.
+    source: "https://education.hanover.edu/resources/tevera.php"
+  - claim: >
+      Pricing is opaque at the institutional level — the only concrete figure found
+      publicly is a $215 one-time "lifetime" per-student subscription fee referenced
+      by one institution (Hanover College) for its teacher-prep program, not a
+      published institutional/enterprise price list.
+    source: "https://education.hanover.edu/resources/tevera.php"
+
+retention_anchor: >
+  Multi-decision-point student records (application through program completion) live
+  inside the platform for the length of a student's program, plus historical placement,
+  evaluation, and accreditation-reporting data an institution would need to reconstruct
+  or migrate on switch. The one-time per-student "lifetime access" pricing model found
+  at Hanover College also creates an unusual switching dynamic: students, not just the
+  institution, have a sunk-cost relationship with the platform, which raises the
+  practical bar for a program-level switch even if administrators want to move.
+
+exxat_opportunity: >
+  Experiential Learning Cloud's accreditation depth (CAEP, CSWE, CACREP) is real but
+  sits entirely outside Prism's core health-sciences accreditor set — Prism's Q3 2027
+  Accreditation Management pillar competes here mainly by being health-sciences-native
+  (ACEN/CCNE/CAPTE/ACPE/ARC-PA-aligned) where this competitor has no visible presence,
+  rather than by out-featuring it on a shared accreditor. More directly exploitable:
+  this product's own marketing and case studies show it is being pulled into
+  "healthcare professional" placements at institutions like South Alabama without any
+  dedicated health-sciences product line, named clinical-compliance module (immunizations,
+  background checks, drug screens), or health-sciences accreditor claim — that is a
+  visible seam Prism can target directly with programs currently bolting a
+  teacher-prep/social-work-native tool onto clinical placement needs it wasn't built
+  for. The unresolved two-brand-change history (Tevera to Experiential Learning Cloud)
+  is also a legitimate stability question Prism can raise with any prospect currently
+  evaluating this vendor.
+
+pricing_signal: >
+  Mostly not publicly disclosed at the institutional/enterprise level — no tiered
+  pricing page or per-student institutional rate was found on lumivero.com. One
+  concrete data point exists from a customer-facing help page: Hanover College
+  describes a one-time "$215 plus your state sales tax and any transaction fees"
+  lifetime student subscription fee for its teacher-prep program's use of the
+  platform, but this is a single institution's student-facing price, not a general
+  institutional list price, and may not generalize to other disciplines or contract
+  structures.
+
+last_researched: "2026-08-26"
+
+sources:
+  - "https://lumivero.com/products/experiential-learning-cloud/"
+  - "https://lumivero.com/resources/newsroom/lumivero-launches-experiential-learning-cloud/"
+  - "https://www.businesswire.com/news/home/20250521708677/en/Lumivero-Launches-Experiential-Learning-Cloud-to-Empower-Career-Readiness-and-Institutional-Success"
+  - "https://www.edtechinnovationhub.com/news/lumivero-launches-new-experiential-learning-cloud-tool-claims-it-can-replace-up-to-five-separate-systems"
+  - "https://lumivero.com/use-cases/field-placement/"
+  - "https://lumivero.com/solutions/tracking-feedback-loop/field-based-education/"
+  - "https://lumivero.com/resources/case-studies/south-alabama-experiential-learning/"
+  - "https://lumivero.com/resources/newsroom/experiential-learning-cloud-named-student-engagement-solution-of-the-year-2026/"
+  - "https://lumivero.com/resources/newsroom/lumivero-announces-acquisition-of-tevera-to-data-solutions-portfolio/"
+  - "https://www.prweb.com/releases/lumivero-announces-acquisition-of-tevera-to-data-solutions-portfolio-852423662.html"
+  - "https://education.hanover.edu/resources/tevera.php"
+  - "https://site.imsglobal.org/certifications/lumivero/experiential-learning-cloud"
+  - "https://www.ta.com/news/lumivero-a-new-market-leading-data-insight-platform-strategically-combines-qsr-international-palisade-and-addinsoft/"
+  - "https://www.crunchbase.com/acquisition/lumivero-acquires-tevera--fc005e13"

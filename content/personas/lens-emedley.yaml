@@ -1,0 +1,127 @@
+# COMPETITOR LENS — reframes ../competitors/emedley.yaml around roles, not features.
+# Synthesis pass over the existing teardown; no fresh research.
+competitor: "eMedley (AllofE Solutions)"
+
+how_they_implicitly_serve_roles:
+  - role: "Program Admin"
+    read: >
+      Comprehensively served on paper, and the module inventory is the most complete
+      full-suite story in this set relative to a single admin's year: eduSched for
+      preference-, lottery-, and track-based rotation scheduling with site capacity;
+      eCurriculum for mapping; eValuate+ for evaluations; ExamN for exams; eKeeper for
+      affiliation agreements and preceptor pay; eCLAS for case logs; plus auto-generated
+      MSPE letters that pull from every other module — genuinely useful, because MSPE
+      authoring is one of the admin's most painful annual jobs. The offsetting signals are
+      about working in it rather than buying it: reviewers call the UI "clunky" relative to
+      modern tools, implementation teams report no comparable-program examples to learn
+      from, and — a specific admin risk — there is no sandbox environment to test
+      configuration changes before they hit production. An admin reconfiguring an
+      evaluation cycle is doing it live.
+    related_flows:
+      - flow: admin-onboarding--01-account-activation-login-navigation.yaml
+        step: "Onboarding Notes"
+        element: "Add Notes: title, description, module name, document upload"
+  - role: "Clinical Coordinator"
+    read: >
+      Well covered on the mechanics of placement, and eKeeper's affiliation-agreement
+      tracking with auto-expiration reminders and preceptor pay automation addresses two
+      coordinator jobs that most competitors here ignore entirely. eduSched's
+      preference/lottery/track scheduling with site capacity management is real placement
+      tooling. The open question is gating: eMedley's Student Documents module tracks
+      immunizations, certifications, and disease-occurrence records with expiration
+      notifications and cohort/individual missing-vs-submitted reports, but the teardown is
+      explicit that whether those items actually gate placement start or continuation is
+      not stated publicly. The distinction matters to this role specifically — a compliance
+      report the coordinator has to read and act on is a different product from a
+      compliance rule that blocks a start date automatically.
+  - role: "Preceptor"
+    read: >
+      The most clearly under-served role in eMedley, and it is documented rather than
+      inferred. The preceptor's actual touchpoints exist — eCLAS supports preceptor
+      time-approval, eValuate handles clinical/preceptor evaluations, OSCEs, and EPA
+      entrustment ratings, and there is a dedicated iOS/Android case-log app. But
+      reviewers say the product is "not the most mobile user-friendly" and "difficult to
+      navigate on a phone or tablet" despite that app existing, and separately call the
+      evaluation UI "clunky" compared to Qualtrics. Those two complaints intersect exactly
+      where the preceptor lives: a clinician completing an evaluation on a phone between
+      patients. The caveat is sample size — Capterra shows 3.7/5 from only three reviews —
+      so this is a real but thinly-evidenced signal, and should be validated rather than
+      asserted.
+  - role: "Compliance/Accreditation Liaison"
+    read: >
+      Half-served, and the missing half is the accreditation half. On compliance the role
+      is in decent shape: a Student Documents taxonomy covering the standard immunization,
+      certification, and training items, with manual or auto-approval workflows, automated
+      expiration notifications, and cohort compliance reporting. On
+      accreditation there is no standalone module at all — accreditation support is folded
+      entirely into eCurriculum's mapping of courses and sessions to LCME standards, plus
+      AAMC Curriculum Inventory participating-vendor status. There is no documented
+      self-study evidence aggregation, no accreditation-cycle project management, and no
+      COCA-specific mapping. So a DO program's liaison gets an LCME-shaped curriculum map
+      and is left to assemble the COCA self-study by hand — notable given eMedley's own
+      named DO customers (Nova Southeastern KPCOM, UIW School of Osteopathic Medicine).
+  - role: "Dean"
+    read: >
+      Thinly served, and mostly through data that exists rather than through views built
+      for the role. The raw material is there — EPA growth-curve reporting, evaluation
+      dashboards with frequency analysis, ExamN's item analysis and performance dashboard
+      tied to competencies and standards, curriculum gap-and-overlap analysis,
+      auto-generated curriculum websites — but nothing public describes a cross-program,
+      institution-level oversight surface. The dean's due-diligence position is also weak:
+      public review volume is very thin (3.7/5 from three Capterra reviews), and while
+      Capterra lists a $5,000/year flat starting price, eMedley's own pages publish nothing
+      and describe implementations as customized per program, so the listed figure is a
+      floor, not a quote. Twenty-five-plus years of continuous operation since 1999 and
+      named DO customers are the strongest reassurance on offer.
+
+gaps_prism_can_exploit:
+  - claim: "The Preceptor is the sharpest documented gap — stated by users, not inferred."
+    detail: >
+      eMedley ships a mobile case-log app and reviewers still say the product is
+      difficult to navigate on a phone or tablet, with a "clunky" evaluation UI. This
+      is the one competitor where preceptor-experience weakness is stated by users
+      rather than inferred from silence — but validate it, since it rests on three
+      reviews.
+  - claim: "eMedley's accreditation story is LCME-shaped, not COCA-native."
+    detail: >
+      eMedley has no dedicated accreditation module at all — it is curriculum
+      mapping to LCME standards plus AAMC CI vendor status. Prism's Q3 2027 pillar,
+      built as a true self-study/evidence-aggregation workflow scoped for COCA, can
+      leapfrog rather than match, and eMedley's own DO customers (KPCOM, UIWSOM) are
+      living proof that DO programs are buying an LCME-shaped accreditation story for
+      lack of an alternative.
+  - claim: "Placement gating is unconfirmed for the Clinical Coordinator — worth testing in a demo."
+    detail: >
+      eMedley documents compliance tracking and reporting but never claims those
+      items gate placement start or continuation. If gating is genuinely absent, the
+      coordinator is doing enforcement manually off a report — a role-level
+      difference worth confirming in a demo.
+  - claim: "No sandbox environment is a concrete, demo-able Program Admin pain."
+    detail: >
+      Implementation teams report configuration changes go straight to production.
+      Safe change management is an unglamorous but demo-able admin win.
+    related_flows:
+      - flow: admin-onboarding--01-account-activation-login-navigation.yaml
+        step: "Onboarding Notes"
+        element: "Add Notes: title, description, module name, document upload"
+  - claim: "Do NOT lead with Surveys & Course Evaluations or Exam Management against eMedley."
+    detail: >
+      eValuate+ and ExamN (question banks, lockdown browser, webcam proctoring,
+      psychometric item analysis) ship today against Prism's Q1/Q2 2027 roadmap, and
+      full-suite MD/DO RFPs requiring exams now will favor eMedley by default. Lead
+      on role experience and on the accreditation module eMedley does not have.
+
+sources:
+  - "../competitors/emedley.yaml"
+  - "eMedley's Student Documents item taxonomy (relocated from how_they_implicitly_serve_roles[].read, Compliance/Accreditation Liaison): MMR, Hepatitis, flu, PPD, Varicella, BLS, CPR, HIPAA training, and licenses."
+  - "https://www.emedley.com/medical/"
+  - "https://clinical.emedley.com/features/"
+  - "https://emedley.com/curriculum-mapping"
+  - "https://www.emedley.com/examn/"
+  - "https://emedley.com/evaluate/"
+  - "https://evaluateplus.emedley.com/"
+  - "https://www.emedley.com/student-documents/"
+  - "https://www.capterra.com/p/185269/eMedley/"
+  - "https://www.capterra.com/p/185269/eMedley/reviews/"
+  - "https://allofe.com/about/"
+  - "https://emedley.com/2026/03/17/transforming-medical-education-how-nova-southeastern-university-partnered-with-emedley-to-implement-competency-based-assessment/"

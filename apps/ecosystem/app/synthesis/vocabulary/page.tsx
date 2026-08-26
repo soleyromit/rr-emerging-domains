@@ -1,0 +1,108 @@
+import { Section } from "@astryxdesign/core/Section";
+import { Stack } from "@astryxdesign/core/Stack";
+import { Heading } from "@astryxdesign/core/Heading";
+import { Text } from "@astryxdesign/core/Text";
+import { Divider } from "@astryxdesign/core/Divider";
+import { Markdown } from "@astryxdesign/core/Markdown";
+import { EmptyState } from "@astryxdesign/core/EmptyState";
+import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList";
+import { Collapsible, CollapsibleGroup } from "@astryxdesign/core/Collapsible";
+import { PageHeader } from "@/components/page-header";
+import { Takeaway } from "@/components/takeaway";
+import { GlossaryTabs } from "@/components/glossary-tabs";
+import { readMarkdownFile } from "@/lib/content";
+import { parseGlossary } from "@/lib/glossary";
+
+export default function VocabularyPage() {
+  const content = readMarkdownFile("synthesis/vocabulary-glossary.md");
+
+  if (!content) {
+    return (
+      <Section padding={6}>
+        <EmptyState title="Not yet synthesized" description="content/synthesis/vocabulary-glossary.md has not been written." />
+      </Section>
+    );
+  }
+
+  const glossary = parseGlossary(content);
+
+  return (
+    <Stack gap={0}>
+      {/* ---------- Bite-sized: what this is, how much of it there is ---------- */}
+      <Section padding={6} dividers={["bottom"]}>
+        <Stack gap={5}>
+          <PageHeader
+            eyebrow="Strategy"
+            title="Speak COCA, ACPE, CODA, and LCME before the first call"
+            description="Organized by domain: term → plain-English definition → which Prism pillar it touches → how to say it to a dean. Roadmap pillars are labeled honestly, not oversold."
+          />
+          <Takeaway title="Nobody reads a glossary end to end — look up the four terms that will come up on your call">
+            Start with the Rosetta Stone below: every term here has an allied-health equivalent the team already
+            uses daily. Then open the tab for the domain you&rsquo;re walking into and scan the term names —
+            each row expands to the full entry only if you need it.
+          </Takeaway>
+        </Stack>
+      </Section>
+
+      <Section padding={6} dividers={["bottom"]}>
+        <MetadataList columns={3}>
+          <MetadataListItem label="Terms defined">{glossary.totalTerms}</MetadataListItem>
+          <MetadataListItem label="Expansion domains">{glossary.domainCount}</MetadataListItem>
+          <MetadataListItem label="Cross-domain terms (learn first)">{glossary.crossDomainTerms}</MetadataListItem>
+        </MetadataList>
+      </Section>
+
+      {/* ---------- The on-ramp: the translation table, in full, uncollapsed ---------- */}
+      {glossary.rosetta ? (
+        <Section padding={6} dividers={["bottom"]}>
+          <Stack gap={3}>
+            <Heading level={2}>{glossary.rosetta.title.replace(/^\d+\.\s*/, "")}</Heading>
+            {/* SCAN-LAYER: intentional on-ramp table, not prose — do not gate behind Collapsible */}
+            <Markdown headingLevelStart={3} contentWidth={860}>
+              {glossary.rosetta.body}
+            </Markdown>
+          </Stack>
+        </Section>
+      ) : null}
+
+      {/* ---------- Everything below is lookup reference, not reading ---------- */}
+      <Section padding={6} variant="muted">
+        <Divider label="DEEP DIVE — OPTIONAL DETAIL BELOW" />
+      </Section>
+
+      {glossary.groups.length ? (
+        <Section padding={6} dividers={["bottom"]} variant="muted">
+          <Stack gap={4}>
+            <Stack gap={1}>
+              <Heading level={2}>Every term, by domain</Heading>
+              <Text type="supporting">
+                Scan the names. Expand a row for the full entry — definition, the Prism pillar it touches, the line
+                to say to a dean, and the source file it came from.
+              </Text>
+            </Stack>
+            <GlossaryTabs groups={glossary.groups} />
+          </Stack>
+        </Section>
+      ) : null}
+
+      <Section padding={6} variant="muted">
+        <CollapsibleGroup type="multiple" hasDividers density="compact">
+          {glossary.howToUse ? (
+            <Collapsible value="how-to-use" defaultIsOpen={false} trigger="How to use this glossary — sourcing rules, Prism pillar statuses, and the COCA legal flag">
+              <Markdown headingLevelStart={4} contentWidth={860}>
+                {glossary.howToUse}
+              </Markdown>
+            </Collapsible>
+          ) : null}
+          {glossary.appendix.map((section) => (
+            <Collapsible key={section.title} value={section.title} defaultIsOpen={false} trigger={section.title}>
+              <Markdown headingLevelStart={4} contentWidth={860}>
+                {section.body}
+              </Markdown>
+            </Collapsible>
+          ))}
+        </CollapsibleGroup>
+      </Section>
+    </Stack>
+  );
+}

@@ -1,0 +1,152 @@
+# Cross-cutting ROLE persona (not a per-domain program archetype — see
+# _TEMPLATE_discipline.yaml for the discipline layer).
+# Every pain below traces to a file in ../accreditation/, ../domains/, or
+# ../competitors/ and, through those, to a primary source URL.
+role_name: "Program Administrator (Academic Program Manager / Program Coordinator)"
+applies_across_domains: ["DO", "Pharmacy", "Dentistry", "Medicine"]
+
+day_in_the_life_summary: >
+  The operational backbone of the program office and the person who is, in
+  practice, the integration layer between every system the program runs. They
+  own cohort rosters, course and section setup, the academic calendar, student
+  records, grade posting, and the endless "can you pull me a list of..."
+  requests from faculty, the dean, and the accreditation liaison. Their day is
+  a sequence of context switches: reconciling a roster between the SIS and the
+  clinical-ed platform, chasing a faculty member for grades that are past the
+  turnaround deadline, re-keying the same student data into a third system
+  because the modules do not talk to each other, and exporting a report that
+  the built-in reporting suite cannot produce so they can finish it in Excel.
+  Almost nothing they do is a single system's job end-to-end, which is why
+  their real product is a shadow spreadsheet — the only place where the roster,
+  the placement, the compliance status, and the grade all sit in one row. The
+  work is highly seasonal and spikes hard at term rollover, at cohort
+  onboarding, and in the twelve to eighteen months before an accreditation
+  site visit, when every historical record they have been maintaining suddenly
+  has to be produced as evidence.
+
+top_tasks:
+  - "Maintain the authoritative cohort roster and student record, and reconcile it against the SIS, the LMS, and the clinical-education platform whenever any of the three changes."
+  - "Set up courses, sections, learning activities, and the academic calendar each term, including rotation blocks and the assignments/evaluations attached to them."
+  - "Chase and post grades — critically, inside the accreditor's turnaround window (LCME requires final grades within six weeks of a course or clerkship ending)."
+  - "Produce ad hoc rosters, completion reports, and data pulls on request for the dean, the clinical coordinator, the accreditation liaison, and external bodies."
+  - "Onboard each new cohort — accounts, orientation, policy attestations, handbook acknowledgments — and offboard graduates, including retaining records for post-graduation licensure verification."
+  - "Track student progression and gate events (APPE-readiness clearance, clerkship entry, graduation clearance) against program requirements."
+  - "Administer the tool itself — user accounts, permissions, form templates, and vendor support tickets — because the program rarely has dedicated IT for the ed-tech stack."
+  - "Assemble the routine annual reporting packages the accreditor requires on a fixed cadence (e.g., COCA annual and mid-cycle reports), separate from the big self-study."
+
+top_pains:
+  - pain: >
+      The program admin is the human integration layer between clinical-ed
+      modules that don't talk to each other. Every seam between the platform's
+      own pieces — SIS, LMS, clinical-ed system — is manual reconciliation
+      work that lands on them, not the software.
+    accreditation_link: >
+      Not a single standard, but it degrades evidence quality for every
+      standard that requires a centrally-overseen, program-wide view — e.g.
+      LCME Element 8.6, which explicitly demands a centrally-overseen system
+      monitoring completion of required clinical experiences (not a per-site or
+      per-department view).
+    source: "../competitors/core-elms.yaml (weaknesses — reviewers say the modules 'seem disjointed from each other' with limited connectivity, Capterra reviews https://www.capterra.com/p/265422/CORE-ELMS/reviews/); ../competitors/medhub.yaml (weaknesses — MedHub and eValue still present as two separate systems a decade after their 2015 merger); ../competitors/new-innovations.yaml (weaknesses — curriculum mapping confined to UME product, GME product only does material 'distribution'); ../accreditation/lcme.yaml (Standard 8, Element 8.6)"
+
+  - pain: >
+      The reporting they're asked for is the reporting the tools do worst — a
+      request as basic as "show me every student's progress against the four
+      required APPE settings" becomes a manual export-and-pivot exercise.
+    accreditation_link: >
+      ACPE Standard 3, Key Elements 3.2.b and 3.2.d (per-student rollup against
+      1,440 APPE hours and all four required practice settings, with graduation
+      clearance gated on it); COCA Standard 6, Element 6.10 (per-student
+      completion checklist for resident-present, DO-supervised, and inpatient
+      rotations before fourth-year clerkships).
+    source: "../competitors/core-elms.yaml (weaknesses — reviewers state outright the 'reporting suite lacks depth and consistency'); ../competitors/axium.yaml (Accreditation Management row — reporting rests on a 'Custom Query Engine' and 'Info Manager' for ad hoc report building rather than structured, standard-by-standard evidence); ../accreditation/acpe.yaml (Standard 3.2.b, 3.2.d); ../accreditation/coca.yaml (Element 6.10)"
+    related_flows:
+      - flow: "admin-onboarding--08-learning-activities-competency-management-reporting.yaml"
+        step: "Learning Activity Reports — Standard tab"
+        element: "Timesheet reports — Hours by Categories (filters: rotation, settings, status, students, sites, locations, experiential supervisors, categories, submission dates, placement faculty; Group By with nesting)"
+
+  - pain: >
+      Grade and evaluation turnaround is an SLA they're accountable for but
+      have no instrument to manage, so they end up manually tracking who's
+      late in a spreadsheet, by hand.
+    accreditation_link: >
+      LCME Standard 9, Element 9.8 (fair and timely summative assessment —
+      final grades within six weeks) and Element 9.7 (formative feedback at or
+      before the midpoint of each required course/clerkship).
+    source: "../accreditation/lcme.yaml (Standard 9, Elements 9.7 and 9.8, gap_notes — 'Turnaround-time compliance reporting against the six-week SLA is not confirmed out of the box'; no competitor publicly documents an SLA-compliance report either); primary: https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf p.15"
+    related_flows:
+      - flow: "rotation-lifecycle--07-summative-evaluation-grading-turnaround-completion-verification.yaml"
+        step: "Auto Notifications (Learning Activities > Auto Notifications)"
+        element: "Recipient Type selector"
+
+  - pain: >
+      Onboarding and account administration are surprisingly brittle in
+      competitor tools — a routine event like a preceptor changing jobs can
+      fragment their history across two accounts, and the admin is the one
+      who reconciles it by hand.
+    accreditation_link: >
+      ACPE Standard 3, Key Element 3.3.a (a preceptor record with license
+      status and performance evaluations on file, linked to every placement
+      that preceptor supervises) — a split account breaks that linkage.
+    source: "../competitors/core-elms.yaml (weaknesses — reviewers report that changing a preceptor's employer requires creating a new account rather than updating the existing one, awkward user-account handling); ../competitors/emedley.yaml (weaknesses — implementation teams separately report having no sandbox environment to test configuration changes before they hit production, https://www.capterra.com/p/185269/eMedley/reviews/); ../accreditation/acpe.yaml (Standard 3.3.a)"
+    related_flows:
+      - flow: "preceptor-site-onboarding--05-access-provisioning-getting-the-preceptor-into.yaml"
+        step: "Preceptor Portal (Mentor Teacher Portal) — Login"
+        element: "Login email field"
+
+  - pain: >
+      Cohorts are growing faster than program-office headcount, in every
+      domain at once — more students, more placements, more evaluations, more
+      records, and the same admin holding all of it.
+    accreditation_link: >
+      COCA Standard 6, Element 6.9 (a three-year rolling average of students
+      eligible for rotations matched against demonstrated adequate capacity at
+      each site) — enrollment growth directly increases the volume of data this
+      element requires the program to maintain and prove.
+    source: "../domains/do.yaml (market — DO total enrollment hit an all-time high of 40,905 in 2025-26, up 2.9% year over year with first-year enrollment up 62% over the decade, https://www.aacom.org/become-a-doctor/about-osteopathic-medicine/quick-facts); ../domains/medicine.yaml (market — MD enrollment crossed 100,000 for the first time in 2025-26, 100,723 MD students, https://www.aamc.org/news/us-medical-schools-enroll-record-number-students-2025); ../domains/dentistry.yaml (market — dental predoctoral enrollment rose to 28,925, with 25% of 2024 first-year enrollees at newly opened schools); ../accreditation/coca.yaml (Element 6.9)"
+
+  - pain: >
+      Ownership of institutional memory sits with the program admin alone, and
+      vendor churn keeps threatening it — a wave of recent mergers and
+      acquisitions across the competitive field means migration projects keep
+      landing on the one person who knows what every historical field
+      actually means.
+    accreditation_link: >
+      COCA Standard 11, Element 11.9 (timely, complete submission of annual and
+      mid-cycle reports every year of the accreditation term) — a mid-cycle
+      platform migration puts that continuity at risk.
+    source: "../competitors/core-elms.yaml (ownership — merger into PeopleGrove); ../competitors/new-innovations.yaml (ownership — QGenda acquisition July 2025); ../competitors/leo-davinci.yaml (weaknesses — DaVinci/Leo merged into Elentra May 2024, with Elentra now publicly marketing migration paths off Leo); ../competitors/medhub.yaml (ownership — MedHub/E*Value under Ascend Learning); ../accreditation/coca.yaml (Element 11.9); four of the eight competitors researched have changed hands or merged recently"
+
+tools_touched:
+  - "Student Information System (Banner, Colleague, PeopleSoft, Workday Student) — the registrar-side system of record for enrollment and transcripts"
+  - "LMS (Canvas, Blackboard, Moodle) — syllabi, didactic gradebook, and, in some competitor stacks, LTI-linked exam grade sync"
+  - "The clinical/experiential platform — Exxat Prism, CORE ELMS, eValue/MedHub, eMedley, Elentra, Leo, New Innovations, or one45 depending on the program"
+  - "axiUm (dental schools specifically) — the combined patient EHR, billing, and student competency-grading system of record for the teaching clinic"
+  - "Microsoft Excel / Google Sheets — the shadow system of record where roster, placement, compliance, and grade data actually get joined"
+  - "Outlook/Gmail plus a shared program-office inbox — the real workflow engine for chasing grades, forms, and documents"
+  - "SharePoint / Box / Google Drive — where affiliation agreements, syllabi, policies, and self-study artifacts get filed"
+  - "Accreditor submission portals — ACPE PHARMS (which replaced AACP AAMS as of Standards 2025), COCA annual/mid-cycle report forms, AAMC Curriculum Inventory, LCME DCI"
+  - "DocuSign / Adobe Sign — affiliation agreements, policy attestations, handbook acknowledgments"
+
+sources:
+  - "../accreditation/lcme.yaml (Elements 1.1, 8.6, 9.7, 9.8)"
+  - "../accreditation/acpe.yaml (Key Elements 3.2.b, 3.2.d, 3.3.a, 7.5.b — including the ACPE PHARMS platform note)"
+  - "../accreditation/coca.yaml (Elements 6.9, 6.10, 11.9)"
+  - "../accreditation/coda.yaml (Elements 1-2, 2-8)"
+  - "../domains/do.yaml (enrollment growth)"
+  - "../domains/medicine.yaml (enrollment growth)"
+  - "../domains/dentistry.yaml (enrollment growth, new-school openings)"
+  - "../domains/pharmacy.yaml (program count growth vs. applicant decline)"
+  - "../competitors/core-elms.yaml (disjointed modules, reporting depth, account handling)"
+  - "../competitors/medhub.yaml (MedHub + eValue platform separation)"
+  - "../competitors/e-value.yaml (mobile/web reliability complaints)"
+  - "../competitors/emedley.yaml (no sandbox environment, clunky UI)"
+  - "../competitors/new-innovations.yaml (split UME/GME products, QGenda acquisition)"
+  - "../competitors/leo-davinci.yaml (Elentra migration pressure on Leo customers)"
+  - "../competitors/axium.yaml (ad hoc query-based reporting, dated UI)"
+  - "../prism/capability-map.yaml (shipped vs. roadmap pillars; anchor-relative scheduling primitive)"
+  - "https://www.capterra.com/p/265422/CORE-ELMS/reviews/"
+  - "https://www.capterra.com/p/185269/eMedley/reviews/"
+  - "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf"
+  - "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf"
+
+last_researched: "2026-08-24"

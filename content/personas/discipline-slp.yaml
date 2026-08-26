@@ -1,0 +1,205 @@
+# Discipline-layer persona for Speech-Language Pathology (SLP).
+# The PROGRAM is the archetype, not an individual.
+#
+# SOURCE-DEPTH CAVEAT — read before comparing to the four expansion-domain personas
+# (discipline-do/pharmacy/dentistry/medicine.yaml): SLP has NO dedicated
+# ../domains/*.yaml, NO ../accreditation/*.yaml, and NO SLP-scoped competitor
+# teardown in this repo. This file is grounded almost entirely in two
+# Exxat-internal artifacts (the synthesized SLP playbook and one admin video
+# transcript), both of which describe how SLP works INSIDE Exxat Prism — a
+# discipline Exxat already serves — rather than independent market research on
+# SLP programs at large. It is deliberately shorter and hedged accordingly; do
+# not pad it to match the expansion-domain personas until real domain,
+# accreditation (CAA/CFCC), and competitor research exists for SLP.
+domain: "SLP"
+persona_name: "The Clock-Hour-Counting CAA-Accredited SLP Program"
+archetype_summary: >
+  A graduate SLP program accredited by CAA (the Council on Academic Accreditation
+  in Audiology and Speech-Language Pathology, under ASHA) whose entire clinical
+  administration revolves around one number: every student's progress toward the
+  400 supervised clinical hours required for ASHA certification. The unit of
+  record is not the rotation but the individual patient encounter — a clinical
+  log capturing the supervising Clinical Educator, date, patient demographics,
+  time split between intervention and evaluation, direct contact versus
+  observation, mode of delivery (in-person vs telepractice), training level, and
+  placement setting — all of which must roll up across 9 KASA competencies /
+  9 service delivery areas and patient age groups to prove breadth of experience,
+  not just total hours. Supervision runs through Clinical Educators (the SLP
+  analog of PT's Clinical Instructor / OT's fieldwork educator) who review,
+  approve, or bounce each log, and CFCC certification standards — notably
+  Standard V-E on clinical-supervisor accountability — make the educator's
+  sign-off itself a compliance artifact. The program typically holds CAA program
+  accreditation alongside ASHA/CFCC individual-certification requirements
+  simultaneously, so its evidence obligations are dual-track by design. Sources
+  reviewed are silent on cohort structure, slot-request/wishlist patterns, and
+  named coordinator roles (no documented DCE/SCCE equivalent), so this
+  archetype's placement-operations shape is an open research gap, not a known
+  quantity.
+accreditation_pressure:
+  - point: "Note: no dedicated CAA/CFCC standards file exists yet"
+    detail: >-
+      No dedicated ../accreditation/*.yaml file exists for this discipline yet —
+      the four files in that directory cover COCA, LCME, ACPE, and CODA only,
+      none of which applies to SLP. What follows is therefore drawn from the
+      Exxat playbook's own framing rather than a standards-document read, and a
+      proper CAA/CFCC standards teardown is the single highest-value next
+      research task for this persona. The named pressures:
+  - point: "Courses must map to CAA and CFCC standards; gaps get flagged"
+    detail: >-
+      (1) CAA program accreditation requires curriculum coverage evidence —
+      Prism's SLP tooling exists specifically to map course objectives to CAA
+      Standards, CFCC Standards, program outcomes, and KASA, and to surface
+      under-covered standards via a Mapped Standards Report before a review,
+      which implies gap-finding ahead of site visits is the felt need.
+  - point: "Students must log 400 ASHA-required clinical hours"
+    detail: >-
+      (2) The ASHA 400-hour supervised-clinical-experience threshold is tracked
+      per-student and cumulatively, with min/max hour thresholds per
+      participation-type/mode-of-delivery combination flagging under-logged
+      students — certification eligibility is a per-student arithmetic problem
+      across multiple simultaneous dimensions (hours by KASA service-delivery
+      area, age group, intervention vs evaluation, direct contact vs
+      observation).
+  - point: "Supervisors must sign an attestation approving each log (CFCC Standard V-E)"
+    detail: >-
+      (3) CFCC Standard V-E clinical-supervisor accountability is concrete
+      enough that the product ships a purpose-built hook for it: a configurable
+      attestation the Clinical Educator must sign while approving student logs.
+  - point: "Affiliation agreements are tracked for accreditation compliance"
+    detail: >-
+      (4) Affiliation agreements are stored and monitored in the Sites module
+      for contract oversight and accreditation documentation, echoing the
+      agreement-lifecycle pressure documented in every other discipline in this
+      repo.
+  - point: "Note: specific CAA standard numbers aren't researched yet"
+    detail: >-
+      Specific CAA standard numbers, review cadence, and evidence formats are
+      NOT in the source material and should not be cited until researched.
+current_tools:
+  - point: "Note: no SLP-specific competitor research exists yet"
+    detail: >-
+      Unknown — and honestly so. None of the nine competitor teardowns in
+      ../competitors/ mentions SLP or speech-language pathology: that research
+      pass was scoped to the four expansion domains (DO, Pharmacy, Dentistry,
+      Medicine), and the incumbents it profiles are med-ed and pharmacy/dental
+      suites.
+  - point: "Closest competitor signal is CORE ELMS, which doesn't name SLP"
+    detail: >-
+      The nearest signal is core-elms.yaml, which records CORE ELMS claiming
+      15+ disciplines including PT, OT, PA, nursing, and social work — an
+      allied-health spread adjacent to SLP, but SLP itself is not named.
+  - point: "Note: what SLP programs use today is unresearched"
+    detail: >-
+      The well-known SLP-market tools (dedicated clock-hour trackers used by
+      CSD programs) have no teardown here, so what a prospective SLP program
+      runs today — dedicated tracker, generic survey tools, or spreadsheets —
+      is an open research question.
+  - point: "Forms and hour-threshold rules require Exxat support, not self-service"
+    detail: >-
+      The one thing the sources DO establish is what an Exxat-served SLP
+      program experiences: a clinical-log-centric report suite that is
+      genuinely discipline-shaped (the playbook calls Clock Hours the most
+      discipline-specific report in the library), but with notably heavier
+      support-gating than PT/OT/PA — new forms, min/max hour thresholds, and
+      early-alert notification rules all require prism-support@exxat.com or a
+      CSS/Account Manager rather than self-service,
+  - point: "No ready-made forms; programs must hand-build their own"
+    detail: >-
+      and unlike PT there are no free off-the-shelf named standard instruments
+      (no CIET/PTMACS analog) — programs hand-configure KASA Summary Forms,
+      supervisor evaluations, and site assessments from a general toolkit.
+jtbd:
+  - job: >
+      When my students log hundreds of individual patient encounters a semester
+      across intervention/evaluation, direct-contact/observation, telepractice/
+      in-person, and every patient age group, I want each student's running total
+      sliced by all of those dimensions at once and checked against the 400-hour
+      requirement and per-category minimums, so a student's certification
+      eligibility is never a surprise in their final semester.
+    evidence_or_rationale: >
+      This is the load-bearing job the entire SLP product surface is built
+      around: the Clinical Clock Hours Report (Cumulative) explicitly tracks
+      400-hour progress, the Clinical Log Report flags students below configured
+      minimums in red, and two further reports break hours down by KASA service
+      type and by multiple attributes age-wise. The video transcript's worked
+      examples ("total direct contact intervention hours with the adult age
+      group for a specific student") show the granularity programs actually
+      query at. THIS IS THE PRIMARY JOB.
+    related_flows:
+      - flow: "rotation-lifecycle--05-in-rotation-capture-hours-encounters-procedures.yaml"
+        step: "Clinical Log Entry (SLP) — clock-hour capture"
+        element: "Practice Type (Intervention vs. Evaluation) with minutes split"
+  - job: >
+      When a Clinical Educator I do not employ approves a student's log, I want
+      that approval to carry a signed attestation on the same record, so
+      supervisor accountability is evidenced per encounter instead of
+      reconstructed from email at review time.
+    evidence_or_rationale: >
+      The playbook names CFCC Standard V-E explicitly and documents the
+      product's answer — an attestation the educator must complete while
+      approving logs — plus the Clock Hours report surfacing which attestations
+      supervisors signed and how many hours they reviewed. That a purpose-built
+      hook exists for this one standard is strong evidence it is a real,
+      recurring program pain, not a hypothetical.
+    related_flows:
+      - flow: "rotation-lifecycle--05-in-rotation-capture-hours-encounters-procedures.yaml"
+        step: "Clinical Log / Timesheet review by the site-side educator (no-login delegator link)"
+        element: "Attestation prompt at review time (Enable Attestation)"
+  - job: >
+      When an accreditation review approaches, I want my course objectives
+      mapped to CAA and CFCC standards with under-covered standards surfaced
+      automatically, so I find the curriculum gaps before the site visitors do.
+    evidence_or_rationale: >
+      Directly from the playbook's accreditation section: mapping to CAA/CFCC/
+      program outcomes plus the Mapped Standards Report for gap identification
+      "before an accreditation review." This maps onto stage 6 (Courses,
+      rotations & curriculum mapping) of
+      ../journeys/admin-onboarding-product-setup.yaml, which independently
+      records SLP as a discipline that "maps to CAA and CFCC standards and leans
+      on the Mapped Standards Report for gap-finding" — the one setup stage
+      where SLP's JTBD and the admin-onboarding journey demonstrably intersect.
+    related_flows:
+      - flow: "accreditation-self-study--04-curriculum-competency-coverage-mapping-to-the.yaml"
+        step: "Mapping Summary Dashboard / Mapped Standards Report"
+        element: "Unmapped Standards filter"
+  - job: >
+      When I need a new evaluation form, an hour-threshold rule, or an
+      early-alert notification, I want to configure it myself the way PT
+      programs configure theirs, so routine setup does not become a support
+      ticket with someone else's turnaround time.
+    evidence_or_rationale: >
+      The playbook's gap list flags SLP's recurring dependency on
+      prism-support@exxat.com / CSS for configuration that is self-service in
+      PT (new forms, notification rules, min/max thresholds), and the journey
+      file's stage 1 repeats it ("SLP is more support-gated than PT/OT/PA...
+      in form building"). For Exxat this is a retention-side job — a served
+      discipline's friction — but for any vendor courting an SLP program it is
+      the standard to beat. Exxat-side synthesis of documented gaps, not a
+      quoted customer complaint.
+switching_trigger: >
+  Weakly evidenced compared to the expansion-domain personas, because no market
+  or competitor research exists for SLP in this repo — treat these as hypotheses.
+  (1) A CAA reaccreditation cycle or CFCC supervision-accountability question
+  landing on a program that tracks its 400-hour math in spreadsheets: the
+  multi-dimensional slicing the reports above automate (hours by KASA area x
+  age group x participation type x mode) is miserable to maintain by hand at
+  cohort scale, and a review is the moment that cost becomes visible.
+  (2) A certification-eligibility near-miss — a student discovered short on a
+  category of hours late in the program — which converts hour-tracking from
+  bookkeeping into a named failure. (3) In the reverse direction (churn risk for
+  an Exxat-served program): the documented self-service gap versus sibling
+  disciplines, since a program repeatedly told to email support for forms,
+  thresholds, and notifications that PT admins configure themselves is being
+  handed a reason to look around. What would VALIDATE or kill these: an SLP
+  domain file, a CAA/CFCC standards teardown, and at least one teardown of the
+  dedicated SLP clock-hour trackers actually incumbent in this market.
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md (itself a synthesis of eight Exxat Prism Help Center artifacts — see its data-quality caveat)"
+  - "/Users/romitsoley/Downloads/SLPVideosTranscripts.md (Setting up and Reviewing Clinical Logs admin tutorial, https://vimeo.com/1040505757)"
+  - "https://help.exxatprism.com/hc/en-us/articles/43654417152529-SLP-Videos"
+  - "../journeys/admin-onboarding-product-setup.yaml (stage 6 curriculum-mapping tie; stage 1 support-gating note; stage 8 clinical-log specifics)"
+  - "../competitors/core-elms.yaml (nearest allied-health competitor signal; SLP not named — checked, no competitor file mentions SLP)"
+  # No ../domains/slp.yaml, no ../accreditation/ file for CAA/CFCC, and no
+  # SLP-scoped competitor teardown exist yet — the three biggest gaps behind
+  # this file's hedges.
+last_researched: "2026-08-24"

@@ -1,0 +1,793 @@
+# Element-level ground truth underneath rotation-lifecycle.yaml, stage 8.
+# See _TEMPLATE.yaml for field conventions (SCHEMA v2: analysis fields live per element).
+# Every accreditation_citation and competitor_equivalent claim below traces to a real
+# source file in confirmed_by — never re-derived from the journey's own synthesis.
+#
+# COVERAGE NOTE (2026-08-25): this file originally covered only the four expansion
+# domains (DO, Pharmacy, Dentistry, Medicine) plus the PT/PTA precedent. It has been
+# extended to cover the eight disciplines Exxat Prism serves TODAY — PT/PTA, OT/OTA,
+# PA, SLP, Nursing, Social Work, Teacher Education, and CRNA — because stage 8 is the
+# one stage where each accreditor's requirements stop being narrative and become a
+# concrete, field-shaped report. Every existing-discipline claim below is grounded in
+# the accreditor registry built for that discipline in ../accreditation/ (capte,
+# acote, arc-pa, caa-asha, nursing, coa, cswe, caep) plus that discipline's playbook.
+#
+# COMPETITOR-COVERAGE FINDING, stated once and referenced throughout: across all nine
+# competitor teardowns in ../competitors/, EVERY named-standard accreditation claim is
+# for ACGME, LCME, CACMS, COCA, ACPE, CODA, or ARC-PA. Not one teardown documents a
+# competitor artifact against CAPTE, ACOTE, CAA/ASHA, CCNE, ACEN, COA, CSWE, or CAEP.
+# So for six of the eight existing disciplines there is genuinely NOTHING to compare
+# against at element level, and that is recorded as such below rather than papered
+# over with screen-level vagueness. The two exceptions are PA (Elentra names ARC-PA
+# report alignment) and the generic CQI loop (New Innovations ships citation/concern
+# tracking inside its ACGME Annual Program Evaluation).
+flow_name: "Post-Rotation Rollup: Cross-Site Comparability, CQI Closure & Accreditation Evidence"
+maps_to_journey: "rotation-lifecycle.yaml, stage 8"
+persona: "Compliance / Accreditation Liaison (../personas/role-compliance-accreditation-liaison.yaml), working alongside the Program Administrator who holds most of the underlying screen access"
+steps:
+  - screen: "School Profile > Accreditation card"
+    navigation_path: "Program Details > Setup > School Profile > Accreditation"
+    elements:
+      - element: "+ / pencil icon to add or edit an accreditation entry"
+        type: "record editor (drawer)"
+        data_shown: "Name of accrediting body; Accreditation status; Type of accreditation; Accreditation details (free text); Next accreditation date; Most recent accreditation date"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.9; LCME Standard 1, Element 1.1 (institutional accreditation-status record only — these are free-text/date metadata fields, not standard-level evidence)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in this research documents an equivalently-scoped accreditation-status editor; e-value.yaml's 'Accreditation Automation' feature page markets dashboards and scorecards at a feature-name level, not field-by-field, so a like-for-like element comparison isn't supportable from public docs."
+        gap_severity: "cosmetic"
+        gap_note: "The drawer captures who/what/when as free text and dates. There is no field that ties an entry to a specific standard number or to supporting evidence, which is what COCA 11.9 and ACPE 7.5.b actually require."
+      - element: "Accreditation entries list"
+        type: "read-only rollup, repeatable per accreditor"
+        data_shown: "One entry per accrediting body the program holds status with"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.9; LCME Standard 1, Element 1.1 (institutional accreditation-status record, not standard-level evidence)"
+        competitor_equivalent: "Not comparable at element level — e-value.yaml documents MedHub/E*Value's accreditation dashboards only by feature name, with no disclosed per-accreditor record list to compare this rollup against."
+        gap_severity: "cosmetic"
+        gap_note: "A read-only list of status records per accreditor. It is a metadata roster, not a standards-to-evidence mapping, so it satisfies nothing COCA 11.9 or ACPE 7.5.b require beyond recording that a status exists."
+      - element: "Accreditation entries list — repeatability across a MULTI-ACCREDITOR STACK (Nursing / CRNA clause)"
+        type: "read-only rollup, repeatable per accreditor"
+        data_shown: "One entry per body; a nurse anesthesia track can legitimately need three (COA for the CRNA track, CCNE or ACEN for the DNP around it, and the state board of nursing's program approval)"
+        gates_on: []
+        accreditation_citation: "COA Standard A.12 (program acts in accordance with the Accreditation Policies and Procedures Manual — see ../accreditation/coa.yaml); CCNE Standard IV, Key Element IV-A and ACEN Standard 5, Criterion 5.1 (both require a written systematic evaluation plan per program type — see ../accreditation/nursing.yaml)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in ../competitors/ documents ANY nursing accreditor (CCNE, ACEN, or COA) by name; every named-standard claim across the nine files is ACGME/LCME/CACMS/COCA/ACPE/CODA/ARC-PA. There is nothing to compare a three-body accreditation stack against."
+        gap_severity: "cosmetic"
+        gap_note: "The repeatable-entry model is enough to RECORD all three bodies, which nursing.yaml confirms ('Prism's Accreditation record already stores repeatable accrediting-body entries, so a program can record both its accreditor and its board approval'). What it cannot express is that the three carry different rules over the same data: state boards outrank the accreditor on clock hours, ratios, and simulation caps (ACEN Criterion 4.6 explicitly defers to 'regulatory agencies'), and nothing encodes a per-state rule table. The card is a roster, not a rule stack."
+      - element: "Accreditation entries list — one entry per DEGREE LEVEL (OT/OTA clause)"
+        type: "read-only rollup"
+        data_shown: "The OT playbook documents a school running both MSOT and OTD adding both as separate accreditation details under one accrediting body"
+        gates_on: []
+        accreditation_citation: "ACOTE Standard A.4.2 with A.6.5 (publication of program outcomes and the graduation-rate formula, applied per degree level — ACOTE holds doctoral, master's, baccalaureate, and associate programs to four parallel standard columns in one document; see ../accreditation/acote.yaml)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents ACOTE at all, so degree-level segmentation of an accreditation record has no competitor artifact to measure against."
+        gap_severity: "configure-needed"
+        gap_note: "Multiple entries per body is supported and is how OT programs already use it. The limitation is that the degree level lives in free text, so nothing downstream (report, threshold, or standard set) is keyed to it — which matters because ACOTE's Level II length rule is degree-level-conditional inside ONE standard number (24 weeks OT vs. 16 weeks OTA at C.1.12) and a single university often runs both in one tenant."
+      - element: "View-only site-visitor access (provisioned by Exxat support, not on this card)"
+        type: "access grant, support-gated"
+        data_shown: "Read-only account for an external reviewer during an accreditation site visit"
+        gates_on: ["Requires an Exxat support / Account Manager request — not admin self-service"]
+        accreditation_citation: "CAEP Standard R5, Component R5.1 — 'Verification of the Quality Assurance System through demonstration,' i.e. the artifact CAEP expects is a LIVE system walkthrough, not a PDF binder (see ../accreditation/caep.yaml); COA Accreditation Policies and Procedures Manual (site visits as a COA-side assessment mechanism, ../accreditation/coa.yaml)"
+        competitor_equivalent: "Not comparable at element level — e-value.yaml documents MedHub's 'CLER visit/letter/response-action tracking' as a shipped feature, but that tracks the visit as a workflow object; no competitor teardown discloses a reviewer-scoped read-only role, so the comparison is between two different things rather than field-by-field."
+        gap_severity: "configure-needed"
+        gap_note: "The strongest existing answer to the one accreditor requirement a binder structurally cannot satisfy. Two limits: it is a support request rather than a first-class role (OT playbook records Exxat staff 'providing view-only access for site visitors and assisting with report generation when needed'), and it is not scoped to an accreditation cycle or to a standard set — a reviewer either gets read access or does not. caep.yaml names 'a read-only reviewer role scoped to one accreditation cycle' as a concrete differentiating feature request; this is the raw material for it, not the feature."
+    action: "Admin manually records the program's institution-level accreditation status per accreditor (e.g. COCA, LCME, ACPE, CODA — or, for existing disciplines, CAPTE, ACOTE, ARC-PA, CAA, CCNE/ACEN, COA, CSWE, CAEP) as free-text/date fields. For a site visit, a separate support request provisions read-only reviewer access."
+    confirmed_by: "'Managing Program Details via Setup.md' (Help for Program Administrators > Step-by-Step Guides > Program Details), section 'Accreditation'; OT Playbook.md lines 112-118 (accreditation fields, both MSOT and OTD addable, Exxat-assisted site-visitor view-only access); Nursing Playbook.md lines 112-120 (ACEN/CCNE/COA standards reference and the critical-standard convention); ../accreditation/coa.yaml, ../accreditation/nursing.yaml, ../accreditation/acote.yaml, ../accreditation/caep.yaml"
+
+  - screen: "Curriculum Mapping > Standards management"
+    navigation_path: "Curriculum Mapping > Program Details > Standards"
+    elements:
+      - element: "Pre-populated accreditation standards list (left panel)"
+        type: "read-only list, domain-scoped"
+        data_shown: "Every accreditor standard pre-loaded for the program's configured domain"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.4; ACPE Standard 2, Element 2.2.d (this list is the taxonomy load point a COCA/LCME/ACPE/CODA standard set would occupy; confirmed in ../accreditation/coca.yaml and ../accreditation/acpe.yaml as prism_fit: Configure/Transfer)"
+        competitor_equivalent: "Elentra markets 'tag-based accreditation-standard linkage' at a comparable conceptual level (elentra.yaml), but its public pages do not disclose whether standard sets ship pre-loaded per accreditor, so this stays a feature-level, not element-level, comparison."
+        gap_severity: "none"
+        gap_note: "Shipped and generic across accreditors already — ARC-PA and ACOTE standard sets are pre-loaded on this same panel today. The four new domains need a content load here, not engineering."
+      - element: "Pre-populated standards list — CONFIRMED LOADED SETS for the eight existing disciplines"
+        type: "read-only list, domain-scoped"
+        data_shown: "ARC-PA 6th Edition (PA); ACOTE split four ways by degree level — Doctoral 2023 + legacy 2018, Master's 2023, Baccalaureate 2023, Associate 2023 — plus an NBCOT set for OTR; AACN Essentials pre-populated for Nursing; CAA Standards and CFCC Standards as two separate sets for SLP"
+        gates_on: []
+        accreditation_citation: "ARC-PA Standard B1, Elements B1.01 a-d and B1.02 (../accreditation/arc-pa.yaml, prism_fit: Transfer); ACOTE Standard A.5.1 (../accreditation/acote.yaml, prism_fit: Transfer); CCNE Standard I, Key Element I-B — CCNE does not merely recommend the AACN Essentials, it REQUIRES the 10 Domains / 8 Concepts / 45 Competencies (../accreditation/nursing.yaml); CAA Standard 3.1B sub-elements 3.1.1B-3.1.6B (../accreditation/caa-asha.yaml)"
+        competitor_equivalent: "Elentra's Medicine discipline page names ARC-PA specifically among the standards it reports against (elentra.yaml) — the only genuine element-adjacent competitor comparison available anywhere in this stage, and it is for ONE of the eight disciplines. Elentra names no PT, OT, SLP, nursing, social work, or teacher-education accreditor; neither does any other teardown."
+        gap_severity: "none"
+        gap_note: "This is the strongest single proof that the Accreditation Management build is a generalization rather than a new capability: four accreditor families are already loaded, one of them (ACOTE) split four ways by degree level and one of them (SLP) carrying two independently-revised sets side by side. Two disciplines are NOT loaded and should not be claimed: CSWE's nine competencies run as a program-authored custom set under 'Program Specific Standards' (cswe.yaml AS 3.1.2), and caep.yaml states there is no evidence InTASC or CAEP R1-R5 ships pre-loaded at all."
+      - element: "Activate / Deactivate toggle"
+        type: "toggle"
+        data_shown: "Checkmark = active standard, usable for curriculum mapping"
+        gates_on: ["Deactivating a standard cascades to delete every mapping already made against it"]
+        accreditation_citation: "COCA Standard 6, Element 6.4; ACPE Standard 2, Element 2.2.d (this toggle is what makes a standard available as a mapping target)"
+        competitor_equivalent: "Not comparable at element level — elentra.yaml documents tag-based standard linkage but discloses no activate/deactivate mechanic, and nothing about cascade-delete behavior, so there is no competitor equivalent to compare this toggle against."
+        gap_severity: "none"
+        gap_note: "Shipped and works generically across accreditors. Worth flagging for a taxonomy migration: per gates_on, deactivating a standard cascade-deletes every mapping already made against it, so an edition change (e.g. a CAPTE-style 2016-to-2024 renumber) is destructive rather than versioned."
+      - element: "Activate / Deactivate toggle — EDITION-CHURN EXPOSURE across the eight existing disciplines"
+        type: "toggle"
+        data_shown: "The same cascade-delete behavior, applied to standard sets that are all mid-revision right now"
+        gates_on: ["Deactivating a standard cascade-deletes every mapping made against it — there is no versioned migration path"]
+        accreditation_citation: "CAPTE 2024 Standards, effective for all programs Jan 1 2026, superseding the 2016 edition (../accreditation/capte.yaml); CCNE Standard I, Key Element I-B — Prism's loaded Essentials are documented against the 2021 edition while CCNE's 2026 amendment exists precisely because AACN reissued them, effective Jan 1 2027 (../accreditation/nursing.yaml); CAA's separately adopted 2027 Standards effective Aug 1 2027 (../accreditation/caa-asha.yaml); CSWE bylaws requiring EPAS review at intervals not exceeding 7 years, next expected ~2029 (../accreditation/cswe.yaml); the per-SPA edition churn behind CAEP (ACTFL 2026, ALA/AASL 2019, AMLE 2022, CEC, NPBEA/NELP 2018 — see ../accreditation/caep.yaml)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in this research documents how any competitor handles an accreditor edition renumber. leo-davinci.yaml is the nearest adjacent claim (AAMC Curriculum Inventory business rules that flag data errors PRE-submission), which is validation rather than versioning."
+        gap_severity: "gap"
+        gap_note: "This is the sharpest cross-discipline risk this stage surfaces, and it is not hypothetical: four of the eight served disciplines have a standards edition landing between now and 2029. Because deactivation cascade-deletes mappings, an edition transition destroys the very longitudinal mapping history a self-study trends. capte.yaml calls the CAPTE 2016-to-2024 renumber 'the concrete argument for making the edition crosswalk a first-class field in Accreditation Management'; caep.yaml independently calls SPA edition transitions 'a genuinely risky operation for a TE customer.' Two accreditor registries reached that conclusion separately, which is what makes it a product requirement rather than an opinion."
+      - element: "+Add <Standard Name> drawer (Standard code / Standard description / Annotations)"
+        type: "input fields"
+        data_shown: "Custom sub-standard authoring beneath a pre-loaded accreditor standard"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.4; ACPE Standard 2, Element 2.2.d (program-specific sub-standards beneath the accreditor's own numbering)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in this research documents a custom sub-standard authoring form, so the comparison stops at Elentra's feature-level 'standard linkage' claim (elentra.yaml)."
+        gap_severity: "none"
+        gap_note: "Shipped. Lets a program extend an accreditor's standard set with its own sub-standards, which is the escape hatch for accreditor language that does not decompose cleanly into the pre-loaded taxonomy."
+      - element: "+Add drawer used to carry SEVERAL FRAMEWORKS AT ONCE (Nursing / Social Work / Teacher Education clause)"
+        type: "input fields, repeatable per standard set"
+        data_shown: "Nursing maps one course objective simultaneously to AACN Essentials + NONPF + IPEC + the four spheres of care + program SLOs; Social Work runs one generalist set plus one per area of specialized practice; Teacher Education needs InTASC + CAEP + the relevant SPA + the state's own standards"
+        gates_on: []
+        accreditation_citation: "CSWE Accreditation Standard M3.2, AS M3.2.1 (MSW programs must carry the extended and enhanced version of all nine competencies per specialization — ../accreditation/cswe.yaml); CAEP Standard R1, Component R1.1 (CAEP components wrap named InTASC standards, so the mapping target is InTASC with a CAEP rollup — ../accreditation/caep.yaml); CCNE Standard I, Key Element I-B (../accreditation/nursing.yaml)"
+        competitor_equivalent: "one45 documents 'standardized vocabularies aligned to CanMEDS and AAMC competency frameworks' with version control and an audit trail (one45.yaml) — genuinely multi-framework, and one45.yaml rates it 'at-parity' with Prism's Curriculum Mapping. That is the closest real comparison in this stage, and it is at framework-inventory level, not at the field level of this drawer."
+        gap_severity: "none"
+        gap_note: "Shipped and proven — nursing.yaml treats the multi-framework case as settled ('nothing here needs building'), and cswe.yaml confirms the dual generalist/specialization shape is 'already a solved problem.' The unbuilt half is CONSISTENCY: cswe.yaml notes nothing enforces that the client system levels named in AS M3.2.1 match those in AS M3.2.4 and AS 5.0.1(a), which is exactly what CSWE audits. A cross-standard divergence check is named there as 'a small, high-credibility Accreditation Management feature.'"
+    action: "Admin activates the accreditor's standard set and, if needed, adds program-specific sub-standards or additional parallel frameworks beneath it — this is the configuration step a COCA/LCME/ACPE/CODA taxonomy load would use, and the step CSWE and CAEP programs already use because their sets do not ship pre-loaded."
+    confirmed_by: "'Managing Accreditation Standards for Curriculum Mapping.md' (Help for Program Administrators > Step-by-Step Guides > Curriculum Mapping); OT Playbook.md line 146 (four ACOTE degree-level sets plus NBCOT for OTR); Nursing Playbook.md line 41 (Standards pre-populated with AACN Essentials); SLP Playbook.md lines 41-45 (CAA + CFCC sets loaded as two independently-revised standard sets; the Mapped Standards Report as the gap-identification surface over them; and 'beyond KASA' framework mapping requiring CSS/Account Manager assistance rather than self-service); SW Playbook.md lines 56-59 (nine CSWE competencies configured as a custom framework); ../accreditation/capte.yaml, nursing.yaml, caa-asha.yaml, cswe.yaml, caep.yaml"
+
+  - screen: "Curriculum Mapping > Mapping Reports > Heatmap Report"
+    navigation_path: "Curriculum Mapping > [select Curriculum] > Mapping Reports > [select standard] > Other Reports > Heatmap Report"
+    elements:
+      - element: "Heatmap grid"
+        type: "read-only rollup, cross-tabulation"
+        data_shown: "X-axis = accreditation standards; Y-axis = course offering name/number; cell = count of mapped course measures"
+        gates_on: []
+        accreditation_citation: "ARC-PA 6th Edition (confirmed live today); the same grid would need COCA/LCME/ACPE/CODA edition-specific configuration for the new domains"
+        competitor_equivalent: "No competitor teardown documents a directly comparable course-by-standard heatmap at element level; core-elms.yaml notes CORE ELMS ships ACPE-aligned 'curriculum gap analysis' by name but does not disclose its visual or interaction shape, so the comparison stops at feature-name parity."
+        gap_severity: "none"
+        gap_note: "Shipped, and generic once a standard set is loaded. Scope caveat: cells count course-to-standard mappings, i.e. curriculum coverage — not site-by-outcome comparability. It does not touch what COCA 6.11 or LCME 8.7 require (see step 5), and capability-map.yaml is explicit that the two should not be conflated."
+      - element: "Heatmap grid — DOWNLOAD (absent)"
+        type: "missing export control"
+        data_shown: "N/A — the PA playbook instructs CSS to advise programs to screenshot the grid"
+        gates_on: []
+        accreditation_citation: "ARC-PA Standard B1, Elements B1.01 a-d and B1.02 (../accreditation/arc-pa.yaml, which flags this defect explicitly: 'For a report whose entire purpose is accreditation-readiness evidence, screenshot-as-export is a real gap')"
+        competitor_equivalent: "leo-davinci.yaml documents Leo's Insights Dashboard as an aggregated accreditation-readiness surface and Leo as an AAMC-authorized Curriculum Inventory vendor with one-click submission since 2013; that is a submission pipeline where this element has no export at all. Leo's public pages do not decompose the dashboard's export options, so the comparison holds at the workflow level."
+        gap_severity: "gap"
+        gap_note: "Confirmed in Exxat's own PA playbook as a CSS advisory, not an inference: the Heatmap cannot be downloaded. Every other Mapping Report in the suite exports. A screenshot is not an auditable exhibit, so for any accreditor that wants the coverage matrix in the self-study — ARC-PA B1, CAA 3.1.1B-3.1.6B, CAEP R5.1 — the liaison retypes it. Small, well-defined, and the cheapest fix identified in this stage."
+      - element: "Hover tooltip"
+        type: "read-only detail"
+        data_shown: "Standard code, course details, total measures mapped for that cell"
+        gates_on: []
+        accreditation_citation: "ARC-PA 6th Edition (confirmed live today); surfaces the standard code for a cell, so it inherits whichever standard set is configured"
+        competitor_equivalent: "Not comparable at element level — core-elms.yaml names ACPE-aligned 'curriculum gap analysis' as a feature but discloses no drill-down or tooltip behavior to compare against."
+        gap_severity: "none"
+        gap_note: "Shipped read-only drill-down on the grid. Same scope caveat as the grid: it explains a coverage count, not an outcome comparison."
+      - element: "Color legend"
+        type: "read-only legend"
+        data_shown: "Distribution of mapping counts, min-to-max, darker = more mappings"
+        gates_on: []
+        accreditation_citation: "ARC-PA 6th Edition (confirmed live today) — legend is accreditor-agnostic, keyed to mapping counts rather than to any standard's own thresholds"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in this research discloses heatmap scaling or legend behavior."
+        gap_severity: "none"
+        gap_note: "Shipped. Scaled min-to-max by mapping count, so shading is relative to the program's own data — there is no accreditor-defined threshold or target band behind the colors."
+      - element: "Crosswalk Report (Nursing sibling report on the same pillar)"
+        type: "read-only rollup, cross-tabulation with a depth dimension"
+        data_shown: "AACN Essentials by row, course/objective by column; each cell records BOTH content type (knowledge- / skill- / behavior-based) AND depth (introduced / reinforced / demonstrated)"
+        gates_on: []
+        accreditation_citation: "CCNE Standard III, Key Elements III-B through III-E (a separate demonstration per degree program AND per track of where the Domains, Concepts and 45 Competencies are incorporated — ../accreditation/nursing.yaml); the same depth axis is what CAEP Standard R1, Component R1.1 needs for the InTASC Learning Progressions (../accreditation/caep.yaml names this report as 'the closest existing analogue to InTASC learning progressions in the product')"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents CCNE or ACEN at all. elentra.yaml's '>40% of the CACMS Data Collection Instrument covered' is the nearest structural analogue (an accreditor's own instrument mirrored in the mapping tool) but it is a different accreditor and a different instrument."
+        gap_severity: "none"
+        gap_note: "Shipped, and modelled directly on AACN's own Essentials Toolkit crosswalk template — i.e. a second accreditor-format-matched report alongside PA's B2 export. The reason it belongs in this stage: it is the only mapping report in the product carrying a depth dimension rather than a flat mapped/not-mapped bit, which is precisely what CAEP's learning-progression language and CCNE's per-track demonstration both need. Currently nursing-only."
+    action: "Admin reviews which courses cover which standards, and how thoroughly, as a curriculum-coverage accreditation-readiness check — then, for PA, screenshots it, because the Heatmap has no export."
+    confirmed_by: "'Heatmap Report.md' (Help for Program Administrators > Step-by-Step Guides > Curriculum Mapping Reports); ../prism/capability-map.yaml lines ~446-461 and ~568-577; PA Playbook.md line 73 ('this report cannot be downloaded — advise programs to screenshot it'); Nursing Playbook.md line 56 (Crosswalk Report, Essentials-by-row with knowledge/skill/behavior and introduced/reinforced/demonstrated); ../accreditation/nursing.yaml, ../accreditation/caep.yaml"
+
+  - screen: "Curriculum Mapping > Mapping Reports > Mapping Tags Report"
+    navigation_path: "Curriculum Mapping > Mapping Reports > [select curriculum/standard] > Mapping Tags tile > [click a tag bar]"
+    elements:
+      - element: "Tag bars (e.g. 'Needs Review', 'Reviewed')"
+        type: "clickable read-only rollup"
+        data_shown: "Count of mappings carrying each free-form colored tag"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.1 (closed-loop finding -> action -> evidence — this tag mechanism is the nearest existing building block, not a fit)"
+        competitor_equivalent: "New Innovations ships 'Annual Program Evaluations (APE): Cross-program performance review with trend analysis and citation/concern tracking' (new-innovations.yaml, rated 'ahead') — a named finding-tracking object where this is a two-state colored label. New Innovations' public GME page does not decompose the citation/concern record's fields, so the comparison is object-level, not field-by-field. This is the single closest documented competitor equivalent to a CQI loop anywhere in ../competitors/."
+        gap_severity: "gap"
+        gap_note: "A tag is a free-form label, not a finding object. Nothing links a tag to the specific programmatic change made in response, and a count of tagged mappings is not a queue with ownership, due date, or closure state."
+      - element: "Tag detail report / Word export"
+        type: "report export"
+        data_shown: "Every mapping instance carrying the selected tag"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.1 (the nearest shipped analog to a finding register; does not satisfy the element)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents an equivalent tag-filtered QA export."
+        gap_severity: "gap"
+        gap_note: "The export lists mapping instances carrying a tag. There is no evidence attachment and no per-academic-year queryability, so it cannot be pulled as a self-study exhibit showing a finding, the action taken, and the resulting evidence. This confirms — rather than merely re-asserts — that COCA 11.1 stays Gap: the nearest shipped mechanism does not do what the standard requires, it is simply the closest analog available today."
+      - element: "Tag object — MISSING FIELDS the eight existing accreditors each name explicitly"
+        type: "absent fields on a shipped object"
+        data_shown: "N/A — a tag carries a label and a color; it carries no cited data point, no stakeholder group, no disposition, no re-measurement"
+        gates_on: []
+        accreditation_citation: "CAA Standard 5.0, Standards 5.4 and 5.8 — the program must EVALUATE the improvement, not merely log it, so the object needs a re-measurement field rather than a close-out (../accreditation/caa-asha.yaml); CAEP Standard R5, Component R5.4 — the decision grid names a STAKEHOLDER GROUP as a required field and CAEP explicitly expects records of changes that did NOT improve outcomes, so the object must not be modelled as a remediation tracker (../accreditation/caep.yaml); CAPTE Standard 2, Element 2C — two worked examples of change within the LAST FOUR YEARS, each with rationale, process, timeline and reassessment result, which needs a queryable timestamp and an exemplar flag (../accreditation/capte.yaml); ACOTE Standard A.6.3 — eleven ENUMERATED data streams analysed EACH ACADEMIC YEAR with an annual report of planned action responses (../accreditation/acote.yaml); CSWE Accreditation Standard 5.0, AS 5.0.1(c) — specific curricular changes with CLEAR LINKS TO THE DATA (../accreditation/cswe.yaml); CCNE Standard IV, Key Element IV-F and ACEN Standard 5, Criterion 5.1(d)-(f) (../accreditation/nursing.yaml); ARC-PA Standard C1, Element C1.01 — the standard's verb is not 'collect' but 'create self-improvement action plans' (../accreditation/arc-pa.yaml); COA Standard H.2 (../accreditation/coa.yaml)"
+        competitor_equivalent: "New Innovations' APE citation/concern tracking (new-innovations.yaml) and MedHub/E*Value's customizable Annual Program Evaluation forms with CLER letter/response-action tracking (e-value.yaml) are both shipped finding-to-response objects — but BOTH are ACGME-shaped, and neither vendor publishes the object's field list. Critically, neither is documented against any of the eight accreditors in this stage, so no competitor is proven to satisfy CAA 5.4's re-measurement clause or CAEP R5.4's stakeholder-group field either."
+        gap_severity: "gap"
+        gap_note: "Eight independent accreditor registries, researched separately, each land on the same missing object and each add one field the others do not: re-measurement (CAA), stakeholder group plus a keep/modify/discontinue disposition plus tolerance for changes that failed (CAEP), a four-year lookback window with an exemplar flag (CAPTE), a fixed eleven-stream annual template (ACOTE), a link to the specific data point (CSWE), and a three-year retention of the analysis itself rather than just the numbers (ACEN 5.1). That convergence is the argument acote.yaml, caa-asha.yaml, cswe.yaml, caep.yaml and nursing.yaml all make independently: this belongs as a first-class object type in Accreditation Management, not bolted onto Curriculum Mapping. ACOTE's version is the useful scoping detail — because A.6.3's list is enumerated and fixed at eleven streams, an ACOTE build can be a fixed report template rather than a generic evidence binder."
+    action: "A curriculum owner filters mappings by a QA tag (e.g. clears a 'Needs Review' queue by re-tagging items 'Reviewed' once addressed) — the closest existing analog to a finding-tracking workflow, and the mechanism every one of the eight existing accreditors' CQI standards falls back to today."
+    confirmed_by: "'Mapping Tags Report for Curriculum Mapping.md' (Help for Program Administrators > Step-by-Step Guides > Curriculum Mapping Reports); ../prism/capability-map.yaml lines ~510-523; ../accreditation/caa-asha.yaml (Standards 5.4/5.8), ../accreditation/caep.yaml (R5.4), ../accreditation/capte.yaml (2C), ../accreditation/acote.yaml (A.6.3), ../accreditation/cswe.yaml (5.0.1(c)), ../accreditation/nursing.yaml (IV-F, 5.1), ../accreditation/arc-pa.yaml (C1.01), ../accreditation/coa.yaml (H.2)"
+
+  - screen: "Learning Activities > Reports > Custom Reports (Forms and Evaluations data source)"
+    navigation_path: "Learning Activities > Reports > Custom (tab) > Create New Report > Forms and Evaluations data source > Pivot Report"
+    elements:
+      - element: "Rows field picker"
+        type: "report filter / pivot config"
+        data_shown: "e.g. Clinical Setting or Site (from Course & Placement Information column group)"
+        gates_on: []
+        accreditation_citation: "LCME Standard 8, Element 8.7 (see ../accreditation/lcme.yaml, element_id 'Standard 8, Element 8.7'); ACPE Standard 7, Key Element 7.3.c (see ../accreditation/acpe.yaml) — this picker is where the by-site/by-setting axis those elements require actually comes from"
+        competitor_equivalent: "MedHub/E*Value's public 'Accreditation Automation' page names program scorecards and 'benchmarking against national/institutional trends' (e-value.yaml) as shipped, purpose-built features where this is a field the admin must select by hand; MedHub does not publish their scorecard's dimension list, so the contrast is purpose-built vs. self-service, not field-by-field."
+        gap_severity: "configure-needed"
+        gap_note: "Confirmed present: Clinical Setting and Site are exposed as pivot row dimensions today, per the documented 'Performance by Clinical Setting' scenario. No engineering needed — an admin selects it per report."
+      - element: "Values field picker"
+        type: "report filter / pivot config"
+        data_shown: "Score (Average) — an aggregation over the numeric rating-scale responses on any evaluation form"
+        gates_on: []
+        accreditation_citation: "LCME Standard 8, Element 8.7; ACPE Standard 7, Key Element 7.3.c — this picker supplies the comparison measure itself, and is where COCA Standard 6, Element 6.11's 'comparable-outcomes' statistic would have to live"
+        competitor_equivalent: "MedHub/E*Value markets benchmarking and scorecards as finished features (e-value.yaml); their public docs do not disclose which statistics those scorecards compute, so it cannot be confirmed field-by-field whether they go beyond a mean."
+        gap_severity: "configure-needed"
+        gap_note: "Score (Average) exists and is documented. What this picker does not offer is any variance or effect-size measure, so the averages it produces can be compared by eye but not flagged statistically — the piece COCA 6.11 needs that still requires the Accreditation Management build."
+      - element: "Basic / Advanced Filters accordion"
+        type: "report filter"
+        data_shown: "Course, Rotation, Academic Year, Evaluation Status, Site, and every evaluation question as a filterable field"
+        gates_on: []
+        accreditation_citation: "LCME Standard 8, Element 8.7; ACPE Standard 7, Key Element 7.3.c (Academic Year filtering is what makes a result citable to a specific review cycle)"
+        competitor_equivalent: "Not comparable at element level — e-value.yaml documents no filter inventory for MedHub/E*Value's scorecards, so there is nothing to compare this accordion's field list against."
+        gap_severity: "configure-needed"
+        gap_note: "Rich and shipped: Academic Year, Site, Rotation and per-question filtering all exist. The limitation is that a filter narrows a population; it cannot express a threshold rule such as COCA 6.11's comparable-outcomes band."
+      - element: "Filters accordion — NO DEMOGRAPHIC AXIS (Teacher Education / Nursing clause)"
+        type: "absent filter dimension"
+        data_shown: "N/A — Course, Rotation, Academic Year, Status, Site and per-question fields are filterable; race/ethnicity and other candidate demographics are not exposed as a comparability dimension on this data source"
+        gates_on: []
+        accreditation_citation: "CAEP Standards R1-R4 — disaggregation by preparation program AND race/ethnicity is required across EVERY component R1.1 through R4.3, with disparities either absent or explained with remediation steps, and CAEP Component R5.1 requires the quality-assurance system itself to support that disaggregation (../accreditation/caep.yaml); ACEN Standard 5, Criterion 5.1 — aggregate data must be DISAGGREGATED with written justification wherever it is not, and Criterion 5.3 applies the same rule to NCLEX-RN results (../accreditation/nursing.yaml)"
+        competitor_equivalent: "Not comparable at element level — and notably, caep.yaml records that neither of the two accreditor-format export precedents this repo tracks (ARC-PA's B2 report, CAPTE's dual-numbered reports) carries a demographic axis either. No competitor teardown documents demographic disaggregation in an accreditation report at all."
+        gap_severity: "gap"
+        gap_note: "Prism holds the underlying data — the Students > Reports > 'Race, Gender, Age & Ethnicity' report exists and is already one of the five sources in PT's AAR pull (step 7). What does not exist is that dimension being joinable to an outcome pivot, which is exactly what CAEP asks for on every component and ACEN asks for on every criterion. caep.yaml's scoping advice is the right one: treat demographic disaggregation as a cross-cutting reporting primitive rather than re-solving it per element. Two of eight existing disciplines need it structurally; neither can get it from this screen."
+      - element: "Data-source refresh-frequency badge"
+        type: "read-only status indicator on the report builder"
+        data_shown: "Per data source: some live/continuous, others (Slot, Sites, Locations, Contracts, Personnel, Faculty) refresh only every 24 hours"
+        gates_on: []
+        accreditation_citation: "CCNE Standard II, Key Element II-C (the site-sufficiency review artifact is built on Sites data — ../accreditation/nursing.yaml); CAA Standard 3.0B, Standard 3.6B (the SLP Statistics tab showing per-student stats by Setting and Rotation refreshes only at 6am EST daily, which caa-asha.yaml flags as 'a caveat if the pitch is real-time gap detection')"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown discloses data-freshness semantics for its accreditation reporting. e-value.yaml's 'direct import of ACGME survey results into scorecards' implies a batch model but MedHub publishes no refresh cadence."
+        gap_severity: "cosmetic"
+        gap_note: "Honest and shipped — the badge is a real UI element, not a hidden limitation, which is the right posture. It belongs in this stage because six of the ten Custom Report data sources are the site/contract/personnel sources a cross-site comparability or sufficiency report runs on, and all six are on the 24-hour tier. Nothing in this stage should be described as real-time."
+      - element: "Save and Run / Export"
+        type: "button"
+        data_shown: "Persists the report to the Custom tab; exports the resulting grid"
+        gates_on: []
+        accreditation_citation: "LCME Standard 8, Element 8.7; ACPE Standard 7, Key Element 7.3.c — the point at which a comparability result would have to leave Prism as submittable evidence"
+        competitor_equivalent: "MedHub/E*Value's 'automated ADS-formatted report generation' (e-value.yaml) is the direct contrast: an accreditor-formatted export where this button produces a generic report grid. MedHub does not publish the mapping behind their formatted export, so the comparison is at the output-format level."
+        gap_severity: "gap"
+        gap_note: "Saving and exporting a grid is shipped, but there is no accreditor-formatted export of the result — the output is a general report the liaison must re-key into the accreditor's template. Confirmed by capability-map.yaml and coca.yaml as still requiring the Accreditation Management build (roadmap Q3 2027)."
+    action: "An admin builds — from scratch, manually, per report — a pivot with Rows = Clinical Setting/Site and Values = Score (Average) to compare average student-evaluation scores across sites or settings. This is a self-service, general-purpose report builder, not a purpose-built comparability tool."
+    confirmed_by: "'Generating and Managing Custom Reports.md' (Help for Program Administrators > Step-by-Step Guides > Learning Activities), 'Forms and Evaluations' section, named scenario 'Performance by Clinical Setting' (Rows: Clinical Setting, Columns: Form Name, Values: Score (Average)); ../prism/capability-map.yaml 'Program Quality Analytics' entry (ten Custom Report data sources, per-source refresh-frequency badges); ../accreditation/caep.yaml, ../accreditation/nursing.yaml, ../accreditation/caa-asha.yaml"
+
+  - screen: "PT/PTA discipline > Learning Activities > Reports (CAPTE-mapped standard reports)"
+    navigation_path: "Placements > [Group] > Placements for Group > Reports; and Learning Activities > Reports"
+    elements:
+      - element: "'Number and Variety of Clinical Sites (Standard 2C)' report"
+        type: "standard report, scoped to selected rotations"
+        data_shown: "Site count, type, slot-fill rate, geographic distribution"
+        gates_on: []
+        accreditation_citation: "CAPTE Standard 2C (named in the report title itself). Precedent pattern for what a COCA/LCME/ACPE/CODA standard-mapped report would need to look like — not itself evidence for those four accreditors, which have no equivalent named report today."
+        competitor_equivalent: "axium.yaml notes axiUm markets 'CODA-Ready Reporting' but its own evidence (Custom Query Engine, Info Manager) suggests ad hoc query building rather than a report named after the standard it evidences; axiUm's public docs are not granular enough to confirm that definitively."
+        gap_severity: "none"
+        gap_note: "Shipped for PT/PTA. Demonstrates the pattern of naming the report after the standard number so a liaison can pull evidence without translating between systems."
+      - element: "'Number and Variety of Clinical Slots (Standard 8F)' report"
+        type: "standard report, scoped to selected rotations"
+        data_shown: "Total slots, setting variety, geographic distribution, patient-population diversity"
+        gates_on: []
+        accreditation_citation: "CAPTE Standard 8F (named in the report title itself). Precedent only — no COCA/LCME/ACPE/CODA equivalent exists today."
+        competitor_equivalent: "axium.yaml's 'CODA-Ready Reporting' claim is the nearest competitor marketing, but its documented mechanics point to ad hoc queries rather than standard-named reports; not confirmable field-by-field from public docs."
+        gap_severity: "none"
+        gap_note: "Shipped for PT/PTA. Notably includes setting variety and patient-population diversity, which is the closest existing analog to the site-mix evidence COCA and LCME reviewers ask for."
+      - element: "The '2C' and '8F' labels themselves — STALE EDITION NUMBERING"
+        type: "report metadata (report title)"
+        data_shown: "Two report titles carrying 2016-edition CAPTE numbering that no longer exists in the 2024 edition"
+        gates_on: []
+        accreditation_citation: "CAPTE Standard 2, Element 2D8 — sufficiency, quality, quantity and variety of clinical sites in the 2024 edition. There IS no Standard 8 in the 2024 PT or PTA documents (both stop at Standard 7), and 2024's 2C is Program Assessment, not sites; see ../accreditation/capte.yaml, which calls this an 'IMPORTANT VERSION HAZARD.' The 2024 Standards apply to all programs as of Jan 1 2026."
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents an accreditor edition renumber at all, in either direction. leo-davinci.yaml's AAMC business rules that flag data errors pre-submission is the nearest adjacent behavior and is validation, not renumbering."
+        gap_severity: "gap"
+        gap_note: "The single most concrete finding in this stage, and it undercuts the precedent it sits inside. Prism's other five CAPTE reports already carry dual '2024 X / 2016 Y' labels — these two have not been renumbered, so a PT program pulling '2C' evidence for a 2024-cycle self-study is citing a standard number that means something else now. capte.yaml's recommendation is to fix it before a 2024-cycle self-study and to treat it as the concrete argument for a first-class edition-crosswalk field. Note the shipped-report content is correct; only the citation is wrong, which is the more dangerous failure mode. CORROBORATION ADDED 2026-08-25 from a full read of the PT playbook: the migration is not merely overdue, it is a KNOWN, TRACKED work item — the playbook's own enhancements list carries 'Map competencies to CAPTE 7 (2024) Standards (in progress)' (Physical Therapy (PT) Playbook.md line 195). The 2024 standard set is therefore being loaded on the curriculum-mapping side while two shipped reports still print 2016 numbering on the reporting side, which is precisely the shape of the versioning gap the final step of this file scopes: an edition transition half-completed across two surfaces with nothing tying them together."
+      - element: "'Average CI Teaching Effectiveness (CAPTE 2024 4P/2016 4O)' report"
+        type: "standard report"
+        data_shown: "Student ratings of CI teaching, aggregated with dual 2024/2016 standard numbering in the report title itself"
+        gates_on: []
+        accreditation_citation: "CAPTE 2024 Standard 4P / 2016 Standard 4O (dual numbering carried in the title). Precedent only — and the most instructive one, since it shows a shipped report surviving an accreditor's edition renumber."
+        competitor_equivalent: "No competitor teardown in this research documents how a competitor handles accreditor edition renumbering, so this dual-numbering behavior has no comparable to measure against."
+        gap_severity: "none"
+        gap_note: "Shipped for PT/PTA. Confirms capability-map.yaml's 'not starting from zero' argument with a second independent precedent alongside ARC-PA: Accreditation Management (Q3 2027) is a generalization of a proven per-discipline pattern rather than a build from nothing. This precedent does not itself close any COCA/LCME/ACPE/CODA gap."
+    action: "PT/PTA program admin downloads a report named directly after the CAPTE standard number it evidences, scoped by Group & Rotation — five of the seven reports carrying correct dual 2024/2016 numbering, two still carrying 2016-only numbers that no longer exist."
+    confirmed_by: "'CAPTE (Commission on Accreditation in Physical Therapy Education) Reports.md' (Help for Program Administrators > Discipline Specific Guides > PT-PTA); PT Playbook.md — read IN FULL 2026-08-25 — lines 210-222 (the seven CAPTE-mapped reports, each named with its standard number, and the specific PTSE 1 question each pulls from: Q14 for interprofessional practice / PTA supervision under 2024 6F, Q7 for patient disease and condition across the lifespan and continuum of care under 2024 6H, Q3 for practice settings under 2024 6H, with Total Qualifications of CIs sourced from the CI Details form; all run by selecting Group & Rotation and clicking Download Report, with no raw-data assembly) and line 195 ('Map competencies to CAPTE 7 (2024) Standards (in progress)' — the in-flight edition migration behind the stale 2C/8F labels); ../accreditation/capte.yaml (Standard 2, Element 2D8 gap_notes — the version hazard)"
+
+  - screen: "PT/PTA discipline > Annual Accreditation Report (AAR) data-gather sequence"
+    navigation_path: "Sites > Contracts (filtered Active) -> Learning Activity > Reports > 'Total Qualifications of CIs (Standard 4O)' -> Students > Reports > 'Race, Gender, Age & Ethnicity' -> Placements > Reports > 'Comprehensive Placement Report [live]'"
+    elements:
+      - element: "Contract Status filter (Sites > Contracts)"
+        type: "report filter"
+        data_shown: "Active/Expired status per site contract"
+        gates_on: []
+        accreditation_citation: "Discipline-adjacent evidence for the pain_or_gap claim that annual-report assembly is manual today — the same pattern the journey describes for COCA's annual/mid-cycle reports (Element 11.9) and ACPE's PHARMS-feeding self-study (Key Element 7.5.b). The same five-source manual pattern is what CAPTE Standard 2, Element 2D9 evidence assembly runs on today."
+        competitor_equivalent: "MedHub/E*Value's 'automated ADS-formatted report generation' (e-value.yaml) needs no equivalent manual filter step; MedHub's public page does not disclose its underlying field mapping, so the comparison is at the process level."
+        gap_severity: "gap"
+        gap_note: "Source one of five. Works as a filter, but it is a separate module visit whose output the liaison must export and carry to the AAR template by hand."
+      - element: "'Total Qualifications of CIs (Standard 4O)' report"
+        type: "standard report, scoped to a Learning Activity Group"
+        data_shown: "% credentialed CIs, certification of advanced clinical skill, CI years of experience"
+        gates_on: []
+        accreditation_citation: "CAPTE Standard 4, Element 4P (2024) / 4O (2016) — clinical education faculty qualifications and effectiveness; ../accreditation/capte.yaml rates this Transfer and calls it 'the strongest existing proof point in the file.' Also discipline-adjacent evidence for the manual-assembly pain_or_gap claim behind COCA 11.9 / ACPE 7.5.b."
+        competitor_equivalent: "MedHub/E*Value automates the equivalent export end-to-end (e-value.yaml); their field mapping is undisclosed, so the contrast is automated vs. manual rather than field-by-field."
+        gap_severity: "gap"
+        gap_note: "Source two of five. The report content is shipped and standard-named — the gap is that its output is one more Excel export the liaison must stitch in, not a section written into an assembled report. One PTA-specific caveat from capte.yaml: PTA Element 4N lets clinical education faculty be licensed physical therapist ASSISTANTS 'if permitted by the state practice act,' and Prism's preceptor credential model has no state-practice-act rule layer, so a PTA program's CI-eligibility figure in this report is manually qualified."
+      - element: "'Race, Gender, Age & Ethnicity' report, Age Group Distribution section"
+        type: "standard report"
+        data_shown: "Cohort demographic breakdown; decelerated-status flag to keep headcounts accurate"
+        gates_on: []
+        accreditation_citation: "Discipline-adjacent evidence for the manual-assembly pain_or_gap claim behind COCA Element 11.9 and ACPE Key Element 7.5.b. The same decelerated-status flag is named in ../accreditation/capte.yaml as 'precisely the denominator control an ultimate-pass-rate calculation needs' for CAPTE Element 1C2, and in ../accreditation/acote.yaml as the nearest existing analogue to the G3 exclusion in ACOTE's graduation-rate formula."
+        competitor_equivalent: "MedHub/E*Value's automated ADS-formatted generation (e-value.yaml) is the named contrast at the process level; no public field list is available for a closer comparison."
+        gap_severity: "gap"
+        gap_note: "Source three of five, from a third module (Students). Requires the liaison to know the decelerated-status flag exists in order to keep headcounts accurate — institutional knowledge the workflow does not enforce. Worth noting how far this one flag reaches: two other accreditor registries independently identified it as the denominator mechanism their own rate calculations would need, which makes it a small piece of shipped data with disproportionate downstream value."
+      - element: "'Comprehensive Placement Report [live]', Location Name column + Select Course Offerings filter"
+        type: "standard report, live data"
+        data_shown: "Every placement made; de-duplicated by Location for a unique-sites count"
+        gates_on: []
+        accreditation_citation: "Direct, discipline-adjacent evidence for the pain_or_gap claim that self-study/annual-report assembly is a manual, hand-stitched, multi-export process today (COCA Element 11.9; ACPE Key Element 7.5.b)"
+        competitor_equivalent: "MedHub/E*Value's 'automated ADS-formatted report generation' (e-value.yaml) produces a submission-ready output where this element requires the admin to delete duplicate-location rows in Excel by hand; MedHub does not disclose its field mapping, so the comparison holds at the process level."
+        gap_severity: "gap"
+        gap_note: "The sharpest single confirmation in this step: the unique-sites count an accreditor asks for is produced by the admin manually deleting duplicate Location Name rows after export. This substantiates rather than re-states the journey's claim that a liaison hand-assembles a binder against standard numbers."
+    action: "The liaison manually pulls five separate reports across four modules, applies filters and manual de-duplication (e.g. deleting duplicate-location rows by hand to get a unique-site count), exports each to Excel, and hand-assembles the results into the accreditor's AAR template outside Prism."
+    confirmed_by: "'How to Gather Data for AAR Report Using Exxat Prism.md' (Help for Program Administrators > Discipline Specific Guides > PT-PTA); PT Playbook.md lines 224-232 (the defined five-section AAR pull sequence: clinical education agreements/sites from Sites > Contracts filtered to Site Status = Active and exported to Excel sorted by Start Date; CI qualifications/credentialing percentages via a Learning Activity Group per cohort/academic year then Total Qualifications of CIs; admissions/enrollment/demographics from Students > Reports > Race, Gender, Age & Ethnicity filtered by cohort; sites with at least one placement in the academic year from Placements > Reports > Comprehensive Placement Report [live] with duplicate locations removed by hand; plus the tip to mark students 'decelerated' on the student profile and move their cohort so AAR headcounts stay accurate); ../accreditation/capte.yaml, ../accreditation/acote.yaml"
+
+  - screen: "OT/OTA discipline > ACOTE program-evaluation evidence assembly (Students > Reports; Learning Activities > Reports; Curriculum Mapping > Measure Attributes Usage)"
+    navigation_path: "Students > Reports > Communication and Intervention Report / Attestation Report / Program Requirements Report; Learning Activities > Reports > Comprehensive Report for Placement-Based Forms (AOTA FWPE family); Curriculum Mapping > Mapping Reports > Measure Attributes Usage"
+    elements:
+      - element: "Comprehensive Report for Placement-Based Forms, Group By selector (AOTA FWPE data)"
+        type: "read-only rollup with pivot selector"
+        data_shown: "FWPE results grouped by student, course, educator, site, location, or setting; sibling shapes are Raw Data, Aggregate, and Graphical"
+        gates_on: []
+        accreditation_citation: "ACOTE Standard C.1.8 (evaluating the effectiveness of supervision — ../accreditation/acote.yaml names this report's Group By pivots, Site > Location > Student and Preceptor > Student, as 'the pivots the standard actually needs'); ACOTE Standard C.1.15 (formal evaluation of student performance on Level II fieldwork)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in ../competitors/ names ACOTE or any OT-specific instrument. The AOTA FWPE has no competitor analogue documented anywhere in this research; e-value.yaml's 'CCC Milestone Review' equivalent at New Innovations aggregates ACGME milestone data, a different instrument for a different accreditor."
+        gap_severity: "none"
+        gap_note: "Shipped, and the single strongest cross-site comparability surface for any existing discipline: because the FWPE is a nationally standardized AOTA instrument shipped as a non-editable Standard form archetype, grouping the SAME instrument by site or by educator produces a like-for-like comparison rather than a comparison of differently-worded local forms. That instrument standardization is the thing that makes comparability meaningful, and acote.yaml is explicit that it is what the four expansion domains should be assessed on."
+      - element: "The same Group By rollup, read against ACOTE's COMPARABILITY clause"
+        type: "read-only rollup"
+        data_shown: "Aggregated FWPE outcomes per site / per instructional method"
+        gates_on: []
+        accreditation_citation: "ACOTE Standard C.1.11 — documentation that ALL students had SIMILAR Level I experiences across learning activities, objectives, assignments and outcome measures, with each experience tagged to one of six permitted instructional methods (virtual, simulated, standardized patients, faculty practice, faculty-led site visits, or supervision by a fieldwork educator in a practice environment); see ../accreditation/acote.yaml"
+        competitor_equivalent: "Not comparable at element level — no teardown documents ACOTE. e-value.yaml's 'benchmarking against national/institutional trends' is the nearest marketed claim of comparability anywhere in ../competitors/, but it is ACGME-scoped and MedHub publishes no statistic list, so it cannot be shown to do what C.1.11 needs either."
+        gap_severity: "gap"
+        gap_note: "acote.yaml states the finding in terms this file should not soften: comparability under C.1.11 is 'asserted by construction (same course offering, therefore same experience), not measured. Nothing compares realized Level I outcomes across sites or delivery methods to show that a simulated cohort and a practice-environment cohort actually performed comparably — the same cross-site statistical comparability gap logged against COCA 6.11 and rotation-lifecycle--08 in this repo.' An accreditor registry for an EXISTING, well-served discipline independently named this stage as the home of the gap, which is the strongest available confirmation that the gap is real and not expansion-domain-specific."
+      - element: "Measure Attributes Usage report (Instructional Methods; Lifespan/population tags)"
+        type: "read-only coverage rollup, bar graph"
+        data_shown: "Distribution of course measures across a configured attribute taxonomy — for OT, Instructional Methods and lifespan/population tags"
+        gates_on: []
+        accreditation_citation: "ACOTE Standard A.5.1 (curriculum prepares students for generalist practice across named lifespan populations and practice settings) and Standard C.1.11 (documentation of which of the six permitted instructional methods each Level I experience used — acote.yaml confirms this report is the mechanism Exxat's own ACOTE guide cites for C.1.11)"
+        competitor_equivalent: "core-elms.yaml documents CORE ELMS' CompMS as marketing 'accreditation-standards mapping and reporting' with 'continuous improvement tools' and an ACPE-aligned curriculum gap analysis — a feature-name-level analogue to a coverage report, for a different accreditor, with no disclosed attribute model. Not comparable at element level."
+        gap_severity: "configure-needed"
+        gap_note: "Shipped, and OT is one of only two disciplines (with PA) where the attribute taxonomy is confirmed loaded. The limit acote.yaml names is that coverage here is descriptive, not evaluative: 'nothing asserts a threshold (every student must see at least one pediatric and one older-adult experience) and alerts on a cohort falling short.' A distribution bar graph answers 'what did we cover' and never 'who is short.'"
+      - element: "Communication and Intervention Report / Attestation Report / Program Requirements Report"
+        type: "standard reports, student-scoped"
+        data_shown: "All communication and intervention activity; attestation completion; per-student Program Requirements completion"
+        gates_on: []
+        accreditation_citation: "ACOTE Standard A.3.5 (documented, regular faculty advisement per student, inspectable by a site visitor — ../accreditation/acote.yaml rates this Transfer and names this report family); ACOTE Standard A.6.3 (routinely secured formative and summative data across eleven enumerated streams, analysed EACH ACADEMIC YEAR)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents an advisement-history export. New Innovations' APE citation/concern tracking (new-innovations.yaml) is a program-level finding register, not a per-student advisement history, so it is a different object."
+        gap_severity: "configure-needed"
+        gap_note: "Shipped for OT specifically — and worth flagging because a dedicated Interventions report is recorded as MISSING in five other accreditor registries in this repo (arc-pa, caa-asha, cswe, caep, acote all note that the only interventions-needing-follow-up surface is the Sites/Locations Dashboard on a 24-hour refresh). The OT playbook documents a 'Communication and Intervention Report' under Students > Reports; reconcile that against the capability-map's 'no dedicated Interventions report' finding before either claim is used externally. This is a genuine open question, not a settled fact."
+      - element: "Graduation-rate and NBCOT pass-rate rollup"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "ACOTE Standard A.4.2 with A.6.5 — graduates and graduation rates reported separately AND totalled for each of the previous 3 years, posted on the program's HOME PAGE, computed as on-time graduates G1 divided by (students admitted G2 minus students who left for non-academic, non-clinical-performance reasons G3), with an 80% floor; ACOTE Standard A.6.4 — an 80% NBCOT rolling average over the 3 most recent calendar years, with a small-cohort rule extending the window year by year up to 5 years until 25 test-takers are reached (see ../accreditation/acote.yaml)"
+        competitor_equivalent: "one45.yaml documents Acuity Insights' Analytics pulling NBME CBSE/CCSE exam data into a 'Gateway exams' performance dashboard — a shipped external-exam ingestion precedent, though for a different exam body and with no threshold-computation claim. No competitor is documented ingesting NBCOT data."
+        gap_severity: "gap"
+        gap_note: "Two distinct pieces of missing logic, not one. The G3 exclusion needs a CLASSIFIED departure reason (a health/family withdrawal leaves the denominator, an academic or clinical-performance withdrawal does not) — acote.yaml notes Prism's Interventions records already capture the academic/professionalism side of that distinction and recommends reconciling the two models rather than inventing a parallel field. The A.6.4 small-cohort window is real conditional logic, not a footnote: acote.yaml warns that 'a naive 3-year average would misreport compliance for the many small OTA programs.' Both land in Accreditation Management (Q3 2027) with Exam Management (Q2 2027) as a dependency."
+    action: "An OT/OTA program assembles ACOTE program-evaluation evidence by pulling the FWPE rollup grouped by site or educator, the attribute-coverage graphs, and the per-student advisement/requirements reports — then hand-computes the graduation and NBCOT rates ACOTE A.6.3's annual analysis requires, because neither is produced by the product."
+    confirmed_by: "OT Playbook.md lines 194-199 (Student Reports incl. Communication and Intervention, Attestation, Program Requirements), lines 325-338 and 352-354 (standards mapping and coverage reporting), lines 366-375 (Level I comparability and Measure Attributes Report by instructional method); ../accreditation/acote.yaml (Standards A.3.5, A.4.2, A.5.1, A.6.3, A.6.4, A.6.5, C.1.8, C.1.11, C.1.15); ../prism/capability-map.yaml (no dedicated Interventions report)"
+
+  - screen: "PA discipline > ARC-PA-formatted exports and portal reconciliation"
+    navigation_path: "Curriculum Mapping > Mapping Reports > B2 Instructional Objectives Report; Sites > Reports > SCPE Details; Learning Activities > Learning Activity Group > Reports > Comprehensive Report Patient Log / Aggregate Report for Placement-Based Forms"
+    elements:
+      - element: "B2 Instructional Objectives Report (multi-tab Excel export)"
+        type: "accreditor-formatted report export"
+        data_shown: "One tab per ARC-PA standard carrying at least one mapped instructional objective; columns Standard / Course Name and Number / Instructional Objective; one row per objective-to-standard mapping; sub-lettered standards such as B2.06a-f consolidated onto a single tab"
+        gates_on: []
+        accreditation_citation: "ARC-PA Standard B1, Elements B1.01 a-d and B1.02, built specifically against 6th Edition B/C/D sections (../accreditation/arc-pa.yaml, prism_fit: Transfer, described there as 'the strongest incumbent evidence in this file')"
+        competitor_equivalent: "The one place a real element-level competitor comparison exists in this stage: elentra.yaml records that Elentra's Medicine discipline page names ARC-PA among the standards it reports against, alongside LCME (incl. ED-5, ED-7), COCA, CACMS, ACPE and CODA, with a University of Miami case reference for generating reports during an LCME mock visit. Elentra does not publish the output FORMAT of its ARC-PA reporting, so the comparison holds at 'both claim ARC-PA-aligned reporting' and stops short of tab-by-tab."
+        gap_severity: "none"
+        gap_note: "Shipped, and the reference implementation for what Accreditation Management should generalize: the output is not a grid the liaison re-keys, it is the accreditor's own document shape. Two other precedents now sit alongside it — Nursing's Crosswalk Report modelled on AACN's Essentials Toolkit template, and SLP's KASA Clinical Certification Report which generates a signed ASHA certification template. Three accreditor-format-matched outputs across three disciplines is a pattern, not a one-off."
+      - element: "SCPE Details report (Sites > Reports)"
+        type: "accreditor-format-mirrored report export"
+        data_shown: "Cohort, site name, affiliation status, setting, slots offered, slots used — laid out to mirror the ARC-PA Entry Level Program Portal's own SCPE data-entry screen; filterable on 'Written Agreements = Yes'"
+        gates_on: []
+        accreditation_citation: "ARC-PA Standard A1, Element A1.10 a-b (sufficiency of clinical sites and preceptors, plus the 6e rule restricting non-U.S. sites to ELECTIVE rotations only), placed in SSR Appendix 11a; see ../accreditation/arc-pa.yaml"
+        competitor_equivalent: "leo-davinci.yaml is the sharpest contrast available: Leo has been an AAMC-authorized Curriculum Inventory vendor since 2013 with ONE-CLICK submission and AAMC business rules built in to flag data errors pre-submission. Prism's equivalent is a format-matched export the admin diffs by hand in Excel. Different accreditor, but the same workflow, and the delta (validated submission vs. manual diff) is the comparison worth carrying."
+        gap_severity: "gap"
+        gap_note: "The most concrete manual seam in this whole stage. Exxat's own documented best practice is 'gold in, gold out' — keep Prism site/location names identical to the ARC-PA portal, download both exports, and diff them line by line in Excel. arc-pa.yaml calls that manual diff 'the single most concrete, already-validated case for what Accreditation Management should automate — a per-accreditor submission-format target with a reconciliation view, not a generic evidence binder.' Also unenforced: A1.10b's non-U.S.-elective-only rule is checked by a manual state/country filter, not a validation."
+      - element: "Comprehensive Report Patient Log — six-way Group By with two-level drill-down"
+        type: "read-only rollup, cross-tabulation with click-through"
+        data_shown: "Every patient encounter filterable by date range, course/rotation, site, location, setting or cohort; groupable six ways; any numeric cell drills through two levels into the underlying individual logs"
+        gates_on: []
+        accreditation_citation: "ARC-PA Standard B3, Element B3.04 a-d (SCPEs occurring in all four named settings — emergency department, inpatient, outpatient, operating room — per student), placed in SSR Appendix 14D; see ../accreditation/arc-pa.yaml, which calls this 'one of the most important patient-logging reports in Prism' for this standard"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown discloses a patient-log rollup's grouping dimensions or drill-down depth. one45.yaml confirms one45 ships 'procedure/patient-encounter logs' and emedley.yaml confirms encounter logging with 'dashboard + frequency-analysis reporting,' but neither publishes the report's pivot model."
+        gap_severity: "none"
+        gap_note: "Shipped, and genuinely the closest thing in the product to the cross-site comparability analytic this stage is about: same instrument, sliced by site and by setting, with a path back to the source record. What it compares is EXPOSURE COUNTS, not outcome scores — so it answers 'did every student see an OR' and not 'did students at site A score comparably to students at site B.' Note the template constraint: the patient-log form is support-configured, and arc-pa.yaml is blunt that 'for B3.04 the template's field set IS the accreditation evidence model, and it is not admin-editable.'"
+      - element: "Aggregate Report for Placement-Based Forms, grouped by student + preceptor + setting"
+        type: "read-only rollup with multi-key grouping"
+        data_shown: "Preceptor Evaluation of Student results simultaneously grouped by student, preceptor and setting"
+        gates_on: []
+        accreditation_citation: "ARC-PA Standard B3, Element B3.06 a-g (preceptor-enabled learning outcomes by specialty — three linked artifacts: preceptor area of practice, a rotation schedule showing the supervising preceptor's area of practice per placement, and evaluation results demonstrating students met the outcomes); see ../accreditation/arc-pa.yaml"
+        competitor_equivalent: "Not comparable at element level — no teardown documents a three-key evaluation aggregate. New Innovations' 'CCC Milestone Review: Evaluation data aggregation with spider graphs' (new-innovations.yaml) is a shipped evaluation-aggregation surface but for ACGME milestones, with no disclosed grouping model."
+        gap_severity: "gap"
+        gap_note: "The join is the gap, not the data. Exxat's own documented workflow is to COPY practice settings out of the Comprehensive Personnel Report and PASTE them into the preceptor-based placement report — i.e. the join between preceptor credentials and placements is a manual Excel step. arc-pa.yaml names that copy-paste seam as 'the concrete, nameable thing a B3.06 report inside Accreditation Management would eliminate, and the same seam recurs in every accreditor standard that asks did the right kind of supervisor deliver the right kind of experience.'"
+      - element: "C1.01 nine-stream self-assessment rollup"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "ARC-PA Standard C1, Element C1.01 (with C1.02) — ongoing self-assessment using at minimum nine named data streams: admissions data; PANCE scores AND sub-scores; didactic/clinical/overall attrition; course grades including exam scores; course and instructor evaluations INCLUDING clinical sites and preceptors; summative evaluation results; graduate/exiting student evaluation of the program; program-defined measures of PD/medical-director/principal-faculty effectiveness outside teaching; and remediation — see ../accreditation/arc-pa.yaml"
+        competitor_equivalent: "e-value.yaml documents MedHub's customizable Annual Program Evaluation forms plus direct import of ACGME survey results into scorecards — a shipped multi-stream annual self-assessment object, ACGME-shaped. That is a real capability contrast at the object level; MedHub does not publish the APE's field taxonomy, so it cannot be shown to satisfy C1.01's specific nine streams either."
+        gap_severity: "gap"
+        gap_note: "Three of the nine streams are strong today (course/instructor and site/preceptor evaluations, summative results, remediation via Interventions), graduate/exiting-student evaluation is served by Exxat Surveys, PANCE is blocked on Exam Management (Q2 2027), and admissions data plus the PD/MD effectiveness measures have no home at all. arc-pa.yaml also records a documentation defect worth carrying: Exxat's own PA accreditation guide files its Graduate Survey content under 'Accreditation Standard C2.01 a-c,' and there IS no C2.01 in the 6th Edition — 5e C2.01 a-c was renumbered into 6e B3.02 a-c, while the graduate-survey content belongs under 6e C1.01. A stale 5e citation surviving inside a document titled '6th Edition' is the same class of defect as the CAPTE 2C/8F labels in step 6."
+    action: "A PA program pulls the ARC-PA-formatted B2 export straight into the self-study, pulls SCPE Details and diffs it line by line against the ARC-PA portal's own slots report in Excel, and joins preceptor credentials to placements by copy-paste — then assembles the C1.01 nine-stream self-assessment entirely outside the product."
+    confirmed_by: "PA Playbook.md lines 67-75 (the seven-report Mapping suite incl. the B2 Instructional Objectives Report and the non-downloadable Heatmap), lines 168-180 (SCPE Details, portal mirroring, 'gold in, gold out' diff workflow), lines 182-188 (Comprehensive Personnel Report and the area-of-practice best practice), lines 244-246 (Comprehensive Report Patient Log); ../accreditation/arc-pa.yaml (A1.10 a-b, B1.01/B1.02, B3.04 a-d, B3.06 a-g, C1.01/C1.02); ../competitors/elentra.yaml, ../competitors/leo-davinci.yaml"
+
+  - screen: "SLP discipline > Clinical Log report family and the CAA threshold/publication set"
+    navigation_path: "Learning Activities > Reports > Clinical Log Aggregate Report / Clinical Log Report / Clinical Clock Hours Report (Cumulative) / Clinical Log Report (Type of Services by Age Group)"
+    elements:
+      - element: "Clinical Log Aggregate Report"
+        type: "read-only rollup across students, cohorts, courses or rotations"
+        data_shown: "Comprehensive rollup of all student clinical-log data, used for gap identification and progress monitoring; the SLP playbook names accreditation reporting as its primary use case"
+        gates_on: []
+        accreditation_citation: "CAA Standard 3.0B, Standard 3.6B (evidence each student obtained breadth and depth of clinical practice across settings, populations and age groups — ../accreditation/caa-asha.yaml calls this 'the single best-served CAA element in shipped Prism'); CAA Standard 3.0B, Standard 3.1B (the 400 / 25 observation / 325 graduate hour split)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in ../competitors/ names CAA or ASHA at all. The SLP playbook itself notes this report type is described generically across disciplines (it names CAPTE, ACEN and ARC-PA as example use cases), so it is a shared engine rather than an SLP-specific build."
+        gap_severity: "none"
+        gap_note: "Shipped, and the cleanest example in the product of a rollup whose axes were chosen to match an accreditor's own decomposition: the report family filters on Training Level (graduate vs. undergraduate) and Student Participation Type (direct contact vs. observation), which are exactly the three axes CAA 3.1B splits the 400 hours along. That is comparability by construction of the data model, not by a report the admin builds."
+      - element: "Mapped Standards Report — curriculum-coverage GAP identification against CAA and CFCC standards"
+        type: "read-only coverage/gap report over the curriculum map"
+        data_shown: "Standards that are INSUFFICIENTLY COVERED by the program's curriculum map, surfaced so a program can find gaps before an accreditation review rather than during one. Two sibling navigation paths are documented alongside it: the Cumulative Report at Dashboard > Curriculum Mapping > Mapping Reports > Other Course Based Reports > Cumulative Report, and the Assessment Attribute Report at Dashboard > Curriculum Mapping > Mapping Reports > Measure Attributes Usage > Assessment Method (Bar Graph)."
+        gates_on: []
+        accreditation_citation: "CAA Standard 3.1B, Sub-elements 3.1.1B-3.1.6B (../accreditation/caa-asha.yaml) — CAA requires evaluation AND intervention across the lifespan for each of the nine communication and swallowing elements, and caa-asha.yaml treats Curriculum Mapping as the didactic half of that evidence with the Clinical Log family as the clinical half. Also CAA Standard 2.0, Standard 2.3 by extension, since the same map carries CFCC Standards as a second, independently-revised set."
+        competitor_equivalent: "core-elms.yaml documents CORE ELMS shipping an ACPE-aligned 'curriculum gap analysis' — a directly comparable CONCEPT (a report that names under-covered standards rather than merely displaying coverage), for a different accreditor, with no disclosed output shape. That is the closest genuine analogue anywhere in ../competitors/ to this element, and it is worth stating as such rather than defaulting to 'not comparable': both vendors ship gap analysis; neither publishes what the gap threshold is."
+        gap_severity: "configure-needed"
+        gap_note: >
+          ADDED 2026-08-25 on a full read of the SLP playbook (Speech-Language Pathology (SLP)
+          Playbook.md lines 41-45). This file previously documented the Heatmap, the Mapping Tags
+          Report, Nursing's Crosswalk Report and OT's Measure Attributes Usage, and missed the one
+          mapping report that is stated as GAP-FINDING rather than coverage-displaying. The
+          distinction matters for this stage's central argument: every other mapping surface
+          documented here answers "what did we cover," and the OT element below records that "a
+          distribution bar graph answers 'what did we cover' and never 'who is short.'" The Mapped
+          Standards Report is the one shipped exception on the curriculum side.
+          Three honest limits. (1) The playbook describes it as highlighting standards
+          "insufficiently covered" without stating what threshold defines insufficient, so whether
+          this is a genuine rule or a zero-mapping check is unconfirmed and should be verified
+          before it is pitched. (2) It is a CURRICULUM-coverage gap report, not an outcome or
+          comparability report — it says a standard has too few mapped measures, never that
+          students performed below expectation on it. (3) Per line 45, mapping frameworks BEYOND
+          KASA (professional practice competencies, university learning outcomes) requires CSS or
+          Account Manager assistance rather than self-service, so the map this report reads is only
+          as complete as a services engagement made it — the same support-gating that lands on the
+          min/max hour thresholds in the element below and on custom forms and notification rules
+          elsewhere in this journey.
+      - element: "Configured min/max hour thresholds (red-flag under-logged students)"
+        type: "threshold rule rendered inline in a report"
+        data_shown: "Per participation-type x mode-of-delivery cell; students below minimum render red directly on the Clinical Log Report"
+        gates_on: ["Configurable only by prism-support@exxat.com — not admin self-service"]
+        accreditation_citation: "CAA Standard 4.0, Standard 4.3 (policies for identifying students needing intervention in the academic AND clinical components, applied CONSISTENTLY across all students identified — ../accreditation/caa-asha.yaml); CAA Standard 3.6B (the 'find the gap before graduation' behaviour)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents an hours-threshold flag inside a report. one45.yaml documents duty-hours and leave-time tracking 'for accurate and simplified program and accreditation reporting' but discloses no threshold or flagging mechanic."
+        gap_severity: "configure-needed"
+        gap_note: "This is the single most reusable shipped mechanic identified anywhere in this stage, and two other accreditor registries reach for it by name: cswe.yaml calls it 'the closest shipped analogue and the obvious thing to extend' for the CSWE 400/900 field-hour floors, and nursing.yaml names it as 'the same mechanic nursing needs' for CCNE III-H's 1,000/500-hour minimums. It is also support-gated in all three cases, which caa-asha.yaml calls 'the clearest SLP-specific self-service gap in the whole file.' A shipped, proven, threshold-with-red-flag primitive that three disciplines want and none can configure themselves."
+      - element: "Report filter set — 50-course-offering cap and the 6am Statistics refresh"
+        type: "report filter constraint"
+        data_shown: "Reports cap at 50 course offerings per run; the Statistics tab showing per-student stats by Setting and Rotation refreshes at 6am EST daily"
+        gates_on: ["A cohort spanning more than 50 course offerings must be run in multiple passes and merged by hand"]
+        accreditation_citation: "CAA Standard 3.0B, Standard 3.6B and Standard 4.0, Standard 4.7 (complete and accurate records of every student's progress for the entire time of matriculation — ../accreditation/caa-asha.yaml flags both constraints: the 6am refresh as 'a caveat if the pitch is real-time gap detection,' and the 50-offering cap as mattering 'for a large program assembling a full-cohort self-study exhibit')"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown discloses report pagination limits or data-freshness windows."
+        gap_severity: "cosmetic"
+        gap_note: "Small but load-bearing for exactly this stage: a self-study exhibit is a full-cohort artifact, and a 50-offering ceiling turns one export into several plus a manual merge — the same hand-stitching pattern step 7 documents for PT's AAR pull, arriving from a different direction."
+      - element: "KASA Clinical Certification Report"
+        type: "document generation from report data"
+        data_shown: "A signed ASHA certification template confirming a student met all standards, generated from the program's own competency and hours data"
+        gates_on: []
+        accreditation_citation: "CAA Standard 4.0, Standards 4.7 and 4.8 — per-student documentation demonstrating the student met all academic, clinical and other requirements for the degree AND for the credential, made available to the student, to graduates, and to non-completing attendees (../accreditation/caa-asha.yaml); the underlying credential is CFCC's CCC-SLP Standard V"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents generation of a certifying body's own signed template. This is the furthest any Prism report goes beyond dashboarding, and nothing in ../competitors/ is documented reaching it."
+        gap_severity: "none"
+        gap_note: "Confirmed in capability-map.yaml as going 'beyond dashboarding into document generation.' It is the third accreditor-format-matched output alongside PA's B2 export and Nursing's Crosswalk Report — and the only one that produces a signed artifact rather than a formatted grid, which is the shape Accreditation Management ultimately needs. caa-asha.yaml notes the unresolved half: nothing confirms a graduate or non-completing attendee retains access to their own record after graduation, and the CCC-SLP application is filed AFTER graduation, which is exactly when the hours verification is needed."
+      - element: "Praxis pass-rate and completion-rate threshold rollup"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "CAA Standard 5.0, Standards 5.5 and 5.6 — at least 80% of students enrolled on the first census date complete within the published time frame, and at least 80% of Praxis Subject Assessment test-takers pass, both averaged over the 3 most recently completed academic years, counting a repeat test-taker only once per reporting period; CAA Standard 1.0, Standard 1.9 — the resulting 3-year table published on the program's public website under the verbatim label 'Student Achievement Data' or 'Student Outcome Data,' segmented PER MODALITY for distance education and satellite campuses (../accreditation/caa-asha.yaml)"
+        competitor_equivalent: "one45.yaml documents Analytics pulling NBME exam data into a dashboard — an external-exam ingestion precedent — but no competitor is documented ingesting ETS/Praxis data or publishing an accreditor-labelled table to a public page."
+        gap_severity: "gap"
+        gap_note: "Two SLP-specific requirements that must survive into the Accreditation Management spec because no other accreditor in this repo states them. (1) The label is VERBATIM: CAA prescribes the exact heading text, so this is a formatted publication target rather than a data export. (2) Per-modality segmentation for distance education and satellite campuses forces modality to be a first-class attribute on the COHORT record, upstream of any report. And a hard firewall: CAA Standard 5.2 explicitly forbids using the Praxis as summative student assessment, so Praxis results must be modelled strictly as a programmatic outcome measure and must never be wired into per-student competency roll-ups — a rule with no equivalent anywhere else in ../accreditation/."
+    action: "An SLP program runs the clinical-log rollup family to evidence hours breadth, depth and distribution against CAA 3.1B/3.6B — then computes the 5.5/5.6 three-year averages and publishes the 1.9 Student Achievement Data table entirely outside Prism."
+    confirmed_by: "SLP Playbook.md — read IN FULL 2026-08-25. Lines 21 (KASA as the standard ASHA competency framework, nine KASA competencies / nine service delivery areas, with the individual areas NOT enumerated in that source), 27 (Learning Activity Group as the bundling mechanism that lets reports, reviews and setup run across a group of courses/rotations at once rather than course-by-course — the scoping object every report on this screen is run through), 41-45 (curriculum mapping to CAA Standards, CFCC Standards, program outcomes and additional competencies; the Mapped Standards Report as gap identification BEFORE an accreditation review, with the Cumulative Report and Assessment Attribute Report navigation paths; and the 'beyond KASA' mapping requiring CSS/Account Manager assistance rather than self-service), 46-47 (CFCC Standard V-E clinical-supervisor attestation and its Learning Activities > Set-up > Clinical Log > Attestation path), 49 (the Clinical Clock Hours Report (Cumulative) explicitly tracking the 400-hour requirement), 67 (min/max hour thresholds not self-service), 88-100 (SLP has no free off-the-shelf standard instruments the way PT does; the configured toolkit of KASA Summary Forms, Clinical Supervisor Evaluations (Midterm & Final), Student Self-Assessments, Student Evaluations of Clinical Sites and of Clinical Supervisors, Site Assessments aligned to program goals and accreditation standards, and custom forms — all requiring a prism-support ticket to create; and the Student Performance Report across all nine service delivery areas), 104-105 (surveys buildable directly in Prism from December 2025, with Graduating Student Survey and Clinical Supervisor Survey as the named use cases), 118 (question-based early-alert notifications configured by support, not self-service), 120-138 (the full report suite, the shared filter set, the 50-course-offering cap, and the Clinical Log Aggregate Report's accreditation-reporting use case incl. its cross-discipline CAPTE/ACEN/ARC-PA framing), 142-149 (the discipline's own gap list, which is a DOCUMENTATION gap rather than a confirmed product gap and must not be upgraded into either kind of claim); ../accreditation/caa-asha.yaml (Standards 1.9, 2.3, 3.1B, 3.1.1B-3.1.6B, 3.6B, 4.3, 4.7/4.8, 5.2, 5.5/5.6); ../prism/capability-map.yaml (KASA Clinical Certification Report)"
+
+  - screen: "Nursing discipline > per-track curriculum grids and the Competency Review Dashboard"
+    navigation_path: "Curriculum Mapping > [select Curriculum Grid per track] > Mapping Reports; Competency Management > Review > View Report; Sites > Reports > Slot Sufficiency Report"
+    elements:
+      - element: "Curriculum Grid selector (one grid per degree/track)"
+        type: "scope selector"
+        data_shown: "A separate grid per ADN / BSN / MSN / DNP / specialty track, each independently mapped against the same shared standards framework"
+        gates_on: ["Prism states plainly at grid creation that reports run ACROSS a curriculum grid but cannot run on multiple grids simultaneously"]
+        accreditation_citation: "CCNE Standard III, Key Elements III-B through III-E — a separate demonstration per degree program AND per track, each key element individually marked 'not applicable if that program is not under review' (../accreditation/nursing.yaml); the opposing requirement is ACEN Standard 4, Criterion 4.1, which requires ONE set of end-of-program student learning outcomes applying to ALL program options"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown names CCNE or ACEN. one45.yaml's curriculum module is rated 'at-parity' overall but discloses no per-track scoping model, and elentra.yaml describes filtering 'by cohort, course, or objective set' without stating whether cross-cohort union reporting is supported."
+        gap_severity: "gap"
+        gap_note: "nursing.yaml calls this 'the single most consequential structural limit in the file, and nursing is the discipline where it bites hardest': a five-track nursing school produces five disconnected report sets and no product-supported program-level union view. It is FINE for CCNE III-B/C/D/E, which are deliberately per-degree — and it BREAKS ACEN 4.1, which requires one outcome set across all options. A CCNE school and an ACEN school need opposite things from the same feature. The same limit lands on Social Work from the other direction (see step 12) and on CSWE AS 5.0.1(b)'s per-option-AND-aggregate requirement."
+      - element: "Competency Management > Review Dashboard (Domain Scores, Student Proficiency Distribution, Students Meeting Threshold by Domain, Score Distribution box plot)"
+        type: "read-only analytics dashboard with a configured threshold"
+        data_shown: "Per-domain scores; Meeting Threshold vs. Below Threshold split; a Score Distribution box plot that renders RED when a domain's median falls below its configured threshold (default pass threshold 70%, parent scores computed as a pooled mean rather than an average of averages)"
+        gates_on: []
+        accreditation_citation: "ACEN Standard 5, Criterion 5.1(b)-(c) — a specific measurable expected level of achievement per method, aggregate data collected at faculty-determined intervals AND disaggregated for meaningful analysis (../accreditation/nursing.yaml describes this dashboard as 'ACEN 5.1(b) and (c) rendered as a product'); CSWE AS 5.0.1(b) reads on the same dashboard (../accreditation/cswe.yaml)"
+        competitor_equivalent: "New Innovations' 'CCC Milestone Review: Evaluation data aggregation with spider graphs' (new-innovations.yaml) is the closest shipped competitor analytic — evaluation data aggregated to a competency framework with a visual distribution — but it is ACGME-milestone-shaped and New Innovations publishes no threshold or statistical model, so the comparison stops at 'both aggregate evaluation data to a competency view.'"
+        gap_severity: "none"
+        gap_note: "Shipped, and the only place in the product where a THRESHOLD drives a visual state change on an outcome distribution rather than on a coverage count — i.e. the closest thing to the comparability band this stage's central gap describes. Two limits carried from the registries. nursing.yaml notes the real advantage: because assessment-to-competency mapping happens once and calculates automatically, disaggregation by track or cohort is a filter rather than a rebuild, which is precisely what ACEN 5.1(c) asks for. coa.yaml notes the real risk for CRNA: this is a DOMAIN-level view, and COA treats each of its fifty graduate standards as individually critical, so a domain average can mask a single failed competency."
+      - element: "Slot Sufficiency Report (Sites > Reports, a Custom report)"
+        type: "read-only rollup"
+        data_shown: "Total Slots Offered / Total Placements / Completed Placements, by site"
+        gates_on: []
+        accreditation_citation: "CCNE Standard II, Key Element II-C — clinical sites sufficient, appropriate and available, plus evidence of a DEFINED, periodically-run process for determining currency/availability/accessibility/adequacy and the modifications made as a result (../accreditation/nursing.yaml names this report as the II-C evidence source)"
+        competitor_equivalent: "Not comparable at element level — no teardown names CCNE. The nearest structural analogue in this repo is Prism's own PA SCPE Details report (step 9) and PT's CAPTE 2C/8F reports (step 6), which is a cross-discipline comparison rather than a competitor one."
+        gap_severity: "configure-needed"
+        gap_note: "Shipped and named for the standard by Exxat's own CCNE guide. nursing.yaml states the limit precisely: 'the report shows volume, not a judgment of adequacy against a defined threshold — the defined process narrative and the modifications-made record are still assembled by hand outside the product.' Same shape as the COA F.1 gap in step 13 and the same shape as the Values-picker gap in step 5: Prism produces the number and never the verdict."
+      - element: "NCLEX-RN pass-rate rollup per campus/site and per track"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "CCNE Standard IV, Key Element IV-C — an 80% licensure pass rate demonstrated FOR EACH CAMPUS/SITE AND TRACK by any one of four permitted calculations, with the program stating which option it used; ACEN Standard 5, Criterion 5.3 — the most recent annual rate OR the three-year mean at 80% for first-time takers, OR 80% including repeaters, OR at/above the national mean, additionally DISAGGREGATED with written justification when it is not, analysed annually with actions taken, documented for three years, and SHARED with communities of interest (../accreditation/nursing.yaml)"
+        competitor_equivalent: "one45.yaml documents Analytics pulling NBME CBSE/CCSE data into a 'Gateway exams' performance dashboard, and e-value.yaml documents MedHub flagging at-risk learners against board-exam benchmarks — two shipped external-exam ingestion precedents, both for medical exams. Neither is documented ingesting NCLEX-RN or a published national mean."
+        gap_severity: "gap"
+        gap_note: "nursing.yaml calls this 'the highest-value Gap in this file' because NCLEX pass rate is the number state boards act on independently of the accreditor. Two scoping details that do not appear in any expansion-domain registry: the per-campus/site AND per-track slice means the exam data model must key on the same campus/site entity the placement engine already uses, not just on cohort; and ACEN's 'at or above the national mean' option requires ingesting a SECOND external feed (the published national benchmark), not just the program's own numbers."
+    action: "A nursing program runs per-track curriculum and competency reports, exports the Slot Sufficiency Report as its CCNE II-C site-adequacy evidence, and then assembles the union view, the adequacy judgment, the NCLEX slice, and the three-year record of analysis and decisions by hand."
+    confirmed_by: "Nursing Playbook.md lines 42 (separate grid per track), 52-56 (Mapping Reports suite incl. Crosswalk Report), 61-64 (Cohort Performance Tracking Dashboard and Competency Tracker; COA D.1-D.50 configured as the framework), 68-72 (Sites, Contracts, Slot Sufficiency Report, Placement Clearance, Site Assessments), 112-120 (ACEN/CCNE/COA standards reference and the critical-standard convention); ../accreditation/nursing.yaml (CCNE I-B, II-C, III-B through III-E, III-H, IV-A/IV-C/IV-F; ACEN 4.1, 4.6, 4.9, 5.1, 5.3, 5.4); ../accreditation/coa.yaml; ../accreditation/cswe.yaml"
+
+  - screen: "Social Work discipline > CSWE form-shaped outputs and public posting"
+    navigation_path: "Learning Activities > Reports > Comprehensive Report for Placement Based Form; Competency Management > Review > View Report; Curriculum Mapping > Mapping Reports > Cumulative Report"
+    elements:
+      - element: "Comprehensive Report for Placement Based Form — export then manually delete identifying columns"
+        type: "report export with a manual post-processing step"
+        data_shown: "Completed Learning Contracts / Learning Agreements per placement, exported to Excel, from which the admin deletes the identifying columns by hand"
+        gates_on: []
+        accreditation_citation: "CSWE Accreditation Standard 3.3, AS 3.3.1 (with M3.3.2) — programs routinely submit de-identified sample completed Learning Agreements as proof that all students get competency opportunities across the five system levels; ../accreditation/cswe.yaml names this report as the export Exxat's own CSWE guide points at"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in ../competitors/ names CSWE, and none documents a de-identification mode on any export. This is a genuine blank on the competitive side, not an omission."
+        gap_severity: "gap"
+        gap_note: "cswe.yaml states it plainly: 'de-identification is a manual post-export step — the documented workflow is export to Excel, then delete the identifying columns. A native de-identified export mode would remove a real FERPA foot-gun on an artifact that goes to an external review body.' That is the sharpest privacy finding in this stage: the one artifact that physically leaves the institution and reaches an external reviewer is de-identified by hand, in Excel, with no verification step."
+      - element: "Competency Management > Review > View Report, sliced by program option"
+        type: "read-only rollup"
+        data_shown: "Per-competency achievement across heterogeneous instruments, compared against a configured benchmark"
+        gates_on: ["Option-level segmentation depends on how cohorts, groups and campuses were configured at onboarding; the one-grid-per-report limit blocks the aggregate view for programs using separate grids per option"]
+        accreditation_citation: "CSWE Accreditation Standard 5.0, AS 5.0.1(b) — Form AS 5.0.1(b) reporting the most recent year's outcomes, the calculations for all nine competencies across ALL instruments, stated against the program's own expected level of achievement, broken out for each program option AND in aggregate (../accreditation/cswe.yaml)"
+        competitor_equivalent: "core-elms.yaml documents CORE ELMS' CompMS marketing competency and accreditation-standards mapping 'with smarter mapping and continuous improvement tools' — feature-name-level only, for pharmacy, with no disclosed segmentation model. Not comparable at element level."
+        gap_severity: "configure-needed"
+        gap_note: "The measurement half is shipped and cswe.yaml rates the underlying assessment plan (AS 5.0.1(a)) as the strongest fit in the whole CSWE file — including the detail that the pooled-mean parent scoring method is itself the ANSWER to AS 5.0.1(a)(v)'s compliance statement asking how achievement is calculated. The friction is 'per option AND in aggregate' from one data set, which collides with the same one-grid-per-report limit that lands on Nursing from the opposite direction in step 11. cswe.yaml's point is the operationally useful one: this is a configuration decision made months before anyone reads AS 5.0.1(b), so it belongs in SW implementation, not in a self-study scramble."
+      - element: "Measure Level Attributes ('Dimensions of Learning') and Course Attributes ('Client System Levels'), defined once under Curriculum Mapping > Attributes"
+        type: "reusable attribute taxonomies selected into a curriculum map's setup"
+        data_shown: "Two attribute families the SW playbook names by their production labels: Measure Level Attributes carrying 'Dimensions of Learning', and Course Attributes carrying CSWE's five 'Client System Levels' (Individuals, Families, Groups, Organizations, Communities). Both are defined once under Curriculum Mapping > Attributes and then selected into a curriculum map's setup, alongside Course Measures configured at Courses > Setup > Course Management > Course Measure Categories."
+        gates_on: ["Whether the Cumulative Report and Form AS 3.1.2 evidence can be broken out by dimension or by system level at all — the attribute must exist before a map can carry it"]
+        accreditation_citation: "CSWE Accreditation Standard 3.1, AS 3.1.2 (../accreditation/cswe.yaml) — the nine competencies implemented in generalist content, evidenced through Form AS 3.1.2 and Volume 2 syllabi; CSWE Accreditation Standard M3.2, AS M3.2.1 (with M3.2.2 and M3.2.4) — the specialized-practice framework whose Client System Levels must stay consistent with AS M3.2.4 and AS 5.0.1(a); CSWE Accreditation Standard 3.3, AS 3.3.1 (with M3.3.2) — field opportunities across all five system levels"
+        competitor_equivalent: "one45 documents 'standardized vocabularies aligned to CanMEDS and AAMC competency frameworks' with version control and an audit trail (one45.yaml), rated at-parity — a genuine multi-framework analogue at framework-inventory level. What no competitor teardown documents is a REUSABLE ATTRIBUTE layer sitting beneath the framework, i.e. a taxonomy that qualifies a mapping rather than being the mapping's target. Not comparable at element level."
+        gap_severity: "configure-needed"
+        gap_note: >
+          ADDED 2026-08-25 on a full read of the SW playbook (Social Work (SW) Playbook.md lines
+          56-60 for the setup chain and line 160 for the AS 3.1.2 mapping). This is the mechanism
+          behind a claim the file already made in the abstract — that Social Work's generalist and
+          specialization frameworks are "already a solved problem" — and naming it changes what the
+          residual risk is. The attributes are defined ONCE and reused, which is why
+          ../accreditation/cswe.yaml's warning about cross-standard consistency is a real
+          maintenance hazard rather than a theoretical one: the SAME Client System Levels attribute
+          is read by AS M3.2.1, AS M3.2.4 and AS 5.0.1(a), and the playbook explicitly instructs
+          "keeping this consistent across AS M3.2.1, M3.2.4, and AS 5.0.1(a)" (line 59). An
+          attribute edited for one standard silently changes the evidence for the other two, and
+          nothing detects the divergence — which is precisely the "small, high-credibility
+          Accreditation Management feature" cswe.yaml names.
+          Two further shipped pieces the SW playbook records against AS 3.1.1 that this file had not
+          named (line 159): the Course Database with GENERATE SYLLABUS, and the CURRICULUM GRID's
+          term-by-term sequencing view. Both matter here because CSWE Volume 2 evidence is
+          syllabus-shaped, so a generated syllabus is the closest thing in the product to a
+          submission artifact for that volume — the same accreditor-format-matching pattern PA's B2
+          export, Nursing's Crosswalk Report and SLP's KASA Clinical Certification Report
+          demonstrate, reached from a fourth direction.
+      - element: "Course 'Nature' field, Associate Faculty and Staff, and the Course Offerings faculty-assignment export (CSWE AS 4.2.2)"
+        type: "identification field plus two linkage/export surfaces used as indirect qualification evidence"
+        data_shown: "Per Social Work (SW) Playbook.md line 168: the Course 'Nature' field (Courses > Course Information > About) is what identifies a course as a PRACTICE course; 'Associate Faculty and Staff' links named instructors to those courses; and the Course Offerings tab exports the course/faculty assignment list. Faculty profiles store credential documentation as a reference source — the playbook is explicit that this is 'not a validated system of record.'"
+        gates_on: []
+        accreditation_citation: "CSWE Accreditation Standard 4.2, AS B4.2.1 / M4.2.1 (../accreditation/cswe.yaml) — the faculty-qualification standard this repo's registry does carry. IMPORTANT REGISTRY GAP, recorded rather than papered over: the SW playbook maps this cluster to CSWE AS 4.2.2 (practice-course faculty qualifications), and there is NO element_id for AS 4.2.2 anywhere in ../accreditation/cswe.yaml, whose Standard 4.2 coverage stops at B4.2.1/M4.2.1. The mapping is therefore cited to the playbook, not to the registry, and AS 4.2.2 should be added to cswe.yaml before this element is used to make a compliance claim."
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in ../competitors/ names CSWE, and none documents a course-type field used to scope a faculty-qualification requirement. CORE ELMS sells into social work (core-elms.yaml) but publishes no course-attribute model."
+        gap_severity: "gap"
+        gap_note: >
+          ADDED 2026-08-25. Worth having because it is a second, independent instance of the pattern
+          cswe.yaml already praised as the file's most useful scoping template — Exxat's own guide
+          disclosing where Prism supports a narrative rather than producing the evidence. The three
+          surfaces here are real and shipped, and together they answer 'which named faculty teach
+          which practice courses.' What they do not answer is the standard's actual question, which
+          is whether those faculty are QUALIFIED to teach practice — and the playbook says so in its
+          own words, calling the faculty credential store 'a reference source (not a validated
+          system of record).'
+          Read alongside the AS B4.2.1/M4.2.1 element below, Social Work now has TWO adjacent
+          faculty-qualification standards with the same shape of answer: Prism holds the roster and
+          the documents, computes nothing, and validates nothing. That is the same finding
+          rotation-lifecycle--02 reaches from the preceptor side for CSWE AS B3.3.6/M3.3.6 — degree
+          provenance and post-degree years are not structured attributes — which makes it a single
+          data-model gap showing up in three standards rather than three separate gaps.
+      - element: "CSWE Form generation (AS 3.1.2, AS 5.0.1(a)/(b), AS 4.2.1, Faculty Data Forms)"
+        type: "not shipped"
+        data_shown: "N/A — Prism produces the underlying coverage and outcome evidence; the program transcribes it into CSWE's own forms"
+        gates_on: []
+        accreditation_citation: "CSWE Accreditation Standard 3.1, AS 3.1.2 (completed Form AS 3.1.2); Accreditation Standard 4.2, AS B4.2.1 / M4.2.1 — Exxat's own CSWE guide states Form AS 4.2.1 and the per-faculty Faculty Data Forms 'must be completed outside Exxat Prism' and that Prism 'does not generate or validate required faculty data fields' (../accreditation/cswe.yaml)"
+        competitor_equivalent: "Not comparable at element level — no teardown names CSWE. The nearest cross-vendor comparison is elentra.yaml's claim to cover '>40% of the Data Collection Instrument (DCI) for CACMS' — a vendor stating instrument coverage as a percentage, which is a useful precedent for how form-generation coverage should be represented honestly."
+        gap_severity: "gap"
+        gap_note: "cswe.yaml calls AS 4.2.1 'the most useful element in this file for Accreditation Management scoping precisely BECAUSE it is a disclosed gap. It is the template for how the Q3 2027 pillar should represent partial coverage honestly — supports the narrative, does not produce the form — rather than overstating.' Set against PA's B2 report (step 9), the two together define the range: form generation is proven possible for one accreditor and explicitly disclaimed for another, in the same product."
+      - element: "Public posting of Form AS B5.0.1(d) / M5.0.1(d) with a two-year staleness clock"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "CSWE Accreditation Standard 5.0, AS 5.0.1(c) and 5.0.1(d) — specific curricular changes made from the most recent outcomes WITH CLEAR LINKS TO THE DATA, plus the form posted publicly on the program's own webpage with the assessment plan and summary outcomes, updated at least every two years, with a hyperlink provided to CSWE (../accreditation/cswe.yaml)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents publishing to a program-owned public webpage or watching a refresh clock. e-value.yaml's 'automated alerts for accreditation tasks and policy expirations' is the nearest adjacent mechanic (a deadline watcher) and is ACGME-scoped."
+        gap_severity: "gap"
+        gap_note: "cswe.yaml identifies what CSWE adds beyond the generic CQI loop: 'a PUBLIC-facing, program-owned webpage artifact on a fixed two-year refresh cadence — a concrete, checkable deliverable that a publish-and-remind feature could own outright.' Read alongside ACOTE A.4.2, CAA 1.9, COA G.3, ARC-PA A3.11c's April 1 deadline and CAEP's annual measures, five of the eight existing accreditors require a public publication on a recurring cycle. That convergence is treated as a distinct primitive in the final step."
+      - element: "ADEI / implicit-curriculum finding object"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "CSWE Accreditation Standard 5.0, AS 5.0.2(a) and 5.0.2(b) — a systematic plan to assess at least one anti-racism/diversity/equity/inclusion effort in the IMPLICIT curriculum, the most recent year's outcomes, and specific changes made to the implicit curriculum with clear links to the data, for every program option (../accreditation/cswe.yaml)"
+        competitor_equivalent: "Not comparable at element level — nothing in ../competitors/ documents an implicit-curriculum or program-climate object for any accreditor."
+        gap_severity: "gap"
+        gap_note: "The most CSWE-distinctive finding in this stage and a deliberate scoping decision rather than an oversight. The instrument side is close (Exxat Surveys ships an anonymous public link/QR channel with per-channel analytics), but the implicit curriculum — program environment, climate, governance — is not modelled anywhere in Prism, so there is no object to attach an ADEI finding or an implicit-curriculum change to. cswe.yaml's warning is the one to carry: 'if Accreditation Management models only curriculum-linked evidence, it structurally cannot serve CSWE's implicit-curriculum standards, and Social Work is a live existing-customer discipline, not a prospective one.'"
+    action: "A Social Work program exports sample Learning Agreements and hand-deletes identifying columns, pulls per-option competency outcomes where the grid configuration allows it, then transcribes everything into CSWE's own forms and posts the public-facing form to its program webpage outside the product."
+    confirmed_by: "SW Playbook.md — read IN FULL 2026-08-25. Lines 52-59 (the generalist/specialized EPAS structure; the nine CSWE competencies configured under Program Details > Standards; a parallel specialization framework per area of specialized practice; the Client System Levels course/measure attribute under Curriculum Mapping > Attributes and the instruction to keep it consistent across AS M3.2.1, M3.2.4 and AS 5.0.1(a)); lines 155-172 (the CSWE EPAS standard-to-feature mapping, including the explicit 'supports vs. requires external documentation' framing) — within which line 159 names the Course Database / Generate Syllabus and the Curriculum Grid term-by-term sequencing view for AS 3.1.1, line 160 names Course Measures (Courses > Setup > Course Management > Course Measure Categories), Measure Level Attributes ('Dimensions of Learning') and Course Attributes ('Client System Levels') plus Form AS 3.1.2 and Volume 2 syllabus evidence, line 162 names the Comprehensive Report for Placement Based Form as the de-identified sample-Learning-Agreement export, line 164 names Post-Placement Surveys and the Agencies > Interventions & Communications reports as the AS 3.3.4 CQI evidence, line 167 is the explicit AS B4.2.1/M4.2.1 disclosure that Form AS 4.2.1 and the Faculty Data Forms 'must be completed outside Prism', and line 168 is the AS 4.2.2 cluster (Course 'Nature' field, Associate Faculty and Staff, Course Offerings export, faculty profiles as a reference source rather than a validated system of record); lines 174-182 (the cross-module report inventory); line 183 (the Field Application Form 'Download Raw Response' export); line 190 (the disclosed faculty-credential accreditation gap); line 198 (get curriculum mapping — generalist framework, one framework per specialization, Client System Levels attribute — set up BEFORE field placement season, because Learning Contracts/Evaluations depend on that mapping for competency reporting); ../accreditation/cswe.yaml (AS 3.1.2, 3.3.1, M3.2.1, B4.2.1/M4.2.1, 5.0.1(a)-(d), 5.0.2, 5.0.3 — and NOTE the registry carries no AS 4.2.2 element, which is recorded on the Course 'Nature' element above as a registry gap rather than an invented citation)"
+
+  - screen: "CRNA discipline > per-student threshold rollups and COA's critical-standard severity tier"
+    navigation_path: "Learning Activities > [course] > Reports > Student Activity Insights; Reports > Daily Clinical Forms and Evaluation Reports; Learning Activities > Reports > NBCRNA Transcript Report"
+    elements:
+      - element: "Student Activity Insights report — green / amber / red threshold cells"
+        type: "read-only rollup with a threshold-driven color scale"
+        data_shown: "Per-student progress against each configured case-category minimum: green = met or exceeded (100%+), amber = approaching (roughly 80-99%), red = below the minimum; filterable by rotation, program, clinical settings, site location, status and student"
+        gates_on: []
+        accreditation_citation: "COA Standard E.2.3 and the Appendix (roughly sixty individually numbered minimum case counts across eight families, plus the 2,000 clinical-hour floor) — see ../accreditation/coa.yaml, which matches the transcript's worked example (a 200 minimum against 21 entered) to COA's ASA Classes III-VI row; COA Standard C.4 (clinical experience logs reviewed by faculty on a regular basis)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in ../competitors/ names COA or NBCRNA. emedley.yaml documents encounter logging with 'dashboard + frequency-analysis reporting' and one45.yaml documents procedure/patient-encounter logs, but neither discloses a threshold model or a traffic-light state, so there is nothing to compare the color semantics against."
+        gap_severity: "configure-needed"
+        gap_note: "The most complete threshold-rollup in the product and the closest shipped thing to what this stage's central gap describes — a rule, a computed status, and a visual state change — but the axis is PER STUDENT, not per site. coa.yaml names three things it does not obviously handle: cohort-conditional thresholds (COA's dagger rows bind only students matriculating on/after Jan 1 2026, so one course offering must apply two threshold sets by matriculation year), an actual-vs-simulated split, and multi-parent counting ('count all that apply' means one encounter must increment several thresholds at once). All three are open questions in coa.yaml, not confirmed defects."
+      - element: "Daily Clinical Evaluation Report — student and preceptor responses side by side"
+        type: "aggregation and export layer, per-student PDF (ZIP for multi-select)"
+        data_shown: "Total response counts and percentage distributions per question across the large volume of daily evaluations a multi-year CRNA program accumulates; a wrench icon selects student responses, preceptor responses, or both, and both render side by side per question"
+        gates_on: []
+        accreditation_citation: "COA Standard H.1.1 and H.1.1.1 (CRITICAL) — a written systematic plan for continuous self-assessment incorporating formative and summative evaluations of EACH student, plus a terminal evaluation demonstrating achievement of Graduate Standards D1-D50; COA Standard H.1.2.7 separately requires students to evaluate their own achievement, which is what makes the dual-perspective capture load-bearing (../accreditation/coa.yaml)"
+        competitor_equivalent: "New Innovations' evaluation-data aggregation with spider graphs (new-innovations.yaml) is the closest shipped competitor aggregation of high-volume evaluation data, but it aggregates to ACGME milestones rather than to response distributions, and its dual-rater model is undisclosed. Not comparable at element level."
+        gap_severity: "gap"
+        gap_note: "Built specifically for the volume problem this standard creates, and the transcript is explicit that it exists because 'a large volume of evaluation forms accumulates over time from both students and preceptors.' The gap coa.yaml names is precise and matters for this stage: the report is 'an aggregation and export layer, not a competency computation — it reports response counts and percentage distributions per question, whereas H.1.1.1 asks for achievement of D1-D50.' Bridging the two requires the daily instrument's questions to be MAPPED into Competency Management, which the transcript does not show. One FERPA-adjacent note: the transcript states these per-student PDFs can be shared directly with clinical sites."
+      - element: "NBCRNA Transcript Report"
+        type: "accreditor/certifier-format-matched report"
+        data_shown: "Case-log statistics per student rendered by NBCRNA-required category, 'in accordance with NBCRNA guidelines'"
+        gates_on: []
+        accreditation_citation: "COA Standard C.4 (accurate, complete, faculty-reviewed clinical experience logs, with COA's Guidelines for Counting Clinical Experiences placing final quantification authority on the Program Administrator) and COA Standard E.2.3 with the Appendix (../accreditation/coa.yaml)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents generation of a certifying body's own transcript format. Alongside SLP's KASA Clinical Certification Report and PA's B2 export, this is the third such artifact inside Prism and the second with no competitor analogue documented anywhere."
+        gap_severity: "none"
+        gap_note: "coa.yaml calls this 'the strongest existing CRNA-specific accreditation asset in the product,' and explains why the underlying log's integrity behaviors matter more here than anywhere else: the same record is simultaneously the academic record, the COA C.4 artifact, and the NBCRNA certification-eligibility document. Two configuration traps travel with it — auto-approval and preceptor attestation are MUTUALLY EXCLUSIVE (so a program cannot have frictionless logging and a signed integrity attestation at once, and for C.4 the attestation is the load-bearing half), and no program-administrator affirmation tier exists above preceptor/faculty approval despite COA vesting final quantification authority there."
+      - element: "Standard-severity tier (COA's critical-concern asterisk)"
+        type: "not shipped"
+        data_shown: "N/A — a standard in Prism's standards list carries a code, a description and annotations; it carries no severity attribute"
+        gates_on: []
+        accreditation_citation: "COA's asterisk convention — 'failure to fully comply with one or more of these Standards is considered to be of critical concern in decisions regarding nurse anesthesia program accreditation' — applied to F.7 (the 2:1 supervision cap), F.1, F.5, A.3, A.10, E.2, H.1.1, H.1.2, H.1.6, G.3, B.5/B.6/B.11/B.12/B.15/B.16, and ALL FIFTY graduate standards D.1-D.50 (../accreditation/coa.yaml). The nearest analogue elsewhere is CAPTE's active STAY on Standard 2B, which instructs programs not to respond to it at all (../accreditation/capte.yaml)."
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents standard-severity tiering. New Innovations' 'citation/concern tracking' (new-innovations.yaml) tracks the severity of a FINDING after the fact, which is a different object from a severity attribute on the standard itself."
+        gap_severity: "gap"
+        gap_note: "Two accreditors in this repo, researched independently, attach a per-standard STATE that changes how a program must respond — COA's critical-concern asterisk and CAPTE's stay on 2B — and Prism's standards model can represent neither. capability-map.yaml already names the COA convention as 'a standard-severity-tiering concept absent from the ACEN/CCNE guides that could inform how a unified Accreditation Management pillar surfaces risk across accreditors of different rigor.' A severity/state field on the standard object is small, and it is the difference between a flat list and a risk-ordered one. capte.yaml adds the second state a stay needs: suppressed, not merely deactivated, because deactivation cascade-deletes mappings."
+      - element: "Annual publication of attrition, 6-month employment, and NCE first-time pass rate"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "COA Standard G.3 (CRITICAL) with G.3.4.1-G.3.4.3 — annual publication, on a website linked to COA's List of Accredited Educational Programs, of attrition, employment of graduates as nurse anesthetists within 6 months of graduation, and the NBCRNA NCE FIRST-TIME pass rate for the most recent graduating class; COA Standard H.1.6 (CRITICAL) separately requires pass rates AND MEAN SCORES (../accreditation/coa.yaml)"
+        competitor_equivalent: "e-value.yaml documents MedHub's automated ADS-formatted report generation and benchmarking against national trends — a shipped annual-submission pipeline, ACGME-scoped, with no public-page publication claim. No competitor is documented publishing an accreditor-required metric to a public URL."
+        gap_severity: "gap"
+        gap_note: "coa.yaml calls G.3.4 and H.1.6 together 'the cleanest business case in this file for Accreditation Management: three specific, externally-sourced figures, published annually, on a critical-flagged standard.' One subtlety worth keeping in the data model: H.1.6.2 wants pass rates AND mean scores while G.3.4.3 wants the FIRST-TIME pass rate specifically — a single 'pass rate' field will not satisfy both. Also note COA H.1.2 (CRITICAL) is a straight Gap: the eight-facet student evaluation of courses, instruction, sites, environment, advising, self and program has no CRNA template family, and the PT PTSE1/PTSE2 confidentiality pattern that would satisfy it exists only for PT."
+    action: "A CRNA program reads per-student threshold progress off Student Activity Insights, exports per-student daily-evaluation PDFs, and generates the NBCRNA transcript — then computes and publishes the three COA G.3.4 outcome figures outside the product, with no representation anywhere of which standards COA treats as critical."
+    confirmed_by: "/Users/romitsoley/Downloads/CRNAVideosTranscripts.md lines 21, 27, 31, 35 (Daily Clinical Evaluation Report: aggregation rationale, response-inclusion wrench, side-by-side rendering, sharing PDFs with clinical sites), lines 63, 71 (submission window; attestation mutually exclusive with auto-approval), lines 83-87 (Student Activity Insights navigation, filters, and green/amber/red thresholds with the 200-vs-21 worked example); Nursing Playbook.md lines 83-84 (NBCRNA Transcript Report; Student Activity Insights), line 120 (COA's critical-standard convention); ../accreditation/coa.yaml (C.4, E.2.3 + Appendix, F.1, F.7, G.3/G.3.4, H.1.1/H.1.1.1, H.1.2, H.1.6, D.1-D.50); ../accreditation/capte.yaml (the Standard 2B stay); ../prism/capability-map.yaml"
+
+  - screen: "Teacher Education discipline > CAEP quality-assurance evidence (inferred pillar capability, not observed TE configuration)"
+    navigation_path: "Learning Activities > Setup > Learning Tool Interoperability (GoReact/Echo360); Students > Reports; Curriculum Mapping > Mapping Reports"
+    elements:
+      - element: "GoReact (Echo360) LTI assignment — scores and status syncing back into Prism"
+        type: "integration-backed graded learning activity"
+        data_shown: "Student records or uploads video; reviewer grades against a GoReact rubric with timestamped comments; status flips Submitted -> Reviewed and scores sync back with no manual reconciliation; assignments can require a placement and carry a numeric weight toward the final grade"
+        gates_on: ["The LTI section appears under Learning Activities > Setup only after a support ticket activates it for that discipline and program"]
+        accreditation_citation: "CAEP Standard R1, Component R1.3 — evidence candidates can assess, plan for instruction and use varied instructional strategies (InTASC 6/7/8), with OBSERVATIONAL MEASURES named among CAEP's own possible evidence sources; three cycles of data, disaggregated (../accreditation/caep.yaml, which calls this 'the single element where TE has REAL, TE-specific confirmed product evidence rather than inference')"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in ../competitors/ names CAEP or documents a video-observation integration. This is a genuine blank on the competitive side for the entire discipline."
+        gap_severity: "configure-needed"
+        gap_note: "Shipped and confirmed from the one substantive TE source in the corpus. The limitation that matters for THIS stage: the rubrics live in GoReact, not Prism, so rubric authoring, rubric versioning and inter-rater-reliability work all happen outside the system of record — and CAEP Component R5.2 requires EPP-created assessments to meet the CAEP Criteria for Evaluation of EPP-Created Assessments. caep.yaml's conclusion: 'the validity evidence CAEP wants for that instrument cannot be assembled from Prism alone.' The score rolls up; the instrument's provenance does not."
+      - element: "Triangulated competency-at-completion rollup"
+        type: "not shipped"
+        data_shown: "N/A — every input exists in a different shipped pillar and nothing joins them"
+        gates_on: []
+        accreditation_citation: "CAEP Standard R3, Component R3.3 — CAEP requires 'more than one source' of evidence that candidates reached expected proficiency at completion across all six named areas (content knowledge, pedagogical knowledge, pedagogical skills, critical dispositions, professional responsibilities, technology integration), disaggregated by preparation program, race/ethnicity and other demographics; ../accreditation/caep.yaml scores this prism_fit: Build — the only Build rating in the CAEP file"
+        competitor_equivalent: "Not comparable at element level — no teardown names CAEP. The nearest shipped competitor analogue for multi-source competency rollup is New Innovations' CCC Milestone Review (new-innovations.yaml), which aggregates evaluation data to ACGME milestones; it is single-framework and does not join heterogeneous instrument types."
+        gap_severity: "gap"
+        gap_note: "caep.yaml calls this 'the highest-value TE-specific build in the file and also the element CAEP will not let an EPP fake, because triangulated is stated as a hard requirement rather than a preference.' The closest confirmed analogue in the product is SLP's min/max hour thresholds (step 10) — a real per-student threshold rollup, but support-configured, single-source and hours-based rather than a multi-instrument triangulation. Two dependencies make it worse: the licensure-exam input is blocked on Exam Management (Q2 2027), and the disaggregation requirement runs through every R1-R4 component."
+      - element: "Complaint register (including complaints made to CAEP itself)"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "CAEP Standard R3, Component R3.2 — 'a system for effectively maintaining records of candidate complaints, including complaints made to CAEP,' with documented resolution and aggregate reporting by demographic without exposing identities; the same component asks pointedly how the EPP proves the transition-point process is followed with fidelity — 'how does the EPP ensure there are no loopholes to work around the system?' (../accreditation/caep.yaml)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents a complaint register. e-value.yaml's CLER letter/response-action tracking is the nearest adjacent object (an externally-originated item with a regulator in the loop) and is ACGME-scoped."
+        gap_severity: "gap"
+        gap_note: "caep.yaml is explicit that Interventions must not be stretched to cover this: 'CAEP's requirement is specifically for complaints INCLUDING those made to CAEP itself — an externally-originated record type with a regulator in the loop. Do not stretch Interventions to cover it; scope it as its own object.' Also unbuildable from Prism today: the cohort 3.0 GPA transition point R3.2 requires, because the Grading Scheme module is record-keeping only and 'does not calculate student grades.'"
+      - element: "Exxat Surveys template family for Teacher Education (Employer Satisfaction / Completer Satisfaction)"
+        type: "not shipped (content, not engineering)"
+        data_shown: "N/A — Exxat Surveys ships named templates only for PT (four APTA-aligned Multi-Rater DCE Performance Survey templates) and SLP (Graduating Student Survey, Clinical Supervisor Survey, added December 2025)"
+        gates_on: []
+        accreditation_citation: "CAEP Standard R4, Component R4.2 (satisfaction of employers, with instruments eliciting responses specific to the R1 criteria and a representativeness argument built on response rates) and Component R4.3 (satisfaction of completers, distributed to alumni whose institutional accounts are deprovisioned); ../accreditation/caep.yaml rates both Configure on the strength of Exxat Surveys' email/CSV and anonymous public-link channels plus its Weekly Response Rates analytic"
+        competitor_equivalent: "Not comparable at element level — no teardown names CAEP. axium.yaml and core-elms.yaml both reference survey/CQI tooling at feature-name level for other accreditors, with no template inventory disclosed."
+        gap_severity: "configure-needed"
+        gap_note: "caep.yaml identifies the cheapest product investment in the whole TE file: 'the December 2025 SLP extension is the useful precedent — adding a TE template pair (Employer Satisfaction Survey, Completer Satisfaction Survey) is a demonstrated, recent, repeatable content-ops motion.' The unconfirmed half is the rollup: nothing in the corpus shows Exxat Surveys questions tagging to a Curriculum Mapping standard, so 'results roll up per R1 component' is manual crosswalk work today. Note the same missing template family blocks COA H.1.2 for CRNA (step 13) — one content-ops motion, two disciplines."
+    action: "A TE program evidences observational practice through the GoReact LTI, surveys employers and completers through Exxat Surveys' external channels, and then assembles the triangulated completion rollup, the demographic disaggregation, and the complaint register outside the product — because CAEP requires all three across every component."
+    confirmed_by: "TE Playbook.md lines 12 and 67-72 (the single-source data-quality caveat and the explicit instruction not to cite CAEP standard numbers until confirmed against a TE-specific source — which ../accreditation/caep.yaml now does for the accreditor half only); /Users/romitsoley/Downloads/CRNAVideosTranscripts.md lines 99-117 (the GoReact/Echo360 LTI workflow, support-gated activation, auto-created matching activity, and score/status sync); ../accreditation/caep.yaml (R1.3, R2.1-R2.3, R3.2, R3.3, R4.1-R4.3, R5.1, R5.4). IMPORTANT: caep.yaml states every prism_fit in it is scored against GENERIC pillar capability confirmed for other disciplines, not against observed TE configurations — read this step the same way."
+
+  - screen: "Accreditation Management pillar (not yet built)"
+    navigation_path: "N/A — no shipped screen; roadmap item"
+    elements:
+      - element: "Cross-site statistical comparability engine"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.11; LCME Standard 8, Element 8.7 and Standard 8, Element 8.4. Independently confirmed from an existing discipline: ACOTE Standard C.1.11's comparability clause, where ../accreditation/acote.yaml names 'the same cross-site statistical comparability gap logged against COCA 6.11 and rotation-lifecycle--08 in this repo.'"
+        competitor_equivalent: "MedHub/E*Value ships benchmarking and program scorecards today under its named 'Accreditation Automation' product (e-value.yaml) — the single largest publicly-verifiable gap identified anywhere in this research. Scope caveat now confirmed: MedHub's accreditation automation is documented as ACGME/GME-specific, so it is not proven to serve any of the eight disciplines in this stage either."
+        gap_severity: "gap"
+        gap_note: "Partial analogs exist and this stage now names the two best. Step 5's Custom Report pivot averages scores by site or setting; step 11's Competency Review Dashboard renders a Score Distribution box plot RED when a domain median falls below a configured threshold — the only place a threshold drives a visual state change on an outcome distribution. What still has no analog is variance/effect-size flagging BY SITE against a threshold band. Confirmed Gap, and now confirmed from an existing discipline's accreditor as well as from the expansion domains."
+      - element: "Closed-loop finding -> action -> evidence object"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Elements 11.1/11.4/11.5; CODA Standard 1, Element 1-2. Plus, from the eight existing disciplines: CAPTE Element 2C, ACOTE A.6.3, ARC-PA C1.01, CAA 5.4 and 5.8, CCNE IV-A/IV-F, ACEN 5.1, CSWE AS 5.0.1(c), CAEP R5.4, COA H.2 — twelve accreditors, one object."
+        competitor_equivalent: "MedHub/E*Value's 'Accreditation Automation' (e-value.yaml) and New Innovations' Annual Program Evaluation with citation/concern tracking (new-innovations.yaml) are the two named shipped equivalents; neither publishes its object model, and both are ACGME-shaped, so neither is proven to carry CAA 5.4's re-measurement field or CAEP R5.4's stakeholder-group and disposition fields."
+        gap_severity: "gap"
+        gap_note: "Confirmed Gap, and the field list is now specified rather than gestured at (see step 4): a cited data point, a stakeholder group, a disposition of keep/modify/discontinue, a re-measurement result, a queryable timestamp supporting a four-year lookback, an exemplar flag, and tolerance for logging a change that did NOT improve the outcome. Nearest shipped analog remains step 4's Mapping Tags, which carries none of them."
+      - element: "Standards-to-evidence repository with deadline/submission tracking"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.9; ACPE Standard 7, Key Element 7.5.b; LCME Standard 1, Element 1.1; CODA Standard 5, Element 5-3. From the existing disciplines: ARC-PA Standard A3, Element A3.11 c imposes a hard April 1 annual publish-by date; CAEP's EPP Annual Report via AIMS covers eight annual measures on a between-visit cycle; COA Standard A.11 requires Council PRE-approval before a significant class-size increase (../accreditation/arc-pa.yaml, caep.yaml, coa.yaml)"
+        competitor_equivalent: "MedHub/E*Value ships automated ADS-formatted generation, an accreditation document workspace, and automated alerts for accreditation tasks and policy expirations under 'Accreditation Automation' (e-value.yaml); Prism has no equivalent screen at all."
+        gap_severity: "gap"
+        gap_note: "Analogs now exist for the taxonomy (step 2), for standard-named reports (step 6), and for genuinely accreditor-format-matched OUTPUTS in three separate disciplines — PA's B2 Instructional Objectives Report, Nursing's Crosswalk Report modelled on AACN's own Essentials Toolkit template, and SLP's KASA Clinical Certification Report which generates a signed ASHA template. Nothing shipped stores evidence against a standard number or tracks a submission deadline; step 1's accreditation card records status metadata only. Confirmed Gap — but the format-matching half is proven three times over, which is a materially stronger position than the original four-domain read of this element."
+      - element: "Accreditor edition-crosswalk / standard-version registry"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "CAPTE 2016 -> 2024 (two shipped reports still carrying dead 2016 numbers, step 6); AACN Essentials 2021 -> 2026 with CCNE's amendment effective Jan 1 2027; CAA October 2025 -> the adopted 2027 Standards effective Aug 1 2027; ARC-PA 5e -> 6e (with a stale C2.01 citation surviving inside Exxat's own 6e-titled guide); CSWE 2022 EPAS with review due by ~2029; the per-SPA edition churn behind CAEP; ACOTE's dated reissues of the 2023 standards; COA's dagger rows binding only students matriculating on/after Jan 1 2026"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown in this research documents edition-crosswalk handling in any direction. leo-davinci.yaml's AAMC business rules flagging data errors pre-submission is validation, not versioning."
+        gap_severity: "gap"
+        gap_note: "The clearest NEW requirement this extension surfaces. Prism already carries dual 2024/2016 numbering inside five CAPTE report titles, so the concept exists as report metadata — but it is metadata on a report, not a versioned attribute on the standard, and the Standards screen's deactivate toggle CASCADE-DELETES every mapping made against a standard, which makes an edition transition destructive rather than migratory. Eight of the eight disciplines in this stage have an edition event either recently past or already scheduled. COA adds a second dimension the others do not: cohort-conditional effectivity, where two matriculation years in the same course offering are held to different thresholds."
+      - element: "Standard-severity / standard-state attribute"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "COA's critical-concern asterisk across F.7, F.1, F.5, A.3, A.10, E.2, G.3, H.1.1, H.1.2, H.1.6, six Standard B elements and all fifty of D.1-D.50 (../accreditation/coa.yaml); CAPTE's active STAY on Standard 2B, which instructs programs not to respond to it at all and warns that further stays may follow (../accreditation/capte.yaml)"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents severity or state on a standard. New Innovations tracks the severity of a finding after the fact (new-innovations.yaml), which is a different object."
+        gap_severity: "gap"
+        gap_note: "Two accreditors, researched independently, attach a per-standard state that changes how a program must respond, and the standards object can represent neither. capability-map.yaml already flags COA's convention as informing 'how a unified Accreditation Management pillar surfaces risk across accreditors of different rigor.' A stay additionally needs a SUPPRESSED state distinct from deactivated, because deactivation destroys mappings — so the two requirements are one field with at least three values, not two features."
+      - element: "Public-page publication with a recurrence/recency clock"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "ACOTE Standard A.4.2 (three-year outcome table plus an active NBCOT link on the program HOME PAGE); CAA Standard 1.9 (three-year table under the verbatim label 'Student Achievement Data' or 'Student Outcome Data,' segmented per modality); CSWE AS 5.0.1(d) (Form B5.0.1(d)/M5.0.1(d) on the program webpage, refreshed at least every two years, hyperlinked to CSWE); COA Standard G.3 (CRITICAL — annual publication on a site linked to COA's List of Accredited Programs); ARC-PA Element A3.11 c (NCCPA's five-year report, distant campuses broken out individually, by April 1 each year); CAEP's EPP Annual Report requirement that the annual measures display on the EPP's OWN public website; plus CAPTE Element 5B and COCA Element 11.4 from the expansion side"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents publishing an accreditor-required metric to a public URL. e-value.yaml's 'automated alerts for accreditation tasks and policy expirations' is the nearest adjacent mechanic and covers the clock, not the publication."
+        gap_severity: "gap"
+        gap_note: "Six of the eight existing disciplines plus two expansion accreditors require a program-owned PUBLIC page carrying accreditor-specified figures on a recurring cycle, with three different cadences (annual, two-yearly, and a hard April 1 date) and at least two prescribed labels or layouts. caep.yaml reaches the same conclusion from the TE side — 'publish an accreditor-required metric to a public URL' is a cross-accreditor primitive rather than a COCA quirk. No shipped pillar publishes anything outward, so this is a genuinely new surface rather than a report variant, and it is the most repeated single requirement across the twelve accreditor registries in this repo."
+      - element: "Post-graduation outcome object"
+        type: "not shipped"
+        data_shown: "N/A"
+        gates_on: []
+        accreditation_citation: "CAPTE Element 1C3 (90% employment rate over two years); ACOTE Standard A.6.3 (graduate job placement, employer satisfaction, alumni scholarly activity among its eleven enumerated streams); CSWE AS 5.0.3 (graduation rate plus at least one additional outcome, three most recent years, against a program-set benchmark); CCNE Key Element IV-E and ACEN Criterion 5.4 (80% employment; response rate reported as a first-class metric); COA Standards H.1.4/H.1.5/H.1.6.3 and G.3.4.2 (alumni and employer evaluation; employment within 6 months); CAEP Components R4.1 and R4.3 (completer effectiveness and completer satisfaction); CAA Standard 4.8 (documentation available to graduates and non-completing attendees); plus COCA Element 11.5 from the expansion side"
+        competitor_equivalent: "Not comparable at element level — no competitor teardown documents an alumni or completer entity surviving graduation. one45.yaml's Analytics spans admissions through evaluation but stops at the program boundary as well."
+        gap_severity: "gap"
+        gap_note: "Every one of the eight existing disciplines needs this and none of them has it — Prism's student record ends at conferral. Three registries note the same downstream consequence from different angles: capte.yaml (residency/fellowship tracking, employment rate, and licensure rate all blocked by one missing entity), caa-asha.yaml (the CCC-SLP application is filed AFTER graduation, which is exactly when the hours verification is needed), and caep.yaml (an alumni contact list must stay current for three-plus years or the completer survey is worthless). caep.yaml also supplies the scoping discipline: CAEP R4.1's state-owned P-12 growth data is largely unobtainable, so the honest product answer is 'support the case-study and observation route well,' not 'integrate state longitudinal data systems.'"
+    action: "N/A"
+    confirmed_by: "../prism/capability-map.yaml, 'Accreditation Management' pillar entry (status: roadmap, target: Q3 2027) and its notes recording six accreditor-specific precedents across five disciplines, the CAPTE edition-crosswalk precedent, the KASA document-generation precedent, COA's critical-standard convention, and the CSWE honest-partial-coverage precedent; ../accreditation/capte.yaml, acote.yaml, arc-pa.yaml, caa-asha.yaml, nursing.yaml, coa.yaml, cswe.yaml, caep.yaml, coca.yaml, lcme.yaml, acpe.yaml, coda.yaml"
+
+sources:
+  - "'Managing Program Details via Setup.md', 'Managing Accreditation Standards for Curriculum Mapping.md', 'Heatmap Report.md', 'Mapping Tags Report for Curriculum Mapping.md', 'Generating and Managing Custom Reports.md', 'CAPTE (Commission on Accreditation in Physical Therapy Education) Reports.md', 'How to Gather Data for AAR Report Using Exxat Prism.md' — all from /99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/"
+  - "../prism/capability-map.yaml — 'Accreditation Management' and 'Curriculum Mapping' pillar entries, the intelligence_layer 'Program Quality Analytics' entry (ten Custom Report data sources with per-source refresh-frequency badges), and the Competency Management Review Dashboard detail"
+  - "../accreditation/coca.yaml, ../accreditation/lcme.yaml, ../accreditation/acpe.yaml, ../accreditation/coda.yaml (the four expansion accreditors)"
+  - "../accreditation/capte.yaml (PT/PTA — Elements 1C2, 2C, 2D8, 2D9, 2E, 4P, 5B, 6A; the 2016->2024 version hazard and the Standard 2B stay)"
+  - "../accreditation/acote.yaml (OT/OTA — Standards A.3.5, A.4.2, A.5.1, A.6.3, A.6.4, A.6.5, C.1.8, C.1.11, C.1.15)"
+  - "../accreditation/arc-pa.yaml (PA — 6th Edition Standards A1.10 a-b, A3.11 c, B1.01/B1.02, B3.02 a-c, B3.04 a-d, B3.06 a-g, C1.01/C1.02; the 5e->6e crosswalk and the stale C2.01 citation)"
+  - "../accreditation/caa-asha.yaml (SLP — Standards 1.9, 3.1B, 3.6B, 4.3, 4.7/4.8, 5.2, 5.4/5.8, 5.5/5.6; the Praxis firewall and per-modality segmentation)"
+  - "../accreditation/nursing.yaml (CCNE Key Elements I-B, II-C, II-F, II-G, III-B through III-E, III-H, III-I, III-K, IV-A, IV-C, IV-E, IV-F; ACEN Criteria 4.1, 4.6, 4.9, 4.10, 5.1, 5.3, 5.4; the one-grid-per-report CCNE/ACEN conflict)"
+  - "../accreditation/coa.yaml (CRNA — Standards C.4, C.5, D.1-D.50, E.2.3 + Appendix, F.1, F.5, F.7, F.9, G.3/G.3.4, H.1.1, H.1.2, H.1.6; the critical-concern asterisk convention)"
+  - "../accreditation/cswe.yaml (Social Work — 2022 EPAS AS 3.1.1, 3.1.2, M3.2.1, 3.3.1, 3.3.3, 3.3.4, B4.2.1/M4.2.1, 5.0.1(a)-(d), 5.0.2, 5.0.3)"
+  - "../accreditation/caep.yaml (Teacher Education — Components R1.1-R1.4, R2.1-R2.3, R3.2, R3.3, R4.1-R4.3, R5.1, R5.4; the EPP Annual Report / AIMS eight annual measures; NOTE: every prism_fit there is scored against generic pillar capability, not observed TE configuration)"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/ — Physical Therapy (PT) Playbook.md (read in full 2026-08-25; lines 195, 210-232, 250-259), Occupational Therapy (OT) Playbook.md (lines 112-118, 144-146, 194-199, 325-338, 352-354, 366-375), Physician Assistant (PA) Playbook.md (lines 67-75, 168-188, 244-246), Speech-Language Pathology (SLP) Playbook.md (read in full 2026-08-25; lines 21, 27, 41-49, 67, 88-100, 104-105, 118, 120-138, 142-149), Nursing Playbook.md (lines 40-56, 61-72, 83-86, 112-120), Social Work (SW) Playbook.md (read in full 2026-08-25; lines 52-59, 63-73, 155-172, 174-183, 190, 198), Teacher Education (TE) Playbook.md (READ IN FULL 2026-08-25 — all 73 lines; lines 12 and 63-73 carry the single-source data-quality caveat and the Open Gaps list, of which line 72 explicitly warns against citing CAEP standard numbers as Exxat-specific until confirmed against a TE-specific source; lines 19-26 and 33-57 are the only substantive product content, all of it the GoReact/Echo360 LTI integration)"
+  - "/Users/romitsoley/Downloads/CRNAVideosTranscripts.md — lines 21-35 (Daily Clinical Evaluation Report), 63-71 (CCE log submission window and the attestation/auto-approval exclusivity), 83-87 (Student Activity Insights green/amber/red thresholds), 99-117 (GoReact/Echo360 LTI)"
+  - "../competitors/e-value.yaml, ../competitors/new-innovations.yaml, ../competitors/leo-davinci.yaml, ../competitors/one45.yaml, ../competitors/elentra.yaml, ../competitors/core-elms.yaml, ../competitors/emedley.yaml, ../competitors/axium.yaml — surveyed specifically for cross-site-comparability and CQI granularity. FINDING: every named-standard accreditation claim across all nine teardowns is ACGME, LCME, CACMS, COCA, ACPE, CODA, or ARC-PA. Only ARC-PA (via elentra.yaml) overlaps with the eight disciplines covered here, so for CAPTE, ACOTE, CAA/ASHA, CCNE, ACEN, COA, CSWE and CAEP there is genuinely no documented competitor artifact to compare against at any granularity."
+last_verified: "2026-08-25"

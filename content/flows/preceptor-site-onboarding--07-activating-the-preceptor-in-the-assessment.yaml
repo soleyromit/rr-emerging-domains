@@ -1,0 +1,293 @@
+# Element-level ground truth underneath preceptor-site-onboarding.yaml, stage 7.
+# See content/flows/_TEMPLATE.yaml for the contract this file follows: every
+# accreditation_citation and competitor_equivalent claim below traces to a real
+# source file in confirmed_by, never back to the journey's own prose.
+# SCHEMA v2 (2026-08-24): analysis fields live on each element, not on the step.
+flow_name: "Activating the Preceptor Into the Assessment Workflow"
+maps_to_journey: "preceptor-site-onboarding.yaml, stage 7"
+persona: "Preceptor / Clinical Instructor (content/personas/role-preceptor.yaml) — the person actually producing assessment data; configured, scheduled, and monitored by the Program Administrator (content/personas/role-program-admin.yaml)"
+steps:
+  - screen: "Forms/Evaluations Setup drawer (Learning Activities > Setup > Forms/Evaluations)"
+    navigation_path: "Courses > [Course Offering] > Learning Activities > Setup > Forms/Evaluations [+ icon] > [form name]"
+    elements:
+      - element: "'Is this a course-based form?' / placement-required toggle"
+        type: "toggle"
+        data_shown: "Whether the form must be tied to an active placement before it can be completed"
+        gates_on: ["Whether the form appears in the preceptor's queue only once a placement exists"]
+        accreditation_citation: "ACPE Standard 7, Key Element 7.3.c (Transfer — this toggle is what makes one form object bind to every placement identically, i.e. the same instrument reused per site by design)"
+        competitor_equivalent: "Not comparable at element level — no file in content/competitors documents a form-to-placement binding toggle at this granularity."
+        gap_severity: "none"
+        gap_note: "Ships and works as documented; the only caveat recorded for this screen concerns the faculty access matrix's role labels, not this toggle."
+      - element: "'Does the form contribute to the student's final score?' toggle + weightage"
+        type: "toggle"
+        data_shown: "Whether this evaluation's score rolls into the Gradebook final grade, and at what weight"
+        gates_on: ["Gradebook final-score calculation for the course"]
+        accreditation_citation: "LCME Standard 9, Element 9.8 (Configure — this toggle is what makes a preceptor-submitted evaluation grade-bearing, and therefore what puts it inside the six-week final-grade clock)"
+        competitor_equivalent: "Not comparable at element level — neither E*Value's nor one45's public material names a per-form grade-contribution/weightage control."
+        gap_severity: "none"
+        gap_note: "Ships and works as documented; the only caveat recorded for this screen concerns the faculty access matrix's role labels, not this toggle."
+      - element: "Publish date / Due date (anchor-relative)"
+        type: "input field"
+        data_shown: "N days before/after the placement's Start, Mid, or End date — never an actual calendar date"
+        gates_on: ["When the form becomes visible to the preceptor / when it is marked overdue"]
+        accreditation_citation: "LCME Standard 9, Element 9.7 (Transfer — anchor-relative Due Date set to the Middle anchor); LCME Standard 9, Element 9.8 (Configure — anchor-relative Due Date set to the End anchor)"
+        competitor_equivalent: "content/competitors/e-value.yaml documents 'mid-point-to-end-of-rotation summary evaluations' as a shipped E*Value capability, but its own source note admits E*Value's 'anchor-relative rotation-date engine is not independently verifiable' from public docs — whether E*Value's scheduling is placement-relative (like Prism's) or fixed-calendar cannot be confirmed at element level."
+        gap_severity: "none"
+        gap_note: "The anchor-relative date field itself is confirmed shipped; what is unverifiable is the competitor side of the comparison, not this element."
+      - element: "Course Faculty / Placement Faculty / Faculty Advisor access matrix"
+        type: "toggle"
+        data_shown: "Per-role edit-vs-view-only permission on the activated form"
+        gates_on: ["Which faculty roles can edit a submitted evaluation vs. only view it"]
+        accreditation_citation: "No accreditation element's evidence lives on this control specifically — it governs post-submission edit rights, not the existence or timing of the assessment."
+        competitor_equivalent: "Not comparable at element level — no file in content/competitors documents a per-role edit-vs-view permission matrix on an evaluation form."
+        gap_severity: "none"
+        gap_note: >
+          The 'Placement Faculty' role named in this access matrix is very likely Exxat's internal label for
+          the preceptor/CI, since it sits alongside Course Faculty and Faculty Advisor — but no glossary/terminology
+          document in the sourced material (including the Prism Terminology and Getting Started guide) defines the
+          three roles explicitly. Treat that identification as a strong inference, not a confirmed fact.
+    action: "Program admin activates a Standard, Multi-Term, or Custom evaluation form for the course offering and anchors its Due Date to the placement's Middle date (midpoint feedback) or End date (summative/grade-bearing), then sets which faculty roles can edit vs. view it."
+    confirmed_by: "Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+
+  - screen: "Delegator link — no-login preceptor access (email-delivered)"
+    navigation_path: "Admin side: Learning Activities > [Course] > Form Distribution (resend action); preceptor side: a unique emailed link, no Prism login path"
+    elements:
+      - element: "Delegator link (unique, no-login, emailed on distribution/assignment)"
+        type: "access token (no-login)"
+        data_shown: "A one-time-per-form URL that opens the evaluation or patient-log form directly in-browser for a preceptor with no Prism account"
+        gates_on: ["Whether an un-credentialed preceptor can reach the form at all"]
+        accreditation_citation: "LCME Standard 9, Elements 9.7 and 9.8 (indirectly — this is the access mechanism that makes any preceptor-side form completion possible, which both elements depend on)"
+        competitor_equivalent: "content/competitors/leo-davinci.yaml documents an equivalent named capability — 'on-demand evaluation links can be emailed to clinical faculty with no login required' — making this the one element in this flow where a competitor's public material is granular enough for a direct, named element-level comparison. Leo and Prism both ship the same no-login access pattern."
+        gap_severity: "none"
+        gap_note: >
+          Confirmed for the PA discipline in the sourced playbook, and structurally similar to the OT Fieldwork
+          Educator's link-based, no-login FWPE completion flow (Playbooks/Occupational Therapy (OT) Playbook.md —
+          "Fieldwork Educators complete the FWPE without a Prism login"). Not independently confirmed for PT, Nursing,
+          or any of the four target new domains, though nothing in the sourced material suggests it is discipline-gated.
+      - element: "Resend action"
+        type: "button"
+        data_shown: "Re-triggers the same delegator-link email, or lets an admin copy/re-email it manually"
+        gates_on: []
+        accreditation_citation: "No accreditation element's evidence lives on this control specifically — it is a recovery path for the access mechanism cited on the delegator link itself."
+        competitor_equivalent: "Leo/DaVinci's 'on-demand evaluation links can be emailed' (content/competitors/leo-davinci.yaml) implies the same re-send affordance, but their public material does not name a distinct resend control, so the comparison holds at capability level only, not element level."
+        gap_severity: "none"
+        gap_note: "Confirmed present in the PA playbook alongside the delegator link; inherits the same PA/OT-only confirmation caveat as the link element."
+      - element: "Link duration (Program Details) — the form's 'soft due date'"
+        type: "input field"
+        data_shown: "How long the delegator link stays live after the form's Due Date"
+        gates_on: ["Whether a late-submitted evaluation is still accepted once the formal Due Date has passed"]
+        accreditation_citation: "LCME Standard 9, Element 9.8 (indirectly — this setting decides how long after the Due Date a preceptor submission still lands, which is the input to any turnaround measurement)"
+        competitor_equivalent: "Not comparable at element level — no file in content/competitors documents a configurable link-lifetime/grace-period setting."
+        gap_severity: "none"
+        gap_note: "Confirmed configurable at the Program Details level in the sourced PA playbook; same PA/OT-only confirmation caveat as the other elements on this screen."
+    action: "The preceptor, who has no Prism account of their own, receives an emailed delegator link once the evaluation is assigned/distributed, opens it directly, and completes the form — this is the literal mechanism by which a credentialed-but-outside-the-portal preceptor gets 'activated' into the assessment workflow."
+    confirmed_by: "Playbooks/Physician Assistant (PA) Playbook.md, section 'Delegator Links, Notifications & Other Workflow Mechanics'"
+
+  - screen: "CIET v2.0 midpoint completion (preceptor-facing, Standard/Multi-Term form)"
+    navigation_path: "Delegator link (or in-app) > [Placement] > CIET v2.0"
+    elements:
+      - element: "Training-quiz gate (first use)"
+        type: "toggle"
+        data_shown: "The CI must pass an in-product CIET training quiz, or select 'attest & bypass,' before the form unlocks"
+        gates_on: ["Whether the CI can proceed to complete the evaluation"]
+        accreditation_citation: "No accreditation element's evidence lives on this gate specifically — it is an evaluator-readiness control attached to the CIET instrument, not to a midpoint- or turnaround-feedback requirement."
+        competitor_equivalent: "Not comparable at element level — no file in content/competitors names a training-quiz gate on an evaluation instrument; only pillar-level claims exist (E*Value's 'mid-point-to-end-of-rotation summary evaluations,' one45's '360° reviews')."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The quiz content is CIET-specific and therefore PT/PTA-only, but the gate mechanism itself sits on the
+          generic Standard/Multi-Term form type. Standing up an equivalent evaluator-readiness gate for
+          DO/Pharmacy/Dentistry/Medicine is a content/configuration task on a proven engine, not a new pillar.
+      - element: "Workflow selector set at activation: 'CIET v2.0 Midterm and Final' vs. 'CIET v2.0 – Final only'"
+        type: "toggle"
+        data_shown: "Whether the preceptor is asked for a midpoint submission at all for this course"
+        gates_on: ["Whether a midpoint form instance is generated for the placement"]
+        accreditation_citation: "LCME Standard 9, Element 9.7 (Transfer — this selector is the concrete, in-production control that decides whether a midpoint formative evaluation exists for the placement)"
+        competitor_equivalent: "Not comparable at element level — E*Value's 'mid-point-to-end-of-rotation summary evaluations' (content/competitors/e-value.yaml) is directionally the same idea, but no competitor file names a midterm-vs-final workflow selector at activation."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Confirmed shipped, but bound to the CIET instrument for PT/PTA. The Nursing playbook independently confirms
+          an analogous non-PT custom midterm/final form pair, so the midpoint-plus-final workflow is proven across at
+          least two disciplines; each new domain needs its own instrument configured against it.
+      - element: "Copy Responses (Multi-Term form feature)"
+        type: "button"
+        data_shown: "Carries the CI's midterm answers forward into the final form in one click"
+        gates_on: ["Requires the same preceptor to complete both midterm and final, and identical form structure; one-time use per form pair"]
+        accreditation_citation: "LCME Standard 9, Element 9.7 (indirectly — it is the continuity mechanism linking the midpoint formative record to the summative one, not itself the evidence that midpoint feedback occurred)"
+        competitor_equivalent: "Not comparable at element level — no file in content/competitors names a midterm-to-final response carryover feature."
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is a property of the generic Multi-Term form archetype (content/prism/capability-map.yaml, 'Surveys &
+          Course Evaluations' pillar notes), not of CIET, so it transfers to any new domain that adopts a Multi-Term
+          midterm/final pair. Its preconditions (same preceptor both times, identical form structure, one-time use)
+          are documented constraints, not gaps.
+    action: "The preceptor completes the CIET at the rotation's midpoint — the concrete, in-production event that satisfies the midpoint-feedback requirement — and can reuse those answers as a starting point for the final evaluation via Copy Responses."
+    confirmed_by: "Exxat-Help-Guides: Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/CIET Form (Clinical Internship Evaluation Tool) Configuration.md; Playbooks/Physical Therapy (PT) Playbook.md (CIET v2.0 section); content/prism/capability-map.yaml, 'Surveys & Course Evaluations' pillar notes (Form archetype taxonomy — Multi-Term / Copy Responses)"
+
+  - screen: "Auto Notifications (Learning Activities > Auto Notifications > Add Notification)"
+    navigation_path: "Learning Activities > Auto Notifications > Add Notification"
+    elements:
+      - element: "Recipient Type selector"
+        type: "input field"
+        data_shown: "Students or Experiential Supervisor — the preceptor is addressed only under this second, generic label"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.8 (partially — alerts reach whoever is completing the form, but the element's 'automatic alerts to faculty/coordinators' wording is not satisfied by either available recipient type)"
+        competitor_equivalent: "Not comparable at element level — content/competitors/core-elms.yaml and content/competitors/e-value.yaml name 'due-date reminders' / automated low-score alerts as shipped features at the marketing-page level, but neither publishes a recipient-type list to compare against."
+        gap_severity: "gap"
+        gap_note: >
+          This selector is where the unresolved half of the LCME 9.8 hedge sits: the only two recipient types are
+          Students and Experiential Supervisor, so there is no confirmed distinct reminder path to program
+          "faculty/coordinators" as such — only to whoever is completing the form.
+      - element: "Start Condition (anchor + day-offset builder)"
+        type: "input field"
+        data_shown: "e.g. 'send 3 days before Due Date,' anchored to Beginning/Middle/End of Placement"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.8 ('automatic alerts... as the six-week SLA approaches' — this builder is where the approaching-deadline alert is actually defined)"
+        competitor_equivalent: "content/competitors/core-elms.yaml and content/competitors/e-value.yaml both name 'due-date reminders' as shipped, but neither publishes an anchor-and-offset configuration screen granular enough to compare element-for-element."
+        gap_severity: "configure-needed"
+        gap_note: "Confirmed shipped and anchor-relative; must be built per course offering by an admin rather than arriving pre-configured."
+      - element: "Reminder Frequency + End Condition"
+        type: "input field"
+        data_shown: "Once/Daily/Weekly/Every X days; stops after a specific date, after X notifications, or on an anchor"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.8 (the escalation/repeat half of the alerting requirement — how persistently the approaching-SLA nudge repeats)"
+        competitor_equivalent: "Not comparable at element level — the competitor files' 'due-date reminders' claims say nothing about configurable cadence or stop conditions."
+        gap_severity: "configure-needed"
+        gap_note: "Confirmed shipped; like the Start Condition, it is an admin-authored configuration per course offering, not a default."
+      - element: "Auto-exclusion logic"
+        type: "read-only rollup"
+        data_shown: "Automatically excludes forms already Submitted/Reviewed and placements marked On Hold or Unsuccessful"
+        gates_on: []
+        accreditation_citation: "No accreditation element's evidence lives here — it is noise suppression on the alerting mechanism cited above."
+        competitor_equivalent: "Not comparable at element level — no file in content/competitors documents reminder auto-exclusion behavior."
+        gap_severity: "none"
+        gap_note: "Documented as automatic behavior requiring no configuration, so unlike the sibling builder fields on this screen it carries no setup burden."
+    action: "Admin configures a recurring reminder anchored to the placement's Middle date (nudging the preceptor toward the midpoint form) and a second reminder anchored to the End date (nudging toward the summative/grade-bearing form before the SLA elapses), both targeted at the 'Experiential Supervisor' recipient type."
+    confirmed_by: "Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Setup Auto Notifications for Forms and Evaluations.md"
+
+  - screen: "Gradebook (Learning Activities > Setup > Gradebook)"
+    navigation_path: "Learning Activities > [Course] > Setup > Gradebook"
+    elements:
+      - element: "Student x Activity score grid"
+        type: "read-only rollup"
+        data_shown: "Final score per student across every graded activity, including the preceptor-submitted evaluation's score once it rolls in"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.8 (Configure — the grid records the scores that constitute the final grade, but carries no visible days-since-end-date SLA flag)"
+        competitor_equivalent: "Not comparable at element level — no file in content/competitors documents a gradebook grid at this granularity."
+        gap_severity: "configure-needed"
+        gap_note: "This is where the compliance-monitoring half of 9.8 (is this grade late?) would have to be read, and it is not surfaced here; see the Custom Reports step for the closest confirmed workaround."
+      - element: "Pencil-icon inline edit / bulk update"
+        type: "input field"
+        data_shown: "Manual score entry or override, individually or in bulk"
+        gates_on: []
+        accreditation_citation: "No accreditation element's evidence lives on this control specifically — it is the faculty override path onto the scores cited on the grid and Publish button."
+        competitor_equivalent: "Not comparable at element level — no file in content/competitors documents gradebook inline or bulk score editing."
+        gap_severity: "none"
+        gap_note: "Confirmed shipped in the sourced how-to; no gap identified at this control."
+      - element: "Publish button"
+        type: "toggle"
+        data_shown: "Draft vs. Published — the event that releases the grade to the student"
+        gates_on: ["Student-facing grade visibility"]
+        accreditation_citation: "LCME Standard 9, Element 9.8 (Configure — this click is the 'final grade available' event the six-week clock is measured against)"
+        competitor_equivalent: "Not comparable at element level — no file in content/competitors names a grade-publish event to compare against."
+        gap_severity: "none"
+        gap_note: "The grade-recording and grade-release mechanism itself is confirmed; what is missing sits on the score grid (no SLA flag) and in reporting, not on this button."
+    action: "Course/placement faculty confirms or overrides the score the preceptor's evaluation produced, then clicks Publish — the event LCME 9.8's six-week clock is measured against."
+    confirmed_by: "Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Tracking Student Grades Via Gradebook.md"
+
+  - screen: "Custom Reports — Forms and Evaluations data source"
+    navigation_path: "Learning Activities > Reports > Create New Report > Data Source: Forms and Evaluations"
+    elements:
+      - element: "Evaluator Role column/filter"
+        type: "report filter"
+        data_shown: "Faculty, Preceptor, Student, etc. — lets a coordinator isolate preceptor-submitted evaluations specifically"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.8 (turnaround-time reporting for program leadership — this filter is what scopes such a report to preceptor submissions)"
+        competitor_equivalent: "Not comparable at element level — no file in content/competitors names an equivalent self-service evaluator-role report field."
+        gap_severity: "gap"
+        gap_note: >
+          The raw field is confirmed present, which is why "unconfirmed" is no longer accurate as an absolute — but
+          no purpose-built, named six-week-SLA-compliance report uses it; a coordinator must hand-build the view.
+      - element: "Due Date / Submitted Date / Evaluation Status columns"
+        type: "report filter"
+        data_shown: "Assigned Date, Due Date, Submitted Date, Last Updated Date, Evaluation Status (Pending/In Progress/Completed)"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.8 (these are the exact fields a turnaround calculation needs — Due Date vs. Submitted Date)"
+        competitor_equivalent: "Not comparable at element level — no file in content/competitors names an equivalent self-service date/status field set."
+        gap_severity: "gap"
+        gap_note: >
+          Narrows, rather than closes, the journey's SLA-reporting hedge: the data exists in a self-service report,
+          but no pre-built turnaround calculation ships against it anywhere in the sourced material (help center, PT
+          playbook, or capability-map.yaml). This independently matches the finding reached for the sibling journey in
+          content/flows/rotation-lifecycle--07-summative-evaluation-grading-turnaround-completion-verification.yaml.
+      - element: "Pivot mode"
+        type: "report filter"
+        data_shown: "Group by row/column with count/average/date aggregation, e.g. Evaluation Status (rows) x Form Name (count)"
+        gates_on: []
+        accreditation_citation: "LCME Standard 9, Element 9.8 (the aggregation step that turns per-form dates into a program-leadership compliance view)"
+        competitor_equivalent: "Not comparable at element level — no file in content/competitors names an equivalent self-service pivot-report capability."
+        gap_severity: "gap"
+        gap_note: >
+          Pivot aggregation is confirmed available, so the compliance view is constructible by hand; what is absent is
+          any shipped, named six-week-SLA dashboard built on it.
+    action: "A coordinator builds a self-service pivot report filtering Evaluator Role = Preceptor and comparing each grade-bearing form's Due Date against its Submitted Date, to manually approximate the turnaround-compliance view the product does not ship pre-built."
+    confirmed_by: "Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md (section 'Forms and Evaluations')"
+
+  - screen: "Location Evaluations tab (Sites > Locations > [Location] > Location Evaluations)"
+    navigation_path: "Sites > Locations > [Location] > Location Evaluations"
+    elements:
+      - element: "Per-evaluation View link"
+        type: "button"
+        data_shown: "Opens the completed student-authored evaluation of this site or preceptor"
+        gates_on: []
+        accreditation_citation: "LCME Standard 8, Element 8.5; COCA Standard 11, Element 11.2 (student evaluation of clerkship/preceptor/site — the completed instrument this link opens IS the evidence). CODA Standard 3, Element 3-4 (faculty evaluation) is adjacent but NOT satisfied here — see gap_note."
+        competitor_equivalent: "content/competitors/one45.yaml documents 'One45 Assessment and Evaluation... 360° reviews, two-tier workflows, customizable forms' as shipped today — directionally comparable (a competitor ships student-facing evaluation instruments now) but one45's public product page is not granular enough to name an equivalent single form/workflow for element-by-element comparison."
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is this flow's single biggest resolution of the journey's stage-7 pain_or_gap. Student evaluation of
+          the preceptor and site was never gated behind the "Surveys & Course Evaluations" pillar as the journey
+          previously stated — it already runs inside the shipped Clinical & Experiential Education
+          pillar's Forms/Evaluations engine, in production, for PT-PTA (PTSE 1/2) and, per the Nursing playbook, in an
+          independently-built custom-form pair for Nursing too. Separately, the "Surveys & Course Evaluations"
+          pillar itself has also shipped and is no longer roadmap Q1 2027 (CORRECTED 2026-08-26 per Exxat PM
+          confirmation, see ../prism/capability-map.yaml, Surveys & Course Evaluations pillar). What is genuinely unconfirmed is (a) an equivalent
+          validated instrument for DO, Pharmacy, Dentistry, or Medicine, and (b) the CODA 3-4 faculty-evaluation
+          requirement specifically — a keyword search across all seven discipline playbooks and the full
+          Exxat-Help-Guides mirror for a faculty-facing (not student-facing) periodic evaluation screen returned
+          nothing; that half of the journey's CODA 3-4 hedge stands unresolved.
+      - element: "Share-with-students enablement"
+        type: "toggle"
+        data_shown: "For PT-PTA, PTSE 1 (Student Evaluation of Clinical Site) ships with this enabled by default; for any other form or discipline, enabling it requires an Exxat support ticket to prism-support@exxat.com"
+        gates_on: ["Whether future students browsing Explore Locations can see this site's aggregated evaluation history"]
+        accreditation_citation: "No accreditation element's evidence lives on this toggle — LCME 8.5 and COCA 11.2 are satisfied by the completed evaluation itself, not by whether it is republished to future students."
+        competitor_equivalent: "Not comparable at element level — no file in content/competitors documents a share-evaluations-with-students control or a student-facing aggregated site history."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Clearly the less self-serve of the two elements on this screen: only PT-PTA's PTSE 1 has it on by default,
+          and for every other form or discipline — including all four target new domains — enabling it is not an
+          in-product admin action but an Exxat support ticket to prism-support@exxat.com.
+    action: "Admin reviews a student's completed evaluation of the clinical site (PTSE 1) or, separately, of the preceptor (PTSE 2, routed via a 'Send to CI' option rather than published) — closing the reverse direction of the feedback loop this stage exists to open."
+    confirmed_by: "Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Viewing Location Evaluations.md; Playbooks/Physical Therapy (PT) Playbook.md, section 'PTSE 1 / PTSE 2'; Playbooks/Nursing Playbook.md (documents 'Student Evaluation of Preceptor' and 'Preceptor Evaluation of Student' as custom forms independent of PT)"
+
+sources:
+  - "Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+  - "Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Assignments.md"
+  - "Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/CIET Form (Clinical Internship Evaluation Tool) Configuration.md"
+  - "Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Setup Auto Notifications for Forms and Evaluations.md"
+  - "Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Tracking Student Grades Via Gradebook.md"
+  - "Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md"
+  - "Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Viewing Location Evaluations.md"
+  - "Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Planned Communication for PT-PTA/Low score indicators for PTSE forms.md"
+  - "Help for Program Administrators/Getting Started for Admin (includes User Guides)/Exxat Prism Terminology and Getting Started.md"
+  - "Playbooks/Physical Therapy (PT) Playbook.md"
+  - "Playbooks/Physician Assistant (PA) Playbook.md"
+  - "Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "Playbooks/Nursing Playbook.md"
+  - "content/prism/capability-map.yaml"
+  - "content/accreditation/lcme.yaml"
+  - "content/accreditation/acpe.yaml"
+  - "content/accreditation/coda.yaml"
+  - "content/competitors/e-value.yaml"
+  - "content/competitors/core-elms.yaml"
+  - "content/competitors/leo-davinci.yaml"
+  - "content/competitors/one45.yaml"
+last_verified: "2026-08-24"

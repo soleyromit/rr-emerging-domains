@@ -1,0 +1,245 @@
+# Researched 2026-08-26. Every non-trivial factual claim carries a source URL found via
+# public web search/fetch. Anything not independently verifiable is marked accordingly.
+# IMPORTANT FRAMING: CastleBranch is NOT a full clinical/experiential education platform.
+# It is a compliance-and-background-screening point solution. Its own marketing explicitly
+# names full clinical-education platforms (including Prism's direct competitor CORE) as
+# integration partners, not as things it replaces. See feature_teardown pillar 1 and
+# exxat_opportunity below for the single most important finding: CastleBranch's own
+# clinical-placement product (CB Bridges / "Bridges EXP") was spun off in the 2024 DISA
+# acquisition and has since been discontinued outright (confirmed by direct fetch of
+# bridgesexp.com on 2026-08-26, which shows only a discontinuation notice).
+competitor: "CastleBranch (now DISA Healthcare Technology)"
+slug: "castlebranch"
+domains_served: ["Nursing", "Allied Health"]   # Allied Health evidenced specifically for Physician Assistant (UNC-Chapel Hill) and Occupational Therapy Assistant (Minnesota West) programs via CastleBranch institutional portals; broader allied-health marketing language is generic and does not name every discipline
+category: "Compliance and background-screening point solution for healthcare education — not a clinical/experiential education platform"
+company:
+  founded: >
+    1997, by Brett Martin, originally in Chapel Hill, NC, relocating to Wilmington, NC in
+    2002. Company has operated 25+ years / "over 20 years" per its own current marketing.
+    Source: https://www.crunchbase.com/organization/castlebranch
+    Source: https://portcitydaily.com/local-news/2014/05/23/castlebranch-unveils-new-building-with-plenty-of-surprises/
+  hq: "1844/1845 Sir Tyler Drive, Wilmington, NC (company purchased its HQ building in a 2020 joint venture)"
+  ownership: >
+    DISA Global Solutions acquired CastleBranch's screening-and-compliance business
+    effective March 1, 2024. CastleBranch's separate clinical-experience/placement
+    platform, "CB Bridges," was NOT part of that sale — it was spun out under a new
+    independent name, "Bridges EXP," and has since ceased operations entirely: a direct
+    fetch of bridgesexp.com on 2026-08-26 shows only the notice "The Bridges EXP clinical
+    placement solution is no longer available," corroborated by a third-party account
+    (a competing vendor's blog) describing a June 30, 2026 shutdown with no new orders
+    accepted after May 30, 2026. Separately, DISA acquired American DataBank (owner of
+    the "Complio" compliance-tracking brand, also used in nursing-program compliance) in
+    February 2025 and folded both brands into a new "DISA Healthcare Technology"
+    division; CastleBranch itself was rebranded "DISA Healthcare Technology" in 2026,
+    though the CastleBranch name and legacy login (myCB) are still referenced as current.
+    Source: https://disa.com/news/disa-global-solutions-completes-strategic-acquisition-of-castlebranch-healthcare-compliance-and-screening/
+    Source: https://www.bridgesexp.com/ (fetched directly 2026-08-26)
+    Source: https://rotationmanager.com/castlebranch-bridges-is-shutting-down-what-nursing-programs-need-to-know-and-do/
+    Source: https://disa.com/news/disa-global-solutions-acquires-american-databank-launches-healthcare-technology-division/
+    Source: https://disahealthcare.com/castlebranch/
+
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: >
+      Not a current capability. CastleBranch previously had a clinical-experience/
+      placement product ("CB Bridges") covering placement requests, clinical scheduling,
+      and clinical paperwork, but that product was separated from CastleBranch in the
+      2024 DISA acquisition, rebranded "Bridges EXP," and has since been discontinued
+      outright (see ownership notes). CastleBranch/DISA Healthcare's own current
+      "Placement & Rotation Management" page describes only compliance-mapping and
+      requirement tracking around rotations — no scheduling, hours tracking, or
+      preceptor/site matching is described. The company's own partnerships page
+      explicitly names other vendors, including CORE (a direct Prism competitor already
+      profiled in this repo), Typhon, InPlace Software, Trajecsys, myClinicalExchange,
+      and ProjectConcert, as the platforms that handle "clinical and experiential
+      learning" — i.e., CastleBranch positions itself as complementary to these
+      platforms, not as a substitute for them.
+    depth_vs_prism: "behind"
+    evidence: >
+      "The Bridges EXP clinical placement solution is no longer available" (direct site
+      fetch). Partnerships page: CORE "manages clinical and experiential learning,
+      competency mapping, and student success" — named as a partner CastleBranch
+      integrates alongside, not a function CastleBranch performs itself.
+    source: "https://disahealthcare.com/partnerships/"
+  - pillar: "Compliance Management"
+    competitor_capability: >
+      This is CastleBranch's entire business, and it is deep. Background checks, drug
+      testing, immunization/vaccination tracking, document collection and verification,
+      license tracking, "compliance mapping" that auto-matches identical requirements
+      between a school and a clinical agency to eliminate redundant submissions,
+      auto-generated attestation forms with digital signatures, affiliation-agreement/
+      contract tracking with expiration and renewal notifications, secure profile-sharing
+      with third-party clinical sites, and audit-ready compliance reporting. Claims scale
+      of 2,000+ institutions, 10,000+ programs, and nearly 1 million students served
+      annually.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "monitors compliance before student registration for rotations," "Auto Compliance
+      Mapping... identifies identical requirements between schools and agencies to
+      reduce redundant submissions," "Electronic Agreement Storage." Company also claims
+      "trusted for over 20 years as a leading provider of higher education background
+      screening and compliance management solutions."
+    source: "https://disahealthcare.com/placement-rotation-management/"
+  - pillar: "Curriculum Mapping"
+    competitor_capability: >
+      Not publicly evidenced. No CastleBranch/DISA Healthcare page found describes
+      competency-to-course mapping, gap analysis, or accreditation-standards mapping.
+      The company's own partnerships page attributes "competency mapping" specifically
+      to its partner CORE, not to its own product — a self-description that this pillar
+      is out of scope for CastleBranch, sourced from CastleBranch's own site rather than
+      inferred from absence alone.
+    depth_vs_prism: "prism-only"
+    evidence: >
+      Partnerships page credits CORE, not CastleBranch, with "competency mapping."
+      Searches of disahealthcare.com and legacy castlebranch.com marketing pages found
+      no curriculum-mapping, gap-analysis, or competency-map module described anywhere.
+    source: "https://disahealthcare.com/partnerships/"
+  - pillar: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    competitor_capability: "not publicly disclosed / unable to verify"
+    depth_vs_prism: "unknown"
+    evidence: >
+      No CastleBranch/DISA Healthcare marketing page, help doc, or third-party review
+      mentions a survey or course/preceptor-evaluation module of any kind. Given the
+      product's tight compliance-and-screening scope this is likely a genuine gap, but
+      no page explicitly disclaims it the way the partnerships page does for competency
+      mapping, so it is marked unable to verify rather than confirmed absent.
+    source: "unable to verify — searched disahealthcare.com, legacy castlebranch.com marketing pages, and Trustpilot reviews; no survey/evaluation module found"
+  - pillar: "Exam Management (Prism roadmap Q2 2027)"
+    competitor_capability: "not publicly disclosed / unable to verify"
+    depth_vs_prism: "unknown"
+    evidence: >
+      Same as Surveys & Course Evaluations above — no exam, testing, or secure-assessment
+      capability is described anywhere in current CastleBranch/DISA Healthcare marketing,
+      consistent with the product being scoped to compliance/screening only, but not
+      explicitly disclaimed by the vendor itself.
+    source: "unable to verify — searched disahealthcare.com and legacy castlebranch.com marketing pages; no exam-management module found"
+  - pillar: "Accreditation Management (Prism roadmap Q3 2027)"
+    competitor_capability: >
+      No named-accreditor mapping or standards-alignment feature was found (no ACEN,
+      CCNE, ACOTE, CAPTE, or ARC-PA claims located anywhere in current marketing).
+      Compliance records and audit-ready reporting could plausibly be cited as supporting
+      evidence during an accreditation site visit, but that is an indirect byproduct of
+      the compliance module, not a dedicated accreditation-standards-mapping feature.
+    depth_vs_prism: "prism-only"
+    evidence: >
+      Targeted searches for CastleBranch alongside ACEN and CCNE returned no results
+      connecting the two; no accreditor name appears on disahealthcare.com/castlebranch/
+      or the higher-education/placement pages found.
+    source: "unable to verify — no named-accreditor mapping feature found on disahealthcare.com or legacy castlebranch.com"
+
+strengths:
+  - claim: >
+      Deep, singular focus on compliance/background-screening at real scale: 2,000+
+      institutions, 10,000+ programs, and nearly 1 million students served annually,
+      per the vendor's own current claims.
+    source: "https://disahealthcare.com/castlebranch/"
+  - claim: >
+      "Compliance mapping" auto-matches identical requirements between a school and a
+      clinical agency to eliminate redundant document submissions — real product depth
+      a generic document-storage point solution would lack.
+    source: "https://disahealthcare.com/placement-rotation-management/"
+  - claim: >
+      Explicitly designed as an interoperability layer: its own partnerships page names
+      and integrates with the leading clinical-education platforms (CORE, Typhon,
+      InPlace, Trajecsys, myClinicalExchange, ProjectConcert), positioning it to coexist
+      with Prism at an account rather than compete head-on for the same budget line.
+    source: "https://disahealthcare.com/partnerships/"
+  - claim: >
+      25+ years of incumbency and brand recognition specifically in nursing/allied-health
+      compliance, with deeply embedded workflows at community colleges and university
+      nursing programs nationwide.
+    source: "https://www.crunchbase.com/organization/castlebranch"
+
+weaknesses:
+  - claim: >
+      Discontinued its own clinical-placement/scheduling product (CB Bridges / Bridges
+      EXP) outright in 2026 — a direct site fetch shows only a "no longer available"
+      notice — leaving CastleBranch/DISA Healthcare with zero credible clinical-
+      placement product of its own, a real regression from a prior area of overlap
+      with Prism.
+    source: "https://www.bridgesexp.com/"
+  - claim: >
+      Very poor recent end-user sentiment: 1.5/5 on Trustpilot across 41 reviews (95%
+      one-star), citing unresponsive support (30-53 minute holds), inconsistent document
+      rejection, and unexpected/bundled fees.
+    source: "https://www.trustpilot.com/review/www.castlebranch.com"
+  - claim: >
+      No substantive B2B review presence found on Capterra, G2, or Software Advice
+      comparable to other competitors in this space; the reviews found are almost
+      entirely end-user (student) accounts of the consumer-facing screening product, not
+      institutional-buyer reviews of the compliance platform itself.
+    source: "https://www.g2.com/products/castlebranch/reviews (largely inaccessible/sparse) and absence of a found Capterra listing"
+  - claim: >
+      Three ownership/brand transitions in roughly two years (DISA acquisition of the
+      screening business in 2024, DISA's acquisition of sibling brand American DataBank
+      in 2025, and a "DISA Healthcare Technology" rebrand in 2026) create real
+      continuity-of-support uncertainty for institutions evaluating long-term stability.
+    source: "https://disa.com/news/disa-global-solutions-acquires-american-databank-launches-healthcare-technology-division/"
+  - claim: >
+      No curriculum-mapping, survey/evaluation, exam-management, or accreditation-
+      standards-mapping capability found anywhere in current marketing; the product is
+      scoped entirely to compliance/background-screening, not a clinical-education
+      platform.
+    source: "https://disahealthcare.com/partnerships/"
+
+retention_anchor: >
+  Retention is anchored in the compliance workflow itself rather than in the kind of
+  multi-module data lock-in CORE or Prism have: each student's immunization, background-
+  check, and drug-test history lives in CastleBranch/DISA Healthcare across their program
+  years, and the "compliance mapping" agreements a school has negotiated with its clinical
+  sites are institution-specific setup work that is costly to redo elsewhere. That said,
+  this anchor is measurably weaker than a full-platform competitor's: the Bridges EXP
+  shutdown proves CastleBranch/DISA Healthcare itself does not treat every one of its own
+  product lines as sticky, and the very poor recent end-user sentiment (1.5/5 Trustpilot)
+  suggests institutions may tolerate the vendor mainly because switching a compliance
+  backbone is administratively painful, not because the product satisfies them.
+
+exxat_opportunity: >
+  CastleBranch is best understood as a coexistence case, not a head-to-head displacement
+  target — its own partnerships page already names CORE (a Prism competitor) as a
+  clinical-education integration partner, meaning the realistic Exxat play is to be added
+  to the same list, not to unseat CastleBranch's compliance business. The live, time-
+  sensitive opportunity is the Bridges EXP shutdown: the deadline (new orders stopped
+  May 30, 2026; platform access ends June 30, 2026) has just passed as of this writing,
+  meaning nursing/allied-health programs that relied on CB Bridges for clinical
+  scheduling and placement are actively without a clinical-placement system right now and
+  need a replacement before fall-term rotations. Prism should position directly into that
+  gap — explicitly as the platform that replaces what Bridges EXP did, while integrating
+  with (not replacing) whichever compliance vendor, CastleBranch/DISA Healthcare or
+  American DataBank/Complio, the institution already has under contract. A second, softer
+  angle: CastleBranch's very poor recent Trustpilot sentiment and three ownership changes
+  in two years give Exxat a stability-and-service argument to pair with the placement-gap
+  argument when a prospect already has both vendors and is reevaluating.
+
+pricing_signal: >
+  No public tiered pricing page found on castlebranch.com/disahealthcare.com; sales
+  appears to be institution-by-institution package pricing. Unlike most competitors in
+  this repo, actual per-student dollar figures are incidentally published by individual
+  institutions on their own program websites: $153.00 (Bismarck State College), $153.98
+  (Bon Secours Memorial College of Nursing), and $94 (San Jacinto College, Medical
+  Laboratory Technology) — variation reflecting differently negotiated packages
+  (background check + drug screen + document tracking bundles) rather than a public list
+  price.
+
+last_researched: "2026-08-26"
+
+sources:
+  - "https://disa.com/news/disa-global-solutions-completes-strategic-acquisition-of-castlebranch-healthcare-compliance-and-screening/"
+  - "https://disa.com/news/disa-global-solutions-acquires-american-databank-launches-healthcare-technology-division/"
+  - "https://www.prnewswire.com/news-releases/disa-global-solutions-acquires-american-databank-launches-healthcare-technology-division-302368032.html"
+  - "https://disahealthcare.com/castlebranch/"
+  - "https://disahealthcare.com/placement-rotation-management/"
+  - "https://disahealthcare.com/partnerships/"
+  - "https://www.bridgesexp.com/"
+  - "https://rotationmanager.com/castlebranch-bridges-is-shutting-down-what-nursing-programs-need-to-know-and-do/"
+  - "https://www.wilmingtonbiz.com/real_estate_-_commercial/2020/04/01/castlebranch_buys_its_hq_in_joint_venture/20169"
+  - "https://www.wilmingtonbiz.com/castlebranch_sells_off_part_of_company/2024/03/19/castlebranch_sells_off_part_of_company/25409"
+  - "https://portcitydaily.com/local-news/2014/05/23/castlebranch-unveils-new-building-with-plenty-of-surprises/"
+  - "https://www.crunchbase.com/organization/castlebranch"
+  - "https://www.trustpilot.com/review/www.castlebranch.com"
+  - "https://www.g2.com/products/castlebranch/reviews"
+  - "https://portal.castlebranch.com/UE11/spif/UO33/UO33"
+  - "https://portal.castlebranch.com/MY27/spif/WZ05/WZ05"
+  - "https://bismarckstate.edu/uploads/288/DMS%20CastleBranch%20Information.pdf"
+  - "https://www.sanjac.edu/programs/areas-of-study/health/med-lab-tech/getting-started-castlebranch/"
+  - "https://www.bsmcon.edu/sites/default/files/assets/images/NEW%20Student%20Compliance%20FAQs_Hannah%20Harman%201.pdf"

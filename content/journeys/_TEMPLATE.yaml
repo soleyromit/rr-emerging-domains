@@ -1,0 +1,12 @@
+# One file per journey: rotation-lifecycle.yaml, accreditation-self-study.yaml,
+# preceptor-site-onboarding.yaml, competency-verification.yaml
+journey_name: "e.g. 'Rotation Lifecycle'"
+domain_scope: ["DO", "Pharmacy", "Dentistry", "Medicine"]
+persona: "which persona/role (see ../personas/) this journey centers on"
+stages:
+  - stage: "e.g. 'Site & preceptor onboarding'"
+    current_state_in_prism: ""
+    pain_or_gap: ""
+    accreditation_link: ""
+    competitor_comparison: ""
+sources: []

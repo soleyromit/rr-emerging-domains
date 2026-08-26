@@ -1,0 +1,315 @@
+# Element-level ground truth underneath competency-verification.yaml, stage 1
+# ("Define the competency framework and map it into the curriculum").
+#
+# SCHEMA v2 (2026-08-24): accreditation_citation / competitor_equivalent /
+# gap_severity / gap_note now live on each ELEMENT, not on the step.
+#
+# Two shipped Prism modules cover this stage, and they are NOT the same
+# feature under two names:
+#   1. Curriculum Mapping — maps courses/course-measures/learning objectives
+#      to an accreditor's standard hierarchy (structural coverage evidence).
+#   2. Competency Management — a separate, newer module (its own nav tile
+#      under Curriculum Management) that scores students against a named
+#      competency on a 1-5 (or custom) scale, sourced from didactic grades,
+#      didactic assessment questions, experiential assessment questions, or
+#      a combination, with a threshold, a cohort Review dashboard, and a
+#      student-facing publish/unpublish gate.
+# Every element below traces to a real screen name in one of these two
+# modules, per the exact source file in `confirmed_by`.
+
+flow_name: "Competency Framework Setup and Curriculum Mapping"
+maps_to_journey: "competency-verification.yaml, stage 1"
+persona: >
+  Assessment / Curriculum & Competency Director (primary — owns both the
+  Curriculum Mapping standards library and the Competency Management setup);
+  Compliance & Accreditation Liaison (secondary — consumes the Mapped
+  Standards / Heatmap reports as accreditation-readiness evidence). See
+  ../personas/ — role files not yet written (see journey persona note).
+
+steps:
+  - screen: "Program Details > Standards"
+    navigation_path: "left nav: Program Details > Standards panel"
+    elements:
+      - element: "Pre-populated accreditation standards list (left panel)"
+        type: "read-only rollup, domain-scoped"
+        data_shown: "Every accreditation standard pre-loaded for the program's registered domain (e.g. an ARC-PA program sees ARC-PA standards, a CAPTE program sees CAPTE standards)."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.4; ACPE Standard 2, Key Element 2.2.d; CODA Standard 2, Element 2-8; LCME Standard 9, Element 9.4 — all four require a defined standard/outcome taxonomy as the mapping target, and this pre-loaded list is where that taxonomy would ship from."
+        competitor_equivalent: "Elentra's public Accreditation feature page names LCME/COCA/CACMS/ACPE/CODA/ARC-PA as supported standard sets and states >40% CACMS DCI coverage (elentra.yaml) — directionally the same idea (both vendors pre-load named standard sets), and the only element on this screen where a public-doc comparison can be made at all, though Elentra publishes no screen detail to compare field-for-field."
+        gap_severity: "configure-needed"
+        gap_note: "No COCA/ACPE/CODA-specific standard set is confirmed pre-loaded today — only ARC-PA and ACOTE are confirmed pre-loaded, per the PA and OT playbooks. This element is where the gap for the four new domains actually sits."
+      - element: "Activate / edit-pencil toggle per standard"
+        type: "toggle"
+        data_shown: "Active (checkmark) vs. inactive (gray) state per standard/sub-standard."
+        gates_on: ["Whether the standard is selectable as a mapping target in Curriculum Mapping. Deactivating a standard that already has course/measure mappings deletes those mappings."]
+        accreditation_citation: "Standard-set agnostic — it acts on whichever taxonomy is loaded, so it carries no COCA/ACPE/CODA/LCME evidence of its own; the citation belongs to the standards list it operates on."
+        competitor_equivalent: "No Elentra, CORE ELMS, Leo/DaVinci, eMedley, or one45 doc describes an equivalent per-standard activate/deactivate control — their public docs are not granular enough to support a comparison at this element level."
+        gap_severity: "none"
+        gap_note: "The activation mechanism itself is shipped and domain-agnostic; its readiness for the four new domains is entirely downstream of whether the standards list above is populated."
+      - element: "+Add <<Standard Name>> drawer — Standard code / Standard description / Annotations fields"
+        type: "input field set"
+        data_shown: "Free-text standard code (e.g. '6.4', '2-8', '2.2.d'), description, and an annotations field for internal notes."
+        gates_on: []
+        accreditation_citation: "Accepts any free-text standard code, including COCA 6.4, ACPE 2.2.d, and CODA 2-8 — this is the confirmed path by which a not-yet-pre-loaded standard set can still be entered as a mapping target."
+        competitor_equivalent: "No competitor file on record documents a program-authored custom standard/SLO entry form at this granularity, so no element-for-element comparison is possible from public docs."
+        gap_severity: "none"
+        gap_note: "Shipped and sufficient as the manual workaround for the pre-load gap above — the four new domains' standards can be added here by hand today."
+    action: >
+      The Curriculum & Competency Director activates the pre-loaded standards
+      the program will map against, and adds any sub-standard or
+      program-specific standard/SLO not already pre-loaded, before mapping
+      begins.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
+
+  - screen: "Curriculum Mapping > Add Curriculum (4-step drawer: Details > Course Offering > Mapping Setup > Curriculum Grid)"
+    navigation_path: "Curriculum Mapping dashboard > +Add Curriculum"
+    elements:
+      - element: "Select Course Measures (+ icon, per-measure activate toggle)"
+        type: "toggle list"
+        data_shown: "Every course measure defined in Courses > Setup > Course Measures; toggle controls whether that measure is active for this curriculum grid's mapping screen."
+        gates_on: ["Deactivating a measure category deletes the data associated with it."]
+        accreditation_citation: "Course measures are the carrier for the new domain's competency taxonomy (e.g. COCA 6.4's 7-competency taxonomy incl. OPP/OMM as a course-measure attribute), but the measures themselves are program-defined, so no accreditor standard is evidenced by this control directly."
+        competitor_equivalent: "Not comparable at element level — neither CORE ELMS's CompMS add-on (core-elms.yaml) nor Leo/DaVinci's session-mapping docs (leo-davinci.yaml) describe a per-measure activation list."
+        gap_severity: "none"
+        gap_note: "Domain-agnostic mechanism, shipped and proven for PA and OT."
+      - element: "Select Standards for Mapping (Mapping from / Mapping to / Attributes)"
+        type: "mapping-chain builder"
+        data_shown: "Mapping from = course measure or course; Mapping to = standards activated in Program Details > Standards; Attributes = optional mapping-level attribute tags."
+        gates_on: ["Only standards already activated on the Program Details > Standards screen are selectable here."]
+        accreditation_citation: "COCA 6.4, ACPE 2.2.d (2.1.a-m outcome taxonomy as the mapping-to standards), and CODA 2-8 (course-to-competency crosswalk) are all satisfied structurally by this chain — this is the element where the crosswalk itself is created."
+        competitor_equivalent: "CORE ELMS sells an equivalent capability as a separately priced add-on module ('CompMS') rather than a bundled screen (core-elms.yaml) — a real architectural difference (bundled vs. up-sell), not just a naming one. Leo/DaVinci's public docs describe mapping 'every session in every course' to competency sets and EPAs but do not enumerate an equivalent builder, so that half cannot be compared element-for-element."
+        gap_severity: "configure-needed"
+        gap_note: "Selectable targets are limited to standards activated upstream, which for COCA/ACPE/CODA/LCME are not confirmed pre-loaded — the chain works, but the new domains' standards must be added first."
+      - element: "Select Attributes for Courses"
+        type: "multi-select"
+        data_shown: "Course-level and course-measure-level attribute taxonomy (e.g. Bloom's Taxonomy, Instructional Methods, Lifespan/population tags, SCPE settings — confirmed live for PA and OT today)."
+        gates_on: []
+        accreditation_citation: "This is where a discipline-specific dimension such as COCA 6.4's OPP/OMM would be tagged onto courses/measures; today only ARC-PA (PANCE Topics, SCPE settings) and ACOTE (Instructional Methods, Lifespan tags) attribute sets are confirmed."
+        competitor_equivalent: "No competitor file documents a course-attribute taxonomy at this granularity, so no element-for-element comparison is possible from public docs."
+        gap_severity: "configure-needed"
+        gap_note: "Mechanism is proven (PA: PANCE Topics/Bloom's/SCPE settings; OT: ACOTE Instructional Methods/Lifespan tags — capability-map.yaml, Curriculum Mapping pillar notes) but no COCA/ACPE/CODA/LCME-specific attribute set (e.g. an 'OPP/OMM' attribute, a 'COEPA domain' attribute) is confirmed already loaded for the four new domains. This element is the specific home of that gap."
+      - element: "Curriculum Grid preview"
+        type: "read-only preview grid"
+        data_shown: "Final curriculum sequence (courses by term/professional year/academic year) before save."
+        gates_on: []
+        accreditation_citation: "Displays the saved sequence only; carries no standard-specific evidence of its own."
+        competitor_equivalent: "Not comparable at element level to any competitor file on record."
+        gap_severity: "none"
+        gap_note: "Read-only confirmation view; domain-agnostic and shipped."
+    action: >
+      The Director builds the curriculum sequence, activates the course
+      measures that will carry the new domain's competency taxonomy, chains
+      each measure to the activated accreditor standards, and tags courses
+      with the discipline-specific attribute set (the same mechanism already
+      proven for ARC-PA/PANCE Topics and ACOTE/Lifespan tags).
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Adding Curriculum Grid in Curriculum Mapping.md"
+
+  - screen: "Course Objectives > Mapping (with Map with Leo AI assist)"
+    navigation_path: "Curriculum Mapping > select Curriculum + Course Offering > Mapping icon > Course Objectives > select objective"
+    elements:
+      - element: "Map with Leo button"
+        type: "button (AI-assisted)"
+        data_shown: "Leo analyzes the selected learning/course objective plus curriculum structure and existing mappings, and returns suggested standard mappings with a summary."
+        gates_on: ["Requires AI Consent accepted at Program Details > AI Consent (opt-in, revocable) before the feature appears."]
+        accreditation_citation: "Applies generically to whichever standard set (COCA/ACPE/CODA/LCME) is active for the program — Leo suggests against whatever standards are loaded, so accreditation fit follows directly from the Program Details > Standards step above."
+        competitor_equivalent: "No competitor teardown on file documents an AI-assisted standard-suggestion feature at this granularity — capability-map.yaml calls this 'materially ahead of what any competitor teardown documented,' and nothing in core-elms.yaml, leo-davinci.yaml, emedley.yaml, elentra.yaml, or one45.yaml describes an equivalent. Treat as a confirmed Prism-only capability, not a scored competitor race."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Suggested-standards checklist + thumbs up/down feedback"
+        type: "review checklist"
+        data_shown: "Number of standards suggested; per-standard check/uncheck; an 'Already Mapped' label if a manual mapping already exists for that objective."
+        gates_on: []
+        accreditation_citation: "Applies generically to whichever standard set (COCA/ACPE/CODA/LCME) is active for the program — the checklist shows suggestions against whatever standards are loaded."
+        competitor_equivalent: "No competitor teardown on file documents an equivalent human-review checklist over AI suggestions at this granularity (core-elms.yaml, leo-davinci.yaml, emedley.yaml, elentra.yaml, one45.yaml) — confirmed Prism-only, not a scored race."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Apply Mapping button"
+        type: "button"
+        data_shown: "Commits only the checked suggestions as live mappings."
+        gates_on: ["Nothing is written until Apply Mapping is clicked — every AI suggestion requires explicit human approval."]
+        accreditation_citation: "Applies generically to whichever standard set (COCA/ACPE/CODA/LCME) is active; the human-approval gate is what makes an AI-assisted mapping defensible as accreditation evidence."
+        competitor_equivalent: "No competitor teardown on file documents an equivalent explicit-approval commit step for AI-suggested mappings (core-elms.yaml, leo-davinci.yaml, emedley.yaml, elentra.yaml, one45.yaml) — confirmed Prism-only, not a scored race."
+        gap_severity: "none"
+        gap_note: ""
+    action: >
+      The Director (or a delegated faculty member) selects a course
+      objective and either maps it to standards manually or requests Leo's
+      AI-suggested mapping, reviews/edits the suggested standards, and
+      applies the approved subset.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Curriculum Mapping with Leo.md"
+
+  - screen: "Curriculum Mapping > Mapping Reports > Mapped Standards Report"
+    navigation_path: "Curriculum Mapping dashboard > select Curriculum > Mapping Reports > Mapped Standards"
+    elements:
+      - element: "Mapped Standards summary bar"
+        type: "read-only rollup"
+        data_shown: "Total standards in the selected framework, total mapped, and % mapped, per curriculum/cohort."
+        gates_on: []
+        accreditation_citation: "Directly answers the 'showing where each competency is taught and assessed' evidence requirement common to COCA 6.4, ACPE 2.2.d, and CODA 2-8; the %-mapped view is exactly the coverage reporting ACPE 2.2.d's required_software_behavior calls for (acpe.yaml)."
+        competitor_equivalent: "Leo/DaVinci markets a mapping-completion 'Insights Dashboard' by name (leo-davinci.yaml) — a directly comparable named feature, and the one element on this screen where a like-for-like competitor comparison holds."
+        gap_severity: "none"
+        gap_note: "This rollup resolves the journey's prior 'no mapping-completion dashboard' hedge — it is a shipped, named %-mapped dashboard, not a gap."
+      - element: "All Standards / Unmapped Standards filter"
+        type: "report filter"
+        data_shown: "Toggles the standards list between full and unmapped-only."
+        gates_on: []
+        accreditation_citation: "The unmapped-only view is the coverage-gap reporting ACPE 2.2.d's required_software_behavior calls for (acpe.yaml), and serves the same evidence class for COCA 6.4 and CODA 2-8."
+        competitor_equivalent: "CORE ELMS's CompMS is described only as doing 'gap analysis,' not at this screen-level detail (core-elms.yaml) — conceptually the closest analog to this filter, but not element-for-element comparable from public docs."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Directly Mapped vs. Indirectly Mapped classification"
+        type: "read-only rollup"
+        data_shown: "Directly Mapped = explicit user-created mapping on the viewed entity; Indirectly Mapped = inherited via parent/child standard hierarchy."
+        gates_on: []
+        accreditation_citation: "Same evidence class as the summary bar (COCA 6.4 / ACPE 2.2.d / CODA 2-8); the direct/indirect split is what lets a reviewer distinguish deliberate coverage from inherited coverage."
+        competitor_equivalent: "No competitor file on record documents a direct-vs-inherited mapping distinction, so no element-level comparison is possible from public docs."
+        gap_severity: "none"
+        gap_note: ""
+    action: >
+      The Compliance & Accreditation Liaison opens this report ahead of a
+      site visit to confirm which of the four accreditors' standards still
+      have zero mappings, and exports it as accreditation-readiness
+      evidence.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
+
+  - screen: "Curriculum Mapping > Mapping Reports > Heatmap Report"
+    navigation_path: "Curriculum Mapping dashboard > select Curriculum > Mapping Reports > select standard > Other Reports > Heatmap Report"
+    elements:
+      - element: "Heatmap grid (X = standards, Y = course offerings)"
+        type: "read-only visualization"
+        data_shown: "Each cell = count of course measures mapped to that standard for that course offering; color intensity scales with mapping count."
+        gates_on: []
+        accreditation_citation: "Same evidence class as the Mapped Standards Report above (COCA 6.4 / ACPE 2.2.d / CODA 2-8) — confirmed today only against ARC-PA 6th Edition B/C/D sections; no COCA/ACPE/CODA-configured heatmap has been documented."
+        competitor_equivalent: "Not named in any competitor file at this element level; CORE ELMS's CompMS gap-analysis claim (core-elms.yaml) is the closest conceptual analog but its public docs do not describe a heatmap visualization specifically, so no element-level comparison is possible."
+        gap_severity: "configure-needed"
+        gap_note: "Shipped and proven for PA/ARC-PA; needs the same standard set reconfigured and populated with real course-measure mappings for COCA/ACPE/CODA/LCME before it is evidence-ready for the four new domains."
+      - element: "Hover tooltip (Standard Code / Course Details / Total Measures Mapped)"
+        type: "read-only detail popover"
+        data_shown: "Drill-down detail for a single cell."
+        gates_on: []
+        accreditation_citation: "Same evidence class as the grid it drills into (COCA 6.4 / ACPE 2.2.d / CODA 2-8) — confirmed today only against ARC-PA 6th Edition B/C/D sections."
+        competitor_equivalent: "Not named in any competitor file at this element level; no public competitor doc is granular enough to compare a per-cell drill-down popover."
+        gap_severity: "configure-needed"
+        gap_note: "Renders whatever the grid renders, so it inherits the same reconfiguration need — no COCA/ACPE/CODA/LCME-populated version documented."
+    action: >
+      The Director scans the heatmap for lightly-mapped or unmapped cells —
+      standards with little or no course coverage — before a curriculum
+      committee review.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Heatmap Report.md"
+
+  - screen: "Competency Management > Setup > Add New (4-step drawer: Select Competency > Course Type > Scoring Source/Assessments > Summary)"
+    navigation_path: "Curriculum Management section > Competency Management > Setup tab > Add New"
+    elements:
+      - element: "Course Type selector — Experiential / Didactic / Both"
+        type: "radio selector"
+        data_shown: "Experiential = placement-course-based competency tracking; Didactic = non-placement course, via Final Course Grades or Question-Level Assessment Scoring; Both = combined framework."
+        gates_on: ["Only one competency framework can be configured at a time per competency, though multiple frameworks per competency are allowed."]
+        accreditation_citation: "COCA 6.4's requirement that OPP/OMM be assessed 'DURING clinical clerkships, not only pre-clinically' (do.yaml) maps directly onto this selector's Experiential path — this is the first confirmed element-level evidence that Prism's data model can attach a manual-skills competency to the rotation record rather than only a pre-clinical course."
+        competitor_equivalent: "No competitor file documents an equivalent experiential-vs-didactic competency sourcing choice — CORE ELMS's CompMS (core-elms.yaml) and Leo/DaVinci's EPA mapping (leo-davinci.yaml) are described only at the marketing-feature level, so no element-level comparison is possible."
+        gap_severity: "none"
+        gap_note: "Architecturally well-suited to the DO OPP/OMM case specifically. What remains unconfirmed is upstream of this selector, at the drawer's Select Competency step: whether any named external taxonomy (AACP COEPA, AAMC Curriculum Inventory/MedBiquitous, USMLE content outline) is pre-loaded as a competency list, versus an administrator typing each competency name in by hand."
+      - element: "Associate assessments / course offerings step"
+        type: "multi-select with eye-icon preview"
+        data_shown: "Eligible experiential assessments, eligible didactic assessments, or eligible didactic course offerings — 'eligible' means the assessment has a scoring scale and is active, or the course offering has grading schemes enabled."
+        gates_on: ["An assessment with no scoring scale, or an inactive assessment, will not appear as selectable."]
+        accreditation_citation: "This is the element that ties a named competency to the assessments that evidence it — ACPE 2.1.a-m and CODA 2-24's ~15-category list would each become one competency wired here to its own assessment set."
+        competitor_equivalent: "No competitor file documents a comparable assessment-association step with eligibility rules; CORE ELMS and Leo/DaVinci describe their competency modules only at marketing-feature level, so no element-level comparison is possible."
+        gap_severity: "none"
+        gap_note: "Shipped and taxonomy-agnostic; works against whatever assessments the program has configured."
+      - element: "Scoring scale configurator"
+        type: "input field / scale builder"
+        data_shown: "Default 1-5 scale, or a custom scale defined by the administrator."
+        gates_on: []
+        accreditation_citation: "No accreditor standard on file prescribes a specific scale; ACPE 2.1.a-m and CODA 2-24 categories would each be scored on whatever scale is set here."
+        competitor_equivalent: "No competitor file describes a configurable competency scoring scale at this element level, so no comparison is possible from public docs."
+        gap_severity: "none"
+        gap_note: "Shipped, with custom scales supported."
+      - element: "Competency threshold field"
+        type: "input field"
+        data_shown: "The score value below which a student is flagged as not-yet-competent in reports and the Review dashboard."
+        gates_on: ["Threshold must fall within the selected scoring scale's range or the save is rejected."]
+        accreditation_citation: "The threshold is what turns a score into a competent/not-yet-competent determination, which is the operative judgement behind COCA 6.4, ACPE 2.1.a-m, and CODA 2-24 category attainment."
+        competitor_equivalent: "No competitor file documents an explicit competency threshold field; CORE ELMS's CompMS and Leo/DaVinci's EPA mapping are described only at marketing-feature level, so no element-level comparison is possible."
+        gap_severity: "none"
+        gap_note: "Shipped, with range validation against the configured scale."
+    action: >
+      The Director selects (one at a time) which named competency to
+      configure, whether it is demonstrated experientially (e.g. on the
+      rotation record), didactically, or both, associates the eligible
+      assessments or course offerings, sets the scoring scale and threshold,
+      and saves — after which Prism prompts to start mapping immediately or
+      defer it.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+
+  - screen: "Competency Management > Review (cohort dashboard)"
+    navigation_path: "Curriculum Management section > Competency Management > Review tab > select Competency framework > select Cohort"
+    elements:
+      - element: "Course Type dropdown (Didactic / Experiential)"
+        type: "toggle"
+        data_shown: "Switches all charts below between didactic-sourced and experiential-sourced competency scores for a Both-type framework."
+        gates_on: []
+        accreditation_citation: "Carries no standard-specific evidence itself; it selects which sourcing path (didactic vs. experiential, per the Setup drawer's Course Type) the charts below report against."
+        competitor_equivalent: "Not comparable at element level to any competitor file on record (core-elms.yaml, leo-davinci.yaml, emedley.yaml, elentra.yaml, one45.yaml document no equivalent view control)."
+        gap_severity: "none"
+        gap_note: "Display control only; shipped."
+      - element: "Domain Scores chart"
+        type: "read-only chart"
+        data_shown: "Average competency score per domain for the selected cohort."
+        gates_on: []
+        accreditation_citation: "LCME 9.4's call for a centralized assessment system aggregating student achievement against program objectives (lcme.yaml) is partially met by this chart for whichever competencies are configured; LCME 9.4's own prism_fit rating in lcme.yaml is 'Configure' and still names the roadmap Accreditation Management pillar (Q3 2027) as the layer that would formally tie this to program-level objectives end-to-end."
+        competitor_equivalent: "Not comparable at element level — none of core-elms.yaml, leo-davinci.yaml, emedley.yaml, elentra.yaml, or one45.yaml documents a named cohort competency domain-score chart."
+        gap_severity: "none"
+        gap_note: "Scores against a numeric 1-5/custom scale, not an EPA-style entrustment/supervision-level scale, so the journey's EPA/entrustment hedge is not resolved by this chart and should stay flagged."
+      - element: "Student Proficiency Distribution chart"
+        type: "read-only chart"
+        data_shown: "Count of students Meeting Threshold (all domains) vs. Below Threshold (at least one domain)."
+        gates_on: []
+        accreditation_citation: "This is the threshold-flagging half of LCME 9.4's centralized-achievement requirement (lcme.yaml) — it shows cohort attainment against the configured threshold, while the objective-mapping half remains with the roadmap Accreditation Management pillar (Q3 2027)."
+        competitor_equivalent: "Not comparable at element level — no competitor file on record documents a meeting-vs-below-threshold cohort distribution chart."
+        gap_severity: "none"
+        gap_note: "Concrete, shipped answer to the journey's prior 'no documented EPA/entrustment dimension' hedge insofar as competency-threshold-based scoring exists — but threshold, not entrustment level."
+      - element: "Score Distribution by Domain (box plot)"
+        type: "read-only chart"
+        data_shown: "Min/max/average/median score per domain; median-below-threshold domains render in red."
+        gates_on: []
+        accreditation_citation: "Same evidence class as the Domain Scores chart against LCME 9.4 (lcme.yaml) — adds distribution detail rather than a distinct standard citation."
+        competitor_equivalent: "Not comparable at element level — no competitor file on record documents a per-domain score-distribution box plot."
+        gap_severity: "none"
+        gap_note: "Same numeric-scale caveat as the other charts: distribution is over a 1-5/custom score, not an entrustment/supervision level."
+      - element: "Publish / Unpublish dropdown"
+        type: "toggle with confirmation modal"
+        data_shown: "Controls student-facing visibility of the framework's scores; does not affect underlying score calculation."
+        gates_on: ["Students can view their competency score for a framework only once it is explicitly Published."]
+        accreditation_citation: "No accreditor standard on file speaks to student-facing publication of competency scores; this control carries no accreditation evidence of its own."
+        competitor_equivalent: "Not comparable at element level — no competitor file on record documents an explicit publish/unpublish gate on competency scores."
+        gap_severity: "none"
+        gap_note: "Shipped visibility gate, independent of score calculation."
+    action: >
+      The Director reviews cohort-level competency attainment, drills into
+      at-risk students from the Students in Cohort grid, and decides when to
+      publish scores to students for the term.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Adding Curriculum Grid in Curriculum Mapping.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Curriculum Mapping with Leo.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Assigning Attributes to a Course for Curriculum Mapping.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Heatmap Report.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/do.yaml"
+
+last_verified: "2026-08-24"

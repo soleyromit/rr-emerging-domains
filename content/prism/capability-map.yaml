@@ -1,0 +1,1331 @@
+product: "Exxat PRISM"
+tagline: "System of record for clinical & experiential education"
+sources:
+  - "Exxat PRISM Academic Suite infographic v7_FNL (internal marketing asset), local file: Exxat Prism Infographic_v7_FNL.pdf"
+  - "Exxat internal how-to doc: 'Managing Course Activities – Activating Assignments (Prism)', local file"
+  - "Exxat Internal Zendesk discipline playbook: 'Physician Assistant' (CSS & CX knowledge base), local file: FireShot Capture 003"
+  - "Exxat Internal Zendesk discipline playbook: 'Occupational Therapy (OT)' (CSS & CX knowledge base), local file: FireShot Capture 004"
+  - "Exxat Internal Zendesk discipline playbook: 'Physical Therapy (PT)' (CSS & CX knowledge base), local file: FireShot Capture 002"
+  - "Exxat Prism Basic Tutorials for Program Administrators (16-part Vimeo series + standalone feature walkthroughs, transcribed), local file: exxat_transcripts.md"
+  - "Exxat Prism Help Center (399 articles, official documentation), extracted to 99-Assets/documents/Exxat-Help-Guides/ in the Obsidian vault"
+  - "Discipline video transcript: TEVideosTranscripts.md"
+  - "Discipline video transcript: SLPVideosTranscripts.md"
+  - "Discipline video transcript: PTPTAVideosTranscripts.md"
+  - "Discipline video transcript: PAVideosTranscripts.md"
+  - "Discipline video transcript: OTOTAVideosTranscripts.md"
+  - "Discipline video transcript: NursingTutorialsTranscripts.md"
+last_updated: "2026-08-24"
+
+core_ring:
+  description: >
+    Six modules arranged around a "Courses / Faculty / Students" core in the
+    official Prism Academic Suite diagram. Three are shipped today (no date
+    badge on the diagram); three carry explicit 2027 roadmap dates on that
+    same official diagram. The PA and OT discipline playbooks (CSS & CX
+    internal knowledge base) confirm real, granular feature detail behind
+    each shipped pillar — well beyond the infographic.
+  pillars:
+    - name: "Clinical & Experiential Education"
+      status: shipped
+      notes: >
+        The placement/rotation engine. Anchor-relative scheduling (publish/due
+        dates set as N days before/after a placement's start/mid/end date,
+        not fixed calendar dates) is confirmed real. The PA/OT playbooks
+        confirm this is a genuinely deep, mature module — including a real
+        allocation/matching engine (Placement Assist), which corrects an
+        earlier reading of the competitive research (see
+        content/synthesis/gap-analysis.md Pattern G) that assumed Prism had
+        no matching layer at all. CONFIRMED via tutorial transcript ("Managing
+        Placements"): Placement Assist is a mature constraint solver, not a
+        simple ranker — it supports per-course/rotation/setting placement
+        caps ("in each" vs. "combined" application), distance-based scoring
+        (school-to-location or student-address-to-location), overlapping-
+        rotation exclusion, and setting-to-course pairing rules that persist
+        across future runs, and reports back what % of students got their
+        1st/2nd/3rd/4th wishlist choice. Suggestions are never
+        auto-committed — an admin reviews and creates placements from the
+        results. This is a materially deeper matching engine than a
+        generic waitlist/lottery tool.
+      features:
+        - name: "Placement Assist"
+          detail: >
+            Algorithmic placement engine: run placements in staged batches,
+            assign weighted difficulty scores to hard-to-fill specialties
+            (e.g. Women's Health = 10, Pediatrics = 9) so scarce slots get
+            placed first, then move to easier courses. Works with a wishlist
+            (location- or setting-ranked) feeding into it. Also supports
+            per-student max-placement rules by course/rotation/setting,
+            distance-weighting, and an overlapping-rotation guard. CONFIRMED
+            via Exxat help-center documentation: full self-service
+            availability is currently limited to PT-PTA and OT-OTA
+            programs — all other disciplines must contact support to have
+            it enabled, and the docs explicitly flag it as having "limited
+            functionality" outside those two disciplines today. Also
+            supports split/combined rotation-equivalence rules (e.g. one
+            6-month rotation vs. two 3-month half-rotations counting as
+            equivalent) by pairing a per-course max-placement override with
+            the overlap-group guard.
+        - name: "Placement publish step & no-login external completion"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: a placement match
+            is not visible to the student until an admin explicitly clicks
+            Publish — a distinct step from making the match itself — and
+            deleting a placement sends no automatic notification to either
+            the student or the preceptor (admins must communicate the change
+            manually). Separately, faculty or site personnel who need to
+            complete a Form/Evaluation during a placement do not need a
+            Prism login at all — they receive a direct completion link.
+        - name: "PA vs. PT/OT/Nursing course-and-rotation data model divergence"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: the underlying
+            Course/Rotation model differs by discipline, not just by
+            terminology. For PT/PTA, OT/OTA, and Nursing programs, a
+            "Course" represents a Timeframe (often completed in any clinical
+            Setting) and each individual rotation is modeled as its own
+            course; for PA programs, a "Course" instead represents the
+            clinical Setting itself (often completed at any point in the
+            clinical year), and a Rotation is the period in which a student
+            completes one or more Courses — when a rotation spans multiple
+            courses, admins must specify which course a student is
+            completing when placing them in a slot. This is a real
+            data-model distinction, not a labeling difference — it changes
+            how registrations and learning activities tag to course
+            offerings across disciplines.
+        - name: "Patient Log review, deletion, and reopening workflow"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: patient logs move
+            through In Progress/Pending Review → Needs Attention/Approved.
+            School admins and faculty can edit or delete a log at any
+            status; site preceptors can mark Needs Attention/Approved but
+            cannot delete; students can edit/delete only while In Progress
+            or Pending Review, never after Approved. Admins can reopen an
+            Approved log back to Needs Attention (not a one-way approval),
+            which auto-emails the student. Deletion requires the deleting
+            role to type a reason, and for schools using Power BI patient-
+            log reports, deleted records only reflect in those reports on a
+            24-hour batch cycle, not immediately. CONFIRMED, with the
+            SETUP side of this workflow, in the PA video-tutorial
+            transcript ("Setting up and Managing Patient Logs"): patient
+            logs are configured per course offering (Learning Activities >
+            Setup > pencil icon on Patient Log) and the log form itself is
+            a selectable TEMPLATE — effectively a patient-log type — so one
+            PA program can run different log structures on different
+            courses/rotations; only a standard template ships, and both new
+            templates and edits to existing ones require a CSS agent,
+            Account Manager, or prism-support ticket. Three configuration
+            details matter for scoping: a "no logs more than N days after
+            the encounter date" submission window; optional grading
+            contribution (max score + weightage toward the course grade);
+            and an auto-approve-on-submission toggle that is MUTUALLY
+            EXCLUSIVE with both preceptor review and the student
+            attestation — turning auto-approval on silently removes the
+            attestation option, so a program cannot have a
+            frictionless log and a signed integrity attestation at the same
+            time. The reviewer grid's first four columns are fixed; the
+            rest are removable/reorderable per program.
+        - name: "Faculty Timesheet (mobile, geolocated, limited release)"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: a limited-release
+            module lets supervising faculty log clinical-supervision hours
+            via a mobile app that captures GPS location alongside
+            check-in/check-out; manual (non-geolocated) entries get a
+            distance-from-location alert icon in the admin review grid.
+            Admins can edit timestamps directly — originals stay visible,
+            the edit is audit-logged, and faculty are not notified of the
+            change. Status flow: New Entry → Pending Review → Approved /
+            Need Attention / Not Approved, with Need Attention resubmittable
+            by faculty back to Pending Review.
+        - name: "Three-tier faculty association model"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: faculty can be
+            independently associated at the course level (edit rights on
+            course info/measures/resources/learning-activity setup,
+            view-only on placements — for Course Directors/Adjuncts), the
+            student level (view-only access to that student's Academics,
+            Profile, Compliance, Communications, Interventions, Coursework,
+            and Learning Activities — for advisors; the student
+            Compliance-tab visibility is itself a separate admin toggle), or
+            the placement level (view/review scoped only to the specific
+            students/placements assigned via a "Placement Faculty"
+            checkbox). These are independently grantable, not tiers of one
+            role.
+        - name: "Student Self-Placement"
+          detail: >
+            Program admins can enable self-placement per course offering,
+            letting students originate their own clinical placement
+            directly in Prism rather than only responding to admin-assigned
+            slots, with a choice of "requires approval from school" or
+            "auto-approve placements on student submission."
+        - name: "Experiential Supervisor Intake Form (PIF)"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: a configurable
+            digital intake form (locked standard profile fields plus a
+            custom per-program section, 12 element types including
+            e-signature/attestation/file upload) sent to clinical
+            supervisors via a unique encrypted delegator link, with
+            real-time email-engagement tracking (Delivered/Opened/Link
+            clicked/Failed). Submitted responses land in a diffed review
+            drawer (new value vs. current profile value) and sync to the
+            personnel profile as a one-way, irreversible, final action — no
+            reject/undo; any further change requires a brand-new request.
+            If the supervisor consents, their standard-field responses are
+            reused to auto-prefill future intake forms sent by OTHER Exxat
+            programs ("Fill once, use everywhere with Exxat") — a
+            cross-institution credentialing-data network effect, not just
+            per-program caching — and the feature is explicitly marketed to
+            close "accreditation audit gaps" via a timestamped sync history.
+            Bulk sending is not yet supported (one supervisor at a time).
+        - name: "Slot Request"
+          detail: >
+            Site partners confirm slot availability directly inside Prism
+            (site-based or preceptor-based models); responses populate
+            placement/SCPE reports automatically instead of manual collection.
+        - name: "Wishlist Setup"
+          detail: "Settings-based (electives), slot-based (core), or location-based ranking; 'My Request' option depending on program process."
+        - name: "Follow the Preceptor"
+          detail: "Preceptor-based placement mode publishes all of a preceptor's associated locations to the student automatically."
+        - name: "Explore Locations"
+          detail: "Interactive map of clinical sites students can browse, with site details, requirements, and shared documents — on by default."
+        - name: "Patient Logging with configurable Diagnosis & Procedure Minimums"
+          detail: >
+            Programs define minimum encounters per diagnosis/procedure per
+            rotation; students track progress in real time, faculty see gaps
+            before rotation end. ICD codes non-chargeable, CPT codes
+            chargeable ($18/student/year in the PA pricing example).
+        - name: "Clinical Log (SLP) — a distinct module from Patient Log"
+          detail: >
+            CONFIRMED via the SLP video-tutorial transcript ("Setting up and
+            Reviewing Clinical Logs"): Clinical Log is its own Learning
+            Activity type, not the Patient Log renamed. Its unit of record
+            is TIME, not an encounter count — every entry captures the
+            supervising clinical educator, encounter date, patient
+            demographics, and the minutes split between INTERVENTIVE and
+            EVALUATIVE practice — which is why the whole SLP reporting
+            family aggregates hours rather than case counts, and why the
+            diagnosis/procedure-minimum model documented above for PA does
+            not transfer to SLP. Setup mirrors the PA patient log (per-course
+            offering, template preview, N-days submission window, optional
+            grading weight, configurable reviewer columns with the first
+            four locked) plus an SLP-specific attestation the CLINICAL
+            EDUCATOR signs when reviewing student logs (the attested
+            statements and the hours each supervisor reviewed print at the
+            bottom of the Clock Hours report — a supervisor-level
+            sign-off trail, distinct from the student-level attestations
+            described under Compliance Management). Five named reports:
+            Clock Hours, Clinical Log, Clinical Log Multiple Attributes
+            Age-wise, Clinical Log Types of Service Age-wise, and Clinical
+            Log Raw Data — all cross-tabulating hours across the same five
+            SLP-specific axes (student participation type: direct contact
+            vs. observation; intervention vs. evaluation; mode of delivery
+            incl. in-person vs. telepractice; training level:
+            graduate vs. undergraduate; and patient age group), with
+            per-service-type breakouts (e.g. voice and resonance x adult).
+            The min/max hour thresholds per participation-type x
+            mode-of-delivery cell — which red-flag any student below
+            minimum directly in the Clinical Log report — are
+            support-configured only (prism-support@exxat.com), reinforcing
+            the SLP self-service gap already noted in
+            exxat_advantage_layer. Reports cap at 50 course offerings per
+            run. Directly relevant to the new domains: this is Prism's
+            proven pattern for an hours-and-supervision-based accreditor
+            (ASHA/CAA) as opposed to an encounter-count-based one
+            (ARC-PA) — the closest existing analogue for
+            competency/hour-threshold accreditors like ACPE or CODA.
+        - name: "Exxat One Availability-Based Wishlist (PT/PTA/OT/OTA only)"
+          detail: >
+            CONFIRMED via the PT/PTA and OT/OTA video-tutorial transcripts
+            (same "Managing Exxat One Availability Based Wishlist" video
+            published to both disciplines): a THIRD wishlist mode beyond
+            the settings/slot/location-ranked options listed under
+            "Wishlist Setup" — students rank real, live Exxat One site
+            AVAILABILITIES (not program-created slots) before any placement
+            request is sent, inverting the usual sequence into a
+            demand-first, availability-driven flow. Admin creates it in
+            Prism (Placement > course offering > Wishlist > Create Wishlist,
+            with view/open/close dates), filters the visible availability
+            pool by state / experience type / specialization, and sets a
+            min and max number of availabilities each student must rank;
+            students are handed off from the Prism dashboard's Needs
+            Attention section into Exxat One (non-SSO students must accept
+            the Exxat One privacy policy first) to browse in map or list
+            view, rank, and submit. The admin action then flips from View
+            Request to Request Slot, the request goes to the site from
+            inside Exxat One, and site-approved schedules come back via the
+            existing import-schedules path documented under "Exxat One
+            Linking + Schedule Processing." Two facts worth carrying into
+            GTM: this is scoped to PT, PTA, OT, and OTA programs only —
+            another instance of the PT/OT-first rollout pattern already
+            seen with Placement Assist — and every Prism ADMIN user gets
+            Exxat One access at no additional charge, which makes the
+            two-product story a distribution advantage rather than a
+            second sale.
+        - name: "Telehealth Tracking"
+          detail: "Timesheet-based (recommended) or patient-log-based tracking against accreditor telehealth-percentage thresholds (e.g. ARC-PA's per-rotation/per-year caps)."
+        - name: "Site Assessment"
+          detail: "Custom-built 'Initial Site Visit' and 'Ongoing Site Visit' forms; results roll into a Comprehensive Site Assessment report."
+        - name: "Placement Reports (6 report types)"
+          detail: "Comprehensive Placement Report (live), Distribution of Slots by Location, Distribution of Slots by Setting, Placement by Preceptor, Placement by Site/Location, Placement Limit Report."
+        - name: "Exxat One Linking + Schedule Processing"
+          detail: >
+            RESOLVES open question below on what the "Schedules" feature
+            actually is. Exxat One is confirmed as a genuinely separate,
+            connected product (its own login/data model) with a two-stage
+            integration into Prism: (1) a one-time site/location LINKING
+            step — including an AI match-confidence tool (High/Medium/No
+            Match tiers) to bulk-link Exxat One locations to existing Prism
+            records — and (2) SCHEDULE PROCESSING, which converts
+            site-approved Exxat One schedules into Prism slots and
+            placements (student auto-matched by email similarity, rotation
+            auto-suggested by closest date range), including update
+            propagation when a schedule changes on either side
+            (student added/removed/replaced, location changed, cancelled).
+            Per the admin-tutorial transcript this was targeted to ship
+            ~February 2026, i.e. linking was live before processing. This
+            is a real, working two-product integration story, not a vague
+            roadmap mention — relevant to the GTM narrative for
+            "Exxat's placement marketplace" as a differentiator. CONFIRMED
+            via Exxat help-center documentation: the linking step uses a
+            named "Smart Bulk Link" drawer for High/Medium-confidence
+            matches, and once a row is manually confirmed AI suggestions
+            stop appearing for that row.
+        - name: "Custom Site Assessment form builder"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: self-service form
+            builder (Sites > Setup > Form Setup) supporting 11 question
+            types (single/multiple choice, short/long answer, dropdown,
+            date picker, toggle, attestation, e-signature, divider, text
+            editor) with per-question help text, character limits, and
+            mandatory flags. Forms have Draft/Published states; once
+            Published a form cannot be unpublished; Exxat-standard forms
+            can't be edited or deleted; custom forms can only be deleted
+            once they have zero responses. Results roll into a
+            Comprehensive Site Assessment report used for accreditation
+            trend evidence.
+        - name: "Rotation Readiness Checklist"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: Exxat's own
+            documented canonical launch sequence — Courses/Course
+            Offerings → Student Registration → Duration Blocks/Rotations →
+            Slots (or Slot Requests direct from sites) → Assign Students
+            (tracked via the Placement Clearance Dashboard) → Publish
+            Placements + notify → activate per-course learning-activity
+            modules. Useful as the reference "golden path" workflow when
+            scoping a new discipline's onboarding. Placement Groups
+            (bundles of course offerings placed together) are capped at 20
+            per program with up to 50 course offerings each.
+    - name: "Compliance Management"
+      status: shipped
+      notes: >
+        CORRECTION to prior research: this pillar gates on more than student
+        items. Placement Clearance in the PA/OT playbooks explicitly requires
+        (1) student compliance status, (2) site/location-specific documents,
+        (3) active contracts, and (4) validity of preceptor
+        license/board-certification for the assigned specialty — i.e. Prism
+        already gates on site, contract, and preceptor entities today, not
+        only the student. This meaningfully changes the "entity model stops
+        at the student" reading in gap-analysis.md Pattern A — the gating
+        exists, the open question is whether it extends to the specific new
+        item types each new-domain accreditor asks for (e.g. faculty
+        calibration, GME program status), not whether non-student gating
+        exists at all.
+      features:
+        - name: "Placement Clearance"
+          detail: >
+            Blocks a placement unless student compliance + site documents +
+            active contract + valid preceptor license/certification are all
+            satisfied — a real multi-entity gate, confirmed in both PA and
+            OT playbooks. CAVEAT confirmed via Exxat help-center
+            documentation: the "Placement Clearance" report specifically
+            only reflects uploaded compliance-document status and site
+            contract status — it does NOT indicate whether the student's
+            profile has actually been shared with the site, a distinct
+            manual step admins can miss. The live Clearance Dashboard (a
+            different view from the report) runs three parallel status
+            models — Requirement Upload Status, Contract Status, Compliance
+            Status — plus a separate three-state tracker (Missing/Exists/NA)
+            specifically for Preceptor CV, License, and Certification, and
+            Exxat's documented best practice is to start monitoring it 6-8
+            weeks before rotations begin. It also supports bulk
+            location-requirement document download and admin approval of
+            student-uploaded location documents directly from the
+            dashboard, plus a delegator merge field
+            (@StudentProfileWithComplianceAndLocationRequirementsLink) that
+            gives site personnel a no-login link to a student's compliance +
+            location-requirement status.
+        - name: "Contracts with expiry alerts"
+          detail: >
+            Signed affiliation agreements tracked under 'Contracts' and
+            linked to locations; a 'contract expiring' toggle is a named
+            best practice. CONFIRMED via Exxat help-center documentation: an
+            automated Contract Status check on the Placement Clearance
+            Dashboard evaluates each location's contract(s) against
+            placement dates (Valid Contract vs. Needs Attention when a
+            contract expires before placement end, with a distinct "Missing
+            Contracts" state and multi-contract-per-location handling). A
+            single contract can be "linked" to multiple sites via a chain
+            icon so one agreement covers many sites without duplication;
+            unlinking only works when tied to multiple sites, deleting only
+            when tied to exactly one. A "common contract sharing" toggle
+            lets one contract cover multiple discipline programs at the same
+            university, and contracts can auto-generate a downloadable
+            document from a saved program template.
+        - name: "Attestations"
+          detail: "Checkbox-based acknowledgment items (e.g. profile-accuracy attestation, graduation-requirements attestation) shared per-cohort or per-course."
+        - name: "Program Requirements"
+          detail: "Per-setting compliance requirements (e.g. a specific document required only for Acute Care placements), tracked per student with completed/pending/overdue/outstanding status."
+        - name: "Personnel compliance"
+          detail: "Preceptor certification and license number tracked on the personnel record, surfaced in the Comprehensive Personnel Report."
+        - name: "Role-Based Access Control (RBAC)"
+          detail: "Sensitive records (e.g. advisement/intervention notes) restricted to assigned faculty/advisors only — confirmed in the OT playbook's student-advising workflow."
+        - name: "Site Sharing Model"
+          detail: >
+            Per-entity, per-sub-field cross-program visibility controls (Site,
+            Contract, Location, Personnel) — a university with multiple
+            programs on Prism (e.g. PT + OT + PA) can share basic site info
+            across programs while keeping contract documents or personnel
+            records program-private. Personnel is never auto-shared. Directly
+            relevant to the "one repo, many disciplines" pitch for
+            universities running several of the four new domains at once.
+            CONFIRMED via tutorial transcript: as of Sept. 2025 this was
+            simplified from 5 models down to 3 (Standard / All Sharing / No
+            Sharing) — worth knowing the model is actively being simplified,
+            not static. CONFIRMED with further detail via Exxat help-center
+            documentation: the old OPM (Online Program Management) model is
+            now fully deprecated, and a real behavioral change shipped
+            alongside the consolidation — All Sharing and Prism Sharing
+            clients no longer get default location sharing with site
+            programs; location sharing must now be explicitly selected
+            per site/location via an "Edit Programs" drawer, confirmed by
+            re-typing a displayed verification number. Edits to a shared
+            location cascade automatically to every program using it, and
+            location deletion is permanently blocked if any placements or
+            slots are attached. At the Institution-Administrator level,
+            central location management additionally requires the school
+            be on the "All Sharing" or "Standard Sharing" model as a
+            prerequisite — it's not available under "No Sharing."
+        - name: "Exxat Approve (managed compliance review)"
+          detail: >
+            CONFIRMED via tutorial transcripts ("Managing Student
+            Compliance", "Setting Up and Reviewing Faculty Compliance"): a
+            paid add-on service where Exxat's own team reviews
+            student/faculty compliance documents on the school's behalf
+            (schools not subscribed still review documents themselves).
+            Faculty Compliance is a parallel module to student compliance —
+            same setup mechanics (templates, categories, mandatory/sensitive
+            flags, auto-notifications) plus faculty-specific Compliance
+            Groups for bulk assignment — and it requires Exxat Approve to
+            use. This is a services-attach revenue lever worth flagging for
+            the domain-expansion pricing model, not just a feature.
+            CONFIRMED with further detail via Exxat help-center
+            documentation: schools enrolled in "Approve Services" get
+            document review/approval within a stated 24-48 hour SLA;
+            non-enrolled schools instead route rejected/pending documents to
+            their own School Administrator. A dedicated "Review
+            Clarifications" tool lets the school and the Approve team
+            exchange clarifying questions on a document mid-review, gated to
+            users with full compliance access specifically to prevent
+            sensitive-information leakage. On the faculty-compliance side, a
+            document's "Reset" action both archives the prior document into
+            an Archived Documents section AND resets the requirement to
+            "Get Started" for re-upload — this Reset-as-versioning pattern
+            is the mechanism for handling renewed/replaced compliance
+            documents (e.g. an annual TB test) rather than a simple
+            overwrite, and applies to both student and faculty compliance.
+        - name: "One-Time-Password (OTP) protection for shared compliance data"
+          detail: >
+            Support-configured option that gates any emailed or profile-
+            shared compliance information behind an OTP sent to the
+            recipient's own school email before they can view it — applies
+            uniformly to student-profile shares, placement-section emails to
+            preceptors, and (per the faculty-compliance transcript) faculty
+            compliance data as well. A concrete PHI/FERPA-adjacent security
+            control worth citing when addressing new-domain accreditor
+            data-handling requirements. CONFIRMED with further detail via
+            Exxat help-center documentation: the OTP is sent only to the
+            original recipient's email, so a forwarded link cannot be opened
+            by the forwardee — and the broader Notification Hub Email Setup
+            screen this lives in also exposes a configurable Delegator Link
+            Expiry Duration (days) for externally shared links, alongside
+            Email Display Name and Default Reply-To Email Address controls.
+        - name: "Communications vs. Interventions (structured advising/incident log)"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: Prism formally
+            separates two record types, loggable against Students, Courses,
+            Sites, Locations, and Personnel: Communications (neutral,
+            informational — advising conversations, requests, check-ins) and
+            Interventions (documented incidents/concerns requiring
+            monitoring or remediation — academic/professionalism issues,
+            compliance/placement problems), the latter carrying a formal
+            Open/Closed status and structured Follow-Ups (planned vs. actual
+            date, notes). Both share one drawer-based form across every
+            entity type (Mode, initiator, a "Make visible to student"
+            publish toggle requiring explicit confirmation, attachments up
+            to 25MB). Notably there is currently no dedicated Interventions
+            report — the only way to see interventions needing follow-up is
+            the Sites/Locations Dashboard (24-hour refresh), bucketed into
+            More than 7 days / Next 7 days / Past Due.
+        - name: "Compliance document status & exemption taxonomy"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: beyond a plain
+            Approved/Not Approved/Pending Review/In Progress status, an
+            approval can carry one of four specific exception sub-statuses
+            with single-letter codes — Approved with Declination (D),
+            Approved with Exception (E), Approved with Medical Exemption
+            (M), Approved with Religious Exemption (R) — i.e. exemption
+            tracking (relevant to immunization/health mandates) is a native
+            status, not a free-text workaround. A separate internal-only
+            "Review Clarification" comment thread exists that is explicitly
+            never visible to students. Students can only remove their own
+            uploaded file while it's Pending Review or Not Approved — once
+            Approved, only the school team/admin can remove it.
+        - name: "Third-party background check & drug screening integrations"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: Prism has two
+            parallel, named vendor integrations for background checks and
+            drug screening — Universal Background Screening, Inc. (fingerprint
+            background checks and drug screening, own support contact) and
+            Cisive (separate onboarding flow and status taxonomy, including a
+            "Complete – Under MRO Review" state reflecting real DOT-style
+            Medical Review Officer review chains) — plus a native
+            ComplianceJunction integration specifically for HIPAA training
+            (vendor-provided Course Id/Course Link, configurable
+            mandatory/Approve-review/sensitive-content flags, published per
+            cohort). Where both a Universal background check and drug
+            screening are required, the system enforces an order dependency:
+            drug screening can only be requested once the background check
+            reaches "In Process," and vice versa for an additional
+            background check.
+        - name: "Two-tier attestations with signed audit trail"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: attestations exist
+            at both a general profile level (dashboard) and a course-specific
+            level (only acknowledgeable from within Coursework); every
+            agreed attestation is retained with a timestamp in the student's
+            Profile > Academics tab as a durable acknowledgment record —
+            relevant evidence trail for accreditor data-handling questions.
+    - name: "Curriculum Mapping"
+      status: shipped
+      notes: >
+        CORRECTION to prior research: earlier competitor comparisons
+        (gap-analysis.md) described Prism's mapping as "generic." The
+        playbooks show a proven, configurable per-discipline attribute
+        system already in production for two disciplines (PA: PANCE Topics,
+        Bloom's Taxonomy, SCPE settings; OT: ACOTE Instructional Methods,
+        Lifespan/population tags). The gap for the four new domains is
+        configuration (loading COCA/LCME/ACPE/CODA-specific attribute sets),
+        not a missing capability.
+      features:
+        - name: "Curriculum Mapping with Leo (AI-assisted)"
+          detail: >
+            Exxat's AI assistant ("Leo") suggests standard-to-objective
+            mappings based on curriculum structure and existing mappings;
+            human reviews and approves every suggestion before it applies.
+            Opt-in, with consent to use curriculum data and a right to
+            withdraw/delete. Confirmed shipped, not roadmap — this is
+            materially ahead of what any competitor teardown documented.
+        - name: "Pre-loaded + custom standards"
+          detail: "Accreditor standards (ARC-PA, ACOTE by degree level: Associate/Baccalaureate/Master's/Doctoral) come pre-loaded; programs add custom program-specific standards/SLOs alongside them."
+        - name: "Configurable course & mapping attributes"
+          detail: "Per-discipline attribute taxonomies (e.g. Bloom's Taxonomy, ACR Domain, PANCE Topics, Instructional Methods, SCPE settings, Lifespan/population tags) — the same mechanism that would need COCA/LCME/ACPE/CODA-specific attribute sets configured for the new domains."
+        - name: "AACN Essentials competency-based-education pipeline (Nursing)"
+          detail: >
+            CONFIRMED via the Nursing video-tutorial transcript
+            ("Streamline Transition to Competency-Based Education") — the
+            single best worked example in any source of Prism running an
+            end-to-end CBE transition for one accreditor framework, and
+            therefore the closest template for what the new domains would
+            need. The AACN Essentials ship PRE-POPULATED, and the mapping
+            target differs by program level: entry-level programs map to
+            sub-competencies A/B/C, advanced-level programs to E/F/G —
+            i.e. Prism already models a single accreditor framework with
+            level-conditional sub-scopes, the same shape the CSWE
+            generalist-vs-specialized pattern takes. Programs map the same
+            course objectives simultaneously to the Essentials AND to
+            additional frameworks named in the transcript (NONPF, IPEC core
+            competencies, the four spheres of care, the eight concepts of
+            nursing practice, plus program SLOs). Two report shapes here are
+            NOT covered by the seven-report suite listed below: a Nursing
+            CROSSWALK report where each row is an Essential and each column
+            a course or course objective, and each cell records both the
+            content TYPE (knowledge- / skill- / behavior-based) and the
+            depth (introduced / reinforced / demonstrated) — a two-
+            dimensional depth-of-coverage matrix, materially richer than
+            the Heatmap Report's count-of-mappings cell; and a cumulative
+            mapping report deliberately formatted to line up against the
+            AACN Essentials Toolkit's own sample curriculum-mapping
+            template, a third accreditor-format-matching precedent
+            alongside ARC-PA B2 and CAPTE (see the Accreditation Management
+            pillar). The transcript is also explicit that Prism tracks
+            EXPOSURE and ACHIEVEMENT as separate constructs: exposure is
+            captured by student self-report (a daily activity log tagging
+            which Essentials they encountered, rolled into a distribution
+            report) and by patient logging, while achievement comes from
+            assessment-question-to-competency mappings scored by
+            preceptors/CIs/faculty. Skill achievement is tracked across
+            both didactic and clinical courses. Qualitative and
+            quantitative assessment formats are both supported.
+        - name: "Mapping report suite (7 reports)"
+          detail: "Mapped Standards Report, Mapped Courses Report, Cumulative Report, B2 Instructional Objectives Report (accreditor-formatted export), Heatmap Report (course x standard coverage matrix), Course Attributes Usage report, Mapping Attributes Usage report."
+        - name: "Heatmap Report"
+          detail: >
+            X-axis = accreditation standards, Y-axis = course offerings,
+            cell = count of mapped course measures — a visual
+            accreditation-readiness view, already shipped (not to confuse
+            with the competitive-comparability 'Gap' in gap-analysis.md,
+            which is about cross-SITE statistics, a different capability).
+            CONFIRMED with further detail via Exxat help-center
+            documentation: for PA programs the Heatmap Report and the B2
+            Instructional Objective Mapping Report are both explicitly built
+            against ARC-PA 6th Edition (2025, B/C/D sections) — the B2
+            report exports a multi-tab Excel file (one tab per standard with
+            ≥1 mapped objective, sub-lettered standards like B2.06a-f
+            consolidated onto one tab) — direct evidence Prism already does
+            edition-specific accreditor-format exports, not just a generic
+            coverage matrix.
+        - name: "Mapped Standards Report — Directly vs. Indirectly Mapped"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: mappings are
+            classified as Directly Mapped (explicitly created on the item
+            itself) vs. Indirectly Mapped (inherited via parent-child
+            standard hierarchy) — the product notes this replaces an older
+            "Semi-Mapped" label, a small but real signal of active product
+            iteration on curriculum-mapping terminology/reporting clarity.
+        - name: "Generate Syllabus"
+          detail: "Auto-builds a syllabus from mapped curriculum data with a configurable, reorderable section picker (logo, prereqs, textbooks, faculty, attributes, evaluation criteria, grading scheme, event schedule); downloadable. Confirmed in the OT playbook."
+        - name: "Unmapped Report"
+          detail: "Lists standards/outcomes with zero course coverage — the direct 'what haven't we covered yet' view for a self-study. Confirmed in the OT playbook, alongside Standards-Based and Course-Based mapping reports (likely the same underlying reports as the PA-named 'Mapped Standards'/'Mapped Courses' reports, confirmed twice under different names)."
+        - name: "Grading Scheme module"
+          detail: >
+            Multiple reusable grading schemes per school (Letter Grade with
+            configurable bands, Pass/Fail), shared across gradebooks and
+            evaluations. Confirmed in the OT playbook and CONFIRMED with
+            exact example values via tutorial transcript ("Administrator
+            Navigation"): Letter Grade example A=90-100, B=80-<90, C=70-<80,
+            D=0-<70; Pass/Fail uses a single passing-score-percentage
+            threshold, not a band table. CONFIRMED with further detail via
+            Exxat help-center documentation: the grading scale is
+            configured once at the school/program level and flows
+            automatically into every course — individual courses cannot
+            define their own scale, and their only per-course choice is
+            letter-grade vs. pass/fail. The grading scale is for
+            record-keeping only; Prism does not calculate student grades
+            from it.
+        - name: "Measure Linking Report"
+          detail: "CONFIRMED via tutorial transcript ('Curriculum Mapping'): shows which courses have measures/events linked to each other (e.g. a learning outcome linked to the objectives/events that achieve it) — a fourth mapping report beyond the 7 already listed above."
+        - name: "Cumulative Report — dual anchor modes"
+          detail: "CONFIRMED via tutorial transcript: the Cumulative Report can be anchored either by Course Offerings (one sheet per course, every mapping instance as a row) or by a Standards set (one sheet, every course-mapping instance for that standard list, plus cross-references to linked standards from other lists) — a materially more flexible export than a single fixed report shape."
+        - name: "Course Offering vs. Course Catalog data model"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: a "Course" in the
+            Course Catalog is a standalone reusable entity (course
+            number/name, a Requires Placement flag); a "Course Offering"
+            schedules that course for a specific cohort/term/academic year
+            and only then becomes placement/coursework/forms-eligible.
+            Offerings can be built from scratch, cloned from an existing
+            offering (choosing which of Course Information/Measures/
+            Resources/Learning Activities/Attestations to copy), or bulk
+            CSV-imported — but neither cloning nor bulk import auto-registers
+            students; that's always a separate step. The Requires-Placement
+            flag itself locks after an offering is created from that course
+            and can only be changed by contacting Exxat Support — a
+            deliberate guardrail tying Curriculum Mapping to the placement
+            engine.
+        - name: "Measure Linking + tagged review workflow"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: a chain-icon
+            "Linking" feature connects one course measure to another (e.g. a
+            course objective to the lecture objectives that achieve it),
+            surfaced in the Measure Linking Report. Separately, both
+            measures and standard mappings support free-form colored Tags
+            (e.g. "Needs Review," "Reviewed") that function as a lightweight
+            built-in curriculum-committee QA workflow — a faculty member
+            tags a mapping "Needs Review," the curriculum owner runs a
+            report filtered by that tag to clear the queue, then re-tags it
+            "Reviewed." Deleting a course measure cascades to silently
+            delete every mapping/attribute tied to it, with no separate
+            confirmation of what's lost.
+        - name: "Curriculum Cloning (2-phase pipeline)"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: a 4-step wizard
+            copies an entire curriculum to a new cohort in two phases —
+            Phase 1 clones structure + course offerings synchronously (the
+            curriculum is inaccessible until this completes; a Phase 1
+            failure rolls back the whole operation, no curriculum is
+            created); Phase 2 clones learning activities (Forms/Evals,
+            Patient Log, Timesheet, Time Off) asynchronously in the
+            background with a live progress indicator, while the curriculum
+            is already usable — a partial Phase 2 failure shows a warning
+            banner but does NOT roll back the successfully cloned course
+            offerings. Admins choose "Clone Activation" (preserve source
+            active/inactive state, default) or "Keep Inactivated" (force all
+            cloned activities off for pre-launch review); forms with a fixed
+            calendar publish date are always cloned but never auto-activated
+            to prevent stale-date distribution.
+        - name: "Program-Specific Standards vs. Accreditation Standards"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: Curriculum
+            Mapping separates pre-loaded, accreditor-owned "Accreditation
+            Standards" (which can only be deactivated, never deleted, and
+            whose deactivation cascades to delete any mappings already made
+            against them) from admin-authored "Program Specific Standards"
+            (e.g. university/program-level goals and learning outcomes not
+            tied to any accreditor), each independently sub-goal-able and
+            taggable. Course info also carries a "Share with Site" toggle
+            controlling whether a course's curriculum-mapping data is
+            exposed to clinical partner sites — a direct integration point
+            between Curriculum Mapping and the placement/site module.
+    - name: "Surveys & Course Evaluations"
+      status: shipped
+      notes: >
+        CONFIRMED SHIPPED — per Exxat PM confirmation, 2026-08-26, resolving
+        the RECONCILE note below in favor of "shipped." This corrects
+        content/feature-map/*.yaml, which independently carried this pillar
+        as "behind" across all four domains — that verdict predates this
+        correction and read as "Prism doesn't have this" rather than the
+        accurate "shipped, competitive depth not yet re-assessed."
+
+        RECONCILE (superseded by the confirmation above, kept for the
+        research trail): the infographic marks this pillar roadmap, but the PT
+        playbook documents a real, in-production evaluation/forms engine
+        already running named, externally-validated instruments today — CIET
+        v2, PTSE1, PTSE2, SCIPAI, PTMACS/PTAMACS — each with configurable
+        multi-step review workflows (student completes -> site reviews ->
+        school admin reviews, with a "send to CI" step and a "parallel
+        workflow" mode).
+
+        RESOLVED (partially) via the "Forms/Evaluations Workflows" tutorial
+        transcript, which answers the open question below directly: Prism
+        already formalizes evaluation forms into a named taxonomy of THREE
+        (arguably four) archetypes — Single-Term Form (one-time, e.g. a
+        final rotation eval), Multi-Term Form (reused within a placement,
+        e.g. midterm + final, with a support-enabled "Copy Responses"
+        feature that lets a preceptor carry midterm answers into the final
+        form in one click, one-time-use per form pair, requires identical
+        form structure and the same preceptor on both), Standard Form
+        (pre-built, non-editable system instruments — the transcript names
+        CIET and AOTA FWPE explicitly as examples), and Custom Form
+        (school-defined workflow). This existing taxonomy already spans
+        every instrument named in the PT/OT playbooks (CIET v2, PTSE1/2,
+        AOTA FWPE, SCIPAI, PTMACS/PTAMACS all slot into Standard or
+        Multi-Term). This reads as strong evidence that the Q1 2027 roadmap
+        item is a FORMALIZATION/EXPANSION of this existing engine (e.g.
+        productizing "Copy Responses" beyond support-only, building a
+        self-service survey-authoring UI) rather than a net-new build —
+        though this transcript doesn't confirm the item's exact scope, so
+        the open question stays open for a definitive answer, just
+        narrower now.
+
+        RESOLVED (further) via Exxat help-center documentation: "Exxat
+        Surveys" is a distinct, already-documented first-party
+        survey builder/distribution/analytics module — 14 question types,
+        authoring from scratch/template/copy or Word/PDF-to-survey
+        conversion, three distribution channels (in-Prism to
+        Student/Faculty/Personnel, additional email/CSV upload, and an
+        anonymous public link/QR code), and full analytics (Status
+        Overview, Weekly Response Rates, per-channel breakdown, Assignment
+        Completion Time Distribution, Raw and Aggregate exports) —
+        explicitly marketed to eliminate the need for third-party survey
+        tools for accreditation/outcomes/CQI use cases. It already ships
+        named templates for PT (4 built-in APTA-aligned 360-style
+        Multi-Rater DCE Performance Survey templates) and was extended to
+        SLP as recently as December 2025 (Graduating Student Survey,
+        Clinical Supervisor Survey). This narrows the open question
+        further: Prism already ships BOTH a placement-specific
+        Forms/Evaluations engine (the form-archetype taxonomy above) AND a
+        separate general-purpose survey tool today — the only remaining
+        unconfirmed piece is what incremental scope the Q1 2027 roadmap
+        item adds on top of these two already-shipped systems.
+      features:
+        - name: "PTSE 1 / PTSE 2 (validated APTA forms)"
+          detail: "PTSE1 evaluates the clinical site (publishable as a 'Location Evaluation'); PTSE2 evaluates the Clinical Instructor (not publishable; has a 'Send to CI' option instead). Both feed pre-configured CAPTE-reporting-requirement reports."
+        - name: "Clinical Internship Evaluation Tool (CIET v2)"
+          detail: >
+            Validated professional-behaviors/patient-management instrument
+            with an in-product training quiz (or attest-and-bypass),
+            completed by both student and CI at midterm/final; a 'Parallel
+            Workflow' mode (independent completion) was described as in
+            development in the PT playbook. UPDATE — CONFIRMED SHIPPED in
+            the PT/PTA video-tutorial transcript ("How to use the CIET v2.0
+            Form"): the concurrent/blinded mode is live, not in development.
+            Student and CI fill the same term's evaluation simultaneously
+            and neither party's ratings are visible to the other until both
+            have submitted — an explicit anti-bias design, and the PT
+            playbook's "in development" note is now stale. The same
+            transcript adds three mechanics worth carrying: (1) school-
+            specific benchmarks — customizable per COURSE, injected into the
+            form's instructions, so one validated national instrument can
+            carry program-defined performance expectations without forking
+            the instrument; (2) the prerequisite training quiz is a
+            once-ever gate per person, not per form — passing it once
+            clears the student or CI for every future CIET in any course or
+            placement, with unlimited retakes and a review-your-wrong-
+            answers loop, and a CI trained outside Exxat can self-attest to
+            bypass it; and (3) a hard-stop escalation path — if the CI
+            answers that the student's performance is unsatisfactory for
+            their level of education, the form directs them to contact the
+            school to intervene. Post-submission edits by either party
+            require the school to resubmit the form back to them; workflow
+            is Midterm Get Started → In Progress → Midterm Pending School
+            Review → Final Get Started → … Reporting is via the Forms and
+            Evaluations Raw Data Report (one row per role per term — four
+            rows for a submitted-and-reviewed midterm+final) and the
+            Graphical Report for Placement Forms (per-question bar charts
+            aggregated by rotation or setting, plus a response-distribution
+            pie chart, filterable to a single instance such as "Student
+            Midterm Rating").
+        - name: "SCIPAI / PTMACS / PTAMACS"
+          detail: >
+            Additional validated, free, Exxat-native (not available on any
+            competitor platform per the PT playbook) formative assessment
+            tools for PT/PTA, each with its own multi-role review chain
+            (student, CI, SCCE, DCE). CONFIRMED via Exxat help-center
+            documentation: both PTAMACS and SECEE (SCIPAI's clinical
+            education evaluation section) have dedicated Cumulative Report
+            exports summarizing midterm/final responses across a cohort,
+            and PTMACS-type forms surface a "view response summary" link
+            directly on the completion screen.
+        - name: "AOTA Fieldwork Performance Evaluation (FWPE) form family"
+          detail: >
+            CONFIRMED via the OT/OTA video-tutorial transcript ("Fieldwork
+            Performance Evaluation in Exxat Prism"): the AOTA FWPE named
+            elsewhere in this file only as an example of a "Standard" form
+            is actually a family of FIVE standard forms — Student
+            Self-Assessment for OT, Student Self-Assessment for OTA,
+            Fieldwork Educator Evaluation for OT, Fieldwork Educator
+            Evaluation for OTA, plus a supplement form for both roles used
+            specifically when a fieldwork educator leaves mid-session and a
+            new educator takes over (a real mid-placement evaluator-handoff
+            case worth checking for in any new discipline). Two separate
+            workflows run per placement: the student self-assessment (student
+            names a primary fieldwork educator — secondary educators are a
+            text field, informational only — then submits; the educator gets
+            a VIEW-ONLY email link and the form auto-advances to admin
+            review) and the fieldwork-educator evaluation (four-point rating
+            scale with required justification comments per rating; students
+            see their ratings immediately on educator submit). Unlike student
+            forms, educator forms have no publish date — admins send them
+            directly, on an auto-notification schedule anchored to the
+            beginning/middle/end of the placement, and Exxat's stated
+            best practice is to send only to the school-added fieldwork
+            educator to avoid duplicate evaluations. Four report types:
+            Raw Data, Aggregate, Graphical, and Comprehensive (the last
+            filterable/groupable by student, course, educator, site,
+            location, or setting).
+        - name: "Exxat Surveys (general-purpose survey platform)"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: a first-party,
+            in-Prism survey builder distinct from the placement-evaluation
+            Forms/Evaluations engine above — 14 question types (incl.
+            attestation, e-signature, date/time-range pickers), build from
+            scratch/template/copy or Word/PDF conversion, three distribution
+            channels (in-Prism by persona, additional email/CSV, or an
+            anonymous public link/QR code), and analytics covering status
+            overview, weekly response rates, per-channel breakdown,
+            completion-time distribution, and Raw vs. Aggregate exports. An
+            access-visibility setting (all program users vs. creator only)
+            locks once published. Ships named 360-style templates for PT
+            (APTA-aligned DCE Performance Survey set) and was extended to
+            SLP as of December 2025 — see the pillar notes above on how
+            this reframes the Q1 2027 roadmap item.
+        - name: "Forms/Evaluations Distribution & Email Dashboard"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: admins can
+            multi-select forms to distribute at once, schedule distribution
+            in advance ("Auto Distribution," relative to placement
+            Beginning/Mid/End with a day-offset builder), and individually
+            include/exclude recipients before sending. A separate Email
+            Dashboard tracks every distributed evaluation email through
+            five states — In Progress, Delivered, Opened, Link Clicked,
+            Bounced — with a "Remove form access" action that immediately
+            invalidates that recipient's form link, and exports the full
+            grid to CSV (with the raw link blanked out for
+            cancelled/access-removed rows). A "Graphical Report" visual/
+            drill-down view of question-level evaluation responses is
+            currently activated only for the PA discipline.
+        - name: "Multi-response form type"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: alongside the
+            Single-Term/Multi-Term/Standard/Custom taxonomy already
+            documented below, some Learning Activity forms are typed
+            "Multi-response" — supporting multiple submissions/evaluators
+            per placement with admin-configurable dynamic columns pulled
+            from form fields for grid display. Forms overall are editable
+            only while they have zero responses and can never be
+            unpublished once published; students can delete a multi-response
+            form only while it's In Progress and pending the immediate next
+            reviewer, while admins can delete one in any status.
+        - name: "Admin-gated un-submit"
+          detail: >
+            Once a student submits a form or evaluation, they cannot
+            self-edit it — the School Administrator must explicitly
+            "un-submit" it before the student can revise and resubmit, a
+            deliberate data-integrity control rather than free-form editing.
+        - name: "GoReact video assessment integration (LTI)"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: for
+            non-placement/didactic courses, Prism embeds GoReact via LTI for
+            rubric-scored video assignments — students record/upload video
+            in-browser and submit; faculty grade with GoReact rubrics (built
+            or newly created inside GoReact, not Prism); status flips
+            Submitted → Reviewed automatically once the evaluator posts the
+            rubric in GoReact, syncing back to Prism with no manual
+            reconciliation. On first save of an assignment in Prism, Prism
+            auto-creates the matching activity in GoReact. Assignments can
+            require a placement, carry a numeric weight toward the final
+            grade, and be marked visible to other faculty. CONFIRMED, with
+            two additional details, in the TE (Teacher Education)
+            video-tutorial transcript — the only discipline transcript that
+            covers this feature, and the only substantive TE source material
+            found at all: (1) LTI is a fourth Learning Activity category that
+            appears under Learning Activities > Setup alongside Forms and
+            Evaluations, Timesheets, and Patient Logs, and it is NOT on by
+            default — a program must file an Exxat support ticket to have it
+            activated for its discipline and program (another instance of the
+            support-gated configuration boundary noted in
+            exxat_advantage_layer); and (2) reviewers grade against the
+            GoReact activity with timestamped comments on the recording, and
+            students can record in-browser, upload a file, or submit other
+            supported media sources. Notably the TE transcript names the
+            integration "Echo360 (GoReact)," i.e. the vendor is referenced
+            under both names in Exxat's own material.
+        - name: "Standard Survey library (open to any client)"
+          detail: "E.g. 'CI/SCCE Assessment of DCE Performance' and the Duke-developed 'Belongingness Scale-Clinical Placement Experience,' both built in Prism and released for any client to use — evidence the survey engine already supports adding new validated instruments, not just fixed forms."
+        - name: "Form archetype taxonomy (Single-Term / Multi-Term / Standard / Custom)"
+          detail: >
+            CONFIRMED via tutorial transcript ("Forms/Evaluations
+            Workflows"): every evaluation form in Prism is one of these four
+            types. Single-Term = one-time (e.g. final rotation eval).
+            Multi-Term = reused within a placement (midterm + final), with a
+            support-enabled "Copy Responses" button that lets a preceptor
+            carry midterm answers into the final form in one click (works
+            only if both forms share identical structure and the same
+            preceptor completes both; one-time use per form pair). Standard
+            = pre-built, non-editable, system-provided instruments (CIET,
+            AOTA FWPE named explicitly). Custom = fully school-defined
+            workflow. See "Compliance Management" pillar for the OTP/data-
+            protection mechanism that also applies when this data is shared.
+    - name: "Exam Management"
+      status: roadmap
+      target: "Q2 2027"
+    - name: "Accreditation Management"
+      status: roadmap
+      target: "Q3 2027"
+      why_it_matters: >
+        This is the single most load-bearing fact for the whole domain
+        expansion initiative: Exxat's own public roadmap already names
+        "Accreditation Management" as a dedicated, not-yet-shipped pillar.
+        The domain expansion thesis (DO/Pharmacy/Dentistry/Medicine are
+        higher-stakes, accreditation-driven buyers) and this roadmap item
+        are the same conversation, not two separate ones — the Accreditation
+        Management build should be scoped WITH the new-domain standards
+        (COCA/LCME/ACPE/CODA), not just for existing disciplines. IMPORTANT
+        UPDATE: this pillar is not starting from zero. The B2 Instructional
+        Objectives Report (an ARC-PA-*formatted* compliance export already
+        shipped inside Curriculum Mapping) and the Heatmap Report show Prism
+        already assembles standard-by-standard evidence for at least one
+        accreditor. The PT playbook confirms a SECOND precedent: pre-configured
+        reports already map PTSE1 survey data directly to CAPTE reporting
+        requirements. Two independent accreditor-formatted precedents (ARC-PA,
+        CAPTE) makes Q3 2027 closer to "generalize and extend an existing,
+        proven pattern to four more accreditors" than "build from nothing."
+      notes: >
+        FURTHER STRENGTHENED via Exxat help-center documentation (399
+        articles): the "not starting from zero" case now spans at least six
+        accreditors across five disciplines, not two. Dedicated
+        discipline-specific "Accreditation Standards Support Guides" exist
+        for ACEN, CCNE, and COA (Nursing), ACOTE (OT), plus ARC-PA (PA),
+        CAPTE (PT), and a Social Work (CSWE) standards guide — each mapping
+        product features directly to that accreditor's named standard
+        numbers. CAPTE reports specifically carry BOTH 2016 and 2024
+        standard numbering side by side in report metadata (e.g. "Standard
+        2024 4P/2016 4O"), i.e. Prism already maintains an accreditor
+        edition-crosswalk inside report metadata itself — directly relevant
+        to how a new-domain accreditor's periodic standard revisions would
+        need to be handled. A separate SLP report (KASA Clinical
+        Certification Report) goes beyond dashboarding into document
+        generation — it produces signed ASHA certification templates
+        confirming a student met all standards. Two additional nuances
+        worth carrying into scoping conversations: COA (Nursing) uses an
+        explicit "critical standard" asterisk convention (e.g. supervision
+        ratios, graduate competencies) where failure is treated as a matter
+        of critical concern — a standard-severity-tiering concept absent
+        from the ACEN/CCNE guides that could inform how a unified
+        Accreditation Management pillar surfaces risk across accreditors of
+        different rigor; and the CSWE (Social Work) guide is unusually
+        candid that Prism provides only *indirect* evidence for faculty
+        headcount/degree-threshold standards (stores faculty
+        degree/role/CV data and course-assignment evidence, but explicitly
+        states required faculty data forms "must be completed outside Exxat
+        Prism") — a real, disclosed coverage gap rather than an oversold
+        capability, useful as a template for how the eventual Accreditation
+        Management pillar should represent partial coverage honestly.
+      features:
+        - name: "Per-accreditor standard-mapped report suites (ARC-PA, CAPTE, KASA/ASHA)"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: multiple standard
+            reports are named directly after accreditor citations rather
+            than generically. ARC-PA 5th Ed. examples: Raw Data for
+            Placement Forms (B3.04), Aggregate Report for Placement Based
+            Forms (B3.04, B3.07), Interventions and Communications (B4.01b),
+            SCPE Details (B3.01, B3.02), Comprehensive Personnel Report
+            (B3.05-07), Comprehensive Assessment Report (B3.04, C2.01).
+            CAPTE examples for PT/PTA: Number and Variety of Clinical Sites
+            (Standard 2C) and Number and Variety of Clinical Slots (Standard
+            8F) — both scoped to selected rotations and refreshed weekly;
+            the equivalent reports for every other discipline are
+            generically named with no standard citation, i.e. this
+            standard-name-mapping pattern is currently PT/PTA- and
+            PA-specific, not yet generalized. SLP's KASA Clinical
+            Certification Report additionally generates downloadable,
+            signed ASHA certification templates, not just a dashboard.
+        - name: "Program-level accreditation record + Sites accreditation reports"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: Program Details >
+            Setup > School Profile > Accreditation stores structured,
+            repeatable entries (Name of accrediting body, Accreditation
+            status, Type, Details, Next/Most-recent accreditation date).
+            Separately, the Sites module's report catalog has its own
+            dedicated "Accreditation Reports" category (SCPE Details —
+            cohort-wise accreditation report) alongside a Location Reports
+            category carrying "HRSA Grant Details" — consolidated federal
+            Health Resources & Services Administration grant data per
+            clinical location, a US healthcare-workforce-funding tracking
+            capability not implied by generic site reporting.
+        - name: "Nursing advanced-practice accreditor reports (NBCRNA, AACN Essentials)"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: a dedicated
+            NBCRNA Transcript Report displays case-log statistics per
+            student "in accordance with NBCRNA guidelines" for CRNA
+            programs, and a separate DNP Activity Log Report breaks down
+            student project vs. non-project hours with exposure mapped
+            directly to the AACN Essentials framework — direct
+            curriculum-to-accreditor-framework mapping for advanced-practice
+            nursing, not a generic hours log.
+        - name: "Institution-level Comprehensive Placement Report for IPE evidence"
+          detail: >
+            A cross-program placement report exists at the institution
+            (tenant) level — not standard program-level access, requires an
+            Account Manager/CSS grant — letting institutional users see
+            which sites/locations host students from multiple disciplines
+            simultaneously, explicitly positioned as supporting evidence for
+            Interprofessional Education (IPE) activities in accreditation
+            self-studies.
+        - name: "Annual Accreditation Report (AAR) data-pull workflow (PT)"
+          detail: >
+            CONFIRMED via Exxat help-center documentation: Exxat documents a
+            repeatable 5-source pull sequence for a PT program's Annual
+            Accreditation Report — contracted sites (Sites > Contracts
+            filtered Active), CI credentialing % (Total Qualifications of
+            CIs report scoped to a Learning Activity Group), demographics
+            (Race/Gender/Age/Ethnicity report), and unique placement sites
+            (Comprehensive Placement Report, de-duplicated by location) —
+            using a "decelerated" academic-status flag to keep headcounts
+            accurate. A reusable template for what a per-accreditor
+            "how to assemble the annual report" playbook should look like.
+        - name: "Read-only accreditation site-visit accounts"
+          detail: "Exxat support can provision a dedicated read-only account specifically for accreditation site visitors on request — a purpose-built account type rather than repurposing a standard admin login."
+
+intelligence_layer:
+  description: "Wraps all six core pillars; positioned as the differentiation layer."
+  capabilities:
+    - "Early-risk Alerts — confirmed via the 'Interventions' tab on the student profile (OT playbook): professional-concern records, remediation/probation status, with SLA-style follow-up states (Overdue / within 7 days / beyond 7 days) rolling up into a bulk report."
+    - >
+      Competency Tracking — CONFIRMED SHIPPED with real depth via tutorial
+      transcript ("Setting Up Competency Management"), not just a bare
+      roadmap label. Maps competencies to either experiential assessment
+      questions (child-most standard level only) or didactic course grades
+      (final-grade or question-level scoring source), or both in one
+      framework. Scores normalize onto a 1-5 scale (or a custom
+      school-defined scale) with a configurable pass threshold (default
+      70%). Parent-level scores are a POOLED mean across all child
+      competencies' mapped questions (not a naive average-of-averages),
+      which matters if this scoring model needs to be explained to an
+      accreditor. Student Competency Dashboard shows score-per-competency,
+      score-over-time trendlines (flagging stagnant/declining competencies
+      for intervention), and student-vs-class-average radar charts.
+      Frameworks can be selectively published to students. This is a
+      genuinely mature, accreditation-oriented competency engine — a strong
+      selling point for the new domains, most of which have explicit
+      competency-based-education mandates. CONFIRMED with further depth via
+      Exxat help-center documentation: the full workflow is a 4-step
+      lifecycle (configure framework → map assessments/course offerings →
+      generate reports → publish scores), and mappings support a
+      "Save as Draft" state (stored, does NOT affect live competency
+      calculations) vs. "Apply Changes" (activates the mapping and
+      immediately recalculates scores everywhere downstream). Course Type
+      can be Experiential, Didactic (with two distinct scoring sources —
+      final course grades, which requires grading schemes enabled first, or
+      question-level assessment scoring), or Both (one combined
+      review/finalization process with a Didactic/Experiential toggle on
+      the Review Grid). Publish/Unpublish is visibility-only and fully
+      reversible — it never touches the underlying calculation; deleting a
+      framework, by contrast, is permanent and cannot be undone. The Review
+      Dashboard renders four chart types per cohort: Domain Scores
+      (average per domain), Student Proficiency Distribution ("Meeting
+      Threshold" = all domains above threshold vs. "Below Threshold" = at
+      least one domain below), Students Meeting Threshold by Domain, and a
+      Score Distribution box plot that renders red when a domain's median
+      falls below its configured threshold. A student-facing "My
+      Competency Tracker" mirrors this with a red threshold line across
+      four views and only appears once an admin has published at least one
+      competency.
+    - >
+      Program Quality Analytics — CONFIRMED via Exxat help-center
+      documentation: a self-service custom report builder (Learning
+      Activities > Reports > Create New Report, first shipped for
+      Timesheet data) lets admins pick data points, apply basic/advanced
+      filters, and optionally pivot (group by row/column with Sum/Average/
+      Earliest-Latest-date aggregation) — e.g. total approved hours per
+      course per student over a chosen date range. Custom Reports overall
+      span 10 data sources (Timesheet, Time Off, Placements, Slot, Sites,
+      Locations, Contracts, Personnel, Faculty, Forms and Evaluations),
+      each generatable as Raw Data or Pivot; each data source carries its
+      own refresh-frequency badge — some are live/continuous, others (Slot,
+      Sites, Locations, Contracts, Personnel, Faculty) only refresh every
+      24 hours, which nuances any blanket "real-time reporting" claim.
+      "Contextual" report creation (context filters pre-locked to a
+      specific Course/Rotation) is currently supported only when created
+      from inside a Learning Activities Group — Rotations, Course
+      Offerings, and Placement Groups are roadmap, not yet shipped. One
+      named report, "Areas of Professional Interest," is explicitly
+      Power BI-backed with click-to-drill-down bar charts — the only
+      named external-BI-engine integration found in this material, versus
+      the otherwise-native grid/export report tooling.
+    - "Recommendations"
+    - >
+      AI Insights (Leo AI) — TWO confirmed shipped surfaces: (1) Curriculum
+      Mapping's standard-to-objective suggestion assist (human-approved),
+      and (2) 'Ask Leo' (labeled BETA, OT playbook) — a natural-language
+      query tool over platform data, e.g. "Are there any follow-ups for
+      student intervention and communication?", returning a structured
+      result table with a standard AI-disclaimer. This is real, shipped
+      conversational AI over Prism's own data, not a roadmap claim.
+      CONFIRMED with further depth via tutorial transcript: Ask Leo
+      supports multi-turn context-aware conversation (no need to restate
+      prior context), voice input/output, cites its sources per answer
+      (click-through to the underlying help article), saved/searchable/
+      pinnable conversation history, and a minimizable floating-window mode
+      — a genuinely full-featured in-product assistant, not a basic FAQ
+      bot. CONFIRMED with further depth via Exxat help-center
+      documentation: Ask Leo is agentic, not just conversational — it can
+      directly create and assign tags (Sites, Locations, Contracts,
+      Personnel, Students), open the password-change flow (non-SSO
+      accounts only), change the user's UI theme, deep-link/navigate to
+      specific app pages, and answer live data-retrieval queries (e.g.
+      "How many students have the married tag?"); any response can be
+      exported as a PDF. The curriculum-mapping assist surface is
+      product-named "Map with Leo" and includes per-suggestion
+      thumbs-up/down feedback and an "Already Mapped" label when a manual
+      mapping already exists — nothing is ever auto-applied, every
+      suggestion requires an explicit "Apply Mapping" click. It sits behind
+      a formal AI Legal Consent flow: a per-program opt-in gated to
+      specific admin roles (Program Super Administrator and a few other
+      named roles), recorded with policy version/timestamp/consenting
+      user, revocable at any time (either program-wide via consent
+      withdrawal or per-feature via the AI Features Hub) — as of the
+      source material this consent flow covers Map with Leo specifically,
+      with other AI features stated to adopt the same flow in future
+      releases. A separate "Leo Course Import" feature extracts course
+      setup data (About, Measures, Event Schedule) from an uploaded
+      syllabus, flags fields it's uncertain about for manual review, and
+      carries an explicit product caveat ("Leo can make mistakes — review
+      the generated content carefully"). Similarly, a Leo-AI engine
+      auto-suggests Bloom's Taxonomy levels (domain + level, e.g.
+      Cognitive/Apply) for a course measure by matching its action verbs,
+      refreshing automatically when the measure text changes or curriculum
+      is cloned, always requiring a manual apply click.
+    - >
+      Low-Score Threshold Alerting — CONFIRMED via Exxat help-center
+      documentation: two related but distinct mechanisms flag struggling
+      students mid-rotation rather than only at rotation end. A form-level
+      "Low Score Notification" auto-emails placement faculty (plus
+      optional named individuals) when an evaluation's overall score drops
+      below a configured threshold (red-highlighted on the review screen);
+      a question-level "Response-Based Notification" instead fires when a
+      specific question fails a set criterion. Both require Exxat
+      Support/Account-Manager setup to activate, not self-service. The
+      PA-accreditation guide frames this explicitly as a way to avoid
+      accreditor citations for late identification of clinical
+      deficiencies (ARC-PA 6th ed. B4.01 a-b). A parallel Nursing-specific
+      pattern, the Student Activity Insights Report, gives both admins and
+      students themselves a green/amber/red view of logged clinical
+      activity against program minimum/preferred benchmarks — the same
+      early-intervention concept surfaced as a student-facing
+      self-monitoring tool rather than an admin alert. The OT/OTA
+      video-tutorial transcript supplies the only concrete calibrated
+      values found for either mechanism, on the AOTA FWPE: the
+      response-based alert fires by DEFAULT on any rating of 1 on any
+      question, and additionally on a 1 or 2 on the named
+      "fundamentals of practice" safety/ethics items (AOTA code of ethics
+      and federal/state/facility regulation adherence, safety-regulation
+      compliance and incident reporting, hazard anticipation) — i.e. the
+      severity tiering is instrument-aware, not a flat threshold; and the
+      low-score cutoff carries a published recommended value of 111-or-
+      below for OT students and 91-or-below for OTA students. That
+      transcript also documents the operational catch: because only the
+      FINAL FWPE counts toward overall scoring, Exxat's own best practice
+      is to leave the low-score cutoff OFF until all midterms are
+      submitted and reviewed, otherwise midterm scores trigger false
+      alarms — and enabling either notification requires a support ticket
+      naming each recipient's first name, last name, and email, so the
+      recipient list is a manually maintained artifact that goes stale.
+    - >
+      Program 360 / Placement 360 dashboards — CONFIRMED via tutorial
+      transcripts ("Administrator Navigation", "Managing Placements"):
+      Program 360 is a program-wide real-time rollup (core entities,
+      academics, sites/contracts, slots, placements, learning activities).
+      Placement 360 is the equivalent single-placement command center —
+      timeline, compliance/contract/requirement-upload status in one view,
+      people, location detail, and learning-activity summary for that one
+      placement. Both are drill-down entry points into the rest of the
+      system rather than static reports, which is a meaningfully different
+      (more useful) pattern than a report library. CONFIRMED with further
+      detail via Exxat help-center documentation: Program 360's metric
+      groups are Core Entities (Active Students, Faculty/Staff), Academics
+      (course-offering distribution, curricula/tracks, standards mapped),
+      Sites & Contracts, Slots (Total/Past/Ongoing/Future), Placements
+      (Total/Past/Ongoing/Future plus Wishlists/My Request/Placement
+      Assist counts), and Learning Activities. Separately, the lighter
+      "Placement List Report" omits several fields present in the
+      Comprehensive Placement Report (student cohort/group/phone, program
+      requirements, internal-only notes, attestations) — worth knowing
+      which report to point a given ask at.
+
+exxat_advantage_layer:
+  description: "Outer ring — operational/GTM differentiators, not features per se."
+  items:
+    - >
+      LMS/SIS Integration — CONFIRMED with a material caveat via Exxat
+      help-center documentation: there is currently no client-facing API
+      for third-party integration ("Exxat doesn't currently provide APIs
+      for this purpose"). All SIS/LMS sync (named examples: Banner, Canvas,
+      PeopleSoft) instead runs via secure SSH-delivered CSV file feeds that
+      Exxat's own team processes through a formal Planning → Setup →
+      Testing → Go-Live rollout — three ongoing feed types (Student, Course
+      Registration, Compliance) plus a one-time Course Offering Feed. The
+      Student Feed can only ADD or UPDATE (matched by email); it cannot
+      delete a student (deactivation instead sets Program Status to
+      InActive), and Cohort changes via feed are not automated — they must
+      be requested and processed manually by Exxat support. Relevant
+      framing for the domain-expansion pitch: "integration" today means a
+      managed file-feed relationship with Exxat's implementation team, not
+      a self-service API a partner university's IT team can build against
+      directly.
+    - "WCAG AA Compliant"
+    - >
+      24/7 Support — CORRECTION via Exxat help-center documentation: the
+      in-app live-chat channel specifically is only staffed 7:30am–7:30pm
+      EST, not around the clock — worth confirming what "24/7" actually
+      covers (e.g. ticketing vs. live chat vs. a phone line) before citing
+      it as a differentiator against competitors.
+    - "Shared Best Practices"
+    - "Dedicated AM (Account Manager)"
+    - "Role-Based Access Control (RBAC) for sensitive student records"
+    - >
+      Self-service vs. support-gated configuration boundary — CONFIRMED via
+      Exxat help-center documentation as a genuine cross-cutting pattern,
+      not isolated cases: a meaningful surface of configuration requires a
+      support ticket or Account Manager involvement rather than being
+      admin-self-service, including enabling/disabling entire Learning
+      Activity categories per program, requesting a new named report,
+      custom evaluation/form creation, SSO configuration, sensitive-document
+      flagging/whitelisting, site-sharing-model changes, idle-timeout
+      settings at the institutional level, enabling geo-coded timesheets,
+      adding a new patient-log type, granting a faculty member full
+      admin access or multi-program access, and (called out specifically
+      for SLP, in contrast to PT/OT/PA which have more free standard forms)
+      building new assessment forms, question-based early-alert
+      notifications, and per-participation-type hour thresholds on the
+      Clinical Log Report. Worth surfacing to Product/CX as a possible
+      discipline-specific self-service gap, and worth scoping explicitly
+      for whichever new domain launches first.
+    - >
+      Security & compliance certification portal (Trust Portal) —
+      administrators (Program and Institution level) get self-service
+      access to Exxat's Trust Portal, listing SOC 2 Type II, ISO 27001, ISO
+      42001, HIPAA Compliance, and TX-RAMP Level 2 certifications, plus
+      downloadable SOC 2, ISO, HIPAA, VAPT (penetration test), and HECVAT
+      reports — positioned for institutional audits, vendor reviews, and
+      annual compliance checks. Paired with a mandatory Two-Factor
+      Authentication rollout for all non-SSO users (students, faculty,
+      admins) effective July 2025 with a 90-day setup grace window before
+      lockout (SMS or registered-email OTP, "remember this device for 30
+      days" option).
+    - >
+      Granular out-of-the-box role catalog — beyond a generic admin role,
+      Prism ships an extensive named role catalog at both the program level
+      (e.g. Super Program Administrator, Curriculum Administrator,
+      Faculty Compliance Administrator, Site & Contract Coordinator
+      (Limited), Compliance Administrator, Read-Only Program Administrator,
+      Non-Compliance Admin, PRISM Administrator Without Compliance) and the
+      tenant level (CCS Institution Administrator, User Management Admin
+      Read-Only, Compliance Management Admin, Institutional Placement
+      Admin) — with custom roles requestable via support. Relevant to
+      positioning Prism's governance model against competitors with a
+      flatter admin/faculty/student permission tier.
+    - >
+      Dual payment-model licensing with in-product gating — subscription
+      licenses can be configured per license type/persona as "University
+      Pay" (utilization triggers on account activation) or "User Pay"
+      (utilization only after the user completes payment, with the product
+      itself gating feature access behind a payment prompt — users can
+      skip it but are limited to a subset of features until they pay).
+      License resource pools track five states (Contractual limit, Unused,
+      Used, Expired, Lapsed) with configurable over-utilization overage
+      caps and Minimum Billed Quantity (MBQ) under-utilization payment-
+      recovery clauses; only a "License Manager" role can view/assign
+      licenses, and mock/training users don't consume license counts. A
+      cheaper "Student Approve" subscription tier restricts the entire
+      student app to four menu items (Dashboard, Profile, Compliance,
+      Subscriptions) and hard-paywalls every compliance action once it
+      expires — a concrete example of the product enforcing its own
+      commercial tiering, not just tracking it.
+    - >
+      Faculty CV auto-generation — faculty complete a structured profile
+      (education, employment, licenses, certifications, awards, teaching/
+      scholarship/service history) and can generate a compiled .docx CV
+      directly from that data, with Teaching Details auto-populated from
+      courses the program has actually assigned them, broken out by
+      academic year — a differentiator that doubles faculty-credentialing
+      data as both accreditation self-study evidence and a real HR
+      deliverable.
+
+served_today:
+  note: >
+    Per the master plan doc (PRISM_Domain_Expansion_Plan.docx) and the
+    discipline-playbook knowledge base: Prism today serves nursing and
+    allied health — confirmed discipline-specific playbooks exist for
+    Physician Assistant (PA), Occupational Therapy (OT), and Physical
+    Therapy (PT) at minimum, plus CRNA Nursing. Each has its own
+    accreditor-specific standards library, terminology, and configuration
+    inside the same underlying platform (Program Setup is always
+    "Lockstep" — cohort-based — in both PA and OT).
+
+    RESOLVED (substantially) via the 399-article Exxat help-center corpus
+    and 6 discipline video-transcript files: the served-discipline list is
+    materially larger than PT/OT/PA/CRNA. Confirmed with real, dedicated
+    source material — Accreditation Standards Support Guides, help-center
+    folders, and/or discipline playbooks — for Nursing broadly (ACEN, CCNE,
+    COA, plus CRNA/DNP-specific reports), Speech-Language Pathology (SLP;
+    CAA/CFCC standards, KASA competencies, Surveys extended to SLP as of
+    December 2025), and Social Work (CSWE EPAS 2022, including a
+    generalist-vs-specialized-practice competency-framework pattern). A
+    seventh discipline, Teacher Education (TE), is confirmed served but
+    with unusually thin documentation — no dedicated help-center folder and
+    no CSS discipline playbook, just a single video transcript covering the
+    GoReact/Echo360 LTI integration; standard playbook sections
+    (terminology, program setup, standard evaluation forms, CAEP standards)
+    remain open gaps for TE specifically. Athletic training, public health,
+    and nutrition remain UNCONFIRMED as served disciplines — Nutrition
+    appears only as a passing example in one placement-calendar feature
+    (Non-Consecutive Placement Dates), not as evidence of a full served
+    discipline.
+
+open_questions_for_phase_2:
+  - "Confirm whether Placement Clearance's site/contract/preceptor gating already generalizes to a faculty or affiliated-GME-program entity, or would need extension for COCA 10.2/10.3."
+  - "[STRENGTHENED, still open — see 'Accreditation Management' pillar notes above, via Exxat help-center documentation] Confirm whether 'Accreditation Management' Q3 2027 scope covers standard-level mapping or only evidence aggregation. Now six accreditor-specific precedents exist (ARC-PA, CAPTE, ACEN, CCNE, COA, CSWE) plus a document-generation precedent (KASA/ASHA certification templates) and an edition-crosswalk precedent (CAPTE 2016/2024 dual numbering) — reinforcing 'generalize an existing, proven pattern' over 'build from nothing,' but the exact Q3 2027 scope itself is still unconfirmed."
+  - "[RESOLVED — see 'LMS/SIS Integration' under exxat_advantage_layer above, via Exxat help-center documentation] Confirm LMS/SIS integration partner list: Banner, Canvas, and PeopleSoft are named as SIS/LMS feed examples. The mechanism is confirmed to NOT be a client-facing API — it's Exxat-managed, SSH-delivered CSV file feeds (Student, Course Registration, Compliance feeds plus a one-time Course Offering feed) with no self-service API on offer."
+  - "[RESOLVED (substantially) — see 'served_today' note above, via the 399-article Exxat help-center corpus and 6 discipline video transcripts] Confirm current full domain scope against their own playbooks: SLP and Social Work are confirmed served with real accreditor-mapped source material (CAA/CFCC/KASA for SLP; CSWE EPAS for Social Work); Nursing is confirmed served broadly (ACEN/CCNE/COA) beyond just CRNA; a 7th discipline, Teacher Education, is confirmed served but with unusually thin documentation. Athletic training, public health, and nutrition remain UNCONFIRMED as served disciplines."
+  - "[RESOLVED — per Exxat PM confirmation, 2026-08-26] 'Surveys & Course Evaluations' is shipped, not roadmap — see the pillar's status/notes above. Prism ships both the placement-evaluation Forms engine (CIET v2, PTSE1/2, SCIPAI, PTMACS/PTAMACS) and the general-purpose 'Exxat Surveys' builder. The remaining open item, not yet re-scoped: content/feature-map/*.yaml's per-domain competitive verdicts for this pillar were authored against the old 'roadmap' status and need re-verification now that it's confirmed shipped."
+  - "[RESOLVED — see 'Exxat One Linking + Schedule Processing' under the Clinical & Experiential Education pillar above, via exxat_transcripts.md] Exxat One (a connected, year-round clinical-partner slot-marketplace product, debuted March 2024, integrates into Prism via a 'Schedules' feature) is a distinct product adjacent to Prism, confirmed in the PT playbook — worth understanding for the GTM story. The admin-tutorial transcripts confirm the mechanics: a one-time site/location linking step (with AI match-confidence tiers) followed by schedule processing (Exxat One schedules -> Prism slots/placements, with update propagation), targeted to ship ~February 2026."
+  - "The PT playbook names four vendors that do NOT integrate with Exxat and compete specifically at the placement/slot-marketplace layer: myClinicalExchange (mCE), Clinician Nexus, ACEMAPP, CastleBranch Bridges. These aren't in content/competitors/ (which covers MD/DO/Pharmacy/Dentistry-focused vendors) — flag to Ruchi/leadership as a second competitive front relevant to Prism's EXISTING allied-health business, separate from the four-domain expansion."

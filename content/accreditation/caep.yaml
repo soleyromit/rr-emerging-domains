@@ -1,0 +1,944 @@
+# CAEP (Council for the Accreditation of Educator Preparation) — Teacher Education
+#
+# NOTE ON THE `domain` FIELD: every other file in this directory sets `domain` to
+# one of the four EXPANSION markets (DO | Pharmacy | Dentistry | Medicine) named
+# in _TEMPLATE.yaml. CAEP is not one of those four — it is the accreditor for an
+# EXISTING Exxat discipline (Teacher Education, which already has a TE playbook,
+# a TE video-tutorial transcript, and an existing-discipline entry in
+# content/flows/admin-onboarding--05-sites-locations-personnel-management.yaml).
+# Setting `domain: "Teacher Education"` (the discipline name) rather than forcing
+# it into the four-market enum is deliberate: this file is an existing-discipline
+# accreditation baseline, not a new-domain expansion case.
+#
+# NOTE ON SOURCE HANDLING: CAEP does NOT carry a COCA-style AI-specific
+# restriction — no notice on the 2022 Standards Workbook PDF or the standards
+# pages prohibits submission of its content to an artificial-intelligence
+# platform, and a full-text search of the workbook for "artificial intelligence",
+# "copyright", "reproduce", and "permission" returns nothing. CAEP's site-wide
+# Terms of Use (https://caepnet.org/terms-of-use/) does, however, carry two
+# restrictions that this research brushes against and that are worth flagging
+# rather than assuming away: (1) "The Content may not be copied, distributed,
+# republished, uploaded, posted or transmitted in any way without the prior
+# written consent of CAEP, except that: You may download, print, distribute and
+# use pages from the Site for your own informational, non-commercial purposes,
+# but not for commercial use or general distribution"; and (2) an explicit
+# prohibition on users who "Monitor, gather or copy any Content on this Site by
+# using any robot, 'bot,' spider, crawler, spyware, engine, device, software,
+# extraction tool or any other automatic device, utility or manual process of any
+# kind." This file was built by fetching the public standards page and the public
+# 2022 Standards Workbook PDF through automated tooling and PDF text extraction,
+# and it paraphrases CAEP component requirements for internal product planning
+# rather than reproducing the standards document verbatim. Internal product
+# research is arguably the "informational, non-commercial" carve-out, but the
+# automated-extraction clause is unambiguous and the carve-out explicitly stops
+# at "commercial use or general distribution." Flag this to Legal/Compliance
+# before any CAEP standards excerpting reaches customer-facing materials, and
+# route a permission request to webmaster@caepnet.org (the address CAEP's own
+# Terms of Use names for proposed uses) if CAEP standards text is going to be an
+# ongoing part of this workstream.
+#
+# CONTINUITY NOTE (prior repo work): Teacher Education is the one discipline this
+# repo has repeatedly flagged as having NO documented Exxat evidence base. The TE
+# playbook carries an explicit data-quality caveat that it is built from a single
+# source (one GoReact/Echo360 LTI video tutorial) and covers no TE terminology,
+# no program-setup patterns, no compliance patterns, no placement/slot workflows,
+# no standard evaluation instruments, and no accreditor standards; it states
+# outright "do not cite specific CAEP standard numbers in customer conversations
+# until confirmed against a TE-specific source."
+# content/flows/admin-onboarding--01 records that the help-guide mirror has six
+# discipline folders (Nursing, OT-OTA, PA, PT-PTA, SLP, SW) and NO Teacher
+# Education folder despite a TE playbook existing; --04 records TE compliance
+# (background check / fingerprinting) as "explicitly unpopulated"; --06 records
+# that "no TE curriculum-mapping or CAEP-standard source exists in this corpus";
+# --07 records TE placement/slot workflows as an open question; and --05 calls TE
+# "the one discipline where stage-5 fit is inferred rather than documented."
+# THIS FILE DOES NOT OVERTURN THAT. It closes exactly one half of the gap — the
+# ACCREDITOR half, which is now researched against CAEP's own current published
+# standards. The EXXAT half (what TE programs actually do in Prism) remains
+# undocumented, so every prism_fit below is scored against the GENERIC pillar
+# capability confirmed in ../prism/capability-map.yaml for other disciplines, not
+# against observed TE configurations. Read each prism_fit as "this is what the
+# pillar can do for any discipline," never as "this is how TE programs run it."
+
+accreditor: "CAEP (Council for the Accreditation of Educator Preparation)"
+slug: "caep"
+domain: "Teacher Education"
+governs: >
+  Educator Preparation Providers (EPPs) — university-based and freestanding
+  programs that prepare teachers, school leaders, school psychologists, reading
+  specialists, librarians, and other school professionals for P-12 practice.
+  CAEP accredits at the PROVIDER level (the whole EPP), not program by program;
+  individual specialty licensure areas are reviewed separately through one of
+  three program-review options (SPA National Recognition, CAEP Evidence Review of
+  Standard R1/RA1, or State Program Review) determined by the CAEP-state
+  partnership agreement. CAEP maintains two distinct standard sets — Initial-
+  Licensure (R1-R7) and Advanced-Level (RA.1-RA.5 plus Standards 6-7). This file
+  covers the INITIAL-LICENSURE standards, the clinical-placement-heavy program
+  type (student teaching / clinical practice) most relevant to Prism.
+standards_document:
+  title: "CAEP Revised 2022 Standards Workbook (Standards for Initial-Licensure Preparation, adopted by the CAEP Board of Directors December 2020)"
+  version_or_year: >
+    Workbook dated June 11, 2021; per its own NOTICE page, "in effect for
+    self-study reports submitted by educator preparation providers preparing for
+    a review to be conducted using CAEP Revised Standards for Initial-Licensure
+    Preparation scheduled Spring 2022 and beyond." Still the current version
+    linked from caepnet.org/caep-standards/ as of research date (file served from
+    the /wp-content/uploads/2024/10/ path). CAEP bylaws require a standards
+    review every seven years.
+  url: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf"
+
+standards:
+  - element_id: "Standard R2, Component R2.3"
+    element_title: "Clinical Experiences"
+    evidence_programs_must_produce: >
+      A scope-and-sequence chart of every clinical experience from early field
+      experience through the culminating student teaching / internship, plus
+      documented evidence on all six named attributes CAEP defines — Depth (the
+      programmatic link between clinical experience, coursework, and candidate
+      assessment), Breadth (variety of settings observed and practiced in),
+      Diversity (opportunities with students of varied learning needs and
+      backgrounds), Coherence (a deliberate, purposeful, sequential order
+      assessed with performance-based protocols), Duration, and Modality
+      (virtual / hybrid / face-to-face). Evidence must show every candidate had
+      active clinical experiences in diverse settings with diverse P-12 students
+      (which may be in the same or different schools); that experiences were
+      assessed with performance-based criteria; that candidates assessed impact
+      on P-12 student learning in more than one clinical setting using both
+      formative and summative assessments; and three cycles of data with analyses,
+      disaggregated by preparation program and race/ethnicity. CAEP names a
+      "Tracking system of placements/experiences" as a possible source of evidence
+      outright.
+    required_software_behavior: >
+      Placement records need discrete, filterable attributes for setting type,
+      grade band, school demographics, modality, and duration — so that "breadth"
+      and "diversity" can be PROVEN per candidate rather than asserted — plus a
+      per-candidate rollup that answers "did this candidate experience more than
+      one distinct setting, and did they assess P-12 impact in each?" before
+      program completion is certified. It must also carry a sequenced,
+      multi-experience model (early field observation hours → practicum →
+      student teaching) rather than a single terminal placement, and export the
+      whole placement roster in a form a CAEP visitor team can audit.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      This is the Clinical & Experiential Education pillar's core job. The
+      confirmed Rotation Readiness Checklist sequence (Courses/Course Offerings →
+      Student Registration → Duration Blocks/Rotations → Slots → Assign Students
+      → Publish Placements → activate per-course learning-activity modules)
+      already models a multi-stage sequence of dated placements at named
+      locations, and "Explore Locations" plus the Placement Reports suite
+      (Distribution of Slots by Location, Distribution of Slots by Setting)
+      already slice placements by setting. The CAEP-specific work is configuring
+      the attribute taxonomy — grade band, school demographic profile, modality —
+      as the setting dimension, exactly the way SCPE settings were configured for
+      PA and Lifespan/population tags for OT under Curriculum Mapping's
+      "Configurable course & mapping attributes."
+    gap_notes: >
+      Two real caveats. (1) Prism's placement model is confirmed to diverge by
+      discipline (PT/OT/Nursing model a Course as a Timeframe with each rotation
+      its own course; PA models a Course as the clinical Setting) — TE's
+      early-field-hours-plus-semester-of-student-teaching shape matches neither
+      cleanly, and which variant TE programs are provisioned on is undocumented
+      in this corpus. (2) CAEP's "diversity of P-12 students" attribute is a
+      property of the SCHOOL's student body, not of the placement or the
+      candidate — Prism's site/location record has no confirmed field for
+      partner-school demographics, so demographic-diversity evidence would today
+      be a manual crosswalk against state report-card data.
+    source: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 22-24, Component R2.3 — Key Concepts, Quality Evidence, Possible sources of evidence)"
+
+  - element_id: "Standard R2, Component R2.1"
+    element_title: "Partnerships for Clinical Preparation"
+    evidence_programs_must_produce: >
+      Evidence that partners CO-CONSTRUCT clinical arrangements — not that the
+      EPP merely secured placements. Specifically: documentation of a
+      collaborative process reviewed periodically covering collaborative
+      development/review/revision of instruments and evaluations, collaborative
+      revision of the structure and content of clinical activities, mutual
+      involvement in ongoing decision-making about partnership structure, agreed
+      provisions to ensure diversity of clinical settings, and creation of
+      opportunities for candidates to work with diverse P-12 students who have
+      differing needs — plus evidence BOTH the P-12 schools and the EPP have
+      benefited. CAEP names three possible evidences: documentation of
+      collaboration (meeting decisions, agenda topics), MOUs, and Advisory Boards.
+    required_software_behavior: >
+      A partner registry at both district and school level with the executed MOU
+      attached, its term/expiry tracked, and a linked log of partnership
+      touchpoints (advisory board meetings, co-construction sessions, decisions
+      taken) that can be exported as a per-partner narrative — because the
+      evidence CAEP wants is the RELATIONSHIP record, not just the signed
+      document.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Compliance Management's "Contracts with expiry alerts" already stores
+      executed affiliation agreements linked to locations, with an automated
+      Contract Status check on the Placement Clearance Dashboard (Valid Contract
+      vs. Needs Attention vs. Missing Contracts) and a chain-icon "linked
+      contract" model letting one district-level agreement cover many school
+      locations without duplication — a near-exact structural match for a
+      district MOU covering multiple partner schools. The partnership-touchpoint
+      log maps onto the confirmed "Communications vs. Interventions" record type,
+      which is explicitly loggable against Sites and Locations (not only
+      Students), with attachments up to 25MB.
+    gap_notes: >
+      Communications records are loggable against Sites/Locations but there is
+      currently NO dedicated Interventions/Communications report — per the
+      capability map the only view is the Sites/Locations Dashboard on a 24-hour
+      refresh, bucketed by follow-up urgency. Assembling "here is three years of
+      co-construction with District X" for a self-study would today mean manual
+      collation. This is the same reporting hole coca.yaml flagged from a
+      different angle, and it belongs in the Accreditation Management (Q3 2027)
+      scope, not as another Compliance report.
+    source: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 18-19, Component R2.1 — Key Concepts, Quality Evidence, Possible evidences)"
+
+  - element_id: "Standard R2, Component R2.2"
+    element_title: "Clinical Educators"
+    evidence_programs_must_produce: >
+      Evidence that the EPP and its P-12 partners jointly develop criteria for
+      CO-SELECTING clinical educators (CAEP's term covers both provider-based
+      university supervisors and school-based cooperating/mentor teachers) that
+      includes demonstrated positive impact on candidate and/or P-12 student
+      learning; that both parties participate in designing and delivering training
+      for clinical educators (CAEP names four example topics: understanding roles
+      and responsibilities, use of evaluation instruments and evaluating candidate
+      professional dispositions, setting goals/objectives for the clinical
+      experience, and providing feedback); that clinical educators have the
+      opportunity to RECEIVE feedback on their own experience; and three cycles of
+      data with analyses. Named possible sources: MOUs, process documents and
+      training materials, feedback tools for clinical educators, criteria for
+      serving as a clinical educator, job descriptions, and partnership meeting
+      decisions.
+    required_software_behavior: >
+      A clinical-educator personnel record carrying the eligibility criteria as
+      structured, verifiable attributes (years of experience, licensure area
+      match to the candidate's certification field, training completion date,
+      re-qualification expiry) that GATES assignment, plus an outbound instrument
+      collecting the clinical educator's own feedback on the placement, plus a
+      training-completion tracker with the same expiry mechanics used for student
+      compliance items.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The multi-entity gating is already real, not aspirational: the Placement
+      Clearance Dashboard is confirmed to run a three-state tracker
+      (Missing/Exists/NA) specifically for Preceptor CV, License, and
+      Certification alongside student compliance and contract status — i.e.
+      Compliance Management already gates a placement on the SUPERVISOR's
+      credentials, which is precisely what R2.2 co-selection criteria require.
+      The Experiential Supervisor Intake Form (PIF) — a configurable digital
+      intake form sent via encrypted delegator link with e-signature/attestation
+      element types and real-time email-engagement tracking — is the ready-made
+      mechanism for capturing the cooperating teacher's credentials AND their
+      feedback, and Exxat markets it explicitly for closing "accreditation audit
+      gaps" via a timestamped sync history. Faculty Compliance provides the
+      parallel track for university supervisors.
+    gap_notes: >
+      Three things to scope rather than assume. (1) Faculty Compliance requires
+      the paid Exxat Approve add-on — a services-attach cost, not a free
+      configuration, if TE programs are to track university-supervisor
+      qualifications the same way. (2) PIF bulk sending is not yet supported (one
+      supervisor at a time), which is a real operational problem for a TE program
+      onboarding several hundred cooperating teachers each semester — materially
+      worse at TE volumes than at PA/OT preceptor volumes. (3) CAEP wants proof of
+      DELIVERED TRAINING with content, not just a completion flag; the
+      ComplianceJunction pattern (vendor Course Id + Course Link tracked as a
+      compliance item) is the closest confirmed analogue and would need
+      repointing at EPP-authored cooperating-teacher training.
+    source: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 20-21, Component R2.2 — Key Concepts, Quality Evidence, Possible sources of evidence)"
+
+  - element_id: "Standard R1, Component R1.1"
+    element_title: "The Learner and Learning"
+    evidence_programs_must_produce: >
+      Evidence that candidates apply critical concepts and principles of learner
+      development (InTASC Standard 1), learning differences (InTASC Standard 2),
+      and creating safe and supportive learning environments (InTASC Standard 3),
+      at the appropriate progression level — CAEP explicitly asks how the evidence
+      demonstrates "increasing complexity in candidate application ... aligned
+      with the InTASC Learning Progression for Teachers." Evidence must be
+      disaggregated by preparation program and race/ethnicity showing no or few
+      disparities (or disparities explained with remediation steps), across three
+      cycles of data. Named sources include differentiated lesson/unit plans,
+      EPP-created measures, and performance-based assessments.
+    required_software_behavior: >
+      A configurable competency framework holding the InTASC 10 model core
+      teaching standards as the mapping dimension, tagged across both didactic
+      courses and clinical experiences, with a coverage matrix showing where each
+      InTASC standard is taught versus assessed — and, distinctively for CAEP, a
+      way to express PROGRESSION LEVEL (introduced / reinforced / demonstrated) on
+      each mapping rather than a flat mapped/not-mapped bit.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Squarely the Curriculum Mapping pillar. Its confirmed model separates
+      pre-loaded accreditor-owned "Accreditation Standards" from admin-authored
+      "Program Specific Standards," and per-discipline attribute taxonomies are a
+      production capability (PANCE Topics and Bloom's Taxonomy for PA, ACOTE
+      Instructional Methods for OT). The InTASC/CAEP work is loading the taxonomy,
+      not building a mechanism. The progression-level requirement has a direct
+      confirmed precedent too: the Nursing AACN Essentials crosswalk report
+      already records BOTH content type (knowledge-/skill-/behavior-based) AND
+      depth (introduced / reinforced / demonstrated) per cell — the closest
+      existing analogue to InTASC learning progressions in the product.
+    gap_notes: >
+      CAEP's R1 components are structurally two-layered — the CAEP component
+      (R1.1) wraps named InTASC standards (1, 2, 3) — so the mapping target is
+      really InTASC with a CAEP rollup, not CAEP alone. The Nursing precedent
+      shows Prism can map one set of objectives to several frameworks at once
+      (AACN Essentials + NONPF + IPEC + program SLOs), so this is supported; but
+      the pre-loaded-standards library is confirmed to ship ARC-PA, ACOTE, and
+      AACN sets and there is no evidence in this corpus that InTASC or CAEP R1-R5
+      ships pre-loaded. Treat "load InTASC + CAEP 2022 as a shipped standard set"
+      as explicit configuration work with a cost, not a given.
+    source: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 10-11, Component R1.1 — Key Concepts, Guiding Questions, Quality Evidence)"
+
+  - element_id: "Standard R1, Component R1.3"
+    element_title: "Instructional Practice"
+    evidence_programs_must_produce: >
+      Evidence candidates can assess (InTASC Standard 6), plan for instruction
+      (InTASC Standard 7), and use a variety of instructional strategies (InTASC
+      Standard 8), AND that they "model and apply national or state approved
+      technology standards to engage and improve learning for all students" —
+      technology integration is a mandatory, separately-evidenced strand added in
+      the 2022 revision. Named possible sources: assignments or tasks from
+      courses, assignments or tasks from clinical experiences, proprietary
+      assessments (CAEP names edTPA rubrics, PPAT rubrics, and Teacher Work Sample
+      rubrics related to instructional practice), pedagogical knowledge tests,
+      OBSERVATIONAL MEASURES, and digital portfolios demonstrating application of
+      national or state technology standards. Three cycles of data, disaggregated.
+    required_software_behavior: >
+      Rubric-scored observation of actual teaching — video or in-person — captured
+      against the InTASC 6/7/8 mapping, completed by the university supervisor and
+      the cooperating teacher, with scores aggregating to a cohort-level
+      distribution across three cycles and a per-candidate artifact trail
+      (lesson plan + recording + scored rubric) that survives to the self-study.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      This is the single element where TE has REAL, TE-specific confirmed product
+      evidence rather than inference. The GoReact (Echo360) LTI integration is
+      documented in the TE video-tutorial transcript — the only substantive TE
+      source in the whole corpus — and it does exactly what R1.3 observational
+      evidence requires: students record in-browser or upload video, reviewers
+      grade against GoReact rubrics with TIMESTAMPED comments on the recording,
+      and status flips Submitted → Reviewed automatically, syncing back to Prism
+      with no manual reconciliation. Prism auto-creates the matching GoReact
+      activity on first save. Assignments can require a placement and carry a
+      numeric weight toward the final grade — so a student-teaching video
+      observation is a first-class, placement-linked, graded artifact.
+    gap_notes: >
+      LTI is NOT on by default. Per both the TE playbook and the help-center
+      documentation, Learning Tool Interoperability appears under Learning
+      Activities > Setup only after a support ticket activates it for that
+      discipline and program — another instance of the support-gated
+      configuration boundary this repo has tracked elsewhere. Also note the
+      rubrics themselves live in GoReact, not Prism: rubric authoring, rubric
+      versioning, and inter-rater reliability work (which R5.2 Data Quality
+      demands) all happen outside the system of record, so the validity evidence
+      CAEP wants for that instrument cannot be assembled from Prism alone. And
+      Exxat's own material names the vendor inconsistently ("Echo360 (GoReact)"),
+      worth normalizing before it reaches a customer deck.
+    source: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 14-15, Component R1.3 — Key Concepts, Quality Evidence, Possible sources of evidences)"
+
+  - element_id: "Standard R1, Component R1.4"
+    element_title: "Professional Responsibility"
+    evidence_programs_must_produce: >
+      Evidence candidates understand professional standards of practice, relevant
+      laws, policies and codes of ethics (InTASC Standard 9), and can collaborate
+      with learners, families and colleagues (InTASC Standard 10) — including
+      candidate reflections addressing their own cultural background and
+      unconscious/systemic biases. Named possible sources: course assignments,
+      EPP-created measures, DISPOSITIONS ASSESSMENTS, relevant sections of state
+      licensure requirements, and required state/EPP ethics training. Three cycles
+      of disaggregated data.
+    required_software_behavior: >
+      A recurring dispositions instrument administered at multiple points by
+      multiple raters (self, university supervisor, cooperating teacher), with
+      scores retained longitudinally per candidate so growth is visible; plus
+      tracked completion of state/EPP-mandated ethics training as a gating
+      requirement; plus a durable, timestamped record that the candidate
+      acknowledged the professional code of ethics.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Two shipped mechanisms combine cleanly. The confirmed Multi-Term form
+      archetype under the Forms/Evaluations engine reuses one instrument within a
+      placement (midterm + final), and the Multi-response form type supports
+      multiple submissions/evaluators per placement with admin-configurable grid
+      columns — between them, a multi-rater dispositions instrument administered
+      twice per placement is an existing shape, not a new build. For the ethics
+      and code-of-conduct half, Compliance Management's confirmed "Two-tier
+      attestations with signed audit trail" retains every agreed attestation with
+      a timestamp in the student's Profile > Academics tab, at both profile level
+      and course-specific level.
+    gap_notes: >
+      Dispositions assessment is the one instrument family CAEP treats as
+      near-mandatory that has NO confirmed Exxat standard-form analogue — unlike
+      PT (CIET v2, PTSE1/2, SCIPAI, PTMACS) or OT (the five-form AOTA FWPE
+      family), Teacher Education has zero pre-built instruments documented in
+      this corpus. A TE program would author its own Custom form. That is
+      workable but it lands the program squarely in R5.2's requirement that
+      EPP-created assessments meet the CAEP Criteria for Evaluation of
+      EPP-Created Assessments — i.e. the absence of a validated standard form is
+      not a neutral gap, it transfers a validity burden onto the customer.
+    source: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 16-17, Component R1.4 — Key Concepts, Quality Evidence, Possible sources of evidence)"
+
+  - element_id: "Standard R1, Component R1.2"
+    element_title: "Content"
+    evidence_programs_must_produce: >
+      Evidence candidates know central concepts of their content area (InTASC
+      Standard 4) and can apply content in developing equitable and inclusive
+      learning experiences (InTASC Standard 5). CAEP explicitly allows the outcome
+      data to come from one of three routes: "a Specialist Professional
+      Associations (SPA) process, a state review process, or an evidence review of
+      Standard 1." Named possible sources include outcome assessments submitted as
+      part of SPA National Recognition or state approval, EPP-created measures,
+      proprietary measures (edTPA content rubrics, PPAT content rubrics, Praxis
+      Content Exams), and state required licensure measures. Three cycles,
+      disaggregated.
+    required_software_behavior: >
+      The ability to hold a SECOND, licensure-area-specific standard framework
+      per program (the relevant SPA's standards — e.g. CEC for special education,
+      NCTM for mathematics, ACTFL for world languages, NPBEA/NELP for leadership)
+      alongside the CAEP/InTASC framework, mapped from the same course objectives;
+      plus ingestion of externally-scored content-exam results (Praxis, state
+      licensure tests) per candidate for the completion rollup.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The multi-framework half is a confirmed capability: the Nursing AACN
+      Essentials pipeline maps the same course objectives simultaneously to the
+      Essentials AND to NONPF, IPEC, the four spheres of care, and program SLOs,
+      and the Cumulative Report's dual anchor modes let the export be anchored
+      either by Course Offering or by a Standards set — which is exactly the shape
+      of a per-SPA program report. The AACN precedent also already models
+      level-conditional sub-scopes (entry-level maps to sub-competencies A/B/C,
+      advanced-level to E/F/G), the same shape CAEP's Initial-vs-Advanced split
+      takes.
+    gap_notes: >
+      The exam-score half is a Gap and should be scoped as such. Praxis and state
+      licensure test results are externally scored by ETS or a state vendor;
+      nothing shipped ingests licensure-exam results, and the natural home is the
+      roadmap Exam Management pillar (Q2 2027) — the identical conclusion
+      coca.yaml reached about NBOME/COMLEX-USA, which strengthens the case that
+      Exam Management should be scoped as an EXTERNAL-RESULT INGESTION layer
+      across every accreditor in this workstream rather than as exam delivery.
+      Separately, SPA coverage is genuinely wide (ACTFL, ALA/AASL, AMLE, ASCA,
+      CEC, NAGC/CEC gifted, NPBEA/NELP, NASP and others, each on its own standards
+      edition and revision cycle) — loading and maintaining that library is a
+      real, recurring content-ops cost, not a one-time configuration.
+    source: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 12-13, Component R1.2); SPA list and per-SPA standards editions at https://caepnet.org/spa-standards-report-forms/"
+
+  - element_id: "Standard R3, Component R3.2"
+    element_title: "Monitoring and Supporting Candidate Progression"
+    evidence_programs_must_produce: >
+      Documented TRANSITION POINTS from admission through completion with
+      criteria, covering content knowledge, pedagogical knowledge, pedagogical
+      skills, critical dispositions, professional responsibilities, and ability to
+      integrate technology; proof the transition points and criteria are
+      transparent to candidates; identification of a transition point at which a
+      cohort GPA of 3.0 is achieved, monitored over time; documented performance
+      reviews, remediation efforts and support provisions with evidence that
+      action is taken when an individual candidate's progression is at risk; and
+      "a system for effectively maintaining records of candidate complaints,
+      including complaints made to CAEP," with documented resolution. CAEP asks
+      pointedly how the EPP proves the transition-point process is followed with
+      fidelity — "how does the EPP ensure there are no loopholes to work around
+      the system?" Named sources include a crosswalk of key Standard R1 evidence
+      aligned to transition points, and documentation of complaints/appeals with
+      demographics of complainants but no identifying names.
+    required_software_behavior: >
+      A per-candidate gate model where advancement to the next stage (admission →
+      methods coursework → student teaching → recommendation for licensure) is
+      blocked until named criteria are satisfied, with the gate visible to the
+      candidate; a structured advising/remediation log with open/closed status and
+      scheduled follow-ups; and a separate, auditable complaint register with
+      resolution outcomes that can be reported in aggregate by demographic without
+      exposing identities.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The gating mechanic exists and is genuinely multi-entity: Placement
+      Clearance blocks a placement unless student compliance, site documents,
+      active contract, and supervisor credential validity are all satisfied — so
+      "cannot enter student teaching until prerequisites are met" is a supported
+      gate, and the Clearance Dashboard's parallel status models plus Exxat's
+      documented 6-8-weeks-ahead monitoring practice give the fidelity evidence
+      CAEP's loophole question is really asking for. The remediation half maps
+      directly onto the confirmed Interventions record type — a formal
+      Open/Closed status with structured Follow-Ups (planned vs. actual date,
+      notes), a "Make visible to student" publish toggle requiring explicit
+      confirmation, and RBAC restricting advisement/intervention notes to assigned
+      faculty and advisors only.
+    gap_notes: >
+      Two genuine misses. (1) There is confirmed to be NO dedicated Interventions
+      report — the only view of interventions needing follow-up is the
+      Sites/Locations Dashboard on a 24-hour refresh, which is site-oriented, not
+      candidate-cohort-oriented; the "three cycles of remediation data,
+      disaggregated by race/ethnicity" that R3.2 demands is not extractable today.
+      (2) Prism has no confirmed complaint register distinct from Interventions,
+      and CAEP's requirement is specifically for complaints INCLUDING those made
+      to CAEP itself — an externally-originated record type with a regulator in
+      the loop. Do not stretch Interventions to cover it; scope it as its own
+      object under Accreditation Management (Q3 2027). Note also that the cohort
+      3.0 GPA transition point cannot be computed in Prism at all: the confirmed
+      Grading Scheme module is explicitly record-keeping only and "does not
+      calculate student grades."
+    source: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 28-29, Component R3.2 — Key Concepts, Guiding Questions, Quality Evidence)"
+
+  - element_id: "Standard R3, Component R3.3"
+    element_title: "Competency at Completion"
+    evidence_programs_must_produce: >
+      Triangulated evidence — CAEP requires "more than one source" — that
+      candidates reached the expected proficiency at completion across all six
+      named areas: content knowledge, pedagogical knowledge, pedagogical skills,
+      critical dispositions, professional responsibilities, and ability to
+      integrate technology effectively, in the field(s) where certification is
+      sought. Data disaggregated by preparation program, race/ethnicity, and other
+      demographics, with disparities either absent or explained with remediation
+      steps. Named possible sources: progression-level threshold/criteria for
+      success at completion, EPP-created measures, proprietary measures (edTPA
+      rubrics, PPAT rubrics, Praxis Content Exams), state required licensure
+      measures, STUDENT-TEACHING EVALUATION INSTRUMENTS, and dispositions /
+      non-academic factor instruments.
+    required_software_behavior: >
+      A per-candidate completion dashboard that pulls scores from several distinct
+      instruments (summative student-teaching evaluation, dispositions instrument,
+      video-observation rubric, external licensure exam) into one proficiency
+      rollup per competency area, with a program-configurable threshold per area,
+      and cohort-level aggregation disaggregated by demographic and by licensure
+      area.
+    prism_fit: "Build"
+    prism_fit_rationale: >
+      Every input exists in a different shipped pillar and nothing joins them.
+      Clinical & Experiential Education holds the placement and the summative
+      evaluation; Curriculum Mapping holds the InTASC/CAEP framework the scores
+      should roll up to; the Forms/Evaluations engine holds the instruments; the
+      GoReact LTI activity holds the observation rubric score. The closest
+      confirmed analogue to the join is the SLP Clinical Log's min/max hour
+      thresholds per participation-type × mode-of-delivery cell, which red-flag
+      any student below minimum directly in the report — that IS a per-student
+      threshold rollup, but it is support-configured only, single-source, and
+      hours-based rather than a multi-instrument competency triangulation.
+    gap_notes: >
+      This is the highest-value TE-specific build in the file and it is also the
+      element CAEP will not let an EPP fake, because "triangulated" is stated as a
+      hard requirement rather than a preference. Two dependencies make it worse
+      than it looks: the licensure-exam input is blocked on Exam Management (Q2
+      2027), and the disaggregation-by-race/ethnicity requirement runs through
+      EVERY R1-R4 component, so demographic disaggregation should be treated as a
+      cross-cutting reporting primitive for the CAEP configuration rather than
+      re-solved per element.
+    source: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 32-33, Component R3.3 — Key Concepts, Quality Evidence, Possible sources of evidence)"
+
+  - element_id: "Standard R4, Component R4.1"
+    element_title: "Completer Effectiveness"
+    evidence_programs_must_produce: >
+      Evidence, from a representative sample of completers and programs, that
+      program completers (A) effectively contribute to P-12 student-learning
+      growth AND (B) apply in P-12 classrooms the professional knowledge, skills
+      and dispositions the preparation was designed to achieve — plus a stated
+      rationale/methodology for why those impact measures were selected. Three
+      cycles of data, disaggregated, and over a seven-year accreditation cycle the
+      data must be representative of ALL programs. CAEP's named evidence sources
+      split across the two halves: for P-12 growth, state-level student
+      performance data (student growth measures, value-add measures), performance
+      portfolios, case studies; for classroom application, state-level teacher
+      evaluation data, focus groups/interviews with completers, P-12 students and
+      observers, observations of completers, and surveys.
+    required_software_behavior: >
+      Retain a completer record past graduation, linked back to the preparation
+      record; ingest externally-held outcome data keyed to that completer (state
+      teacher-evaluation ratings, student growth measures) that the EPP does not
+      own and often cannot legally obtain in identifiable form; and support
+      structured observation of completers in their own classrooms one to three
+      years post-graduation.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      No shipped pillar tracks post-graduation outcomes. Clinical & Experiential
+      Education's records stop at the placement, and Prism's student lifecycle
+      ends at completion. This is the same structural boundary coca.yaml
+      identified for GME placement rates — the entity model does not extend past
+      graduation — recurring here for a different accreditor and a different
+      outcome, which is the strongest signal yet that "post-completion outcome
+      record" should be a first-class object in Accreditation Management (Q3 2027)
+      rather than an accreditor-by-accreditor bolt-on.
+    gap_notes: >
+      TE's version of this gap is harder than DO's, and the difference matters for
+      scoping. COCA's Element 11.5 needs one number per graduate from one national
+      source (the Match). CAEP R4.1 needs P-12 STUDENT learning growth attributed
+      back through the completer to the preparation program — data owned by 50
+      different state education agencies under 50 different data-sharing regimes,
+      much of it unavailable to EPPs at all in identifiable form. Most EPPs
+      satisfy R4.1 with case studies and completer observations precisely because
+      the state-level data route is closed to them. Any product answer here should
+      be scoped as "support the case-study and observation route well" rather than
+      "integrate state longitudinal data systems."
+    source: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 34-35, Component R4.1 — Key Concepts, Quality Evidence, Possible sources of evidence table)"
+
+  - element_id: "Standard R4, Component R4.2"
+    element_title: "Satisfaction of Employers"
+    evidence_programs_must_produce: >
+      Evidence from a representative sample of employers (principals, district
+      HR) that they perceive completers' preparation was sufficient for their job
+      responsibilities, including preparation to work with diverse P-12 students
+      and their families. The instrument must elicit responses specific to the R1
+      criteria — the learner and learning, content, instructional practice,
+      professional responsibilities, and technology — and the EPP must show the
+      sample is representative across most licensure areas, or a purposive sample
+      to be enlarged over time. Named sources: employer satisfaction surveys,
+      focus groups or interviews with detailed methodology, employer satisfaction
+      case study.
+    required_software_behavior: >
+      Survey authoring where the question set is explicitly mapped to the R1
+      competency framework so results roll up per component; distribution to
+      recipients who have NO account and no relationship to the institution's
+      identity provider (a principal at a partner district); response-rate
+      analytics good enough to evidence representativeness; and both raw and
+      aggregate export.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      This was originally scored differently from the (then-Gap) survey
+      elements in coca.yaml, on the strength of the capability map's own
+      "RESOLVED (further)" finding. CORRECTED 2026-08-26, per Exxat PM
+      confirmation (see content/prism/capability-map.yaml, Surveys & Course
+      Evaluations pillar): "Surveys & Course Evaluations" is a shipped pillar,
+      not a Q1 2027 roadmap item as this entry and the official infographic
+      previously indicated — coca.yaml's equivalent survey elements have since
+      been corrected to Configure as well, so this is no longer a deliberate
+      divergence, just the same shipped fact applied consistently. Exxat
+      Surveys is confirmed via help-center documentation as an already-shipped,
+      first-party module: 14 question types, authoring from scratch/template/
+      copy or Word/PDF conversion, and — the part that matters here — three
+      distribution channels including additional email/CSV upload and an
+      anonymous public link/QR code, plus Status Overview, Weekly Response
+      Rates, per-channel breakdown and Raw/Aggregate exports. It is explicitly
+      marketed as removing the need for third-party survey tools for
+      accreditation/outcomes/CQI. External-employer distribution and
+      response-rate evidence are the two hard parts of R4.2, and both are shipped.
+    gap_notes: >
+      What is NOT confirmed is the mapping: nothing in the corpus shows Exxat
+      Surveys questions tagging to a Curriculum Mapping standard, so "results roll
+      up per R1 component" is manual crosswalk work today. Also note Exxat Surveys
+      ships named templates only for PT (four APTA-aligned 360-style Multi-Rater
+      DCE Performance Survey templates) and SLP (Graduating Student Survey,
+      Clinical Supervisor Survey, added December 2025) — the December 2025 SLP
+      extension is the useful precedent: adding a TE template pair (Employer
+      Satisfaction Survey, Completer Satisfaction Survey) is a demonstrated,
+      recent, repeatable content-ops motion, and it is the single cheapest
+      TE-specific product investment identified in this file.
+    source: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 36-37, Component R4.2 — Key Concepts, Guiding Questions, Quality Evidence)"
+
+  - element_id: "Standard R4, Component R4.3"
+    element_title: "Satisfaction of Completers"
+    evidence_programs_must_produce: >
+      Evidence from a representative sample of completers that they perceive their
+      preparation as relevant to the responsibilities they actually encounter on
+      the job and that it was effective, including preparation to work with
+      diverse P-12 students and families. Instruments must elicit responses
+      specific to the R1 criteria; ALL programs must be included within the data
+      cycles; three cycles of data, disaggregated by program and other
+      demographics. Named sources: completer/alumni satisfaction surveys, focus
+      groups or interviews with detailed methodology, and state proprietary
+      measures administered by state entities.
+    required_software_behavior: >
+      Survey distribution to alumni whose institutional accounts have been
+      deprovisioned — i.e. to personal email addresses held in a record that must
+      survive graduation — with per-program response tracking to prove every
+      program is represented in each cycle.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Same Exxat Surveys mechanism as R4.2: the additional email/CSV upload
+      channel and the anonymous public link both work without a Prism account, and
+      the Assignment Completion Time Distribution and Weekly Response Rates
+      analytics support the representativeness argument. Distribution "in-Prism by
+      persona" would not reach alumni, but the CSV channel does.
+    gap_notes: >
+      The binding constraint is upstream of the survey tool and is the same
+      post-graduation entity boundary R4.1 hits: keeping an alumni contact record
+      current for three-plus years after completion is not a confirmed capability,
+      and a completer survey is only as good as the address list. Pair this with
+      R4.1 when scoping the post-completion record — one object serves both.
+    source: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 38-39, Component R4.3 — Key Concepts, Quality Evidence, Possible sources of evidence)"
+
+  - element_id: "Standard R5, Component R5.1"
+    element_title: "Quality Assurance System"
+    evidence_programs_must_produce: >
+      An overview or flow chart of the ENTIRE quality assurance system including
+      the roles and responsibilities of everyone accountable for data collection,
+      monitoring, analysis and reporting; documentation of how data enter the
+      system, how they are reported, how they are used in decision making, and how
+      the outcomes of those decisions inform programmatic improvement; a crosswalk
+      of every measure included in the system; and — notably — "Verification of
+      the Quality Assurance System through demonstration," meaning a CAEP visitor
+      team expects a live walkthrough. The system must demonstrably support
+      disaggregation by licensure area/program, race/ethnicity, and other EPP-
+      identified dimensions. CAEP notes that R5 "encompasses process and structure
+      components from R1-R4," so every other standard connects back to it.
+    required_software_behavior: >
+      A single standard-aligned evidence repository mapping each CAEP component to
+      the specific measures, instruments, data cycles and owners that answer it;
+      an audit trail showing when each measure was collected and by whom; and the
+      ability to demonstrate the system live to an external reviewer rather than
+      only to export a binder.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      This is the literal definition of the roadmap Accreditation Management
+      pillar (Q3 2027) — the same conclusion coca.yaml reached for COCA Element
+      11.9. Curriculum Mapping's Heatmap Report gives a standard × course-offering
+      coverage matrix, which is a partial answer for R1 only; nothing shipped
+      federates evidence across the placement engine, compliance, evaluations and
+      surveys into one standard-indexed system with owners and cycles.
+    gap_notes: >
+      Two CAEP-specific requirements should be carried into the Accreditation
+      Management spec rather than discovered late. (1) "Verification through
+      demonstration" means the artifact is a LIVE SYSTEM WALKTHROUGH, not a PDF —
+      a read-only reviewer role scoped to one accreditation cycle is a concrete,
+      differentiating feature request that a static evidence binder does not
+      satisfy. (2) Disaggregation by race/ethnicity is required across R1-R4, so
+      the demographic dimension has to be a system-wide reporting primitive; the
+      ARC-PA B2 and CAPTE precedents show Prism already does edition-specific
+      accreditor-format exports, which is the right pattern to extend, but neither
+      of those precedents carries a demographic axis.
+    source: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 40-41, Component R5.1 — Key Concepts, Quality Evidence, Possible sources of evidence)"
+
+  - element_id: "Standard R5, Component R5.4"
+    element_title: "Continuous Improvement"
+    evidence_programs_must_produce: >
+      Documentation that the EPP regularly and systematically reviews, analyzes
+      and interprets quality-assurance data, identifies patterns across programs,
+      and makes data-driven changes — with the changes explicitly linked to the
+      evidence that prompted them and to the EPP's goals and relevant standards,
+      and with the EFFECTS of those changes tracked over time. CAEP states plainly
+      that "not all changes need to lead to improvement, as CAEP encourages
+      data-driven experimentation, but changes should trend toward improvement,"
+      and asks the EPP to document the decision itself (keep / modify /
+      discontinue). Named sources: a decision grid (Question, Data, Stakeholder
+      group, Decision), condensed meeting minutes highlighting data review and
+      decisions, outcomes of changes after they were made, and a goals crosswalk
+      table.
+    required_software_behavior: >
+      A closed-loop "finding → decision → change → measured effect" object where
+      each record cites the specific data that prompted it, names the stakeholder
+      group that decided, records the disposition (keep/modify/discontinue), and
+      links forward to the later data cycle showing what happened — queryable by
+      academic year for the self-study.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      No shipped pillar closes the finding-to-action loop. The closest confirmed
+      mechanism is Curriculum Mapping's free-form colored Tags ("Needs Review" /
+      "Reviewed") functioning as a lightweight curriculum-committee QA workflow —
+      genuinely useful, but a two-state tag on a mapping, not a decision record
+      with cited evidence and a measured downstream effect.
+    gap_notes: >
+      coca.yaml already flagged this exact closed-loop pattern as recurring across
+      "most 'continuous improvement' standards from every accreditor in this
+      workstream" and argued it should be a first-class object type in
+      Accreditation Management rather than bolted onto Curriculum Mapping. CAEP
+      R5.4 confirms that prediction from a completely different discipline and
+      accreditor family, and adds two structural details worth building to: CAEP's
+      decision grid names a STAKEHOLDER GROUP as a required field on each decision
+      (tying R5.4 to R5.3 Stakeholder Involvement, which requires documented
+      internal and external stakeholder input into program design and evaluation),
+      and CAEP explicitly expects records of changes that did NOT improve outcomes
+      — so the object must not be modeled as a remediation tracker that assumes
+      every logged change is a success.
+    source: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 46-47, Component R5.4 — Key Concepts, Quality Evidence, Possible sources of evidence; R5.3 at pp. 44-45)"
+
+licensure_or_gme_layer:
+  - body: "State Education Agencies / State Boards of Education (50-state teacher licensure and program approval)"
+    what_it_governs: >
+      Teacher licensure and certification is a STATE function, not a national one,
+      and unlike medicine there is no single national licensing examination
+      sequence. Each state independently sets its own certification requirements
+      (required exams and cut scores, required coursework, minimum student-
+      teaching clock hours or weeks, background-check and fingerprinting rules,
+      induction/mentoring requirements, and initial-vs-professional license
+      tiers), and each state separately approves EPPs to operate. CAEP
+      accreditation does not confer the right to recommend candidates for
+      licensure — state program approval does. CAEP formalizes this through
+      published CAEP-state partnership agreements, which as of research date cover
+      roughly 34 states plus the District of Columbia and which specify, per
+      state, WHICH of three program-review options an EPP may use for its
+      specialty licensure areas: SPA Program Review with National Recognition,
+      CAEP Evidence Review of Standard R1/RA1, or State Program Review. The
+      variation is real and consequential — some states permit all three (Alabama,
+      Arizona, Indiana, Mississippi, Montana, Nebraska, New Hampshire, North
+      Dakota, Ohio), California's agreement lists only state review, and
+      "Providers in South Carolina and West Virginia MUST select SPA program
+      review when available." CAEP also warns that available program review
+      options "may not align with state approval options."
+    relevance_to_product: >
+      This is the single biggest structural difference between Teacher Education
+      and every other discipline in this repo, and it should shape how a TE
+      instance is configured rather than being treated as a footnote. In DO,
+      Pharmacy, Dentistry, and Medicine there is one accreditor and one national
+      exam pipeline; in TE there is one accreditor sitting on top of fifty
+      different regulatory regimes, and the EPP must satisfy both simultaneously.
+      Concretely: (1) the standards framework a TE program maps its curriculum to
+      is not one set but a stack — CAEP 2022 components, the InTASC 10 model core
+      teaching standards CAEP's R1 components cite by number, the relevant SPA's
+      standards for each licensure area, and the state's own teaching standards —
+      which makes Curriculum Mapping's confirmed multi-framework capability (the
+      Nursing AACN + NONPF + IPEC + SLO precedent) the load-bearing feature for
+      this discipline; (2) the completion gate differs per state, so R3.3's
+      "competency at completion" thresholds are not one program-level
+      configuration but potentially several; and (3) for any multi-state EPP or
+      any online EPP placing candidates across state lines, placement eligibility
+      itself becomes state-dependent. Prism's confirmed site-sharing model and
+      program-level configuration are the levers, but no source in this corpus
+      shows a state-jurisdiction attribute on a placement or a completion rule.
+    source: "https://caepnet.org/state-partners/ (Program Review Options for CAEP Accreditation by State Agreement table, including the South Carolina and West Virginia SPA mandate and the caveat that review options may not align with state approval options)"
+  - body: "edTPA (Stanford SCALE / Pearson) and other teacher performance assessments (PPAT, state-specific TPAs)"
+    what_it_governs: >
+      edTPA is a real, currently-operating portfolio-based teacher performance
+      assessment in which a candidate submits lesson plans, unedited video of
+      their own classroom teaching, student work samples and written commentary,
+      scored against rubrics by external raters. It is developed by Stanford's
+      Center for Assessment, Learning and Equity and operated by Pearson, which
+      holds the copyright. CAEP itself names edTPA rubrics as an acceptable
+      proprietary evidence source under R1.2 (content), R1.3 (instructional
+      practice), R2.3 (clinical experiences) and R3.3 (competency at completion) —
+      so it is not merely adjacent to CAEP, it is embedded in CAEP's own named
+      evidence menu. Its regulatory footprint, however, is contracting and
+      genuinely varies by state: New York removed it as a certification
+      requirement effective April 2022; Washington eliminated it by statute
+      (2SHB 1028, April 2021); New Jersey ended its standardized performance
+      assessment mandate in 2022 and later legislated against requiring it;
+      Connecticut stopped requiring a passing edTPA score for program completion
+      as of July 1, 2024; California treats edTPA as one of several approved
+      TPAs rather than the mandated one; Maryland moved to require a performance
+      assessment for all teaching areas effective July 1, 2025; and roughly half
+      the states that mandated some standardized performance assessment in 2019 no
+      longer do. A restructured "edTPA Essentials" with a two-task design is
+      slated to launch August 2026. PPAT (ETS) is the main competing instrument
+      and is likewise named in CAEP's evidence menu.
+    relevance_to_product: >
+      Three product consequences. (1) Because edTPA/PPAT scores are externally
+      produced by Pearson or ETS, they belong in the same
+      external-result-ingestion bucket as Praxis and state licensure exams — the
+      roadmap Exam Management pillar (Q2 2027), scoped as ingestion and reporting,
+      never as delivery. (2) Because the state mandate is eroding but CAEP's
+      evidence expectation is not, more EPPs are substituting locally-built
+      performance assessments for edTPA — which pushes them straight into R5.2's
+      requirement that EPP-created assessments meet the CAEP Criteria for
+      Evaluation of EPP-Created Assessments, and makes instrument-validity
+      documentation a growing customer need rather than a shrinking one. (3) The
+      edTPA submission itself is video-of-teaching plus artifacts plus commentary
+      — structurally the same object as the confirmed GoReact/Echo360 LTI
+      assignment TE programs already run in Prism, which makes "the place
+      candidates assemble and rehearse their performance-assessment portfolio" a
+      credible TE-specific product position even though Prism cannot score the
+      official submission.
+    source: "https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (edTPA and PPAT rubrics named as possible evidence sources at pp. 13, 15, 24 and 33); state policy status per https://edtpa.org/resource_item/StatePolicyOverview, https://www.nysed.gov/college-university-evaluation/teacher-performance-assessment-requirement-frequently-asked-questions, https://www.pesb.wa.gov/preparation-programs/standards/assessments/performance-assessments-edtpa/, and https://portal.ct.gov/sdecertification/knowledge-base/articles/epps/edtpa-teacher-performance-assessment"
+  - body: "CCSSO / InTASC (Interstate Teacher Assessment and Support Consortium)"
+    what_it_governs: >
+      The Council of Chief State School Officers publishes the InTASC Model Core
+      Teaching Standards — 10 standards in four categories: The Learner and
+      Learning (1 Learner Development, 2 Learning Differences, 3 Learning
+      Environments), Content (4 Content Knowledge, 5 Application of Content),
+      Instructional Practice (6 Assessment, 7 Planning for Instruction, 8
+      Instructional Strategies), and Professional Responsibility (9 Professional
+      Learning and Ethical Practice, 10 Leadership and Collaboration) — released
+      in 2011 and paired with the InTASC Learning Progressions for Teachers 1.0
+      (2013). InTASC is not an accreditor and issues no credential; it is the
+      shared competency vocabulary that CAEP's Standard R1 is built on. CAEP's
+      four R1 components map one-to-one onto InTASC's four categories and cite the
+      individual InTASC standards by number, and CAEP's guiding questions
+      repeatedly ask how evidence shows "increasing complexity ... aligned with
+      the InTASC Learning Progression for Teachers."
+    relevance_to_product: >
+      The practical mapping target for a TE curriculum is InTASC, with CAEP as the
+      rollup layer — the same two-level shape as ARC-PA's B2 instructional
+      objectives or the AACN Essentials sub-competencies, both of which Prism
+      already handles. Two configuration implications follow: the standards
+      library needs InTASC loaded as its own set (not folded into CAEP), linked to
+      the CAEP components that cite it, so the confirmed Directly Mapped vs.
+      Indirectly Mapped inheritance does the CAEP rollup automatically; and the
+      Learning Progressions mean the mapping needs a DEPTH dimension, for which
+      the Nursing crosswalk report's introduced / reinforced / demonstrated axis
+      is the existing precedent to copy rather than reinvent.
+    source: "https://learning.ccsso.org/intasc-model-core-teaching-standards-and-learning-progressions-for-teachers ; InTASC standards cited by number throughout CAEP components R1.1-R1.4 at https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 10-17)"
+  - body: "Specialized Professional Associations (SPAs) — CEC, ACTFL, AMLE, ASCA, ALA/AASL, NPBEA/NELP, NASP and others"
+    what_it_governs: >
+      SPAs are national subject-matter and role-specific associations that review
+      individual licensure-area programs within an EPP and grant National
+      Recognition. SPA Program Review with National Recognition is one of the
+      three program-review options a CAEP-state agreement may specify, and SPA
+      Initial Review Reports are due THREE YEARS before the CAEP site review —
+      i.e. the SPA cycle runs ahead of, and feeds, the CAEP cycle. Each SPA
+      maintains its own standards on its own revision schedule (ACTFL moved to
+      2026 standards; ALA/AASL to 2019 standards for reports from spring 2022;
+      AMLE to revised 2022 MLTP standards; CEC operates separate initial
+      practice-based standards including an EI/ECSE set and also absorbed gifted-
+      education review from NAGC in 2018; NPBEA required NELP 2018 standards from
+      spring 2021), and CAEP notes NASP is transitioning out of the SPA role
+      entirely after CHEA recognized it as an accrediting organization in May 2022.
+    relevance_to_product: >
+      For Curriculum Mapping this is the recurring content-ops cost, and it is
+      bigger than any single accreditor load. A mid-size EPP might run ten or more
+      licensure areas, each against a different SPA's standards, each on its own
+      edition and sunset date — a library-maintenance problem structurally like
+      Prism's confirmed pre-loaded ARC-PA/ACOTE-by-degree-level sets but with far
+      more sets and faster churn. Two things to note when scoping: Curriculum
+      Mapping's confirmed rule that pre-loaded Accreditation Standards can only be
+      DEACTIVATED, never deleted, and that deactivation CASCADES to delete
+      mappings already made against them, makes SPA edition transitions
+      (2013 → 2024 CEC, 2019 → 2026 ACTFL) a genuinely risky operation for a TE
+      customer; and the three-years-ahead SPA deadline means the evidence calendar
+      a TE program needs is not a single CAEP countdown but two interleaved ones.
+    source: "https://caepnet.org/spa-standards-report-forms/ (Active SPAs, per-SPA standards editions and transition dates; 'SPA Initial Review Reports are due three (3) years before the CAEP site review'); program-review options per https://caepnet.org/state-partners/"
+  - body: "CAEP Annual Reporting (EPP Annual Report via AIMS) and the eight annual measures"
+    what_it_governs: >
+      Between site visits, every accredited EPP submits an annual report through
+      CAEP's AIMS platform covering: provider information; enrollment; substantive
+      changes; analysis and links displaying candidate performance data and the
+      required annual reporting measures ON THE EPP'S OWN PUBLIC WEBSITE; progress
+      remediating any areas for improvement, weaknesses or stipulations;
+      data-informed continuous improvement efforts; and authorization
+      acknowledging CAEP policy. CAEP states that providers "submit annual reports
+      to CAEP that gather common data for eight annual measures," covering impact
+      on student learning, teacher effectiveness, employer and completer
+      satisfaction, and consumer-information outcomes including graduation,
+      licensure, employment and student loan default rates. Reports are reviewed
+      on a rolling basis with feedback to providers, and the data feed both CAEP's
+      between-visit monitoring and the EPP's own self-study trend analysis.
+    relevance_to_product: >
+      This is the TE analogue of COCA's Element 11.9 and carries the same
+      argument: it is the highest-leverage element in the file for the
+      Accreditation Management (Q3 2027) business case, because it is a
+      recurring, deadline-bound, field-structured submission rather than a
+      once-every-seven-years narrative. Two CAEP-specific twists worth building
+      to. (1) The PUBLIC-WEBSITE DISPLAY requirement means the output is not only
+      a submission to CAEP but a published page the EPP must keep current — the
+      same auto-publish-to-a-public-page pattern coca.yaml identified for COMLEX
+      pass rates and GME placement rates, now confirmed for a third accreditor,
+      which makes "publish an accreditor-required metric to a public URL" a
+      cross-accreditor primitive rather than a COCA quirk. (2) The measures
+      include loan-default and employment data owned by financial aid and by state
+      agencies respectively — outside anything Prism holds — so the honest scope
+      is a report that aggregates what Prism owns and provides structured slots
+      for what it does not, not an end-to-end generator.
+    source: "https://caepnet.org/terms/epp-annual-report/ (EPP Annual Report definition and its seven required contents); https://caepnet.org/accreditation-cycle-costs/ (Annual Reporting section: 'eight annual measures' and their subject matter)"
+  - body: "State background-check, fingerprinting and school-district clearance requirements"
+    what_it_governs: >
+      Placement of a teacher candidate in a P-12 classroom is gated by state
+      criminal-history and child-protection clearance law and by the receiving
+      district's own onboarding requirements — commonly fingerprint-based state
+      and FBI criminal history checks, child-abuse/neglect registry clearances,
+      TB testing in some states, and district-specific orientation or
+      confidentiality agreements. These requirements come from state statute and
+      district policy, NOT from CAEP: no component of the 2022 Initial-Licensure
+      standards imposes a background-check requirement on candidates. They are
+      nonetheless absolute placement blockers, and they vary by state and often by
+      district within a state.
+    relevance_to_product: >
+      This is the cleanest illustration of the TE structural pattern and it should
+      be stated explicitly in any TE positioning: for Teacher Education the
+      COMPLIANCE burden is state/district-driven while the EVIDENCE burden is
+      accreditor-driven, whereas in the health disciplines both flow largely from
+      the same accreditor. That means Compliance Management's confirmed
+      capabilities — per-setting Program Requirements, the Placement Clearance
+      gate, the exemption sub-status taxonomy, the Universal Background Screening
+      and Cisive integrations, the Reset-as-versioning pattern for renewed
+      documents — are exactly right for TE mechanically, but the requirement SETS
+      have to be modeled per state and per district partner rather than once per
+      program. Prior repo work flags TE compliance (background check /
+      fingerprinting) as explicitly unpopulated in the TE playbook's own gaps
+      list; nothing found in this research changes that, so treat per-district
+      requirement variation as an open question to verify with a CSS/CX owner
+      before it appears in a customer conversation.
+    source: "Absence of any background-check requirement across CAEP Initial-Licensure components R1.1-R5.4, https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 10-47); TE compliance gap per /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md ('Open Gaps' — Compliance) and content/flows/admin-onboarding--04-compliance-template-setup.yaml"
+
+last_researched: "2026-08-25"

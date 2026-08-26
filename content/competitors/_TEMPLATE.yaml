@@ -1,0 +1,48 @@
+# TEMPLATE — copy this shape for each competitor file. One file per competitor,
+# filename <slug>.yaml. Every non-trivial factual claim MUST carry a source URL.
+# Do not invent numbers, quotes, or pricing — write "not publicly disclosed" if unknown.
+competitor: "Example Competitor Name"
+slug: "example-competitor"
+domains_served: ["DO", "MD"]          # subset of: DO, Pharmacy, Dentistry, Medicine
+category: "e.g. 'Med-ed management (UME+GME)'"
+company:
+  founded: "year, or 'not publicly stated'"
+  hq: "city, state/country, or 'not publicly stated'"
+  ownership: "independent / owned by X / part of Y suite"
+
+# One entry per Prism pillar (see ../prism/capability-map.yaml) this competitor
+# is comparable on, plus any capability they have that Prism does not.
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: ""
+    depth_vs_prism: "ahead | at-parity | behind | prism-only | unknown"
+    evidence: ""
+    source: "https://..."
+  - pillar: "Compliance Management"
+    competitor_capability: ""
+    depth_vs_prism: ""
+    evidence: ""
+    source: ""
+  - pillar: "Curriculum Mapping"
+    competitor_capability: ""
+    depth_vs_prism: ""
+    evidence: ""
+    source: ""
+  - pillar: "Accreditation Management"
+    competitor_capability: ""
+    depth_vs_prism: ""
+    evidence: ""
+    source: ""
+
+strengths:
+  - claim: ""
+    source: ""
+weaknesses:
+  - claim: ""
+    source: ""
+retention_anchor: "why customers stay even if unhappy (data lock-in, network effects, sunk training cost, etc.)"
+exxat_opportunity: "one paragraph: where Prism can specifically win against this competitor"
+pricing_signal: "public pricing info if any, else 'not publicly disclosed'"
+last_researched: "2026-08-24"
+sources:
+  - "https://..."

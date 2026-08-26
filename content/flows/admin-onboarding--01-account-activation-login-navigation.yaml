@@ -1,0 +1,934 @@
+# Element-level ground truth underneath admin-onboarding-product-setup.yaml, stage 1
+# ("Account activation, login & navigation"). See _TEMPLATE.yaml for field meanings.
+#
+# SOURCING NOTE (deliberate, and the reason this file exists in this form):
+# the PRIMARY source for this stage is the raw tutorial transcript at
+# /Users/romitsoley/Downloads/exxat_transcripts.md — specifically "1/16
+# Administrator Navigation in Exxat Prism" (lines 5-71), "16/16 (Part 1) How to
+# use Ask Leo" (lines 1683-1699), and "16/16 (Part 2) Using the Resource Center"
+# (lines 1701-1719). Earlier work in this repo laundered transcript content
+# through help-center paraphrases and lost the direct citation; every
+# confirmed_by below cites the transcript FILE AND LINE NUMBERS wherever the
+# transcript covers the step, and falls back to the help-center mirror only for
+# material the transcript genuinely does not cover (2FA, User Settings panel,
+# Trust Portal, the SSO provisioning boundary).
+#
+# SCOPE NOTE: Tutorial 1/16 is a single 60-minute video that walks the entire
+# Program Details tree (school profile, accreditation record, grading schemes,
+# clinical settings, standards, Notification Hub, User Roles, Program 360,
+# program calendar). Only the account-activation / login / chrome-and-navigation
+# portions of it belong to stage 1; the Program Details subtrees it covers are
+# stages 2+ of this journey and are deliberately NOT modeled here. In
+# particular, Program Details > Setup > Accreditation is already modeled at
+# element level in competency-verification--08-close-the-loop-external-
+# validation-against.yaml (COCA 11.9 / CODA 1-2), and that citation is NOT
+# re-derived here — the only accreditation-relevant element in THIS stage is the
+# read-only site-visit account type, which is an account-provisioning element.
+
+flow_name: "Day One — Activation, Login & Finding Your Way Around"
+maps_to_journey: "admin-onboarding-product-setup.yaml, stage 1"
+persona: >
+  Primary: Program Administrator brand new to the platform
+  (../personas/role-program-admin.yaml) — has been named by their school as the
+  person who will own Prism, has an invitation email (or, on SSO, is waiting to
+  be told their account is live), and has not yet seen the product. Secondary:
+  Exxat Support / the assigned Account Manager, who is a mandatory participant
+  in this stage rather than an optional escalation — SSO account activation,
+  SSO configuration itself, custom-role creation, and read-only site-visit
+  accounts are all support-provisioned, not admin-self-service. Tertiary: the
+  Compliance / Accreditation Liaison (../personas/role-compliance-accreditation-
+  liaison.yaml), who inherits the Trust Portal and the site-visit account type.
+
+steps:
+  - screen: "Exxat Prism invitation email (arrives in inbox, outside the product)"
+    navigation_path: "n/a — email client; the account does not exist in a usable state until this link is clicked"
+    action: >
+      New admin receives an email invitation from the Exxat Prism support team,
+      reads the username their school assigned, and clicks the activation link.
+      This is the only entry point for a standard (non-SSO) account — there is
+      no self-registration path documented anywhere in the source material.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md line 9 ("1/16
+      Administrator Navigation"): "You will receive an email invitation from the
+      EXAT Prism support team. The invitation includes a link to activate your
+      account. The email invite also includes the username for your account set
+      up by your school. Simply click the link in the invite to activate your
+      account." Corroborated by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/School Administrator User Guide.md ("Logging In and Dashboard": "If you are not using Single Sign On, you will receive an invitation to set up your account.")
+    elements:
+      - element: "Activation link in the invitation email"
+        type: "one-time link (email body)"
+        data_shown: "Single hyperlink; the transcript states no expiry window, no resend control, and no admin-visible invitation status"
+        gates_on: ["password setup", "first login", "every downstream setup stage in this journey"]
+        accreditation_citation: "none — this is a platform-mechanics element with no direct accreditor tie in coca.yaml, lcme.yaml, acpe.yaml or coda.yaml."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. The nine files in content/competitors/ document clinical/placement/accreditation feature depth; none describes an invitation-email or account-activation mechanic. The nearest adjacent data point is one45.yaml's own note that its public materials leave capabilities 'unable to verify whether this exists behind login' — i.e. competitor activation flows are not publicly observable at all."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The single highest-frequency day-one failure mode (invite filtered to
+          spam, link already used, wrong username) has no self-service remedy on
+          this screen and no Prism-specific troubleshooting content behind it:
+          the help center's own Troubleshooting Guide.md has a section literally
+          titled "Login/Logout Issues" whose entire content is how to sign in and
+          out of Windows and macOS, not Exxat Prism. Separately, Whitelist
+          Communications from Exxat PRISM.md exists and names the three sending
+          IPs plus notifications@exxat.com — but it is written for the admin to
+          forward to CLINICAL SITES, not for the admin's own IT department to
+          pre-whitelist before the admin's own invitation is sent. Ordering
+          problem: the deliverability fix is documented downstream of the first
+          email that can fail.
+      - element: "Username (assigned by the school, printed in the invite)"
+        type: "read-only value delivered by email"
+        data_shown: "The account username set by the school, not chosen by the user"
+        gates_on: ["standard login"]
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research; no competitor file describes username issuance."
+        gap_severity: "none"
+        gap_note: "Behaves as documented. Worth noting only that the username is school-assigned and not editable by the admin, so it becomes a support ticket if wrong."
+      - element: "SSO accounts: no invitation email at all"
+        type: "absence of an element (support-provisioned instead)"
+        data_shown: "Nothing — the admin is notified out-of-band by support that the account is ready"
+        gates_on: ["SSO first login"]
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "MedHub is the only competitor in this research whose public materials name the authentication stack at all — 'SAML/Shibboleth SSO' and 'multifactor authentication' (medhub.yaml, Compliance Management pillar, sourced to medhub.com/software/). MedHub's pages name the protocols, not the provisioning handoff, so the comparison holds at protocol level and stops there. CORE ELMS is explicitly weaker: core-elms.yaml records that 'only generic SSO/LTI standards support is described' with no named integration partners."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Asymmetric onboarding: the transcript tells SSO admins only that
+          "support will let you know when you are ready to access your account"
+          (line 13), and the School Administrator User Guide confirms "If you are
+          using Single Sign On, our support team will activate both school and
+          student accounts on your behalf." SSO configuration itself is on
+          capability-map.yaml's explicit list of support-gated (non-self-service)
+          configuration. So the SSO day-one path has no admin-visible status,
+          no admin-triggerable action, and no ETA surface — it is a wait-for-email
+          relationship with Exxat, which is a real friction point to name when
+          selling into IT-governed MD/DO/Pharmacy/Dentistry institutions where SSO
+          is mandatory rather than optional.
+
+  - screen: "Set your password (standard/non-SSO accounts only)"
+    navigation_path: "Invitation email > activation link > password setup screen"
+    action: >
+      Admin sets a first password against five stated complexity rules and clicks
+      Submit; the system confirms the password was set successfully.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md line 11 ("1/16
+      Administrator Navigation"): "For standard accounts, you'll be prompted to
+      set up a new password following a few guidelines. Your password must be a
+      minimum of eight characters with at least one uppercase character, one
+      lowercase character, one numerical character, and one non-alphanumeric
+      character... Once you've set up your password, click Submit. The system
+      will notify you after your password is successfully set up." The identical
+      five rules are restated in /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Using User Settings- Administrators.md ("Password Guidelines").
+    elements:
+      - element: "Password field + complexity rules"
+        type: "input field with client-side validation"
+        data_shown: "Min 8 chars; >=1 uppercase [A-Z]; >=1 lowercase [a-z]; >=1 base-10 digit [0-9]; >=1 non-alphanumeric"
+        gates_on: ["first login"]
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file records a password policy. MedHub's page-level security claims (medhub.yaml: '128-bit STRONG Encryption SSL, Multifactor authentication, FERPA compliance, SOC 2 compliance') are marketing-page assertions about the stack, not a comparable field-level password rule set."
+        gap_severity: "none"
+        gap_note: "Standard, unremarkable policy, consistently documented in both the transcript and the User Settings guide. No institutional override (e.g. a school-set rotation interval or length floor) is documented anywhere in the source material."
+      - element: "Submit button"
+        type: "button"
+        data_shown: "Success notification on completion"
+        gates_on: ["first login"]
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "login.exxat.com — standard login"
+    navigation_path: "login.exxat.com"
+    action: >
+      Admin enters the school-assigned username and the password they just set,
+      and clicks LOGIN.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md line 11: "Go to
+      login.exat.com and log in to EXAT Prism using your login credentials you
+      just set up." (Transcript renders the domain phonetically as
+      'login.exat.com'; the product is Exxat Prism.) Login-screen sequence
+      corroborated by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Two-Factor Authentication (2FA) for Exxat Prism Non-SSO Admin Users.md ("Login Using 2FA", steps 1-2).
+    elements:
+      - element: "Username field"
+        type: "input field"
+        data_shown: "School-assigned username (not an email address, per the invite element above)"
+        gates_on: ["session"]
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Note the asymmetry with the SSO path on the same page, which takes an email address rather than a username — two different identifier types on one entry point."
+      - element: "Password field"
+        type: "input field (masked)"
+        gates_on: ["session"]
+        data_shown: ""
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "LOGIN button"
+        type: "button"
+        data_shown: "Advances to the 2FA prompt (non-SSO) or, on first login, to the privacy-policy acceptance gate"
+        gates_on: ["2FA setup/challenge", "privacy policy acceptance"]
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "login.exxat.com — single sign-on"
+    navigation_path: "login.exxat.com > [school email] > school IdP login page > redirect back to Exxat"
+    action: >
+      Admin enters their school email address, is redirected to their school's
+      own login page, authenticates there, and is redirected back into Prism.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md line 13: "Single sign-on
+      is a user authentication method that allows users to log in to multiple
+      applications and websites using one set of credentials. Accounts using SSO
+      verification verify your identity outside of the EXAT system... For single
+      sign-on accounts, support will let you know when you are ready to access
+      your account. Go to login.exat.com and enter your school's email address.
+      You will then be taken to your school's login page. Log in to your school
+      portal, and you will be redirected to the EXAT site." Cross-discipline
+      corroboration that SSO is the assumed default in practice:
+      /Users/romitsoley/Downloads/OTOTAVideosTranscripts.md line 75 ("log into
+      Exxat using your university credentials") and
+      /Users/romitsoley/Downloads/PAVideosTranscripts.md line 23 ("Log in to
+      Exxat Prism using your university credentials").
+    elements:
+      - element: "School email address field (IdP discovery)"
+        type: "input field, email-domain routed"
+        data_shown: "Routes to the institution's own login page based on the email domain"
+        gates_on: ["session", "skips the 2FA setup path entirely"]
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "MedHub explicitly names 'SAML/Shibboleth SSO' plus multifactor authentication on its software page (medhub.yaml, Compliance Management pillar) — the only element-level-nameable authentication claim among the nine competitor teardowns, and the one place a head-to-head on protocol support is fair. CORE ELMS describes 'only generic SSO/LTI standards support' with no named partners (core-elms.yaml). Prism's own transcript never names a protocol (SAML, Shibboleth, OIDC) at all, so Prism is currently BEHIND MedHub on public specificity here even if the underlying implementation is equivalent."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Two distinct issues. (1) Public specificity: no protocol is named in
+          any transcript or help article inspected, which is a procurement
+          liability in exactly the IT-governed institutions the four expansion
+          domains (DO, Pharmacy, Dentistry, Medicine) live in. (2) Self-service:
+          capability-map.yaml lists 'SSO configuration' on its confirmed
+          support-gated configuration boundary — the admin cannot set up,
+          re-point, or test SSO themselves.
+      - element: "Redirect back to Exxat after IdP authentication"
+        type: "system redirect"
+        data_shown: "Lands on the privacy-policy acceptance gate on first login"
+        gates_on: ["privacy policy acceptance"]
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "Setup Two Factor Authentication (mandatory, non-SSO users only)"
+    navigation_path: "login.exxat.com > LOGIN > Setup Two Factor Authentication"
+    action: >
+      On first login, a non-SSO admin must register either a phone number or
+      their institutional email as a second factor, verify a 6-digit code, and
+      only then reaches the dashboard. Mandatory since July 2025 with a 90-day
+      grace window, after which setup is required to keep using Prism.
+    confirmed_by: >
+      NOT covered by the tutorial transcript — the "1/16 Administrator
+      Navigation" video predates this rollout and describes a login flow with no
+      second factor, which is itself worth knowing (the canonical onboarding
+      video is out of date on the very first screen a new non-SSO admin sees).
+      Source is /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Two-Factor Authentication (2FA) for Exxat Prism Non-SSO Admin Users.md, corroborated by /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (exxat_advantage_layer, Trust Portal item: "mandatory Two-Factor Authentication rollout for all non-SSO users (students, faculty, admins) effective July 2025 with a 90-day setup grace window before lockout").
+    elements:
+      - element: "Setup with Phone Number (recommended path)"
+        type: "button + phone input + Verify Phone Number"
+        data_shown: "6-digit code delivered by SMS"
+        gates_on: ["dashboard access after the 90-day grace window"]
+        accreditation_citation: "none directly — no element in coca.yaml, lcme.yaml, acpe.yaml or coda.yaml names an authentication control. Adjacent but not equivalent: COCA Standard 11, Element 11.2 requires documented proof of CONFIDENTIALITY for student evaluations of instruction, which is an evidence-handling requirement, not an account-security one; citing 2FA against it would be a stretch."
+        competitor_equivalent: "MedHub names 'Multifactor authentication' on its software page (medhub.yaml) — at-parity as a claim, but MedHub's public materials do not say whether it is mandatory, what factors are supported, or whether there is a device-remember window, so the comparison stops at 'both have MFA.' No other competitor teardown in this research mentions MFA at all."
+        gap_severity: "none"
+        gap_note: "Shipped and enforced. Prism is arguably ahead of the documented field here on mandatoriness, but that fact is not in the onboarding video, so a new admin meets it as a surprise."
+      - element: "Setup Another Way (email OTP fallback)"
+        type: "link > auto-filled registered email + Send Code"
+        data_shown: "Registered institutional email is pre-filled and not editable on this screen; 6-digit code by email"
+        gates_on: ["dashboard access after the 90-day grace window"]
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The article warns that "2FA codes are sent only to your registered
+          institutional email ID. Make sure it's up to date in your user profile"
+          — but a brand-new admin on their very first login has not yet seen
+          their profile and cannot verify or change that address before it
+          becomes their second factor. Circular dependency on day one.
+      - element: "Remember this device for 30 days"
+        type: "checkbox on the OTP challenge"
+        data_shown: "Skips OTP prompts for 30 days on that specific browser only"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Per-browser, not per-user — an admin who works from a lab machine and a laptop re-enrols each one."
+      - element: "Change Phone Number (post-setup, via User Settings)"
+        type: "flow initiated from User Settings; secure emailed link"
+        data_shown: "Logs the user out of ALL devices, then emails a secure link to re-enrol a phone"
+        gates_on: ["all active sessions"]
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "Correctly conservative security design, but a destructive-feeling side effect (global logout) for what reads like a profile edit; worth a clearer warning in-flow."
+
+  - screen: "Privacy Policy & Terms of Use acceptance gate (first login, both auth paths)"
+    navigation_path: "login.exxat.com > [authenticate] > acceptance gate"
+    action: >
+      Admin optionally opens the linked privacy policy and terms of use, then
+      accepts. Acceptance is a hard gate — the transcript states the login does
+      not complete until it is given, on both the standard and SSO paths.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md line 13 (standard path):
+      "Click on the links to view and read EXAT's privacy policy and terms of
+      use. Accept EXAT's privacy policy. Once you accept, you will log into your
+      account." and line 15 (SSO path): "Accept EXAT's privacy policy and terms
+      of use. Click on the links to view the full details. Once you accept, you
+      will log into your account."
+    elements:
+      - element: "Privacy policy / Terms of Use links"
+        type: "outbound links"
+        data_shown: "Full policy text"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Accept button"
+        type: "button (hard gate)"
+        data_shown: "No 'decline' path is described; the account is unusable until accepted"
+        gates_on: ["all product access"]
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Note the relationship to Consent Detail in User Settings (below) and
+          to the separate AI Legal Consent flow that gates Map with Leo per
+          capability-map.yaml — Prism has at least three distinct consent
+          surfaces, and only this one is encountered on day one.
+
+  - screen: "Dashboard (central hub, post-login landing)"
+    navigation_path: "login > Dashboard"
+    action: >
+      Admin lands on the dashboard and uses its link tiles to reach the three
+      documented section groups. This is the primary orientation surface of the
+      product and the one the rest of the tutorial library assumes you start from.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md lines 15-17 ("1/16
+      Administrator Navigation"): "The dashboard is your central hub, presenting
+      all the available options tailored to your needs. Use the links on the
+      dashboard to access different sections of the EXAT system. These sections
+      are broken into subsections of program, curriculum management, and
+      placement management... You can also access these options anytime through
+      the hamburger menu at the top of the page. We support custom roles based on
+      your program's needs. If you are assigned a custom role, you might have
+      limited access to these sections. Use the dashboard icon at the top of the
+      webpage to navigate back to the dashboard at any time."
+    elements:
+      - element: "Program section links"
+        type: "navigation tiles/links"
+        data_shown: "Per the transcript: program information, students, faculty, and their compliance"
+        gates_on: ["stages 2-4 of this journey (program details, users/roles, students & faculty setup)"]
+        accreditation_citation: "none — this is a navigation element; the accreditation-bearing screens it leads to (Program Details > Setup > Accreditation, COCA 11.9 / CODA 1-2) are modeled in competency-verification--08-close-the-loop-external-validation-against.yaml and belong to a later stage of this journey, not here."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file describes a dashboard's information architecture. The only adjacent evidence is negative: one45.yaml records a reviewer complaint of an outdated interface, and emedley.yaml records a reviewer calling the UI 'clunky' relative to modern tools, but neither is anchored to a specific navigation element."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Curriculum / Course Management section links"
+        type: "navigation tiles/links"
+        data_shown: "Courses and curriculum of the program"
+        gates_on: ["curriculum setup stages of this journey"]
+        accreditation_citation: "none — navigation element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Placement Management section links"
+        type: "navigation tiles/links"
+        data_shown: "Experiential education management"
+        gates_on: ["placement setup stages of this journey"]
+        accreditation_citation: "none — navigation element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Dashboard icon (top bar, 'return home')"
+        type: "persistent navigation button"
+        data_shown: "Returns to the dashboard from anywhere"
+        gates_on: []
+        accreditation_citation: "none — navigation element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Custom-role visibility limiting (what a new admin can actually see here)"
+        type: "role-based access control affecting which sections render"
+        data_shown: "The transcript's own caveat: 'If you are assigned a custom role, you might have limited access to these sections' — but no in-product indication of WHICH sections were withheld or WHY"
+        gates_on: ["everything downstream in this journey"]
+        accreditation_citation: "none directly. axiUm markets RBAC as a HIPAA/FERPA/CODA compliance control (axium.yaml: 'role-based access control limiting user visibility', 'built-in security features—such as role-based access, audit trails, and encryption—help schools meet HIPAA, FERPA and CODA requirements'), but no element in coda.yaml itself imposes an access-control requirement, so that framing is axiUm's marketing, not a CODA element this repo has verified."
+        competitor_equivalent: "axiUm is the one competitor with a comparable, publicly stated RBAC claim (axium.yaml, tied to HIPAA/PIPEDA/FERPA/CODA). Prism's own position is stronger on catalog breadth per capability-map.yaml — a named out-of-the-box role catalog at both program level (Super Program Administrator, Curriculum Administrator, Faculty Compliance Administrator, Site & Contract Coordinator (Limited), Read-Only Program Administrator, etc.) and tenant level — but the two are documented at different altitudes (axiUm: security posture; Prism: role names), so this is not a clean element-for-element comparison."
+        gap_severity: "gap"
+        gap_note: >
+          The day-one orientation problem this stage exists to surface: a new
+          admin cannot tell whether a missing dashboard section means 'your
+          program does not use this' or 'your role does not permit this' or
+          'this pillar is not yet configured.' Nothing on the dashboard names
+          the assigned role or lists withheld sections. Compounded by the fact
+          that custom roles are support-requested (capability-map.yaml), so the
+          admin often did not choose their own role and has no record of it.
+
+  - screen: "Hamburger menu (persistent global navigation)"
+    navigation_path: "Any screen > hamburger menu (upper left / top of page)"
+    action: >
+      Admin opens the hamburger menu to reach any module from anywhere, rather
+      than routing back through the dashboard.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md line 17: "You can also
+      access these options anytime through the hamburger menu at the top of the
+      page." This is the single most-repeated navigation instruction in the whole
+      corpus and it is discipline-invariant — verbatim reliance on it appears in
+      /Users/romitsoley/Downloads/PTPTAVideosTranscripts.md lines 37, 79, 117;
+      /Users/romitsoley/Downloads/OTOTAVideosTranscripts.md lines 75, 91, 93, 95,
+      97, 119; /Users/romitsoley/Downloads/PAVideosTranscripts.md line 23;
+      /Users/romitsoley/Downloads/SLPVideosTranscripts.md line 23.
+    elements:
+      - element: "Hamburger menu module list"
+        type: "global navigation drawer"
+        data_shown: "Same program / curriculum / placement module set as the dashboard, minus whatever the user's role withholds"
+        gates_on: []
+        accreditation_citation: "none — navigation element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Worth flagging for the onboarding narrative rather than as a defect:
+          every discipline tutorial in this corpus opens its instructions with
+          'from your dashboard or upper left hand hamburger menu,' which makes
+          this element the de facto shared vocabulary of all Exxat training
+          content. Any change to it invalidates six discipline video libraries
+          at once.
+
+  - screen: "Global search bar"
+    navigation_path: "Any screen > global search bar (top of page)"
+    action: >
+      Admin types a name or ID and narrows with an entity filter to jump straight
+      to a record, rather than navigating the module tree.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md lines 65-69: "The global
+      search bar in EXAP Prism allows you to efficiently search across the entire
+      platform... you can effortlessly locate individuals, courses, sites and
+      locations, placements, and standards... Click on the people filter if you
+      are having trouble locating the student... Use the curriculum option to
+      locate specific course-related entities such as course offerings, course
+      measures, and course measure categories... when you search for placements,
+      you can search by the student's name, the placement ID, the site name, the
+      rotation name, or the experiential supervisor assigned to the placement."
+    elements:
+      - element: "Search input + type-ahead dropdown"
+        type: "search field"
+        data_shown: "Matching records across all five entity types in one dropdown"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. Elentra has named search tooling (elentra.yaml: 'Curriculum Explorer, Curriculum Search, and Curriculum Matrix... searching within attached files') but that is a curriculum-domain search product, not a cross-entity global search bar — a different object, not a weaker version of the same one."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "People filter"
+        type: "search scope filter"
+        data_shown: "Students, faculty, personnel"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Curriculum filter"
+        type: "search scope filter"
+        data_shown: "Course offerings, course measures, course measure categories"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Elentra's Curriculum Search is the nearest named competitor object (elentra.yaml) and searches within attached files, which this filter is not documented to do; but Elentra's page does not enumerate the entity types it covers, so this is not a fair element-level win/loss either way."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Sites and Locations filter"
+        type: "search scope filter"
+        data_shown: "Sites and locations"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Placements filter"
+        type: "search scope filter"
+        data_shown: "Searchable by student name, placement ID, site name, rotation name, OR assigned experiential supervisor — five distinct keys, per the transcript's worked example (Dante / Glolium General Hospital / grad course three / Kunal Vaishnav / PM00001530); result hyperlinks into the Placement 360 dashboard"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research; no competitor file describes placement lookup keys. This is the most element-level-specific capability on this screen and has no comparator."
+        gap_severity: "none"
+        gap_note: "Genuinely strong and under-marketed: five search keys against one entity, resolving into a 360 command center rather than a flat record."
+      - element: "Standards filter"
+        type: "search scope filter"
+        data_shown: "Accreditation and program-specific standards"
+        gates_on: []
+        accreditation_citation: "none for the SEARCH element itself — the standards library it searches is where the accreditation citations live, and that library is already modeled at element level (COCA 11.1, LCME 1.1, ACPE 7.5.b) in competency-verification--08-close-the-loop-external-validation-against.yaml. Not re-derived here."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Only useful once stage-2+ standards setup has happened; on literal day one it returns nothing, which is expected but unexplained in-product."
+
+  - screen: "Resource Center (pink question mark icon)"
+    navigation_path: "Any screen > pink question mark icon (top of page)"
+    action: >
+      Admin opens the Resource Center to self-serve training, release notes,
+      events, the discipline community, and support escalation.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md lines 19-29 ("1/16
+      Administrator Navigation") and lines 1705-1719 ("16/16 (Part 2) Using the
+      Resource Center") — the two are near-verbatim duplicates of each other,
+      both stating the five sections are "product education, product updates,
+      webinars, workshops, and community and support services."
+    elements:
+      - element: "Product Education > Help Guides"
+        type: "outbound link to the Learning Hub"
+        data_shown: "'Help for Program Administrators section of our learning hub... step-by-step guides specific to your tasks and responsibilities as an administrator' (transcript line 19/1707)"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "one45 is the only competitor with a verified PUBLIC knowledge base (one45.yaml repeatedly cites 'the public knowledge base' as a research source, including for its ExamSoft/NBME integration detail) — meaning one45's equivalent content is readable without a login, while Exxat's Learning Hub sits behind the Resource Center. Neither is documented at article-level granularity by any competitor file, so the only fair comparison is public-vs-gated, not depth."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The discipline-coverage asymmetry that matters most for expansion: the
+          help-guide mirror at /Users/romitsoley/Downloads/PRISM-Expansion-Vault/
+          99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/
+          Discipline Specific Guides contains exactly six discipline folders —
+          Nursing, OT-OTA, PA, PT-PTA, SLP, Social Work (SW). There is no folder
+          for Teacher Education (despite a TE playbook existing), and none for
+          DO, Pharmacy, Dentistry, or Medicine. A new DO or Pharmacy admin
+          clicking Help Guides on day one gets generic content only.
+      - element: "Product Education > Videos"
+        type: "outbound link to the Vimeo showcase"
+        data_shown: "'EXAT Prism Tutorials: Program Administrators Vimeo showcase page' (transcript line 19)"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          This is the canonical day-one training asset and it is stale at the
+          point of highest stakes: the 1/16 Administrator Navigation video walks
+          a login flow with NO two-factor step, while 2FA has been mandatory for
+          all non-SSO users since July 2025 per the help center. It also names
+          Ask Leo only as a button that offers FAQs (line 31), a description
+          superseded by the 16/16 Part 1 video's account of a multi-turn,
+          voice-capable, source-citing assistant. Same showcase, contradictory
+          content, no version indicator.
+      - element: "Product Education > FAQs"
+        type: "outbound link"
+        data_shown: "'FAQs for Administrators page. These frequently asked questions come straight from real-world queries and support tickets submitted by other admins' (transcript line 21)"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Product Education > Additional Resources"
+        type: "outbound link"
+        data_shown: "Case studies, planned communications, supporting materials"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Product Updates > Release Notes"
+        type: "outbound link"
+        data_shown: "'a list of all our past releases organized by module. The most recent update is marked with the Latest tag' (transcript line 23)"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Organized by module and Latest-tagged — a real strength versus the generic 'changelog' most vendors do not publish at all, but not comparable because no competitor file records one."
+      - element: "Product Updates > Feature Walkthrough / Past Release Webinars / register for upcoming release webinar"
+        type: "outbound links + registration"
+        data_shown: "Guided overview of each new functionality; recorded past sessions; live registration when a release webinar is scheduled"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Webinars / Workshops"
+        type: "outbound links to Learning Hub event pages"
+        data_shown: "Upcoming sessions with free registration, plus recordings of past webinars; in-person workshops ('we walk you through the entire system and answer your EXAT Prism questions')"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. Adjacent and relevant to positioning: emedley.yaml records that 'new implementation teams report a lack of comparable-program examples and no sandbox environment to test changes before they go to production' — the exact onboarding need this element and the Community element address, and a documented eMedley weakness."
+        gap_severity: "none"
+        gap_note: "Named programs behind these links per School Administrator User Guide.md: Cohere (annual all-user conference) and Cohere-X regional workshops, registration free."
+      - element: "Community > Explore (discipline topic page)"
+        type: "outbound link, auto-routed by discipline"
+        data_shown: "'You'll automatically land on the page for your specific discipline, where you can connect with peers, join discussions on discipline trends' (transcript line 27/1715)"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Elentra is the closest structural analog and is arguably ahead: elentra.yaml documents a 20+ university multi-institution Consortium 'where features built by one member school are shared back to all others.' That is a governance/product-contribution model, not a discussion board, so it is a stronger version of a different thing — worth naming precisely rather than scoring. No other competitor teardown documents a peer community."
+        gap_severity: "gap"
+        gap_note: >
+          The auto-routing promise is exactly what breaks first in a new domain.
+          The corpus supports discipline-specific content for at most seven
+          disciplines (PT/PTA, OT/OTA, PA, SLP, Nursing, Social Work, Teacher
+          Education — and TE only via a playbook, with no help-guide folder).
+          For DO, Pharmacy, Dentistry and Medicine there is no discipline page to
+          auto-route a new admin to, so a launch-day expansion admin hits an
+          empty or mis-routed community on the first support surface they touch.
+          Standing up a discipline community page is a prerequisite for, not a
+          consequence of, the first expansion-domain sale.
+      - element: "Support Services > Submit a Ticket"
+        type: "outbound link into the Help section"
+        data_shown: "Submit a new ticket and view previously submitted tickets; account manager contact info on the right-hand side; Learning Hub and Vimeo channel buttons"
+        gates_on: ["every support-gated configuration item in this journey (SSO config, custom roles, read-only site-visit accounts, form building, report requests)"]
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "CORE ELMS sets the bar to beat on service specifically: core-elms.yaml records Customer Service rated 4.9/5 across 36 Capterra reviews (overall 4.7/5, ease of use 4.3/5) and names that service score as a retention anchor competitors must clear. That is an outcome metric, not a ticket-form comparison, but it is the most element-relevant competitor data point that exists for this element."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Load-bearing far beyond 'help': capability-map.yaml documents a
+          confirmed cross-cutting self-service boundary where SSO configuration,
+          custom role creation, granting a faculty member full admin access,
+          idle-timeout settings, custom evaluation/form creation and named-report
+          requests all require a ticket or Account Manager. For a new admin this
+          screen is not an escape hatch, it is a mandatory part of setup — which
+          should be stated up front in onboarding rather than discovered.
+      - element: "Support Services > Know Your Account Manager / Book a Meeting"
+        type: "read-only contact card + scheduling link"
+        data_shown: "Assigned account manager's details; Book a Meeting schedules time with them"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. capability-map.yaml lists 'Dedicated AM (Account Manager)' as an Exxat advantage-layer differentiator; no competitor file documents a named, in-product, bookable account manager, so this is a plausible but unverified-against-competitors advantage."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Live chat button"
+        type: "in-app chat widget"
+        data_shown: "'Click on the chat button and a window will open for you to chat with our live support team' (transcript line 29)"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          capability-map.yaml carries an explicit CORRECTION on this element:
+          the in-app live-chat channel is staffed 7:30am-7:30pm EST, not 24/7,
+          despite '24/7 Support' appearing in the advantage layer. The transcript
+          states no hours at all. Do not let a new admin (or a sales deck) infer
+          round-the-clock chat from this button.
+
+  - screen: "Ask Leo (AI assistant, in-product toolbar)"
+    navigation_path: "Any screen > Ask Leo icon in the Exxat Prism toolbar"
+    action: >
+      Admin asks a natural-language question, follows up conversationally, and
+      uses the cited sources to jump to the underlying help article — the fastest
+      documented path out of day-one confusion without opening a ticket.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md lines 1687-1699 ("16/16
+      (Part 1) How to use Ask Leo"), which is far richer than the one-paragraph
+      version in the older 1/16 navigation video at line 31 ("click on the Ask
+      Leo button, select one of the frequently asked questions, or ask a new
+      question in the text area provided. Leo is still learning..."). Agentic
+      behaviours (tag creation, opening the password-change flow, theme change,
+      deep-link navigation, PDF export) come from
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (AI Insights item), sourced there to Exxat help-center documentation.
+    elements:
+      - element: "Ask Leo toolbar icon"
+        type: "button"
+        data_shown: "Opens a welcome screen offering: start a conversation, review previous conversations, or pick a suggested question"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "No competitor teardown in this research documents an in-product conversational assistant. Two near-misses that must not be confused with one: (1) e-value.yaml documents 'AI-powered risk assessment' analytics that flag at-risk learners — an analytics model, not an assistant; (2) leo-davinci.yaml documents a product literally NAMED Leo (DaVinci Education's platform, formerly LCMS+), which is an entire LMS/curriculum platform, not an assistant. The name collision is a genuine GTM hazard in MD/DO sales conversations and should be handled explicitly. On the substance, Prism has no documented competitor here."
+        gap_severity: "none"
+        gap_note: "Strongest differentiated element in this entire stage, and the one most likely to be underweighted because it is 'just a help button.'"
+      - element: "Role-tailored suggested questions"
+        type: "prompt chips"
+        data_shown: "'The suggestions are tailored to your role, so the options may vary depending on whether you're using the student, faculty, or administrator experience' (transcript line 1689); examples given: 'How do I create a placement?', 'Where can I view student requirements?', 'How do I review my students' patient logs?'"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Tailoring is by ROLE (student/faculty/administrator), not by
+          DISCIPLINE — stated explicitly in the transcript. A brand-new DO or
+          Dentistry admin gets the same three placement/patient-log prompts as a
+          PT admin. Discipline-conditioning the suggested prompts is the cheapest
+          available discipline-personalization in the whole onboarding stage.
+      - element: "Message box + send / multi-turn context"
+        type: "input field"
+        data_shown: "'Because Ask Leo remembers the context of the current discussion, you don't need to repeat information from previous messages' — worked example: 'How do I create a placement?' then 'Can I edit it after publishing?' (transcript line 1691)"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research; no competitor documents any conversational surface at all."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Microphone (voice input) and Read Aloud (voice output)"
+        type: "toggle buttons"
+        data_shown: "Speech-to-text auto-submits the question; responses can be played/stopped as audio"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Relevant to the WCAG AA claim in capability-map.yaml's advantage layer, and pairs with the High Contrast theme in User Settings — accessibility affordances are unusually concrete for this product category."
+      - element: "Per-answer source citations"
+        type: "inline links on each response"
+        data_shown: "'Along with each response, Ask Leo provides the sources used to generate the answer. Click a source to view the original article' (transcript line 1693)"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "This is the element that makes Ask Leo a viable replacement for browsing the Resource Center rather than a supplement to it — it collapses steps 10 and 11 of this flow into one."
+      - element: "Conversation history: New Chat, search, rename, pin, delete"
+        type: "list management controls"
+        data_shown: "Every conversation auto-saved; keyword search across history"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Effectively a personal, searchable onboarding notebook — and it overlaps
+          functionally with Onboarding Notes (next step) without either surface
+          referencing the other.
+      - element: "Floating window: drag, resize, minimize to floating action button"
+        type: "window chrome"
+        data_shown: "Collapses to a draggable FAB that persists while working"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Thumbs up / thumbs down feedback"
+        type: "feedback buttons"
+        data_shown: "Submitted immediately"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Agentic actions (create/assign tags, open password change, change theme, deep-link navigation, live data queries, export answer to PDF)"
+        type: "assistant-initiated actions"
+        data_shown: "Per capability-map.yaml: tag creation across Sites/Locations/Contracts/Personnel/Students; opens the password-change flow for NON-SSO accounts only; changes UI theme; deep-links to app pages; answers live data questions ('How many students have the married tag?'); any response exportable as PDF"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor documents an assistant, let alone an agentic one."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Neither the 1/16 nor the 16/16 Part 1 transcript mentions ANY agentic
+          capability — both describe Ask Leo purely as answering questions. The
+          product can do materially more than its own onboarding video says. Also
+          note the beta labelling (capability-map.yaml records 'Ask Leo' as
+          labelled BETA in the OT playbook) alongside the 1/16 video's caveat
+          'Leo is still learning and therefore please reach out to support if you
+          have any important questions' — mixed confidence signals on the surface
+          a new admin is most likely to lean on hardest.
+
+  - screen: "Onboarding Notes"
+    navigation_path: "Any screen > Onboarding Notes icon"
+    action: >
+      Admin records setup decisions and open questions for themselves, for other
+      program administrators, and for Exxat associates — with module tagging and
+      document attachment — during the setup period this journey covers.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md lines 31-35 ("1/16
+      Administrator Navigation"): "Click on the Onboarding Notes icon to access
+      the Onboarding Notes section. Here, you can leave notes for yourself, EXAT
+      associates, and other program administrators... Please note, these EXAT
+      associates and program administrators can also leave notes here. However,
+      this is not a formal place to receive support from the EXAT team."
+    elements:
+      - element: "Add Notes: title, description, module name, document upload"
+        type: "input fields + Browse to Upload"
+        data_shown: "Title, free-text description, module picker, one attached document subject to stated file-type and size limits"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie. Note the contrast with the Program Details > Accreditation record (a later stage of this journey, cited to COCA 11.9 / CODA 1-2 in competency-verification--08): that screen is the accreditation record; this one is explicitly informal scratch space and must not be confused for evidence storage."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. The closest relevant competitor evidence is a documented ABSENCE on the other side: emedley.yaml records that 'new implementation teams report a lack of comparable-program examples and no sandbox environment to test changes before they go to production' — Onboarding Notes is a partial answer to precisely that implementation-period need, which no competitor file describes having."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Filter by module"
+        type: "filter icon"
+        data_shown: "Narrows the note list to one module"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Comments thread (plus icon) — including comments from Exxat associates"
+        type: "threaded comments"
+        data_shown: "Comments from Exxat associates appear in a Comments section on the note; admin can add their own"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          A genuine and self-acknowledged trap. Exxat associates can and do
+          comment here, which makes it look and behave like a support channel,
+          while the transcript itself warns 'this is not a formal place to
+          receive support from the EXAT team.' Nothing on the screen carries
+          that warning; it exists only in a training video the admin may never
+          watch. During exactly the setup period this journey models, a new admin
+          asking a real blocking question in the wrong place has no SLA and no
+          routing to a ticket.
+      - element: "View Documents / documents-column hyperlink, edit (pencil), delete (trash)"
+        type: "row actions"
+        data_shown: "Attached documents reachable from the note detail and from the table's documents column"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "User Settings (profile-name dropdown, top right)"
+    navigation_path: "Any screen > click your profile name (top-right corner)"
+    action: >
+      Admin personalizes the interface, manages their own credentials and
+      sessions, reviews consent, and reaches the Trust Portal.
+    confirmed_by: >
+      Named in /Users/romitsoley/Downloads/exxat_transcripts.md line 69
+      ("Personalize your experience with EXAP Prism by clicking on the dropdown
+      menu next to your name. You can change the color theme to suit your
+      preference and switch between light and dark modes. Additionally, you can
+      manage your password and review the privacy policy and the terms of use.")
+      — but the transcript predates and therefore omits Consent Detail,
+      Logged-in Devices, Login History, Trust Portal and the Exxat Certification
+      link, all of which come from /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Using User Settings- Administrators.md
+    elements:
+      - element: "Theme (Blue / Purple / High Contrast)"
+        type: "selector, applies instantly"
+        data_shown: "Blue is default; High Contrast is described as an accessibility option for improved visibility"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. Adjacent negative evidence on competitors' UI: one45.yaml cites reviewer complaints of an outdated interface and a vendor slow to act on feedback; emedley.yaml cites a 'clunky' UI relative to modern tools and poor mobile usability; medhub.yaml cites a mobile app described as 'very buggy,' freezing and 'atrociously slow.' None of these is anchored to a theming control, so this remains an uncontested element."
+        gap_severity: "none"
+        gap_note: "Pairs with the WCAG AA claim in capability-map.yaml's advantage layer; a shipped High Contrast theme is a more concrete accessibility proof point than the claim itself."
+      - element: "Mode (Light / Dark)"
+        type: "toggle"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Change Password"
+        type: "flow — behaves DIFFERENTLY for SSO vs non-SSO users"
+        data_shown: "Both paths sign the user out of all devices. SSO users change it in-flow (current password, new, confirm, Save). Non-SSO users instead get a time-limited reset link emailed to their registered address and complete it there."
+        gates_on: ["all active sessions"]
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: >
+          The SSO/non-SSO split is inverted from intuition (the SSO user gets the
+          simpler in-app flow; the password-native user gets bounced to email),
+          and it contradicts nothing but explains nothing either. Also note that
+          capability-map.yaml records Ask Leo can open this same flow, but 'for
+          non-SSO accounts only' — a third variation of the same control.
+      - element: "Consent Detail"
+        type: "read/manage panel"
+        data_shown: "View existing consent, review policy details, update consent"
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Third consent surface in the product (after the day-one privacy/ToU
+          gate and the separate per-program AI Legal Consent flow that gates Map
+          with Leo, per capability-map.yaml). Nothing links them; an admin
+          auditing 'what have we agreed to' has to know all three exist.
+      - element: "Logged-in Devices"
+        type: "session list with revoke actions"
+        data_shown: "Device type (Desktop/Mobile/Unknown), browser name, last-active timestamp; log out an individual device or all other devices"
+        gates_on: []
+        accreditation_citation: "none directly — no element in coca.yaml, lcme.yaml, acpe.yaml or coda.yaml requires session management."
+        competitor_equivalent: "axiUm is the only competitor whose public materials claim adjacent controls — 'role-based access, audit trails, and encryption—help schools meet HIPAA, FERPA and CODA requirements' (axium.yaml) — but an audit trail of record access is a different object from a self-service device-session list, so this is adjacency, not equivalence. No competitor file documents a device-session panel."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Login History"
+        type: "read-only log"
+        data_shown: "Device used, date/time of login, unfamiliar devices flagged; article directs the user to email prism-support@exxat.com on an unrecognized login"
+        gates_on: []
+        accreditation_citation: "none directly; see the Logged-in Devices note above."
+        competitor_equivalent: "Same as Logged-in Devices — axiUm's 'audit trails' claim (axium.yaml) is the nearest public analog and is about clinical-record access governance, not user login history; not element-comparable."
+        gap_severity: "cosmetic"
+        gap_note: "Documentation notes times may display in IST or local timezone — a small but real ambiguity in a security log."
+      - element: "Trust Portal"
+        type: "gated document library (Program and Institution Administrators only)"
+        data_shown: "Security areas (Product Security, Responsible AI, Data Protection, Compliance, Risk Management, Data Privacy); certifications SOC 2 Type II, ISO 27001, ISO 42001, HIPAA, TX-RAMP Level 2; downloadable SOC 2, ISO, HIPAA, VAPT and HECVAT documents"
+        gates_on: ["institutional vendor/security review during procurement and annual re-review"]
+        accreditation_citation: "none — no element in coca.yaml, lcme.yaml, acpe.yaml or coda.yaml imposes a vendor-security requirement; this is an institutional procurement/IT-governance artifact, not an accreditor one, and should be described that way rather than borrowed into an accreditation story."
+        competitor_equivalent: "MedHub is the only competitor with comparable public claims — 'FERPA compliance, SOC 2 compliance, 128-bit STRONG Encryption SSL, Multifactor authentication, 99.95% uptime' (medhub.yaml, sourced to medhub.com/software/) — but those are marketing-page assertions, not a self-service portal delivering the underlying SOC 2/ISO/HECVAT artifacts to the customer. Prism is ahead on delivery mechanism and on breadth (ISO 42001 for AI management systems and TX-RAMP Level 2 have no competitor analog in this research); MedHub is at parity on the claim itself."
+        gap_severity: "none"
+        gap_note: >
+          Strongest under-used element in the stage for the four expansion
+          domains: DO/Pharmacy/Dentistry/Medicine programs sit inside larger
+          academic health centers with formal HECVAT-driven vendor review, and
+          this portal answers that review self-service. It is currently buried in
+          a personal-preferences dropdown alongside Light/Dark Mode.
+      - element: "Earn Your Exxat Certification link"
+        type: "outbound link on the profile card"
+        data_shown: "Named quick-link next to the user's name and email"
+        gates_on: []
+        accreditation_citation: "none — this is a Prism user-proficiency certification, NOT a programmatic accreditation artifact; do not conflate."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "A day-one-relevant training on-ramp sitting in a settings menu rather than in the Resource Center where a new admin is told to look for training."
+      - element: "Logout"
+        type: "button"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "none — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "Read-only accreditation site-visit account (support-provisioned; no admin-facing screen exists)"
+    navigation_path: "n/a — not self-service; requested from Exxat support / the Account Manager"
+    action: >
+      When a site visit approaches, the program requests a purpose-built
+      read-only account for the visiting accreditation team rather than sharing
+      an admin login. Included in this stage because it is an account-
+      provisioning decision, not a reporting one — it belongs to whoever owns
+      account activation, which is the persona of this stage.
+    confirmed_by: >
+      NOT covered by any tutorial transcript. Source is
+      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml, "Read-only accreditation site-visit accounts": "Exxat support can provision a dedicated read-only account specifically for accreditation site visitors on request — a purpose-built account type rather than repurposing a standard admin login." Cross-checked against the named program-level role catalog in the same file, which includes a "Read-Only Program Administrator" role.
+    elements:
+      - element: "Read-only site-visit account type"
+        type: "account/role provisioning (support-gated)"
+        data_shown: "Purpose-built read-only access for external accreditation visitors"
+        gates_on: ["what an accreditation site-visit team can see directly in the product"]
+        accreditation_citation: >
+          CODA Standard 1, Element 1-2 and COCA Standard 11, Element 11.9 —
+          citing the precedent already established in
+          competency-verification--08-close-the-loop-external-validation-against.yaml
+          and coda.yaml (whose Element 1-2 entry describes the self-study report
+          "CODA reviews before every site visit" and the "one-time manual
+          compilation before a site visit" it currently requires). The tie here
+          is narrow and should be stated narrowly: this element governs site-visit
+          ACCESS, not the evidence those standards actually require, which
+          remains a Gap pending the Accreditation Management pillar (roadmap
+          Q3 2027 per capability-map.yaml).
+        competitor_equivalent: "New Innovations is the closest documented analog — new-innovations.yaml names Annual Program Evaluation with citation/concern tracking plus CLER visit management, i.e. explicit site-visit tooling — but that is visit workflow, not a visitor account type. axiUm's RBAC-for-CODA framing (axium.yaml) is about internal user visibility, not external reviewer access. No competitor teardown in this research documents a purpose-built external-reviewer account, so on this specific element there is no comparator."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The capability exists and is genuinely thoughtful (a distinct account
+          type rather than a shared admin login), but it is invisible: it appears
+          in no transcript, no Getting Started guide, and no self-service screen.
+          A program discovers it only if their Account Manager mentions it, which
+          means the default behaviour under site-visit time pressure is the
+          insecure one — sharing an admin credential. Making this a documented,
+          self-service provisioning action is a small change with a
+          disproportionate trust payoff in the DO/Dentistry/Medicine sales cycle.
+
+sources:
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — PRIMARY. '1/16 Administrator Navigation in Exxat Prism' (lines 5-71; account activation lines 9-13, dashboard/hamburger/custom roles lines 15-17, Resource Center lines 19-29, chat + Ask Leo line 29-31, Onboarding Notes lines 31-35, global search lines 65-69, theme/password dropdown line 69); '16/16 (Part 1) How to use Ask Leo' (lines 1683-1699); '16/16 (Part 2) Using the Resource Center' (lines 1701-1719)"
+  - "/Users/romitsoley/Downloads/PTPTAVideosTranscripts.md (lines 37, 79, 117 — dashboard/hamburger navigation idiom, PT/PTA)"
+  - "/Users/romitsoley/Downloads/OTOTAVideosTranscripts.md (lines 75, 91-97, 119 — 'log into Exxat using your university credentials', dashboard/hamburger idiom, OT/OTA)"
+  - "/Users/romitsoley/Downloads/PAVideosTranscripts.md (line 23 — 'Log in to Exxat Prism using your university credentials', PA)"
+  - "/Users/romitsoley/Downloads/SLPVideosTranscripts.md (line 23 — dashboard/hamburger idiom, SLP)"
+  - "/Users/romitsoley/Downloads/NursingTutorialsTranscripts.md (checked — contains no account-activation, login, or navigation-chrome content; Nursing texture for this stage comes from the help-guide folder instead)"
+  - "/Users/romitsoley/Downloads/TEVideosTranscripts.md (checked — contains no account-activation, login, or navigation-chrome content)"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Two-Factor Authentication (2FA) for Exxat Prism Non-SSO Admin Users.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Using User Settings- Administrators.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/School Administrator User Guide.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Troubleshooting Guide.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Whitelist Communications from Exxat PRISM.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/ (directory listing — six discipline folders only: Nursing, OT-OTA, PA, PT-PTA, SLP, Social Work (SW))"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/ (directory listing — seven disciplines: PT, OT, PA, SLP, Nursing, Social Work, Teacher Education; none for DO, Pharmacy, Dentistry, Medicine)"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (Ask Leo agentic detail; 2FA July 2025 mandate; Trust Portal; support-gated configuration boundary incl. SSO config; role catalog; read-only site-visit accounts; live-chat hours correction)"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml (SAML/Shibboleth SSO, MFA, SOC 2/FERPA claims; mobile-app reliability complaints)"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml (generic SSO/LTI only; Customer Service 4.9/5, overall 4.7/5, ease of use 4.3/5)"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml (no sandbox / lack of comparable-program examples for new implementation teams; 'clunky' UI; poor mobile usability)"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml (public knowledge base; 'unable to verify whether this exists behind login'; outdated-interface complaint)"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml (product named 'Leo' — name-collision hazard, not an assistant)"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml ('AI-powered risk assessment' analytics — different shape from a conversational assistant)"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml (Curriculum Explorer/Search/Matrix; 20+ university Consortium model)"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml (RBAC + audit trails framed against HIPAA/FERPA/CODA)"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/new-innovations.yaml (APE with citation/concern tracking, CLER visit management)"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml (Element 1-2 — self-study reviewed before every site visit)"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml (Element 11.2 confidentiality — checked and deliberately NOT cited on 2FA; Element 11.9 precedent)"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/flows/competency-verification--08-close-the-loop-external-validation-against.yaml (precedent for the COCA 11.9 / CODA 1-2 pairing on the Program Details > Accreditation screen; deliberately not re-derived here)"
+last_verified: "2026-08-24"

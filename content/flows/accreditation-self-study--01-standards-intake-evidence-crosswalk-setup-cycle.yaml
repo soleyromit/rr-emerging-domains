@@ -1,0 +1,271 @@
+# Element-level ground truth underneath accreditation-self-study.yaml, stage 1
+# ("1. Standards intake & evidence crosswalk setup (cycle kickoff, T-24 months)").
+# Every confirmed_by citation below is a real file in the help-center mirror, a discipline
+# playbook, the capability map, or an accreditation standard file — never re-derived from the
+# journey's own narrative.
+# SCHEMA v2 (2026-08-24): accreditation_citation / competitor_equivalent / gap_severity /
+# gap_note now live on each element rather than on the step. Where the underlying research did
+# not distinguish between sibling elements, the same verdict is stated identically on each
+# rather than inventing artificial precision.
+flow_name: "Standards Intake & Evidence Crosswalk Setup"
+maps_to_journey: "accreditation-self-study.yaml, stage 1"
+persona: >
+  Associate/Assistant Dean for Assessment, Accreditation & CQI (or "Director of Assessment and
+  Accreditation" in Pharmacy), acting as Program Administrator in Prism, typically working with
+  the Curriculum Committee chair who owns course-level mapping data entry.
+steps:
+  - screen: "Program Details > Setup > Standards — Accreditation Standards panel"
+    navigation_path: "Program Details > Setup > Standards (left panel: Accreditation Standards)"
+    elements:
+      - element: "Standards tree (left panel)"
+        type: "read-only hierarchical list"
+        data_shown: "All pre-populated accreditation standards for the program, scoped by the program's configured domain (e.g. ARC-PA for a PA program, ACOTE for an OT program)."
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.9; LCME Standard 1, Element 1.1; ACPE Standard 7, Key Element 7.5.b; CODA Standard 1, Element 1-2 — this list IS the first-class standard/element taxonomy object those four elements assume exists, and it is already generalized across at least six other accreditors (ARC-PA, ACOTE, CAPTE, ACEN, CCNE, COA, plus ASHA/KASA and CSWE guides — capability-map.yaml lines 727-756)."
+        competitor_equivalent: "Elentra's Curriculum Explorer / Curriculum Search / Curriculum Matrix tag-management tools are the closest public analog (elentra.yaml) and are confirmed to cover >40% of the CACMS DCI, but Elentra's public materials describe this at feature/marketing-page granularity only — no screen-level documentation of a standards tree was found, so this element cannot be compared field-for-field from available sources."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The object exists and ships; for the four target accreditors it would render EMPTY today.
+          A targeted search of all 322 help-center articles and all 6 Discipline Specific Guides
+          folders in the vault returns zero mentions of COCA, LCME, ACPE, or CODA and no discipline
+          folder for DO/Pharmacy/Dentistry/Medicine — none of the four standard sets are pre-loaded.
+      - element: "Activate button"
+        type: "button"
+        data_shown: "Toggles a pre-loaded standard on for mapping; a checkmark confirms active state."
+        gates_on: ["Whether the standard is selectable in Curriculum Mapping and the Mapped Standards Report."]
+        accreditation_citation: "COCA Standard 11, Element 11.9; LCME Standard 1, Element 1.1; ACPE Standard 7, Key Element 7.5.b; CODA Standard 1, Element 1-2 — this button is the gate that makes an element citable downstream in Curriculum Mapping and the Mapped Standards Report."
+        competitor_equivalent: "No Elentra (or other) source documents an activate/deactivate step on a standard code; Elentra's public materials stop at feature granularity, so this element cannot be compared from available sources."
+        gap_severity: "configure-needed"
+        gap_note: "Mechanically complete, but has nothing to act on for the four target accreditors until their element lists are keyed in via the +Add drawer below."
+      - element: "Deactivate toggle (edit-pencil drawer)"
+        type: "toggle"
+        data_shown: "Gray-out state for an inactive standard."
+        gates_on: ["Deactivating a standard that already has mappings CASCADES to delete every mapping made against it — no separate confirmation of what's lost."]
+        accreditation_citation: "Indirectly touches all four elements' evidence-integrity expectation (COCA 11.9, LCME 1.1, ACPE 7.5.b, CODA 1-2): deactivation silently destroys the mapped evidence those elements depend on."
+        competitor_equivalent: "Not comparable from available sources — no competitor teardown documents standard-deactivation semantics or cascade behavior."
+        gap_severity: "configure-needed"
+        gap_note: "Shipped and domain-agnostic, but the documented cascade — every mapping against the standard is deleted with no confirmation of what is lost — makes mid-cycle taxonomy revisions risky during a live self-study."
+      - element: "+Add <<Standard Name>> drawer"
+        type: "input field set"
+        data_shown: "Standard code (free text, e.g. '1', '1.a', '7D'), Standard description, Annotations (notes/explanation)."
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.9; LCME Standard 1, Element 1.1; ACPE Standard 7, Key Element 7.5.b; CODA Standard 1, Element 1-2 — this drawer is the literal intake point where all four accreditors' element taxonomies would have to be created."
+        competitor_equivalent: "Elentra's tag-management tooling is the closest public analog (elentra.yaml) but is documented only at feature/marketing-page granularity — no add-a-standard-code field set is described publicly, so no field-by-field comparison is possible from available sources."
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is where the real configuration labor lands. Loading the four accreditors means
+          manually re-keying each element list one code at a time through this same generic drawer
+          used for every other discipline (COCA has ~50+ elements across 11 standards, LCME ~93
+          elements across 12 standards) — real labor, not a missing capability.
+      - element: "Delete (vertical ellipsis on a standard drawer)"
+        type: "button"
+        data_shown: "Permanently removes a standard after a confirmation prompt."
+        gates_on: []
+        accreditation_citation: "Not an evidence locus for any of the four elements — generic taxonomy housekeeping, guarded by a confirmation prompt."
+        competitor_equivalent: "Not comparable from available sources — no competitor teardown documents standard-deletion behavior."
+        gap_severity: "none"
+        gap_note: "Domain-agnostic and complete today; carries no accreditor-specific dependency and needs no configuration for the four new domains."
+    action: >
+      Admin builds or edits the accreditor's element taxonomy by activating pre-loaded standards
+      (if any exist for the domain) or manually adding standard codes/descriptions one at a time.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
+
+  - screen: "Program Details > Setup > Standards — Program Specific Standards panel"
+    navigation_path: "Program Details > Setup > Standards (left panel: Program Specific Standards)"
+    elements:
+      - element: "+ icon (Program Specific Standards)"
+        type: "button"
+        data_shown: "Opens a drawer to name a program-authored standard not tied to any accreditor."
+        gates_on: []
+        accreditation_citation: "Not tied to a specific element by design (that's the point of this object type), but is the confirmed workaround path for any of the four new accreditors' sub-elements the pre-loaded taxonomy in step 1 doesn't yet cover."
+        competitor_equivalent: "No competitor teardown in content/competitors documents an equivalent 'generic custom standard used as a workaround for missing accreditor granularity' pattern at this level of detail — not stated as absent, just unconfirmed either way from available sources."
+        gap_severity: "configure-needed"
+        gap_note: "A real, in-production escape hatch, but it is manual, per-standard, per-program setup work, and produces a program-authored label rather than an accreditor-official element citation in exported reports."
+      - element: "Subcategory drawer"
+        type: "input field"
+        data_shown: "Goals or sub-sections nested under a program-specific standard."
+        gates_on: []
+        accreditation_citation: "Not tied to a specific element by design, but this is where sub-element granularity (e.g. 'ARC-PA B3.03/B3.04 outcomes' per the PA discipline guide) is actually modeled when the pre-loaded taxonomy lacks it."
+        competitor_equivalent: "No competitor teardown documents an equivalent nested custom-subcategory object at this level of detail — unconfirmed either way from available sources."
+        gap_severity: "configure-needed"
+        gap_note: "Same escape-hatch trade-off as the parent object: manual per-standard setup, and the resulting sub-element carries a program-authored label rather than an accreditor-official citation in exported reports."
+      - element: "Tags"
+        type: "input field / multi-select"
+        data_shown: "Free-form, fully customizable colored tags (e.g. 'Needs Review,' 'Reviewed') attachable to a standard or subcategory."
+        gates_on: []
+        accreditation_citation: "Not an evidence locus for any of the four elements — a generic review-state label, not an accreditor-recognized attribute."
+        competitor_equivalent: "Not comparable from available sources — no competitor teardown documents per-standard tagging at field level."
+        gap_severity: "none"
+        gap_note: "Fully customizable and domain-agnostic; works today for any accreditor with no configuration beyond naming the tags. It confers no accreditor-official semantics, only internal review state."
+    action: >
+      Used both for genuine institutional goals AND, per the PA discipline guide, as a documented
+      workaround: programs create a "Program Specific Standard" to model an accreditor sub-element
+      not natively represented in the pre-loaded taxonomy (e.g. "ARC-PA B3.03/B3.04 outcomes"),
+      then map evaluation questions to it via Competency Management.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Standards.md; corroborated by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md (Standard B3.03 a-c and B3.05 a-f setup instructions: 'Create a program specific standard and name it ARC-PA B3.03/B3.04 outcomes')"
+
+  - screen: "Program Details > Setup > School Profile — Accreditation card"
+    navigation_path: "Program Details > Setup > School Profile"
+    elements:
+      - element: "Name of accrediting body"
+        type: "input field"
+        data_shown: "Free text, e.g. 'COCA' or 'LCME.'"
+        gates_on: []
+        accreditation_citation: "Supports the accreditor-name/date bookkeeping layer under all four target accreditors' self-study cover pages, but does not itself hold standard/element-level evidence — that lives in Curriculum Mapping (steps 1, 4, 5 of this flow)."
+        competitor_equivalent: "Not compared — no competitor teardown documents an equivalent program-level accreditation record card at field level."
+        gap_severity: "none"
+        gap_note: "Domain-agnostic free-text field; works today for any of the four accreditors with zero configuration."
+      - element: "Accreditation status"
+        type: "input field"
+        data_shown: "Program's current standing."
+        gates_on: []
+        accreditation_citation: "Supports the accreditor-name/date bookkeeping layer under all four target accreditors' self-study cover pages, but does not itself hold standard/element-level evidence — that lives in Curriculum Mapping (steps 1, 4, 5 of this flow)."
+        competitor_equivalent: "Not compared — no competitor teardown documents an equivalent program-level accreditation record card at field level."
+        gap_severity: "none"
+        gap_note: "Domain-agnostic free-text field; works today for any of the four accreditors with zero configuration."
+      - element: "Type of accreditation"
+        type: "input field"
+        data_shown: "e.g. initial, continuing, provisional."
+        gates_on: []
+        accreditation_citation: "Supports the accreditor-name/date bookkeeping layer under all four target accreditors' self-study cover pages, but does not itself hold standard/element-level evidence — that lives in Curriculum Mapping (steps 1, 4, 5 of this flow)."
+        competitor_equivalent: "Not compared — no competitor teardown documents an equivalent program-level accreditation record card at field level."
+        gap_severity: "none"
+        gap_note: "Domain-agnostic free-text field; works today for any of the four accreditors with zero configuration."
+      - element: "Accreditation details"
+        type: "input field"
+        data_shown: "Free text notes."
+        gates_on: []
+        accreditation_citation: "Supports the accreditor-name/date bookkeeping layer under all four target accreditors' self-study cover pages, but does not itself hold standard/element-level evidence — that lives in Curriculum Mapping (steps 1, 4, 5 of this flow)."
+        competitor_equivalent: "Not compared — no competitor teardown documents an equivalent program-level accreditation record card at field level."
+        gap_severity: "none"
+        gap_note: "Domain-agnostic free-text field; works today for any of the four accreditors with zero configuration."
+      - element: "Next accreditation date / Most recent accreditation date"
+        type: "date field"
+        data_shown: "Cycle timeline dates."
+        gates_on: []
+        accreditation_citation: "Supports the accreditor-name/date bookkeeping layer under all four target accreditors' self-study cover pages, but does not itself hold standard/element-level evidence — that lives in Curriculum Mapping (steps 1, 4, 5 of this flow)."
+        competitor_equivalent: "Not compared — no competitor teardown documents an equivalent program-level accreditation record card at field level."
+        gap_severity: "none"
+        gap_note: "Domain-agnostic date fields; work today for any of the four accreditors with zero configuration."
+    action: "Admin records a repeatable, structured entry per accreditor at the program level (a school running both MD and DO tracks would add two entries here)."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Your Program Information.md"
+
+  - screen: "Curriculum Mapping > Mapping Reports > Mapped Standards Report"
+    navigation_path: "Curriculum Mapping > Mapping Reports (top-right) > select Curriculum/Cohort > select standard framework > Mapped Standards chart"
+    elements:
+      - element: "Curriculum/Cohort dropdown"
+        type: "report filter"
+        data_shown: "Which curriculum/cohort's mappings to review."
+        gates_on: []
+        accreditation_citation: "Scoping control only — not itself the evidence locus for any of the four elements, but it determines which cohort's evidence the rest of the report speaks for."
+        competitor_equivalent: "Elentra's Curriculum Matrix is described as supporting 'filtering by cohort, course, or objective set' (elentra.yaml), which is the closest documented analog to this filter — but only at that marketing-page granularity, so no element-for-element comparison is possible."
+        gap_severity: "none"
+        gap_note: "Fully shipped and domain-agnostic; needs no work for the four new domains."
+      - element: "Standard framework selector"
+        type: "report filter"
+        data_shown: "Which accreditor's standard set (once loaded per step 1) to review."
+        gates_on: []
+        accreditation_citation: "The point at which a named accreditor's element set (COCA, LCME, ACPE, CODA) would become reportable — entirely dependent on step 1's taxonomy existing in Prism."
+        competitor_equivalent: "No Elentra source documents a named-framework selector at screen level; Elentra does ship a named-standard accreditation reporting page (elentra.yaml), but not described at this granularity, so the comparison cannot be made element-for-element."
+        gap_severity: "none"
+        gap_note: "The selector mechanic is fully shipped; for the four target accreditors it would list nothing until step 1's configuration work is done — a config dependency, not a report limitation."
+      - element: "Mapped Standards chart / progress bar"
+        type: "read-only rollup"
+        data_shown: "Total standards in the framework, total mapped, percentage mapped."
+        gates_on: []
+        accreditation_citation: "Provides the coverage rollup all four accreditors' self-studies open with (COCA 11.9, LCME 1.1, ACPE 7.5.b, CODA 1-2), computed per element rather than asserted narratively."
+        competitor_equivalent: "Not comparable from available sources — no competitor teardown documents a mapped-vs-total coverage rollup at this granularity."
+        gap_severity: "none"
+        gap_note: "Fully shipped; its numbers are only as complete as step 1's loaded framework — a partial taxonomy simply yields a low percentage, not a system limitation."
+      - element: "Standards filter: All Standards vs. Unmapped Standards"
+        type: "report filter"
+        data_shown: "Switches the left-pane standards list to show only standards with zero mappings."
+        gates_on: []
+        accreditation_citation: "Directly addresses the 'nothing detects that an element has NO evidence attached until a reviewer asks' pain point in the journey's current pain_or_gap text — this filter is exactly that detection mechanism, once step 1's taxonomy exists in Prism."
+        competitor_equivalent: "No Elentra source documents an explicit unmapped-vs-mapped standards filter; Elentra's Curriculum Matrix filtering is described only as 'by cohort, course, or objective set' (elentra.yaml), so this specific detection behavior cannot be compared from available sources."
+        gap_severity: "none"
+        gap_note: "Shipped and already performs per-element gap detection; usefulness for the four new domains is entirely gated on step 1's configuration work."
+      - element: "Mapping Relationship Type column (Directly Mapped / Indirectly Mapped)"
+        type: "read-only rollup"
+        data_shown: "Whether a mapping was created explicitly on the item or inherited via parent-child standard hierarchy."
+        gates_on: []
+        accreditation_citation: "Distinguishes direct evidence from inherited coverage — the distinction reviewers under all four accreditors probe when asking whether an element is genuinely evidenced or merely covered by its parent."
+        competitor_equivalent: "No Elentra (or other) source documents a Direct/Indirect mapping distinction at this granularity — cannot be compared element-for-element from available sources."
+        gap_severity: "none"
+        gap_note: "Fully shipped and domain-agnostic; requires no configuration for the four new domains beyond the taxonomy itself."
+      - element: "Export drawer (Report Scope + Format)"
+        type: "button / export"
+        data_shown: "Report Scope = Selected Standard or All Standards (Parent and Child); Format = Word or Excel."
+        gates_on: []
+        accreditation_citation: "Produces the exportable coverage artifact that goes into the self-study appendix for all four accreditors, scoped to a standard and its parent/child tree."
+        competitor_equivalent: "Not comparable from available sources — no competitor teardown documents export scope/format options at field level."
+        gap_severity: "none"
+        gap_note: "Fully shipped and domain-agnostic; Word/Excel output works today for any loaded framework."
+    action: >
+      Reviewer switches to the "Unmapped Standards" filter to find every element with no evidence
+      attached, then exports a Word/Excel report scoped to the standard and its parent/child tree
+      for the self-study appendix.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
+
+  - screen: "Curriculum Mapping > Mapping Reports > Mapped Standards Report — Standard Description narrative"
+    navigation_path: "Curriculum Mapping > Mapping Reports > (select a standard) > Standard Description section"
+    elements:
+      - element: "+ icon (add narrative)"
+        type: "button"
+        data_shown: "Opens a drawer to attach free-text narrative to the selected standard."
+        gates_on: []
+        accreditation_citation: "Entry point for the narrative-level CQI documentation LCME Element 1.1 and CODA Element 1-2 require; the button itself only opens the drawer, it holds no evidence."
+        competitor_equivalent: "Not comparable from available sources — no competitor teardown documents a per-standard narrative field or its entry point."
+        gap_severity: "configure-needed"
+        gap_note: "Shipped and domain-agnostic; the limitation lives in the field it opens, not in this control."
+      - element: "Narrative text field"
+        type: "input field"
+        data_shown: "Accreditation notes or supporting context for the standard, included in exported reports if selected under Customize Your View."
+        gates_on: []
+        accreditation_citation: "Partially narrows LCME Element 1.1 and CODA Element 1-2's requirement for narrative-level CQI documentation, but only as a static, manually-updated text field attached to a point-in-time report — it does not auto-flag a standard 'trending out of compliance' or track CQI action-item status, which both accreditation files still call for."
+        competitor_equivalent: "Not comparable from available sources — no competitor teardown documents a per-standard narrative field."
+        gap_severity: "configure-needed"
+        gap_note: "A real but shallow substitute for ongoing CQI monitoring: free text, no status/state machine, no alerting, and it must be manually re-authored every cycle."
+    action: "Reviewer attaches a compliance narrative directly to a standard, alongside its mapped courses/measures, so the exported report reads as a self-study-ready package rather than a bare coverage matrix."
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
+
+  - screen: "(No screen exists) — ongoing, cross-pillar compliance-monitoring dashboard"
+    navigation_path: "N/A — not a shipped screen anywhere in Prism today"
+    elements:
+      - element: "N/A"
+        type: "N/A"
+        data_shown: "What would be needed: a dashboard that continuously aggregates evidence from Compliance Management, Curriculum Mapping, and (once shipped) Surveys/Exam Management against every standard, flags standards trending out of compliance, and maintains a defensible CQI audit trail — i.e. the literal job description of the roadmap 'Accreditation Management' pillar."
+        gates_on: []
+        accreditation_citation: "LCME Standard 1, Element 1.1 ('effective, ongoing monitoring... not just at self-study time'); COCA Standard 11, Element 11.9; ACPE Standard 7, Key Element 7.5.b; CODA Standard 1, Element 1-2 — all four accreditation files independently rate this specific continuous-monitoring behavior 'Gap,' and that rating stands unresolved by anything found in the help-center mirror or discipline playbooks."
+        competitor_equivalent: >
+          Elentra ships a named-standard accreditation reporting page today
+          (LCME/COCA/CACMS/ACPE/CODA/ARC-PA per elentra.yaml) with at least one referenced
+          institutional case (University of Miami Miller School of Medicine, LCME mock visit); Leo
+          (DaVinci) has been an AAMC-authorized Curriculum Inventory vendor since 2013 with
+          pre-submission AAMC business-rule error flagging (leo-davinci.yaml). Neither teardown
+          documents screen-level detail of a continuous-monitoring/trending-out-of-compliance
+          dashboard specifically, so even these competitor claims cannot be verified at element
+          level from available sources — but both are shipped, named-standard reporting products
+          today against Prism's unshipped roadmap item.
+        gap_severity: "gap"
+        gap_note: "This is the one part of the stage 1 pain point that element-level tracing does NOT resolve — it remains a genuine, dated (Q3 2027) roadmap gap, not a configuration task."
+    action: "N/A — this is the genuine, unresolved gap underneath the stage, distinct from the crosswalk-setup mechanics in steps 1-5 above, which are largely configuration work on an existing object model."
+    confirmed_by: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (lines 705-725, Accreditation Management pillar, status: roadmap, target: Q3 2027)"
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Standards.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Your Program Information.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+last_verified: "2026-08-24"

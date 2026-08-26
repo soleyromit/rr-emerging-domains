@@ -1,0 +1,33 @@
+# One file per domain: discipline-DO.yaml, discipline-pharmacy.yaml, etc.
+# The PROGRAM is the archetype (e.g. "a growing COCA-accredited DO program"),
+# not an individual — this is the discipline layer of the persona system.
+domain: "DO"
+persona_name: "e.g. 'The Fast-Growing DO Program'"
+archetype_summary: ""
+# grounded in ../accreditation/*.yaml — what keeps this program's accreditation
+# liaison up at night. One entry per distinct pressure point, not one essay —
+# see content/CONTENT-DENSITY.md.
+accreditation_pressure:
+  - point: "e.g. 'The counting regime'"
+    detail: ""
+# grounded in ../competitors/*.yaml — what they likely run today, same
+# one-point-per-entry shape as accreditation_pressure.
+current_tools:
+  - point: ""
+    detail: ""
+# Plain language: the sentence a dean could say out loud. No inline "Element N.N"
+# citations or named-source parentheticals in `job` itself — that detail belongs in
+# evidence_or_rationale, which already exists to carry it. See content/CONTENT-DENSITY.md.
+jtbd:
+  - job: "When [situation], I want to [motivation], so I can [outcome]."
+    evidence_or_rationale: ""
+    # Optional cross-reference to the flows/*.yaml element(s) that verify this job
+    # gets done — navigational metadata, not a citation (see ARCHITECTURE.md). Bare
+    # flow filename, no ../flows/ prefix. Omit step/element for a whole-flow match.
+    # Leave the whole key off rather than force a weak match.
+    # related_flows:
+    #   - flow: "<exact flow filename>.yaml"
+    #     step: "<exact steps[].screen, optional>"
+    #     element: "<exact steps[].elements[].element, optional>"
+switching_trigger: "what would make this program evaluate a new vendor"
+sources: []

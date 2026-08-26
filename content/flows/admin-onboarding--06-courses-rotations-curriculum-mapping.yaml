@@ -1,0 +1,954 @@
+# Element-level ground truth underneath admin-onboarding-product-setup.yaml, stage 6
+# ("Courses, rotations & curriculum mapping").
+#
+# SCOPE NOTE — this is PRODUCT ONBOARDING, not the clinical lifecycle. The four
+# existing journeys (rotation-lifecycle, preceptor-site-onboarding,
+# competency-verification, accreditation-self-study) all assume Prism is already
+# configured. This file traces what a brand-new Program Administrator actually
+# clicks in week 1-6 to bring the course catalog, course offerings, and the
+# curriculum grid into existence — the substrate every one of those four
+# journeys silently depends on. Where it overlaps
+# competency-verification--01-define-the-competency-framework-and-map.yaml, the
+# overlap is deliberate and the angle is different: that file asks "can this
+# model a competency framework?", this one asks "what does the person setting it
+# up from an empty tenant have to do, in what order, and what can they
+# irreversibly get wrong on day one?"
+#
+# PRIMARY SOURCE for every step below is the general admin-tutorial transcript at
+# /Users/romitsoley/Downloads/exxat_transcripts.md — specifically the sections
+# "## 8/16 Setting Up Courses in Exxat Prism" (lines 655-805),
+# "## 14/16 Performing Curriculum Mapping in Exxat Prism" (lines 1497-1611), and
+# "## Heatmap Report in Exxat Prism (Curriculum Mapping)" (lines 1735-1745).
+# Help-center articles are cited ONLY where they add a field the transcript does
+# not narrate (e.g. Map with Leo, Bloom's Taxonomy auto-suggest), never as a
+# paraphrase substitute for transcript content.
+#
+# SCHEMA v2: accreditation_citation / competitor_equivalent / gap_severity /
+# gap_note are per ELEMENT, not per step.
+
+flow_name: "Course Catalog, Offerings & Curriculum Grid Build-Out"
+maps_to_journey: "admin-onboarding-product-setup.yaml, stage 6"
+persona: >
+  Program Administrator, new to the platform (primary — owns Courses > Setup,
+  the course catalog, course offerings, and builds the first curriculum grid).
+  Secondary: Curriculum/Assessment Director or curriculum-committee chair (owns
+  the standards library in Program Details > Standards and signs off on the
+  mapping taxonomy before mapping starts); Course Faculty (secondary, and only
+  if the admin grants it — Program Details > Faculty Dashboard Configuration has
+  a discrete "curriculum grids" access toggle that is off-able, per
+  exxat_transcripts.md line 1187: "if you'd like to keep curriculum mapping
+  limited to administrators simply turn off access to curriculum grids for
+  faculty"). See ../personas/.
+
+steps:
+
+  # ---------------------------------------------------------------- STEP 1
+  - screen: "Courses > Setup > Course Organization"
+    navigation_path: "Dashboard or upper-left hamburger menu > Courses > Setup tab > Course Organization section"
+    action: >
+      Before a single course exists, the admin defines the academic calendar
+      vocabulary the whole tenant will inherit: terms, professional years,
+      academic years, and (optionally) an additional course identifier. The
+      transcript is explicit that this is step one of a four-step workflow —
+      "First, you will set up course organization options, add courses to the
+      course catalog, create course offerings using these courses, then set up
+      the course information for each course offering" (line 659).
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 659-669"
+    elements:
+      - element: "Terms (pencil icon > Term text box > Add), with drag-handle (double-ellipses) and up/down reorder arrows"
+        type: "ordered list editor"
+        data_shown: "Term names, in program-defined sequence (e.g. Fall / Winter / Spring / Summer for a quarter-system school)."
+        gates_on:
+          - "Term order literally controls curriculum-grid column order — 'The order of these terms affect the way that courses are displayed on the curriculum grid, therefore, make sure these terms are entered sequentially' (transcript line 663)."
+          - "A term cannot be deleted once any course offering is associated with it (line 665)."
+        accreditation_citation: "None directly — but this is the upstream dependency for CODA Standard 2, Element 2-8 (curriculum management plan) and ACPE Standard 2, Key Element 2.2.d evidence, because sequencing is the axis on which both accreditors read a curriculum map. Miskeyed term order silently produces an out-of-sequence crosswalk."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. one45.yaml documents 'version control and audit trail' on the curriculum repository, which is the closest analogue to getting sequencing wrong and needing to see when it changed — Prism's term list has no documented version history."
+        gap_severity: "configure-needed"
+        gap_note: "Order is load-bearing and set by drag-and-drop with no validation, no preview, and no undo. A new admin has no way to see the downstream grid consequence until a curriculum grid exists — which is four steps later."
+      - element: "Professional Years (pencil icon in Professional Years card)"
+        type: "ordered list editor, optional"
+        data_shown: "Year-level labels (Year 1, Year 2, ...) assigned to course offerings."
+        gates_on:
+          - "Optional per transcript line 665; meaningful only for lockstep programs. 'You can always add another professional year titled Non-Lockstep for courses which are offered to students regardless of their professional year.'"
+        accreditation_citation: "COCA Standard 6, Element 6.4 — the osteopathic core-competency curriculum map has to show progression (introduce/reinforce/demonstrate) across the program, and professional year is the only field in this screen that carries program-stage semantics."
+        competitor_equivalent: "new-innovations.yaml documents defining curriculum objectives 'across MD/DO program stages' — a directionally equivalent concept, but their public docs do not describe a configurable year-label list, so this is not comparable element-for-element."
+        gap_severity: "none"
+        gap_note: "The explicit lockstep/non-lockstep escape hatch (a literal 'Non-Lockstep' year value) is a workable convention, though it is a naming convention rather than a modeled program type."
+      - element: "Academic Years (pencil icon in Academic Year section)"
+        type: "ordered list editor"
+        data_shown: "Calendar-year spans, e.g. '2024 to 2025'."
+        gates_on:
+          - "Only one Academic Calendar can be created per academic year (line 673)."
+          - "Editing an academic-year value propagates to every course offering already assigned it (line 663)."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Additional Course Identifier (activation bit + free-text title, e.g. 'Section')"
+        type: "toggle + input field"
+        data_shown: "A custom disambiguation axis so two offerings of the same course in the same term/academic year/professional year can coexist."
+        gates_on:
+          - "Without it, the system HIDES an already-created course from the add-offering picker for that same term/AY/PY combination — 'we do this to ensure that two course offerings are not created indistinguishably from one another' (lines 693-695). The identifier is the only documented unlock."
+        accreditation_citation: "LCME Standard 8, Element 8.7 (Comparability of Education/Assessment) — where the same course runs as parallel sections or on parallel campuses, this field is the only structural handle Prism has for telling those instances apart, which is the precondition for any comparability claim."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. medhub.yaml documents UME 'course enrollment/waitlists/lottery scheduling' via eValue, which implies a section concept, but no public MedHub doc describes a configurable section-identifier field."
+        gap_severity: "configure-needed"
+        gap_note: "This is a day-one decision with silent late consequences: a program that does not switch this on before creating offerings hits an unexplained 'the course disappeared from the list' behavior later, and the transcript's own explanation of that behavior arrives ~30 lines after the toggle."
+
+  # ---------------------------------------------------------------- STEP 2
+  - screen: "Courses > Setup > Course Management, Academic Calendar, and Learning Activity"
+    navigation_path: "Courses > Setup tab > Course Management dropdown / Academic Calendar section / Learning Activity section"
+    action: >
+      Still pre-catalog, the admin seeds three shared taxonomies that later
+      screens can only consume, never create: course measure categories (the
+      container for every learning objective the curriculum map will use),
+      program-wide course policies, and the term-level start/end date calendar.
+      They also configure timesheet categories here.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 669-677"
+    elements:
+      - element: "Course Measure Categories (Course Management > Course Measure Categories)"
+        type: "taxonomy list"
+        data_shown: "The named buckets a program's objectives live in — the transcript notes programs call these different things: 'Some schools call their course measures course objectives, others may call them instructional and lecture objectives' (line 1515)."
+        gates_on:
+          - "Nothing can be mapped that is not first a category here. The curriculum-grid setup drawer can only activate/deactivate from this list (line 1531)."
+          - "System blocks duplicates automatically (line 1515)."
+        accreditation_citation: "ACPE Standard 2, Key Element 2.2.d (content breadth and depth — curriculum mapping to educational outcomes); CODA Standard 2, Element 2-8 (curriculum management plan); COCA Standard 6, Element 6.4. All three require a named objective taxonomy as the mapping source, and this is the screen that creates it."
+        competitor_equivalent: "one45.yaml documents 'standardized vocabularies aligned to CanMEDS and AAMC competency frameworks' as a shipped part of One45 Curriculum Management — i.e. one45 ships pre-standardized vocabularies where Prism ships an empty list the admin names themselves. elentra.yaml documents 'tag management/mapping' as the equivalent mechanism. Both are real, comparable competitor capabilities at this element's granularity."
+        gap_severity: "configure-needed"
+        gap_note: "Prism's own tutorial warns about the failure mode rather than preventing it: 'We recommend having a distinct and minimal list of course measures added here as curriculum mapping can get confusing if you use interchangeable terms' (line 1515). No pre-seeded discipline vocabulary is confirmed for this list the way accreditation standards are pre-seeded in Program Details > Standards — that asymmetry is the single highest-leverage day-one advisory moment in this stage."
+      - element: "Course Policies (+ icon > Policy Name / description text area / Browse to Upload)"
+        type: "input field set + file upload"
+        data_shown: "Program-wide policies inherited by every course (transcript's own example: 'students need to attend at least 80% of their courses', line 671)."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-1 (Instruction — advance course information): written information to students in advance of each course covering goals/requirements, content, evaluation method, and how grades and competency are determined. Program-wide policy text is one component of that written packet."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file in content/competitors/ describes a program-wide policy inheritance object."
+        gap_severity: "none"
+        gap_note: "Course-specific policies are added separately at the offering level and coexist with the inherited program-wide ones (line 729), which is the right shape for CODA 2-1."
+      - element: "Academic Calendar (Add New > select academic year > per-term start/end dates > 'update these new start dates and end dates for the existing course offerings' option)"
+        type: "date matrix + propagation toggle"
+        data_shown: "One start/end date pair per term per academic year; feeds course-offering date pre-population."
+        gates_on:
+          - "One calendar per academic year, hard limit (line 673)."
+          - "Pre-populates course-offering start/end dates at creation time (line 691)."
+          - "BLOCKED after mapping: 'if this course offering has been used in curriculum mapping, you will not be able to make changes to the academic calendar options for this course offering' (line 701)."
+        accreditation_citation: "None directly — platform-mechanics element. Indirectly upstream of ACPE Standard 3, Key Element 3.1.b (IPPE minimum clock hours by practice setting), since term dates bound the windows those hours accrue in."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: "The mapping lock is the sharpest onboarding trap in this whole stage: the admin does the calendar work first, maps second, then discovers the calendar is frozen and the documented remedy is a support ticket — 'please reach out to our support team at prism-support@exat.com and they can make these changes on your behalf' (line 703). For a first-year program still moving its calendar around, this converts a self-serve edit into a vendor dependency."
+      - element: "Learning Activity > Timesheet (pencil icon; single-select vs. multi-select radio, category alias, comma-separated category list)"
+        type: "radio + input field set"
+        data_shown: "The categories students pick from when logging timesheet entries; transcript examples are 'simulation or direct contact' (mutually exclusive → single-select) vs. 'new patient and evaluative practice' (→ multi-select) (lines 675-677)."
+        gates_on:
+          - "Set here once, program-wide; the course-level timesheet activity consumes it."
+        accreditation_citation: "ACPE Standard 3, Key Element 3.1.b (IPPE duration — minimum clock hours BY PRACTICE SETTING) — the single/multi-select decision determines whether hours can be attributed cleanly to one setting, which is exactly what 3.1.b's per-setting minimum requires. A multi-select configuration makes per-setting hour totals ambiguous."
+        competitor_equivalent: "medhub.yaml documents 'timesheet-based duty-hour tracking with auto-alerts for violations' — a shipped, comparable capability, though MedHub's public docs describe threshold alerting rather than a configurable category taxonomy, so the comparison holds on the tracking half and not on the configuration half."
+        gap_severity: "configure-needed"
+        gap_note: "Comma-separated free text in a single box is a fragile input for a taxonomy that later drives hour-attribution reporting; there is no documented validation, no per-category metadata, and no documented way to retire a category without editing the string."
+
+  # ---------------------------------------------------------------- STEP 3
+  - screen: "Courses > Course Catalog"
+    navigation_path: "Courses > Course Catalog tab > Add Course / Upload Courses"
+    action: >
+      The admin populates the master course list — either one course at a time
+      or via a four-column CSV. This is the 'comprehensive master list of all
+      courses' that the help center names as curriculum-mapping prerequisite #1.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 677-689"
+    elements:
+      - element: "Course Number (free-text)"
+        type: "input field"
+        data_shown: "Program's own course code, transcript example 'PA233' — 'a letter code signifying the domain of your program, followed by a number code' (line 679)."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: "Uniqueness is explicitly NOT enforced: 'keep in mind the course numbers already in use, because our system does not prevent you from adding multiple courses with the same course number' (line 679). On day one, with a bulk CSV, this is how a tenant acquires silent duplicates that later produce two indistinguishable rows in every mapping report."
+      - element: "Course Name (free-text)"
+        type: "input field"
+        data_shown: "Display name used across offerings, grids, and every mapping report."
+        gates_on:
+          - "Renaming the catalog course does NOT propagate automatically — 'When you change a course name and number, this change does not automatically reflect existing course offerings offered from this course' (line 687)."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "one45.yaml documents 'version control and audit trail' on the curriculum repository — the specific thing that would make a name change safe and traceable. Prism's documented behavior is a confirm-by-typing-a-number dialog with no version history."
+        gap_severity: "configure-needed"
+        gap_note: "Propagation is opt-in via a 'do you want to apply the change to course offering' checkbox plus a per-offering selection table (line 703) — sound design, but it means catalog and offering names can legitimately diverge, and nothing surfaces that divergence."
+      - element: "Requires Placement (Yes/No)"
+        type: "radio, immutable after save"
+        data_shown: "Whether the course is a placement/rotation course or purely didactic."
+        gates_on:
+          - "Didactic offerings cannot have students placed and are restricted in learning-activity types: 'Forms and evaluations can be set up in didactic courses, but patient logs, timesheets, and time off cannot be set up' (line 803)."
+          - "Surfaces later as the brown 'P' indicator on the curriculum grid (line 1539)."
+        accreditation_citation: "ACPE Standard 3, Key Elements 3.1.a/3.2.b (IPPE/APPE structure and required practice settings) and COCA Standard 6, Element 6.9 (Clinical Education) — this flag is what separates the experiential half of the curriculum from the didactic half, and both accreditors' evidence packets are structured on exactly that split."
+        competitor_equivalent: "leo-davinci.yaml documents mapping 'every session in every course — didactic or clinical', i.e. Leo/DaVinci carries the same didactic/clinical distinction at finer (session) granularity than Prism's course-level flag. That is a real, sourced comparison at this element's granularity."
+        gap_severity: "gap"
+        gap_note: "Irreversible: 'it is not possible to change a placement-related course to a didactic course, or vice versa' (line 687). A new admin makes this call before they have seen what either mode does, and the only remedy is delete-and-recreate — which is itself blocked once an offering exists (line 689) or once mapping exists (line 705)."
+      - element: "Upload Courses > Download CSV Template (4 columns: serial number, course number, course name, requires placement)"
+        type: "bulk import"
+        data_shown: "Post-upload analysis screen with success/fail counts and per-row 'duplicate' or 'fields missing' text indicators; rows can be deselected before commit (lines 681-683)."
+        gates_on:
+          - "Duplicate and incomplete rows are rejected, not imported."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "one45.yaml documents a 'Canvas Alignment Tool that syncs LMS learning-event and facilitator data to keep curriculum maps current' — a genuine architectural difference at exactly this element's granularity: one45 has a documented live LMS sync where Prism's documented path is a four-column CSV. core-elms.yaml notes no named SIS/LMS integration partners (Canvas, Banner) are public, 'only generic SSO/LTI standards support' — so CORE is at parity with Prism here, one45 is ahead."
+        gap_severity: "gap"
+        gap_note: "No SIS/LMS course-catalog integration is documented anywhere in the admin transcript or the help-center Courses folder. For a large multi-track program (the Nursing case: a separate grid per ADN/BSN/MSN/DNP/specialty track), the day-one catalog build is manual CSV work with no upstream system of record."
+      - element: "Course Catalog table (course number, course name, requires placement, last updated, updated by) + sort, search, export icon"
+        type: "table with sort/search/export"
+        data_shown: "Full catalog, sortable on any of the three data columns; searchable by number or name; exportable to Excel (line 685)."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "'Last updated' + 'updated by' is the only change-tracking in this stage's screens — useful, but it is a last-write stamp, not the audit trail one45 documents."
+
+  # ---------------------------------------------------------------- STEP 4
+  - screen: "Courses > Course Offerings > Add Course Offering"
+    navigation_path: "Courses > Course Offerings tab > Add Course Offering"
+    action: >
+      The admin instantiates catalog courses into the actual term/year the
+      program will run them in — 'Course offerings are instances of courses
+      offered to students. A single course can be used to create multiple course
+      offerings' (line 689). This is the object every downstream journey
+      (placements, wishlists, learning activities, mapping) actually attaches to.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 689-705"
+    elements:
+      - element: "Cohort selector (lockstep programs only) + auto-register-the-cohort confirmation"
+        type: "dropdown + confirmation dialog"
+        data_shown: "Cohort assigned to the offering; on save the system offers to register every student in that cohort at once."
+        gates_on:
+          - "Only appears for lockstep programs — 'If your program is not lockstep, you will not have the option to select a cohort' (line 691)."
+        accreditation_citation: "None directly — platform-mechanics element. Downstream it is what makes CODA Standard 2, Element 2-6 and LCME 8.7 comparability queries answerable by cohort."
+        competitor_equivalent: "elentra.yaml documents 'filtering by cohort, course, or objective set' inside Curriculum Explorer/Search — cohort as a first-class filter dimension is confirmed at parity. The auto-registration-on-create behavior has no documented competitor equivalent at this granularity."
+        gap_severity: "none"
+        gap_note: "The lockstep/non-lockstep branch is handled honestly here (field hidden rather than shown-and-ignored), which matters for Social Work and Nursing where non-lockstep and multi-track structures are the norm."
+      - element: "Term / Academic Year / Professional Year selectors + auto-populated Start Date / End Date"
+        type: "dropdown set + date fields"
+        data_shown: "Dates pre-populate from the Academic Calendar configured in step 2 and can be overridden per offering (line 691)."
+        gates_on:
+          - "Values must already exist in Course Organization; they cannot be created inline."
+          - "After mapping, the academic-calendar options are frozen (line 701)."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Strict no-inline-create discipline is correct for data hygiene but punishing on day one: an admin mid-build who realizes they need a fifth term has to leave the wizard, go to Setup, add it, and come back."
+      - element: "Course multi-select table (filtered to the chosen term/cohort/AY; already-created combinations hidden)"
+        type: "multi-select table"
+        data_shown: "Catalog courses eligible for this term/AY/PY combination."
+        gates_on:
+          - "Already-used combinations are hidden, not disabled with an explanation — the unlock is the Additional Course Identifier from step 1 (lines 693-695)."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "Hiding rather than disabling-with-reason is the specific interaction that makes the Additional Course Identifier feel like an undocumented prerequisite."
+      - element: "Course Offerings table + wrench icon (column reorder via double-ellipses / remove via trash / Add a Column) + filter icon + export icon"
+        type: "configurable table"
+        data_shown: "Course number, course name, academic year, professional year, term, additional course identifier, cohort (lockstep only), assigned faculty/staff, registered-student count (line 695). Filterable by course, cohort, academic year, professional year, online/on-campus, term, placement requirement, start date, end date (line 697)."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. Configurable-column grids are table stakes and no competitor teardown in content/competitors/ documents them field-by-field."
+        gap_severity: "none"
+        gap_note: "The registered-student count column is quietly the best day-one QA signal in this stage — a zero there after cohort assignment means registration silently did not happen."
+      - element: "All / Completed / Ongoing / Upcoming tabs"
+        type: "date-derived view tabs"
+        data_shown: "Offerings bucketed by end date in past / end date future & start date past / start date future (line 699). Default landing is All."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Delete course offering (trash icon > data-loss preview popup > type-the-number confirmation)"
+        type: "destructive action with typed confirmation"
+        data_shown: "A popup enumerating the types of information that will be lost before deletion (line 705)."
+        gates_on:
+          - "HARD BLOCK if used in curriculum mapping: 'If this course is used in curriculum mapping, it cannot be deleted. To delete courses with curriculum mapping data associated, please reach out to our support team' (line 705)."
+        accreditation_citation: "CODA Standard 2, Element 2-8 (curriculum management plan — ongoing review and evaluation) reads on this in an unusual way: the mapping lock is arguably CORRECT accreditation behavior, since it prevents silent destruction of the crosswalk a program is accountable for maintaining."
+        competitor_equivalent: "one45.yaml's documented 'version control and audit trail' is the alternative design — preserve history rather than hard-block the delete. That is a genuine, sourced architectural contrast at this element's granularity."
+        gap_severity: "gap"
+        gap_note: "Right instinct, wrong escape hatch. Blocking is defensible; routing every legitimate correction through prism-support@exat.com is not, and it lands squarely on new programs who are most likely to need to undo an early mistake."
+
+  # ---------------------------------------------------------------- STEP 5
+  - screen: "Courses > Setup > Course Management > Import Course Offerings"
+    navigation_path: "Courses > Setup tab > Course Management dropdown > Import Course Offerings > + icon"
+    action: >
+      For a full-program build, the admin bulk-imports offerings through a
+      three-step wizard (prepare/download template → name the instance and
+      upload → resolve validation errors and import), then confirms with a
+      typed number.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 707-711; supplemented for the wizard's three named steps and the student-registration caveat by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Course Setup.md, 'Import Course Offerings'"
+    elements:
+      - element: "Download Template (asterisked mandatory columns)"
+        type: "template download"
+        data_shown: "Columns for term, academic year, start date, end date, professional year, cohort, course; mandatory columns marked with an asterisk."
+        gates_on:
+          - "'you will need to have set up these term, academic year, start date, end date, professional year, and cohort values in the course organization section before you can add them here, meaning you cannot add any of these values if they have not already been set up in the system. Additionally, you cannot add new courses here' (line 709)."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research; none of the nine competitor files documents a bulk-import template's column contract."
+        gap_severity: "configure-needed"
+        gap_note: "The import is a pure join against pre-existing lookup values, which makes steps 1-3 hard prerequisites. Nothing in the wizard tells the admin that before they have already filled the spreadsheet."
+      - element: "Import instance Title + Browse to Upload"
+        type: "input field + file upload"
+        data_shown: "Named import job appearing in the bulk-import instances history table."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Named, retained import instances with a downloadable original file (line 711) is genuinely good onboarding hygiene — it makes a botched day-one import diagnosable."
+      - element: "Validation analysis screen (red boxes on values not present in the system)"
+        type: "read-only validation rollup"
+        data_shown: "Per-cell error highlighting; 'If there are any red boxes, this will alert you that the entered value is not already added in the system. You will either need to edit the template or add the values from the template to the system in order to proceed' (line 711)."
+        gates_on:
+          - "Import button is gated behind resolving every flagged value."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Pre-commit validation with in-place error display is stronger than the catalog CSV's post-hoc success/fail counts — the two bulk paths in this same stage have inconsistent error UX."
+      - element: "Bulk import does NOT register students"
+        type: "documented behavioral limit"
+        data_shown: "n/a — stated constraint: 'Bulk importing course offerings does not automatically register students to those offerings. Students must be registered separately after the import is complete.'"
+        gates_on:
+          - "Student registration must be run separately per offering (see step 7)."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: "Asymmetric with the single-offering path, where selecting a cohort offers to auto-register everyone (line 691). A program that bulk-imports 60 offerings then has 60 separate registration tasks — the exact scale at which they chose bulk."
+
+  # ---------------------------------------------------------------- STEP 6
+  - screen: "Course Offering > About"
+    navigation_path: "Courses > Course Offerings > click a course offering name > About"
+    action: >
+      The admin fills in the syllabus-grade metadata for each offering: course
+      details, grading scheme, requisites, textbooks, evaluation criteria,
+      course policies, attributes, and faculty/staff assignment — then can emit
+      it as a Word syllabus or jump straight to mapping.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 711-733"
+    elements:
+      - element: "Description text area"
+        type: "input field"
+        data_shown: "Course description — 'can be viewed and edited by course faculty, and it can be viewed by students on their course page' (line 713)."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-1 (Instruction — advance course information): CODA requires written information to students in advance of each course covering goals/requirements, content, evaluation methods, and how grades and competency are determined. This field plus Evaluation Criteria plus Course Policies plus Grading Scheme are collectively the Prism surface where that packet lives, and it IS student-visible."
+        competitor_equivalent: "emedley.yaml documents 'auto-generated curriculum websites' from eCurriculum — a student-facing publication surface for the same content, which is a step beyond a student-visible field on a course page. Sourced and comparable."
+        gap_severity: "none"
+        gap_note: "Student visibility is confirmed, which is the part CODA 2-1 actually needs."
+      - element: "Credits"
+        type: "input field (numeric)"
+        data_shown: "Credit count — 'This number of credits will be displayed on a curriculum grid if the course is added to a curriculum grid' (line 713)."
+        gates_on: []
+        accreditation_citation: "None directly — platform-mechanics element. It is the grid-visible weight that makes a curriculum grid legible as a program of study."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Duration (weeks/months), Hours, Clock Hours"
+        type: "input field set"
+        data_shown: "Clock hours defined in-product as 'the total number of hours per week a student spends attending class or participating in other instructional activities that count toward the student's completion of the program' (line 717)."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.1.b (IPPE duration — minimum clock hours by practice setting) and Key Elements 3.2.b/3.2.d (APPE duration) — clock hours are the literal unit ACPE counts. SLP's 400-hour CFCC requirement runs through the clinical-log side rather than this field, but the same accounting need is present."
+        competitor_equivalent: "medhub.yaml documents timesheet-based duty-hour tracking with violation alerts; new-innovations.yaml documents ACGME case-log import. Both are hour-ACCRUAL systems. This Prism field is a declared-hours attribute on the course, not accrual — the two are related but not equivalent, and no competitor teardown documents a declared-clock-hours course attribute."
+        gap_severity: "configure-needed"
+        gap_note: "Three overlapping duration fields (Duration, Hours, Clock Hours) with one in-product definition between them. For ACPE programs this is exactly where a per-setting hour claim has to reconcile against logged hours, and nothing here links declared to actual."
+      - element: "Nature dropdown"
+        type: "dropdown, extensible only by vendor"
+        data_shown: "Course nature classification."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: "'if you would like other nature options, you can always ask our support team at prism-support@exat.com to add new options to this list' (line 715). Same pattern as the Requisite dropdown (line 725): a taxonomy the customer cannot extend themselves. For four brand-new domains whose course natures are not the incumbent disciplines', this is a predictable early support-ticket generator."
+      - element: "Core vs. Elective indicator, Department, Field of Study"
+        type: "radio + input fields"
+        data_shown: "Classification metadata carried onto the syllabus and grid."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-24 (minimum competencies within the scope of general dentistry) — core-vs-elective is the structural marker distinguishing what every graduate must complete from what some do, which is the boundary 2-24 is drawn around."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Share course information with sites (Site Resources page toggle)"
+        type: "toggle"
+        data_shown: "Exposes course name, rotation dates, and any course resource with its own 'Share with Sites' bit to the Site Resources page (line 717)."
+        gates_on:
+          - "Two-level gate: the course-level toggle must be on AND the resource-level 'Show on Site Resources page' bit must be on (line 737)."
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.c (preceptor education and development) and COCA Standard 6, Element 6.9 (Clinical Education) — site-visible course expectations are part of how a program evidences that clinical sites know what students are there to achieve."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. No competitor file documents a site-facing course-information surface with a two-level share gate."
+        gap_severity: "none"
+        gap_note: "The two-level gate is a real support question waiting to happen (resource shared, course not, nothing appears) but is documented explicitly in the transcript."
+      - element: "Grading Scheme (pencil icon; letter grade / pass-fail / neither)"
+        type: "dropdown set"
+        data_shown: "Course-level scheme that 'will automatically apply to all graded learning activities, and the final weighted score for the course will also follow this grading scheme' (line 721)."
+        gates_on:
+          - "Specific schemes must first be created in Program Details > Setup (line 723) — another pre-existing-lookup dependency."
+          - "Per-activity overrides live in Learning Activities Setup, not here (line 721)."
+        accreditation_citation: "CODA Standard 2, Element 2-1 ('how grades and competency are determined' must be given to students in advance) and LCME Standard 9, Element 9.8 (Fair and Timely Summative Assessment)."
+        competitor_equivalent: "elentra.yaml documents 'gradebook integration for flexible grade scales' inside its Assessment & Evaluation module — a comparable shipped capability at this granularity."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Attributes section (upper right; pencil icon)"
+        type: "multi-select, curriculum-scoped"
+        data_shown: "Course-level attribute values (Lifespan, Instructional Methods, SCPE settings, Client System Levels, etc.) — the transcript defers it: 'The Attributes section in the upper right-hand corner of the screen is used for curriculum mapping' (line 717), and 'The attributes you are able to select from here are contingent upon which attributes you activated in the system for that curriculum' (line 1541)."
+        gates_on:
+          - "Only attributes activated for THIS curriculum are selectable — so a course not yet in a curriculum grid has an effectively empty attributes panel."
+        accreditation_citation: "COCA Standard 6, Element 6.4 (osteopathic core competencies incl. OPP/OMM as a taggable course attribute); ACPE Standard 2, Key Element 2.2.d (breadth and depth). CODA Standard 2, Element 2-9 (adequate patient experiences) reads on population/lifespan attributes specifically."
+        competitor_equivalent: "elentra.yaml documents 'tag management/mapping' as the mechanism connecting sessions/objectives to standards — structurally the same idea. leo-davinci.yaml documents 'cross-course themes, diagnoses, and procedures tied to patient encounter logs', which is ahead of Prism here: their tags link forward into encounter data, where Prism's course attributes are reporting dimensions only."
+        gap_severity: "configure-needed"
+        gap_note: "Ordering trap: the Attributes panel appears on the course About screen from day one but only becomes usable after a curriculum grid exists and has activated attributes. A new admin working screen-by-screen will hit an empty dropdown with no explanation of why."
+      - element: "Faculty and Staff (+ / pencil; faculty dropdown + multi-role dropdown)"
+        type: "assignment widget"
+        data_shown: "Faculty/staff assigned to the offering with one or more roles each; removable via trash icon (line 719)."
+        gates_on:
+          - "Faculty must already exist in the system (Tutorial 11/16 Setting up Faculty)."
+          - "Downstream, Program Details > Faculty Dashboard Configuration decides whether those faculty can see 'your program's curriculum grids' at all (line 1187)."
+        accreditation_citation: "CODA Standard 3, Element 3-4 (faculty evaluation process) and ACPE Standard 3, Key Element 3.3.a (preceptor criteria) both need a defensible record of who was responsible for what instruction; this assignment is that record on the didactic side."
+        competitor_equivalent: "one45.yaml documents the Canvas Alignment Tool syncing 'learning-event and facilitator data' — i.e. one45 can populate faculty-to-session assignment from the LMS rather than by hand. Sourced and comparable; Prism's path is manual."
+        gap_severity: "none"
+        gap_note: "Multi-role-per-faculty is supported, which matters in small programs where one person is course director, lecturer, and advisor."
+      - element: "Generate Syllabus (checkbox picker > Download, Word .docx output)"
+        type: "document generator"
+        data_shown: "Per-section checkboxes selecting what goes into the syllabus; output is a Microsoft Word document (line 731). The OT playbook enumerates the configurable columns: school logo, course details, pre/co-requisites, textbooks/resources, faculty & staff, attributes, evaluation criteria, course policies, measures, event schedule, grading scheme."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-1 (advance written course information to students) — most directly. ACOTE C.1.x-equivalent syllabus requirements are documented in the OT playbook as satisfied by this exact feature. CODA Standard 2, Element 2-8 also reads on it as the artifact a curriculum-review cycle inspects."
+        competitor_equivalent: "emedley.yaml documents 'auto-generated curriculum websites' — a live, always-current publication surface versus Prism's point-in-time Word export. That is a real capability difference at this element's granularity, and the direction favors eMedley for anything students consume continuously."
+        gap_severity: "configure-needed"
+        gap_note: "Word export means the syllabus is a snapshot: it does not update when the underlying course or mapping changes, and there is no documented version stamp on the generated file. For CODA 2-1's 'in advance of each course' obligation a program has to manage regeneration cadence themselves."
+      - element: "Go to Mapping button (upper right)"
+        type: "navigation button, conditional"
+        data_shown: "Jumps to this course's curriculum-mapping page."
+        gates_on:
+          - "Appears only 'If this course has been associated with a curriculum' (line 731)."
+        accreditation_citation: "None — navigation element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "The conditional appearance is the clearest in-product signal a new admin gets that curriculum-grid membership is a prerequisite for mapping."
+
+  # ---------------------------------------------------------------- STEP 7
+  - screen: "Course Offering > Student Registration"
+    navigation_path: "Course offering page > left-side menu > Student Registration"
+    action: >
+      The admin populates the roster — either by filtering and selecting
+      students in-app, or by uploading an Excel list keyed on email address.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 745-759"
+    elements:
+      - element: "Select to Register (left-side filters: student name, cohort, group, tag, enrollment term, graduation term, campus, student category > Search Record > select > Register)"
+        type: "filtered multi-select"
+        data_shown: "Filtered student table (name, cohort, group, enrollment term, graduation term, campus, student category) with select-all checkbox."
+        gates_on:
+          - "Depends entirely on student records and cohort/group/tag taxonomy created in the earlier onboarding stage (Tutorial 2/16 Setting up Students)."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "medhub.yaml documents UME 'course enrollment/waitlists/lottery scheduling' via eValue — a materially richer enrollment model (waitlists, lotteries) than Prism's select-and-register. Sourced and comparable at this element's granularity."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Upload List to Register (Excel template: serial number, first name, last name, email address)"
+        type: "bulk import"
+        data_shown: "Post-upload table showing located vs. not-located students, with not-located rows grayed out (line 755)."
+        gates_on:
+          - "Match is on email address only — 'the student's name is unimportant to the import process. It is most important that you add the student's email address in the address column correctly' (line 753)."
+          - "Students must already exist AND be status Active — 'If the student is assigned the inactive or graduated status, they will not be registered successfully' (line 753)."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Email-as-primary-key with a silent gray-out for misses is a quiet data-quality risk on a first-year bulk load: a typo produces a student who looks registered on the roster spreadsheet and is not registered in Prism."
+      - element: "Unregister (action column) with data-loss warning and typed-number confirmation"
+        type: "destructive action"
+        data_shown: "'Unregistering a student removes their access to the course page and all their placement data and saved or submitted learning activity data' (line 759)."
+        gates_on: []
+        accreditation_citation: "COCA Standard 11, Element 11.9 and CODA Standard 1, Element 1-2 both assume the program retains its outcome record; destroying submitted learning-activity data on unregistration is in tension with that retention expectation."
+        competitor_equivalent: "one45.yaml's documented 'version control and audit trail' is the design that avoids this. Sourced and comparable."
+        gap_severity: "gap"
+        gap_note: "Hard-delete of submitted student work on unregistration, guarded only by a typed-number dialog. A new admin cleaning up a mis-registered roster in week 3 can destroy real submissions with no recovery path documented anywhere in the transcript."
+
+  # ---------------------------------------------------------------- STEP 8
+  - screen: "Course Offering cloning (Actions > Clone, and Clone From on the course page)"
+    navigation_path: "Courses > Course Offerings > Actions column > Clone  |  Course offering page > Clone From (upper right)"
+    action: >
+      Rather than rebuilding each term, the admin clones a configured offering
+      forward — either forward (Clone, prefilled from source, change cohort/AY)
+      or backward (create empty offerings first, then Clone From a populated
+      sibling of the same parent course).
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 791-801"
+    elements:
+      - element: "Clone drawer, step 1: prefilled attribute fields requiring change"
+        type: "prefilled form"
+        data_shown: "All source-offering fields prefilled; 'Since two core offerings cannot have identical details, you will be required to update certain attributes' (line 793)."
+        gates_on:
+          - "Same uniqueness constraint as manual creation — term/AY/PY (+ additional identifier) must differ."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Clone drawer, step 2: import selectors (About, Course Measures, Resources, Learning Activities, Attestations)"
+        type: "checkbox set"
+        data_shown: "Which sections of the source offering are copied (line 795)."
+        gates_on:
+          - "Cloned attestation due dates are NOT copied — 'you will need to add a date to these attestations if you choose to clone them' (line 801)."
+        accreditation_citation: "CODA Standard 2, Element 2-8 (curriculum management plan) — cloning course measures forward is how a program preserves an approved objective set across cycles rather than re-typing it, which is the maintenance behavior 2-8 wants evidence of."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research; no competitor file documents an offering-level clone with per-section import selectors."
+        gap_severity: "cosmetic"
+        gap_note: "The silently-dropped attestation due date is a documented papercut, not a structural gap — but it is exactly the kind of thing a first-time admin discovers when a student complains an attestation never came due."
+      - element: "Clone From: red alert icon on sections that already have data"
+        type: "inline warning"
+        data_shown: "'if you see this red alert icon, this means that the course you are cloning to already has information populated in the selected sections. This means that this previously added course information will be lost if you complete the cloning process' (line 799)."
+        gates_on:
+          - "Both offerings must share the same parent course (line 797)."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Overwrite is warned pre-commit at section granularity, which is better than the unregister flow's blanket warning."
+
+  # ---------------------------------------------------------------- STEP 9
+  - screen: "Program Details > Standards"
+    navigation_path: "Dashboard or upper-left menu > Program Details > Standards tab"
+    action: >
+      The admin (usually with the curriculum committee) activates the
+      pre-loaded accreditation/professional standard set for their domain and
+      adds any program-specific standard set — PLOs, SLOs, program goals — that
+      the curriculum will also be mapped against.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1503-1513; cross-referenced to line 49 of the same transcript ('You can add standards to be mapped to course measures in the Curriculum Mapping section')"
+    elements:
+      - element: "Accreditation and Professional Standards list (pre-loaded, expandable parent > child > grandchild hierarchy)"
+        type: "read-only hierarchical library"
+        data_shown: "'We will preload the latest version of standards relevant to your domain' (line 1503); arbitrary-depth nesting — 'There may be additional children standards within a child standard.'"
+        gates_on:
+          - "Only activated sets become selectable as mapping targets in the curriculum grid setup."
+        accreditation_citation: "This is THE element where the accreditor taxonomy itself lives: COCA Standard 6, Element 6.4; ACPE Standard 2, Key Element 2.2.d; CODA Standard 2, Element 2-8; LCME Standard 9, Element 9.4. Per prior work in content/journeys/competency-verification.yaml stage 8, this same Standards library plus the Heatmap Report is the evidence base cited for COCA Element 11.9 (annual/mid-cycle reports) and CODA Element 1-2 (institutional effectiveness) — this file does not re-derive that, it inherits it."
+        competitor_equivalent: "elentra.yaml is the strongest documented comparison: Elentra's Accreditation feature page names LCME/COCA/CACMS/ACPE/CODA/ARC-PA as supported standard sets and claims >40% CACMS DCI coverage, and Elentra is an AAMC Curriculum Inventory participating vendor with native MedBiquitous support. emedley.yaml and new-innovations.yaml also document direct AAMC Curriculum Inventory submission. Prism has no documented AAMC CI or MedBiquitous story anywhere in this corpus — a concrete, sourced deficit at exactly this element."
+        gap_severity: "gap"
+        gap_note: "Pre-loading is CONFIRMED only for ARC-PA (PA playbook: 'ARC-PA accreditation standards come pre-loaded'), ACOTE 2023 across all four degree levels plus NBCOT (OT playbook), the AACN Essentials plus accreditor standards (Nursing playbook: 'come pre-populated'), and CAA/CFCC (SLP playbook). It is UNCONFIRMED for all four expansion domains — no source in this corpus shows COCA, CODA, ACPE, or LCME standards pre-loaded. The screen supports adding them by hand; that is not the same product experience."
+      - element: "Activate button / Activate Standard toggle (per set, via pencil icon)"
+        type: "toggle, destructive on deactivate"
+        data_shown: "Active vs. inactive state of a whole standard set."
+        gates_on:
+          - "'if this standard has been mapped, curriculum mapping data related to this standard will be lost' (line 1505)."
+        accreditation_citation: "Same set as above — activation is what makes a standard a legal mapping target, so it gates every downstream COCA 6.4 / ACPE 2.2.d / CODA 2-8 / LCME 9.4 evidence artifact."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — competitor materials describe which standard sets are supported, never an activate/deactivate control with documented data-loss semantics."
+        gap_severity: "gap"
+        gap_note: "Irreversible data loss behind a single toggle, with the warning delivered in narration rather than (per the transcript) a typed-number confirmation like the ones guarding course deletion. Standards get toggled during accreditor version transitions — exactly the moment mapping history matters most."
+      - element: "Standard Name text box (editable) + export icon (Excel)"
+        type: "input field + export"
+        data_shown: "Editable display name for a pre-loaded standard set; Excel export 'for offline access' (line 1505)."
+        gates_on: []
+        accreditation_citation: "None directly — but renaming a pre-loaded accreditor set is a traceability risk against COCA 6.4 / CODA 2-8 evidence, since the exported crosswalk will carry the local name, not the accreditor's."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "Editable accreditor-standard names with no 'as-published' original retained is a small integrity gap in an otherwise well-structured library."
+      - element: "Program Specific Standards (+ icon > set name > Add Standard > standard code / Standard Description / Annotations; nested children via + to the left of a standard)"
+        type: "hierarchical input field set"
+        data_shown: "Arbitrary-depth custom standard trees — transcript examples are 'program learning outcomes, student learning outcomes, and program goals' (line 1507). Codes are alphanumeric and the system appends the trailing period; the convention for children is parent code + identifier (1 → 1A)."
+        gates_on:
+          - "A set that has been mapped cannot be deleted (line 1513)."
+        accreditation_citation: "CSWE EPAS AS 3.1.1 / 3.1.2 (nine generalist competencies) and AS M3.2.1/M3.2.2 (specialized practice) per the Social Work playbook — CSWE's generalist-plus-specializations structure is implemented in Prism precisely as one custom standard set per framework here. Also ACPE 2.2.d, where COEPA outcomes beyond ACPE's own 2.1.a-m live."
+        competitor_equivalent: "one45.yaml documents 'standardized vocabularies aligned to CanMEDS and AAMC competency frameworks' — pre-built frameworks rather than a custom-set builder. Prism's builder is more open; one45's is more turnkey. Both directions are sourced."
+        gap_severity: "none"
+        gap_note: "This is the strongest element in this stage for the four expansion domains: even without a pre-loaded COCA/CODA/ACPE/LCME set, the custom-set builder demonstrably carries a real accreditor hierarchy (CSWE's is already run this way in production per the SW playbook). The gap is pre-load convenience, not capability."
+
+  # ---------------------------------------------------------------- STEP 10
+  - screen: "Courses > Setup > Measures"
+    navigation_path: "Courses > Setup tab > Measures option"
+    action: >
+      The admin names the measure types the program will use program-wide
+      (course objectives, instructional objectives, lecture objectives, program
+      outcomes...), each with an active bit. These are titles only — the actual
+      objective text is entered per course later.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1515-1517"
+    elements:
+      - element: "+ icon > course measure name"
+        type: "input field"
+        data_shown: "Measure title only; duplicates blocked automatically (line 1515)."
+        gates_on:
+          - "Every downstream mapping surface — curriculum grid setup, course Measures section, mapping page left rail — reads exclusively from this list."
+        accreditation_citation: "ACPE Standard 2, Key Element 2.2.d; COCA Standard 6, Element 6.4; CODA Standard 2, Element 2-5 (student evaluation methods must measure defined competencies) — the 'defined' half of 2-5 originates here."
+        competitor_equivalent: "one45.yaml documents a 'centralized repository linking objectives, sessions, and assessments' — Prism's equivalent link is objectives→standards and objectives→events, but the objectives→assessments link belongs to the separate Competency Management module (per content/flows/competency-verification--01-define-the-competency-framework-and-map.yaml). one45's is documented as one repository; Prism's is two modules."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Active bit per measure"
+        type: "toggle"
+        data_shown: "'Make sure the active bit is turned on to allow course measure entries to be added at the course level for this new measure' (line 1517)."
+        gates_on:
+          - "Inactive measures cannot receive course-level entries."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Deactivate-instead-of-delete preserves history, which is the right pattern and a deliberate contrast with the destructive standard-set toggle in step 9."
+
+  # ---------------------------------------------------------------- STEP 11
+  - screen: "Curriculum Mapping > Attributes"
+    navigation_path: "Upper-left hamburger menu > Curriculum Mapping > Attributes (left-hand menu)"
+    action: >
+      The admin builds the two attribute taxonomies that make a map
+      interpretable rather than merely complete: Course and Measure Attributes
+      (what the content IS) and Mapping Attributes (what the student DOES with
+      it). Optional in the product's own words, and the single biggest
+      determinant of whether the resulting reports answer an accreditor.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1517-1525; Bloom's/Leo details from /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Bloom-s Taxonomy using Leo-AI.md"
+    elements:
+      - element: "Course and Measure Attributes (+ icon > category name > Active toggle; horizontal ellipses > Add Child > option name)"
+        type: "two-level taxonomy builder"
+        data_shown: "Transcript's worked example is Lifespan → infants, children, adolescents, adults, older adults (line 1523). 'We will provide some default attributes for you which are specific to your discipline' (line 1519). Confirmed live per discipline: Lifespan / ARC-PA Themes / SCPE settings / Interprofessional Education / Instructional Methods / Assessment Methods (PA playbook); population tagging by age group (OT playbook); Client System Levels — Individuals, Families, Groups, Organizations, Communities (SW playbook); lifespan, assessment methods, teaching tools (Nursing video, line 31 of NursingTutorialsTranscripts.md)."
+        gates_on:
+          - "Attributes must exist here before a curriculum grid can select them, and must be selected into a grid before a course can assign values (line 1541)."
+        accreditation_citation: "COCA Standard 6, Element 6.4 (osteopathic core competencies — OPP/OMM as a course attribute); CODA Standard 2, Element 2-9 (adequate patient experiences — population/lifespan coverage); ACOTE A.5.1 per the OT playbook (lifespan and setting breadth is evidenced by attribute-usage reports); CSWE EPAS AS M3.2.1/M3.2.4/AS 5.0.1(a) per the SW playbook (Client System Levels cross-referenced across three standards)."
+        competitor_equivalent: "elentra.yaml documents tag management as its mapping mechanism and 'searching within attached files'; leo-davinci.yaml documents 'cross-course themes, diagnoses, and procedures' as mappable dimensions tied to encounter logs. Both are sourced and comparable; Leo/DaVinci's are ahead because their tags reach into patient-encounter data, where Prism's course/measure attributes are curriculum-side only."
+        gap_severity: "configure-needed"
+        gap_note: "Discipline-default attributes are confirmed for PA, OT, SW, and Nursing and unconfirmed for DO, Pharmacy, Dentistry, and Medicine. The taxonomy builder is domain-agnostic, so this is a content-seeding gap, not an engineering one — but it is the difference between a new DO program starting from a populated Lifespan/OPP taxonomy and starting from an empty screen."
+      - element: "Mapping Attributes (same builder, separate section)"
+        type: "two-level taxonomy builder"
+        data_shown: "Assigned at the moment a standard is mapped, not to the course itself. Transcript's example: Knowledge → introduce, reinforce, demonstrate (line 1523). PA playbook confirms the production shape: 'mapping attributes classify content as knowledge-based, skill-based, or behavior-based, and define instructional level (beginner/intermediate/advanced).'"
+        gates_on:
+          - "Selected per mapping instance in the curriculum grid's Select Standards for Mapping step (line 1535)."
+        accreditation_citation: "COCA Standard 6, Element 6.4 — a curriculum map showing WHERE each competency is taught and assessed implies depth, which is what introduce/reinforce/demonstrate encodes. ACPE Standard 2, Key Element 2.2.d ('breadth AND DEPTH'). CODA Standard 2, Element 2-8 (surfacing redundancy requires knowing at what level a topic recurs)."
+        competitor_equivalent: "leo-davinci.yaml documents mapping to 'multiple competency sets and Entrustable Professional Activities (EPAs)' with an Insights Dashboard flagging gaps; elentra.yaml documents objective/competency/session mapping to standards. Neither competitor file documents a separate mapping-time attribute layer distinct from the tag itself — this two-layer design (what it is vs. how deeply it is taught) appears to be a genuine Prism differentiator, though the absence of a documented competitor equivalent may reflect their marketing depth rather than a real absence."
+        gap_severity: "none"
+        gap_note: "This is the mechanism behind the crosswalk report accreditors like — the Nursing video describes exactly this output: 'Each cell represents whether the content taught is knowledge based, skill-based, or behavior based. It also identifies whether the concept is introduced, reinforced, or demonstrated in that course.'"
+      - element: "Bloom's Taxonomy as a configured attribute + Leo-AI level suggestion"
+        type: "attribute category + AI suggestion"
+        data_shown: "Leo reads the action verbs in a measure and suggests the Bloom's level; with multiple verbs it suggests the highest. Suggestions appear only if Bloom's is configured AND enabled as a mappable attribute; they refresh when measure text is edited, a curriculum is cloned, or the Bloom's setup changes; and they never auto-apply."
+        gates_on:
+          - "Requires Bloom's set up under Curriculum Mapping > Attributes > Course and Measure Attributes."
+          - "Requires the Map with Leo consent flow (Program Details > AI Consent; toggled at Program Details > Setup > AI Features Hub)."
+        accreditation_citation: "Per the Nursing playbook, Auto-Suggest Bloom's Taxonomy is used as COA Standard E.6 evidence ('helping programs write more rigorous, measurable objectives')."
+        competitor_equivalent: "No competitor teardown in content/competitors/ documents AI-assisted curriculum mapping or Bloom's-level suggestion at all. one45.yaml's 'standardized vocabularies' and elentra.yaml's tag management are both manual. This is a documented Prism-ahead element — and the only one in this stage where Prism leads every competitor in this research."
+        gap_severity: "none"
+        gap_note: "Human-in-the-loop by design ('Leo tracks suggestions in the background, but never applies them without your action'), with withdrawable consent and a data-deletion right — the correct posture for a feature touching accreditation evidence. Note the onboarding cost: two separate prerequisites (attribute configured + consent granted) before a new admin sees any suggestion."
+
+  # ---------------------------------------------------------------- STEP 12
+  - screen: "Curriculum Mapping > Add Curriculum (4-step wizard)"
+    navigation_path: "Curriculum Mapping > Add Curriculum > Details > Course selection > Mapping Setup > Curriculum Grid preview"
+    action: >
+      The admin assembles the actual grid: names it, selects which offerings
+      belong to it, declares which measures are in play, chains measures/courses
+      to standard sets, picks the attributes to capture, previews the grid, and
+      saves. This is the object every mapping report runs against.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1525-1539"
+    elements:
+      - element: "Curriculum Name + Description"
+        type: "input field set"
+        data_shown: "Naming convention guidance is in the transcript: 'lockstep schools commonly use the name of the cohort for the curriculum name'; non-lockstep programs 'use curriculum to keep track of groups of courses within an academic year' (lines 1525-1527)."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: "The constraint that makes naming strategic is stated once, in passing: 'You will be able to run reports across a curriculum grid, but you cannot run reports on multiple grids simultaneously. Please keep this in mind while you are creating a curriculum grid' (line 1525). The Nursing playbook shows the cost — programs configure 'a separate grid per degree/track (ADN/BSN/MSN/DNP/specialty)', which by this rule means no single report spans the school's whole curriculum. Same problem for CSWE generalist-plus-specializations and for any DO/PharmD program with dual tracks."
+      - element: "Course selection (search by number/name; filter by academic year, professional year, section, term, cohort > Search Record > multi-select table)"
+        type: "filtered multi-select"
+        data_shown: "Course number, course name, academic schedule, assigned cohort (line 1529)."
+        gates_on:
+          - "Only existing course offerings are selectable — steps 3-5 are hard prerequisites."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "elentra.yaml documents filtering 'by cohort, course, or objective set' in Curriculum Explorer — parity at this granularity."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Select Course Measures (Add or Edit Course Measures; per-measure activation bit; reorder arrows/drag; Attributes dropdown)"
+        type: "toggle list + multi-select"
+        data_shown: "Every active program-wide measure, all initially on; deactivate per curriculum. 'The order of these course measures is reflected in the measures section within courses and the mapping page of courses' (line 1531)."
+        gates_on:
+          - "The Attributes dropdown here chooses WHICH TYPES of attributes measures can carry, not values — 'you are not assigning specific attributes to specific measures here' (line 1533)."
+        accreditation_citation: "ACPE Standard 2, Key Element 2.2.d; CODA Standard 2, Element 2-8; COCA Standard 6, Element 6.4 — this is the screen that scopes what the map is capable of expressing before any mapping happens."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "The type-vs-value distinction is genuinely confusing and the transcript has to stop and disclaim it. A new admin who under-selects here silently caps what every downstream report can show, and correcting it means editing the curriculum after mapping has begun."
+      - element: "Select Standards for Mapping (Mapping From: course or course measure | Mapping To: an activated standard set | Attributes) > Add, repeatable"
+        type: "mapping-chain builder"
+        data_shown: "A table of mapping instances; multiple chains supported — the transcript walks through mapping the entire course to two different standard sets as separate entries (line 1535)."
+        gates_on:
+          - "Mapping To offers only standard sets activated in Program Details > Standards (step 9)."
+          - "Mapping From = course is the macro level, = course measure is the micro level: 'by mapping standards to the entire course, you can track student progress at a more macro level, and mapping standards to course objectives is a detailed method' (line 1533)."
+        accreditation_citation: "This element is where a program decides the GRAIN of its accreditation evidence. COCA Standard 6, Element 6.4 and ACPE Standard 2, Key Element 2.2.d are answerable at either grain but far more credibly at measure grain; CODA Standard 2, Element 2-8's redundancy detection effectively requires measure grain; LCME Standard 9, Element 9.4 (all students held to the same objectives) requires it."
+        competitor_equivalent: "leo-davinci.yaml documents mapping 'every session in every course' — SESSION grain, finer than Prism's course-or-measure choice. elentra.yaml documents mapping 'course objectives, competencies, and individual teaching sessions'. Both competitors document a finer default grain than Prism's coarsest option, which is a real, sourced difference at this element."
+        gap_severity: "none"
+        gap_note: "Supporting both grains simultaneously, with multiple standard sets per grain, is genuinely strong — it is what lets one grid answer an accreditor, a licensure blueprint, and internal SLOs at once (the Cumulative Report's whole premise)."
+      - element: "Select Attributes for Courses (+ icon at bottom of Mapping Setup)"
+        type: "multi-select"
+        data_shown: "Which course-level attribute categories this grid captures — transcript example: lifespan and assessment methods (line 1537)."
+        gates_on:
+          - "Determines what the course About page's Attributes panel offers (line 1541) — resolving the empty-dropdown trap noted in step 6."
+        accreditation_citation: "ACOTE A.5.1 per the OT playbook (lifespan/setting breadth evidence); COCA Standard 6, Element 6.4; CSWE AS M3.2.1 (Client System Levels)."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Curriculum Grid preview (courses grouped by academic year and professional year, then by term)"
+        type: "read-only preview"
+        data_shown: "The final sequence before save; back-navigation to any prior step is supported (line 1537)."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-8 and CSWE AS 3.1.1 (per the SW playbook, the Curriculum Grid is cited directly as the 'term-by-term sequencing view' evidence artifact)."
+        competitor_equivalent: "elentra.yaml documents a 'Curriculum Matrix' tool — the closest named competitor equivalent to this grid, and sourced."
+        gap_severity: "none"
+        gap_note: "This preview is the first moment a new admin sees whether the term ordering they set in step 1 actually produces a legible program of study — roughly two to four weeks after they set it."
+      - element: "Brown 'P' indicator next to course names in the saved grid"
+        type: "read-only indicator"
+        data_shown: "'This brown P indicates that the course is placement related' (line 1539)."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Elements 3.1.a/3.2.b/3.2.d (IPPE/APPE structure, duration, required settings) and COCA Standard 6, Element 6.9 — the experiential subset of the curriculum is what these standards are drawn around, and this indicator is how it reads off the grid."
+        competitor_equivalent: "leo-davinci.yaml documents mapping sessions 'didactic or clinical' as a first-class distinction. Sourced and comparable."
+        gap_severity: "cosmetic"
+        gap_note: "A single-letter color-coded indicator carrying a meaningful distinction is a small accessibility concern; the transcript documents no legend or text alternative."
+
+  # ---------------------------------------------------------------- STEP 13
+  - screen: "Course page (within a curriculum) > Attributes / Event Schedule / Measures"
+    navigation_path: "Curriculum Mapping > select a curriculum > click a course name"
+    action: >
+      Per course, and the transcript is blunt that this is per course with no
+      shortcut — 'You will need to complete this setup individually for all of
+      the courses in the curriculum' (line 1541) — the admin assigns attribute
+      values, optionally builds an event schedule, and enters the actual
+      objective text with codes, attributes, tags, evidence documents, child
+      measures, and cross-links.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1541-1561"
+    elements:
+      - element: "Attributes section (pencil icon > per-category value dropdowns)"
+        type: "multi-select per category"
+        data_shown: "Values from the categories the grid activated — transcript example: 'if students will work with infants and children in this course, select the Lifespan dropdown and select the Infants and Children values' (line 1543)."
+        gates_on:
+          - "Selectable set is 'contingent upon which attributes you activated in the system for that curriculum' (line 1541)."
+        accreditation_citation: "ACOTE A.5.1 (OT playbook: 'Population Tagging — course measure attributes tagged by population group... to demonstrate breadth of exposure'); CODA Standard 2, Element 2-9; COCA Standard 6, Element 6.4."
+        competitor_equivalent: "elentra.yaml tag management; leo-davinci.yaml cross-course themes. Both sourced and comparable, both operating at session rather than course grain."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Event Schedule (Add Event: title, date, start/end time, faculty multi-select, location, Browse to Upload reference materials + notes)"
+        type: "scheduling table + file upload"
+        data_shown: "Course calendar of lectures/topics/exams. 'Events added to the event schedule can be linked with measures to keep track of how the two are related' (line 1543)."
+        gates_on:
+          - "'Students cannot view the event schedule. This section is mainly used for your own reference or for collaborating with course faculty' (lines 1543-1545)."
+        accreditation_citation: "CODA Standard 2, Element 2-1 (advance course information to students) is NOT satisfied by this element specifically, because it is explicitly not student-visible — the syllabus generator, not this, carries that obligation. It does support CODA Standard 2, Element 2-8's evidence of what was actually delivered."
+        competitor_equivalent: "one45.yaml documents the Canvas Alignment Tool syncing 'learning-event and facilitator data' from the LMS — i.e. one45 populates the equivalent of this schedule automatically from where faculty already work. Prism's is hand-entered. Sourced, and a real difference."
+        gap_severity: "configure-needed"
+        gap_note: "Hand-entered, non-student-visible, and duplicative of whatever the institution's LMS already holds. Realistically the first thing a busy new admin skips — which then costs them the measure-to-event linking and the Measure Linking Report downstream."
+      - element: "Measures section (+ per category: Code, Description, Notes, attribute dropdowns, Tags, Browse to Upload related document)"
+        type: "input field set + file upload"
+        data_shown: "Code and Description are both required before save (line 1551). Related document is 'an artifact or evidence that supports the mapping of attributes and standards to this measure' (line 1555)."
+        gates_on:
+          - "Attribute dropdowns shown here are only those the curriculum's measure-attribute setup selected."
+        accreditation_citation: "ACPE Standard 2, Key Element 2.2.d; COCA Standard 6, Element 6.4; CODA Standard 2, Element 2-5 (evaluation methods must measure DEFINED competencies — this is where they are defined); ARC-PA 6th ed. B1.01 a-d / B1.02 per the PA playbook."
+        competitor_equivalent: "one45.yaml's 'centralized repository linking objectives, sessions, and assessments' is the closest sourced equivalent. No competitor teardown documents per-objective evidence-file attachment, which is a Prism-ahead detail at this granularity."
+        gap_severity: "gap"
+        gap_note: "No bulk import for measures is documented anywhere in the admin transcript or the help-center Curriculum Mapping folder — yet the Nursing CBE video claims objectives 'can either be entered directly into the system or imported in bulk to save time' (NursingTutorialsTranscripts.md line 31). That contradiction is unresolved in this corpus and matters enormously: hand-entering every objective for every course in a DO or PharmD curriculum is the single largest labor item in this entire onboarding stage. FLAG FOR VERIFICATION with product before repeating either claim externally."
+      - element: "Tags on a measure (+ icon > select tag / Add New Tag with name + color picker)"
+        type: "tag picker + creator"
+        data_shown: "Internal workflow tags — transcript's worked example is a curriculum-committee review loop: a faculty member assigns a 'Needs Review Measure' tag, 'You can generate a report to view all the Needs Review Measure tags, view the tags that need review, and change the status of these tags once they are reviewed' (line 1553)."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-8 (curriculum management plan — 'ongoing curriculum review process with input from faculty/students/administration') — this tag-plus-report loop is the closest thing in shipped Prism to an in-product curriculum-review workflow, which is exactly what 2-8 asks a program to evidence."
+        competitor_equivalent: "one45.yaml's 'version control and audit trail' addresses the same governance need through history rather than through workflow tags. leo-davinci.yaml's Insights Dashboard flags mapping gaps but is not documented as a review-assignment mechanism. Both sourced; neither is the same shape."
+        gap_severity: "configure-needed"
+        gap_note: "It is a tagging convention, not a workflow: no assignee, no due date, no state machine, no notification. It satisfies CODA 2-8 as a paper trail only if the program disciplines itself into using it consistently."
+      - element: "Child measures (horizontal ellipses > Add Child) and measure/event Linking (link icon)"
+        type: "hierarchy + cross-reference"
+        data_shown: "Sub-measures under a measure; links from a measure to course events and to measures in OTHER categories — 'Measures cannot be linked with other measures added to the same category' (line 1559)."
+        gates_on: []
+        accreditation_citation: "CODA Standard 2, Element 2-8 (surfacing gaps and redundancies across the map benefits directly from an explicit outcome→objective→event chain); COA Standard E.5 sequencing evidence per the Nursing playbook."
+        competitor_equivalent: "one45.yaml's objectives-sessions-assessments repository is the sourced equivalent for the objective→event half. No competitor teardown documents a cross-category measure-to-measure link."
+        gap_severity: "none"
+        gap_note: "The transcript's rationale is exactly right: 'if you have a specific learning outcome which has objectives and events which helped you achieve that particular outcome' (line 1559) — this is how a program shows an outcome is actually delivered, not merely declared."
+      - element: "Reorder button / Delete All per measure category"
+        type: "bulk action, destructive"
+        data_shown: "Drag or arrow reordering; category-wide delete."
+        gates_on:
+          - "'if you have performed curriculum mapping on any measure in this measure category, this mapping data will be lost' (line 1561)."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "one45.yaml's version control and audit trail is the sourced counterexample."
+        gap_severity: "gap"
+        gap_note: "A 'Delete All' button sitting next to 'Reorder', destroying mapping data, guarded (per the transcript) by narration alone rather than the typed-number confirmation used for lesser deletions elsewhere in the same product. Inconsistent destructive-action guarding is a real onboarding risk."
+
+  # ---------------------------------------------------------------- STEP 14
+  - screen: "Course Mapping page"
+    navigation_path: "Course page > Go to Mapping  |  Curriculum grid > hover a course > mapping icon"
+    action: >
+      The admin (or a delegated faculty member) performs the actual mapping —
+      first optionally for the whole course, then measure by measure —
+      attaching mapping-level attributes, tags, rationale notes, and evidence
+      documents to each standard association.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1561-1575"
+    elements:
+      - element: "Measure-category left rail with mapped-count badges"
+        type: "read-only progress rollup"
+        data_shown: "'Each course measure category will have a helpful count displaying how many measures have been mapped' (line 1563)."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element. It is the in-course progress signal that aggregates into the Mapping Summary's program-level progress view."
+        competitor_equivalent: "leo-davinci.yaml documents an 'Insights Dashboard' showing 'real-time mapping-completion status (green checkmarks for finished mappings, flags for gaps)' — the same need, solved at program level rather than in-course. Sourced and comparable."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Map Entire Course option"
+        type: "mode selector"
+        data_shown: "Course-level attributes panel plus the standards list, when the curriculum's mapping setup enabled course-grain mapping (lines 1563-1565)."
+        gates_on:
+          - "Only available if 'you... have selected standards to be mapped to courses when setting up the curriculum' (line 1563)."
+        accreditation_citation: "COCA Standard 6, Element 6.4 and ACPE Standard 2, Key Element 2.2.d are both answerable at this grain, less credibly than at measure grain."
+        competitor_equivalent: "elentra.yaml and leo-davinci.yaml both document finer default grain (course objectives and individual sessions respectively). Sourced."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Standard picker (+ icon per standard set; expand parents; parent checkbox selects all children; multi-select)"
+        type: "hierarchical multi-select"
+        data_shown: "The activated standard hierarchy from step 9; 'To select all the children standards of a parent standard at the same time, select the checkbox next to that parent standard' (line 1567)."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.4; ACPE Standard 2, Key Element 2.2.d; CODA Standard 2, Element 2-8; LCME Standard 9, Element 9.4; ARC-PA 6th ed. B1.01/B1.02; CSWE AS 3.1.1/3.1.2; AACN Essentials domains/competencies/sub-competencies per the Nursing video. This element IS the crosswalk every one of those standards asks for."
+        competitor_equivalent: "elentra.yaml (tag-based standard linkage, >40% CACMS DCI coverage, AAMC CI vendor), emedley.yaml (LCME standards + AAMC CI vendor), new-innovations.yaml (direct submission to the AAMC Curriculum Inventory portal), e-value.yaml (AAMC Curriculum Survey + MedBiquitous alignment, CIR integration). Four separate competitors document standards-mapping WITH a documented external submission or interchange path. Prism's documented output is Excel/Word export. That is the sharpest sourced competitive deficit in this stage."
+        gap_severity: "gap"
+        gap_note: "The mapping itself is at parity or better; the interchange is not. For MD/DO specifically, a program that must feed the AAMC Curriculum Inventory has a named, shipped path with Elentra, eMedley, New Innovations, and E*Value, and a manual export with Prism."
+      - element: "Parent-standard select-all checkbox"
+        type: "bulk-select shortcut"
+        data_shown: "Selects every child standard of a parent in one click (line 1567)."
+        gates_on: []
+        accreditation_citation: "Same set as the standard picker — but with an integrity caveat: bulk-claiming every child of a parent is precisely the over-mapping pattern a site visitor probes, and CODA Standard 2, Element 2-8's redundancy-detection duty cuts against it."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "A speed feature that makes over-mapping one click cheaper than accurate mapping. No documented warning, and the Heatmap will happily render the inflated counts as dark cells."
+      - element: "Per-mapping pencil: mapping-level attributes, Tags, Notes, Browse to Upload related document"
+        type: "input field set + file upload"
+        data_shown: "Attributes ('such as if this demonstrates students' intermediate knowledge, click on the Knowledge dropdown and select the Intermediate option'), free-text rationale Notes visible only to faculty/admins with course access, and an evidence upload — 'Schools use this upload section to upload artifacts or samples for your accreditation site visits' (lines 1567-1571)."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.4 (submission requires the map itself); CODA Standard 2, Element 2-8; ACPE Standard 2, Key Element 2.2.d. The Notes field is where a program's mapping RATIONALE lives — 'if you would like to provide a rationale for this mapping instance, you could do so here' — which is the qualitative half of every self-study narrative built on a map."
+        competitor_equivalent: "No competitor teardown in content/competitors/ documents per-mapping-instance evidence attachment or rationale notes. Elentra's documented 'searching within attached files' implies file attachment somewhere in its curriculum tools, but not at mapping-instance granularity. Prism appears ahead here; the caveat is that competitor marketing depth, not competitor capability, may be what is missing."
+        gap_severity: "none"
+        gap_note: "Artifact-at-the-mapping-instance is the strongest single element in this stage for accreditation defensibility — it is the difference between asserting coverage and showing the assignment that produced it."
+      - element: "Unmapped/mapped color indicator on each measure"
+        type: "read-only status indicator"
+        data_shown: "'Before you map a course measure, the measure will be assigned a red indicator indicating that it has not been mapped yet. After you map standards, this color will change to blue, purple, or cyan, depending on your chosen EXAT prism theme' (line 1575)."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "leo-davinci.yaml's Insights Dashboard uses 'green checkmarks for finished mappings, flags for gaps' — same signal, shape-plus-color rather than color-only. Sourced."
+        gap_severity: "cosmetic"
+        gap_note: "Color-only status encoding, and the mapped color is theme-dependent — no shape or text alternative is documented. Minor, but it is the primary completeness signal on the screen where the bulk of the work happens."
+      - element: "Delete a mapped standard (trash icon > typed-number confirmation)"
+        type: "destructive action with typed confirmation"
+        data_shown: "'The system will confirm you would like to disassociate this standard. Enter the number on the screen, then select the Delete button' (lines 1571-1573)."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "one45.yaml's audit trail is the sourced alternative — history rather than confirmation."
+        gap_severity: "none"
+        gap_note: "Correctly guarded, and notably better guarded than the far more destructive 'Delete All' on a measure category (step 13) and the standard-set deactivate toggle (step 9)."
+
+  # ---------------------------------------------------------------- STEP 15
+  - screen: "Curriculum Mapping > Mapping Reports"
+    navigation_path: "Curriculum Mapping > select curriculum > Mapping Reports (upper right) > Mapping Summary"
+    action: >
+      With mapping done, the admin runs the reports that turn the grid into
+      accreditation evidence — and, during onboarding specifically, uses the
+      unmapped-standards view as the completeness checklist that tells them
+      whether stage 6 is actually finished.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1577-1601, and '## Heatmap Report in Exxat Prism (Curriculum Mapping)', lines 1739-1745"
+    elements:
+      - element: "Mapping Summary dashboard (standards mapped / courses mapped / attribute and tag usage graphics; curriculum dropdown; hover for detail)"
+        type: "report dashboard"
+        data_shown: "Program-level mapping progress with per-bar drilldown; the curriculum dropdown switches grids one at a time (line 1577)."
+        gates_on:
+          - "One grid at a time — the same constraint from line 1525."
+        accreditation_citation: "CODA Standard 2, Element 2-8 (ongoing review); COCA Standard 6, Element 6.4; per prior work in content/journeys/competency-verification.yaml stage 8, this reporting family plus the Standards library is the evidence base cited against COCA Element 11.9 and CODA Element 1-2."
+        competitor_equivalent: "leo-davinci.yaml's Insights Dashboard ('real-time mapping-completion status... against program objectives') is the direct sourced equivalent. core-elms.yaml documents CompMS 'curriculum gap assessments' — but as a separately priced add-on module, an architectural difference (bundled vs. up-sell) worth naming."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Course Attributes Usage / Measure Attributes drilldowns (expand, filter by attribute and course, Show Only Assigned Attributes, search, Export to Excel)"
+        type: "drilldown table with filters + export"
+        data_shown: "How many times each attribute option was selected and by which courses (lines 1577-1581)."
+        gates_on: []
+        accreditation_citation: "ACOTE A.5.1 per the OT playbook ('Coverage Reporting — attribute-usage reports show lifespan-population coverage and highlight gaps'); ACEN 4.3 and CCNE III-G per the Nursing playbook (delivery-method variety); COA Standard E.5 sequencing."
+        competitor_equivalent: "emedley.yaml documents 'gap-and-overlap analysis' in eCurriculum — the closest sourced equivalent. medhub.yaml documents 'non-linear reporting' on curriculum-exposure data."
+        gap_severity: "none"
+        gap_note: "Excel export at every level of this family is what makes it usable as self-study appendix material."
+      - element: "Measure Linking Report (per course > measures with their linked measures/events; Go to Measures hyperlink; Export to Word)"
+        type: "report + navigation shortcut"
+        data_shown: "Which measures are linked to which other measures and course events (line 1581)."
+        gates_on:
+          - "Empty unless the event schedule and linking work in step 13 was actually done."
+        accreditation_citation: "COA Standard E.5 (sequencing) per the Nursing playbook; CODA Standard 2, Element 2-8."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "The Go to Measures hyperlink back into the course is good report-to-edit ergonomics and is rare across this report family."
+      - element: "Cumulative Report (anchor: Standards or Course Offerings; attribute-type selectors; Generate and Download)"
+        type: "configurable Excel export"
+        data_shown: "Course-anchored = one sheet per course, one row per mapping instance, with columns for course number, course name, course attributes, measure category, measure, measure attributes, mapping level (course vs. measure), standards mapped, and mapping attributes. Standard-anchored = one sheet across all instances, plus columns for standards from other lists linked to each standard (lines 1583-1587)."
+        gates_on: []
+        accreditation_citation: "CSWE EPAS AS 3.1.1 and AS M3.2.1 per the SW playbook (Cumulative Report named directly as competency-coverage evidence); ACPE Standard 2, Key Element 2.2.d; COCA Standard 6, Element 6.4. The Nursing playbook adds that this report is 'modeled directly on AACN's own Essentials Toolkit crosswalk template' — and the Nursing video invites the comparison explicitly (NursingTutorialsTranscripts.md line 39)."
+        competitor_equivalent: "e-value.yaml documents curriculum mapping 'explicitly aligned to the AAMC Curriculum Survey and MedBiquitous Curriculum Standards' with CIR integration — an equivalent multi-framework crosswalk WITH a named external interchange target. Prism's is an Excel file. Sourced, and the gap is interchange, not content."
+        gap_severity: "none"
+        gap_note: "Multi-framework-in-one-view (accreditor + licensure blueprint + SLOs + attributes simultaneously) is the payoff for the multi-chain mapping setup in step 12 and is the report discipline playbooks reference most."
+      - element: "Per-standard tab: Mapped Standards bar, All Standards / Unmapped Standards dropdown, per-standard course list, Narrative (+ icon), Customize Your View, export to Word/Excel with child-standard inclusion option"
+        type: "report with editable narrative + configurable export"
+        data_shown: "Standards used out of total; courses per standard; expandable to course objectives. Narrative is authored in-report: 'This narrative can be helpful when meeting with your accreditation body' (line 1591)."
+        gates_on:
+          - "'Please note that the data populated in the exported file will depend on how you customize the report. So make sure you configure the report to your preferences before you export' (line 1593)."
+        accreditation_citation: "COCA Standard 6, Element 6.4 submission; ACPE Standard 2, Key Element 2.2.d; CODA Standard 2, Element 2-8; CAA/CFCC standards per the SLP playbook ('Mapped Standards Report highlights standards that are insufficiently covered'); COA Standard E.2 per the Nursing playbook (Standards-Based plus Unmapped Standards as a paired gap check)."
+        competitor_equivalent: "leo-davinci.yaml flags gaps on an Insights Dashboard; emedley.yaml provides 'gap-and-overlap analysis'; core-elms.yaml sells gap assessment as the CompMS add-on. All three sourced. None of the three documents an in-report authored narrative field, which is a Prism-ahead detail — narrative-next-to-evidence is exactly the self-study shape."
+        gap_severity: "none"
+        gap_note: "The Unmapped Standards view is the single most useful screen in this stage for a NEW admin: it is the only place that answers 'am I done?' with a list rather than a feeling."
+      - element: "Mapping Level Attribute report / crosswalk (Standards picker, Courses picker, Attributes picker, view selector: With Assigned and Unassigned / Only Assigned / Only Unassigned > export icon)"
+        type: "multi-axis configurable Excel export"
+        data_shown: "Rows = standards, columns = courses broken down into measures, cells = whether mapped and which attributes were selected. 'Courses are organized by academic schedule so that earlier courses appear on the left and newer courses appear on the right... This report is used to demonstrate that student learning level, knowledge, skills, or other attributes graduate in complexity and depth over the course of their academic career' (lines 1599-1601)."
+        gates_on:
+          - "Column order derives from the academic-schedule values set in step 1 — term ordering resurfaces here as report semantics."
+        accreditation_citation: "COCA Standard 6, Element 6.4 (progression of competency depth across the program); ACPE Standard 2, Key Element 2.2.d ('breadth AND depth'); CODA Standard 2, Element 2-8; LCME Standard 9, Element 9.4. The Nursing playbook and video both call this the accreditation crosswalk ('Each row is an Essential, and each column is a course or a course objective')."
+        competitor_equivalent: "e-value.yaml documents 'representations of standards coverage'; emedley.yaml documents gap-and-overlap analysis. Neither public source documents a spiral-progression crosswalk with an assigned/unassigned view selector at this granularity, so the comparison is directional rather than element-for-element."
+        gap_severity: "none"
+        gap_note: "The Only Unassigned view is the QA counterpart to the Unmapped Standards list — it finds mapped-but-unattributed instances, which are invisible in every other report."
+      - element: "Heatmap Report (Mapping Reports > ARC-PA 6th Edition 2025 B/C/D Sections Mapping > Other Report > Heatmap Report; X-axis = standards, Y-axis = course offering name/number, cell = count of mapped measures, hover detail, min-max color legend)"
+        type: "visualization report"
+        data_shown: "'Each cell shows how many course measures are mapped to a specific standard for a given course offering. When you hover over any cell, you will see additional details, including the standard code, course details, and the total number of mapped measures for that combination... Darker colors indicate a higher number of mappings, while lighter colors indicate fewer mappings' (exxat_transcripts.md lines 1743-1745). Opens in a new tab."
+        gates_on:
+          - "ENTRY POINT IS PA-ONLY: 'Keep in mind that this option appears only for PA programs using the ARC-PA sixth edition mapping' (line 1741)."
+        accreditation_citation: "ARC-PA 6th edition B/C/D sections directly. Per prior work in content/journeys/competency-verification.yaml stage 8, the Heatmap is one of the three shipped artifacts cited as the 'not starting from zero' evidence for COCA Element 11.9 and CODA Element 1-2 — but note that citation rests on the report's SHAPE being portable, not on a COCA/CODA-scoped heatmap existing today."
+        competitor_equivalent: "leo-davinci.yaml's Insights Dashboard (real-time completion status with gap flags) and emedley.yaml's gap-and-overlap analysis are the sourced functional equivalents. Neither is documented as accreditor-version-scoped the way Prism's ARC-PA-6th-edition entry point is — Prism's is more specific and less general."
+        gap_severity: "gap"
+        gap_note: "Two compounding gaps at one element. (1) Domain lock: the entry point is documented as appearing only for PA programs on ARC-PA 6th edition, so DO/Pharmacy/Dentistry/Medicine have no confirmed heatmap today — the visual an accreditation-readiness conversation opens with. (2) No export: the PA playbook states flatly that this report 'cannot be downloaded — advise programs to screenshot it to extract data.' A screenshot is not a self-study appendix. Both are narrow, high-visibility fixes."
+      - element: "Curriculum dropdown scoping on every report in this family"
+        type: "report filter"
+        data_shown: "Selects which single curriculum grid the report runs against."
+        gates_on:
+          - "'you cannot run reports on multiple grids simultaneously' (line 1525)."
+        accreditation_citation: "ACEN 4.5 and CCNE III-B/C/D per the Nursing playbook, where each degree/track is configured as its own grid — meaning a school with five tracks produces five separate report sets with no product-supported union view. CSWE AS 3.1.1 vs. AS M3.2.1 has the same shape (generalist grid vs. specialization grids)."
+        competitor_equivalent: "elentra.yaml documents Curriculum Explorer/Search filtering 'by cohort, course, or objective set' without a documented single-grid restriction, and claims coverage of >40% of the CACMS DCI — which implies program-wide, not grid-scoped, reporting. Sourced, and Elentra is ahead at this element."
+        gap_severity: "gap"
+        gap_note: "The most consequential structural limit in this stage, and it is stated once in narration during grid creation rather than surfaced where it bites. Any program whose curriculum legitimately spans multiple grids (multi-track Nursing, CSWE generalist + specializations, dual-degree DO/PharmD tracks) cannot produce a single program-level coverage report from Prism."
+
+  # ---------------------------------------------------------------- STEP 16
+  - screen: "Curriculum Mapping > Clone Curriculum"
+    navigation_path: "Curriculum Mapping > select curriculum > Clone Curriculum"
+    action: >
+      Rather than rebuilding stage 6 every year, the admin clones the finished
+      curriculum forward for the next cohort — creating a new set of course
+      offerings with a shifted academic schedule and copying the course setup
+      and mapping setup along with it.
+    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1601-1609"
+    elements:
+      - element: "Clone Curriculum: new name, description, Cohort selector (lockstep)"
+        type: "input field set + dropdown"
+        data_shown: "'Cloning a curriculum creates a new set of course offerings with the academic schedule specified by you' (line 1603). 'The process of cloning a curriculum is different between lockstep and non-lockstep programs.'"
+        gates_on:
+          - "Newly cloned courses inherit the selected cohort."
+        accreditation_citation: "CODA Standard 2, Element 2-8 (curriculum management plan across review cycles) — year-over-year continuity of the map is what makes a review cycle demonstrable rather than a one-time snapshot."
+        competitor_equivalent: "one45.yaml's 'version control and audit trail' is the alternative approach to year-over-year continuity — versioning one curriculum rather than cloning into a new one. Genuinely different data models, both sourced."
+        gap_severity: "configure-needed"
+        gap_note: "Cloning creates a sibling, not a version. There is no documented lineage link from clone to parent, so 'what changed between the 2025 and 2026 map' is not a question Prism answers — it is exactly the question CODA 2-8 and COCA 11.9 review cycles ask."
+      - element: "Academic-year and term remapping (pencil per academic-year group; pencil per term group; per-course exclusion checkboxes)"
+        type: "bulk remap + exclusion"
+        data_shown: "Shift a whole academic-year group forward ('you can change the academic year from 2024 to 2025 to 2025 to 2026 for all the courses originally assigned the academic year of 2024 to 2025'), or move a term group (fall → spring). Individual courses can be excluded (lines 1605-1607)."
+        gates_on:
+          - "'you will not be able to change the academic years for individual courses' — group-level only (line 1605)."
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "Group-only academic-year shifting is a sensible guardrail, but a program that genuinely moves one course a year later has to clone, exclude, and hand-build that one offering."
+      - element: "Clone content selectors (course details, prereqs/coreqs, textbooks, evaluation criteria, course policies, faculty & staff, course events, course measures setup, mapping setup)"
+        type: "checkbox set"
+        data_shown: "All checked by default; unchecking omits that content from the new curriculum (lines 1607-1609)."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 2, Key Element 2.2.d and CODA Standard 2, Element 2-8 — carrying the mapping setup forward is what makes the second year's evidence comparable to the first's."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "That 'mapping setup' is clonable is the single largest labor saver across the whole stage — it means the expensive taxonomy work in steps 9-12 is a one-time cost, not an annual one."
+
+sources:
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '## 8/16 Setting Up Courses in Exxat Prism' (lines 655-805, 20-chapter course setup walkthrough: course organization, catalog, offerings, bulk import, About, registration, resources, events, communications/interventions, compliance, announcements, attestations, cloning, didactic offerings) [PRIMARY]"
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '## 14/16 Performing Curriculum Mapping in Exxat Prism' (lines 1497-1611, standards setup, course measures, attributes, curriculum grid build, mapping, mapping reports, curriculum cloning) [PRIMARY]"
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '## Heatmap Report in Exxat Prism (Curriculum Mapping)' (lines 1735-1745, standalone report tutorial; PA/ARC-PA-6th-edition entry point) [PRIMARY]"
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — line 49 (Program Details > Standards tab pointer), line 1187 ('12/16 Managing Faculty': Faculty Dashboard Configuration toggle for curriculum-grid access), line 1475 ('13/16 Managing Learning Activities': heat map as one of three visualization formats on the comprehensive forms report — a DIFFERENT heat map from the curriculum-mapping Heatmap Report; noted here to prevent conflation)"
+  - "/Users/romitsoley/Downloads/NursingTutorialsTranscripts.md — '1. Streamline Transition to Competency-Based Education' (lines 19-59: AACN Essentials pre-populated, sub-competency ABC vs. EFG mapping, bulk objective import claim, cumulative report modeled on the AACN Essentials Toolkit, knowledge/skill/behavior + introduce/reinforce/demonstrate crosswalk)"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md — 'Curriculum Mapping' section (ARC-PA pre-loaded standards, Map with Leo, the seven mapping reports, and the Heatmap 'cannot be downloaded' CSS note)"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md — ACOTE A.5.1 / A.5.4 / syllabus standards and the Generate Syllabus configurable-column list"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — 'Program Details & Curriculum Setup' and 'Curriculum Mapping' sections (grid-per-track, Map with Leo, Auto-Suggest Bloom's, report-to-standard mapping for ACEN/CCNE/COA)"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — CSWE EPAS AS 3.1.1/3.1.2/M3.2.1 implementation via custom standard sets, Course Measures, Client System Levels and Dimensions of Learning attributes"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — CAA/CFCC mapping, Mapped Standards Report gap identification, Cumulative Report navigation path"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — CAPTE 7 (2024) competency mapping noted as 'in progress'; seven CAPTE-mapped pre-built reports"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — explicit data-quality caveat that no TE curriculum-mapping or CAEP-standard source exists in this corpus"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Course Setup.md — Import Course Offerings three-step wizard and the 'does not automatically register students' constraint"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Curriculum Mapping with Leo.md — consent flow, AI Features Hub toggle, and the four stated curriculum-mapping prerequisites"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Bloom-s Taxonomy using Leo-AI.md — Leo verb-matching logic, refresh triggers, never-auto-apply guarantee"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml — Standard 6 Element 6.4; Standard 11 Elements 11.1/11.9"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml — Standard 2 Elements 2-1, 2-5, 2-6, 2-8, 2-9, 2-24; Standard 1 Element 1-2; Standard 3 Element 3-4"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml — Standard 2 Key Element 2.2.d; Standard 3 Key Elements 3.1.a/3.1.b/3.2.b/3.2.d/3.3.a/3.3.c"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml — Standard 6 Element 6.2; Standard 8 Elements 8.4/8.7; Standard 9 Elements 9.4/9.8"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml, emedley.yaml, one45.yaml, e-value.yaml, new-innovations.yaml, leo-davinci.yaml, core-elms.yaml, medhub.yaml, axium.yaml — Curriculum Mapping pillar rows and integration/audit-trail claims"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/journeys/competency-verification.yaml, stage 8 — precedent for the Program Details > Standards + Heatmap Report evidence base cited against COCA 11.9 / CODA 1-2 (inherited here, not re-derived)"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/flows/competency-verification--01-define-the-competency-framework-and-map.yaml — prior element-level trace of the same two modules from the competency angle; this file is the setup-mechanics complement, not a duplicate"
+
+last_verified: "2026-08-24"

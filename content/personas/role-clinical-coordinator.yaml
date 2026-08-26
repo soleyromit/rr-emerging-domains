@@ -1,0 +1,168 @@
+# Cross-cutting ROLE persona (not a per-domain program archetype — see
+# _TEMPLATE_discipline.yaml for the discipline layer).
+# Titles vary by domain: Experiential Education Coordinator / Director of
+# Experiential Education (Pharmacy), Clerkship Coordinator / Director of
+# Clinical Education (DO, Medicine), Clinic Coordinator / Extramural Rotation
+# Coordinator (Dentistry).
+role_name: "Clinical / Experiential Education Coordinator"
+applies_across_domains: ["DO", "Pharmacy", "Dentistry", "Medicine"]
+
+day_in_the_life_summary: >
+  The person who turns an accreditation requirement into an actual student
+  standing in an actual clinic on an actual Monday. They recruit and re-recruit
+  sites, negotiate slot counts, match students to placements, and then spend
+  the rest of the year absorbing the churn — a preceptor goes on leave, a site
+  loses its supervising physician, an affiliation agreement lapses, a student
+  fails a background check three days before a rotation starts. In Pharmacy
+  they are sequencing 300 IPPE hours across the didactic years and then
+  building a coursework-free fourth year of six to seven APPE blocks per
+  student. In DO and Medicine they are placing OMS-3/OMS-4 and MS-3/MS-4
+  students across a distributive network of independently recruited community
+  hospitals and practices, often in multiple states, while competing with
+  other schools for the same slots. In Dentistry the shape is different but no
+  easier — the core is a longitudinal in-house patient panel, with extramural
+  community rotations layered on top and per-procedure faculty sign-off
+  underneath. Across all four, the job is capacity arithmetic under constant
+  perturbation, and the coordinator is the only person who holds the whole
+  picture. Their peak seasons are placement-building season and the weeks
+  before an accreditation site visit, when every capacity decision they made
+  has to be justified with data.
+
+top_tasks:
+  - "Recruit, onboard, and retain clinical sites and preceptors, and re-verify each one's capacity every cycle."
+  - "Build the placement/rotation schedule — matching students to sites and preceptors against requirements, preferences, geography, and capacity."
+  - "Enforce required-experience taxonomies per student (ACPE's four required APPE settings; COCA's four core plus three required clerkships; LCME's required patient types/conditions/skills list)."
+  - "Track and verify hours and encounters against hard thresholds — 300 IPPE hours with 75 community and 75 hospital minimums, 1,440 APPE hours at 160 hours minimum per rotation, COCA's four-week-minimum core rotations."
+  - "Keep affiliation agreements current for every site, and stop placements at any site whose agreement has lapsed."
+  - "Monitor student-to-preceptor ratios and supervision requirements in real time (ACPE caps most situations at 2 students per precepting pharmacist)."
+  - "Deploy, chase, and close out the evaluation forms attached to every placement — midpoint formative, end-of-rotation summative, student-of-site, student-of-preceptor."
+  - "Handle exceptions constantly: exemptions and substitute experiences, off-cycle and repeat rotations, remediation placements, site closures mid-block."
+  - "Produce the rotation roster, site capacity table, and cross-site comparability data a site-visit team will ask for."
+
+top_pains:
+  - pain: >
+      Site and preceptor capacity is the structural bottleneck of the job, and
+      it's tightening in every domain at once — the coordinator is being asked
+      to place more students into a pool of slots that isn't growing with
+      them, without even a live, defensible view of the supply they have.
+    accreditation_link: >
+      COCA Standard 6, Element 6.9 (a three-year rolling average of students
+      eligible for first-time, repeat, and off-cycle rotations matched against
+      demonstrated adequate faculty/capacity at each site, PLUS a contingency
+      plan for replacing lost rotation capacity); LCME Standard 5, Element 5.5
+      (evidence that clinical sites offer adequate numbers and types of
+      patients to support the required curriculum).
+    source: "../domains/do.yaml (distinctive_pain_points — DO programs report community hospitals reserving slots for affiliated MD programs, and since the 2020 AOA-ACGME Single Accreditation System merger DO students compete directly with MD students for the same fourth-year away-rotation slots, https://thedo.osteopathic.org/2023/11/to-solve-the-problem-of-too-few-clinical-rotation-sites-leaders-in-medicine-consider-business-solutions/ and https://pmc.ncbi.nlm.nih.gov/articles/PMC11984451/); ../domains/medicine.yaml (distinctive_pain_points — 44% of AAMC-surveyed schools report moderate-to-severe pressure to pay community physicians and clinics to host students, something most do not currently do, https://www.aamc.org/news/so-many-medical-students-so-few-clerkship-sites); enrollment keeps rising meanwhile (DO up 2.9% to 40,905 in 2025-26; MD past 100,000 for the first time); ../accreditation/coca.yaml (Element 6.9); ../accreditation/lcme.yaml (Element 5.5)"
+
+  - pain: >
+      Affiliation agreements are site-level compliance, but the shipped
+      tooling is student-level — an agreement can't lapse while students are
+      actively placed there, yet Compliance Management only gates on
+      student items like immunizations and background checks, not a site's
+      contract lifecycle.
+    accreditation_link: >
+      ACPE Standard 3, Key Element 3.5.b; LCME Standard 1, Element 1.4;
+      CODA Standard 4, Element 4-6; COCA Standard 6, Element 6.9 (executed
+      affiliation agreements for every contracted clinical site).
+    source: "../accreditation/acpe.yaml (Key Element 3.5.b — prism_fit 'Gap', 'No pillar today models site-level compliance/contract documents'); ../accreditation/lcme.yaml (Element 1.4); ../accreditation/coda.yaml (Element 4-6); ../competitors/core-elms.yaml (Compliance Management row — affiliation agreement tracking with expiration alerts); ../competitors/emedley.yaml (eKeeper affiliation agreement tracking); competitors are uneven here too — Elentra, Leo, and one45 show no publicly documented compliance-item module at all"
+    related_flows:
+      - flow: "preceptor-site-onboarding--02-affiliation-agreement-execution-contract-lifecycle-management.yaml"
+
+  - pain: >
+      Required-experience taxonomies are program-specific, hard-edged, and
+      graduation-gating, and none of them fit a generic "placement complete"
+      field — each domain needs its own shape of hours, encounters, or
+      procedure log rolled up per student, and each is currently a
+      Configure-or-Gap rather than something that works out of the box.
+    accreditation_link: >
+      ACPE Key Elements 3.1.b and 3.2.b/3.2.d; COCA Element 6.10;
+      LCME Elements 6.2 and 8.6; CODA Element 2-24.
+    source: "../accreditation/acpe.yaml (3.1.b, 3.2.b, 3.2.d — 'Configure', open question on setting-category aggregation; pharmacy needs hours aggregated by setting category with two 75-hour sub-minimums inside a 300-hour total, simulation hours excluded, plus a separate 1,440-hour APPE rollup across four named settings); ../accreditation/coca.yaml (6.10 — DO needs per-student attributes like 'residents present at site,' 'supervising physician is a DO,' and 'setting is inpatient' rolled into a pre-clerkship checklist); ../accreditation/lcme.yaml (6.2, 8.6 — 'No confirmed out-of-the-box required patient encounter tracking'; medicine needs a published list of required patient types, conditions, and skills with per-student gap detection); ../accreditation/coda.yaml (2-24 — 'Gap', likely the single largest dentistry-specific build; dentistry needs procedure-level logging in CDT terms across roughly fifteen competency categories)"
+    related_flows:
+      - flow: "admin-onboarding--08-learning-activities-competency-management-reporting.yaml"
+        step: "Timesheet setup (per course)"
+        element: "Categorization — Single Select vs Multi-Select + category list builder (add / X to remove)"
+
+  - pain: >
+      Supervision and ratio rules have to be enforced at assignment time, not
+      discovered at audit time — a coordinator who can't see a live ratio or
+      supervision-eligibility check when they make an assignment is creating a
+      compliance finding they won't learn about for two years.
+    accreditation_link: >
+      ACPE Standard 3, Key Element 3.3.e (2:1 maximum); LCME Standard 9,
+      Element 9.3; COCA Standard 5, Element 5.4; CODA Standard 2, Element 2-6.
+    source: "../accreditation/acpe.yaml (3.3.e — prism_fit 'Transfer', real-time capacity calculation blocking assignments above 2:1, caps most IPPE/APPE situations at two students per precepting pharmacist and requires documented exceptions); ../accreditation/lcme.yaml (9.3 — requires supervision appropriate to training level and within the supervisor's scope of practice); ../accreditation/coca.yaml (5.4 — requires published direct-supervision policies, including telemedicine, with distribution proof); ../accreditation/coda.yaml (2-6 — CODA's model is per-procedure chairside sign-off by a faculty clinical practice unit rather than per-shift supervision); ../domains/dentistry.yaml (clinical_education_shape — per-procedure chairside sign-off)"
+    related_flows:
+      - flow: "preceptor-site-onboarding--06-student-assignment-ratio-capacity-and-eligibility.yaml"
+
+  - pain: >
+      Cross-site comparability is a named accreditation requirement that
+      essentially nobody ships — cross-site consistency/drift analytics isn't
+      a confirmed report in Prism, and this is the analysis the coordinator
+      is asked for first at a site visit.
+    accreditation_link: >
+      COCA Standard 6, Element 6.11; LCME Standard 8, Element 8.7;
+      ACPE Standard 7, Key Element 7.3.c; CODA Standard 2, Element 2-6.
+    source: "../accreditation/coca.yaml (6.11 — prism_fit 'Gap', 'needs inferential statistics across site-tagged outcome data', requires a statistical-analysis report comparing student outcomes across all core and required sites); ../accreditation/lcme.yaml (8.7 — requires documented comparability of experience and equivalent assessment across every location a course or clerkship runs); ../accreditation/acpe.yaml (7.3.c — 'Cross-site consistency/drift analytics is not confirmed as an existing report', requires a documented QA procedure showing standardized components and consistent assessment across all sites offering the same course); ../accreditation/coda.yaml (2-6 — requires documented faculty calibration across every site)"
+
+  - pain: >
+      Preceptor-side gating doesn't exist the way student-side gating does —
+      whether the system can block a preceptor-to-placement assignment the
+      same way it blocks a student one is unconfirmed, so the coordinator
+      tracks preceptor onboarding in a side spreadsheet and hopes.
+    accreditation_link: >
+      ACPE Standard 3, Key Elements 3.3.a and 3.3.c (preceptor criteria,
+      education and development, gating assignment).
+    source: "../accreditation/acpe.yaml (3.3.a, 3.3.c — 'Requires confirming Compliance Management can gate a preceptor-to-placement assignment the same way it gates a student-to-placement assignment'; ACPE requires every preceptor complete orientation to the program's mission, the specific syllabus expectations, and effective evaluation technique BEFORE accepting a student, plus a documented development-activity log and a licensed-pharmacist majority per student's preceptor set); ../prism/capability-map.yaml (Compliance Management — item taxonomy unconfirmed, open Phase 2 question)"
+    related_flows:
+      - flow: "preceptor-site-onboarding--04-preceptor-orientation-training-policy-attestation-the.yaml"
+
+  - pain: >
+      Matching and scheduling tools each solve one slice and force the
+      coordinator to work around the rest — most competitor tools run
+      lottery/preference-based allocation but don't publicly document an
+      anchor-relative primitive, the thing that actually makes
+      midpoint-feedback and grade-deadline automation work at scale.
+    accreditation_link: >
+      LCME Standard 9, Element 9.7 (formative feedback at or before the
+      midpoint of every required experience) — the canonical anchor-relative
+      use case.
+    source: "../competitors/core-elms.yaml (SmartMatch reportedly cuts matching time significantly, but reviewers say its extensive settings lack clear setup documentation); ../competitors/one45.yaml (three named lottery algorithms); ../competitors/new-innovations.yaml (weaknesses — a competing vendor characterizes its scheduling as manual rule setup rather than constraint solving, hitting limits on complex structures, https://schedulingwiz.com/blog/best-gme-residency-tools); Elentra, Leo, and eMedley also run lottery/preference-based allocation; ../prism/capability-map.yaml (anchor-relative scheduling — publish/due dates set N days before or after a placement's start, mid, or end date); ../accreditation/lcme.yaml (9.7 — prism_fit 'Transfer')"
+    related_flows:
+      - flow: "rotation-lifecycle--06-midpoint-formative-feedback-early-risk-intervention.yaml"
+
+tools_touched:
+  - "The clinical/experiential platform — Exxat Prism, CORE ELMS (SmartMatch), eValue/MedHub, eMedley (eduSched, eCLAS, eKeeper), Elentra Clinical Experience Management, Leo (PET, Clerkship Lottery), New Innovations, one45 Program Scheduling"
+  - "AAMC VSLO — the away/visiting-rotation platform for MD and DO fourth-year audition rotations"
+  - "axiUm (dental) — chair/book/availability scheduling and student-patient matching against graduation requirements, for the in-house teaching clinic"
+  - "Site and preceptor contact database — usually a spreadsheet or CRM-ish workaround rather than a real system"
+  - "Affiliation agreement repository — SharePoint/Box plus DocuSign, tracked manually against expiration dates"
+  - "Excel / Google Sheets — capacity models, ratio checks, hours reconciliation, the master placement grid"
+  - "Email and phone — the actual channel for site recruitment, slot negotiation, and mid-block crisis handling"
+  - "Health-system credentialing portals — separate, per-site, per-student onboarding for badge, EHR access, and occupational-health clearance"
+  - "State-board intern-hour tracking (Pharmacy) — supervised intern hours reported outside the academic system"
+
+sources:
+  - "../accreditation/acpe.yaml (Key Elements 3.1.a, 3.1.b, 3.2.b, 3.2.d, 3.3.a, 3.3.c, 3.3.e, 3.5.b, 7.3.c)"
+  - "../accreditation/coca.yaml (Elements 6.9, 6.10, 6.11, 5.4)"
+  - "../accreditation/lcme.yaml (Elements 1.4, 5.5, 6.2, 8.6, 8.7, 9.3, 9.7)"
+  - "../accreditation/coda.yaml (Elements 2-6, 2-9, 2-24, 4-6)"
+  - "../domains/do.yaml (distributive clinical model; site capacity bottleneck; DO/MD away-rotation competition)"
+  - "../domains/medicine.yaml (clerkship site shortage; away-rotation cost burden)"
+  - "../domains/pharmacy.yaml (IPPE/APPE two-tier structure; coursework-free capstone year)"
+  - "../domains/dentistry.yaml (longitudinal comprehensive-care panel; per-procedure sign-off; patient-sourcing shortfalls delaying graduation)"
+  - "../competitors/core-elms.yaml"
+  - "../competitors/emedley.yaml"
+  - "../competitors/elentra.yaml"
+  - "../competitors/leo-davinci.yaml"
+  - "../competitors/one45.yaml"
+  - "../competitors/new-innovations.yaml"
+  - "../competitors/axium.yaml"
+  - "../prism/capability-map.yaml"
+  - "https://www.aamc.org/news/so-many-medical-students-so-few-clerkship-sites"
+  - "https://thedo.osteopathic.org/2023/11/to-solve-the-problem-of-too-few-clinical-rotation-sites-leaders-in-medicine-consider-business-solutions/"
+  - "https://pmc.ncbi.nlm.nih.gov/articles/PMC11984451/"
+  - "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf"
+  - "https://pmc.ncbi.nlm.nih.gov/articles/PMC11667986/"
+
+last_researched: "2026-08-24"

@@ -1,0 +1,31 @@
+@layer reset, theme, base, astryx-base, astryx-theme, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "@astryxdesign/core/reset.css";
+@import "@astryxdesign/core/astryx.css";
+@import "@astryxdesign/theme-neutral/theme.css";
+@import "@astryxdesign/core/tailwind-theme.css";
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@layer base {
+  html,
+  body {
+    height: 100%;
+  }
+}
+
+/* Observable Plot hardcodes tooltip/marker backgrounds to --plot-background: white
+   via a zero-specificity :where() rule injected into every chart's own <style>
+   block (see @observablehq/plot's plot.js) — this app never overrode it, so every
+   chart's hover tooltip rendered as an unreadable white-on-white box regardless of
+   the app's dark theme. That <style> block is unlayered, and per the CSS cascade
+   layers spec, unlayered rules ALWAYS beat layered ones (even @layer base with
+   real specificity) — so this override must be unlayered too, deliberately outside
+   every @layer block above, to even compete on specificity. Matches Plot's default
+   generated class (plot-d6a7b5) via a prefix selector so it survives a Plot
+   version bump that changes the hash. */
+svg[class*="plot-"] {
+  --plot-background: var(--color-background-popover);
+  color: var(--color-text-primary);
+}

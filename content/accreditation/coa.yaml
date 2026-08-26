@@ -1,0 +1,1079 @@
+# COA (Council on Accreditation of Nurse Anesthesia Educational Programs) — CRNA
+#
+# DOMAIN FIELD NOTE: the other four files in this folder (coca/lcme/acpe/coda)
+# set `domain` to one of the four EXPANSION markets (DO | Pharmacy | Dentistry |
+# Medicine). COA is not one of those — it is the accreditor for an
+# ALREADY-SERVED discipline (nurse anesthesia / CRNA, confirmed in production
+# per ../prism/capability-map.yaml `served_today`). Using the discipline name
+# "CRNA" in `domain` here is deliberate, not a schema violation: this file is
+# the accreditor-registry counterpart to ../personas/discipline-nursing.yaml,
+# which explicitly flags "no ../accreditation/{acen,ccne,coa}.yaml exists yet"
+# as the prerequisite for bringing that persona to expansion-domain depth.
+#
+# NAME COLLISION WARNING: this "COA" is NOT the general nursing accreditor
+# family. Nursing pre-licensure/graduate tracks answer to ACEN and/or CCNE
+# (covered separately). This COA accredits nurse anesthesia programs only. Any
+# future acen.yaml / ccne.yaml must not be merged into or confused with this
+# file.
+#
+# SOURCE HANDLING: unlike ./coca.yaml, the COA standards PDF carries NO
+# AI-usage restriction. Its only notice is a plain copyright line ("Copyright ©
+# 2014 by the Council on Accreditation of Nurse Anesthesia Educational
+# Programs," p. 1) and the standards landing page shows only "Copyright © 2025
+# COA All Rights Reserved." Both were checked specifically for an
+# AI-platform-submission prohibition of the kind COCA publishes; none is
+# present. This file paraphrases element requirements for internal product
+# planning and does not reproduce the standards document verbatim.
+#
+# PRODUCT-EVIDENCE NOTE: this file is the first artifact anywhere in the repo to
+# cite /Users/romitsoley/Downloads/CRNAVideosTranscripts.md — the only dedicated
+# Level-0 CRNA product source in the vault, previously uncited by every persona,
+# journey, and flow file. Every prism_fit below that rests on observed product
+# behavior is cited to that transcript by line number, in the confirmed_by style
+# used in ../flows/admin-onboarding--01-account-activation-login-navigation.yaml.
+#
+# EXISTING-MENTION AUDIT: ../personas/discipline-nursing.yaml,
+# ../journeys/admin-onboarding-product-setup.yaml, and
+# ../journeys/preceptor-site-onboarding.yaml already reference COA element
+# numbers written without a registry to check against. Verified below — see
+# `verification_of_prior_repo_mentions` at the foot of this file.
+
+accreditor: "COA (Council on Accreditation of Nurse Anesthesia Educational Programs)"
+slug: "coa"
+domain: "CRNA"
+governs: "Entry-level nurse anesthesia programs awarding practice doctorate degrees (DNP / DNAP) in the United States and Puerto Rico, including post-master's certificates and distance-education programs; students accepted on or after January 1, 2022 must graduate with doctoral degrees. COA also accredits postgraduate CRNA fellowships under a separate standards document. It is a programmatic accreditor recognized by the U.S. Department of Education and CHEA, autonomous from (though historically linked to) the AANA."
+standards_document:
+  title: "Standards for Accreditation of Nurse Anesthesia Programs — Practice Doctorate"
+  version_or_year: "Approved May 21, 2025; effective January 1, 2026. Certain elements marked with a dagger (†) apply only to students matriculating on or after January 1, 2026."
+  url: "https://www.coacrna.org/wp-content/uploads/2026/07/Standards-for-Accreditation-of-Nurse-Anesthesia-Programs-Practice-Doctorate-May-2025-Effective-Date-January-2026.pdf"
+
+# COA's severity convention, which no other accreditor in this folder uses:
+# an asterisk (*) on a standard means "Failure to fully comply with one or more
+# of these Standards is considered to be of critical concern in decisions
+# regarding nurse anesthesia program accreditation" (footer, pp. 12, 15, 16, 20,
+# 22, 23, 24, 26). CRITICAL flags below are quoted from that convention, not
+# inferred.
+
+standards:
+  - element_id: "Standard F.7 (Clinical Site Standards) — CRITICAL (*)"
+    element_title: "Clinical Supervision Ratio — hard 2:1 student-to-preceptor cap"
+    evidence_programs_must_produce: >
+      Proof that the student-to-clinical-preceptor supervision ratio at every
+      clinical site accounts for anesthetic/surgical complexity, the student's
+      knowledge and ability, and patient comorbidities — and that AT NO TIME
+      does the number of students directly supervised by one clinical preceptor
+      exceed 2:1. The glossary tightens this further: no more than 2 students to
+      1 CRNA, or 2 students to 1 physician anesthesiologist if no CRNA is
+      involved; the supervising CRNA/anesthesiologist is the only party
+      responsible for the patient's anesthesia care and must provide direct
+      guidance, evaluate performance, and approve the student's plan of care.
+      Brief exceedances are tolerated only for extenuating circumstances (e.g.
+      life-threatening situations), and the program must then demonstrate the
+      event was rare AND that contingency plans existed (additional CRNA called
+      in, emergency cases diverted). The program must also show students know
+      who is supervising them at any given time.
+    required_software_behavior: >
+      The unit of enforcement is preceptor-shift, not placement. A system must
+      (1) record, per clinical day, which named supervising CRNA or physician
+      anesthesiologist is responsible for which students — not just which site a
+      student is assigned to; (2) compute the OBSERVED concurrent ratio from
+      that assignment data rather than trusting a declared slot capacity number;
+      (3) block or hard-warn at assignment time when a third student would land
+      on the same preceptor on the same day; and (4) provide a structured
+      exception record — date, reason, contingency action taken, approver — that
+      aggregates into the "this is rare and planned for" narrative COA demands,
+      since the standard permits exceedance but only with documented
+      justification. Because supervision is also capped to credentialed
+      CRNAs/anesthesiologists (F.5), the preceptor referenced by the ratio must
+      be the same credentialed personnel record the clearance gate validates.
+    prism_fit: "Build"
+    prism_fit_rationale: >
+      Prism holds every input but computes none of the output. Clinical &
+      Experiential Education models supervision capacity as a human-declared
+      offer count on a Site/Location Slot (the internal Nursing Playbook names
+      "Sites → Slots" as where CRNA programs assign and monitor the ratio), and
+      Compliance Management's Placement Clearance Dashboard already runs a
+      Missing/Exists/NA tracker on Preceptor CV, License, and Certification — so
+      the preceptor entity, the credential check, and the capacity field all
+      exist. What does not exist is any per-preceptor, per-day ratio
+      computation: a slot count is a static number an admin types, and the CRNA
+      product surfaces confirm nothing else. The one CRNA-specific capture point
+      that could feed a real observed ratio is the CCE log's preceptor field,
+      but the transcript describes the preceptor purely as a REVIEWER of the
+      submitted log, never as a supervision-capacity dimension —
+      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md line 67: "If you
+      select No, you must specify whether a preceptor should review the
+      student's patient log. Click on the email template option to view the
+      email that the preceptor will receive." No report in the transcript's
+      reporting walkthrough aggregates by preceptor at all; the only CRNA report
+      demonstrated aggregates by student (line 83: "Select the Student Activity
+      Insights report"). This is COA's single most distinctive, most enforceable,
+      critical-flagged requirement and Prism does not compute it today.
+    gap_notes: >
+      Scope as a new derived object — "supervision assignment (preceptor x date
+      x students)" — sitting between Slot and Placement, plus an exception log.
+      Do NOT scope it as a slot-capacity validation: a slot cap constrains how
+      many students a SITE takes over a rotation, whereas F.7 constrains how many
+      students one PERSON supervises at one moment, and a site with ample slots
+      can still breach F.7 on a short-staffed day. Two adjacent precedents to
+      reuse: the Placement Assist overlapping-rotation guard (already a
+      concurrency check, just on the wrong axis) and the geolocated Faculty
+      Timesheet (already ties a named supervising faculty member to a
+      time-bounded clinical shift). Cross-reference
+      ../journeys/preceptor-site-onboarding.yaml, which independently reached
+      the same conclusion — that the declared "# of offers" count is the only
+      evidence for a live 2:1 standard and the only match-time surfacing
+      mechanism is PA's Max Placement rule.
+    source: "https://www.coacrna.org/wp-content/uploads/2026/07/Standards-for-Accreditation-of-Nurse-Anesthesia-Programs-Practice-Doctorate-May-2025-Effective-Date-January-2026.pdf (p. 23, Standard F.7; Glossary 'Clinical supervision,' p. 35)"
+
+  - element_id: "Standard C.4 (Student Standards)"
+    element_title: "Clinical Experience Logs, Faculty-Reviewed on a Regular Basis"
+    evidence_programs_must_produce: >
+      Accurate, complete clinical experience logs kept by every student and
+      reviewed by program faculty on a REGULAR BASIS (not once at graduation),
+      counted per COA's strict crediting rules: a student may take credit for a
+      case only where they personally provided anesthesia for critical portions
+      of it, and may count a procedure (CVC placement, regional block, etc.)
+      only if they personally performed it. Observation-only involvement cannot
+      be counted, and two learners should not be assigned to the same case
+      except where acuity requires two anesthesia providers — any deviation must
+      be justified by the program. COA's companion Guidelines for Counting
+      Clinical Experiences places final authority for quantifying experiences on
+      the Program Administrator, who must affirm the accuracy of the record.
+    required_software_behavior: >
+      Per-encounter case logging with a review/approval workflow that produces
+      an immutable record once approved (because these logs are simultaneously
+      the academic record, the accreditation evidence, and the certification
+      eligibility artifact); a submission window that forces contemporaneous
+      entry rather than end-of-rotation reconstruction; an explicit
+      attestation captured from the reviewing preceptor at approval time,
+      because COA's crediting rules turn on facts (did the student personally
+      manage the critical portions?) only the supervising clinician can affirm;
+      and a program-administrator-level affirmation layer above the preceptor
+      review, since COA vests final quantification authority there.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      This is shipped and in production for CRNA today — the strongest Transfer
+      in this file. The Clinical & Experiential Education pillar's Patient Log
+      IS the CCE log, confirmed verbatim in
+      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md line 57: "The case
+      log, also referred to as the patient log in some institutions, may vary in
+      name across schools. However, within Exxat Prism, it is labeled as the
+      patient log." Setup runs through the standard Courses → Learning
+      Activities → Setup path (line 53: "navigate to the learning activities
+      section on the left hand side and click Setup. From there, you can add the
+      CCE log to the course"), with a dedicated "single CCE form" in the form
+      dropdown (line 59). Contemporaneous entry is enforced by a configurable
+      submission window — line 63: "if the encounter date is November 2nd, 2025,
+      and you set the limit to five days, the student will be able to enter the
+      log until November 7th, 2025." Faculty review is a first-class workflow
+      with Pending Review / Needs Attention status tabs and bulk approval (line
+      77, line 79: "select multiple logs and use the Approve All option for bulk
+      approval"). Preceptor attestation is native — line 71: "enable the Enable
+      Attestation option to require preceptors to acknowledge an attestation
+      when reviewing logs... you can add a statement requiring preceptors to
+      attest to the accuracy and integrity of their review before approving a
+      log."
+    gap_notes: >
+      One real trap, confirmed in the same transcript: auto-approval and
+      attestation are MUTUALLY EXCLUSIVE — line 71: "if you mark logs for auto
+      approval, you will not be able to configure an attestation message." A
+      CRNA program cannot have frictionless logging and a signed preceptor
+      integrity attestation at the same time, and for C.4 the attestation is the
+      accreditation-load-bearing half, so auto-approval should be treated as
+      configuration malpractice for this discipline and flagged in
+      implementation. Second gap: COA vests FINAL quantification authority in
+      the Program Administrator, but the transcript's review chain ends at
+      preceptor/faculty approval — no program-administrator affirmation tier is
+      demonstrated. Third: nothing in the transcript enforces COA's
+      two-learners-on-one-case rule.
+    source: "https://www.coacrna.org/wp-content/uploads/2026/07/Standards-for-Accreditation-of-Nurse-Anesthesia-Programs-Practice-Doctorate-May-2025-Effective-Date-January-2026.pdf (p. 16, Standard C.4; Glossary 'Counting clinical experiences,' p. 36); companion doc https://www.coacrna.org/wp-content/uploads/2026/01/Guidelines-for-Counting-Clinical-Experiences-Jan-2026.pdf (p. 1-2, 'General Guidelines on Counting Clinical Experiences')"
+
+  - element_id: "Standard E.2.3 + Appendix (Curriculum Standards) — E.2 is CRITICAL (*)"
+    element_title: "Clinical Experience Minimums — 2,000 clinical hours and ~60 case-category thresholds"
+    evidence_programs_must_produce: >
+      Per-student proof that every graduate met a minimum of 2,000 clinical
+      hours and each of roughly sixty individually numbered minimum case counts
+      in COA's Appendix table, organized into eight families: Patient Physical
+      Status (ASA Classes III-VI ≥200; total cases ≥700†), Patient Assessment
+      (initial preanesthetic ≥50, postanesthetic ≥50, chest X-ray assessment
+      ≥5), Special Cases (geriatric 65+ ≥100; pediatric 2-12 ≥30; pediatric <2
+      ≥10; trauma/emergency ≥30; obstetrical ≥30 split 10 cesarean / 10 labor
+      analgesia; pain management encounters ≥15), Anatomical Categories
+      (intra-abdominal ≥75, intracranial ≥5, oropharyngeal ≥20, intrathoracic
+      ≥15, neck ≥5, neuroskeletal ≥20, vascular ≥10), Methods of Anesthesia
+      (general anesthesia ≥400, tracheal intubation ≥250, emergence ≥300,
+      moderate/deep sedation ≥25, supraglottic airway ≥35, alternative/endoscopic
+      intubation ≥25, mask ventilation ≥100†), Regional Techniques (≥35
+      administered, ≥35 managed), Arterial/Central-line/Ultrasound techniques
+      (arterial puncture ≥25, IV catheter placement ≥100, ultrasound-guided ≥20),
+      plus the didactic contact-hour floors in E.2.2 (advanced
+      physiology/pathophysiology 120, advanced pharmacology 90, basic and
+      advanced principles 120, research 75, advanced health assessment 45).
+      Rows marked † apply only to students matriculating on or after January 1,
+      2026 — i.e. two cohorts in the same building are held to different totals.
+    required_software_behavior: >
+      A configurable, hierarchical minimum-threshold taxonomy where a single
+      logged encounter counts simultaneously toward multiple parents (COA's
+      footnote on Anatomical Categories is explicit: "Count all that apply," and
+      an alternative-technique intubation counts in BOTH the tracheal-intubation
+      and alternative-technique rows); per-student running progress against every
+      threshold with visible red/amber/green status DURING training, not at
+      graduation; separate actual-vs-simulated sub-counts where COA distinguishes
+      them, with a hard rule that certain categories cannot be satisfied by
+      simulation alone; and cohort-conditional thresholds keyed to matriculation
+      date so the † rows apply to the right students automatically.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The mechanism is shipped and demonstrably CRNA-shaped. Clinical &
+      Experiential Education's Patient Log supports program-defined minimums per
+      category, and the CRNA-specific Student Activity Insights report renders
+      progress against them with exactly the traffic-light semantics this
+      standard needs —
+      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md line 87: "A green
+      cell signifies that the student has met or exceeded the minimum
+      requirement, showing 100% or more completion. A yellow or amber cell
+      indicates that the student is approaching the minimum, typically completing
+      around 80 to 99% of the required value. Finally, a red cell, representing
+      0% to below the minimum, means the student has not met the required
+      threshold. For example, if the minimum requirement is 200 and the student
+      has entered only 21, the cell will appear red." The 200-minimum example is
+      itself plausibly COA's Classes III-VI row. The report is filterable by
+      "rotation, program, clinical settings, site location, status, and student"
+      (line 85) and reachable at Learning Activities → course → Reports (line
+      83). The CRNA log layout already carries COA's own taxonomy families
+      (patient physical status, patient assessment, special cases, anatomical
+      categories, methods of anesthesia, arterial technique, central venous
+      catheter, pulmonary artery catheter). So the work is loading the May 2025
+      Appendix as the threshold set, not building a thresholds engine.
+    gap_notes: >
+      Three things the shipped mechanism does not obviously handle. (1)
+      COHORT-CONDITIONAL THRESHOLDS: the † rows (total cases 700, mask
+      ventilation 100 with maintenance 25, CVC monitoring 10) bind only students
+      matriculating on/after Jan 1 2026, so the same course offering must apply
+      two threshold sets by matriculation year — the transcript shows minimums
+      configured per course offering with no cohort conditionality. (2)
+      ACTUAL-vs-SIMULATED: COA repeatedly splits a row into actual and simulated
+      sub-counts and forbids satisfying it by simulation alone; nothing in the
+      transcript shows a simulated flag on a logged encounter. (3) MULTI-PARENT
+      COUNTING: "count all that apply" and the intubation double-count rule mean
+      one encounter must increment several thresholds at once — confirm the
+      Patient Log threshold model does this rather than assigning an encounter to
+      one category. Also note the template itself is support-gated: new patient-
+      log templates and edits to existing ones require a CSS agent, Account
+      Manager, or prism-support ticket (per ../prism/capability-map.yaml), so a
+      COA edition change is not a self-service admin task.
+    source: "https://www.coacrna.org/wp-content/uploads/2026/07/Standards-for-Accreditation-of-Nurse-Anesthesia-Programs-Practice-Doctorate-May-2025-Effective-Date-January-2026.pdf (p. 21, Standard E.2.2 and E.2.3; Appendix table pp. 28-33; Glossary 'Clinical hours,' p. 35)"
+
+  - element_id: "Standard F.9 (Clinical Site Standards) — CRITICAL (*)"
+    element_title: "Student Time Commitment — 64-hour week, 10-hour rest, 16-hour continuous-care ceiling"
+    evidence_programs_must_produce: >
+      Evidence that student time commitment does not exceed 64 hours per week,
+      where that figure is the SUM of class hours plus all clinical hours,
+      AVERAGED OVER 4 WEEKS. The glossary adds two absolute limits the standard
+      text does not: students must have a 10-hour rest period between scheduled
+      clinical duty periods (assigned continuous clinical hours), and at no time
+      may a student provide direct patient care for longer than 16 continuous
+      hours. Clinical hours themselves are defined broadly — anesthesia time
+      plus in-house call, preanesthesia and postanesthetic assessment, patient
+      and OR preparation, and clinical rounds — and total clinical hours must be
+      greater than or equal to total anesthesia time.
+    required_software_behavior: >
+      A duty-hour engine, not a timesheet total. It must (1) sum didactic and
+      clinical hours from two different sources into one weekly figure; (2)
+      compute a 4-week rolling average rather than a per-week snapshot, so a
+      single heavy week is not a violation but a sustained pattern is; (3)
+      detect gaps BETWEEN consecutive duty periods to enforce the 10-hour rest
+      rule, which requires shift start/end timestamps, not daily hour totals;
+      (4) detect continuous-care spans crossing 16 hours; and (5) validate the
+      internal consistency rule that logged clinical hours ≥ logged anesthesia
+      time for the same student.
+    prism_fit: "Build"
+    prism_fit_rationale: >
+      Clinical & Experiential Education ships a Timesheet learning activity —
+      confirmed present for CRNA programs alongside Forms and Evaluations and
+      Patient Logs in the same Learning Activities → Setup screen
+      (/Users/romitsoley/Downloads/CRNAVideosTranscripts.md line 103: "You'll now
+      see the Learning Tool Interoperability section alongside Forms and
+      Evaluations, Timesheets, and Patient Logs") — and the limited-release
+      geolocated Faculty Timesheet already proves Prism can capture
+      check-in/check-out timestamps rather than typed totals. But every duty-hour
+      rule COA states is a temporal-adjacency computation (rest gap between
+      shifts, continuous-span ceiling, 4-week rolling average) and none of the
+      documented Timesheet reporting does adjacency math; the shipped custom
+      report builder aggregates timesheet data by Sum/Average over a date range,
+      which produces a weekly total but not a violation. The didactic half is
+      worse: class hours live in Courses, clinical hours in Timesheet/CCE log,
+      and nothing sums across the two into the single figure F.9 caps.
+    gap_notes: >
+      This is the closest thing in the four-domain workstream to ACGME
+      duty-hour tracking, and it is a genuinely reusable build — medicine
+      (../accreditation/lcme.yaml territory) and any GME-adjacent product need
+      the same engine. Scope it once, as a rules layer over timestamped duty
+      periods, rather than as a CRNA-specific report. Note also that F.9's
+      figure spans didactic and clinical, so the engine cannot live wholly inside
+      the placement module.
+    source: "https://www.coacrna.org/wp-content/uploads/2026/07/Standards-for-Accreditation-of-Nurse-Anesthesia-Programs-Practice-Doctorate-May-2025-Effective-Date-January-2026.pdf (p. 23, Standard F.9; Glossary 'Reasonable time commitment,' p. 41, and 'Clinical hours,' p. 35)"
+
+  - element_id: "Standards D.1-D.50 (Graduate Standards) — ALL 50 CRITICAL (*)"
+    element_title: "Graduate Competency Framework across six domains"
+    evidence_programs_must_produce: >
+      Demonstrated ability, per graduate, on all fifty numbered competencies
+      grouped into six domains: Patient Safety (D.1-D.4), Perianesthesia
+      (D.5-D.12), Critical Thinking (D.13-D.24), Communication (D.25-D.30),
+      Leadership (D.31-D.32), and Professional Role (D.33-D.50). Every one of
+      the fifty carries COA's critical-concern asterisk — an unusual
+      all-or-nothing severity posture with no non-critical graduate competency.
+      Seven of them (D.31, D.38, D.41, D.46, D.48, D.49 — the dagger-marked
+      items on leadership self-reflection, cost-effectiveness, public policy and
+      healthcare financing, cross-system outcome analysis, and informatics for
+      patient care and for healthcare systems) apply only to students
+      matriculating on or after January 1, 2026. D.24 is notable as a
+      competency whose evidence comes entirely from outside the program:
+      "Pass the National Certification Examination (NCE) administered by the
+      NBCRNA."
+    required_software_behavior: >
+      A configurable competency framework carrying all fifty elements with their
+      six-domain parentage; mapping of assessment questions and/or course grades
+      to individual competencies once, with scores computed thereafter; a
+      per-student view showing achievement on every competency (not a domain
+      average, since each of the fifty is independently critical); and
+      cohort-versioning so the seven dagger competencies apply only to the right
+      matriculation years while the older framework stays intact for students
+      already enrolled.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      The Intelligence Layer's Competency Tracking engine is a genuine fit and
+      is already documented as configured with this exact framework — the
+      internal Nursing Playbook states D.1-D.50 are set up directly as the
+      competency framework with a custom competency reporting scale. The engine
+      maps competencies to experiential assessment questions at the child-most
+      standard level or to didactic course grades (or both), normalizes onto a
+      1-5 or custom scale with a configurable pass threshold, and renders a
+      Student Competency Dashboard with per-competency scores, trendlines, and
+      student-vs-class radar charts. Curriculum Mapping supplies the
+      complementary coverage view (Heatmap, Mapped Standards Directly vs.
+      Indirectly, Unmapped) once D.1-D.50 is loaded as an Accreditation
+      Standards set. The Nursing precedent for a pre-loaded accreditor framework
+      with level-conditional sub-scopes (AACN Essentials, entry-level mapping to
+      sub-competencies A/B/C vs. advanced-level E/F/G) is the closest existing
+      shape.
+    gap_notes: >
+      Two cautions. (1) SCORING MODEL vs. SEVERITY MODEL: Prism computes
+      parent-level scores as a pooled mean across child competencies, and its
+      Student Proficiency Distribution buckets a student as "Meeting Threshold"
+      only if ALL domains clear threshold. That is a domain-level view; COA
+      treats each of the fifty as individually critical, so a domain average can
+      mask a single failed competency. Confirm the dashboard can be driven at
+      the competency level rather than the domain level before citing it as COA
+      evidence. (2) COHORT VERSIONING for the seven dagger competencies: the
+      AACN precedent versions by PROGRAM LEVEL, not by matriculation year;
+      whether a framework can be scoped to a matriculation cohort is unconfirmed
+      and is the same conditional-threshold problem flagged under E.2.3/Appendix.
+      (3) D.24 (pass the NCE) cannot be evidenced from in-system data at all —
+      see the Exam Management gap under Standard H.1.6/G.3.4 below.
+    source: "https://www.coacrna.org/wp-content/uploads/2026/07/Standards-for-Accreditation-of-Nurse-Anesthesia-Programs-Practice-Doctorate-May-2025-Effective-Date-January-2026.pdf (pp. 17-20, Standards D.1-D.50; dagger footnote p. 20)"
+
+  - element_id: "Standard H.1.1 and H.1.1.1 (Evaluation Standards) — H.1.1 CRITICAL (*)"
+    element_title: "Formative and Summative Student Evaluation, with Terminal Evaluation against D1-D50"
+    evidence_programs_must_produce: >
+      A written systematic plan for continuous self-assessment incorporating
+      formative and summative evaluations of EACH student, conducted both to
+      counsel the student and to document achievement — plus, specifically, a
+      terminal evaluation completed to demonstrate that student achieved
+      Graduate Standards D1-D50; an established assessment procedure verifying
+      competence in scholarship skills relevant to the area of academic focus;
+      and evidence that faculty advising provides ongoing formal and informal
+      feedback.
+    required_software_behavior: >
+      Two evaluation cadences over one data model: high-frequency formative
+      instruments (in nurse anesthesia, a per-clinical-day evaluation, which over
+      a three-year doctoral program generates thousands of forms per cohort) and
+      a terminal summative instrument whose questions map to the fifty graduate
+      competencies. The formative volume makes AGGREGATION the load-bearing
+      requirement — an accreditor cannot read individual forms, so the system
+      must roll response counts and percentage distributions into a per-student
+      artifact. Dual-perspective capture (student self-rating alongside
+      preceptor rating on the same item) is needed because H.1.2.7 separately
+      requires students to evaluate their own achievement. Advising contacts need
+      their own logged, timestamped record.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Prism has built a CRNA-specific report for exactly the volume problem this
+      standard creates. Per
+      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md line 21: "The Daily
+      Clinical Evaluation Report is designed for nursing CRNA programs, where
+      daily clinical evaluations play a critical role in assessing student
+      performance during clinical practice. Given the extended duration of CRNA
+      courses, a large volume of evaluation forms accumulates over time from both
+      students and preceptors. While existing reports capture individual
+      responses, the Daily Clinical Evaluation Report goes a step further by
+      aggregating all of that data into a structured, easy-to-read format... you
+      can quickly access total response counts, percentage distributions, and a
+      comprehensive overview of evaluation data." Dual-perspective capture is
+      native — line 27: "you will choose whether you want to include student
+      responses, preceptor responses, or both," and line 31: "If both student and
+      preceptor responses are included, the report displays them side by side for
+      each question, making it easy to compare perspectives." Output is a
+      per-student PDF (ZIP for multi-select, line 31), i.e. a portable artifact
+      per student rather than a screen. The terminal half lands on Competency
+      Management mapped to D.1-D.50 (see above), and Compliance Management's
+      Communications vs. Interventions record types cover the advising-feedback
+      trail with Open/Closed status and structured follow-ups.
+    gap_notes: >
+      The Daily Clinical Evaluation Report is an aggregation and export layer,
+      not a competency computation — it reports response counts and percentage
+      distributions per question, whereas H.1.1.1 asks for achievement of D1-D50.
+      Bridging the two requires the daily instrument's questions to be MAPPED to
+      competencies in Competency Management, which the transcript does not show
+      and which should be verified rather than assumed. Second, the transcript
+      notes these per-student PDFs "can also be shared directly with clinical
+      sites, giving preceptors and site coordinators visibility into student
+      evaluation data" (line 35) — a FERPA-adjacent disclosure path worth pairing
+      with Compliance Management's OTP protection before it is recommended.
+    source: "https://www.coacrna.org/wp-content/uploads/2026/07/Standards-for-Accreditation-of-Nurse-Anesthesia-Programs-Practice-Doctorate-May-2025-Effective-Date-January-2026.pdf (p. 25, Standard H.1.1 and sub-elements H.1.1.1-H.1.1.3)"
+
+  - element_id: "Standards B.5, B.6, B.11, B.12, B.15, B.16 (Faculty Standards) — ALL CRITICAL (*)"
+    element_title: "CRNA Administrator and Faculty Licensure plus Current NBCRNA Certification"
+    evidence_programs_must_produce: >
+      For the CRNA program administrator (B.5, B.6) and the assistant CRNA
+      program administrator (B.11, B.12): a current license or privilege to
+      practice as a registered professional nurse and/or APRN in the state or
+      territory of the program's jurisdiction, AND current certification or
+      recertification by the NBCRNA. For CRNA faculty generally, the same two
+      requirements (B.15, B.16). All six carry the critical-concern asterisk.
+      Adjacent non-critical requirements needing the same evidence store: B.1/B.9
+      (doctorally prepared CRNA leadership), B.2/B.10 (doctoral degree from an
+      institution accredited by a USDE-recognized agency at the time conferred),
+      B.17 (formal instruction in curriculum, evaluation, and instruction for
+      administrator, assistant, and course directors), B.18 (only CRNAs and
+      physician anesthesiologists teach clinical anesthesia content), B.19
+      (clinical competency demonstration), B.20 (non-CRNA faculty academically
+      prepared for what they teach), B.21 (distance-education training). A
+      federal/military nurse practicing exclusively in federal systems needs only
+      one state license, per a footnote on B.5.
+    required_software_behavior: >
+      Credential records at the PERSON level with issuing jurisdiction, number,
+      and expiry; automated expiry alerting far enough ahead to renew; a
+      distinction between "licensed somewhere" and "licensed in the program's
+      state of jurisdiction," since B.5 is jurisdiction-specific; NBCRNA
+      certification tracked as a separate item type from RN/APRN licensure
+      (different issuer, different cycle); role-conditional requirement sets so
+      the administrator and assistant administrator carry heavier requirements
+      than adjunct didactic faculty; and CV/degree evidence attached to the same
+      record for B.2/B.10/B.20.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Compliance Management ships a Faculty Compliance module parallel to student
+      compliance — templates, categories, mandatory/sensitive flags,
+      auto-notifications, faculty-specific Compliance Groups for bulk assignment,
+      and a Reset-as-versioning action that archives the prior document and
+      reopens the requirement for re-upload, which is exactly the pattern an
+      annual NBCRNA recertification or biennial license renewal needs. Faculty CV
+      auto-generation from the structured profile (education, employment,
+      licenses, certifications, teaching history by academic year) doubles as the
+      B.2/B.17/B.20 evidence artifact.
+    gap_notes: >
+      Two hard caveats, both material for CRNA specifically. (1) Faculty
+      Compliance REQUIRES the paid Exxat Approve add-on — this critical-flagged
+      standard is therefore gated behind a services attach, not included in the
+      base product, which needs stating in any COA-facing pitch. (2) CRNA
+      PRECEPTORS ARE NOT FACULTY IN PRISM'S DATA MODEL: nursing preceptors sit
+      under Sites → Personnel, OUTSIDE the Faculty Compliance engine (confirmed
+      in ../journeys/admin-onboarding-product-setup.yaml stage 5 and in the
+      internal Nursing Playbook). Standard B.15/B.16 reads on "CRNA faculty," but
+      F.5 imposes the credentialing requirement on clinical-site supervisors too,
+      and those people live in the weaker Personnel store whose only gate is the
+      Placement Clearance Dashboard's Missing/Exists/NA tri-state on CV, License,
+      and Certification — a presence check, not an expiry-aware compliance
+      record. That split is the single biggest structural gap for COA Standard B
+      and F.5 together.
+    source: "https://www.coacrna.org/wp-content/uploads/2026/07/Standards-for-Accreditation-of-Nurse-Anesthesia-Programs-Practice-Doctorate-May-2025-Effective-Date-January-2026.pdf (p. 13, Standards B.5-B.6; p. 14, Standards B.11-B.12 and B.15-B.16; footnote on federal/military licensure, p. 13)"
+
+  - element_id: "Standard C.5 (Student Standards), with Standard D.12"
+    element_title: "ACLS and PALS Certification Before Beginning Clinical Activities"
+    evidence_programs_must_produce: >
+      Proof that every student holds Advanced Cardiac Life Support (ACLS) and
+      Pediatric Advanced Life Support (PALS) certification BEFORE beginning
+      clinical activities (C.5), and — as a critical-flagged graduate
+      competency — that the graduate maintains current ACLS and PALS
+      certification (D.12). The pairing means the certification must be valid at
+      two distinct checkpoints: the start of clinical work and graduation.
+    required_software_behavior: >
+      Certification items with issue and expiry dates that HARD-BLOCK the start
+      of a clinical placement rather than merely flagging non-compliance, since
+      C.5 is a precondition and not a target; expiry alerting on a cycle short
+      enough to catch a two-year ACLS card lapsing mid-program; and re-validation
+      at each new placement rather than a one-time admission check.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Straight Compliance Management. Program Requirements track per-student
+      items with completed/pending/overdue/outstanding status, and the Placement
+      Clearance gate blocks a placement unless student compliance, site
+      documents, active contract, and preceptor credential validity are all
+      satisfied — a genuine multi-entity gate, not an advisory dashboard. The
+      internal Nursing Playbook names ACLS/PALS explicitly as the CRNA-specific
+      certifications verified at that gate, so this is configuration of an
+      existing item type on a proven gate.
+    gap_notes: >
+      Watch the exemption taxonomy: Compliance Management supports Approved with
+      Declination / Exception / Medical Exemption / Religious Exemption
+      sub-statuses, which are appropriate for immunization mandates but would
+      silently satisfy a hard clinical-competency precondition like ACLS if
+      applied here. Confirm exemption sub-statuses can be disabled per item type
+      before configuring ACLS/PALS. Also note Exxat's documented best practice is
+      to begin monitoring the Clearance Dashboard 6-8 weeks before rotations
+      begin — worth encoding as a program calendar event for CRNA cohorts given
+      C.5's absolute "before beginning clinical activities" wording.
+    source: "https://www.coacrna.org/wp-content/uploads/2026/07/Standards-for-Accreditation-of-Nurse-Anesthesia-Programs-Practice-Doctorate-May-2025-Effective-Date-January-2026.pdf (p. 16, Standard C.5; p. 17, Standard D.12)"
+
+  - element_id: "Standards F.5 and F.8 (Clinical Site Standards) — F.5 CRITICAL (*)"
+    element_title: "Supervision Restricted to Institutionally Credentialed CRNAs, Anesthesiologists, and Credentialed Experts"
+    evidence_programs_must_produce: >
+      Evidence that clinical supervision at every site is limited to CRNAs and
+      physician anesthesiologists who are INSTITUTIONALLY CREDENTIALED to
+      practice and immediately available for consultation (F.5), and that
+      supervision in NONANESTHETIZING areas is restricted to credentialed
+      experts authorized to assume responsibility for the student (F.8) —
+      per the glossary, an individual holding a certificate, letter, or other
+      testimonial attesting to their right and authority to provide services in
+      the specialization they were trained in. Standard F.3 additionally requires
+      the program to appoint a CRNA coordinator for each clinical site holding a
+      master's degree (doctoral preferred), with a physician anesthesiologist
+      permitted in that role and any master's-degree exception requiring Council
+      approval valid for five years.
+    required_software_behavior: >
+      A supervisor record typed by role (CRNA / physician anesthesiologist /
+      credentialed expert for a named nonanesthetizing area), carrying the
+      credentialing institution and evidence of privileges — which is a distinct
+      fact from a state license, since F.5 turns on INSTITUTIONAL credentialing
+      at the site where the student works. Site-level appointment of a named
+      CRNA coordinator with degree evidence and, where applicable, a
+      Council-approved exception with its own five-year expiry. The supervisor
+      role type must be readable by the F.7 ratio computation, because the 2:1
+      cap counts only these credentialed individuals.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Compliance Management's personnel-compliance model already tracks preceptor
+      certification and license number on the Personnel record and surfaces it in
+      the Comprehensive Personnel Report, and the Placement Clearance Dashboard's
+      Preceptor CV / License / Certification tri-state gives a per-placement
+      check. Clinical & Experiential Education's Experiential Supervisor Intake
+      Form (PIF) is the natural collection mechanism: a configurable digital
+      intake sent to clinical supervisors via an encrypted delegator link with
+      e-signature/attestation/file-upload elements, engagement tracking, and a
+      timestamped sync history explicitly marketed to close accreditation audit
+      gaps. Adding "institutional credentialing evidence" and a supervisor
+      role-type field to that form's custom section is configuration.
+    gap_notes: >
+      The PIF syncs to the personnel profile as a one-way, irreversible final
+      action with no reject or undo, and bulk sending is not supported (one
+      supervisor at a time) — for a CRNA program onboarding a large anesthesia
+      department this is a real operational cost. More importantly, F.5's fact is
+      INSTITUTIONAL credentialing at the clinical site, not state licensure, and
+      Personnel's documented fields are license number and certification; confirm
+      whether a distinct privileging/credentialing evidence field exists or
+      whether it collapses into a generic document upload. The F.3 site-level
+      CRNA coordinator appointment (with its Council-approved five-year exception
+      clock) has no obvious home in either Sites or Personnel today.
+    source: "https://www.coacrna.org/wp-content/uploads/2026/07/Standards-for-Accreditation-of-Nurse-Anesthesia-Programs-Practice-Doctorate-May-2025-Effective-Date-January-2026.pdf (p. 23, Standards F.3, F.5, F.8; Glossary 'Credentialed expert,' p. 36, and 'Clinical supervision,' p. 35)"
+
+  - element_id: "Standard F.1 with Standard A.10 (Clinical Site / Conducting Institution) — BOTH CRITICAL (*)"
+    element_title: "Sufficiency of Clinical Resources for the Size and Scope of the Program"
+    evidence_programs_must_produce: >
+      Demonstration that the program has sufficient clinical resources to ensure
+      graduates INDIVIDUALLY meet all accreditation requirements (F.1) — note the
+      per-student framing, not an aggregate one — and that program resources are
+      adequate to support its size and scope across six named categories (A.10):
+      financial resources, physical resources, learning resources INCLUDING
+      CLINICAL SITES, faculty, support personnel, and student services. Standard
+      A.11 adds that a program must seek Council approval BEFORE any significant
+      increase in class size and demonstrate reasonable assurance of adequate
+      A.10 resources at the larger size.
+    required_software_behavior: >
+      A site/location inventory with capacity, setting, and historical placement
+      volume; a forward-looking projection tying cohort size to available slots
+      per case category, since F.1's "individually" test means a program with
+      enough total slots can still fail if no site offers, say, enough open-heart
+      or pediatric-under-2 cases for every student to hit the Appendix minimums;
+      and a class-size-increase scenario model producing the A.11 pre-approval
+      submission.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Clinical & Experiential Education's Sites database plus the placement
+      report family (Comprehensive Placement Report, Distribution of Slots by
+      Location, Distribution of Slots by Setting, Placement by Site/Location,
+      Placement Limit Report) is the standing evidence set, and the internal
+      Nursing Playbook names Sites capacity and historical placement data as the
+      sufficiency evidence for exactly this pair. There is also a direct
+      cross-discipline precedent for productizing this: CAPTE reports for PT/PTA
+      are shipped under accreditor-cited names, "Number and Variety of Clinical
+      Sites (Standard 2C)" and "Number and Variety of Clinical Slots (Standard
+      8F)."
+    gap_notes: >
+      The CAPTE-named report pattern is currently PT/PTA- and PA-specific;
+      equivalent reports for every other discipline including Nursing are
+      generically named with no standard citation, so a COA-named F.1/A.10.3
+      report is a real (small) build, not an existing asset. Harder gap: no
+      shipped report crosses site capacity with the Appendix CASE-CATEGORY
+      minimums, which is what F.1's "individually" wording actually demands —
+      capacity-by-case-type sufficiency is the analytic COA cares about and
+      Prism does not produce it. A.10's non-clinical resource categories
+      (financial, physical, support personnel, student services) are outside the
+      product entirely; represent that honestly, following the CSWE precedent
+      where Exxat's own guide states required faculty data forms "must be
+      completed outside Exxat Prism."
+    source: "https://www.coacrna.org/wp-content/uploads/2026/07/Standards-for-Accreditation-of-Nurse-Anesthesia-Programs-Practice-Doctorate-May-2025-Effective-Date-January-2026.pdf (p. 23, Standard F.1; p. 12, Standards A.10, A.10.3, A.11)"
+
+  - element_id: "Standard F.2 with Standard A.3 (Clinical Site / Conducting Institution) — A.3 CRITICAL (*)"
+    element_title: "Legally Binding Clinical Site Contracts and Academic Affiliation Agreements"
+    evidence_programs_must_produce: >
+      A legally binding contract with each clinical site outlining the
+      expectations and responsibilities of both parties (F.2), and — where the
+      program is conducted under an academic affiliation or a joint arrangement
+      between two or more entities with unshared governance — a legally binding
+      written agreement delineating the expectations and responsibilities of all
+      parties (A.3, critical).
+    required_software_behavior: >
+      A contract object linked to sites/locations with executed-copy storage,
+      effective and expiry dates, renewal alerting, and — critically — automatic
+      validation of contract validity against the DATES of each placement, so a
+      placement extending past a contract's expiry is caught before students are
+      on site rather than at audit. One agreement must be able to cover multiple
+      sites without duplication.
+    prism_fit: "Transfer"
+    prism_fit_rationale: >
+      Compliance Management ships this outright. Contracts are tracked and linked
+      to locations with a contract-expiring toggle; an automated Contract Status
+      check on the Placement Clearance Dashboard evaluates each location's
+      contracts against placement dates and returns Valid Contract vs. Needs
+      Attention when a contract expires before placement END, plus a distinct
+      Missing Contracts state and multi-contract-per-location handling. A single
+      contract can be linked to many sites via a chain icon, and a "common
+      contract sharing" toggle lets one agreement cover multiple discipline
+      programs at the same university — directly useful where a university runs
+      CRNA alongside BSN/DNP tracks at the same hospital. Expirations also surface
+      as Program Calendar events.
+    gap_notes: >
+      A.3 is an INSTITUTION-level agreement between conducting entities, not a
+      clinical-site contract; Prism's Contract object is location-linked by
+      design, so the joint-governance agreement has no natural home other than
+      the Program Details accreditation record or a generic document store.
+      Small gap, but A.3 is critical-flagged and F.2 is not, so the weaker
+      coverage is on the more severe standard.
+    source: "https://www.coacrna.org/wp-content/uploads/2026/07/Standards-for-Accreditation-of-Nurse-Anesthesia-Programs-Practice-Doctorate-May-2025-Effective-Date-January-2026.pdf (p. 23, Standard F.2; p. 11, Standard A.3; Glossary 'Conducting institution' and 'Unshared governance')"
+
+  - element_id: "Standards F.4 and F.6 (Clinical Site Standards)"
+    element_title: "Educational Environment Conducive to Learning, and Clinical Site Orientation"
+    evidence_programs_must_produce: >
+      Demonstration that the educational environment at ALL clinical sites is
+      conducive to student learning (F.4), and that clinical site orientations
+      are provided which outline role expectations and responsibilities of
+      students and identify available learning resources (F.6). Neither element
+      carries the critical asterisk, and — see the audit note below — neither
+      element mandates a program-conducted site VISIT; the site visit is a COA
+      process activity, listed among the Council's own objectives as one of the
+      mechanisms by which COA periodically assesses programs, alongside annual
+      reports, self-studies, and progress reports.
+    required_software_behavior: >
+      A repeatable site-assessment instrument capturing the learning-environment
+      facts F.4 turns on (teaching culture, case mix, resource availability,
+      student feedback), versioned so trend across cycles is visible; a record
+      per site of orientation delivered, dated, with the materials issued and
+      an acknowledgment from each student who received it; and follow-up dates
+      that surface on a calendar rather than living in a spreadsheet.
+    prism_fit: "Configure"
+    prism_fit_rationale: >
+      Clinical & Experiential Education ships a self-service Site Assessment form
+      builder (Sites → Setup → Form Setup) with eleven question types including
+      attestation and e-signature, per-question help text and mandatory flags,
+      Draft/Published states, and results rolling into a Comprehensive Site
+      Assessment report used as accreditation trend evidence. Exxat's standard
+      "Initial Site Visit" and "Ongoing Site Visit" forms give a starting
+      template, and the internal Nursing Playbook already documents structured
+      site-assessment tracking (date, mode, type, custom form) with follow-up
+      dates pushed to the Program Calendar. The orientation half (F.6) maps onto
+      Compliance Management's attestation model — an orientation acknowledgment
+      is the same shape as the course-specific attestations already retained with
+      a timestamp in the student's Profile → Academics tab.
+    gap_notes: >
+      Published Site Assessment forms cannot be unpublished, and custom forms can
+      only be deleted at zero responses — plan the COA instrument before
+      publishing it. The F.6 orientation-acknowledgment use is an inference from
+      the attestation model, not a documented CRNA workflow; nothing in the CRNA
+      transcript covers site orientation at all.
+    source: "https://www.coacrna.org/wp-content/uploads/2026/07/Standards-for-Accreditation-of-Nurse-Anesthesia-Programs-Practice-Doctorate-May-2025-Effective-Date-January-2026.pdf (p. 23, Standards F.4 and F.6; COA objectives listing site visits as a COA-side assessment mechanism, p. 6)"
+
+  - element_id: "Standard H.1.2 (Evaluation Standards) — CRITICAL (*)"
+    element_title: "Student Evaluation of Courses, Instruction, Sites, Environment, Advising, Self, and Program"
+    evidence_programs_must_produce: >
+      Student-completed evaluations covering eight named facets: courses
+      (H.1.2.1), didactic instruction (H.1.2.2), clinical sites (H.1.2.3),
+      clinical instruction (H.1.2.4), teaching and learning environment
+      (H.1.2.5), advising/mentorship (H.1.2.6), their own achievement /
+      self-evaluation (H.1.2.7), and the program itself (H.1.2.8) — the last
+      broken out further into institutional/program resources, student services,
+      and curriculum. Standard H.1.3 imposes a parallel faculty-side set
+      (faculty services, the program, and self-evaluation of teaching, practice,
+      service, and scholarly activities).
+    required_software_behavior: >
+      Configurable evaluation instruments bound to each of the eight targets —
+      note that four of them (course, didactic instructor, clinical site,
+      clinical instructor) are DIFFERENT entity types requiring different
+      distribution logic; confidential/anonymized aggregation, since candid
+      evaluation of a clinical instructor who controls the student's grade
+      requires it; and an auditable path from evaluation results into logged
+      program changes, because H.2 requires the program to USE this data to
+      monitor and improve quality, achievement, advising, and accreditation
+      compliance.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      This is the "Surveys & Course Evaluations" pillar. CORRECTED 2026-08-26,
+      per Exxat PM confirmation (see content/prism/capability-map.yaml, Surveys
+      & Course Evaluations pillar): this pillar is shipped, not roadmap Q1 2027
+      as previously stated here. That correction does not resolve this element,
+      though — the nuance that matters for CRNA is that two mechanisms already
+      exist but neither covers this standard as configured today. (a) The
+      Forms/Evaluations engine handles
+      placement-anchored instruments and, for CRNA, demonstrably runs a daily
+      clinical evaluation with both student and preceptor perspectives — but that
+      instrument evaluates the STUDENT, which is H.1.1, the opposite direction
+      from H.1.2. Nothing in
+      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md shows a student
+      evaluating a course, a site, or an instructor. (b) Exxat Surveys, the
+      general-purpose builder, ships named templates only for PT (APTA-aligned
+      Multi-Rater DCE Performance Survey set) and SLP (Graduating Student Survey,
+      Clinical Supervisor Survey, added December 2025) — there is no
+      Nursing/CRNA template family, and PT's PTSE1/PTSE2 pattern (site evaluation
+      publishable, CI evaluation not publishable with a send-to-CI step instead)
+      is precisely the confidentiality model H.1.2.3/H.1.2.4 needs but exists
+      only for PT.
+    gap_notes: >
+      Highest-value, lowest-effort CRNA product move in this file: port the
+      PT PTSE1/PTSE2 site-and-instructor evaluation pattern to nurse anesthesia
+      as a COA-cited standard form family covering H.1.2's eight facets. The
+      engine, the confidentiality model, and the reporting all already exist for
+      another discipline — this is template authoring, not a build. Note that
+      building new assessment forms is support-gated for some disciplines, so
+      confirm whether CRNA sits on the self-service or ticket side of that
+      boundary before promising a timeline. Rating note: this element's Gap
+      rating was never solely about the Surveys & Course Evaluations pillar
+      being roadmap — that framing has been corrected above (shipped, per
+      content/prism/capability-map.yaml, CORRECTED 2026-08-26), but the
+      CRNA-specific gaps (no Nursing/CRNA template family, wrong evaluation
+      direction in the existing Forms/Evaluations instrument) are independent
+      of that fact and still stand. Left as Gap here; worth a fresh look now
+      that the input fact has changed, in case the corrected shipped status
+      changes the effort estimate for closing it.
+    source: "https://www.coacrna.org/wp-content/uploads/2026/07/Standards-for-Accreditation-of-Nurse-Anesthesia-Programs-Practice-Doctorate-May-2025-Effective-Date-January-2026.pdf (pp. 25-26, Standard H.1.2 and sub-elements H.1.2.1-H.1.2.8.3; Standard H.1.3, p. 26)"
+
+  - element_id: "Standards H.1.4-H.1.6 and G.3.4 (Evaluation / Policy) — H.1.6 and G.3 CRITICAL (*)"
+    element_title: "Alumni and Employer Evaluation, Outcome Measures, and Annual Public Publication"
+    evidence_programs_must_produce: >
+      Alumni evaluations of program quality and of their own preparation to enter
+      anesthesia practice (H.1.4.1, H.1.4.2); employer evaluations of the
+      performance of recent graduates (H.1.5); and outcome measures of academic
+      quality (H.1.6, critical) comprising student attrition (H.1.6.1), NBCRNA
+      NCE pass rates AND MEAN SCORES (H.1.6.2), employment rates (H.1.6.3), and
+      any other program-identified measures of student achievement (H.1.6.4).
+      Standard G.3 (critical) then requires ANNUAL PUBLICATION of the program's
+      accreditation status, the specific academic program covered, COA's name,
+      address, telephone number and URL, and — for the most recent graduating
+      class — attrition (G.3.4.1), employment of graduates as nurse anesthetists
+      within 6 months of graduation (G.3.4.2), and the NBCRNA NCE FIRST-TIME
+      pass rate (G.3.4.3). The glossary requires this be posted on a website
+      linked to COA's List of Accredited Educational Programs.
+    required_software_behavior: >
+      Survey distribution to non-users at external email addresses, since alumni
+      and employers hold no accounts; ingestion of NBCRNA-reported NCE results
+      per cohort — both first-time pass rate (for G.3.4.3) and mean scores (for
+      H.1.6.2), which are different figures with different denominators; an
+      attrition calculation keyed to the most recent graduating class; a
+      6-month-post-graduation employment outcome tracked against COA's specific
+      definition (occupational engagement, or an offer of it, in any setting
+      requiring CRNA-scope duties as a condition of employment); and publication
+      of the resulting figures to a public web page on an annual cycle with
+      recency tracking.
+    prism_fit: "Gap"
+    prism_fit_rationale: >
+      Three separate misses. (1) POST-GRADUATION OUTCOMES: no shipped pillar
+      tracks students past graduation — the same gap documented for COCA's GME
+      placement-rate element — so attrition is computable but 6-month employment
+      is not. (2) EXTERNAL-AUDIENCE SURVEYS: Exxat Surveys does support an
+      anonymous public link/QR code and additional email/CSV distribution, which
+      is the mechanism alumni and employer surveys need, but with no CRNA
+      template family (see H.1.2 above) this is unbuilt configuration rather than
+      a shipped answer. (3) NCE RESULTS: pass rates and mean scores originate at
+      NBCRNA, outside any program system — this is the Exam Management pillar's
+      job (roadmap Q2 2027) and, exactly as with NBOME/COMLEX for the DO domain,
+      it must be scoped as a results-ingestion and reporting integration, never
+      as exam delivery. Prism cannot and will not administer the NCE. Nothing
+      shipped publishes program outcome data to a public page on a cycle.
+    gap_notes: >
+      G.3.4 and H.1.6 together are the cleanest business case in this file for
+      Accreditation Management (Q3 2027): three specific, externally-sourced
+      figures, published annually, on a critical-flagged standard. The pattern is
+      structurally identical to COCA Element 11.4/11.5 (publish NBOME pass rates
+      and GME placement rates, with improvement plans on threshold breach) —
+      build the "external outcome figure → threshold check → public publication
+      → recency tracking" object once and it serves both accreditors. Note one
+      COA-specific subtlety: H.1.6.2 wants pass rates AND MEAN SCORES while
+      G.3.4.3 wants the FIRST-TIME pass rate specifically; a single "pass rate"
+      field will not satisfy both.
+    source: "https://www.coacrna.org/wp-content/uploads/2026/07/Standards-for-Accreditation-of-Nurse-Anesthesia-Programs-Practice-Doctorate-May-2025-Effective-Date-January-2026.pdf (p. 24, Standard G.3 and G.3.4.1-G.3.4.3; p. 26, Standards H.1.4-H.1.6 and H.2; Glossary 'Graduate employment rate,' p. 39, and 'Published outcomes,' p. 41)"
+
+licensure_or_gme_layer:
+  - body: "NBCRNA (National Board of Certification and Recertification for Nurse Anesthetists) — National Certification Examination (NCE)"
+    what_it_governs: >
+      The certifying body for initial, continued, and specialty certification of
+      Certified Registered Nurse Anesthetists. It administers the National
+      Certification Examination (NCE), which a graduate of a COA-accredited
+      program must pass to be credentialed as a CRNA, and runs the Continued
+      Professional Certification (CPC) Program for practicing CRNAs alongside
+      the MAC program and the Nonsurgical Pain Management (NSPM) specialty
+      certification. NBCRNA is named in COA's own preamble as one of the
+      communities of interest whose input shapes the standards.
+    relevance_to_product: >
+      NBCRNA appears inside the COA standards in three structurally different
+      ways, and the product implications differ for each. (1) AS A GRADUATE
+      COMPETENCY: Standard D.24 — "Pass the National Certification Examination
+      (NCE) administered by the NBCRNA" — is a critical-flagged competency whose
+      evidence lives entirely outside the program, so any D.1-D.50 competency
+      framework will have exactly one element it cannot compute from in-system
+      data. (2) AS A FACULTY CREDENTIAL: Standards B.6, B.12, and B.16 require
+      current NBCRNA certification or recertification for the program
+      administrator, assistant administrator, and CRNA faculty — a
+      compliance-item type on the person record, distinct from RN/APRN licensure
+      and on its own recertification cycle. (3) AS AN OUTCOME MEASURE: H.1.6.2
+      (pass rates and mean scores) and G.3.4.3 (first-time pass rate, published
+      annually) require ingesting NBCRNA-reported cohort results. Separately,
+      Prism already ships a dedicated NBCRNA Transcript Report that renders
+      case-log statistics per student "in accordance with NBCRNA guidelines" —
+      the strongest existing CRNA-specific accreditation asset in the product,
+      and the reason CCE-log data quality is simultaneously an academic record,
+      a COA C.4 artifact, and a certification-eligibility document. That triple
+      duty is why the log's immutability-after-approval and preceptor-attestation
+      behaviors matter more here than in any other discipline.
+    source: "https://www.nbcrna.com/ ; COA Standards p. 13-14 (B.6, B.12, B.16), p. 18 (D.24), p. 24 (G.3.4.3), p. 26 (H.1.6.2)"
+  - body: "State Boards of Nursing — RN and APRN licensure"
+    what_it_governs: >
+      State-level licensure and scope of practice. COA requires an unencumbered
+      RN and/or APRN license in the United States or its territories as an
+      ADMISSION requirement (Standard C.2.2, critical), and current licensure or
+      privilege to practice as an RN and/or APRN in the STATE OR TERRITORY OF THE
+      PROGRAM'S JURISDICTION for the CRNA program administrator (B.5) and
+      assistant administrator (B.11), and in compliance with state law for CRNA
+      faculty (B.15) — all critical. A footnote carves out federal/military
+      nurses practicing exclusively in federal or military systems, who need only
+      one state or territory license. State boards of nursing are named in COA's
+      preamble as a community of interest in standards development. Post-
+      graduation, state APRN licensure (not COA and not NBCRNA) is what actually
+      authorizes practice, and requirements vary by state including on physician
+      supervision.
+    relevance_to_product: >
+      Three product consequences. (1) JURISDICTION IS A FIELD, NOT A FLAG: B.5
+      and B.11 are satisfied only by licensure in the program's own state, so a
+      credential record needs issuing jurisdiction as structured data — a boolean
+      "license on file" cannot evidence these critical standards, and the
+      federal/military footnote means the validation rule has a documented
+      exception path. (2) LICENSURE AS AN ADMISSIONS GATE: C.2.2 makes an
+      unencumbered RN/APRN license (plus C.2.3's minimum one year full-time
+      critical care experience) an admission precondition, which sits upstream of
+      where Compliance Management normally engages — confirm whether admissions-
+      stage requirements can be tracked in the same store as clinical-stage ones
+      or whether programs run two systems. (3) MULTI-STATE COMPLEXITY: CRNA
+      programs commonly place students across state lines, and since supervision
+      is limited to institutionally credentialed CRNAs and anesthesiologists
+      (F.5) whose authority is state-scoped, a single preceptor record may need
+      multiple jurisdiction-tagged licenses rather than one.
+    source: "COA Standards pp. 13-14 (B.5, B.11, B.15 and federal/military footnote), p. 16 (C.2.2, C.2.3), p. 23 (F.5); Glossary 'Advanced Practice Registered Nurse' and 'Privilege to practice,' pp. 34, 40"
+  - body: "AANA (American Association of Nurse Anesthesiology)"
+    what_it_governs: >
+      The professional association for CRNAs and student registered nurse
+      anesthetists (SRNAs). Not an accreditor — COA is autonomous in its
+      accreditation decisions — but AANA publishes the Scope of Nurse Anesthesia
+      Practice and the Standards for Nurse Anesthesia Practice, which COA's own
+      Guidelines for Counting Clinical Experiences invokes as the definition of
+      the full scope students must be prepared for, and the Code of Ethics for
+      the Certified Registered Nurse Anesthetist, adherence to which is
+      Graduate Standard D.33. COA publishes a formal crosswalk between the AANA
+      Scope of Practice and the COA Standards. AANA's Board of Directors and
+      Education Committee are named contributors to the standards.
+    relevance_to_product: >
+      Two things. First, the published AANA-Scope-to-COA-Standards crosswalk is a
+      ready-made second mapping dimension: a CRNA program mapping curriculum to
+      D.1-D.50 in Curriculum Mapping can carry the AANA scope alongside it, the
+      same multi-framework pattern Nursing already runs (AACN Essentials plus
+      NONPF plus IPEC plus program SLOs simultaneously). Second, AANA is the
+      go-to-market channel — the Assembly of Didactic and Clinical Educators
+      (formerly the Assembly of School Faculty), singled out in COA's preamble,
+      is where CRNA program administrators gather, and is the CRNA equivalent of
+      the AACOM annual meeting noted in ./coca.yaml.
+    source: "https://www.aana.com/ ; COA Standards Preamble p. 3, D.33 p. 19; https://www.coacrna.org/wp-content/uploads/2026/02/Crosswalk-Between-the-AANA-Scope-of-Nurse-Anesthesia-Practice-and-COA-Standards.pdf"
+  - body: "COA Accreditation Policies and Procedures Manual (the process layer, distinct from the Standards)"
+    what_it_governs: >
+      The operational accreditation cycle — annual reports, self-studies, site
+      visits, and progress reports — which COA lists among its own objectives as
+      the mechanisms by which it periodically assesses programs for compliance.
+      Standard A.12 (critical) obliges programs to act in accordance with this
+      Manual, and Standard H.1 footnotes it for the "Plans for Purposeful Change
+      and Needed Improvement" policy. The Manual is revised on its own schedule
+      (current revision June 2026, later than the May 2025 Standards).
+    relevance_to_product: >
+      This is where the site-visit obligation actually lives, and it is COA's
+      activity, not the program's — a distinction the existing repo mentions get
+      wrong (see the audit below). More importantly for scoping: the Manual, not
+      the Standards, defines the report structures and submission deadlines an
+      Accreditation Management pillar would have to target. Following the COCA
+      lesson in ./coca.yaml — scope Accreditation Management around the
+      accreditor's exact report structure and field taxonomy rather than a
+      generic evidence binder — the Manual is the document to mine next for CRNA,
+      and its independent revision cadence means the standards registry and the
+      report-format registry will drift apart and must be versioned separately.
+      Two smaller product hooks: Exxat support can provision read-only
+      accreditation site-visit accounts on request, and Standard A.11 requires
+      Council pre-approval for significant class-size increases, which is a
+      submission with a deadline rather than a continuous compliance state.
+    source: "https://www.coacrna.org/wp-content/uploads/2026/07/Accreditation-Policies-and-Procedures-Manual-rev-June-2026.pdf ; COA Standards p. 6 (Council objectives, site visits), p. 12 (A.11, A.12), p. 25 (H.1 footnote 9)"
+
+# ---------------------------------------------------------------------------
+# AUDIT OF PRE-EXISTING, UNGROUNDED COA MENTIONS ELSEWHERE IN THIS REPO
+# Every mention below was written before this registry file existed. Each was
+# checked against the May 2025 / effective-January-2026 Standards PDF.
+# ---------------------------------------------------------------------------
+verification_of_prior_repo_mentions:
+  - claim: "COA F.7 — hard 2:1 student-to-preceptor supervision ratio"
+    cited_in:
+      - "../personas/discipline-nursing.yaml (lines 41-42, 75, 144, 174)"
+      - "../journeys/preceptor-site-onboarding.yaml (lines 288, 331)"
+      - "../journeys/admin-onboarding-product-setup.yaml (lines 696, 751)"
+    verdict: "CONFIRMED — accurate as written, including the critical flag."
+    detail: >
+      Standard F.7 (p. 23) is asterisked and states "At no time does the number
+      of students directly supervised by an individual clinical preceptor exceed
+      2:1." Two refinements the existing mentions omit and should adopt: the
+      glossary specifies the cap is 2 students to 1 CRNA, or 2 students to 1
+      physician anesthesiologist if no CRNA is involved (i.e. it is not a generic
+      "preceptor"), and the standard is NOT absolute — brief exceedances in
+      extenuating circumstances are permitted where the program demonstrates
+      rarity plus a contingency plan. Describing it as unconditionally hard
+      slightly overstates it and, more usefully, hides a product requirement:
+      the exception record.
+  - claim: "COA F.4 — site visits"
+    cited_in:
+      - "../journeys/admin-onboarding-product-setup.yaml (line 752, 'site visits map to COA F.4')"
+      - "the internal Nursing Playbook, line 72"
+    verdict: "NEEDS CORRECTION — F.4 says nothing about site visits."
+    detail: >
+      Standard F.4 (p. 23) reads that the program "demonstrates that the
+      educational environment at all clinical sites is conducive to student
+      learning." It is not asterisked and imposes no visit obligation. Site
+      visits are COA's OWN activity, listed among the Council's objectives (p. 6)
+      as one mechanism — alongside annual reports, self-studies, and progress
+      reports — by which COA periodically assesses programs, and governed by the
+      Accreditation Policies and Procedures Manual, not the Standards. The
+      defensible version of the claim is: a Site Assessment form is how a program
+      EVIDENCES F.4 (and F.6, site orientations), not that F.4 requires a site
+      visit. Recommend rewording the journey file and the playbook accordingly.
+  - claim: "COA A.10 / F.1 — clinical site sufficiency"
+    cited_in:
+      - "../personas/discipline-nursing.yaml (line 70)"
+      - "../journeys/admin-onboarding-product-setup.yaml (lines 300, 753)"
+    verdict: "CONFIRMED — both citations are correct and both standards are critical."
+    detail: >
+      F.1 (p. 23, asterisked): the program "demonstrates it has sufficient
+      clinical resources to ensure graduates individually meet all accreditation
+      requirements." A.10 (p. 12, asterisked): program resources must be adequate
+      to support size and scope, with A.10.3 naming "learning resources including
+      clinical sites" specifically — so A.10.3 is the precise sub-element and is
+      worth citing over bare A.10. One substantive point the existing mentions
+      miss: F.1's operative word is "individually," which makes this a
+      per-student, per-case-category sufficiency test rather than an aggregate
+      slot count — a materially harder analytic than the Sites-database evidence
+      currently claimed against it.
+  - claim: "COA Graduate Standards D.1-D.50"
+    cited_in:
+      - "../personas/discipline-nursing.yaml (lines 39-40, 74, 136, 174)"
+      - "../journeys/competency-verification.yaml (line 181, CRNA case logging)"
+    verdict: "CONFIRMED — the range is exact, and the critical flag is understated if anything."
+    detail: >
+      Standards D.1 through D.50 (pp. 17-20) are the Graduate Standards, grouped
+      into six domains: Patient Safety (D.1-D.4), Perianesthesia (D.5-D.12),
+      Critical Thinking (D.13-D.24), Communication (D.25-D.30), Leadership
+      (D.31-D.32), and Professional Role (D.33-D.50). ALL FIFTY carry the
+      critical-concern asterisk — there is no non-critical graduate standard.
+      Standard H.1.1.1 (p. 25) independently confirms the range by requiring a
+      terminal evaluation demonstrating "student achievement of Graduate
+      Standards D1-D50." Two facts to add wherever this range is cited: seven
+      elements (D.31, D.38, D.41, D.46, D.48, D.49) are dagger-marked as
+      effective only for students matriculating on or after January 1, 2026, so
+      the framework is cohort-conditional; and D.24 is "Pass the National
+      Certification Examination (NCE)," a competency no program system can
+      evidence internally.
+  - claim: "COA E.2 / C.4 — NBCRNA Transcript Report"
+    cited_in:
+      - "../personas/discipline-nursing.yaml (line 142)"
+    verdict: "CONFIRMED, with a more precise sub-element available."
+    detail: >
+      C.4 (p. 16) is exactly on point: students keep accurate and complete
+      clinical experience logs reviewed by program faculty on a regular basis.
+      E.2 (p. 21, asterisked) is correct but broad; the operative sub-element is
+      E.2.3, 'Clinical experiences (see Appendix)', which is what actually
+      carries the case-count minimums the transcript report renders. Prefer
+      'E.2.3 and the Appendix (pp. 28-33)' over bare 'E.2'.
+  - claim: "COA H.1.4 / H.1.6 — alumni and employer feedback"
+    cited_in:
+      - "../personas/discipline-nursing.yaml (line 159)"
+      - "../journeys/accreditation-self-study.yaml (line 334)"
+    verdict: "PARTIALLY INCORRECT — employer evaluation is H.1.5, not H.1.6."
+    detail: >
+      H.1.4 (p. 26) is alumni evaluation (H.1.4.1 program quality, H.1.4.2 their
+      own preparation to enter practice) — correct. Employer evaluation of recent
+      graduates' performance is H.1.5, a separate sub-element. H.1.6 (asterisked,
+      critical) is outcome measures of academic quality: attrition, NBCRNA NCE
+      pass rates and mean scores, employment rates, and other program-identified
+      measures. So a claim about "alumni and employer feedback" should cite
+      H.1.4 and H.1.5; a claim about employment-rate outcome data should cite
+      H.1.6.3. Both citations happen to be individually valid standards, but the
+      employer half is mis-numbered.
+  - claim: "COA Standard B — faculty licensure / NBCRNA certification, critical sub-standards"
+    cited_in:
+      - "../personas/discipline-nursing.yaml (lines 18, 73, 148)"
+      - "../journeys/admin-onboarding-product-setup.yaml (lines 551, 592-594)"
+    verdict: "CONFIRMED — and the specific critical sub-standards can now be named."
+    detail: >
+      The asterisked Standard B elements on licensure and certification are B.5
+      and B.6 (CRNA program administrator: state-jurisdiction RN/APRN licensure;
+      current NBCRNA certification), B.11 and B.12 (assistant CRNA program
+      administrator, same pair), and B.15 and B.16 (CRNA faculty, same pair) —
+      pp. 13-14. B.1, B.3, and B.9 are also asterisked but concern doctoral
+      preparation and experiential qualification rather than licensure. Replace
+      the vague 'COA Standard B critical sub-standards' with these six numbers.
+  - claim: "ACLS/PALS student certifications gate every CRNA placement"
+    cited_in:
+      - "../personas/discipline-nursing.yaml (lines 42, 138)"
+      - "../journeys/admin-onboarding-product-setup.yaml (line 592)"
+    verdict: "CONFIRMED, with the element number now available (it was never cited)."
+    detail: >
+      Standard C.5 (p. 16): students are certified in ACLS and PALS before
+      beginning clinical activities. Not asterisked at the student stage — but
+      D.12 (p. 17), maintaining current ACLS and PALS certification, IS
+      asterisked as a graduate competency. So the requirement binds at two
+      checkpoints with different severity, which none of the existing mentions
+      capture.
+
+sources_beyond_the_standards_document:
+  - "/Users/romitsoley/Downloads/CRNAVideosTranscripts.md — the only dedicated Level-0 CRNA product source in the vault (3 video transcripts: Daily Clinical Evaluation Report, Managing Clinical Case Experience Log, Echo360/GoReact LTI Assignments). Previously uncited anywhere in this repo; every product-behavior claim above that rests on observed CRNA workflow is cited to it by line number."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — internal synthesis from the ACEN/CCNE/COA Accreditation Standards Support Guides; source of the Sites-to-Slots ratio-monitoring claim, the D.1-D.50 competency-framework configuration, the NBCRNA Transcript Report, and the CRNA CCE log field layout. Self-describes as skewed toward accreditor-mapped features and CRNA logging and thin on general ADN/BSN conventions."
+  - "../prism/capability-map.yaml — pillar names, shipped-vs-roadmap status, and the Compliance Management / Clinical & Experiential Education / Curriculum Mapping feature detail cited throughout."
+  - "https://www.coacrna.org/wp-content/uploads/2026/01/Guidelines-for-Counting-Clinical-Experiences-Jan-2026.pdf — COA's companion interpretive document for case crediting (revised January 2026); the operative constraint layer over the Appendix minimums."
+
+open_questions:
+  - "Does the Patient Log threshold model support COA's multi-parent counting ('count all that apply' on Anatomical Categories; alternative-technique intubations counting in two rows), or does one encounter increment exactly one threshold?"
+  - "Can Patient Log minimums and Competency Management frameworks be scoped to a matriculation cohort? Required for both the seven dagger Graduate Standards and the three dagger Appendix rows effective January 1, 2026."
+  - "Does the CRNA daily clinical evaluation instrument's questions map into Competency Management against D.1-D.50, or does the Daily Clinical Evaluation Report stop at response counts and percentage distributions? Determines whether H.1.1.1's terminal evaluation is Configure or Build."
+  - "Does the Personnel record distinguish INSTITUTIONAL credentialing/privileging at a clinical site (COA F.5) from state licensure, or do both collapse into a document upload?"
+  - "Is form/survey authoring self-service for the CRNA discipline, or support-gated as it is for SLP? Determines the effort to port the PT PTSE1/PTSE2 pattern to satisfy H.1.2."
+  - "Mine the COA Accreditation Policies and Procedures Manual (rev. June 2026) for the actual annual-report and self-study field taxonomy — the ./coca.yaml lesson is that Accreditation Management should be scoped to an accreditor's real report structure, and for COA that structure lives in the Manual, not the Standards."
+
+last_researched: "2026-08-25"

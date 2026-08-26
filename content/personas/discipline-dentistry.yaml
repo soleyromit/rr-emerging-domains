@@ -1,0 +1,339 @@
+# Discipline-layer persona for Dentistry (DDS/DMD).
+# The PROGRAM is the archetype, not an individual.
+# Grounded in ../domains/dentistry.yaml, ../accreditation/coda.yaml, and
+# ../competitors/{axium,core-elms,leo-davinci,e-value,elentra}.yaml.
+# Facts are sourced; persona framing (naming the JTBD, the archetype) is synthesized
+# from the combination of those findings and is labeled as inference where it is one.
+domain: "Dentistry"
+
+persona_name: "The Newly-Opened CODA Dental School Outgrowing Its Own Clinic"
+
+archetype_summary: >
+  A recently opened or fast-growing CODA-accredited predoctoral (DDS/DMD) program —
+  one of the cohort behind U.S. predoctoral program growth from 55 programs in 2000 to
+  77 in 2024-25, where 25% of the 7,013 first-year enrollees in 2024 sat at newly
+  opened schools and total predoctoral enrollment has climbed to 28,925 students in
+  2025-26 [../domains/dentistry.yaml market]. Structurally it looks nothing like a
+  nursing or allied-health program: there are no short block rotations to schedule.
+  Each student carries their own longitudinal comprehensive-care patient panel from
+  year 1 and acts as primary provider through years 3-4 at roughly 32 hrs/week of
+  direct patient care, with a faculty clinical practice unit (~1 lead + 1-2
+  instructors per 2-student team) signing off on each individual procedural step
+  before the student may proceed. Progression is quota- and competency-gated, not
+  calendar-gated [../domains/dentistry.yaml clinical_education_shape].
+  The defining tension for this archetype (inference from combining the domain's
+  patient-sourcing pain point with CODA Standard 2-9): a young program's own teaching
+  clinic does not yet have the established patient base an entrenched school has, so
+  it must push students into community-based extramural sites to manufacture the
+  patient volume CODA requires — which is precisely the multi-site, external-placement
+  shape its incumbent dental system (axiUm) was never built for.
+
+accreditation_pressure:
+  - point: "One accreditor covers dental school and residencies"
+    detail: >
+      CODA governs both the DDS/DMD degree and the postdoctoral GPR/AEGD/specialty
+      layer under one roof — unlike MD/DO where LCME/COCA and ACGME are separate
+      bodies [../accreditation/coda.yaml licensure_or_gme_layer].
+  - point: "Every student must get enough patient care to graduate (Standard 2-9)"
+    detail: >
+      What keeps this program's accreditation liaison up at night, in rough order
+      of dread: (1) Standard 2-9 "adequate patient experiences" — the program must
+      prove every student has access to enough comprehensive patient-care
+      experience to hit every stated competency in reasonable time, while the
+      domain research documents insufficient patient volume/compliance as a
+      widespread, real cause of delayed graduation. For a new school still
+      building a patient base, this is an existential standard, not a paperwork
+      one.
+  - point: "Graduates must prove competency in ~15 clinical skills (Standard 2-24)"
+    detail: >
+      (2) Standard 2-24 minimum competencies — every graduate must be documented
+      competent across ~15 clinical categories (a-o: assessment/diagnosis/treatment
+      planning, head-and-neck cancer screening, referral judgment, caries
+      prevention, anesthesia and pain/anxiety control, restorations, lab
+      coordination, fixed/removable/implant prosthodontics, periodontal therapy,
+      pulpal therapy, mucosal/TMJ/osseous disorders, hard/soft tissue surgery,
+      emergencies, malocclusion/space management, outcomes evaluation), each
+      evidenced by procedure-level logs naturally expressed in ADA CDT codes.
+  - point: "Program must continuously track its own performance (Standard 1-2)"
+    detail: >
+      (3) Standard 1-2 institutional effectiveness — planning, assessment and
+      improvement must be "broad-based, systematic, and continuous," which is the
+      backbone of the self-study CODA reads before every site visit. Programs that
+      compile this manually in the months before a visit feel this as an annual
+      fire drill.
+  - point: "Teaching must be consistent across every clinic site (Standard 2-6)"
+    detail: >
+      (4) Standard 2-6 comparable instruction across all sites — documented
+      faculty calibration, calibration training manuals, periodic monitoring, and
+      evidence of faculty participation, at every site where required educational
+      activity happens. The more extramural sites a growing program adds to solve
+      (1), the more (4) hurts.
+  - point: "Outside clinic partnerships need signed, current agreements (Standard 4-6)"
+    detail: >
+      (5) Standard 4-6 written agreements for any site the institution does not
+      own — an affiliation agreement must not lapse while students are actively
+      placed there.
+  - point: "Patient care quality must be audited and improved (Standard 5-3)"
+    detail: >
+      (6) Standard 5-3 patient-care CQI — written measurable standards of care,
+      ongoing review of a representative sample of patients and records,
+      root-cause analysis of treatment deficiencies, and implemented corrective
+      measures.
+  - point: "Struggling students and faculty get formal reviews (Standards 2-2, 3-4)"
+    detail: >
+      (7) Standard 2-2 individual evaluation and due process when a student
+      misses didactic/behavioral/clinical criteria, and Standard 3-4 objective
+      faculty evaluation across teaching, patient care, scholarship, and service.
+  - point: "Grads also face national exams like INBDE and state clinical boards"
+    detail: >
+      Layered on top, not part of CODA but reported into it: INBDE pass rates
+      (accepted by all U.S. states), the JCNDE DLOSCE, and state/regional
+      hands-on clinical licensure exams via ADEX/CDCA-WREB (manikin-based
+      CompeDont since ~2020) — a second, multi-jurisdiction outcomes rollup that
+      allied-health licensure has no equivalent of.
+  - point: "Accreditation rules changed suddenly in August 2025 (Standards 1-4, 4-4, 1-3)"
+    detail: >
+      Live volatility worth naming in any conversation: the Commission's August
+      8, 2025 action suspended Standards 1-4 and 4-4 indefinitely and revised the
+      Standard 1-3 Intent Statement and Examples of Evidence — the standards this
+      program is being measured against moved within the last year.
+
+current_tools:
+  - point: "axiUm is the dominant dental school software (used by ~90%)"
+    detail: >
+      Almost certainly axiUm (Exan / Henry Schein One) as the system of record.
+      axiUm is reported in use at ~90% of U.S. dental schools, with Henry Schein
+      academic software stated to reach 85% of U.S. and 70% of Canadian dental
+      schools and ~30,000 students [../competitors/axium.yaml].
+  - point: "axiUm bundles patient records, scheduling, grading, and CODA reporting"
+    detail: >
+      It is a combined academic dental EHR + practice management suite:
+      chair/book/availability scheduling, student-patient matching against
+      graduation requirements, an Evaluations Module with customizable grading
+      schemes, student self-assessments, faculty review/approval of student
+      treatments, audit trails, and marketed "CODA-Ready Reporting" — the last of
+      which is genuinely ahead of most cross-discipline competitors on the
+      accreditation-reporting pillar.
+  - point: "axiUm has no tools for off-site placements or compliance tracking"
+    detail: >
+      What axiUm is not: its academic model assumes patients come to the
+      school's own in-house teaching clinic. There is no public evidence of an
+      external rotation/placement engine, a discrete student compliance-item
+      tracker (immunizations, background checks, certifications gating placement
+      start), a structured curriculum-to-competency mapping tool, a general
+      survey/course-evaluation instrument, or an exam-management module.
+  - point: "axiUm's \"compliance\" means data security, not student checks"
+    detail: >
+      Its "compliance" claims are security/data-governance (role-based access,
+      audit trails, encryption for HIPAA/FERPA/CODA), not student credentialing.
+  - point: "Users call axiUm clunky and outdated (3.1/5 rating)"
+    detail: >
+      And its users are blunt about the experience: 3.1/5 on Capterra across 12
+      verified reviews, described as "clunky," "outdated like a program created
+      in the early 90s," steep learning curve, crashes and freezing, many screens
+      per task — tolerated because institutional customers have had few options,
+      per those same reviewers.
+  - point: "CORE ELMS handles placements but makes no CODA claim"
+    detail: >
+      Around that core, this archetype likely runs one or more cross-discipline
+      tools for the jobs axiUm does not cover. Candidates actually serving
+      dentistry per the research: CORE ELMS (dental page exists, SmartMatch
+      placement matching, 30+ modules, 4.7/5 Capterra with 4.9/5 customer service
+      — but its dental page conspicuously makes no CODA-specific claim the way
+      its pharmacy page makes an ACPE one);
+  - point: "Leo serves dentistry but is merging into Elentra"
+    detail: >
+      Leo (DaVinci Education), which lists dentistry as a served domain and
+      ships surveys, exam management and accreditation reporting today but is
+      mid-merger with Elentra under Achieve Partners, with Elentra publicly
+      courting Leo customers to migrate;
+  - point: "Elentra and E*Value serve dentistry but don't speak CDT"
+    detail: >
+      Elentra itself, which lists dentistry among 14 disciplines; and E*Value
+      (MedHub), which lists dentistry among 20+ advanced-practice disciplines.
+      None of these is dentistry-native the way axiUm is; none of them speaks
+      CDT.
+
+jtbd:
+  - job: >
+      When my students are responsible for recruiting and retaining their own patient
+      panel and a shortfall silently pushes back graduation, I want live visibility
+      into each student's patient-encounter volume and breadth against the required
+      competency categories, so I can intervene months before a student misses the
+      quota instead of discovering it at term's end.
+    evidence_or_rationale: >
+      Directly joins CODA Standard 2-9 (evidence that every student has access to
+      sufficient comprehensive patient-care experience to achieve every competency
+      "within a reasonable time") with the domain's documented finding that insufficient
+      patient volume/compliance is a widespread cause of delayed graduation, and with
+      Standard 2-24's ~15-category competency evidence. The required software behavior
+      named in the accreditation research is explicitly "real-time tracking of clinical
+      patient-encounter volume and breadth per student, mapped against required
+      competencies, with pacing alerts." This is the single biggest job — it is the one
+      where the accreditation standard, the student's degree, and the program's
+      graduation rate are the same number. (Job framing is synthesized; the standard,
+      the pain point, and the required behavior are all sourced.)
+    related_flows:
+      - flow: "competency-verification--03-capture-evidence-at-the-point-of.yaml"
+        step: "Configuring Minimum Diagnosis & Procedure Requirements"
+        element: "Procedure Minimums list"
+  - job: >
+      When my clinic's own patient base is too young to feed years of comprehensive
+      care, I want to place students at community-based extramural sites and track
+      those placements, affiliation agreements, and student credentialing as one
+      system, so I can grow patient volume without creating an agreement lapse or
+      compliance failure.
+    evidence_or_rationale: >
+      Standard 4-6 requires a written agreement defining roles for any site the
+      institution does not own, and the accreditation research names the needed behavior
+      as a contract repository linked to each site record with expiration/renewal
+      tracking "so an agreement cannot lapse while students are actively placed there."
+      axiUm shows no public evidence of an external-placement engine or a student
+      compliance-item tracker — its model is patients coming to the school. The
+      inference that a young program leans harder on extramural sites follows from the
+      domain's patient-sourcing pain point plus the growth data (25% of 2024 first-year
+      enrollees at newly opened schools).
+  - job: >
+      When every added extramural site multiplies the number of faculty signing off on
+      procedures, I want to prove that instruction and assessment are comparable across
+      all of them, so a site visit does not turn a growth decision into a citation.
+    evidence_or_rationale: >
+      Standard 2-6 requires evidence of faculty calibration at every site where required
+      educational activity occurs: ongoing training, calibration manuals, periodic
+      monitoring, and documentation of faculty participation. The accreditation research
+      notes that compliance-item tracking is confirmed for students only and that
+      faculty-side calibration/credential tracking is an open question — i.e. this job is
+      under-served by current tooling, not just under-loved.
+    related_flows:
+      - flow: "accreditation-self-study--03-institution-side-documentation-capture-sites-preceptors.yaml"
+        step: "Faculty Compliance — Setup > Requirements / Requirement Groups / Faculty Association"
+        element: "Add New Requirement drawer"
+  - job: >
+      When CODA expects institutional planning, assessment, and improvement to run
+      continuously, I want board pass rates, competency attainment, patient-care QI
+      findings, and faculty evaluations aggregating against my stated program goals
+      year-round, so the self-study is an export rather than a six-month manual
+      reconstruction.
+    evidence_or_rationale: >
+      CODA Standard 1-2 requires this planning/assessment/improvement cycle to be
+      "broad-based, systematic, and continuous" and is described in the accreditation
+      research as "the backbone of the self-study report CODA reviews before every site
+      visit," with the required behavior being continuous year-round aggregation
+      "rather than requiring a one-time manual compilation before a site visit,"
+      exportable in self-study-ready format. Note the competitive reality: axiUm
+      already markets "CODA-Ready Reporting," though its public material suggests ad
+      hoc reporting via a Custom Query Engine / Info Manager rather than structured
+      standard-by-standard evidence mapping.
+  - job: >
+      When a student falls below a clinical or didactic threshold, I want the flag, the
+      remediation decision, and the due-process trail captured as one timestamped case
+      record, so the program can defend the decision and evidence it to CODA.
+    evidence_or_rationale: >
+      Standard 2-2 requires documentation that an individual evaluation was performed
+      and the decision made per institutional due-process policy. The accreditation
+      research distinguishes this from simple compliance gating: what is needed is a case
+      record and remediation/decision trail with timestamps and outcomes, "not just the
+      triggering data point."
+    related_flows:
+      - flow: "accreditation-self-study--07-closing-the-cqi-loop-finding-to.yaml"
+        step: "Student 360 Dashboard — Interventions tab"
+        element: "Mode / Initiated By / Course, Rotation, Site selectors / Subject / Description"
+  - job: >
+      When CODA asks me to sample real patient records for appropriateness and quality
+      of care, I want chart audits, deficiency coding, and corrective actions tracked in
+      a closed loop back to curriculum and supervision changes, so patient-care CQI is a
+      standing process instead of a pre-visit sampling exercise.
+    evidence_or_rationale: >
+      Standard 5-3 requires written measurable standards of care, ongoing review of a
+      representative sample of patients and records, root-cause analysis of treatment
+      deficiencies, and implemented corrective measures. The research notes no confirmed
+      patient-record sampling, deficiency-coding or corrective-action-tracking capability
+      exists in the platform today, and that this evidence is naturally expressed in CDT
+      codes.
+  - job: >
+      When my graduates must clear both the national written exam (INBDE) and, in most
+      states, a separate hands-on regional clinical exam, I want those pass-rate
+      outcomes rolled up alongside my competency data, so licensure performance feeds
+      continuous self-assessment instead of a spreadsheet rebuilt each cycle.
+    evidence_or_rationale: >
+      The accreditation research names program-level INBDE/DLOSCE pass rates as a
+      standard outcomes metric feeding Standard 1-2, and flags state-by-state regional
+      clinical licensure (ADEX/CDCA-WREB) pass rates as "another outcomes measure
+      programs must track and report," calling a multi-jurisdiction outcomes rollup a
+      natural extension. The domain research confirms this second, hands-on licensure
+      layer (live-patient historically, manikin/CompeDont since 2020) has no allied-health
+      analog.
+    related_flows:
+      - flow: "accreditation-self-study--05-external-outcome-data-ingestion-board-exams.yaml"
+        step: "Exam Management (roadmap pillar) — no shipped screen exists"
+        element: "Board-exam / licensure result ingestion — no such element exists in any shipped screen"
+
+switching_trigger: >
+  This archetype does not rip out axiUm. The retention anchor is close to absolute:
+  axiUm is simultaneously the teaching clinic's patient EHR, its billing/revenue-cycle
+  system, and its student competency gradebook in one database — switching means
+  HIPAA-regulated patient record migration, retraining faculty on chairside approval
+  workflows, and rebuilding CODA-aligned reporting, against a vendor most faculty and
+  transfer students already know from their last institution. Realistic triggers are
+  therefore additive or timing-based, not displacement:
+  (1) Standing up a brand-new school. A program in the initial-accreditation cohort has
+  no legacy database to migrate and is buying its whole stack at once — the only moment
+  the full decision is genuinely open [inferred from the 55->77 program growth and the
+  25%-of-enrollees-at-new-schools figure].
+  (2) The first serious extramural expansion. The moment patient-volume pressure
+  (Standard 2-9) forces students out to community sites, the program acquires a
+  multi-site placement, affiliation-agreement (4-6), faculty-calibration (2-6) and
+  student-credentialing problem that axiUm has no public answer for — a budgeted
+  adjacent purchase, not a replacement.
+  (3) A site-visit finding or a self-study cycle that exposed the manual compilation
+  cost of Standard 1-2 / 5-3 evidence, especially against the moving target of the
+  August 8, 2025 Commission action.
+  (4) Vendor instability in the adjacent layer. Dentistry-serving Leo (DaVinci) is
+  mid-merger with Elentra under Achieve Partners, with Elentra actively marketing
+  migration paths off Leo — programs on Leo are being told by their own vendor that a
+  switch is coming, which opens an evaluation window that has nothing to do with
+  dissatisfaction.
+  (5) A CODA-specificity test in procurement. CORE ELMS serves dental but makes no
+  CODA-specific claim on its dental page while making an explicit ACPE claim on its
+  pharmacy page — a program that asks "show me your CODA standard mapping" can knock
+  out a cross-discipline incumbent on that question alone.
+  The disqualifier to respect: any pitch that requires speaking CDT at
+  tooth/surface/procedure-code level, or replacing chairside faculty sign-off, is
+  competing with axiUm's core rather than its gaps.
+
+sources:
+  - "https://www.adea.org/detail-pages/blog/adea---news-and-events/2026/04/07/adea-releases-new-data-on-u.s.-dental-school-applicants-and-enrollees--2025-entering-class"
+  - "https://adanews.ada.org/new-dentist/2025/june/new-dental-schools-drive-increasing-enrollment/"
+  - "https://www.adea.org/docs/default-source/adea-main/publications/adea-trends/adea_trends_2024_25.pdf"
+  - "https://www.ada.org/resources/research/health-policy-institute/dental-education"
+  - "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf"
+  - "https://coda.ada.org/standards"
+  - "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/general_practice_residency_standards.pdf"
+  - "https://jcnde.ada.org/"
+  - "https://jcnde.ada.org/inbde"
+  - "https://www.ada.org/en/education-and-careers/licensure"
+  - "https://www.ada.org/publications/cdt"
+  - "https://adextesting.org/adex-dental/"
+  - "https://www.cdcaexams.org/category/dental-licensure/"
+  - "https://pmc.ncbi.nlm.nih.gov/articles/PMC11667986/"
+  - "https://www.dental.upenn.edu/admissions-academics/dmd-program/clinical-education/"
+  - "https://dental.buffalo.edu/education/dds-program1/about-the-program-dds/program-details/third-year.html"
+  - "https://www.axiumacademic.com/platform/practice-management/"
+  - "https://www.axiumacademic.com/platform/education-evaluation/"
+  - "https://www.axiumacademic.com/platform/analytics-reporting/"
+  - "https://www.exansoftware.com/why-dental-education-programs-trust-axium-ascend-software/"
+  - "https://www.capterra.com/p/130811/axiUm/reviews/"
+  - "https://corehighered.com/core-for-dental"
+  - "https://services.corehighered.com/elms/dental-clinical-education-management-software"
+  - "https://www.capterra.com/p/265422/CORE-ELMS/reviews/"
+  - "https://www.davinci-ed.com/"
+  - "https://elentra.com/blog/from-davinci-to-elentra-how-institutions-are-strengthening-workflows"
+  - "../domains/dentistry.yaml"
+  - "../accreditation/coda.yaml"
+  - "../competitors/axium.yaml"
+  - "../competitors/core-elms.yaml"
+  - "../competitors/leo-davinci.yaml"
+  - "../competitors/elentra.yaml"
+  - "../competitors/e-value.yaml"
+
+last_researched: "2026-08-24"

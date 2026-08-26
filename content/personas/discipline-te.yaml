@@ -1,0 +1,152 @@
+# Discipline-layer persona for Teacher Education (TE).
+# The PROGRAM is the archetype, not an individual.
+# SOURCE-DEPTH CAVEAT: unlike the four expansion-domain personas (DO / Pharmacy /
+# Dentistry / Medicine), this discipline has NO ../domains/*.yaml file, NO
+# ../accreditation/*.yaml file, and NO coverage in any ../competitors/*.yaml
+# teardown. It is grounded in exactly two TE-specific sources — the internal TE
+# playbook and its underlying single-video transcript set — plus the
+# cross-cutting admin-onboarding journey, which repeatedly names TE as a
+# documentation gap. This file is deliberately shorter and more hedged than its
+# siblings; do not read the brevity as low importance, and do not pad it with
+# unverified field knowledge. Persona framing (persona_name, JTBD wording,
+# switching_trigger) is Exxat-side synthesis, not a claim quoted from any source.
+domain: "TE"
+persona_name: "The Video-Observed Teacher Prep Program Exxat Serves but Has Not Yet Researched"
+archetype_summary: >
+  A teacher-education program that is already a live Exxat Prism discipline —
+  it appears in the help center's Program Administrator video tutorials and in
+  the eleven-discipline scope of the admin-onboarding journey — but whose
+  documented product footprint is exactly one workflow: video-based teaching
+  assignments run through the GoReact (Echo360) LTI integration. Candidates
+  record or upload teaching demonstrations from My Coursework, reviewers leave
+  timestamped comments and scores inside GoReact, and assignments, submissions,
+  statuses, and scores sync two-way with Prism automatically. Everything else
+  that defines this program's shape — how it names placements (the broader
+  field's "student teaching" / "clinical practice"), how it structures cohorts
+  (plausibly by licensure content area, e.g. Secondary Math vs Elementary Ed),
+  what its supervisor roles are (the field's "cooperating teacher" / "mentor
+  teacher" / "university supervisor"), and what its compliance stack looks like
+  (background checks, fingerprinting) — is explicitly flagged as UNCONFIRMED
+  in the TE playbook: general industry knowledge, not verified against any
+  Exxat-specific source. Structurally, the program is the odd one out in
+  Exxat's roster twice over, per the admin-onboarding journey: it is the only
+  non-clinical discipline (no clinical-settings taxonomy analogue at all, a
+  Resource Center whose FAQ and community content is clinically framed
+  throughout, a playbook but no help-guide folder), and it is the only
+  discipline with the LTI/GoReact video-assignment path — a feature that is
+  invisible in the product until a support ticket activates it.
+accreditation_pressure:
+  - point: "No dedicated accreditation research file exists yet"
+    detail: >
+      A dedicated accreditation/*.yaml file does NOT exist for this discipline
+      yet — the four files in ../accreditation/ (coca, lcme, acpe, coda) are
+      DO/Medicine/Pharmacy/Dentistry-specific and none applies here.
+  - point: "Likely accreditor is CAEP, but that's unconfirmed"
+    detail: >
+      The TE playbook names the field's dominant accreditor as CAEP (Council
+      for the Accreditation of Educator Preparation) plus applicable
+      state-level standards, but explicitly labels that as general industry
+      knowledge rather than something confirmed by the source material, and
+      instructs that specific CAEP standard numbers must not be cited in
+      customer conversations until confirmed against a TE-specific source.
+      That instruction is adopted here: no CAEP element, evidence
+      requirement, or deadline is asserted in this file.
+  - point: "TE accreditation pressure remains an open question"
+    detail: >
+      Until a ../accreditation/caep.yaml (and state-standards note) is
+      researched, this persona's accreditation pressure is an open research
+      question, not a known quantity — which is itself the finding: Exxat
+      cannot yet have the standards-grounded accreditation conversation with
+      a TE program that it can have with the four expansion domains.
+current_tools:
+  - point: "No competitor analysis exists for teacher education"
+    detail: >
+      The competitive landscape for teacher education is not covered by any
+      existing competitor teardown in ../competitors/ — all nine files
+      (axiUm, CORE ELMS, E*Value, Elentra, eMedley, Leo/DaVinci, MedHub, New
+      Innovations, one45) are health-professions vendors researched for the
+      four expansion domains.
+  - point: "Even the widest rival platforms don't list TE"
+    detail: >
+      Even the two broadest claimants of discipline coverage stop short:
+      CORE ELMS advertises 15+ disciplines (pharmacy, dental, nursing, PT,
+      OT, PA, veterinary, social work) and E*Value 24+ (including athletic
+      training and social work), and neither names teacher education.
+  - point: "GoReact is the one confirmed tool TE programs use"
+    detail: >
+      What IS confirmed on the tooling side is one adjacency, not a
+      competitor: GoReact (now part of Echo360) is the video-assessment tool
+      TE programs use alongside Prism, wired in via LTI — so the realistic
+      picture is Prism plus GoReact for video observation, with everything
+      else about this program's stack (placement coordination, compliance
+      tracking, whether ed-school-specific vendors like the ones this repo
+      has not yet researched hold the category) unknown pending a TE
+      competitor pass.
+jtbd:
+  - job: >
+      When my teacher candidates must submit recorded teaching demonstrations
+      for timestamped feedback, evaluation, and scoring, I want the assignment
+      created once in Prism to exist automatically in GoReact — with
+      submissions, Pending Review / Reviewed statuses, and scores syncing back
+      without manual reconciliation — so video-based assessment runs as one
+      workflow instead of two systems I keep in agreement by hand.
+    evidence_or_rationale: >
+      This is the only fully documented TE workflow in the source material,
+      and it is documented end to end: the TE playbook and the 4:15
+      help-center video cover LTI activation (support ticket required if the
+      Learning Tool Interoperability section is absent under Learning
+      Activities > Setup), assignment configuration (placement-based vs
+      didactic, publish/due dates, grading, faculty visibility), auto-creation
+      of the matching GoReact activity on first save, student access via My
+      Coursework, and automatic sync of reviews and scores back into Prism.
+      THIS IS THE ONLY EVIDENCED JOB. Cross-reference: this JTBD maps directly
+      onto stage 8 ("Learning activities, competency management & reporting")
+      of ../journeys/admin-onboarding-product-setup.yaml, which notes TE is
+      the only discipline with the LTI/GoReact video-assignment path — and
+      that the section is invisible until support enables it for the
+      discipline, one of that stage's five named instances of vendor-gated
+      setup.
+    related_flows:
+      - flow: "admin-onboarding--08-learning-activities-competency-management-reporting.yaml"
+        step: "Learning Tool Interoperability (LTI) — GoReact/Echo360 assignment setup"
+        element: "Auto-provisioning of the matching GoReact activity on first save; automatic sync of submissions, scores and status back to Prism"
+  - job: >
+      (UNVERIFIED — inferred, pending TE-specific research.) When I place
+      candidates into student-teaching placements with cooperating teachers
+      and university supervisors, and clear them through background-check and
+      fingerprinting requirements, I want those workflows to speak my field's
+      language rather than clinical-rotation language, so my coordinators are
+      not translating "preceptor," "patient logs," and "clinical settings" in
+      their heads all year.
+    evidence_or_rationale: >
+      Deliberately hedged: the playbook lists TE terminology, cohort
+      structure, placement/slot workflows, compliance patterns, and evaluation
+      forms as OPEN GAPS with no TE-specific source, and the admin-onboarding
+      journey confirms each independently (stage 3: TE cohort structure
+      unconfirmed; stage 4: TE compliance "a documented blank"; stage 5:
+      Cooperating Teacher / Mentor Teacher / University Supervisor terminology
+      unconfirmed for Exxat; stage 2: no clinical-settings analogue
+      whatsoever). The generic shape of the job is standard TE field
+      knowledge; nothing about how Exxat TE customers actually run it is
+      verified. Do not use this JTBD in customer-facing material until a CSS/CX
+      owner familiar with the discipline confirms it.
+switching_trigger: >
+  Unknown at researched-fact level — no TE domain file, win/loss data, or
+  competitor teardown exists to ground one. Two hypotheses worth testing with
+  a CSS/CX owner, both grounded in the one thing the sources do show: (1) a
+  program whose video-observation workflow is central (the single documented
+  TE differentiator) hitting friction in a tool without a native two-way
+  GoReact sync may evaluate Prism on that integration alone; (2) conversely,
+  the retention risk runs through TE's double-outlier status — a non-clinical
+  program navigating clinically framed help content, generic FAQ/community
+  surfaces, and support-gated activation of its own flagship feature is a
+  program whose day-one experience quietly argues it is not the product's
+  main audience. Flag both as hypotheses, not findings.
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md"
+  - "/Users/romitsoley/Downloads/TEVideosTranscripts.md"
+  - "https://help.exxatprism.com/hc/en-us/articles/47058294206993-TE-Videos"
+  - "../journeys/admin-onboarding-product-setup.yaml"
+  # Checked and confirmed NOT to cover TE (cited as absence, not evidence):
+  # ../accreditation/{coca,lcme,acpe,coda}.yaml and all nine ../competitors/*.yaml files.
+last_researched: "2026-08-24"

@@ -1,0 +1,1652 @@
+# Element-level ground truth underneath admin-onboarding-product-setup.yaml, stage 7.
+# SCHEMA v2: accreditation_citation / competitor_equivalent / gap_severity / gap_note live
+# on each ELEMENT, not on the step.
+#
+# SOURCING NOTE (deliberate, and the reason this file exists in this form): every step below
+# is confirmed directly against the raw admin-tutorial transcript at
+# /Users/romitsoley/Downloads/exxat_transcripts.md, cited by section heading and line range,
+# NOT against a help-center article that paraphrases the same video. Where a help-center doc
+# or discipline playbook adds something the transcript does not say, it is cited as a named
+# secondary source alongside the transcript, never in place of it.
+#
+# JOURNEY FRAMING: this is the day-one PRODUCT SETUP journey, not the live clinical cycle.
+# The question at every screen is "what must a brand-new admin decide, configure, or be
+# blocked on before this machinery can run at all?" — not "how do I place a student today."
+# Where a step is unavoidably operational (running Placement Assist, reviewing a submission),
+# it is included because a new admin must configure it correctly on day one or the first
+# real cycle produces garbage.
+flow_name: "Wishlists, Slot Requests & Placement Assist Setup"
+maps_to_journey: "admin-onboarding-product-setup.yaml, stage 7"
+persona: >
+  Primary: Program Administrator new to the platform (see ../personas/role-program-admin.yaml).
+  Secondary: Clinical Coordinator / DCE-DCE-equivalent, who inherits the slot-request calendar
+  and wishlist cadence once setup is done (../personas/role-clinical-coordinator.yaml).
+  Two non-login actors are configured-for but never onboarded here: site personnel, who
+  respond to slot and location-update requests through a tokenized email link with no Prism
+  account, and Exxat support, who is a hard gate on three separate setup paths in this stage
+  (My Request form templates, the Field Application Form wishlist type, and Placement Assist
+  self-service enablement outside PT/PTA and OT/OTA).
+
+steps:
+  # ---------------------------------------------------------------------------
+  - screen: "Slot Setup — Slot Type & Supervision Type taxonomy"
+    navigation_path: "Sites and Locations > Setup > Slot Setup"
+    action: >
+      Before any slot exists, the new admin edits the two controlled vocabularies that every
+      downstream slot, wishlist filter, and Placement Assist weighting rule will reference:
+      Slot Type (what kind of offer this is) and Supervision Type (the student-to-supervisor
+      ratio). This is the true first action of the stage and is easy to skip — the transcript
+      opens the Managing Slots tutorial here specifically because the defaults ship pre-populated
+      and look finished.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, section "## 7/16 Managing Slots in Exxat
+      Prism", lines 579-584 ("navigate to the sites and location section... click on the setup
+      tab and select the slot setup section. The slot type identifier identifies slots which are
+      unique from other ones... The supervision type slot identifier is typically used to indicate
+      the ratio of experiential supervisors to students at the placement").
+    elements:
+      - element: "Slot Type list (pencil icon > editable label chips)"
+        type: "controlled-vocabulary editor"
+        data_shown: >
+          The set of slot qualifiers a slot can carry. Transcript-confirmed shipped defaults, read
+          off the Add Slot drawer: first come first served (FCFS), requires the student to submit a
+          resume, requires the student to interview, needs to be filled, requested by the student.
+          Admin may add program-specific types — the transcript's worked example is adding
+          "GPA requirement" for slots with a minimum-GPA condition.
+        gates_on:
+          - "Slot Type values become selectable filters on the site-facing slot-request form (step 3), on the slot list, and as weightable priorities inside Placement Assist (step 13)."
+        accreditation_citation: "None — this is a platform-mechanics taxonomy with no direct accreditor tie. Nothing in COCA, CODA, ACPE, or LCME prescribes how a program labels its own capacity offers."
+        competitor_equivalent: >
+          Partially comparable, and only for one value. LEO/DaVinci's Clerkship Lottery documents an
+          "optional first-come-first-serve mode" as a lottery-level setting (content/competitors/leo-davinci.yaml,
+          feature_teardown, Clinical & Experiential Education) — Prism instead models FCFS as a per-slot
+          label that the allocator can weight. No competitor teardown in this research documents an
+          admin-editable slot-qualifier vocabulary at all.
+        gap_severity: "none"
+        gap_note: >
+          Real day-one trap rather than a product gap: the transcript notes the list order here is
+          the exact dropdown order everywhere downstream, and that types are deactivated (not deleted)
+          via the horizontal-ellipses "deactivate label" option. A new admin who never opens this
+          screen inherits five defaults that may not match their program's actual offer types.
+      - element: "Drag handle (double ellipsis) / up-down arrows on each type"
+        type: "reorder control"
+        data_shown: "Position in the list, which is the position in every Slot Type dropdown in the product."
+        gates_on: []
+        accreditation_citation: "None — presentation ordering, no accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Supervision Type list (pencil icon)"
+        type: "controlled-vocabulary editor"
+        data_shown: >
+          Student-to-experiential-supervisor ratio labels. Transcript's worked example from the Add Slot
+          drawer is "one student to two clinical instructors." Explicitly described as customizable:
+          \"you can set up these supervision type indicators according to the needs of your program.\"
+        gates_on:
+          - "Selected per slot; carried onto every placement made from that slot; exposed as a filter on the site-facing offer form."
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.e (2:1 maximum student-to-preceptor ratio) — this is the only
+          field in the entire stage where preceptor-ratio data is captured. But per
+          ../accreditation/acpe.yaml, 3.3.e demands a real-time calculation across a preceptor's
+          concurrently active placements that blocks or flags a violating assignment. This field is a
+          free-text-ish descriptive label chosen by the admin, attached to a slot; nothing in the
+          transcript computes a live ratio from it or blocks on it.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor's public materials expose a supervision-ratio field on a capacity record."
+        gap_severity: "gap"
+        gap_note: >
+          The ratio is descriptive metadata, not a constraint. A program can label a slot "1 student :
+          1 CI" and then place three students against that supervisor through separate slots without the
+          system objecting. For Pharmacy (ACPE 3.3.e) this is the difference between having the data and
+          satisfying the standard. Related but distinct from the PA-only Max Placement Limit documented at
+          ../flows/rotation-lifecycle--04-placement-allocation-scheduling-capacity-balancing.yaml, which
+          caps Location+Setting+Cohort intake (and only warns), not per-preceptor caseload.
+
+  # ---------------------------------------------------------------------------
+  - screen: "Site Communications — Setup New Communication (step 1: what kind of ask is this)"
+    navigation_path: "Sites and Locations > Emails > Setup New Communication"
+    action: >
+      Admin creates a reusable site-communication instance. The transcript is explicit that these
+      "function much like templates. Once you add one, you can use it as many times as you want" —
+      so this is genuine setup work, not a one-off send. Two independent bits decide what the
+      instance is: request slots, request updated location information, both, or neither
+      (neither = a plain informational email).
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
+      lines 585-587 ("click on the setup new communication button... indicate if you would like to
+      set up a general email, a slot request email, a location update request email, or both...
+      If you want to set up a general informational email, leave both bits inactive").
+    elements:
+      - element: "Communication title"
+        type: "input field"
+        data_shown: "Label shown in the communications table and used to identify the instance when sending, tracking, and reading responses."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Request Slots (bit)"
+        type: "toggle"
+        data_shown: "Turns this instance into a capacity solicitation; unlocks the Request Slot configuration wizard (step 3)."
+        gates_on:
+          - "If inactive, the recipient's link contains no availability form at all."
+        accreditation_citation: >
+          COCA Standard 6, Element 6.9 — the standard requires demonstrating adequate capacity at each
+          clinical site (a 3-year rolling average of students eligible against demonstrated site capacity,
+          per ../accreditation/coca.yaml). This toggle is the mechanism by which capacity is actually
+          solicited from sites, so it is upstream of the evidence, though it produces none itself.
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research. eMedley's
+          eduSched is described as including "site capacity management" (content/competitors/emedley.yaml)
+          but its public materials do not describe a site-facing solicitation instrument, and no competitor
+          file documents an outbound capacity-request campaign object.
+        gap_severity: "none"
+        gap_note: >
+          This is a genuine Prism differentiator for the onboarding story: capacity arrives from the partner
+          rather than being keyed in by staff. Worth noting it is the same toggle across all disciplines —
+          nothing here is discipline-scoped.
+      - element: "Request Updated Location Information (bit)"
+        type: "toggle"
+        data_shown: "Turns the instance into (or additionally into) a data-hygiene request asking the site to review its own record on file."
+        gates_on:
+          - "Unlocks the sub-checkbox set in step 4: Notes, Requirements, Housing and Parking Information Notes, Personnel."
+        accreditation_citation: >
+          None directly. Adjacent: LCME Standard 5, Element 5.5 (adequate clinical resources per site) and
+          COCA 6.9 both depend on site records being current, but neither prescribes a periodic site-attested
+          refresh, and this toggle produces no accreditor-facing artifact.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  # ---------------------------------------------------------------------------
+  - screen: "Request Slot configuration (the slot-solicitation wizard)"
+    navigation_path: "Sites and Locations > Emails > [communication] > Next > Request Slot"
+    action: >
+      Admin scopes exactly what the site is allowed to offer: which rotations, with what per-rotation
+      instructions, and which setting / slot-type / supervision-type values the site may pick from.
+      This is the highest-leverage configuration screen in the stage — it is where a program constrains
+      partner input so the returned data is usable by Placement Assist later.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
+      lines 587-599.
+    elements:
+      - element: "Choose Rotation (+ icon) — calendar-year filter, rotation multi-select, advanced-schedule sub-select"
+        type: "modal multi-select picker"
+        data_shown: "The upcoming rotations this request collects availability for; where a rotation has an advanced schedule, individual sub-blocks can be selected."
+        gates_on:
+          - "HARD PREREQUISITE, stated explicitly in the transcript: \"these future rotations need to be added and then select in this section.\" Rotation Setup (stage 6 territory) must be complete before a slot request can be composed at all."
+        accreditation_citation: "None directly — scoping control."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Day-one sequencing dependency that bites new admins: rotations must exist first. A program that
+          onboards mid-cycle and wants to solicit capacity for next year cannot do so until it has built
+          next year's rotation shells.
+      - element: "Instruction Notes (+ icon, per rotation row) and rotation Notes hover icon"
+        type: "per-row free-text note"
+        data_shown: >
+          Per-rotation guidance shown to site personnel on the response form (transcript example: \"you may
+          want to leave a note if you only want slots of specific settings for that rotation\"). The separate
+          hover icon surfaces internal rotation notes carried from Rotation Setup.
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Setting / Slot Type / Supervision Type dropdowns (deselect-to-exclude), plus Slot Type and Supervision Type enable bits"
+        type: "constraint multi-selects + toggles"
+        data_shown: >
+          Which values the site may choose when offering. Transcript's worked example: deselect Inpatient so
+          the site cannot offer inpatient slots. Turning the Slot Type or Supervision Type bit off entirely
+          lets \"sites offer slots without specifying slot or supervision types.\"
+        gates_on:
+          - "Directly constrains the site-facing form's option set."
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.e again, obliquely: switching the Supervision Type bit off is the
+          documented way to make ratio capture optional, which is a configuration choice a Pharmacy program
+          would need to get right in the opposite direction (always required) to have any 2:1 data at all.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Silent data-quality lever. A new admin who leaves supervision type optional gets slots with null
+          ratios back, and no screen later flags them as incomplete.
+      - element: "Auto-notification: Slot Confirmation (bit + linked email template)"
+        type: "toggle + template editor with @-triggered merge fields"
+        data_shown: "Auto-emails both the responding personnel and the school when a location submits availability. Template has separate Site and School tabs, subject and body, and a View Sample Email preview."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research. No competitor file
+          documents notification-template authoring with merge fields, which is the closest analog to a
+          general 'notification templates' setup feature the brief anticipates.
+        gap_severity: "cosmetic"
+        gap_note: >
+          Scoping gotcha the transcript calls out verbatim: \"changes to this email template will apply for
+          all the configured slot requests.\" The template is global, not per-communication-instance, so a
+          new admin editing wording for one campaign silently rewrites it for every campaign.
+      - element: "Auto-notification: Contact Later for Slots (bit + template)"
+        type: "toggle + template editor"
+        data_shown: "Fires a reminder on the future date a site itself nominated when it chose \"contact me later\" on the response form."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Notable as a genuinely site-driven scheduling primitive — the partner sets the follow-up date, not the program."
+      - element: "Allow site personnel to add slots at the site level (bit)"
+        type: "toggle"
+        data_shown: "Lets personnel offer capacity without naming a location — for sites that know they have room but not yet where."
+        gates_on:
+          - "Adds an extra site-level section to the responder's form."
+        accreditation_citation: >
+          COCA Standard 6, Element 6.9 — negatively relevant. Site-level slots are, by construction, not
+          attributable to a specific clinical site record, so any per-site capacity-adequacy rollup will
+          under-count or mis-attribute them until they are resolved to a location.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Convenience toggle with a reporting cost. Turning it on for onboarding ease creates unlocated
+          capacity that must be reconciled before per-site capacity evidence is trustworthy.
+      - element: "School Contact Information section"
+        type: "contact picker"
+        data_shown: "Which school contacts receive the slot-confirmation notification, and whose contact details are exposed to the site."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Instructions and Documents (+ icon: notes textarea + Browse to Upload)"
+        type: "rich note + file attachment"
+        data_shown: "Material the site sees while responding. Transcript example: attach the clinical education schedule describing the curriculum for the requested rotations."
+        gates_on:
+          - "Subject to a stated supported-file-type and size limit shown below the control."
+        accreditation_citation: "None directly — though this is where a program would attach curriculum context a site needs, which is adjacent to ACPE 3.5.b / COCA 6.9 partner-facing documentation practice rather than evidence for it."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  # ---------------------------------------------------------------------------
+  - screen: "Request Updated Location Information configuration"
+    navigation_path: "Sites and Locations > Emails > [communication] > Next > Request Updated Location Information"
+    action: >
+      Admin picks which slices of the location record the site is asked to verify. Anything not
+      checked is simply not shown to the site, so this doubles as a scoping decision about how much
+      partner attention to spend.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
+      lines 601-603.
+    elements:
+      - element: "Notes / Requirements / Housing and Parking Information Notes / Personnel checkboxes"
+        type: "checkbox set"
+        data_shown: >
+          Which categories of location data the site reviews. Transcript's worked example: request only
+          housing-and-parking updates and leave the rest inactive when the other data is known-current.
+        gates_on:
+          - "Unchecked categories are absent from the site-facing update form; the transcript's stated workaround is to ask for anything else in free text via Instructions and Documents."
+        accreditation_citation: >
+          None directly. The Requirements category is the one with downstream accreditation weight — site
+          requirements drive the student Requirement Upload gate visible in Placement Clearance and the
+          Placement 360 dashboard — but the checkbox itself carries no standard.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Site-submitted response is notes-only, not a structured edit"
+        type: "read-only behavior of the responder form"
+        data_shown: >
+          Transcript: \"The location's information will be displayed. The personnel can then review this
+          information and provide notes in the notes text area.\" The site cannot change its own record;
+          it describes the change in prose.
+        gates_on:
+          - "Admin must manually re-key the change on the Locations page, then return to the Response Report and click Mark as Updated."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          Asymmetry worth naming for the onboarding narrative: slot requests write structured data straight
+          into the system, but location-update requests do not — they generate a prose to-do for a human.
+          This is a hidden ongoing staffing cost a new admin does not see at setup time.
+
+  # ---------------------------------------------------------------------------
+  - screen: "Send Emails — recipient selection (Locations tab vs Personnel tab)"
+    navigation_path: "Sites and Locations > Emails > [communication row] > Send Emails"
+    action: >
+      Admin chooses who receives the request — by location or by individual personnel — filters the list,
+      and paginates through selecting recipients.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
+      lines 605-613.
+    elements:
+      - element: "Locations table (name, site, personnel, settings, categories, last-request date and status)"
+        type: "filterable multi-select table"
+        data_shown: "Every location in the system with the outcome of the last request sent to it, so a new admin can see coverage at a glance."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Save Changes button while paginating"
+        type: "button (explicit-save affordance)"
+        data_shown: "Persists selections made on the current page."
+        gates_on:
+          - "Transcript's own warning: \"we recommend you click the save changes button as you navigate the pages to select the locations and not lose any of your selections.\""
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: >
+          Selection state is not durable across pagination without an explicit save — a documented
+          UX sharp edge, and exactly the kind of thing that burns a first-time admin sending their
+          first campaign to a few hundred locations.
+      - element: "Personnel tab (designation, email, category, practice setting, experiential-supervisor flag, communication preferences, associated sites/locations, last emailed)"
+        type: "alternate filterable multi-select table"
+        data_shown: "Person-level targeting instead of location-level."
+        gates_on:
+          - "Switching tabs \"will clear any selected locations and filters\" and requires a Yes confirmation — the two modes are mutually exclusive per send."
+          - "A personnel member with no associated site or location cannot be selected to receive slot or location-update requests at all."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Two setup dependencies converge here and both trace back to earlier onboarding stages: personnel
+          must be associated to a site/location, and their Communication Preferences must permit slot or
+          location requests. A new admin whose personnel import skipped either field finds recipients
+          silently unselectable with no inline remediation path.
+      - element: "Overview screen (count of sites/locations, count of personnel recipients, request type)"
+        type: "read-only pre-send summary"
+        data_shown: "Blast radius confirmation before composing."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  # ---------------------------------------------------------------------------
+  - screen: "Compose Email — template library, merge fields, send-now vs schedule"
+    navigation_path: "Sites and Locations > Emails > [communication] > Send Emails > Compose Email"
+    action: >
+      Admin selects or authors the outbound email template, previews the rendered message, and either
+      sends immediately or schedules it for a future date. Template authoring here is the same control
+      used for student, location-contact, and experiential-supervisor notifications elsewhere in the
+      stage, so getting it right once pays off repeatedly.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
+      lines 613-617; identical template mechanics restated for student notifications at lines 859-861
+      and for placement notifications at lines 1121-1125.
+    elements:
+      - element: "Template list with Add Template / Edit / trash"
+        type: "template CRUD"
+        data_shown: "Template name, subject, header and footer layout, body."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research. This is the
+          nearest thing in the stage to the 'notification templates' comparison the brief anticipates, and
+          the honest answer is that no competitor file in content/competitors/ documents template authoring.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Merge fields (@-symbol picker)"
+        type: "token inserter"
+        data_shown: "Context-specific tokens (recipient first name, last name, and elsewhere Placement Table fields) resolved at send time."
+        gates_on: []
+        accreditation_citation: >
+          None here, but note the related compliance-protection behavior documented at transcript lines
+          1139-1141: when student compliance information is sent to a site contact via merge field, an
+          optional support-configured one-time-password gate can be layered on. That protection is opt-in
+          and requires contacting prism-support@exxat.com.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The OTP protection over merge-fielded compliance data is not on by default and is not surfaced
+          in the compose flow — a new admin building templates on day one would not know it exists.
+      - element: "Send Now / Schedule (date picker) + left-pane live preview"
+        type: "radio + date picker + preview pane"
+        data_shown: "Rendered email as the recipient will see it."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  # ---------------------------------------------------------------------------
+  - screen: "Email Dashboard — deliverability telemetry"
+    navigation_path: "Sites and Locations > Emails > [communication row] > Email Dashboard icon"
+    action: >
+      Admin verifies the campaign actually landed. For a new program this is the first real feedback
+      loop on the quality of the personnel email data imported in earlier onboarding stages.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
+      lines 617-625.
+    elements:
+      - element: "Status column: In Progress / Dropped / Bounced / Delivered / Opened / Link Clicked / Scheduled, with per-status counts at top"
+        type: "read-only rollup with refresh icon"
+        data_shown: >
+          Per-recipient delivery state. Transcript defines each: Delivered = sent not opened, Opened =
+          opened but link not accessed, Link Clicked = request page reached, Dropped/Bounced = undeliverable
+          (escalate to v4support@exxat.com after checking the address).
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Genuinely strong onboarding-feedback surface: a brand-new program can measure the quality of its
+          imported site-contact data on day one from the bounce count, before any placement work depends on it.
+      - element: "Wrench icon (column editor: drag-reorder, delete, Add a Column) and Export icon"
+        type: "table personalization + Excel export"
+        data_shown: "Same column-management control pattern repeated across every table in this stage."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Cancel a scheduled email (checkbox + X icon)"
+        type: "destructive action"
+        data_shown: "Withdraws a not-yet-sent scheduled campaign."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "View hyperlink (request link) — the site-facing response page"
+        type: "preview of the external, no-login responder experience"
+        data_shown: >
+          A per-location section where personnel enter availability for the requested rotations, or choose
+          \"contact me later\" with a date, or \"unable to accept students at this time.\" Sites can see and
+          amend slots the school already entered for that location. If site-level slots were enabled, an extra
+          unlocated section appears. If a location-update request was included, a separate Update Location
+          Information tab appears per location.
+        gates_on: []
+        accreditation_citation: "None directly — but this is the origin point for the capacity data COCA 6.9 evidence would later be computed from."
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research. No competitor file
+          documents an unauthenticated, tokenized partner-facing capacity form — the closest adjacent claim is
+          CORE ELMS' generic "centralized site/student/preceptor management" (content/competitors/core-elms.yaml).
+        gap_severity: "none"
+        gap_note: >
+          Strategically the most important element in the first half of this stage: capacity is collected from
+          partners with no account provisioning, which means onboarding a new program's site network does not
+          require onboarding its site personnel as users.
+
+  # ---------------------------------------------------------------------------
+  - screen: "Response Report — slot responses and location-update responses"
+    navigation_path: "Sites and Locations > Emails > [communication row] > Response Report (chart icon)"
+    action: >
+      Admin reads what came back, and — critically for real programs — records the responses that arrived
+      by phone, email, or PDF outside the system so the coverage picture is complete.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
+      lines 629-643.
+    elements:
+      - element: "Response status band: No Response / Slots Offered / Contact Later / No Slots to Offer"
+        type: "read-only rollup"
+        data_shown: "Distribution of partner responses for this campaign."
+        gates_on: []
+        accreditation_citation: >
+          COCA Standard 6, Element 6.9 — the contingency-planning half of the standard (\"a contingency plan
+          for replacing lost rotation capacity\", per ../accreditation/coca.yaml) is what a No Slots to Offer
+          count is early warning for. The status band surfaces the signal; no contingency artifact is produced.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The raw material for COCA 6.9 contingency evidence exists here per campaign, but there is no
+          longitudinal capacity-trend or shortfall view across campaigns and years — that would have to be
+          assembled by exporting and analyzing outside the product.
+      - element: "Pencil icon — manually override a location's response status, contact-later date, internal notes, and internal document upload"
+        type: "admin override form + file upload"
+        data_shown: >
+          Lets the admin set Contact Later or No Slots Offered for a location that responded outside Prism, and
+          attach the artifact. Transcript's worked example: \"if the site sent you availability in the PDF format
+          outside of the Exxat system, you can upload the availability document here for reference.\"
+        gates_on: []
+        accreditation_citation: "None directly — provenance/record-keeping mechanic."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Important honesty about the real world, and a good onboarding talking point: the product assumes some
+          partners will never use the portal and gives the out-of-band path a first-class home rather than a
+          spreadsheet.
+      - element: "View Slots hyperlink > slot list > Last Updated By column"
+        type: "provenance column"
+        data_shown: >
+          Who added each slot. Transcript is explicit that \"all slots will appear here, even slots you or other
+          school administrators have added\" — the Last Updated By value (the site personnel's name) is the only
+          way to distinguish site-offered capacity from school-entered capacity.
+        gates_on: []
+        accreditation_citation: >
+          COCA Standard 6, Element 6.9 — provenance matters for a capacity-adequacy claim: site-attested capacity
+          and program-assumed capacity are different evidentiary weights, and this column is the only place the
+          difference is recorded.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: >
+          The distinction is discoverable but buried — the transcript instructs the admin to \"scroll to the far
+          right hand side of the table\" to find it, and it is not a default-visible filter.
+      - element: "Manage Request Response button — per-location history of all slot requests sent"
+        type: "drill-down history"
+        data_shown: "Every past request instance to this location with its response status; status, notes, and documents editable retroactively."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Updated Location Information tab > View > Mark as Updated"
+        type: "manual reconciliation workflow"
+        data_shown: "The site's prose notes about what needs changing, and a manual acknowledgement that the admin has applied them."
+        gates_on:
+          - "Mark as Updated is a self-attestation — nothing verifies the location record actually changed."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          Same gap as step 4 seen from the other end: a two-screen manual round trip (read note > edit Location
+          page > return > Mark as Updated) with no diff, no field-level mapping, and no verification.
+
+  # ---------------------------------------------------------------------------
+  - screen: "Add Slot drawer (manual capacity entry)"
+    navigation_path: "Placements > [Course or Placement Group] > Slots > List > Add Slot  —  also reachable from Sites > [site] > Slots and Locations > [location] > Slots"
+    action: >
+      Admin enters capacity by hand — the day-one path for a program migrating an existing site network,
+      where all current availability was negotiated before Prism existed, and the standing path for
+      partners who will never use the response portal.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 10/16 Managing Placements in Exxat Prism",
+      lines 965-973 ("Slots are an instance of location availability where students can be placed for a
+      rotation... they are used by the auto-placement feature to find the best fit"); the same drawer is
+      described from the slot-request side at "## 7/16 Managing Slots", lines 637-641.
+    elements:
+      - element: "Site picker > Location dropdown > Experiential Supervisor dropdown"
+        type: "cascading pickers"
+        data_shown: "The supervisor dropdown is populated only from personnel flagged as experiential supervisors at that location."
+        gates_on:
+          - "A location with no experiential-supervisor-flagged personnel yields an empty dropdown — a direct dependency on the personnel setup done in an earlier onboarding stage."
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a-e and LCME Standard 9, Element 9.1-territory supervision
+          expectations both assume a named supervisor per experience; this is where that link is first formed
+          on the supply side, before any student exists on the record.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Cross-stage dependency: personnel import and the experiential-supervisor flag must be right before slots can be entered meaningfully."
+      - element: "Setting dropdown"
+        type: "single-select"
+        data_shown: "Clinical setting of the offer."
+        gates_on:
+          - "Feeds setting-based wishlists, the Pair Courses with Clinical Settings rule in Placement Assist, and the Distribution of Slots Across Settings report."
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.1.b / 3.2 (IPPE hour minimums by setting category: community,
+          hospital/health-system, other; APPE four required setting categories) — per ../accreditation/acpe.yaml
+          the required behavior is aggregating hours per student against a setting taxonomy. Setting is captured
+          here at the slot, and inherited by the placement, so the taxonomy exists; the threshold enforcement
+          does not.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The setting taxonomy is program-defined, not accreditor-shaped. For Pharmacy, mapping local setting
+          names onto ACPE's four required APPE categories is unmodeled configuration work a new admin must
+          plan for at slot-taxonomy time, not discover at graduation-clearance time.
+      - element: "Status: Confirmed / Tentative / Cancelled (+ cancelled-by School or Site, + Comments)"
+        type: "radio + conditional fields"
+        data_shown: "Whether the site has actually committed. Cancellation attribution is captured separately."
+        gates_on:
+          - "Wishlist setup exposes Confirmed and Tentative as separate include-checkboxes, so status decides student visibility."
+          - "Placement Assist can be configured to weight slots by status."
+        accreditation_citation: >
+          COCA Standard 6, Element 6.9 (capacity adequacy and contingency for lost capacity) — the
+          Cancelled + cancelled-by-Site combination is the closest thing in the product to a structured
+          lost-capacity event, which is precisely what a contingency plan is written against.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Lost-capacity events are recorded but not aggregated: there is no documented report that counts
+          site-initiated cancellations per site per year, which is the shape COCA 6.9 contingency evidence
+          would want.
+      - element: "Slot Type / Supervision Type selectors"
+        type: "single-selects drawn from the step-1 vocabularies"
+        data_shown: "The taxonomies configured in Slot Setup, now applied."
+        gates_on:
+          - "Slot Type values (FCFS, resume required, interview required, needs to be filled, requested by student) drive both student-facing expectations and Placement Assist weighting."
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.e for Supervision Type — same caveat as step 1: descriptive, not enforced."
+        competitor_equivalent: >
+          Partially comparable for the FCFS value only: LEO/DaVinci documents first-come-first-serve as a lottery
+          mode (content/competitors/leo-davinci.yaml). The rest is not documented at this granularity by any
+          competitor teardown in this research.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Notes Shared With Student / Notes Internal Use Only (paired textareas)"
+        type: "dual-visibility free text"
+        data_shown: >
+          Transcript's worked examples: tell students a slot is highly competitive; tell other administrators
+          you suspect the slot may be cancelled.
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          The shared/internal note pairing recurs on slots, placements, sites, and locations — a consistent
+          product idiom worth teaching a new admin once rather than rediscovering four times.
+      - element: "Per-rotation quantity + per-rotation date override (calendar icon)"
+        type: "numeric input per rotation row"
+        data_shown: "How many openings for each rotation; dates default to the rotation dates and can be overridden per slot."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "eMedley's eduSched is publicly described as including 'site capacity management' (content/competitors/emedley.yaml), but not at a level that exposes a per-rotation quantity field, so no element-level comparison is possible."
+        gap_severity: "none"
+        gap_note: ""
+
+  # ---------------------------------------------------------------------------
+  - screen: "Placement Setup (global placement behavior switches)"
+    navigation_path: "Placements > Setup"
+    action: >
+      Genuine day-one policy configuration, and the most consequential screen in this stage that a new
+      admin can miss entirely — it sets program-wide defaults for how students interact with placements,
+      including whether they can create their own.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 10/16 Managing Placements in Exxat Prism",
+      lines 941-947.
+    elements:
+      - element: "Follow the Preceptor (bit) + apply-by-default-on-creation (sub-bit)"
+        type: "toggle + default-inheritance toggle"
+        data_shown: >
+          When on, students see the other locations associated with their placement preceptor and those
+          locations' requirements, \"helping them stay compliant across all sites.\" Can be forced on for
+          all new placements while remaining per-placement editable.
+        gates_on:
+          - "Controls student visibility of sibling locations and their requirement sets."
+        accreditation_citation: >
+          None directly. Adjacent to LCME Standard 5, Element 5.5 and CODA Standard 2, Element 2-6 in that
+          multi-site exposure is the thing both standards care about, but this toggle is a visibility
+          convenience, not evidence.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Confirmed as an existing named Prism feature in ../prism/capability-map.yaml (Clinical & Experiential Education > 'Follow the Preceptor')."
+      - element: "Student Self-Placement (bit) + enable-by-default-for-new-course-offerings (sub-bit) + Manage Course Offerings picker"
+        type: "toggle + default toggle + scoped course picker"
+        data_shown: >
+          Whether students may create placement submissions from their own login, globally and per course
+          offering. Enabling the default prompts the admin to also apply it retroactively to existing
+          placement-required courses.
+        gates_on:
+          - "Gates the entire student-initiated placement path, which is the dominant model in Social Work and common in OT capstone work."
+        accreditation_citation: >
+          None directly — but note the governance implication: student-initiated placements at sites without
+          an executed agreement is exactly the failure mode ACPE Standard 3, Key Element 3.5.b and LCME
+          Standard 1, Element 1.4-adjacent affiliation-agreement requirements exist to prevent.
+        competitor_equivalent: >
+          Partially comparable: Elentra documents "learner-driven elective selection within admin-set capacity
+          rules" (content/competitors/elentra.yaml) — learner self-service bounded by admin rules, which is the
+          same shape. Elentra's public materials do not expose an approval-mode switch, so the comparison stops
+          at the concept.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Highest-stakes default in the stage. Turning this on before contract and compliance gating is
+          configured lets students originate placements at unvetted sites.
+      - element: "Auto-Approve Placements vs Require Approval from School (radio)"
+        type: "mutually exclusive policy radio"
+        data_shown: >
+          Auto-approve activates and publishes student submissions immediately with no review; Require Approval
+          holds every submission in a pending-review state for admin approve/reject.
+        gates_on:
+          - "Auto-approve explicitly skips the review step entirely (transcript: \"the review step is skipped\")."
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.5.b (executed affiliation agreement required for every practice
+          facility) and COCA Standard 6, Element 6.9 (executed agreements for every contracted site) — both
+          are undermined by auto-approve, since nothing in the documented auto-approve path checks contract
+          status before activating the placement.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          A one-click program-wide setting can bypass contract and compliance review for every
+          student-originated placement, and the transcript describes no warning, no scoping to
+          low-risk courses, and no audit surface for the choice. For any of the four expansion domains
+          (Pharmacy, DO, Dentistry, Medicine), auto-approve should be treated as effectively unusable —
+          which makes it an onboarding-guidance problem, not just a product one.
+
+  # ---------------------------------------------------------------------------
+  - screen: "Placement Groups"
+    navigation_path: "Placements > Add Group"
+    action: >
+      Admin bundles course offerings so slots, rotations, wishlists, and Placement Assist runs can be
+      managed across them at once. The PA and PT playbooks treat correct group design as the main lever
+      for placement success, which makes this a setup decision rather than an operational one.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 10/16 Managing Placements in Exxat Prism",
+      lines 947-953; strategy for how to compose groups from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md,
+      "Best Practices — Placement Assist" (identify courses/settings with the fewest slots offered; create
+      groups so hard-to-place courses run first).
+    elements:
+      - element: "Group name + description; course multi-select filtered by academic year, professional year, term, cohort"
+        type: "wizard (name > select courses > review)"
+        data_shown: "Which course offerings this group aggregates."
+        gates_on:
+          - "Placements for Group unlocks cross-course rotation creation and a single Placement Assist run spanning the group."
+        accreditation_citation: "None — organizational container with no direct accreditor tie."
+        competitor_equivalent: >
+          Partially comparable: one45 markets "multi-layered concurrent schedules" and eMedley's eduSched is
+          "track/path-based" (content/competitors/one45.yaml, content/competitors/emedley.yaml) — both imply
+          cross-course scheduling containers, but neither exposes a group-construction workflow to compare
+          field by field.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Trash / pencil on a group (non-destructive by design)"
+        type: "destructive-looking action that is actually safe"
+        data_shown: "Transcript: \"Because placement groups only aggregate courses, you can edit and delete placement groups without losing any course data.\""
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Worth saying out loud during onboarding: groups are cheap and reversible, so a new admin should be
+          encouraged to experiment with group composition rather than treat it as a schema decision.
+
+  # ---------------------------------------------------------------------------
+  - screen: "Create Wishlist — type selection and window"
+    navigation_path: "Placements > [Course offering] > Wishlist > Create Wishlist"
+    action: >
+      Admin picks which preference instrument the program will use and defines the three dates that govern
+      it. The type choice is the single most consequential and least reversible decision in this stage.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      lines 813-817 and 851 ("You will still be able to make changes to the wishlist once it has been
+      saved. However, you will not be able to change the wishlist type").
+    elements:
+      - element: "Prerequisite gate: students registered to the course + rotations created"
+        type: "implicit precondition"
+        data_shown: "Transcript: \"to activate wishlists, you need to have added students to the course and set up rotations for the course.\""
+        gates_on:
+          - "Create Wishlist is unavailable until both are true."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Second explicit cross-stage sequencing dependency in this flow (the first was rotations before slot requests) — both point at Rotation Setup as the true bottleneck of admin onboarding."
+      - element: "View Date / Open Date / Close Date (three separate datetime pickers)"
+        type: "datetime inputs"
+        data_shown: >
+          View = when students can see the wishlist; Open = when submission becomes possible; Close = when
+          submission stops. Per the PT/OT discipline transcripts, Open defaults to the View date.
+        gates_on:
+          - "Close date ends student submission; the dates can subsequently be overridden per individual student from the Wishlist Management review drawer."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research; no competitor file documents a three-date preference window."
+        gap_severity: "none"
+        gap_note: >
+          Practice guidance a new admin will not find in the product: the PA playbook recommends opening the
+          wishlist 2-4 months before the first rotation start date but keeping it open only briefly (its
+          example is Friday to Monday) to compress the decision window.
+      - element: "Wishlist Type selector — Slot-based, Location-based, Slot and Location, My Request, Setting-based, Location Area, Questionnaire, Address Preference, Rotation Preference, Setting-and-Rotation nested, Exxat One Availability-Based, Field Application Form"
+        type: "one-time-only type radio"
+        data_shown: "Twelve distinct preference instruments, each with its own configuration panel."
+        gates_on:
+          - "IMMUTABLE AFTER SAVE. Changing type means deleting and rebuilding the wishlist."
+          - "Two of the twelve are not self-serviceable: the Field Application Form type is \"configured by the Exxat Prism team and is not available for self-setup\", and the My Request type requires support to supply or customize the form template."
+          - "One of the twelve is discipline-gated: Exxat One Availability-Based is \"designed for PT/PTA and OT/OTA programs\" and requires Exxat One access."
+        accreditation_citation: "None — preference intake carries no accreditor evidence requirement of its own."
+        competitor_equivalent: >
+          The clearest competitive comparison in the whole stage, and it is favorable but asymmetric. one45
+          names three allocation methods (Stream Lottery, Rotation Lottery, Randomized Stream Lottery);
+          MedHub's UME module offers "Schedule Lottery: Create lotteries based on custom rules and preferences";
+          LEO/DaVinci's Clerkship Lottery lets students rank-order course preferences with random tiebreak;
+          Elentra advertises a "leading edge lottery system"; eMedley's eduSched is "preference-, lottery-,
+          track/path-based"; New Innovations offers a rotation lottery for 3rd/4th-year students
+          (content/competitors/*.yaml). Every one of these ranks a single object type — courses or rotations.
+          None documents ranking against slots, locations, settings, location areas, addresses, or nested
+          setting-then-rotation. The asymmetry to state honestly: we can read Prism's own tutorial but only
+          competitors' marketing pages, so this compares documented depth, not necessarily shipped depth.
+        gap_severity: "cosmetic"
+        gap_note: >
+          The immutability is the gap, not the taxonomy. A new admin choosing among twelve unfamiliar types
+          with no in-product guidance on which fits their discipline, and no ability to change their mind
+          after save, is the single sharpest onboarding edge in this stage. Discipline defaults exist in the
+          playbooks but not in the product: PA uses slot-based for core and setting-based for electives;
+          OT uses slot- or location-based for Level I, location- or setting-based for Level II, and
+          questionnaire plus My Request for capstone; PT uses slot-based most commonly with location-based
+          as the fallback when a March slot-request cycle underdelivers.
+
+  # ---------------------------------------------------------------------------
+  - screen: "Slot-based wishlist configuration (the reference type)"
+    navigation_path: "Placements > [Course offering] > Wishlist > Create Wishlist > Slot-based > Next"
+    action: >
+      Admin curates which slots students may rank and decides how much of the underlying supply picture
+      to reveal. The transcript's default is maximally permissive — all available slots are included until
+      the admin excludes them.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      lines 817-821.
+    elements:
+      - element: "Inclusion filters: Settings / States / Location Tags / Location Areas / Location Categories (pencil > uncheck to exclude)"
+        type: "exclusion-based multi-selects"
+        data_shown: "Which slots appear on the student's list. Transcript: \"all slots available will be included by default.\""
+        gates_on: []
+        accreditation_citation: "None — curation control."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Include-by-default is the risky default for a new program: a wishlist published without touching
+          these filters exposes every slot in the system, including slots intended for other cohorts or
+          courses. The PA playbook's recommended practice is the opposite — a deliberately curated wishlist
+          restricted to locations that have slots for that course's setting.
+      - element: "Confirmed / Tentative inclusion checkboxes"
+        type: "status filter"
+        data_shown: "Whether unconfirmed capacity is shown to students as rankable."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Showing tentative slots collects preferences against capacity that may evaporate; the transcript documents the No Longer Available indicator at review time as the downstream consequence."
+      - element: "Additional Information bits: show number of available slots / show slot status / show rotation names / show preceptor details"
+        type: "four independent disclosure toggles"
+        data_shown: "How much supply-side truth the student sees while ranking."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Underrated equity lever, and a good onboarding conversation: showing available-slot counts turns
+          ranking into strategic bidding, hiding them keeps it a pure preference statement. The product takes
+          no position; the admin must.
+      - element: "Individual resume upload per ranked preference (bit)"
+        type: "toggle"
+        data_shown: >
+          Students can always attach one resume to the wishlist; this bit additionally lets them tailor a
+          separate resume to each ranked location.
+        gates_on:
+          - "Pairs with the 'requires the student to submit a resume' Slot Type from step 1 and with the Send Interest to Location flow, where the site sees student resumes."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Minimum Required / Maximum Allowed (numeric) + Instructions for Students (textarea)"
+        type: "numeric bounds + free text"
+        data_shown: "How many preferences a student must and may submit, and the program's guidance for doing so."
+        gates_on:
+          - "Enforced on the student submission."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "LEO/DaVinci's Clerkship Lottery documents rank-ordering with random tiebreak on oversubscription but does not document configurable min/max bounds (content/competitors/leo-davinci.yaml), so no element-level comparison holds."
+        gap_severity: "none"
+        gap_note: "Min/max is the main lever on Placement Assist's solvable space — too low a minimum produces students the allocator cannot satisfy from their own list."
+
+  # ---------------------------------------------------------------------------
+  - screen: "Special wishlist types requiring support or a second product"
+    navigation_path: "Placements > [Course offering] > Wishlist > Create Wishlist > My Request | Field Application Form | Exxat One Availability-Based"
+    action: >
+      Admin discovers that three of the twelve wishlist types cannot be completed self-service on day one.
+      Grouped here because the shared characteristic — an external dependency mid-setup — is the thing a new
+      admin most needs warned about.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      lines 835-843; corroborated for PT/OT by
+      /Users/romitsoley/Downloads/PTPTAVideosTranscripts.md, "## 2. Managing Exxat One Availability Based
+      Wishlist in Exxat Prism", lines 111-137 and the identical OT section at
+      /Users/romitsoley/Downloads/OTOTAVideosTranscripts.md, lines 113-139.
+    elements:
+      - element: "My Request — Select Form dropdown (template library)"
+        type: "dropdown populated only by Exxat support"
+        data_shown: >
+          The request form students fill to propose a placement location not currently associated with the
+          program. Transcript: to get the standard form, or to customize it, \"please reach out to our support
+          team at prism-support@exxat.com. They will help you configure and add new templates to be selected here.\"
+        gates_on:
+          - "Self-service blocked: no admin-side form builder for this type."
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.5.b and COCA Standard 6, Element 6.9 (executed agreement per site) —
+          My Request is by definition the intake path for sites the program has no relationship with yet, so
+          it is where contract-status verification matters most. The Process My Request screen (step 15) does
+          expose contract status, which is the mitigating control.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file documents a student-proposed-site intake instrument."
+        gap_severity: "gap"
+        gap_note: >
+          A support ticket sits on the critical path of day-one setup. For Social Work and OT capstone, where
+          student-proposed sites are the dominant model rather than an exception, the program cannot configure
+          its primary placement workflow without Exxat's involvement.
+      - element: "My Request — optional experiential-supervisor sign-off workflow"
+        type: "support-configured form routing"
+        data_shown: >
+          Submitted requests can be routed to the proposed supervisor for review and signature; the returned
+          form can change the request's status automatically. Both the routing and the status-change mapping
+          are support-configured.
+        gates_on:
+          - "Admin-distributed forms expose a Share Again button; student-distributed forms do not, and must instead be unsubmitted by setting overall status to Need More Information so the student resubmits."
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a-d and CODA Standard 2, Element 2-6-adjacent expectations about
+          documented, calibrated supervision — a signed preceptor agreement per proposed site is exactly the
+          artifact these want; here it exists but its plumbing is not admin-configurable.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          Two distinct resend behaviors depending on a support-set configuration the admin cannot see or
+          change is a real onboarding hazard — the admin cannot predict which recovery path they have until
+          a form comes back wrong.
+      - element: "Field Application Form type"
+        type: "wishlist type that cannot be self-configured"
+        data_shown: "Transcript, verbatim: \"This wishlist type is configured by the Exxat Prism team and is not available for self-setup within Exxat Prism.\""
+        gates_on:
+          - "Entirely support-gated."
+        accreditation_citation: "None directly — the accreditation weight sits in the placement it eventually produces, not the intake form."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          This is Social Work's signature instrument — per the SW playbook it supports up to 10 placement
+          suggestions per form, each an agency the student intends to interview with — and it is the one
+          wishlist type a new admin cannot touch at all.
+      - element: "Exxat One Availability-Based type — rotation + State / Experience Type / Specialization filters, min/max availabilities to rank"
+        type: "cross-product wishlist configuration"
+        data_shown: >
+          Students rank real Exxat One site availabilities before requests are sent — the demand-first model.
+          Configured in Prism; every ranking, submission, and request afterwards happens in Exxat One.
+        gates_on:
+          - "Discipline-gated: \"designed for PT/PTA and OT/OTA programs\"."
+          - "Access-gated: \"Only program administrators with access to Exxat One can create this wishlist type.\" The PT/OT transcripts add that all Prism admin users get Exxat One access at no additional charge, via the account manager."
+          - "Student-side gate: non-SSO students are routed to the Exxat One privacy policy and must accept its terms before they can rank."
+        accreditation_citation: "None directly — this is a supply-discovery mechanism, not an evidence-producing one."
+        competitor_equivalent: >
+          Not documented at this granularity by any competitor teardown in this research. Structurally this is
+          a two-sided marketplace (a shared availability pool across institutions) rather than a scheduling
+          feature, and no competitor file in this research documents anything of that shape — the closest
+          adjacent concept is the cross-institution credentialing network effect noted for Prism itself in
+          ../prism/capability-map.yaml.
+        gap_severity: "gap"
+        gap_note: >
+          Strategically the most interesting gap in the stage for the four expansion domains. This is the only
+          wishlist type where preferences are ranked against real, external, cross-institutional availability
+          rather than the program's own slot table — and it is unavailable to Pharmacy, DO, Dentistry, and
+          Medicine, and to Nursing, SLP, Social Work, PA, and TE. It also introduces a second UI and a second
+          privacy-policy acceptance into the student experience.
+
+  # ---------------------------------------------------------------------------
+  - screen: "Wishlist wizard: questionnaire, student assignment, notifications, summary"
+    navigation_path: "Placements > [Course offering] > Wishlist > Create Wishlist > (type panel) > Next > Next > Next > Save"
+    action: >
+      Admin finishes the wizard: optionally appends a questionnaire, chooses which enrolled students receive
+      the wishlist, sets automated reminders, and reviews the summary before the irreversible save.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      lines 845-853.
+    elements:
+      - element: "Questionnaire section (Yes/No, then add/reorder questions via drag handle or arrows)"
+        type: "question builder appended to any type except My Request"
+        data_shown: "Free-form questions shown after the student has ranked preferences. Available standalone as its own wishlist type, or bolted onto any other type."
+        gates_on:
+          - "Explicitly unavailable on My Request wishlists."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Practical escape hatch for the type-immutability problem: a questionnaire can capture the
+          preference dimension the chosen type does not model, without rebuilding the wishlist. Per the SW
+          playbook, course-specific Wishlist Questionnaires are Social Work's rough analog to PT's slot-based
+          wishlist.
+      - element: "Automatically update student selection when course registration is updated (checkbox)"
+        type: "auto-enrollment toggle"
+        data_shown: "Newly registered students are added to this wishlist without admin action."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Small but high-value default for a new program still importing cohorts while wishlists are already live."
+      - element: "Student picker (search, filter by status, click-through to profile)"
+        type: "filterable multi-select"
+        data_shown: "Which enrolled students this wishlist applies to."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Notification checkboxes: on open / 24 hours before close / on close"
+        type: "three notification toggles"
+        data_shown: "Automated student reminders tied to the wishlist window."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Off by default; with the PA playbook's recommended weekend-length open window, an admin who skips these effectively runs a silent deadline."
+      - element: "Summary + Save (type becomes immutable at this moment)"
+        type: "review screen + irreversible commit"
+        data_shown: "Everything configured across the wizard, with back-navigation to any prior section."
+        gates_on:
+          - "Post-save: everything editable except the wishlist type."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "The summary screen does not warn that type is about to become permanent — the constraint is stated only in the tutorial narration."
+
+  # ---------------------------------------------------------------------------
+  - screen: "Publish Slots to Students (the non-wishlist preference path)"
+    navigation_path: "Placements > [Course offering] > Slots > List > (select slots) > Notify Student > Publish Slots"
+    action: >
+      Admin exposes selected slots directly to selected students so they can register interest without a
+      formal wishlist — a lighter-weight parallel mechanism that a new admin should understand as an
+      alternative, not a supplement, to wishlists.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      lines 853-867.
+    elements:
+      - element: "Slot multi-select > Notify Student > student picker > Publish Slots"
+        type: "two-sided selection then publish"
+        data_shown: "Which slots become visible to which students in their Published Slots section."
+        gates_on:
+          - "Student interest captured this way is treated identically to slot-wishlist interest downstream — both feed the Students Interested count and the Send Interest to Location flow."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: >
+          Loosely comparable to MedHub's UME "course enrollment/waitlists" and LEO/DaVinci's optional
+          first-come-first-serve lottery mode (content/competitors/medhub.yaml, content/competitors/leo-davinci.yaml),
+          both of which expose specific offerings to learners for direct claim. Neither is documented at the
+          field level, so the comparison is conceptual only.
+        gap_severity: "none"
+        gap_note: >
+          Genuinely useful for onboarding sequencing: a program can start collecting preference signal before
+          it has decided on a wishlist type, since publishing slots requires no wizard and no immutable choice.
+      - element: "Unpublish Slots (with Published filter)"
+        type: "reversal action"
+        data_shown: "Withdraws slot visibility. Transcript's stated reasons: published by accident, or the location withdrew the offer."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Notable that publishing here is reversible while wishlist type is not — inconsistent reversibility across two adjacent preference mechanisms."
+      - element: "Email History (vertical ellipses > Email History; Site / Student tabs; date range; rotation filter; status column)"
+        type: "audit table"
+        data_shown: "Delivered / Opened / Dropped per recipient, with escalation to prism-support@exxat.com for dropped mail."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: >
+          Status vocabulary drifts between surfaces: the site-communications Email Dashboard uses
+          Dropped/Bounced/Delivered/Opened/Link Clicked/Scheduled, while this one uses Delivered/Opened/Dropped.
+          Minor, but it is the kind of inconsistency that makes a new admin distrust the telemetry.
+
+  # ---------------------------------------------------------------------------
+  - screen: "Wishlist Management (reviewing submissions)"
+    navigation_path: "Placements > [Course offering] > Wishlist > [wishlist name] > Wishlist Management"
+    action: >
+      Admin monitors and reviews submissions. Included in a setup journey because the status vocabulary and
+      the per-student date override are configuration-adjacent behaviors a new admin must understand before
+      the first cycle, not after.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      lines 867-873.
+    elements:
+      - element: "Status counts: Not Started / Started Not Submitted / Submitted / Approved / No Longer Applicable"
+        type: "read-only rollup"
+        data_shown: "Cohort-level completion state for this wishlist."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Submission drawer: ranked preferences, reasoning per rank, questionnaire answers, View Documents"
+        type: "read-only detail with document access"
+        data_shown: "Everything the student submitted, including their stated reasoning for each ranking."
+        gates_on: []
+        accreditation_citation: >
+          None directly. Worth noting for equity-of-placement narratives (adjacent to CODA Standard 2, Element
+          2-6 and COCA Standard 6, Element 6.9 comparability concerns) that the reasoning text is captured but
+          not analyzable in aggregate — Download Preferences exports rankings, and the transcript does not
+          state that free-text reasoning is included.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Per-student View / Open / Close date override"
+        type: "per-record date exception"
+        data_shown: "Individual extension without reopening the wishlist for the whole cohort."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Well-designed exception path; no approval trail or reason field is documented for the override, so extensions are invisible in aggregate."
+      - element: "Status dropdown: Reviewed / In Progress; Notes (internal) and Notes (student-visible)"
+        type: "review-state control + dual-visibility notes"
+        data_shown: "Setting In Progress is the documented mechanism for sending a submission back for revision."
+        gates_on:
+          - "Placement from a slot-based wishlist is available to students in Submitted or Reviewed status."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Download Preferences (Excel)"
+        type: "export"
+        data_shown: "All students' submitted preferences in one file."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "The documented escape hatch for programs that want to run their own allocation logic instead of Placement Assist."
+
+  # ---------------------------------------------------------------------------
+  - screen: "Process My Request dashboard"
+    navigation_path: "Hamburger menu > Process My Request (Upcoming / Current tabs)"
+    action: >
+      Admin works the queue of student-proposed placements: verify compliance, resolve the proposed location
+      to a real Prism record (creating the site and location if needed), link or create the preceptor, route
+      the preceptor agreement, and set four separate statuses before a placement can be created.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      lines 873-905.
+    elements:
+      - element: "Dashboard graphs: submitted requests by status, courses by My Request status, students by My Request status"
+        type: "clickable read-only rollups"
+        data_shown: "Queue shape; clicking a bar deep-links to the filtered All Requests table."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Compliance panel: Some Action Needed / View Compliance, Pending Review flags, expires-during-placement alert icon"
+        type: "embedded compliance gate with inline review"
+        data_shown: >
+          Student compliance state surfaced inside the request, including an alert when a document expires
+          during the proposed placement window. Documents are reviewable and updatable without leaving the page.
+        gates_on:
+          - "Advisory. Transcript: \"Ideally, before you make a placement, you want to make sure the student is fully compliant\" — ideally, not enforced. Create Placement is not documented as blocked."
+        accreditation_citation: >
+          COCA Standard 6 and CODA-adjacent student-readiness expectations, and per ../accreditation/coca.yaml
+          and ../accreditation/coda.yaml, Compliance Management is described as gating placement
+          start/continuation on student-level items. This screen surfaces the same data but the gate is
+          advisory at the point of placement creation.
+        competitor_equivalent: >
+          CORE ELMS documents compliance tracking (immunizations, CPR, background checks, drug screens, HIPAA
+          training, licensing, with expiration reminders) at parity with Prism (content/competitors/core-elms.yaml),
+          but nothing in their public materials describes compliance state embedded in a student-request review
+          screen, so the placement of this control is not comparable.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Compliance, contract, and preceptor are all visible and all advisory here. For the four expansion
+          domains this is exactly the combination that makes the auto-approve setting in step 10 dangerous.
+      - element: "Search Location > (found) Save | (not found) Add New Location > Add New Site cascade"
+        type: "record-resolution workflow with inline creation"
+        data_shown: >
+          Resolves the student's free-text location to a real Prism record, creating site and location records
+          inline if necessary. Transcript note: \"when you add a new site, the system automatically creates it
+          as a location as well.\"
+        gates_on:
+          - "Location must be linked before a placement can be created from the request."
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.5.b and COCA Standard 6, Element 6.9 — this is the moment an unvetted,
+          student-sourced facility enters the program's site inventory. The View Contract button beside it is
+          the only contract check on the path, and it is a link, not a gate.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          Inline site creation with no contract prerequisite is the cleanest example in this stage of setup
+          convenience trading against accreditation control. A new admin should be told explicitly that this
+          path can populate the site inventory with facilities that have no executed agreement.
+      - element: "Search Preceptor / Add Preceptor > document-mapping step (choose personnel profile sections for uploaded files)"
+        type: "record resolution + file routing"
+        data_shown: "Links the request to a personnel record and files the student's uploaded documents into named sections of that preceptor's profile."
+        gates_on: []
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.3.a-d (preceptor credentialing: license number, status, expiration
+          linked to every supervised placement, per ../accreditation/acpe.yaml) — this document-mapping step is
+          where student-supplied preceptor credentials land in the credential record, which makes it an
+          accreditation-relevant data path, not merely a filing convenience.
+        competitor_equivalent: >
+          eMedley's eKeeper and CORE ELMS both document preceptor credential/license tracking
+          (content/competitors/emedley.yaml, content/competitors/core-elms.yaml), but neither documents
+          student-submitted documents being routed into a preceptor profile, so this specific mechanic has no
+          documented equivalent.
+        gap_severity: "none"
+        gap_note: "Genuinely clever: it turns a student-collected artifact into a durable credentialing record instead of a one-off attachment."
+      - element: "Share Preceptor Form / Preceptor Form Share > Share Again; View Preceptor Form; Audit Log; Edit Student Response; Move Request; Delete"
+        type: "form routing + audit + record maintenance controls"
+        data_shown: >
+          Two distribution models (auto-sent on student submission, or admin-initiated). Audit Log shows when
+          and by whom the request was updated. Move Request relocates a submission to another course offering.
+        gates_on:
+          - "Move Request has two hard preconditions: the destination course offering must use the identical My Request form, and both offerings must derive from the same course in the course list."
+          - "Share Again appears only for admin-distributed forms."
+        accreditation_citation: "None directly — the Audit Log is the accreditation-adjacent element, providing change provenance on placement-origination decisions, but no standard in ../accreditation/ names it."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Four status dropdowns (student compliance / preceptor / contract / overall request) + Update, then Create Placement"
+        type: "multi-status gate then commit"
+        data_shown: "Overall status set to Placement Confirmed is the documented precondition for placing."
+        gates_on:
+          - "All four are admin-set values, not computed from the underlying records — the admin asserts the contract is approved, the system does not verify it."
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.5.b; COCA Standard 6, Element 6.9 — a human-asserted contract status
+          is weaker evidence than a system-verified link to an executed, in-date agreement, which is what both
+          standards' evidence expectations describe.
+        competitor_equivalent: >
+          eMedley's eKeeper documents "affiliation agreement tracking with auto-expiration reminders" and
+          CORE ELMS documents "affiliation agreement tracking with expiration alerts"
+          (content/competitors/emedley.yaml, content/competitors/core-elms.yaml). Neither documents whether
+          agreement state gates a placement action, so we cannot say whether their controls are computed or
+          asserted either — the honest comparison is that both sides are undocumented at this depth.
+        gap_severity: "gap"
+        gap_note: >
+          Four manually-asserted statuses standing in for four verifiable system facts. Note the mitigation
+          that does exist elsewhere: the Placement 360 dashboard and the Placement Clearance list both compute
+          real contract and requirement status after the fact (transcript lines 1093-1099, 1147-1161). The gap
+          is that the computed check happens downstream of the decision, not at it.
+
+  # ---------------------------------------------------------------------------
+  - screen: "Process Field Application Forms"
+    navigation_path: "Dashboard or hamburger menu > Process Field Application Forms > All Requests"
+    action: >
+      Admin works the interview-driven placement queue: review each placement suggestion card, map
+      student-entered locations and supervisors to Prism records, track interview outcomes, and create a
+      placement from the accepted suggestion.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      lines 907-925; discipline context from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md
+      (Field Application Form / Multi-Location Field Application Form; up to 10 placement suggestions per form).
+    elements:
+      - element: "Placement suggestion card (location details, supervisor details, interview status, interview schedule, student comments)"
+        type: "read-only card per suggestion, multiple per student"
+        data_shown: "One card per agency the student is pursuing — the multi-interview reality this instrument exists for."
+        gates_on: []
+        accreditation_citation: "None directly at the card level."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file documents an interview-mediated placement pipeline."
+        gap_severity: "none"
+        gap_note: >
+          This is a genuinely differentiated workflow with no analog among the lottery-based competitors, and
+          it is the one workflow a new admin cannot configure without Exxat support (see step 14).
+      - element: "Interview status: Interview Pending / Interview Scheduled / Placement Not Offered / Placement Offered / Placement Accepted / Placement Declined"
+        type: "student-driven status enum with admin visibility"
+        data_shown: >
+          Progress per suggestion. Interview Scheduled requires the student to supply scheduling details, and
+          the scheduled date remains visible on the card even after the status moves on, preserving history.
+        gates_on:
+          - "Exactly one suggestion per student may hold Placement Accepted at a time."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Retaining the interview date after the status changes is a small, deliberate audit-friendly choice worth noting."
+      - element: "Search Location / Add New Location > Add New Agency cascade, with one-time mapping rule"
+        type: "record resolution with a uniqueness constraint"
+        data_shown: >
+          Locations chosen from the Prism list need no mapping; manually entered ones must be mapped before
+          placement creation. Constraint stated verbatim: \"A location can only be mapped once. A mapped
+          location cannot be reused for another submitted location.\"
+        gates_on:
+          - "Mapping is a hard precondition for Create Placement."
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.5.b and COCA Standard 6, Element 6.9 — same concern as My Request:
+          student-sourced agencies enter the site inventory here with no documented contract precondition.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "The one-time mapping rule is a real operational trap: two students interviewing at the same manually-entered agency cannot both map to it."
+      - element: "Search Field Instructor / Task Supervisor, Add New Field Instructor"
+        type: "personnel resolution"
+        data_shown: "Maps a student-submitted supervisor to an existing personnel record, or creates one."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.a-d-equivalent preceptor credentialing concerns apply, though Social Work — this instrument's primary user — is governed by CSWE EPAS, which is not modeled in ../accreditation/ in this research."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Create Placement (one mapped suggestion vs several) > Place or Place and Publish Now"
+        type: "conditional wizard then commit"
+        data_shown: >
+          With one mapped suggestion, course offering and rotation are preselected and agency, location, and
+          supervisor pre-populate. With several, a selection window appears first.
+        gates_on:
+          - "Publishing is what makes the placement visible to the student and the site."
+        accreditation_citation: "None at this element — the accreditation-relevant checks were the mapping and contract steps upstream."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  # ---------------------------------------------------------------------------
+  - screen: "Placement Assist — Setup and Advanced Options"
+    navigation_path: "Placements > [Course offering or Placement Group] > Placement Assist"
+    action: >
+      Admin configures and runs the matching engine. Every option here is a policy decision — how many
+      placements a student may have, whether distance matters, whether overlapping rotations are allowed,
+      which settings belong to which course, and which slot attributes get priority — which is why this
+      belongs in a setup journey even though the run itself is operational.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 10/16 Managing Placements in Exxat Prism",
+      lines 993-1009; discipline strategy from
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md
+      ("Best Practices — Placement Assist") and
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      ("Placement Assist is a popular feature for PT programs"); self-service discipline limitation per
+      ../prism/capability-map.yaml (Placement Assist feature note).
+    elements:
+      - element: "Wishlist source selector (arrow beside each rotation > choose which wishlists this run considers)"
+        type: "per-rotation multi-select"
+        data_shown: >
+          Which submitted wishlists feed the algorithm. Transcript enumerates the seven supported types:
+          slot-based, location-based, slot and location, setting-based, location-area, rotation-preference,
+          and setting-and-rotation nested. It \"can also run randomized placements without a wish list.\"
+        gates_on:
+          - "Address Preference, Questionnaire, and My Request wishlists are absent from the supported list — preference data collected through them cannot drive a run."
+        accreditation_citation: "None — allocation-policy element."
+        competitor_equivalent: >
+          Comparable in kind to CORE ELMS' SmartMatch ("automated student-site-preceptor matching using
+          customizable rules and preferences with instant results"), one45's three lottery methods, MedHub's
+          Schedule Lottery, and LEO/DaVinci's Clerkship Lottery. All rank one object type; this selector
+          composes multiple heterogeneous preference instruments into one run, which none of them documents.
+        gap_severity: "cosmetic"
+        gap_note: >
+          The seven-of-twelve support boundary is stated only in tutorial narration. A new admin can build an
+          Address Preference or Questionnaire wishlist, collect a full cohort's submissions, and only then
+          discover the allocator cannot read them.
+      - element: "Select Students drawer (deselect to exclude) + include-placed-students-and-used-slots toggle"
+        type: "population scoping"
+        data_shown: "Which students are in this run, and whether already-placed students and consumed slots are represented in the report."
+        gates_on:
+          - "Hard invariants stated in the transcript regardless of configuration: never more than one placement per student per course offering, never more than one per rotation, never into an unavailable slot."
+        accreditation_citation: "None — allocation-policy element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Consider Distance for Placements (bit) + school-to-location vs student-address-to-location choice"
+        type: "toggle + mode radio"
+        data_shown: "Adds geographic proximity as a scoring factor; results include a distance-to-placement histogram."
+        gates_on:
+          - "Student-address mode depends on student address data, which for many programs is collected via the Address Preference wishlist type — a type this same engine cannot otherwise consume."
+        accreditation_citation: "None — no accreditor in ../accreditation/ prescribes geographic considerations in placement allocation."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file documents distance-weighted allocation."
+        gap_severity: "none"
+        gap_note: >
+          Real differentiator versus every lottery-based competitor, and a nice closure of the loop with the
+          Address Preference wishlist type: that type's data is useful here even though its rankings are not.
+      - element: "Set Maximum Placements per Student for Courses, Rotations and Settings (bit) > Add Rule (IN EACH vs IN COMBINED; Course | Rotation | Setting; value)"
+        type: "rule builder"
+        data_shown: >
+          Per-student caps. Transcript's worked example: IN EACH + Rotation + [FNP Clinical Practicum, FNP
+          Rotation Part Two] + 1 places a student once in each. IN COMBINED sets a shared limit across the
+          selection instead.
+        gates_on:
+          - "Students at their cap are excluded from that rule's slots for the run."
+        accreditation_citation: >
+          ACPE Standard 3, Key Element 3.2 (APPE four required setting categories) — the Setting dimension of
+          this rule builder is the closest existing mechanism to enforcing a required-setting distribution,
+          but it expresses maxima, not minima. ACPE requires students to complete each of four categories;
+          this can cap a category, not require one.
+        competitor_equivalent: >
+          Elentra documents "learner-driven elective selection within admin-set capacity rules" and CORE ELMS
+          documents SmartMatch's "customizable rules" (content/competitors/elentra.yaml,
+          content/competitors/core-elms.yaml). Both assert rule configurability; neither publishes a rule
+          grammar, so the IN EACH / IN COMBINED distinction has no documented counterpart to compare against.
+        gap_severity: "gap"
+        gap_note: >
+          Maxima-only is a genuine directional gap for Pharmacy and Medicine, where the accreditation-relevant
+          constraint is a required minimum per category, not a ceiling. Expressing "every student must
+          complete one ambulatory-care APPE" is not possible with this grammar.
+      - element: "Restrict Placements in Overlapping Rotations (bit) + auto-detected overlap-group table with per-group opt-out"
+        type: "toggle + system-generated group list + pencil override"
+        data_shown: "System detects date-overlapping rotations and prevents a student from occupying two at once; specific rotations can be allowed to overlap."
+        gates_on:
+          - "Guards against double-booking within the run."
+        accreditation_citation: "None — scheduling-integrity element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Per ../prism/capability-map.yaml this guard, paired with a per-course max-placement override, is also how split/combined rotation equivalences (one 6-month vs two 3-month blocks) are expressed."
+      - element: "Pair Courses with Clinical Settings (bit) + per-course setting picker"
+        type: "toggle + persistent mapping"
+        data_shown: "Restricts a course to slots of specified settings. Transcript notes the mapping persists: \"these settings will be saved for future placement assist instances.\""
+        gates_on:
+          - "Only slots of the paired settings are eligible for that course in the run."
+        accreditation_citation: >
+          ACPE Standard 3, Key Elements 3.1.b and 3.2 (IPPE and APPE setting-category requirements) — this
+          persistent course-to-setting mapping is the nearest existing structure to encoding a required-setting
+          curriculum, though it constrains supply rather than verifying student attainment.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "The persistence is silent and cross-run — a mapping made once for a single group run quietly governs every later run, which is easy to forget and hard to notice."
+      - element: "Customization Based on Slot Types / Slot Settings / Slot Status (three bits + weightage inputs)"
+        type: "priority weighting"
+        data_shown: >
+          Higher weight means slots of that type, setting, or status are prioritized. The capability map's
+          worked example is scarcity-driven weighting — Women's Health 10, Pediatrics 9 — so the hardest-to-fill
+          specialties are allocated first.
+        gates_on: []
+        accreditation_citation: "None — allocation-policy element."
+        competitor_equivalent: >
+          No competitor teardown in this research documents attribute-level weighting. CORE ELMS' SmartMatch is
+          the closest claim ("customizable rules and preferences"), and notably its documented weakness —
+          reviewers report that "SmartMatch's extensive settings lack clear setup documentation/checklists"
+          (content/competitors/core-elms.yaml, weaknesses) — is precisely the risk this screen carries too,
+          which makes it the single most useful competitor datapoint in this stage for an onboarding narrative.
+        gap_severity: "configure-needed"
+        gap_note: >
+          The weighting scale is undefined in the product: nothing states the range, whether weights are
+          relative or absolute, or how the three dimensions combine. The Learn More hyperlink beside the
+          max-placement rule builder is the only in-product explanation documented anywhere on this screen.
+      - element: "Run Placement Assist button — and who is allowed to press it"
+        type: "job trigger"
+        data_shown: "Queues an asynchronous run; the admin lands on the History tab and may leave and return."
+        gates_on:
+          - "DISCIPLINE GATE: per ../prism/capability-map.yaml (sourced from Exxat help-center documentation), full self-service Placement Assist is limited to PT-PTA and OT-OTA programs; every other discipline must contact support to enable it, and the docs describe \"limited functionality\" outside those two."
+        accreditation_citation: "None at the trigger itself."
+        competitor_equivalent: >
+          CORE ELMS markets SmartMatch across "15+ disciplines including pharmacy, dental, nursing, PT, OT, PA,
+          veterinary, social work, and undergraduate medicine" with no discipline gating disclosed
+          (content/competitors/core-elms.yaml). That is the sharpest competitive contrast in this entire stage.
+        gap_severity: "gap"
+        gap_note: >
+          For all four expansion domains — Pharmacy, DO, Dentistry, Medicine — the most sophisticated feature
+          in this stage is not self-service on day one. A new Pharmacy admin following the standard admin
+          tutorial reaches this button and cannot press it without a support engagement, and the tutorial does
+          not warn them.
+
+  # ---------------------------------------------------------------------------
+  - screen: "Placement Assist — Results and History"
+    navigation_path: "Placements > [Course offering or Placement Group] > Placement Assist > History > View Results"
+    action: >
+      Admin evaluates the proposed allocation and decides which suggestions to commit. Suggestions are never
+      auto-committed — the review-then-commit boundary is the defining behavior a new admin must understand.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 10/16 Managing Placements in Exxat Prism",
+      lines 995 and 1009-1013 ("Placement Assist does not automatically place students in the proposed slots,
+      so you can have the final say and make manual changes to the suggested placements").
+    elements:
+      - element: "Summary: distribution by course/rotation/setting, percentage receiving 1st/2nd/3rd/4th choice, distance histogram"
+        type: "read-only analytics"
+        data_shown: "Allocation quality of this run, expressed as preference satisfaction and geographic spread."
+        gates_on: []
+        accreditation_citation: >
+          None directly, though this is the only place in the product where equity of placement outcomes is
+          quantified — data adjacent to CODA Standard 2, Element 2-6 and COCA Standard 6, Element 6.9
+          comparability arguments, but not framed or exportable as accreditation evidence.
+        competitor_equivalent: >
+          No competitor teardown in this research documents preference-satisfaction reporting. one45's claim
+          is granular duty-hour and leave tracking "for accurate and simplified program and accreditation
+          reporting" (content/competitors/one45.yaml) — reporting, but on a different subject entirely.
+        gap_severity: "none"
+        gap_note: >
+          Strong artifact for the onboarding pitch: a new program can compare two configurations of the same
+          run and see the preference-satisfaction difference before committing anything.
+      - element: "Results table: student, suggested location, rank on their wishlist, course offering, rotation, supervisor, slot type, distance, result"
+        type: "reviewable proposal list"
+        data_shown: "Row per proposed placement, showing which ranked choice it satisfies."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Place (single) / select-all checkbox + Create Placement (bulk)"
+        type: "explicit commit action"
+        data_shown: "Nothing is written until pressed."
+        gates_on:
+          - "This is the human-in-the-loop boundary. The transcript is explicit that suggestions are proposals."
+        accreditation_citation: >
+          None directly — but the review-then-commit boundary is itself the control that keeps the algorithm
+          from creating placements at sites with lapsed agreements or non-compliant students, given that the
+          allocator's own constraint set (per step 20) contains no contract or compliance term.
+        competitor_equivalent: >
+          CORE ELMS' SmartMatch markets "instant results, eliminating wait times" (content/competitors/core-elms.yaml),
+          which reads as auto-commit, but their public materials do not state whether a review step exists —
+          so the comparison is suggestive, not documented.
+        gap_severity: "none"
+        gap_note: >
+          Worth teaching explicitly during onboarding: Placement Assist proposes, the admin disposes, and runs
+          are unlimited and non-destructive, so a new admin should be encouraged to run it repeatedly with
+          different weightings before committing anything.
+      - element: "View Setup of the Run"
+        type: "configuration provenance"
+        data_shown: "The exact option set used for that historical run."
+        gates_on: []
+        accreditation_citation: >
+          None named in ../accreditation/, but this is the only reproducibility artifact for how a cohort's
+          placements were allocated — the thing a site visit team would want if it ever questioned equity of
+          placement assignment.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: >
+          Quietly valuable and under-marketed: run configuration is retained per run, which makes the
+          allocation decision auditable after the fact.
+
+  # ---------------------------------------------------------------------------
+  - screen: "Send Interest to Location (site-side input into the match)"
+    navigation_path: "Placements > [Course offering] > Slots > (scroll right) Students Interested > [count hyperlink]"
+    action: >
+      Admin optionally gives sites a vote: share the interested students' contact details and resumes with
+      the location, collect the site's ranking of those students, then place from the site's response. This is
+      the third preference channel in the stage and a distinct program-policy decision at setup time.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      lines 925-935.
+    elements:
+      - element: "Email Recipient pencil (at least one recipient required before sending)"
+        type: "mandatory recipient picker"
+        data_shown: "Which site personnel receive the student-interest link."
+        gates_on:
+          - "Send Interest to Location is unavailable until a recipient is selected."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Interested-students table (student rows plus their submitted slot-wishlist data) + student multi-select"
+        type: "selective disclosure control"
+        data_shown: >
+          Which students' information is shared. Transcript: \"locations can view student contact information
+          and their resume\" and can then \"indicate their preference for the students interested in their
+          available slots.\"
+        gates_on: []
+        accreditation_citation: >
+          None in ../accreditation/. FERPA-adjacent rather than accreditor-driven: this shares identifiable
+          student information with an external party. The comparable protection documented anywhere in the
+          stage is the support-configured one-time-password gate over compliance data in placement emails
+          (transcript lines 1139-1141), which does not apply here.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file documents a site-side ranking channel."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Per-send selective disclosure with no standing policy control: nothing lets a program configure once
+          what may be shared with sites; every send is an individual judgement call.
+      - element: "Site's returned preference, visible back on the Students Interested view; then select students > Place"
+        type: "external input surfaced inline, then commit"
+        data_shown: "Placement options pre-fill from the slot the student expressed interest in."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: >
+          Structurally this is a two-sided match (both student and site rank), which no competitor teardown in
+          this research documents — every documented competitor mechanism (one45, MedHub, LEO/DaVinci, Elentra,
+          New Innovations, eMedley) is one-sided learner ranking against admin-set capacity.
+        gap_severity: "none"
+        gap_note: >
+          Genuine architectural differentiator worth surfacing in the onboarding narrative, but note it does
+          not connect to Placement Assist: site preference informs a manual placement decision and is not an
+          input the allocator can consume.
+
+  # ---------------------------------------------------------------------------
+  - screen: "Exxat One Schedules — processing external schedules into Prism slots and placements"
+    navigation_path: "Dashboard > Exxat One section > Process Now  —  or Placements > Process Now  —  or left menu > Exxat One Schedules"
+    action: >
+      For programs on both products, the admin converts site-approved Exxat One schedules into Prism slots
+      and placements, and maintains that link as schedules change. This is the terminal path of the
+      availability-based wishlist introduced in step 14, and it is real setup work for PT/PTA and OT/OTA
+      programs onboarding onto Prism with an existing Exxat One footprint.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, section "## Processing Schedules from Exxat One to
+      Exxat Prism", lines 1897-1927; the wishlist-to-import loop is described end to end at
+      /Users/romitsoley/Downloads/PTPTAVideosTranscripts.md lines 131-135 and
+      /Users/romitsoley/Downloads/OTOTAVideosTranscripts.md lines 131-135.
+    elements:
+      - element: "Access gate: dual login required"
+        type: "precondition"
+        data_shown: "Transcript: \"you will only have access to the Exxat One / Exxat Prism linking section if you have login access to both Exxat One and Exxat Prism.\""
+        gates_on:
+          - "The entire section is invisible without dual access."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Another day-one dependency that surfaces only by absence — the navigation entry simply is not there, with no explanation of why."
+      - element: "Processing status tabs: To Be Added / Added to Prism / Requires Update"
+        type: "queue segmentation"
+        data_shown: "Where each Exxat One schedule stands relative to its Prism counterpart. Default date filter shows the next year; a Reset hyperlink clears it."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research; no competitor file documents a two-system schedule-reconciliation queue."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Add to Prism drawer: link Site > link Location > select Rotation (nearest-dates recommendation) > slot details"
+        type: "guided mapping wizard with reference pane"
+        data_shown: >
+          Left reference pane shows the Exxat One schedule's title, site, location, slot dates, slot details,
+          and student. \"The rotation whose dates are closest to the schedule's dates is recommended.\" Location
+          and rotation prefill from the mapping.
+        gates_on:
+          - "Site and location must be linked first if they were not linked previously."
+        accreditation_citation: "None — data-migration mechanic."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. This is the closest analog in the stage to a bulk-import comparison, and no competitor teardown documents import mechanics at field level."
+        gap_severity: "none"
+        gap_note: >
+          Well-designed migration affordance — recommendation plus reference pane plus prefill — and the
+          strongest onboarding-specific mechanic in the entire stage.
+      - element: "Assign Student to Slot (bit)"
+        type: "toggle governing slot-only vs slot-plus-placement import"
+        data_shown: "Off imports a bare slot; on continues into student selection with the Exxat One student's email prefilled and the closest-matching Prism student recommended."
+        gates_on:
+          - "For group schedules: students may be left unassigned for some slots, but \"you need to place at least one student\" if the assign bit was enabled."
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Requires Update queue: eye-icon hover showing what changed; Update button"
+        type: "change-detection queue"
+        data_shown: >
+          Three student-change types (assigned where none was, removed, replaced), two location-change types
+          (assigned where none was, replaced), plus schedule cancellation. Last Updated column carries the
+          timestamp.
+        gates_on:
+          - "Reconciliation is admin-driven — the system flags the divergence but does not resolve it."
+        accreditation_citation: >
+          None directly, though an unreconciled Requires Update row means the Prism placement record — the
+          system of record for every accreditation report downstream — is knowingly stale.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          No documented alerting on this queue: a schedule can sit in Requires Update indefinitely with the
+          Prism placement silently wrong, and nothing pushes the admin to look.
+      - element: "Processed-from-schedule indicator on the resulting slot or placement"
+        type: "provenance badge"
+        data_shown: "Marks slots and placements that originated from an Exxat One schedule rather than being entered in Prism."
+        gates_on: []
+        accreditation_citation: >
+          COCA Standard 6, Element 6.9 — same provenance logic as the Last Updated By column in step 8:
+          externally-sourced capacity and internally-asserted capacity carry different evidentiary weight, and
+          this badge is the only place the difference is recorded for imported records.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+sources:
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — PRIMARY. Sections cited directly and by line range: '## 7/16 Managing Slots in Exxat Prism' (lines 573-654), '## 9/16 Managing Wishlists in Exxat Prism' (lines 807-936), '## 10/16 Managing Placements in Exxat Prism' (lines 937-1168), '## Processing Schedules from Exxat One to Exxat Prism' (lines 1893-1929). Every step's confirmed_by cites this file directly rather than a help-center paraphrase of the same videos."
+  - "/Users/romitsoley/Downloads/PTPTAVideosTranscripts.md — '## 2. Managing Exxat One Availability Based Wishlist in Exxat Prism' (lines 105-137). PT/PTA discipline texture on the availability-based wishlist and the wishlist-to-slot-request-to-import loop."
+  - "/Users/romitsoley/Downloads/OTOTAVideosTranscripts.md — '## 2. Managing Exxat One Availability Based Wishlist in Exxat Prism' (lines 107-139). Near-identical OT/OTA version, confirming the feature is genuinely shared across the four PT/PTA/OT/OTA disciplines and not PT-only."
+  - "/Users/romitsoley/Downloads/PAVideosTranscripts.md — checked; contains only patient-logging content, no wishlist/slot/Placement Assist coverage. Negative result used in the discipline-variance analysis."
+  - "/Users/romitsoley/Downloads/SLPVideosTranscripts.md — checked; clinical-logs content only, no coverage of this stage. Negative result."
+  - "/Users/romitsoley/Downloads/NursingTutorialsTranscripts.md — checked; competency-based-education content only, no coverage of this stage. Negative result."
+  - "/Users/romitsoley/Downloads/TEVideosTranscripts.md — checked; Echo360/GoReact assignment content only, no coverage of this stage. Negative result."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md — 'Wishlist' and 'Best Practices — Placement Assist' sections: wishlist-type-per-course-type conventions, the 2-4-month-ahead / short-open-window cadence, and staged placement-group strategy."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — 'Wishlist' section and 'Exxat One Availability-Based Wishlist' section."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md — 'Wishlist Setup' section (Level I / Level II / capstone patterns) and 'Exxat One Availability-Based Wishlist (PT/PTA/OT/OTA)' section."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — Field Application Form / Multi-Location Field Application Form, My Requests, and course-specific Wishlist Questionnaires as SW's analog to the PT slot-request/wishlist model."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — explicitly documents the absence of SLP slot-request, wishlist, and Placement Assist material (its own 'no equivalent playbook source' caveat and gaps list)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — gaps list naming slot-request cadence, wishlist behavior, and Placement Assist adoption as unknown for Nursing."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — gaps list naming placement/slot workflows as an open question for TE."
+  - "content/prism/capability-map.yaml — Placement Assist constraint-solver detail, weighted-difficulty example, and the PT-PTA/OT-OTA self-service limitation; 'Slot Request', 'Wishlist Setup', and 'Follow the Preceptor' feature entries."
+  - "content/accreditation/acpe.yaml — Standard 3 Key Elements 3.1.b, 3.2, 3.3.a-e, 3.5.b."
+  - "content/accreditation/coca.yaml — Standard 6, Element 6.9 (capacity adequacy, executed agreements, contingency for lost capacity)."
+  - "content/accreditation/coda.yaml — Standard 2, Element 2-6 (comparability across clinical sites)."
+  - "content/accreditation/lcme.yaml — Standard 5, Element 5.5 (resources for clinical instruction)."
+  - "content/competitors/core-elms.yaml — SmartMatch capability and the reviewer-sourced weakness that its extensive settings lack setup documentation."
+  - "content/competitors/one45.yaml — three named lottery methods."
+  - "content/competitors/leo-davinci.yaml — Clerkship Lottery: rank-order with random tiebreak, optional FCFS mode."
+  - "content/competitors/medhub.yaml — UME Schedule Lottery, course enrollment/waitlists."
+  - "content/competitors/elentra.yaml — lottery system and learner-driven elective selection within admin-set capacity rules."
+  - "content/competitors/emedley.yaml — eduSched preference/lottery/track-based scheduling with site capacity management; eKeeper affiliation-agreement tracking."
+  - "content/competitors/new-innovations.yaml — rotation lottery for 3rd/4th-year medical students."
+  - "content/competitors/axium.yaml — student-patient matching against graduation requirements (the dentistry allocation unit, used in the discipline-variance analysis)."
+  - "content/flows/rotation-lifecycle--04-placement-allocation-scheduling-capacity-balancing.yaml — prior element-level treatment of the same features from the clinical-cycle angle; this file deliberately does not duplicate its Max Placement Limit analysis but cross-references it."
+last_verified: "2026-08-24"

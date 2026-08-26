@@ -1,0 +1,26 @@
+# One file per major competitor: lens-medhub.yaml, lens-core-elms.yaml, etc.
+# Mirrors ../competitors/<slug>.yaml but reframed around roles, not features.
+#
+# Plain language throughout: `read` and each gap's `claim` should be the sentence
+# a dean could say out loud. No inline "Element N.N" citations in `read` itself —
+# that detail belongs in this file's `sources:`, which already exists to carry it.
+competitor: "e.g. 'MedHub'"
+how_they_implicitly_serve_roles:
+  - role: "Program Admin"
+    read: "how well/poorly this competitor's product seems built for this role, and why"
+    # Optional cross-reference to the flows/*.yaml element(s) this read is grounded
+    # in — navigational metadata, not a citation. Bare flow filename, no ../flows/
+    # prefix. Omit step/element for a whole-flow match. Leave the whole key off
+    # rather than force a weak match.
+    # related_flows:
+    #   - flow: "<exact flow filename>.yaml"
+    #     step: "<exact steps[].screen, optional>"
+    #     element: "<exact steps[].elements[].element, optional>"
+# {claim, detail} objects, not flat strings — claim is the plain-language wedge
+# headline, detail carries the citation/evidence material (named competitor,
+# named Prism pillar, etc.) that used to live inline in a single dense string.
+gaps_prism_can_exploit:
+  - claim: ""
+    detail: ""
+    # related_flows: same shape as above — optional, omit rather than force a weak match.
+sources: []

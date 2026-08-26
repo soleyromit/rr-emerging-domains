@@ -1,0 +1,81 @@
+import { Section } from "@astryxdesign/core/Section";
+import { Stack } from "@astryxdesign/core/Stack";
+import { Card } from "@astryxdesign/core/Card";
+import { Text } from "@astryxdesign/core/Text";
+import { Heading } from "@astryxdesign/core/Heading";
+import { Banner } from "@astryxdesign/core/Banner";
+import { PageHeader } from "@/components/page-header";
+import { ScorecardChart } from "@/components/charts/scorecard-chart";
+import { ScorecardTable } from "@/components/scorecard-table";
+import { getScorecard, computeWeightedTotals } from "@/lib/content";
+
+const DOMAINS = ["DO", "Pharmacy", "Dentistry", "Medicine"];
+
+export default function ScorecardPage() {
+  const scorecard = getScorecard();
+
+  if (!scorecard) {
+    return (
+      <Section padding={6}>
+        <Text type="supporting">No scorecard found.</Text>
+      </Section>
+    );
+  }
+
+  const totals = computeWeightedTotals(scorecard);
+  const isPlaceholder = scorecard.criteria.every((c) => DOMAINS.every((d) => (c.scores?.[d] ?? 0) === 0));
+
+  return (
+    <Stack gap={0}>
+      <Section padding={6} dividers={["bottom"]}>
+        <Stack gap={5}>
+          <PageHeader
+            eyebrow="Strategy"
+            title={
+              scorecard.recommended_beachhead
+                ? `${scorecard.recommended_beachhead} is the recommended beachhead`
+                : "Where-to-play scorecard"
+            }
+            description={
+              <>
+                Borrowed from Lafley &amp; Martin&apos;s <em>Playing to Win</em> — score each domain, don&apos;t
+                just list them. Weights sum to 100%.
+              </>
+            }
+          />
+          {isPlaceholder ? (
+            <Banner status="warning" title="Scores are still placeholders" description="This view will fill in once the synthesis pass completes." />
+          ) : scorecard.recommended_beachhead ? (
+            <Card variant="pink">
+              <Stack gap={2}>
+                <Text type="label" color="secondary">
+                  Why it wins
+                </Text>
+                <Text type="body" maxLines={3}>
+                  {scorecard.rationale}
+                </Text>
+              </Stack>
+            </Card>
+          ) : null}
+        </Stack>
+      </Section>
+
+      <Section padding={6} dividers={["bottom"]}>
+        <Stack gap={3}>
+          <Heading level={2}>Weighted scorecard</Heading>
+          <ScorecardChart scorecard={scorecard} totals={totals} />
+        </Stack>
+      </Section>
+
+      <Section padding={6}>
+        <Stack gap={3}>
+          <Stack gap={1}>
+            <Heading level={2}>Scoring detail</Heading>
+            <Text type="supporting">1–5 per criterion per domain, with rationale.</Text>
+          </Stack>
+          <ScorecardTable criteria={scorecard.criteria} />
+        </Stack>
+      </Section>
+    </Stack>
+  );
+}

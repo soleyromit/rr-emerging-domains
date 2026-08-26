@@ -1,0 +1,22 @@
+domain: "DO"                           # DO | Pharmacy | Dentistry | Medicine
+full_name: "Osteopathic Medicine"
+credential: "DO"
+program_length_years: 4
+market:
+  program_count: ""                    # number of accredited programs, cited
+  program_count_trend: ""              # growing/flat/shrinking + evidence
+  total_enrollment: ""
+  sources: []
+standards_bodies:
+  - name: "COCA"
+    type: "institutional accreditor"
+  - name: "AOA"
+    type: "professional body"
+clinical_education_shape: >
+  How rotations/clerkships work structurally in this domain — length, site
+  types, supervision model, what makes it different from Prism's existing
+  allied-health domains.
+distinctive_pain_points:
+  - claim: ""
+    source: ""
+sources: []

@@ -1,0 +1,38 @@
+domain: "Pharmacy"
+pillars:
+  - pillar: "Clinical & Experiential Education"
+    status: behind
+    leader: "CORE ELMS (SmartMatch, ~90% of U.S. pharmacy programs)"
+    summary: "CORE ELMS is the entrenched incumbent — SmartMatch rotation matching plus IPPE/APPE hour tracking with setting-category sub-thresholds, at near-total market penetration. Prism isn't starting from zero here either: Placement Assist is a comparable weighted allocation engine (confirmed in the PA/OT playbooks), so this is a displacement fight between two real matching engines, not a capability gap."
+    opportunity: "IPPE sequencing (3.1.a) is the one element rated Transfer against CORE's own product — Prism's placement model already fits; the fight is displacement (90% incumbency), not capability."
+    sources: ["content/accreditation/acpe.yaml (3.1.a, 3.2.b)", "content/competitors/core-elms.yaml"]
+  - pillar: "Compliance Management"
+    status: opportunity
+    leader: "CORE ELMS, New Innovations, MedHub (tracking only)"
+    summary: "Competitors track preceptor licenses and site agreements — but none publicly documents a real-time block. ACPE's 2:1 preceptor ratio cap (3.3.e) and pre-assignment orientation gate (3.3.c) have no shipped enforcement anywhere in the market."
+    opportunity: "Prism's gating pattern, extended to the preceptor/site entities, is unclaimed: a real-time ratio cap and a blocking orientation gate would be a defensible, standard-citable differentiator nobody else has."
+    sources: ["content/accreditation/acpe.yaml (3.3.c, 3.3.e, 3.5.b)"]
+  - pillar: "Curriculum Mapping"
+    status: opportunity
+    leader: "CORE ELMS (CompMS), Leo, Elentra, eMedley"
+    summary: "All four ship named-taxonomy mapping against AACP's COEPA 2022 outcomes. Prism's mapping is generic."
+    opportunity: "Add the COEPA 2022 taxonomy — narrow, well-defined scope fix."
+    sources: ["content/accreditation/acpe.yaml (2.2.d)"]
+  - pillar: "Surveys & Course Evaluations"
+    status: opportunity
+    leader: "CORE ELMS, E*Value, eMedley, Elentra, one45, Leo — for comparison; Prism now ships this pillar too"
+    summary: "CORRECTED 2026-08-26 (per Exxat PM confirmation): this pillar is shipped, not roadmap — Prism ships a placement-evaluation Forms engine plus a separate general-purpose 'Exxat Surveys' builder (14 question types, multi-channel distribution, full analytics). See content/prism/capability-map.yaml's 'Surveys & Course Evaluations' pillar. The prior 'can't generate until Q1 2027' framing was wrong and is retired."
+    opportunity: "Re-verify Prism's shipped Surveys/Evaluations depth against ACPE 7.5.a's standardized AACP graduating-student/faculty/preceptor survey requirement specifically — the platform-level gap is closed; what remains, if anything, is whether the shipped surveys already match AACP's exact instrument, not availability."
+    sources: ["content/accreditation/acpe.yaml (7.5.a)", "content/prism/capability-map.yaml (Surveys & Course Evaluations pillar)"]
+  - pillar: "Exam Management"
+    status: opportunity
+    leader: null
+    summary: "Pharmacy's terminal exam (NAPLEX/MPJE) is owned by NABP, external to every vendor in the set — no competitor documents ingestion of it either."
+    opportunity: "Genuine whitespace: a validated-import layer for NABP outcome data, scoped as ingestion not delivery."
+    sources: ["content/domains/pharmacy.yaml"]
+  - pillar: "Accreditation Management"
+    status: behind
+    leader: "CORE ELMS (CompMS), Elentra"
+    summary: "CORE ships explicit ACPE/CAPE-aligned standards mapping; Elentra names ACPE directly. Prism has no shipped standards-to-evidence repository."
+    opportunity: "ACPE retired AAMS and now runs its own PHARMS submission platform (live July 2025) — scope Prism's pillar as an evidence-export layer feeding PHARMS, not a competing portal. ACPE owns the system of record, not the vendor."
+    sources: ["content/accreditation/acpe.yaml (7.5.b)", "content/synthesis/gap-analysis.md (§3.5)"]

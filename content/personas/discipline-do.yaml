@@ -1,0 +1,312 @@
+# Discipline-layer persona for the DO (Osteopathic Medicine) domain.
+# The PROGRAM is the archetype, not an individual.
+# Grounded in ../domains/do.yaml, ../accreditation/coca.yaml, and ../competitors/*.yaml.
+# Persona framing (persona_name, JTBD wording, switching_trigger) is Exxat-side
+# synthesis of those researched facts, not a claim quoted from any source.
+domain: "DO"
+persona_name: "The Fast-Growing COCA-Accredited COM With a Borrowed Clinical Network"
+archetype_summary: >
+  A private college of osteopathic medicine that has grown its class size faster
+  than its clinical capacity. It sits inside a field of 48 accredited COMs (39
+  private, 9 public) teaching at 75 locations across 36 states, where total
+  enrollment hit an all-time high of 40,905 in 2025-26 (up 2.9% year over year,
+  up 59% over the decade) and applications for 2026-27 jumped 12.8% to 26,506.
+  Its first two years are institutionally controlled; OMS-3 and OMS-4 are not.
+  Clinical training runs on the distributive model — students dispersed across a
+  wide, geographically scattered network of independent community hospitals,
+  physician practices, and ambulatory sites that the COM recruits, contracts, and
+  credentials one at a time, rather than block-contracting through one owned
+  teaching hospital. That means hundreds of individually-negotiated preceptor
+  relationships across many states, eight required core clerkships (Family
+  Medicine, Internal Medicine, General Surgery, Pediatrics, OB/GYN, Psychiatry,
+  Emergency Medicine, and OPP/OMM) commonly run as four-week blocks in a ~22-block
+  OMS-3/4 sequence, plus student-scheduled electives and, at many schools, a
+  required rural or underserved primary-care rotation. Layered on top is a
+  DO-specific competency track with no MD or allied-health analog: 200-500 hours of
+  hands-on Osteopathic Manipulative Medicine taught and assessed DURING clerkships,
+  so site and preceptor records must carry a manual-skills competency alongside
+  the usual case logs and EPAs. The program is squeezed from both ends — community
+  hospitals increasingly reserve slots for affiliated MD programs while university
+  systems acquire hospital networks, and since the 2020 AOA-ACGME Single
+  Accreditation System merger its students compete head-to-head with MD students
+  for the same fourth-year away rotations, a gap peer-reviewed work documents as
+  disadvantaging DO applicants for competitive specialties. Its administrative
+  center of gravity is therefore the clinical education office and the
+  accreditation liaison, not the registrar.
+accreditation_pressure:
+  - point: "New 2026 COCA standards demand computed proof, not paperwork"
+    detail: >-
+      COCA's 2026 COM Continuing Accreditation Standards (effective July 1,
+      2026, applied to reviews after February 1, 2027) turn this program's
+      capacity problem into an evidence problem, and most of the evidence is not
+      a document — it is a computed number that must survive a site visit.
+  - point: "Every clinical site needs a current agreement and capacity proof (Element 6.9)"
+    detail: >-
+      (1) Element 6.9 Clinical Education is a CORE element: the COM must show a
+      3-year ROLLING AVERAGE of students eligible for first-time, repeat, and
+      off-cycle rotations matched against demonstrated capacity at each site, an
+      executed affiliation agreement for EVERY contracted clinical site, syllabi
+      for every core/required rotation, and a contingency plan for replacing
+      lost rotation capacity. A single expired affiliation agreement is a
+      compliance exposure, and the contingency-plan requirement means losing a
+      site is a finding waiting to happen — exactly the risk the distributive
+      model runs on.
+  - point: "Must prove every student's key rotations before year four (Element 6.10)"
+    detail: >-
+      (2) Element 6.10 Clinical Experience demands de-identified,
+      SYSTEM-GENERATED proof that every student, before fourth-year clerkships,
+      completed at least one rotation alongside GME resident physicians, at
+      least one supervised by an osteopathic physician, and more than one in an
+      inpatient setting — three discrete per-rotation attributes that must roll
+      up into a per-student checklist the program can run BEFORE clerkships
+      begin, not reconstruct afterward.
+  - point: "Must statistically compare outcomes across all clinical sites (Element 6.11)"
+    detail: >-
+      (3) Element 6.11 Comparability requires a statistical-analysis report
+      comparing student outcomes ACROSS ALL core/required sites — cross-site
+      inferential statistics on site-tagged assessment data, which is the
+      hardest ask in the whole document for a program whose sites are
+      heterogeneous by design.
+  - point: "Curriculum must map where each osteopathic skill, including OMM, is taught (Element 6.4)"
+    detail: >-
+      (4) Element 6.4 Osteopathic Core Competencies (CORE) requires a curriculum
+      map showing where each of the seven competencies — including OPP/OMM, the
+      one with no MD equivalent — is taught AND assessed.
+  - point: "Supervision rules must be published and proven distributed to all (Element 5.4)"
+    detail: >-
+      (5) Element 5.4 Patient Care Supervision (CORE) requires published
+      supervision policies, telemedicine included, plus proof of distribution to
+      students, faculty, and staff — i.e., attestation tracking across a
+      preceptor population the COM does not employ.
+  - point: "Findings must trace to actions and evidence, 3 years back (Standards 11.1/11.2/11.8)"
+    detail: >-
+      (6) Standards 11.1, 11.2, and 11.8 all demand the same closed loop:
+      finding -> action -> evidence, three years deep, linking assessment
+      results, confidential course/clerkship evaluations, and the mandatory COCA
+      student survey to the specific curricular changes made in response.
+  - point: "Board pass rates and residency placement must be public and current (Elements 11.4-11.5)"
+    detail: >-
+      (7) Two bright-line public metrics carry automatic consequences: Element
+      11.4 requires four years of first-time COMLEX-USA Level 1/2/3 pass rates
+      published on a public webpage within 30 DAYS of each NBOME annual update,
+      with an improvement plan for any cohort more than 2 SD below the mean and
+      under 90% and an out-of-compliance finding after three sustained years;
+      Element 11.5 requires a continually-updated public 4-year PGY-1 placement
+      rate, with an improvement plan below 95% and out-of-compliance after three
+      consecutive years.
+  - point: "A full compliance report is due to COCA every single year (Element 11.9)"
+    detail: >-
+      (8) Element 11.9 (CORE) is the annual and mid-cycle COCA report itself —
+      the recurring deadline that forces every number above to be aggregated on
+      COCA's own field taxonomy, on schedule, every year, not just at
+      self-study.
+  - point: "Note: COCA bars feeding its standards text into AI tools"
+    detail: >-
+      Note for anyone reusing this file: the COCA standards PDF carries an
+      explicit notice prohibiting submission of COCA-owned content into AI
+      platforms without written permission; see the header of
+      ../accreditation/coca.yaml before any of this framing goes
+      customer-facing.
+current_tools:
+  - point: "Likely runs on E*Value/MedHub plus spreadsheets for compliance math"
+    detail: >-
+      Almost certainly a legacy med-ed suite plus spreadsheets — and the
+      spreadsheets are where the COCA-critical math actually happens. The
+      realistic incumbent set for a COM: E*Value/MedHub (explicitly ships to
+      osteopathic medicine among 24+ named disciplines, with case logs, hours
+      validation, mobile procedure logging, and evaluation-driven rotation/site
+      scheduling; now Ascend Learning-owned, with public review complaints of
+      slow, buggy, freezing mobile logging and "cumbersome" patient logging);
+  - point: "New Innovations has strong scheduling but was just acquired by QGenda"
+    detail: >-
+      New Innovations (DO/MD, strongest public clinical-scheduling depth —
+      rotation/block/daily/on-call scheduling, a UME rotation lottery, procedure
+      logging with supervision-level tracking; acquired by QGenda in July 2025,
+      adding roadmap and support-continuity uncertainty);
+  - point: "eMedley/AllofE tracks affiliation agreements closest to Element 6.9's ask"
+    detail: >-
+      eMedley/AllofE (DO/MD; eduSched with site capacity management and lottery
+      scheduling, eCLAS mobile case logging, eValuate with EPA entrustment
+      ratings, eKeeper affiliation-agreement tracking with auto-expiration
+      reminders, auto-generated MSPE letters — the closest public match to COCA
+      6.9's affiliation-agreement requirement, and the only competitor here with
+      any published price point, a Capterra "starting price" of $5,000/year
+      flat);
+  - point: "Elentra has strong curriculum tools but no compliance-tracking module"
+    detail: >-
+      Elentra (MD/DO, curriculum/assessment/accreditation depth, AAMC Curriculum
+      Inventory vendor, MedBiquitous native, but NO dedicated, publicly
+      documented Compliance Management module);
+  - point: "Leo/DaVinci also lacks compliance tracking; one45 is MD-only"
+    detail: >-
+      and Leo/DaVinci (DO among five named domains, deep curriculum-mapping
+      heritage, also with no public evidence of student-credentialing compliance
+      tracking). one45 is MD-only and unlikely here.
+  - point: "All vendors keep pricing opaque, with almost no public reviews"
+    detail: >-
+      Three cross-cutting truths shape the persona: (a) every one of these
+      vendors is opaque on pricing and has essentially no findable G2/Capterra
+      review presence, so this program bought largely on reference calls and
+      cannot easily benchmark what it pays;
+  - point: "Compliance tracking still lives in spreadsheets, even on top vendors"
+    detail: >-
+      (b) the two strongest curriculum/accreditation players — Elentra and Leo —
+      are the two with no compliance module, so
+      immunization/background-check/certification tracking and
+      affiliation-agreement expiry almost certainly live in spreadsheets, shared
+      drives, and the clinical coordinator's inbox regardless of which suite the
+      COM owns; and
+  - point: "Most incumbent vendors have been acquired or merged since 2023"
+    detail: >-
+      (c) four of the seven plausible incumbents have changed hands or merged
+      since 2023 (MedHub/E*Value under Ascend, New Innovations to QGenda 2025,
+      Elentra under Achieve Partners with Skyfactor and DaVinci folded in, and
+      Elentra now openly courting Leo customers to migrate), so this program is
+      living with vendor-continuity anxiety it did not choose.
+jtbd:
+  - job: >
+      When COCA expects system-generated proof that every student hit required
+      supervision and setting requirements before fourth year, and that every site
+      they rotated through had a current affiliation agreement and demonstrated
+      capacity, I want those attributes captured automatically as students are
+      scheduled, so I can answer a site-visit question in minutes instead of
+      rebuilding years of history from spreadsheets and coordinator memory.
+    evidence_or_rationale: >
+      This is the direct union of COCA Element 6.9 (a 3-year rolling average of
+      capacity, an executed agreement per site, a contingency plan) and Element
+      6.10, which specifies "de-identified, system-generated proof" of three
+      discrete per-rotation attributes (DO-supervised, GME-resident, and inpatient,
+      required before fourth-year clerkships begin) — the standard names the system
+      of record, not just the outcome. Both are Standard 6 clinical-education
+      elements and 6.9 is CORE. The burden scales with the distributive model:
+      hundreds of individually recruited preceptors across many states rather than
+      a handful of institutionally-contracted affiliates. THIS IS THE PRIMARY JOB.
+    related_flows:
+      - flow: "rotation-lifecycle--01-site-sourcing-capacity-contracting-affiliation-agreement.yaml"
+        step: "Site/Location — Slots tab (Add Slot drawer)"
+        element: "Number of Offers"
+  - job: >
+      When my class size keeps growing and community hospitals keep reserving
+      slots for their own affiliated MD programs, I want a live view of committed
+      capacity versus projected demand per rotation type and site, so I can see a
+      shortfall a year out and execute a contingency plan instead of scrambling to
+      place students weeks before a block starts.
+    evidence_or_rationale: >
+      Grounded in the domain file's named bottleneck (clinical rotation site
+      capacity as a widely reported constraint, intensified by post-2020 direct
+      competition with MD students for away rotations) and in COCA 6.9's explicit
+      requirement for a contingency plan for replacing lost rotation capacity.
+      Enrollment context makes it non-hypothetical: first-year enrollment up 3.6%
+      in one year and 62% over the decade, matriculants up 6.9%. Framing the demand
+      forecast as a job is Exxat-side synthesis of these facts.
+  - job: >
+      When OMM/OPP has to be taught and assessed during clerkships by preceptors
+      who are not my faculty and often not DOs, I want that manual-skills
+      competency tracked on the same rotation record as case logs and EPAs, so the
+      osteopathic distinctive of my curriculum shows up in my competency map
+      instead of living in a separate department spreadsheet.
+    evidence_or_rationale: >
+      COCA Element 6.4 (CORE) requires a map of where each of the seven osteopathic
+      core competencies — OPP/OMM included — is taught and assessed; the domain file
+      documents 200-500 hours of hands-on OMM/OMT integrated into clinical
+      clerkships with no MD or allied-health analog, and requires that at least one
+      core clerkship be DO-supervised. No competitor reviewed publicly documents a
+      manual-skills competency type distinct from procedure/case logging.
+    related_flows:
+      - flow: "competency-verification--01-define-the-competency-framework-and-map.yaml"
+        step: "Competency Management > Setup > Add New (4-step drawer: Select Competency > Course Type > Scoring Source/Assessments > Summary)"
+        element: "Course Type selector — Experiential / Didactic / Both"
+  - job: >
+      When NBOME publishes its annual update and my COMLEX pass rates and PGY-1
+      placement rate both have to go on a public page within a tight, tracked
+      deadline, I want those figures computed automatically from my own student
+      records and pushed to that page, so a clerical miss never becomes an
+      out-of-compliance finding.
+    evidence_or_rationale: >
+      COCA Element 11.4 (30-day publication window; improvement plan below 2 SD and
+      90%; out-of-compliance after three sustained years) and Element 11.5 (public
+      4-year PGY-1 placement rate, PGY-1 entrants divided by PGY-1 applicants;
+      improvement plan below 95%; out-of-compliance after three consecutive years).
+      Both depend on data originating outside the COM — NBOME scores and ACGME Match
+      outcomes — which is why the accreditation file scopes this as an
+      import/reporting integration rather than exam delivery.
+  - job: >
+      When my accreditation liaison assembles the annual or mid-cycle COCA report,
+      I want every required data point — rotation counts, cross-site outcomes, exam
+      pass rates, placement rates, and student-survey findings with the actions
+      taken in response — already mapped to COCA's report fields, so the self-study
+      is a query against a year of normal operations rather than a six-month
+      archaeology project across five systems.
+    evidence_or_rationale: >
+      Element 11.9 (CORE) requires timely, complete annual and mid-cycle report
+      submission, and the accreditation research calls it the single
+      highest-leverage element for a standards-aligned evidence repository built on
+      COCA's exact field taxonomy rather than a generic binder. Elements 11.1, 11.2,
+      and 11.8 all demand the same closed finding -> action -> evidence loop, and
+      6.11 demands cross-site statistical comparability — the pieces the report
+      consumes. Naming this the liaison's job is Exxat-side framing of those
+      standards.
+switching_trigger: >
+  Four triggers, roughly in order of how reliably they open an evaluation:
+  (1) THE COCA CLOCK. The 2026 standards take effect July 1, 2026 and govern
+  reviews after February 1, 2027, and 6.9/6.10 raise the evidentiary bar on
+  exactly the data the distributive model makes hardest to produce. A program that
+  discovers during a mock review or mid-cycle report that it cannot generate the
+  3-year rolling capacity average or the pre-fourth-year DO-supervision/inpatient
+  checklist from its current system is looking at a fix on a deadline. Note the
+  inverse risk: mid-cycle and immediately pre-site-visit is also when switching
+  cost peaks, because years of self-study evidence sit inside the incumbent — the
+  buying window opens just AFTER a site visit closes, or early enough in a cycle
+  that a migration finishes with a full clean year of data behind it.
+  (2) A COMPLIANCE FAILURE WITH A NAME ON IT. An expired affiliation agreement
+  found during a review, a student who started a rotation without a required
+  credential, or a supervision-policy attestation that cannot be produced — these
+  are the failures that turn a spreadsheet into a board-level problem, and they
+  land hardest at Elentra and Leo sites, neither of which publicly ships a
+  compliance module.
+  (3) VENDOR DISCONTINUITY. New Innovations' July 2025 QGenda acquisition,
+  MedHub/E*Value under Ascend Learning, and the Achieve Partners roll-up of
+  Elentra + Skyfactor + DaVinci — with Elentra now publicly inviting Leo customers
+  to migrate — mean a large share of COMs will face a forced-migration or
+  end-of-life conversation they did not initiate. A program being told to move
+  anyway will evaluate the field rather than move where it is pushed.
+  (4) GROWTH BREAKING THE COORDINATOR. Another 3-6% class-size increase against
+  flat site capacity, or the retirement/departure of the clinical coordinator who
+  held the placement logic in her head, converts a tolerable manual process into
+  an unstaffable one. Budget usually follows a headcount request that was denied.
+  Counter-force to price in: every incumbent here holds years of longitudinal
+  rotation, evaluation, and curriculum-mapping history that is the program's own
+  accreditation evidence, so a credible migration story for historical data is a
+  precondition for the conversation, not a closing argument. And because pricing
+  across this category is uniformly non-public with almost no third-party review
+  presence, a program that can be given a real number and real references early is
+  being handed something no incumbent offered it.
+sources:
+  - "https://www.aacom.org/become-a-doctor/about-osteopathic-medicine/quick-facts"
+  - "https://www.aacom.org/searches/reports/report/applicants-enrollment-and-graduates-1977-78---2023-24"
+  - "https://osteopathicfounders.org/osteopathic-medical-school-applications-jump/"
+  - "https://www.aacom.org/become-a-doctor/about-osteopathic-medicine/overview-of-osteopathic-medical-education-and-accreditation"
+  - "https://www.aacom.org/become-a-doctor/about-osteopathic-medicine/omm-explained"
+  - "https://tourocom.touro.edu/media/schools-and-colleges/tourocom/clinical-rotations/clinical_rotations_manual.pdf"
+  - "https://thedo.osteopathic.org/2023/11/to-solve-the-problem-of-too-few-clinical-rotation-sites-leaders-in-medicine-consider-business-solutions/"
+  - "https://pmc.ncbi.nlm.nih.gov/articles/PMC11984451/"
+  - "https://www.ama-assn.org/system/files/cme-issue-brief-single-pathway.pdf"
+  - "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf"
+  - "https://osteopathic.org/accreditation/"
+  - "https://www.nbome.org/"
+  - "https://www.acgme.org/"
+  - "https://www.medhub.com/software/evalue/"
+  - "https://www.new-innov.com/pub/ume.html"
+  - "https://www.qgenda.com/newsroom/qgenda-announces-acquisition-of-new-innovations/"
+  - "https://clinical.emedley.com/features/"
+  - "https://elentra.com/disciplines/medicine-undergraduate"
+  - "https://elentra.com/blog/from-davinci-to-elentra-how-institutions-are-strengthening-workflows"
+  - "https://www.davinci-ed.com/the-davinci-difference/leo-faqs"
+  - "../domains/do.yaml"
+  - "../accreditation/coca.yaml"
+  - "../competitors/e-value.yaml"
+  - "../competitors/new-innovations.yaml"
+  - "../competitors/emedley.yaml"
+  - "../competitors/elentra.yaml"
+  - "../competitors/leo-davinci.yaml"
+last_researched: "2026-08-24"

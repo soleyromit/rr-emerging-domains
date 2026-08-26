@@ -1,0 +1,424 @@
+# Element-level ground truth underneath accreditation-self-study.yaml, stage 2.
+# See _TEMPLATE.yaml for field meanings (SCHEMA v2: analysis fields live per element,
+# not per step). Every accreditation_citation and competitor_equivalent claim below
+# traces to a real source file in confirmed_by — never to this journey's own narrative.
+flow_name: "Continuous Student-Level Clinical Evidence Capture"
+maps_to_journey: "accreditation-self-study.yaml, stage 2"
+persona: >
+  Primary: Program Administrator (../personas/role-program-admin.yaml) — configures Forms/
+  Evaluations, Patient Log, and Timesheet learning activities per course offering, defines the
+  Timesheet category taxonomy, and builds/reads the reports that roll captured evidence up
+  against an accreditor's specific thresholds. Secondary: Preceptor/Site Faculty
+  (../personas/role-preceptor.yaml) — reviews and approves student-submitted Patient Log and
+  Timesheet entries. Tertiary: the student themselves, who has no dedicated persona file in
+  ../personas/ today — they are the one entering patient encounters and timesheet hours, via
+  the "Help for Students" mirror cited below.
+
+steps:
+  - screen: "Learning Activities Setup — Forms/Evaluations drawer (midpoint feedback form)"
+    navigation_path: "Courses > [Course Offering] > Learning Activities > Setup > Forms/Evaluations (+) > [select evaluation form]"
+    elements:
+      - element: "Publish date"
+        type: "anchor-relative date offset (N days before/after placement start, mid, or end)"
+        data_shown: "When students/preceptors can first see the form"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level. core-elms.yaml, one45.yaml, medhub.yaml, and
+          e-value.yaml describe hours/case-log tracking and duty-hours/lottery features at a
+          marketing-page level; none names an anchor-relative (start/mid/end-offset)
+          scheduling primitive for feedback-form visibility with enough mechanical detail to
+          compare field-for-field.
+        gap_severity: "none"
+        gap_note: >
+          Visibility-timing control only. The LCME 9.7 midpoint trigger is carried by the Due
+          date field below, not by this one.
+      - element: "Due date"
+        type: "anchor-relative date offset (N days before/after placement start, mid, or end)"
+        data_shown: "Form due date; set to 0 days after the placement's MID anchor for a midpoint evaluation, so it fires per placement instance rather than a hand-set calendar date"
+        gates_on: ["form completion status downstream"]
+        accreditation_citation: "LCME Standard 9, Element 9.7"
+        competitor_equivalent: >
+          Not comparable at element level. core-elms.yaml, one45.yaml, medhub.yaml, and
+          e-value.yaml describe hours/case-log tracking and duty-hours/lottery features at a
+          marketing-page level; none names an anchor-relative (start/mid/end-offset) due-date
+          primitive for feedback forms with enough mechanical detail to compare
+          field-for-field.
+        gap_severity: "none"
+        gap_note: >
+          This is the specific field that satisfies LCME 9.7: setting the offset to 0 days
+          after the placement's MID anchor makes the midpoint-feedback trigger fire
+          automatically per placement instance rather than needing a per-student calendar
+          date. Shipped as-is, no configuration gap.
+      - element: "Does this form contribute to the student's final score?"
+        type: "toggle"
+        data_shown: "Grading-inclusion flag, with a weightage field if yes"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — none of the four cited competitor teardowns
+          documents grading-inclusion/weightage handling on evaluation forms at this
+          granularity.
+        gap_severity: "none"
+        gap_note: >
+          Grading plumbing, not accreditation evidence. LCME 9.7 concerns the timing of
+          formative feedback, which this toggle does not affect.
+      - element: "Course Faculty / Placement Faculty / Faculty Advisor access controls"
+        type: "role-permission matrix"
+        data_shown: "Who can edit vs. view the activated evaluation once live"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — none of the four cited competitor teardowns
+          documents a per-role edit/view matrix on activated evaluations at this granularity.
+        gap_severity: "none"
+        gap_note: >
+          Access-control plumbing. Shipped as documented; carries no accreditation evidence
+          itself.
+
+    action: >
+      Program admin activates a formative-feedback evaluation form and anchors its due date to
+      the MID point of every rotation, so the LCME 9.7 midpoint-feedback trigger fires
+      automatically per placement rather than needing a per-student calendar date.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+
+  - screen: "Placement 360 — Rotation Details panel (Setting field)"
+    navigation_path: "Placements > [Placement ID] > Placement 360 > Rotation Details"
+    elements:
+      - element: "Setting"
+        type: "read-only rollup of an admin-defined placement/rotation category"
+        data_shown: "The rotation's setting category (e.g. Acute, Community, Outpatient — labels are program-defined, not fixed by Prism)"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.10 (inpatient/outpatient); ACPE Standard 3, Key Elements 3.1.b and 3.2.b/3.2.d (required-setting categories)"
+        competitor_equivalent: >
+          Not comparable at element level. Neither core-elms.yaml nor one45.yaml documents a
+          named, reportable "Setting" attribute living on the rotation/placement record
+          itself — their public docs describe hours and case-log totals, not a queryable
+          setting-category field, so no field-for-field comparison is possible from public
+          sources.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is the element that resolves part of the pain_or_gap's "does not confirmably
+          have" framing: Setting is a real, already-shipped, first-class rotation attribute,
+          surfaced here on Placement 360 and already a filterable Custom Reports column. What
+          is still Configure, not Transfer, is the taxonomy behind this field — the category
+          values are free admin entries, not preloaded with COCA's inpatient/outpatient
+          pairing or ACPE's four required-setting list (community, ambulatory care,
+          hospital/health-system, inpatient adult patient care) — a program would have to
+          define those exact labels itself.
+      - element: "Rotation / Dates / Status"
+        type: "read-only rollup"
+        data_shown: "Rotation name, start/end dates, current placement status"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — rotation name/date/status display is table stakes
+          and none of the four cited competitor teardowns describes theirs at a granularity
+          that would make a field-for-field comparison meaningful.
+        gap_severity: "none"
+        gap_note: >
+          Contextual read-only display. No setting-category taxonomy question attaches here;
+          the COCA 6.10 / ACPE setting evidence lives in the Setting field above.
+
+    action: >
+      Admin or faculty opens a placement's Placement 360 page to confirm which setting category
+      a given rotation is tagged with, before counting it toward a setting-gated requirement.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement 360.md; also confirmed as a named, filterable Custom Reports column ('Setting', example values Acute/Community/Outpatient) in Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md"
+
+  - screen: "Sites > Setup > Form Setup — Custom Site Assessment form builder"
+    navigation_path: "Sites > Setup > Form Setup > Create New Form"
+    elements:
+      - element: "Question type picker"
+        type: "form-builder control, 11 question types including toggle, dropdown, and attestation (per capability-map.yaml)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.10 (\"residents present at site\")"
+        competitor_equivalent: >
+          Not comparable at element level — none of the four cited competitor teardowns
+          documents a self-service custom site-assessment form builder at this question-type
+          granularity.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is the control that resolves the "residents present" arm of COCA 6.10: a
+          toggle question built here makes the answer a discrete, queryable field that rolls
+          into the Comprehensive Site Assessment report rather than living only in a
+          site-visit PDF. Buildable today, not previously built. One real limitation the
+          source material surfaces: a question authored here is a site-level assessment
+          answer (tied to a periodic site visit), not a per-rotation field, so a site that
+          hosts both resident-involved and non-resident rotations across different terms would
+          need an additional per-placement flag to stay precise — that per-placement version is
+          not evidenced anywhere in the sourced material.
+      - element: "Draft / Published state"
+        type: "form lifecycle toggle"
+        data_shown: "Once Published a form cannot be unpublished (per capability-map.yaml)"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown among the four cited
+          documents a form draft/publish lifecycle state, so there is nothing to compare
+          against.
+        gap_severity: "cosmetic"
+        gap_note: >
+          Lifecycle control only; carries no COCA 6.10 evidence itself. The one documented
+          constraint is on this element rather than on the question set: publication is a
+          one-way transition — once Published a form cannot be unpublished (per
+          capability-map.yaml) — so a mis-built site-assessment form has to be superseded
+          rather than retracted.
+
+    action: >
+      Admin builds a toggle question — e.g. "Are GME residents present at this site?" — into
+      the recurring Site Assessment form, so the answer becomes a discrete, queryable field
+      that rolls into the Comprehensive Site Assessment report rather than living only in a
+      site-visit PDF.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Configuring custom site assessment form in Exxat Prism-.md"
+
+  - screen: "Course Setup — Timesheet Categorization"
+    navigation_path: "Courses > Setup > Learning Activity > Timesheet > Edit (pencil icon) > Categorization"
+    elements:
+      - element: "Do you want students to categorize each Timesheet entry?"
+        type: "toggle (Yes/No)"
+        data_shown: ""
+        gates_on: ["whether the Category field appears on the student's time-entry form"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.1.b (gating element — evidence itself lives in the Category List below)"
+        competitor_equivalent: >
+          Not comparable at element level — none of the four cited competitor teardowns
+          documents a per-course switch that turns per-entry hour categorization on or off.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Nothing about ACPE 3.1.b's simulation exclusion or community/hospital sub-minimums
+          is capturable unless this toggle is set to Yes for the course offering; it is
+          off-by-default configuration work, not a shipped default.
+      - element: "Category Alias"
+        type: "text field"
+        data_shown: "The label shown to students for the category field (e.g. 'Category,' 'Activity Type,' 'Service Type')"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown among the four cited
+          documents a renamable label on an hour-log category field.
+        gap_severity: "cosmetic"
+        gap_note: >
+          Labeling only. Lets a program display accreditor-native wording to students, but the
+          value set that ACPE 3.1.b actually depends on lives in the Category List below.
+      - element: "Type"
+        type: "select (Single-select / Multi-select)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — none of the four cited competitor teardowns
+          documents single- vs. multi-select behavior on hour-log categories.
+        gap_severity: "none"
+        gap_note: >
+          Shipped as documented; a program picks one mode. No accreditation evidence attaches
+          to this control directly.
+      - element: "Category List"
+        type: "admin-managed list with add/delete/subcategory controls"
+        data_shown: "School-defined categories; Prism's own documented examples are Simulation, Patient Care Hours, Direct, Indirect, Available"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.1.b (simulation exclusion; community/hospital sub-minimums)"
+        competitor_equivalent: >
+          Not comparable at element level — none of the four cited competitor teardowns
+          documents a per-entry, admin-configurable category taxonomy on hour logs at this
+          granularity.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This list is what resolves the pain_or_gap's "unconfirmed whether Prism aggregates
+          hours by a custom setting-category taxonomy" (and acpe.yaml's matching gap_note) on
+          the capture side: "Simulation" is literally one of Prism's own documented example
+          category values, and the list is admin-definable, single- or multi-select,
+          overridable per course. What is NOT confirmed anywhere in the sourced material is
+          automatic enforcement — nothing shows the two 75-hour sub-minimums or the 300-hour
+          total being blocked from this list, or a student auto-flagged as off-pace before the
+          IPPE window closes; a program would define the categories here, then rely on the
+          report in the next step to check compliance manually.
+
+    action: >
+      Admin defines a category list — for a Pharmacy program, e.g. Simulation, Community,
+      Hospital/Health-System — that students must tag on every logged timesheet entry, either
+      as the school-wide default or overridden per course.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Course Setup.md"
+
+  - screen: "Hours by Category report"
+    navigation_path: "Learning Activities > Reports > Hours by Category (student- and faculty-facing); equivalently Learning Activities > Reports > Create Custom Reports > Timesheet data source for an admin pivot"
+    elements:
+      - element: "Filters (course, rotation, setting, status)"
+        type: "report filter"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Elements 3.2.b/3.2.d (setting-scoped filtering)"
+        competitor_equivalent: >
+          Not comparable at element level — none of the four cited competitor teardowns
+          documents an equivalent named set of course/rotation/setting/status filters on an
+          hours report.
+        gap_severity: "none"
+        gap_note: >
+          Ships as documented in the student-facing Completing Timesheets guide, filterable by
+          course, rotation, setting, and status — no configuration required to scope the
+          report to a required-setting question.
+      - element: "Hours Logged (Total / Category-wise)"
+        type: "aggregated read-only column, or a Custom Reports data point"
+        data_shown: "Total approved hours, including break time, broken out by the categories defined in the prior step"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Elements 3.1.b and 3.2.b/3.2.d"
+        competitor_equivalent: >
+          Not comparable at element level — none of the four cited competitor teardowns
+          documents an equivalent named, category-wise hours aggregation column.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This column is the aggregation half of ACPE 3.1.b's required_software_behavior, and
+          it is real and shipped — but only as good as the category taxonomy configured in the
+          prior step. It is also a pull value, not a push alert: "alert advisors when a
+          student is off-pace before the IPPE window closes" (acpe.yaml's
+          required_software_behavior language) is not evidenced anywhere in the sourced
+          help-center material. capability-map.yaml separately notes that a comparable
+          "per-participation-type hour thresholds" configuration exists on a
+          discipline-specific "Clinical Log Report" (named for SLP), but flags it explicitly as
+          support-ticket/Account-Manager-gated rather than admin self-service — consistent with
+          the same conclusion: aggregation is confirmed, automatic threshold alerting is not.
+      - element: "Pivot Rows/Columns (admin Custom Reports path only)"
+        type: "pivot configuration"
+        data_shown: "e.g. Pivot on Student Name (rows), Category or Setting (columns), Sum of Hours Logged (values)"
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Elements 3.1.b and 3.2.b/3.2.d"
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown among the four cited
+          documents a self-service pivot builder over an hours data source.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Confirmed in the admin Custom Reports guide against the Timesheet data source, but
+          it is a report an admin has to build (student/category rows, category or setting
+          columns, sum of hours values) — not a prebuilt ACPE-threshold view. Same pull-not-push
+          limitation as the Hours Logged column above.
+
+    action: >
+      A student, faculty member, or admin runs the report — filtered or pivoted by category —
+      to check cumulative approved hours per category against the ACPE 300-hour/75-hour
+      thresholds ahead of the IPPE window closing.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Coursework/Completing Timesheets.md (student-facing 'Hours by Category' report, filterable by course/rotation/setting/status); Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md (admin Timesheet-data-source pivot, 'Hours Logged (Total / Category-wise)' data point)"
+
+  - screen: "Comprehensive Report for Custom Values"
+    navigation_path: "Learning Activities > [Learning Activity Group or Course] > Reports > Comprehensive Report for Custom Values"
+    elements:
+      - element: "Filters (Rotation, Settings, Status, Student, Site, Location)"
+        type: "report filter"
+        data_shown: "Auto-populated when accessed via a Learning Activity Group; editable otherwise"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — none of the four cited competitor teardowns
+          documents an equivalent named filter set on a case-log report.
+        gap_severity: "none"
+        gap_note: >
+          Ships as documented, and auto-populates when the report is reached via a Learning
+          Activity Group. Scoping only — the LCME 6.2 / COCA 2-9 evidence lives in the
+          custom-value columns below.
+      - element: "Date range"
+        type: "date-range picker"
+        data_shown: "Optional; skippable to pull all available data"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no competitor teardown among the four cited
+          documents date-range handling on a case-log report.
+        gap_severity: "none"
+        gap_note: >
+          Optional and skippable per the source guide, which is what a full-program
+          longitudinal pull needs. No gap.
+      - element: "Custom-value columns"
+        type: "read-only rollup of student-entered Patient Log field values"
+        data_shown: "Procedures, diagnoses, medications, or other school-defined tasks, each with a participation-level value (e.g. Observed / Assisted / Performed)"
+        gates_on: []
+        accreditation_citation: "LCME Standard 6, Element 6.2 (Required Clinical Experiences); COCA Standard 2, Element 2-9 (adequate patient experiences)"
+        competitor_equivalent: >
+          Directional only, not a verified element-level match: e-value.yaml describes eValue
+          as shipping "case logs for tracking competencies/interventions/encounters," but only
+          at that category level — its public material does not name comparable
+          per-diagnosis/per-procedure columns carrying a participation level, so these columns
+          cannot be compared field-for-field.
+        gap_severity: "configure-needed"
+        gap_note: >
+          These columns are what resolve lcme.yaml's gap_note that there was "no confirmed
+          out-of-the-box 'required patient encounter' tracking distinct from general
+          placement/rotation completion" — the report and the underlying
+          minimum/preferred-requirement data model both exist and are already in production
+          use (the PA discipline's Patient Log). What remains Configure, not Transfer: the
+          Patient Log question set feeding these columns — the specific required-condition list
+          a given accreditor names — is not admin self-service. Per "Managing Course
+          Activities – Activating Patient Logs.md," new patient-log types and field changes
+          are built by Exxat's support team on request, not configured directly by the
+          program.
+      - element: "Custom benchmarking / color-coded indicators"
+        type: "support-enabled report feature"
+        data_shown: "Color-coded performance-tracking indicators against school-defined minimum and preferred rotation requirements; requires contacting Exxat support to enable"
+        gates_on: []
+        accreditation_citation: "LCME Standard 6, Element 6.2 (Required Clinical Experiences); COCA Standard 2, Element 2-9 (adequate patient experiences)"
+        competitor_equivalent: >
+          Not comparable at element level — e-value.yaml's case-log material stops at the
+          category level and names no minimum/preferred-per-diagnosis benchmarking indicator,
+          and the other three cited teardowns document nothing equivalent, so this cannot be
+          compared field-for-field.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is the element that turns the raw custom values above into a
+          progress-against-requirement read before graduation rather than at self-study time,
+          and the minimum/preferred data model behind it is real. The documented constraint
+          sits on this element specifically: per the source guide it must be switched on by
+          contacting Exxat support — support-gated, not admin self-service — the same pattern
+          capability-map.yaml flags for the SLP Clinical Log Report's threshold configuration.
+
+    action: >
+      Faculty or admin runs the report to see, per student, per course/rotation/placement,
+      progress against defined minimum and preferred per-diagnosis or per-procedure
+      requirements, before graduation rather than at self-study time.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Comprehensive Report for Custom Values.md"
+
+  - screen: "Faculty Attribute request (support-gated, no confirmed self-service screen)"
+    navigation_path: "Not a Prism screen — requested via Support Ticket per the Product Customizations Guide's 'Feature Requests Guideline'"
+    elements:
+      - element: "Named requestable Faculty Attribute options"
+        type: "fixed list, requested via support ticket"
+        data_shown: "Faculty Rank; Administrative Position; Faculty Role with respect to a Course; Faculty Role with respect to a Student"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.10 (\"supervising physician is a DO\")"
+        competitor_equivalent: >
+          Not comparable at element level — not evidenced in any of the four cited competitor
+          teardowns' public docs.
+        gap_severity: "gap"
+        gap_note: >
+          This is the one arm of the stage's COCA 6.10 hedge that the source material does NOT
+          resolve, and it should be named honestly as still open rather than folded into the
+          "Configure" read the other two arms of 6.10 got. capability-map.yaml confirms the
+          Personnel/preceptor record already tracks license number and certification status
+          (under Compliance Management), but no sourced document shows a credential-TYPE (MD vs.
+          DO) field anywhere, and it is not among this guide's four named, support-requestable
+          Faculty Attribute options — meaning it would need a net-new attribute built by Exxat,
+          whose availability is unconfirmed by any source reviewed here.
+
+    action: >
+      To capture "supervising physician is a DO" as a discrete, filterable attribute on a
+      preceptor's personnel record, an admin would need to request a net-new Faculty
+      Attribute from Exxat, since a physician credential-type (MD vs. DO) field is not among
+      the four named, requestable options this guide documents.
+    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Exxat Prism Product Customizations Guide.md"
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement 360.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Configuring custom site assessment form in Exxat Prism-.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Course Setup.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Coursework/Completing Timesheets.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Comprehensive Report for Custom Values.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Setting Up and Managing Patient Log - PA.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Patient Logs.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Exxat Prism Product Customizations Guide.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml"
+last_verified: "2026-08-24"

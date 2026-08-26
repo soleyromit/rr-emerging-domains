@@ -1,0 +1,1376 @@
+# Element-level ground truth underneath admin-onboarding-product-setup.yaml, stage 5
+# ("5. Sites, locations & personnel management").
+#
+# SOURCE DISCIPLINE (deliberate, and different from the four older journeys):
+# every step below is confirmed FIRST against the raw program-administrator tutorial
+# transcript at /Users/romitsoley/Downloads/exxat_transcripts.md — the actual narrated
+# product walkthrough — with line ranges and verbatim quotes. Help-center articles are
+# cited only as a SECONDARY corroboration, or where the transcript is silent (e.g. the
+# Experiential Supervisor Intake Form, which post-dates the 16-part tutorial series).
+# Earlier flow files in this repo laundered this same transcript through help-center
+# paraphrases and lost the primary citation; this file does not.
+#
+# SCOPE NOTE: this is DAY-ONE PRODUCT SETUP, not the clinical rotation lifecycle. The
+# sibling flows rotation-lifecycle--01 / --02 and preceptor-site-onboarding--01 / --03
+# walk the same Sites > Personnel and Contracts screens for the *operational* questions
+# ("is this preceptor cleared for this placement?"). This file walks them for the
+# *configuration* question: what a brand-new administrator must create, in what order,
+# before any of those screens have data in them at all. Where a screen appears in both,
+# the element analysis here is about setup mechanics (taxonomy lists, inheritance,
+# migration, invitation), not about gating.
+flow_name: "Standing Up the Site, Location & Personnel Directory"
+maps_to_journey: "admin-onboarding-product-setup.yaml, stage 5"
+persona: >
+  Primarily the Program Administrator who is new to the platform (role-program-admin.yaml)
+  performing first-time configuration — they own the Setup tab, the site-sharing model
+  decision, and the faculty invitation. Secondary: the Clinical/Experiential Education
+  Coordinator (role-clinical-coordinator.yaml), who inherits day-to-day personnel and
+  contract upkeep once the directory exists, and the Institutional Administrator, who is
+  the only role that can change contract organization lists when contracts are shared
+  across programs (transcript, line 359-361).
+
+steps:
+
+  - screen: "Sites > Setup > Sites Organization"
+    navigation_path: "Dashboard (or hamburger menu) > Sites > Setup tab > Sites Organization"
+    action: >
+      Before adding a single site, the new administrator defines the classification vocabulary
+      the whole module will use — site/location categories, personnel categories, and location
+      areas — because these lists become filter dimensions on every later grid and drive the
+      student location-area wishlist.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "5/16 Setting up Sites and Locations in
+      Exxat Prism" (lines 351-355): "Click on the Sites section from your dashboard or from the
+      left hamburger menu, then click on the Setup tab and select the Sites Organization option.
+      You can then set up site/location categories, personnel categories, and location areas."
+      Corroborated by help-center mirror: Help for Program Administrators > Step-by-Step Guides
+      (How-tos) > Sites > "Managing Site Organization and Auto-Notifications.md".
+    elements:
+      - element: "Site/Location Categories list (pencil icon > Add Site or Location Category)"
+        type: "admin-managed lookup list (add / rename / delete)"
+        data_shown: "Free-text category names used to group sites and locations — transcript examples: 'whether the site is a private or public office, whether a payment is required by the student.' Becomes a filter on the Sites and Locations grids."
+        gates_on: ["Which values are selectable in the Categories card on every site and location profile", "The Categories option in the Sites-grid filter"]
+        accreditation_citation: "COCA Standard 6, Element 6.11 (Comparability Across Clinical Education Sites) — indirectly: category tags are the dimension a program would later slice site-by-site outcome comparisons on. No accreditor prescribes a category taxonomy, so this is enabling structure, not evidence itself."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. CORE ELMS (core-elms.yaml) advertises 'centralized site/student/preceptor management' and eMedley (emedley.yaml) advertises 'site capacity management', but neither publishes whether the site taxonomy is admin-configurable at all, let alone its editing UX."
+        gap_severity: "none"
+        gap_note: "Ships as self-serve, unlimited, admin-editable free text. The only real day-one risk is sequencing: categories entered here must exist before a bulk-ish site build-out, and nothing in the UI warns a new admin of that ordering dependency."
+      - element: "Personnel Categories list (pencil icon)"
+        type: "admin-managed lookup list"
+        data_shown: "Grouping labels for site personnel (preceptors, site contacts, experiential supervisors). Transcript: 'Personnel categories can be used for grouping site personnel.'"
+        gates_on: ["Which values appear in the Categories card on a personnel profile", "Personnel-grid filter options"]
+        accreditation_citation: "None — this is a platform-mechanics element with no direct accreditor tie. (Preceptor *qualification* evidence lives on the licensure/certification cards in step 12, not here.)"
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Location Areas list (pencil icon)"
+        type: "admin-managed lookup list with locked system defaults"
+        data_shown: "Geographic groupings students pick from in the location-area wishlist. Transcript: 'Students will be able to indicate their preferences for location areas using the location area wish list.'"
+        gates_on: ["Student location-area wishlist options", "Locations-grid 'location area' filter (transcript line 527: the one filter the Locations tab has that the Sites tab does not)"]
+        accreditation_citation: "None directly. Relevant to ACPE Standard 3 multi-state licensure texture (acpe.yaml, 'site records need a per-state licensure/compliance dimension') only if a program chooses to model areas by state — the field does not enforce that."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Transcript line 355: 'you will not be able to change the in area, out area, or out of state options as they are the default option set up at central level.' A new admin whose program thinks in regions/consortia rather than in/out-of-area inherits three immovable rows they must design around."
+      - element: "Site & Location Tags (tag icon on a site record > Add Tag, name + color)"
+        type: "colored free-text tag, applied per record"
+        data_shown: "Tag name and color, multi-select per site; editable after creation."
+        gates_on: ["Sites-grid 'tags' filter (transcript line 527)", "Explore Locations map tag filter (line 531)"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research; no competitor file describes a tagging layer distinct from a category taxonomy."
+        gap_severity: "none"
+        gap_note: "Two overlapping classification systems (categories set up centrally in Setup, tags created ad hoc on the record) with no in-product guidance on when to use which — a predictable day-one taxonomy-sprawl trap, not a capability gap."
+
+  - screen: "Sites > Setup > Contract Organization"
+    navigation_path: "Sites > Setup tab > Contract Organization"
+    action: >
+      The administrator defines the contract vocabulary — categories, the routing checklist that
+      models their institution's contract-negotiation steps, and the contract status ladder —
+      before any affiliation agreement is entered.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 357-361: "Navigate back to the Setup
+      tab, then click on the Contract Organization option. On the contract organization page, you
+      can set up contract categories, your routing checklist, and contract statuses... The routing
+      checklist is mainly used for contract management. It can be used to capture important steps
+      in the contract negotiation process."
+    elements:
+      - element: "Contract Categories list"
+        type: "admin-managed lookup list"
+        data_shown: "Category values assignable to a contract from the contract's Categories card."
+        gates_on: ["Contract-grid filtering", "Categories card on each contract"]
+        accreditation_citation: "None on its own — the agreement evidence itself lives on the contract record (step 7), not on its taxonomy."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. eMedley's eKeeper (emedley.yaml) is described only as 'affiliation agreement tracking with auto-expiration reminders', with no public detail on contract classification."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Routing Checklist list"
+        type: "admin-managed checklist template (applied per contract as applicable / completed / completion date)"
+        data_shown: "Institution-specific negotiation steps — e.g. legal review, risk management sign-off, counter-signature — later instantiated per contract (transcript line 409)."
+        gates_on: ["The Routing Checklist card available on every individual contract"]
+        accreditation_citation: "LCME Standard 1, Element 1.4 (Affiliation Agreements) and CODA Standard 4, Element 4-6 (written agreements for sites not owned by the institution) — the checklist is where a program can evidence that the required clauses/approvals were actually routed and completed, which is the part accreditors ask about beyond the signed PDF."
+        competitor_equivalent: "Closest documented analog is E*Value/MedHub's 'automated document collection during onboarding (contracts, health records, training documents) via dynamic forms' (e-value.yaml) — but that is a document-intake workflow, not a per-contract negotiation checklist, and MedHub publishes no field-level detail. Not a like-for-like comparison."
+        gap_severity: "configure-needed"
+        gap_note: "Transcript line 359-361: 'you will not be able to make changes to the routing checklist or contract statuses if your program shares contracts between programs... you will need to have your institutional administrator make these changes for you.' For a new program admin at a multi-program school this screen may be read-only on day one — a hard dependency on another human before contract setup can proceed."
+      - element: "Contract Statuses list"
+        type: "admin-managed lookup list (status ladder)"
+        data_shown: "Stage-of-implementation values assignable to a contract. Transcript: 'the contract status is used to keep track of the contract stage of implementation.'"
+        gates_on: ["Status dropdown when adding/editing a contract (line 403)", "Placement Clearance contract-status surfacing (line 413)"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.5.b (a fully executed, current affiliation agreement on file for every practice facility) — the status ladder is what distinguishes 'executed' from 'in negotiation' when a surveyor asks."
+        competitor_equivalent: "CORE ELMS (core-elms.yaml) documents 'affiliation agreement tracking with expiration alerts' at pillar level; whether its agreement records carry a configurable status ladder is not published, so no element-level comparison is possible."
+        gap_severity: "configure-needed"
+        gap_note: "Same shared-contracts lock as the routing checklist. Also note the ACPE file (acpe.yaml, 3.5.b) currently rates site-level contract management as 'Gap' — 'site affiliation-agreement management isn't named in any current or roadmap pillar.' This transcript contradicts that: a full contract object with status, expiry, documents, routing and auto-notification ships today. acpe.yaml 3.5.b should be re-rated Configure on the strength of transcript lines 399-419."
+
+  - screen: "Sites > Setup > Site Sharing Model"
+    navigation_path: "Sites > Setup tab > Site Sharing Model"
+    action: >
+      At a multi-program institution the administrator inspects (and, with the account manager,
+      chooses) how much site data is common across sibling programs versus configured per program
+      — a decision that is expensive to reverse once hundreds of site records exist.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 361-365: "All the information in green
+      is common, while all the information in red is configured per program... as of September 2025,
+      we have made some changes to our site-sharing model. We used to have five different types of
+      site-sharing models. We have since simplified this list of models into three models."
+      Corroborated by help-center mirror: Sites > "Understanding Site Sharing Model in Exxat Prism.md".
+    elements:
+      - element: "Site Sharing Model viewer (green = common, red = per-program legend)"
+        type: "read-only configuration map"
+        data_shown: "Field-by-field breakdown of which site, location, contract and personnel attributes are shared across the institution's programs versus program-scoped."
+        gates_on: ["Whether a sibling program sees this program's site edits", "What the Programs card on a site/contract can grant (steps 5 and 7)"]
+        accreditation_citation: "None directly — but consequential for CODA Standard 4, Element 4-6 and LCME 1.4 evidence assembly at institutions where one agreement covers several programs: the sharing model determines whether one contract record can serve all of them or must be duplicated."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file in content/competitors/ addresses multi-program data partitioning of a site directory at all. This is one of the clearest un-benchmarked areas of Prism's setup surface."
+        gap_severity: "none"
+        gap_note: "Ships and is self-serve to VIEW."
+      - element: "Model selection (Standard sharing / All sharing / No sharing)"
+        type: "vendor-mediated configuration (not a self-serve control)"
+        data_shown: "Standard = selective sharing of site, location and contract info with chosen programs; All = every site/location entity including personnel shared; No = nothing shared."
+        gates_on: ["Every downstream site, location, contract and personnel visibility decision at the institution"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: "Transcript line 365: 'If you have any questions about the site-sharing model, please contact your account manager or reach out to our support team at prism-support@exxat.com.' The single highest-blast-radius decision in stage 5 is not a control the day-one administrator can exercise or change in-product — it is a support ticket, and the tutorial never states whether it can be changed later without data loss."
+
+  - screen: "Sites > Sites tab > Add Site"
+    navigation_path: "Sites > Sites tab > Add Site button"
+    action: >
+      The administrator creates the first site record — the organization that accepts students —
+      and decides at creation time whether that organization is also itself a physical location.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 345-347 (hierarchy: "The first entity
+      is sites. This is the organization which accepts your students... The second entity is
+      locations... The third entity is contracts... The fourth entity is personnel") and lines
+      365-367 ("Click on the Sites tab, then click on the Add Site button... you will need to fill
+      in information for any area marked with a red asterisk").
+    elements:
+      - element: "Site Name / Alias Name / Site EIN"
+        type: "input fields (name required)"
+        data_shown: "Legal site name, an alias for how the program refers to it, and the site's Employer Identification Number."
+        gates_on: ["Duplicate detection during Exxat One bulk linkage (step 15)", "Search and merge behaviour across the Sites grid"]
+        accreditation_citation: "None individually — identity fields. The EIN becomes materially relevant only alongside Payment Details (step 5) for programs that compensate sites."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "No transcript-confirmed duplicate-name check at site creation (the only duplicate warning described anywhere is in the Exxat One bulk-add path, line 1885). Day-one risk of the same hospital being entered twice under two spellings by two coordinators."
+      - element: "'Do you want to add this site as a location?' checkbox"
+        type: "toggle / checkbox at creation"
+        data_shown: "Marks a single-building organization as both the parent site and its own child location, avoiding a redundant location record."
+        gates_on: ["Whether a child location record is auto-created", "Whether students can be placed against the record at all — placements attach to locations, not sites"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research; no competitor file describes a two-level site/location hierarchy, so the collapse-to-one case has no published analog."
+        gap_severity: "none"
+        gap_note: "This is the single most consequential checkbox on the Add Site form for a new admin: miss it on a free-standing clinic and the site exists but is unplaceable until a location is added manually. The transcript flags it conditionally ('If this site serves as the brick-and-mortar location...') but the form gives no downstream warning."
+      - element: "Active toggle"
+        type: "toggle"
+        data_shown: "Whether the site is in active use by the program."
+        gates_on: ["Active/inactive filters on the Sites grid and on the contract-link picker (line 401)"]
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "About Us Notes"
+        type: "rich text, institution-scoped"
+        data_shown: "Site-authored/institution-authored descriptive copy. Transcript line 367: 'used as a part of the institutional app-level setup. When sites are added from the institutional app, programs can access the information added in the About Us Notes section.'"
+        gates_on: ["What a sibling program sees when it reuses this site"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "Only meaningful for institutions using the institutional app; for a standalone single-program admin it is an unexplained empty box on the create form."
+      - element: "Address Information — Domestic / International selector + address"
+        type: "radio + address field set"
+        data_shown: "Country model then street address; feeds the Explore Locations map and the mileage-radius search (line 531)."
+        gates_on: ["Explore Locations map plotting", "Draw Miles Radius distance search", "Advanced-search matching during Exxat One linkage"]
+        accreditation_citation: "ACPE (acpe.yaml, regulatory layer note): 'because affiliation agreements and site licensure must satisfy the specific state the rotation occurs in... site records need a per-state licensure/compliance dimension.' The address is the only structured geography Prism captures on the site record; there is no separate state-licensure attribute."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Address is captured, but nothing in the transcript exposes a per-state regulatory attribute on the site record — programs needing ACPE-style multi-state compliance must improvise with categories or tags."
+
+  - screen: "Site profile > About tab"
+    navigation_path: "Sites > Sites tab > [site name] > About"
+    action: >
+      With the shell record created, the administrator populates the site's substantive content —
+      programs granted access, site-wide requirements, settings, payment terms, categories,
+      documents and notes — knowing that almost all of it will be inherited by every child location.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 369-385 ("In the About tab, you can
+      populate information about the site that can be shared with students... any requirements added
+      will automatically be inherited by all locations associated with the site"), and line 385 for
+      the delete guard. Corroborated by help-center mirror: Sites > "Adding and Managing Sites.md".
+    elements:
+      - element: "Programs card (pencil icon > select programs)"
+        type: "multi-select access grant"
+        data_shown: "Which sibling programs at the institution may access this site's information."
+        gates_on: ["Cross-program visibility of this site — operating inside whatever ceiling the site-sharing model (step 3) sets"]
+        accreditation_citation: "None directly; enables the one-agreement-many-programs case behind CODA 4-6 / LCME 1.4."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Interacts silently with the site-sharing model: the transcript never explains what this card does when the institution is on the 'no sharing' model."
+      - element: "Requirements card (+ icon, comma-separated entry, X to delete, notes area)"
+        type: "free-text list with cascade"
+        data_shown: "Site-imposed prerequisites (e.g. site-specific orientation, badge, drug screen) entered as comma-separated values plus a notes block."
+        gates_on: ["Every child location inherits these automatically (line 371); locations may then remove them individually (line 425)"]
+        accreditation_citation: "None as authored here. Requirements that must be *evidenced* per student are the separate Student Requirement Uploads element below; free-text requirements are informational."
+        competitor_equivalent: "CORE ELMS (core-elms.yaml) tracks 'immunizations, CPR certification, background checks, drug checks, HIPAA training' as compliance items — but those are student-item trackers, not a site-authored free-text requirement list with location inheritance. Not comparable at this granularity."
+        gap_severity: "cosmetic"
+        gap_note: "Comma-separated free text means no reporting or matching across sites — a program cannot ask 'which sites require a drug screen?' from structured data."
+      - element: "Settings card (+ / pencil, select from list, X to disassociate)"
+        type: "controlled multi-select (practice settings)"
+        data_shown: "Practice-setting classifications for the site (e.g. inpatient, outpatient, school-based), with a notes area."
+        gates_on: ["Location inheritance with a per-location 'Inherit Setting Notes' toggle (line 425)", "Locations-grid 'location settings' filter (line 527)", "Setting-scoped report filters across disciplines (e.g. SLP clinical-log reports filter by setting)"]
+        accreditation_citation: "ACPE Standard 3 (four required APPE settings — community, ambulatory care, hospital/health-system, inpatient adult) per acpe.yaml: the setting attribute on the site/location is the structural field a program would count required-setting coverage from. COCA Standard 6, Element 6.10 similarly needs 'setting is inpatient/outpatient' as a filterable attribute."
+        competitor_equivalent: "eMedley eKeeper/eduSched (emedley.yaml) advertises 'site capacity management' but publishes no setting taxonomy; CORE ELMS publishes none either. Not comparable at element level."
+        gap_severity: "none"
+        gap_note: "This is the highest-value structured field on the site record for accreditation reporting and, notably, the one the tutorial spends the least time on."
+      - element: "Payment Details card (+ icon > payment model Site / Location / Personnel, payment rate, rate unit, vendor ID, payment notes)"
+        type: "structured financial record"
+        data_shown: "Who is paid (site, its locations, or named individuals), 'how much you're paying per student placement', how often, and the vendor ID identifying the payee in the program's finance system."
+        gates_on: ["Site Payment Report under Placements > [course] > Reports (line 379)", "Rate inheritance: 'If you enter a rate for a location within a site profile, every location under that site will use the same rate. The same goes for personnel.' (line 377)"]
+        accreditation_citation: "None — no accreditor requires payment tracking. Contextually important for medicine/DO: domains/medicine.yaml records that '44% of AAMC-surveyed schools feel moderate-to-severe pressure to pay community physicians/clinics to host students', making this a market-relevant, not standards-relevant, field."
+        competitor_equivalent: "eMedley's eKeeper is documented as including 'preceptor pay automation' (emedley.yaml) — the closest published analog, and the only competitor in this research with any site/preceptor payment capability named. New Innovations' contract/IRIS Medicare-cost-report automation (new-innovations.yaml) is a GME funding workflow, not a per-placement site payment, so it is adjacent rather than equivalent."
+        gap_severity: "configure-needed"
+        gap_note: "Two setup traps stated in the transcript: (a) 'you won't be able to assign a vendor ID to locations or personnel from this page' — vendor IDs must be entered one profile at a time (line 377); (b) editing a rate forces you to 'enter a new placement start date. Only placements starting after that date will reflect the new payment details' (line 377-379) — a retroactivity boundary a day-one admin backfilling historical rates will hit immediately."
+      - element: "Documents card (general vs archived tables; name, upload date, description, archive bit, share-with-students bit, Browse to Upload)"
+        type: "document repository with archive + student-visibility flags"
+        data_shown: "Per-document: upload date, the file, whether shared with students, notes."
+        gates_on: ["Student visibility of the document in Explore Clinical Locations", "Location-level inheritance with per-document on/off toggles (line 429)"]
+        accreditation_citation: "None for arbitrary site documents. The affiliation agreement itself belongs on the Contract record (step 7), not here — a distinction the UI does not enforce and a new admin can easily get wrong, which would scatter LCME 1.4 / CODA 4-6 / ACPE 3.5.b evidence across two places."
+        competitor_equivalent: "CORE ELMS (core-elms.yaml) documents 'HIPAA-compliant document storage' at pillar level with no per-document flags published. Not comparable at element level."
+        gap_severity: "cosmetic"
+        gap_note: "Archive-vs-active is a manual flag with no version lineage: 'It could be useful to archive old versions of documents' (line 383) is advice, not a versioning feature."
+      - element: "Student Requirement Uploads card (+ icon; name, description, include-in-shared-profile-link bit, show-to-students bit, template upload, Add Another Requirement)"
+        type: "per-site evidence request that generates a student-facing upload task"
+        data_shown: "Requirement name/description, an optional downloadable template, and two visibility bits."
+        gates_on: ["Placement Clearance tab > Requirement Upload Status column, with statuses Get Started / Action Required / Uploaded / Approved / Not Approved (lines 391-397)", "Inherited by every location, with an 'Enabled for this Location' toggle per location (line 427)"]
+        accreditation_citation: "LCME Standard 1, Element 1.4 (occupational-exposure follow-up responsibility and site-imposed conditions) and CODA Standard 4, Element 4-6 — where the *site's* conditions on students are the thing being evidenced. Also the mechanism ACPE 3.5.b programs use for site-mandated onboarding paperwork."
+        competitor_equivalent: "E*Value/MedHub (e-value.yaml) documents 'automated document collection during onboarding... via dynamic forms' — genuinely comparable in intent, but MedHub publishes no per-requirement field list, template-attachment behaviour, or site-to-location inheritance, so the comparison stops at capability level."
+        gap_severity: "none"
+        gap_note: "Rich and clearly the strongest element on this screen: template distribution, per-location enable/disable, admin upload-on-behalf-of-student, reject-with-reason, and reset — all confirmed in transcript lines 389-399."
+      - element: "Delete Site button (upper right)"
+        type: "destructive action with referential guard"
+        data_shown: "Removes the site."
+        gates_on: ["Blocked outright: 'You will not be able to delete a site if there are any available slots or placements at any of the site's child locations' (line 385)"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Sensible guard. Note the asymmetry with contract deletion (step 7), which requires typing a confirmation number, and personnel deletion (step 12), which deletes a person's entire profile from a site-scoped row with only a trash icon."
+
+  - screen: "Site profile > Contracts tab"
+    navigation_path: "Sites > [site name] > Contracts tab"
+    action: >
+      The administrator records the affiliation agreement — either linking an existing contract that
+      already covers several sites, or creating a new one — then fills in its contacts, covered
+      programs, covered locations, routing checklist and documents.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 399-413: "The chain icon allows you to
+      link contracts you have already created for different sites. If, for example, you have multiple
+      sites that are covered by the same contract, rather than consolidating them, you can easily link
+      the contract"; "You can provide the contract with a name, contract number, tax ID, the name of
+      the person who initiated the contract, a start date, and an end date." Corroborated by
+      help-center mirror: Sites > "Managing Contracts.md".
+    elements:
+      - element: "Link Contract (chain icon) — searchable picker with active/inactive filter"
+        type: "many-to-many association control"
+        data_shown: "All existing contracts in the program, searchable and filterable by active status."
+        gates_on: ["One contract record serving multiple sites without duplication", "Unlink Contract button on the contract detail (line 401)"]
+        accreditation_citation: "LCME Standard 1, Element 1.4; CODA Standard 4, Element 4-6; ACPE Standard 3, Key Element 3.5.b — a master agreement covering a health system with many hospitals is exactly the case all three standards produce, and linking (rather than copying) keeps one authoritative expiry date."
+        competitor_equivalent: "eMedley eKeeper — 'affiliation agreement tracking with auto-expiration reminders' (emedley.yaml) — and CORE ELMS — 'affiliation agreement tracking with expiration alerts' (core-elms.yaml) — both ship agreement tracking, but neither publishes whether one agreement record can span multiple site records. The many-to-many linkage is un-benchmarked."
+        gap_severity: "none"
+        gap_note: "Directly contradicts acpe.yaml's 3.5.b rating of 'Gap' ('no pillar today models site-level compliance/contract documents'). It ships, with many-to-many linkage."
+      - element: "Contract Information fields — Name, Contract Number, Tax ID, Initiated By, Start Date, End Date, Open-Ended bit, Contract Template, Active bit, Status, Notes, Add Reference Address"
+        type: "input field set"
+        data_shown: "The core agreement record. 'Open-ended' means no end date; 'Contract Template' is reference-only, indicating which entity's template was used in negotiation."
+        gates_on: ["Expiring-contract auto-notifications (step 8) key off the End Date", "Contract status surfaces on Placement Clearance (line 413)"]
+        accreditation_citation: "LCME Standard 1, Element 1.4 requires 'the agreement document, effective/expiration dates, and the specific responsibility clauses, with renewal alerts' — the first two ship here verbatim; the clause-level structure does not (see gap_note)."
+        competitor_equivalent: "eMedley eKeeper and CORE ELMS both document expiration tracking; neither publishes a field list, so field-for-field comparison is not possible from public sources."
+        gap_severity: "configure-needed"
+        gap_note: "LCME 1.4 asks for specific clauses to be evidenced — school authority over education/assessment, resource access, faculty appointment role, occupational-exposure follow-up. Prism stores those only inside the uploaded PDF plus free-text Notes; there is no structured clause field, so an LCME program must answer clause questions by reading documents rather than querying. The Open-Ended bit also silently exempts a contract from every expiry notification in step 8."
+      - element: "Locations Covered card (+ icon > select locations)"
+        type: "multi-select association"
+        data_shown: "Which of the site's child locations this contract actually covers."
+        gates_on: ["Which locations are contractually clear for placement under this agreement"]
+        accreditation_citation: "CODA Standard 4, Element 4-6 ('any site not owned by the institution where required educational activity occurs') — a health-system master agreement rarely covers every clinic in the system, and this is the only field that records which ones it does."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Nothing in the transcript indicates Prism blocks a placement at a location that is NOT in Locations Covered — the association is descriptive. Compare LCME 1.4's stated software need: 'the ability to block new placements at a site whose agreement has lapsed.' That enforcement is unconfirmed."
+      - element: "Routing Checklist card (per item: applicable?, completed?, completion date, notes)"
+        type: "instantiated checklist"
+        data_shown: "The Setup-defined checklist (step 2) applied to this specific contract with completion dates."
+        gates_on: []
+        accreditation_citation: "LCME Standard 1, Element 1.4 and CODA Standard 4, Element 4-6 — process evidence that the agreement was properly reviewed and executed."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Contract Documents card (name, description, upload date, archive bit, share-with-student bit, Browse to Upload)"
+        type: "document repository"
+        data_shown: "The executed agreement PDF and supporting files."
+        gates_on: []
+        accreditation_citation: "The literal evidence artifact for LCME 1.4, CODA 4-6, ACPE 3.5.b and COCA Standard 6, Element 6.9 ('executed affiliation agreements for every contracted clinical site')."
+        competitor_equivalent: "CORE ELMS 'HIPAA-compliant document storage' (core-elms.yaml) and eMedley eKeeper (emedley.yaml) both store agreements; neither publishes archive/versioning behaviour."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Contract Generation tab (select program template > Generate > PDF)"
+        type: "document generation from template"
+        data_shown: "Produces a contract PDF from a pre-loaded program template."
+        gates_on: ["Template availability — 'If you do not have any templates available, contact prism-support@exxat.com and they can help you get these templates set up' (line 413)"]
+        accreditation_citation: "None — generation is a convenience; the accreditor cares about the executed document, not its origin."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file describes contract generation from a school template."
+        gap_severity: "gap"
+        gap_note: "Not self-serve. A brand-new program cannot load its own contract templates; it is a support-ticket dependency, the same pattern as the site-sharing model (step 3) and the administrative-positions list (step 16). For a day-one admin these are the three places where 'setup' quietly means 'ask Exxat'."
+      - element: "Delete Contract button (type the displayed number to confirm)"
+        type: "destructive action with typed confirmation"
+        data_shown: "Removes the contract."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Typed-number confirmation is the strongest destructive guard in the module; note it protects a contract record but not a personnel record (step 12)."
+
+  - screen: "Sites > Setup > Auto-Notifications (expiring contracts)"
+    navigation_path: "Sites > Setup tab > Auto-Notifications > Add Notification"
+    action: >
+      The administrator configures who gets warned, how far ahead, and how often, when an
+      affiliation agreement approaches its end date — turning a static contract record into a
+      renewal workflow.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 413-419: "To set up auto-notifications
+      for expiring contracts, navigate to the Setup tab and click on the Auto-Notifications
+      option... using the two rightmost dropdown menus, you can select the number of days, weeks, or
+      months in advance of a contract expiration date for which you would like to be notified...
+      if you choose daily, when you have a contract expiring within the timeframe you indicated
+      above, recipients... will receive an email containing this expiring contract every day until
+      the contract has been refreshed."
+    elements:
+      - element: "Notification Title"
+        type: "input field"
+        data_shown: "Label for the notification configuration card."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Lead-time selector (number dropdown + days/weeks/months dropdown)"
+        type: "paired dropdowns"
+        data_shown: "How far in advance of the contract End Date the alert fires — e.g. 2 + months."
+        gates_on: ["Which contracts appear in the notification email at any given time"]
+        accreditation_citation: "LCME Standard 1, Element 1.4 ('renewal alerts'), CODA Standard 4, Element 4-6 ('so an agreement cannot lapse while students are actively placed there'), COCA Standard 6, Element 6.9 ('a document library linking every clinical site to its executed affiliation agreement with expiration/renewal alerts'), ACPE 3.5.b. This one dropdown pair is the single most accreditation-load-bearing setup control in stage 5."
+        competitor_equivalent: "Genuinely comparable and documented on both sides: eMedley eKeeper ships 'affiliation agreement tracking with auto-expiration reminders' (emedley.yaml) and CORE ELMS ships 'affiliation agreement tracking with expiration alerts' (core-elms.yaml). Neither publishes configurable lead time, frequency, or recipient selection, so Prism's configurability is plausibly a differentiator but cannot be proven ahead from public sources."
+        gap_severity: "none"
+        gap_note: "Contracts marked Open-Ended (step 7) have no end date and therefore fall out of this safety net entirely — the transcript never warns about that interaction."
+      - element: "'How frequently these alerts should be sent' selector"
+        type: "dropdown (e.g. daily)"
+        data_shown: "Repeat cadence; alerts keep arriving 'every day until the contract has been refreshed.'"
+        gates_on: ["Email volume to recipients"]
+        accreditation_citation: "Same cluster as lead time (LCME 1.4 / CODA 4-6 / COCA 6.9 / ACPE 3.5.b) — persistence is what makes the alert an actual control rather than a one-shot email."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Recipient table (administrators/faculty/staff with email addresses) + 'Add Additional Email Address' free-text"
+        type: "multi-select roster + ad-hoc address entry (Enter key to commit)"
+        data_shown: "Every admin/faculty/staff person in the system with their email, plus arbitrary external addresses (e.g. the institution's contracts office)."
+        gates_on: ["Depends on faculty/staff having been added first (steps 17-18) — otherwise the roster is nearly empty on day one"]
+        accreditation_citation: "None on its own."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Ordering dependency the tutorial does not call out: this stage's contract alerting is only as good as the faculty/staff roster built later in the same stage. A day-one admin who configures notifications before importing staff will silently notify only themselves."
+      - element: "Per-notification activate/deactivate bit + pencil + trash"
+        type: "toggle and row actions"
+        data_shown: "Retains configuration while suspending sends."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "Site profile > Locations tab > Add New Location"
+    navigation_path: "Sites > [site name] > Locations tab > Add New Location"
+    action: >
+      The administrator adds the physical buildings under the site — the entities students are
+      actually placed at — including the rural/underserved attributes and the student-visibility
+      decision.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 421-423: "you will provide some basic
+      information about this location, such as its name and whether it is active, address
+      information, and contact information. Lastly, in the Additional Information section, you will
+      provide some additional location information like if the location is in a rural area, if the
+      location serves underserved population, and indicate whether you would like this location to
+      appear to students in the Explore Clinical Locations section."
+    elements:
+      - element: "Location Name + Active toggle"
+        type: "input field + toggle"
+        data_shown: "The building's name and whether it is in use."
+        gates_on: ["Explore Locations map shows active locations only (line 529)"]
+        accreditation_citation: "None individually."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "'Is the location in a rural area?' attribute"
+        type: "structured attribute (Additional Information section)"
+        data_shown: "Rural designation for the location."
+        gates_on: ["Reporting/filtering on rural placement distribution"]
+        accreditation_citation: "None in the four accreditor files in this repo (coca/coda/lcme/acpe) name a rural attribute. It is, however, standard HRSA grant reporting vocabulary — and pairs directly with the HRSA Grant Info section on the same location profile (line 525), making this a grant-compliance field rather than an accreditation field."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "'Does the location serve an underserved population?' attribute"
+        type: "structured attribute"
+        data_shown: "Underserved-population designation."
+        gates_on: ["Reporting on underserved-population exposure across a cohort"]
+        accreditation_citation: "No direct element ID in coca.yaml / coda.yaml / lcme.yaml / acpe.yaml requires it. Programs commonly use it as supporting evidence for mission/social-accountability narrative sections and for HRSA grant reporting; treat as mission evidence, not standards evidence."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Boolean only — no depth (MUA/HPSA designation code, population served), so it supports a count but not a substantiated claim."
+      - element: "'Show on Explore Clinical Locations' bit"
+        type: "toggle (Yes/No)"
+        data_shown: "Whether students browsing sites can see this location at all."
+        gates_on: ["Student-facing Explore Clinical Locations catalogue", "Whether students can see student-submitted location evaluations for it (line 523)"]
+        accreditation_citation: "ACOTE C.1.2 (Student Access to Fieldwork Site Information), cited in the OT playbook's ACOTE list — the OT discipline explicitly has a standard about students being able to see site information, which this toggle governs."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file describes a student-facing site catalogue with per-location visibility control."
+        gap_severity: "none"
+        gap_note: "Defaults matter: a new admin building the directory in bulk who leaves this on exposes half-configured locations to students mid-setup. The transcript describes how to turn it off but not what the default is."
+
+  - screen: "Location profile > About (inheritance controls) and Delete Location"
+    navigation_path: "Sites > Locations tab > [location name] > About"
+    action: >
+      The administrator tunes what this specific building inherits from its parent site — settings,
+      categories, requirements, student requirement uploads, documents and notes — and adds
+      location-only content such as housing and parking.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 423-431: "The location will inherit
+      almost all site information, including contracts, settings, categories, requirements,
+      site-specific requirements, documents, and notes"; "Toggle the Enabled for this Location bit to
+      deactivate or activate these site-specific requirements"; "Toggle the Inherit Notes from Site
+      bit in the Notes for Internal Use Only and Notes Shared with Student sections." Corroborated by
+      help-center mirror: Sites > "Adding and Managing Locations.md".
+    elements:
+      - element: "Settings card with X-to-remove inherited values + 'Inherit Setting Notes' toggle + location-specific additions"
+        type: "inheritance override control"
+        data_shown: "Inherited site settings, which of them apply here, and whether the site's setting notes carry down."
+        gates_on: ["Setting-based filters and reports at location granularity"]
+        accreditation_citation: "ACPE Standard 3 required-settings coverage and COCA Standard 6, Element 6.10 ('setting is inpatient/outpatient' as a filterable rotation attribute) — because placements attach to locations, the location's overridden setting, not the site's, is the one that must be correct for these counts."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file describes site-to-location attribute inheritance, which is a direct consequence of no competitor documenting a two-level hierarchy."
+        gap_severity: "none"
+        gap_note: "Powerful, and the correct place for a large health system. The risk is invisible drift: nothing on the site record shows which of its locations have overridden its settings."
+      - element: "Requirements card — X to drop inherited entries, comma-separated location-specific additions, 'inherit site requirement notes' toggle"
+        type: "inheritance override control"
+        data_shown: "Effective requirement list for this building."
+        gates_on: ["What students placed here are told they must satisfy"]
+        accreditation_citation: "None as free text (same limitation as the site-level card in step 5)."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "Free-text plus per-location overrides means the effective requirement set for a program cannot be reported on in aggregate."
+      - element: "Student Requirement Upload table — 'Enabled for this Location' toggle per inherited requirement + location-specific additions"
+        type: "per-row enable/disable toggle"
+        data_shown: "Which site-level student evidence requests apply at this building, plus building-only ones."
+        gates_on: ["Placement Clearance Requirement Upload Status for students placed here (lines 391-397)"]
+        accreditation_citation: "LCME Standard 1, Element 1.4 and CODA Standard 4, Element 4-6 where site-imposed student conditions differ building by building — common in multi-hospital systems where one campus mandates additional screening."
+        competitor_equivalent: "E*Value/MedHub 'automated document collection during onboarding' (e-value.yaml) is the nearest capability, but per-location enablement of an inherited requirement is not documented by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Strong model; correctly separates 'the system requires it' from 'this campus requires it'."
+      - element: "Notes — 'Inherit Notes from Site' toggles, separately for Notes for Internal Use Only and Notes Shared with Student"
+        type: "paired inheritance toggles with audience split"
+        data_shown: "Internal versus student-visible narrative, each independently inheritable."
+        gates_on: ["What a student sees on the location's profile in Explore Clinical Locations"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "The internal/shared split is the correct primitive and is repeated consistently on personnel and faculty profiles — one of the more coherent design threads in the module."
+      - element: "Housing and Parking Information card (+ icon, type selector + free text)"
+        type: "structured-ish free text"
+        data_shown: "Practical logistics for students travelling to the building."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Small but disproportionately valued in PT/OT/SW where students travel to rural or agency placements at their own cost."
+      - element: "Delete Location button"
+        type: "destructive action with referential guard"
+        data_shown: "Removes the location."
+        gates_on: ["Blocked if 'there are any current slots or placements there' (line 431)"]
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  - screen: "Sites > Locations grid > Move Location (mergers & acquisitions) + Location Move History"
+    navigation_path: "Sites > Locations tab > [location] > Move Location"
+    action: >
+      When a hospital is acquired, the administrator re-parents an existing location to a different
+      site, reviews the explicit table of what moves and what does not, confirms, and then watches
+      an asynchronous job complete.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 433-437: "In recent times, we have seen
+      many mergers and acquisitions, M&A, of hospitals and sites. As part of this process, locations
+      that are part of one site must be merged with the new site... attributes inherited from site
+      such as settings, categories, requirements, requirement uploads, notes, documents, and
+      contracts will not be moved. Location-specific information, location-associated details, and
+      slot and placement details will be moved along with the location."
+    elements:
+      - element: "Move Location > destination site picker (search + filter)"
+        type: "record re-parenting control"
+        data_shown: "All sites in the program, searchable."
+        gates_on: ["Blocked for locations linked to Exxat One: 'you will not be able to move an Exxat Prism location from one site to another once it has been linked to an Exxat One location' (line 1887)"]
+        accreditation_citation: "COCA Standard 6, Element 6.9 (executed affiliation agreements for every contracted clinical site) and LCME 1.4 — an acquisition is precisely when a program's agreement coverage silently lapses, and this is the control that surfaces it."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. Notably, health-system consolidation is a named market pressure in domains/do.yaml ('community hospitals increasingly reserve slots exclusively for affiliated MD programs while university systems acquire hospital networks') and domains/medicine.yaml, yet no competitor teardown documents any re-parenting feature at all — this looks like a genuine, un-benchmarked Prism strength."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Implications table shown before confirming the move"
+        type: "read-only pre-flight impact summary"
+        data_shown: "Explicit split: site-inherited attributes (settings, categories, requirements, requirement uploads, notes, documents, contracts) do NOT move; location-specific data, associations, slots and placements DO."
+        gates_on: ["Administrator's informed consent before an irreversible-in-practice re-parenting"]
+        accreditation_citation: "LCME Standard 1, Element 1.4 / CODA 4-6 / ACPE 3.5.b — because contracts explicitly do not travel, a moved location is, the instant the move completes, a location with no inherited agreement until it is re-covered under the destination site's contract (step 7, Locations Covered)."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "The most under-flagged accreditation hazard in the whole stage: the tutorial states contracts do not move but never tells the admin to go re-cover the location under the new site's agreement, and no notification in step 8 fires for a location that has no agreement at all (those alerts key off expiry dates, not absence)."
+      - element: "Async progress banner (yellow = in progress, green = complete)"
+        type: "job status indicator"
+        data_shown: "'This may take a few minutes to complete, but you are free to leave this page and come back later.'"
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Location Move History (directional arrows, who moved it, when)"
+        type: "read-only audit log"
+        data_shown: "Left arrows = moved in from another site; right arrows = moved out; plus actor and timestamp."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9 and LCME 1.4 — provenance for 'why does this site's history show placements before we contracted with it?', a question a survey team asks after any acquisition."
+        competitor_equivalent: "axiUm (axium.yaml) advertises 'full audit trail' on 'every transaction, form, and clinical entry', but that is a clinical-record audit trail in a dental teaching clinic, not a site-directory move history. Not equivalent."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Personnel cascade on move (implicit, no control)"
+        type: "automatic side effect"
+        data_shown: "Transcript line 471: personnel associated with the moved location move too; they are dropped from the origin site only if they have no other location there, and always become associated with the destination site."
+        gates_on: ["Who receives slot-request emails at the origin versus destination site afterwards"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "Correct behaviour, but invisible: the pre-flight implications table describes data, not people, so the admin is not shown which named preceptors are about to change parent site."
+
+  - screen: "Sites > Personnel > Add Personnel (3-step wizard)"
+    navigation_path: "Sites > Personnel tab > Add Personnel (also reachable from a site profile's Personnel tab and from a location's Personnel section)"
+    action: >
+      The administrator creates a person who works at a site — a site/location contact, an
+      experiential supervisor, or both — sets their email-notification preferences, and associates
+      them to the specific sites and locations they cover, with a primary site.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 439-451: "It is important to maintain an
+      updated list of personnel so the correct people receive slot requests and the correct
+      experiential supervisors can be assigned to student placements"; "Experiential supervisors
+      supervise student placements and therefore are assigned to student placements for them to fill
+      and review forms and evaluations distributed to them and review timesheet entries and patient
+      logs submitted"; "If you select a single site to associate with the person, this site will be
+      marked as the primary site." Corroborated by help-center mirror: Sites > "Managing Personnel.md"
+      and "Add or Edit CI - Preceptor Information.md".
+    elements:
+      - element: "Active personnel toggle"
+        type: "toggle"
+        data_shown: "Whether the person is currently working in the field; inactive people are retained 'for information purposes' (line 441)."
+        gates_on: ["Personnel-grid filters", "Whether they appear as an assignable supervisor"]
+        accreditation_citation: "None on its own; retention of inactive supervisors matters for retrospective self-study questions ('who supervised this 2024 cohort?'), which is a records-retention property rather than a named standard."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "'Will this person serve as an experiential supervisor?' (Yes/No)"
+        type: "role-defining toggle"
+        data_shown: "Separates a supervising clinician from an administrative site contact."
+        gates_on: ["Assignability to student placements", "Appearance of Slots and Placements tabs on the profile (line 453)", "Eligibility to receive and complete forms/evaluations, review timesheets and patient logs", "Triggers the 'associate with ongoing or upcoming slots and placements?' prompt on save (line 451)"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.a (a preceptor profile/credentialing record linked to every placement a preceptor supervises); CODA Standard 2, Element 2-6 (faculty calibration per clinical site); COCA Standard 6, Element 6.10 ('at least one [rotation] under an osteopathic physician's supervision' requires the supervisor to be a first-class, attribute-bearing record). This single toggle is what makes the preceptor a queryable entity rather than a name in a text field."
+        competitor_equivalent: "CORE ELMS documents 'preceptor license tracking' and 'centralized site/student/preceptor management' (core-elms.yaml); MedHub/E*Value documents 'Automated Credentials Monitoring' for licenses (medhub.yaml). Both confirm competitors model preceptors as entities, but neither publishes a role-designation control or what it unlocks, so the element-level comparison stops there."
+        gap_severity: "none"
+        gap_note: "Confirms — from the primary transcript, not a paraphrase — the correction that acpe.yaml 3.3.a and coda.yaml 2-6 both hedge on ('unclear whether Compliance Management natively models preceptors as a trackable entity today versus only students'). It does."
+      - element: "Profile Details field set — first/last name, title, email, other contact info, Add Address, Professional Details, Additional Details"
+        type: "input field set (asterisked fields required)"
+        data_shown: "Identity and professional background of the supervisor."
+        gates_on: ["Email is the address slot requests and form/evaluation links are sent to"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.a — the profile is the container for the credential evidence added later (licensure/certification cards, step 12)."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: "There is NO bulk import for personnel. The transcript documents bulk import only for faculty/staff (lines 1199-1205), and the help-center Data Feed Integration guide covers only student and course-registration feeds — no site, location or personnel feed. A program migrating from a legacy system with hundreds of preceptors enters them one wizard at a time, or via the Exxat One AI linkage (step 15) which only creates sites/locations and only for Exxat One customers. This is the single largest day-one throughput gap in stage 5."
+      - element: "Communication preferences step — receive distributed slot requests / location information update requests / other email notifications (slot confirmations and cancellations, students interested in the location, student placement notifications)"
+        type: "notification opt-in set, defaulted per person and overridable per location"
+        data_shown: "Which automated site-facing emails this person receives."
+        gates_on: ["Slot-request email recipients — help-center 'Managing Personnel.md' warns: 'If personnel are added to a Site, but not associated with a specific location, they will not be included in your Slot Request emails.'"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. E*Value/MedHub documents 'automated notifications for students' (e-value.yaml) but nothing about per-site-contact notification preferences."
+        gap_severity: "configure-needed"
+        gap_note: "Highest-consequence silent failure in the module: a personnel record attached to a site but not to any of its locations is invisible to slot requests. The wizard even labels the association step optional ('You can always click on the Skip button'), which is exactly how a program ends up wondering why a site never answers."
+      - element: "Associate Sites and Locations step — site table (name, address, programs), primary-site marker, 'Select All Locations' vs 'Choose Locations', per-location practice setting / designation / communication preferences, association notes"
+        type: "hierarchical multi-select with per-association overrides"
+        data_shown: "Which buildings this person covers and in what capacity at each, pre-populated from the profile step then individually overridable."
+        gates_on: ["Slot-request routing", "Assignability as experiential supervisor at a given location", "Primary-site designation, which cannot later be disassociated (line 459)"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.e (2:1 student-to-preceptor ratio) and LCME Standard 3, Element 3.1 texture — a ratio or supervision query is only computable if the supervisor-to-location mapping is explicit, which this step is where it becomes so."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research; no competitor publishes a person-to-many-locations association model with per-location role attributes."
+        gap_severity: "none"
+        gap_note: "Genuinely sophisticated — per-location designation and communication preferences on one person is a real modelling advantage. Cost: it is also the most laborious screen a migrating admin will meet, repeated once per preceptor."
+
+  - screen: "Personnel profile (About / Associations / Slots / Placements / Communications / Interventions)"
+    navigation_path: "Sites > Personnel > [person name]"
+    action: >
+      The administrator enriches the person's record — tags, categories, CV, licensure,
+      certifications, documents, assistants, notes — and manages their site/location associations
+      over time, including disassociation when they leave.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 451-477: "The Slots and Placements tabs
+      appear only when the personnel member is marked as a clinical instructor"; "If there are any
+      past or current placements assigned to the person at a location at this site, the person will
+      continue to be associated with these placements to preserve any placement or form and
+      evaluation information. However, the person will be removed from any unused slots and upcoming
+      placements"; "you cannot disassociate the site marked as the primary site."
+    elements:
+      - element: "Licensure card (+ icon) and Certification card (+ icon), each with edit and delete"
+        type: "structured credential records"
+        data_shown: "License and certification details for the supervisor."
+        gates_on: ["Placement Clearance preceptor credential checks (Nursing playbook: the Placement Clearance Dashboard 'consolidates preceptor CV/license/certification status, contract validity...')"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.a ('a record that the majority of preceptors for any given student are U.S.-licensed pharmacists, with performance evaluations on file'); COCA Standard 5, Element 5.4 (direct supervision by a licensed health care professional); CODA Standard 2, Element 2-6 (faculty calibration/credential tracking per site). This card is where preceptor-qualification evidence physically lives."
+        competitor_equivalent: "The strongest documented head-to-head in this stage: MedHub/E*Value ships 'Automated Credentials Monitoring for state licenses, DEA, and Controlled Substances registrations' with 'real-time tracking' and 'automated alerts for expiring credentials' (medhub.yaml, e-value.yaml); CORE ELMS ships 'preceptor license tracking' with 'automated expiration reminders' (core-elms.yaml). Prism's transcript documents the license as a stored record but describes NO expiry alerting on it — the contract auto-notification in step 8 is contract-scoped, and the faculty compliance auto-notification in step 16 covers faculty, not site personnel."
+        gap_severity: "gap"
+        gap_note: "Personnel licensure appears to be stored data without an expiry-notification engine of its own, while two named competitors advertise exactly that. If a preceptor license expiry alert does exist it is not in the primary transcript, the Sites help-center folder, or the Faculty Compliance flow — worth confirming with product before it is repeated as a competitive claim either way."
+      - element: "CV upload (Browse to Upload, with file type/size limits)"
+        type: "document upload"
+        data_shown: "The supervisor's CV."
+        gates_on: ["Nursing playbook: preceptor CV status is one of the items the Placement Clearance Dashboard consolidates"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.a and CODA Standard 3, Element 3-4 (objective measurement of faculty performance) rely on documented qualifications; a CV on file is the baseline artifact surveyors request for supervising clinicians."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Unlike the FACULTY profile (step 20), there is no Generate CV for site personnel — the site-side record stores a CV, the faculty-side record can build one."
+      - element: "Slots tab and Placements tab (conditional on the experiential-supervisor designation)"
+        type: "read-only grids, conditionally visible"
+        data_shown: "Slots: site, location, rotation dates, scheduling info, with co-preceptors sharing a row. Placements: consolidated view-only list of the person's placements with site/location/assignment details."
+        gates_on: ["Visibility is gated on the supervisor designation set in step 11"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.e (2:1 ratio) — this grid is the raw data a ratio check reads; Nursing's COA Standard F.7 imposes the same hard 2:1 cap for CRNA programs per the Nursing playbook."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "The data needed for a ratio check is visible per person, but the transcript describes no automatic ratio enforcement here — consistent with acpe.yaml 3.3.e's 'required_software_behavior' of 'blocking or flagging a new assignment that would push the ratio above 2:1', which remains unconfirmed at this screen."
+      - element: "Associations > Associate Sites and Locations / Disassociate Site / Mark as Primary / per-location pencil and unlink"
+        type: "association management with referential protections"
+        data_shown: "Primary site marker, expandable location lists, per-location edit of communication preferences, designation, practice settings and association notes."
+        gates_on: ["Primary site cannot be disassociated", "Typed-number confirmation required to disassociate a site", "Past/current placements retain the person; unused slots and upcoming placements drop them"]
+        accreditation_citation: "LCME Standard 1, Element 1.4 and ACPE 3.3.a indirectly — the preservation rule ('to preserve any placement or form and evaluation information') is what keeps historical supervision evidence intact when a preceptor leaves, which is the property a retrospective self-study depends on."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "The past-preserved / future-cleared split is exactly right for accreditation and is one of the more thoughtful behaviours in the product. Contrast with the trash icon on a site's Personnel row, which 'deletes the person's profile entirely' (line 465) with no typed confirmation described — an inconsistent destructive guard."
+      - element: "Communications tab and Interventions tab (mode, initiated by, communicated with, subject, description, date, document, follow-up date/completion; interventions add rotation, status Open/Closed and multiple follow-ups)"
+        type: "structured relationship log"
+        data_shown: "Every logged contact and every escalation with this person — the transcript's example is 'excessive experiential supervisor absence' (line 485)."
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.11 (Comparability Across Clinical Education Sites) and CODA Standard 2, Element 2-6 — an intervention log is the documented remediation trail when one site or supervisor drifts from the others, which is precisely what comparability standards ask a program to show it monitors and acts on."
+        competitor_equivalent: "CORE ELMS documents 'incident report tracking' (core-elms.yaml) — comparable in spirit, but no public field list, follow-up model, or site/location/personnel scoping, so no element-level comparison is possible."
+        gap_severity: "none"
+        gap_note: "Available identically at site, location and personnel level (lines 479-491) — an unusually complete relationship-management layer that no competitor teardown in this research matches on documentation."
+      - element: "Assistants card (+ icon: name and contact information)"
+        type: "sub-record"
+        data_shown: "An administrative assistant or scheduler attached to a busy supervisor."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "Stores the assistant's contact details but the transcript does not say the assistant receives any of the automated emails — so the real-world workflow (route slot requests through the scheduler) still requires adding the assistant as their own personnel record."
+
+  - screen: "Sites > Setup > Form Setup (custom site assessment forms)"
+    navigation_path: "Sites > Setup tab > Form Setup > Create New Form (or copy icon on a standard form)"
+    action: >
+      The administrator either adopts one of the two standard site assessment forms or copies and
+      customises it, building sections and questions, then publishes it so it becomes selectable
+      when logging a site visit.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 493-513: "If you have never configured a
+      site assessment form in the past, you will have a table displaying our two standard site
+      assessment forms"; "When you publish a site assessment form, this form will be used when adding
+      an assessment to a site or location in the future. Once a published assessment form is used at
+      least once, you will no longer be able to make changes to the assessment form."
+    elements:
+      - element: "Two standard site assessment forms (marked with the 'standard' indicator) + copy icon"
+        type: "shipped template with clone-to-customise"
+        data_shown: "Preconfigured site-visit assessment content, previewable by accordion."
+        gates_on: ["Whether a new program has anything to assess sites with on day one"]
+        accreditation_citation: "COCA Standard 6, Element 6.11 (Comparability Across Clinical Education Sites); CODA Standard 2, Element 2-6 (comparable instruction and assessment across all clinical sites); Nursing COA Standard F.4 per the Nursing playbook ('structured site-visit tracking... with follow-up dates pushed to the Program Calendar'). A shipped default means a new program can produce site-visit evidence before it has designed its own instrument."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file describes site-assessment instrument authoring. This is a shipped Prism capability with no benchmark, notable given that axiUm (axium.yaml) and CORE ELMS (core-elms.yaml) are both rated 'ahead' on Accreditation Management generally."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Field Type dropdown (single choice, multiple choice, short/long answer, title, select from dropdown, date picker, toggle, attestation, e-signature, divider, text editor)"
+        type: "form-builder question type selector"
+        data_shown: "Eleven question types including attestation and e-signature."
+        gates_on: ["What kind of evidence a site visit can capture"]
+        accreditation_citation: "COCA Standard 5, Element 5.4 — coca.yaml's stated software need is 'a version-controlled policy library... that tracks acknowledgment/attestation of the supervision policy', with the gap_note 'Confirm Compliance Management supports document-acknowledgment item types, not just checklist/expiry items.' The attestation and e-signature field types here are direct evidence that Prism's form builder supports attestation item types — in the site-assessment context at least."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Partially answers an open question carried in coca.yaml 5.4's gap_notes. It confirms attestation/e-signature exist as form primitives; it does not confirm they can be attached to a compliance item, which is a different object."
+      - element: "Per-question options — help text (hover), comments bit, 'Make This Mandatory' bit, character limit, Allow Multiple, Long Answer bit"
+        type: "question configuration toggles"
+        data_shown: "Guidance, optionality and input constraints per question."
+        gates_on: ["Whether an assessor can submit an incomplete assessment"]
+        accreditation_citation: "CODA Standard 2, Element 2-6 — mandatory fields are what make cross-site assessments actually comparable rather than sparsely completed."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Save as Draft / Preview / Publish, with status column (draft vs published)"
+        type: "lifecycle controls with an irreversible lock"
+        data_shown: "Draft forms are not usable; published forms become selectable when adding an assessment."
+        gates_on: ["'Once a published assessment form is used at least once, you will no longer be able to make changes to the assessment form' (line 513)"]
+        accreditation_citation: "CODA Standard 2, Element 2-6 and COCA 6.11 — instrument stability across sites is exactly what comparability requires, so the lock is defensible as a feature, not merely a limitation."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "A day-one trap with teeth: a new administrator experimenting with the form builder who publishes and runs one test assessment has permanently frozen that instrument. The workaround (copy to a new form) means the program accumulates near-duplicate forms and loses longitudinal comparability — the very thing 2-6 and 6.11 want."
+
+  - screen: "Exxat One > Prism site & location linkage (one-time)"
+    navigation_path: "Dashboard > Exxat One section > Process Now (or Sites > 'Link Now' banner)"
+    action: >
+      A program that also uses Exxat One performs the one-time mapping of its Exxat One sites and
+      locations onto Prism records — creating missing Prism records inline, accepting AI match
+      recommendations in bulk, and thereafter filtering Exxat One-sourced sites out of slot-request
+      emails.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "Linking Sites and Locations in Exxat One to
+      Exxat Prism" (lines 1857-1891): "This is a one-time activity designed to establish a connection
+      between the site and location information maintained by schools in Exxat Prism and the
+      corresponding information in Exxat One"; "Below the site details, you'll find AI-generated
+      recommendations for potential location matches organized into three categories. High confidence
+      ... Medium confidence ... No match"; "while bulk uploading, if Prism detects an existing location
+      with the same name, a duplicate location name warning will be displayed."
+    elements:
+      - element: "Exxat One Sites tab with Status column (Linked / Not Linked) and per-row Link button"
+        type: "cross-system mapping grid"
+        data_shown: "Every Exxat One site with its details and linkage state."
+        gates_on: ["Schedule processing from Exxat One into Prism slots/placements (the 'Processing Schedules' workflow, lines 1893-1929) depends on this mapping"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — this is a vendor-internal integration between two Exxat products and has no competitor analog by construction."
+        gap_severity: "none"
+        gap_note: "Only relevant to programs on both products; for everyone else this entire screen is absent, which matters when reading the bulk-creation gap noted below."
+      - element: "Link drawer with prefilled search + Advanced Search (address, city, state, zip, prefilled from the Exxat One record)"
+        type: "matching interface"
+        data_shown: "Candidate Prism sites that closely match the selected Exxat One site."
+        gates_on: ["Correct 1:many mapping — multiple Prism sites may be linked to one Exxat One site"]
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Add New Site / Add New Location inside the link drawer (fields prefilled from Exxat One, asterisked fields still required)"
+        type: "inline record creation from external data"
+        data_shown: "A new Prism site or location whose name and address are pre-populated from Exxat One, editable before save, auto-preselected for linkage."
+        gates_on: ["Locations can only be created under an already-linked parent site"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "This is, in practice, the ONLY documented way to create Prism site/location records from pre-existing external data without typing them — and it is available only to Exxat One customers. It underlines the step-11 finding: there is no general-purpose site/location/personnel importer."
+      - element: "AI match recommendations — High confidence / Medium confidence / No match tiles with Review Now"
+        type: "ML-assisted matching with confidence tiers"
+        data_shown: "High = 'strong match based on its name and address'; Medium = 'likely match, but you should review the details'; No match = manual search or creation required."
+        gates_on: ["Entry into the Smart Bulk Link drawer"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. No competitor teardown in content/competitors/ documents any AI-assisted record matching for site directories — this is an un-benchmarked, differentiating capability."
+        gap_severity: "none"
+        gap_note: "The confidence tiering with an explicit 'review before linking' instruction on the medium tier is a responsible pattern; the transcript does not say whether high-confidence bulk links are auditable/reversible in bulk (individual Unlink exists)."
+      - element: "Smart Bulk Link drawer — Select All / individual select, Bulk Link, plus Bulk Add with duplicate-name warning"
+        type: "bulk association and bulk creation"
+        data_shown: "Multiple locations linked or created in one action; a duplicate location name warning offers continue-or-cancel."
+        gates_on: ["Duplicate prevention at bulk-add time only"]
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "The duplicate-name check exists HERE but not on the ordinary Add Site / Add New Location forms (steps 4 and 9), so the manual path a non-Exxat-One program must use is the one without the safeguard."
+      - element: "'Linked with Exxat One' filter on the Sites and Locations grids, and on the Emails tab recipient filtering"
+        type: "filter / audience exclusion"
+        data_shown: "Restricts grids to linked records; excludes Exxat One-sourced sites from slot-request emails."
+        gates_on: ["Prevents double-requesting availability from sites that already supply it through Exxat One (line 1889)"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Also note the hard interaction with step 10: a linked location cannot be moved between sites until it is unlinked — an M&A workflow blocker for dual-product programs."
+
+  - screen: "Faculty & Staff > Setup (View Settings, Faculty Organization, Announcements, Resources)"
+    navigation_path: "Faculty and Staff > Setup tab"
+    action: >
+      Before inviting anyone, the administrator decides what faculty will be able to see when they
+      log in, defines the rank and administrative-position vocabularies, and optionally preloads
+      announcements and resources so the dashboard is not empty on first login.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "11/16 Setting up Faculty in Exxat Prism"
+      (lines 1175-1193): "First, you will need to set up the faculty dashboard and configure faculty
+      organization options. Then you will need to add faculty to the system and invite them to create
+      their login"; "you can enable or disable access to their assigned course offerings, the student
+      profiles they're associated with, the uploaded faculty resources, your shared school contacts,
+      their assigned student placements, your program's curriculum grids, or the faculty compliance
+      section"; "These labels won't affect their system access."
+    elements:
+      - element: "Faculty Dashboard Configuration toggles (course offerings, associated student profiles, faculty resources, shared school contacts, assigned student placements, curriculum grids, faculty compliance)"
+        type: "feature-visibility toggle set (program-wide)"
+        data_shown: "Which seven areas exist in the faculty login at all."
+        gates_on: ["Everything a faculty member can reach — the transcript's example is turning off curriculum grids to keep curriculum mapping administrator-only"]
+        accreditation_citation: "None directly, but consequential for LCME/COCA confidentiality expectations around who may view student records; the toggles are the coarse-grained half of Prism's faculty access model, with per-record Associations (step 20) as the fine-grained half."
+        competitor_equivalent: "axiUm (axium.yaml) documents 'role-based access control limiting user visibility' as a named capability supporting HIPAA/FERPA/CODA — the closest documented analog, though axiUm publishes no toggle inventory. Every other competitor teardown is silent on administrator-configurable role visibility."
+        gap_severity: "none"
+        gap_note: "Program-wide, not per-role: there is no documented way to give one faculty group curriculum grids and another none. Combined with 'ranks don't affect access', a program's only real access dimensions are these seven switches plus per-record associations."
+      - element: "Student Compliance Access — 'Student Compliance Status for Advisors' and 'Student Compliance Status for Course Faculty' toggles"
+        type: "sensitive-data visibility toggles"
+        data_shown: "Whether advisors and course faculty can see student compliance status."
+        gates_on: ["Faculty ability to self-serve placement-readiness checks"]
+        accreditation_citation: "None names this specific disclosure; it is a FERPA/health-record governance decision the transcript frames as a program choice ('Some programs choose to grant this access so faculty can confirm student readiness for placements. Others prefer to keep compliance information visible only to administrators')."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Correctly identified by the tutorial as a policy decision, and one a day-one admin should route to their privacy officer rather than toggle casually."
+      - element: "Faculty Rank list (pencil > type + Add) and Administrative Positions list"
+        type: "admin-managed lookup lists (labels only)"
+        data_shown: "Rank and position vocabularies assignable to faculty and staff."
+        gates_on: ["Faculty-grid filtering and organisation only — explicitly NOT access"]
+        accreditation_citation: "CODA Standard 3, Element 3-4 (faculty evaluation process) and the faculty-qualification narrative sections of LCME/COCA self-studies use rank; here it is a filterable label that supports those reports rather than evidence itself."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Two-sided trap. First, the transcript says twice that ranks and positions do not affect access (lines 1191-1195) — a genuine day-one misconception. Second, on the faculty profile the administrative-position dropdown is NOT freely extensible: 'You can also add additional options to this list by contacting our support team at prism-support@exxat.com' (line 1231), while this Setup screen implies self-serve editing. The two statements need reconciling before a program standardises its position taxonomy."
+      - element: "Announcements (start/end date-time, title, description, document upload) with Upcoming / Current / Former grouping"
+        type: "scheduled dashboard content"
+        data_shown: "Time-boxed messages on the left of the faculty dashboard."
+        gates_on: ["Visibility strictly by date window — upcoming announcements 'aren't visible to faculty yet'"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Faculty Resources (categories with drag-reorder; resource types document / video / link / FAQ)"
+        type: "categorised content library"
+        data_shown: "Handbooks, observation frameworks, policies, FAQs available in the faculty login."
+        gates_on: ["Gated by the 'faculty resources' dashboard toggle above"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.c-style preceptor development texture (acpe.yaml: 'Evidence that every preceptor completed orientation... plus ongoing professional-development activity records') — resources are where orientation material would live, though nothing here records who consumed it."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: "Distribution without acknowledgment: a program can publish an orientation handbook but the transcript describes no read receipt or completion record on faculty resources, which is what ACPE-style orientation evidence actually requires. (The attestation primitive exists in the form builder, step 14, and the compliance engine, step 21 — just not attached to resources.)"
+
+  - screen: "Faculty & Staff > Add Faculty or Staff (+ Single Sign-On Key)"
+    navigation_path: "Faculty and Staff tab > Add Faculty or Staff"
+    action: >
+      The administrator creates individual faculty and staff records and, at an SSO institution,
+      attaches each person's SSO key before invitations go out.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 1193-1199: "If you're adding a staff
+      member, make sure to select the staff option at the top. Then enter their first name, last name,
+      email address, and assign any administrative positions as needed"; "if you assign an SSO key to
+      a faculty member, they will be required to use SSO when logging in after you send their
+      invitation."
+    elements:
+      - element: "Faculty vs Staff selector"
+        type: "record-type radio"
+        data_shown: "Distinguishes teaching faculty from staff members in the same table."
+        gates_on: ["Faculty-grid filtering (the transcript's bulk-email example filters to staff only, line 1275)", "Bulk-import template's faculty/staff column"]
+        accreditation_citation: "CODA Standard 3, Element 3-4 and faculty-roster sections of LCME/COCA self-studies distinguish faculty from staff; getting this wrong at creation pollutes every later faculty count."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Required identity fields (first name, last name, email) + optional reference fields + Administrative Position dropdown"
+        type: "input field set"
+        data_shown: "Minimal required profile; 'The rest of the fields are optional and used mainly for reference.'"
+        gates_on: ["Email is the invitation destination and the account identity"]
+        accreditation_citation: "None at creation — faculty qualification evidence accumulates later on the profile (step 20)."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Deliberately thin: the transcript notes 'Faculty usually fill out their profiles themselves' (line 1227), so the admin creates a shell and the faculty member completes it — a sensible division of labour for day one."
+      - element: "Single Sign-On Key section (+ icon, enter key, Save; pencil to edit)"
+        type: "per-user identity mapping"
+        data_shown: "The institution's SSO identifier for this person."
+        gates_on: ["Presence of a key forces SSO login after invitation — 'they will be required to use SSO when logging in after you send their invitation'", "SSO keys can also be supplied in the bulk-import template (line 1201)"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "MedHub (medhub.yaml) documents 'SAML/Shibboleth SSO' alongside multifactor authentication and SOC 2 compliance; CORE ELMS (core-elms.yaml) is criticised in its own teardown for describing 'only generic SSO/LTI standards support'. So competitors document SSO SUPPORT, but neither documents the per-user key-assignment mechanic — Prism's approach (a key entered per person, or per row in a bulk template) is comparable at capability level and un-benchmarked at element level."
+        gap_severity: "configure-needed"
+        gap_note: "Per-user key entry means an SSO institution must attach a key to every faculty member individually or get every row right in the import template — there is no documented domain-level rule ('everyone @university.edu uses SSO'). And the timing is unforgiving: the key must be in place BEFORE the invitation, since the invitation is what provisions the login type."
+
+  - screen: "Faculty & Staff > Setup > Faculty Management > Bulk Import"
+    navigation_path: "Faculty and Staff > Setup tab > Faculty Management dropdown > Bulk Import > + icon"
+    action: >
+      Rather than creating faculty one at a time, the administrator downloads the template,
+      populates it offline, uploads it, resolves flagged errors and warnings, and confirms the import.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 1199-1205: "First, click the Download
+      Template icon to get the import file... Fields marked with an asterisk symbol are required.
+      Don't change the column headers or structure of the template... If you're including an
+      administrative position, faculty rank, or faculty category, make sure those options are already
+      set up in the faculty organization section."
+    elements:
+      - element: "Download Template icon"
+        type: "spreadsheet template download"
+        data_shown: "Fixed-structure Excel template with asterisked required columns."
+        gates_on: ["Structural integrity — 'Don't change the column headers or structure of the template'"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. Bulk import is the exact category the task brief flags as sometimes comparable, and the honest finding is that none of the nine competitor teardowns in content/competitors/ documents a bulk-import UX at all — only E*Value/MedHub's 'automated document collection... via dynamic forms' (e-value.yaml), which is a different thing (collecting documents from people, not loading a roster)."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Lookup-value prerequisite (administrative position, faculty rank, faculty category must already exist in Faculty Organization)"
+        type: "referential precondition"
+        data_shown: "Import fails or warns on values not already configured in step 16."
+        gates_on: ["Hard ordering dependency: Faculty Organization setup must precede bulk import"]
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "This is the clearest example in stage 5 of an order-of-operations dependency that the product states only inside a tutorial. A day-one admin who imports before configuring ranks gets a validation wall on their largest single data-entry action."
+      - element: "Single Sign-On Key column in the template"
+        type: "bulk identity mapping"
+        data_shown: "Per-row SSO key. 'If you add an SSO key, a single sign-on login will be set up for the faculty member when you invite them to the system.'"
+        gates_on: ["Login type provisioned at invitation time"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "MedHub documents SAML/Shibboleth SSO support (medhub.yaml) but not bulk key assignment; not comparable at element level."
+        gap_severity: "none"
+        gap_note: "Materially reduces the per-user SSO pain flagged in step 17 — for faculty. There is no equivalent for site personnel, who do not get logins through this path at all."
+      - element: "Validation grid — red cells (errors, must fix) vs yellow cells (warnings, recommended), hover for message, error/warning counts, filter to issue rows and duplicates"
+        type: "pre-commit validation UI"
+        data_shown: "Cell-level diagnostics before anything is written."
+        gates_on: ["Errors block the import; warnings do not"]
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Genuinely good: cell-level hover diagnostics, an issues-only filter, and explicit duplicate filtering. The contrast with site/location/personnel entry — which has no import path at all (step 11) — is the sharpest internal inconsistency in stage 5."
+      - element: "Import confirmation (type the displayed number) + import-instance table (title, initiating admin, start date, status, downloadable source file) + refresh icon"
+        type: "guarded commit with audit trail"
+        data_shown: "Every historical import, sortable by title or date, with the original spreadsheet retrievable."
+        gates_on: []
+        accreditation_citation: "None directly, though a retained source file with actor and timestamp is exactly the provenance a survey team likes when asked how the faculty roster was built."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "The transcript does not describe an undo/rollback for a completed import — the retained file supports reconstruction, not reversal."
+
+  - screen: "Faculty & Staff > Setup > Invite Faculty/Staff"
+    navigation_path: "Faculty and Staff > Setup tab > Invite Faculty/Staff"
+    action: >
+      The administrator selects who to invite, builds or picks an email template with merge fields
+      including the all-important invitation link, previews it, and sends now or on a schedule — then
+      tracks activation.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 1205-1211: "You can quickly check who's
+      already activated their account by looking at the Account Status column. If you've assigned an
+      SSO key to any of the selected faculty, they'll automatically receive an SSO login when
+      invited"; "Don't forget to personalize the message using the merge fields... Be sure to include
+      the invitation link merge field so recipients can set up their account."
+    elements:
+      - element: "Selection grid with search and filter + Account Status column"
+        type: "recipient selection with state visibility"
+        data_shown: "Who has been invited, who has activated."
+        gates_on: ["Re-invitation targeting; post-send tracking"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Account Status is the only day-one signal that onboarding is actually landing, and it is well placed."
+      - element: "Email template builder (name, subject, header/footer layout, body, Add Template / Edit / delete)"
+        type: "reusable message template"
+        data_shown: "Program-branded invitation content, reusable across cohorts of invitees."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Notification/communication templating is the one setup-mechanics category the task brief anticipates might be comparable; in fact none of the nine competitor teardowns documents an email-template builder. E*Value/MedHub's documented 'automated notifications' (e-value.yaml) says nothing about admin-authored templates. Not comparable at element level."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Merge fields (typed with @, e.g. @first name @last name) including the invitation link merge field"
+        type: "personalisation tokens with one mandatory token"
+        data_shown: "Recipient-specific substitution at send time."
+        gates_on: ["Omitting the invitation-link merge field produces an invitation nobody can act on"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "The transcript flags it ('Be sure to include the invitation link merge field') but the product apparently does not enforce it — the single most breakable step in faculty onboarding is guarded by a sentence in a video."
+      - element: "Send now vs schedule for a later date, with live left-hand preview"
+        type: "dispatch control"
+        data_shown: "Rendered email preview before commit."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Scheduling is genuinely useful for a go-live plan (invite faculty the morning of orientation), and pairs with the same primitive in bulk email (line 1281)."
+
+  - screen: "Faculty profile — Contact Sharing, Associations, View As, Generate CV, Bulk Update"
+    navigation_path: "Faculty and Staff > [faculty name] > Contact Sharing / Associations / View As / Generate CV; Bulk Update from the Faculty & Staff grid"
+    action: >
+      The administrator wires the newly created faculty into the rest of the system — deciding whose
+      contact details are shared with students and sites, associating them to courses, students and
+      placements, verifying the result through the faculty's own eyes, and maintaining records in bulk.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "12/16 Managing Faculty in Exxat Prism"
+      (lines 1223-1273): "Faculty assigned to students serve as academic advisors... Faculty assigned
+      to courses are called course faculty... Faculty linked to placements are placement faculty";
+      "Students and faculty can view this contact information in the School Contacts section, and
+      sites can view this information in the Clinical Education Contacts section within the Site
+      Resources page"; "The system will take all of the information entered in the faculty profile and
+      export it in the CV format appropriate to your accrediting body."
+    elements:
+      - element: "Contact Sharing toggles (students / other faculty and staff / sites) + notes"
+        type: "audience-scoped disclosure toggles"
+        data_shown: "Which audiences see this person's contact details, plus an audience note."
+        gates_on: ["School Contacts section for students and faculty", "Clinical Education Contacts tile on the public Site Resources page (step 21) — this toggle is what populates it"]
+        accreditation_citation: "ACOTE C.1.2-style student access to fieldwork information (OT playbook) and, more broadly, LCME 1.4's shared-learning-environment expectations that sites know who to contact. Note the privacy dimension: the sites toggle publishes contact details to an UNAUTHENTICATED page (step 21)."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "The 'share on site resources page' bit is set per faculty member from inside their profile (transcript line 565), while the page-level switch lives in Program Details — two screens away from each other. A day-one admin can easily enable the tile and see it empty, or share a person publicly without realising the page needs no login."
+      - element: "Associations > Courses (Manage Associations, multi-select, role per course or 'assign the same role for each course offering')"
+        type: "role-scoped record association"
+        data_shown: "Course offerings this person is faculty for, and in what role — the transcript enumerates 13 distinct capabilities course association grants, from editing course measures to viewing student compliance status."
+        gates_on: ["Everything course faculty can do; also drives the Teaching Details section of their profile (line 1245)"]
+        accreditation_citation: "CODA Standard 3, Element 3-4 (objective measurement of each faculty member's performance in teaching) — the course association is the system's record of teaching assignment, which the faculty-evaluation and CV outputs both depend on."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Note the asymmetry the transcript calls out (line 1245): adding a course in Teaching Details does NOT create an association, but creating an association DOES populate Teaching Details. Easy for a new admin to get backwards."
+      - element: "Associations > Students (search/filter by cohort, group, tags, campus, enrollment, graduation, category; per-student role; typed-number confirmation)"
+        type: "advisee assignment with guarded commit"
+        data_shown: "Advisees, each with a faculty role."
+        gates_on: ["Advisees section of the faculty login", "Advisor visibility of student compliance, if enabled in step 16"]
+        accreditation_citation: "None names advisor assignment specifically; it is the mechanism behind advising-related narrative sections rather than evidence for a numbered element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Typed-number confirmation on an ASSOCIATION is unusually strict — stricter than the guard on deleting a site personnel record."
+      - element: "Placement faculty assignment (performed from Placements > course > placement > Placement Faculty dropdown, not from the faculty profile)"
+        type: "association made from the opposite direction"
+        data_shown: "The faculty member supervising a specific student placement; read back on the profile's Placements section."
+        gates_on: ["Placement-scoped review of learning activities, communications and interventions"]
+        accreditation_citation: "COCA Standard 6, Element 6.11 and CODA Standard 2, Element 2-6 — knowing which program faculty oversee which sites' placements is part of demonstrating monitored comparability across sites."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "Navigational inconsistency: two of the three association types are managed from the faculty profile, the third only from the placement record ('To disassociate a faculty member from a placement, you will need to navigate back to the placement page'). A predictable day-one hunt."
+      - element: "View As button (read-only impersonation) + Switch Back"
+        type: "verification tool"
+        data_shown: "The faculty dashboard exactly as that person sees it; explicitly view-only — 'you will not be able to make any changes or review any submitted student learning activities on behalf of the faculty member.'"
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "The single best day-one verification affordance in this stage: it is how an administrator checks that the seven dashboard toggles and the associations actually produced the intended experience, before inviting anyone."
+      - element: "Generate CV button"
+        type: "document generation from profile data"
+        data_shown: "'The system will take all of the information entered in the faculty profile and export it in the CV format appropriate to your accrediting body.'"
+        gates_on: ["Output quality depends entirely on profile completeness — profile information, education, licensure/certification, academic appointments with workload distribution, teaching, scholarship, service"]
+        accreditation_citation: "CODA Standard 3, Element 3-4 (faculty evaluation across teaching, patient care, scholarship and service — the exact four pillars the Prism faculty profile is organised around, per transcript line 1227); plus the faculty-qualification exhibits every one of LCME, COCA, ACPE and CODA self-studies require. The transcript's own claim ('the CV format appropriate to your accrediting body') makes this the most explicitly accreditation-aware element in the entire stage."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor teardown documents accreditor-formatted CV generation. Given that Elentra, eMedley, CORE ELMS and axiUm are all rated 'ahead' on Accreditation Management generally (elentra.yaml, emedley.yaml, core-elms.yaml, axium.yaml), a shipped, un-benchmarked faculty-CV generator is a specific Prism counterpoint worth verifying and using."
+        gap_severity: "none"
+        gap_note: "Which accreditor formats are actually supported is not enumerated in the transcript — worth confirming per discipline before it is claimed in a sales context, especially for the four expansion domains (dentistry, DO, medicine, pharmacy) whose CV conventions differ."
+      - element: "Bulk Update (select records > Bulk Update > one attribute at a time: Profile Status, Faculty Rank, Faculty/Staff Category)"
+        type: "multi-record attribute update"
+        data_shown: "One attribute applied across a selection; repeat the process per attribute."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "'At this time, you can update one attribute at a time' — end-of-year maintenance (status + rank + category) means three passes over the same selection. Also note: exactly three attributes are bulk-updatable, and no bulk-update equivalent exists for site personnel."
+      - element: "Delete Faculty button"
+        type: "destructive action with referential guard + deletion report"
+        data_shown: "Blocked if 'they are associated with students' courses or placements'; deletions are logged with name, email, reason, deleting admin, and timestamp, searchable and exportable (line 1283)."
+        gates_on: ["Association state blocks deletion"]
+        accreditation_citation: "None directly; the deletion report is a records-governance artifact that supports 'what happened to this faculty member's record?' questions during a survey."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "A logged, reasoned, exportable deletion trail for faculty — and no documented equivalent for site personnel, whose profile can be deleted outright from a site's Personnel row (line 465)."
+
+  - screen: "Program Details > Site Resource Page (the partner-facing, login-free portal)"
+    navigation_path: "Dashboard (or hamburger menu) > Program Details > Site Resource Page"
+    action: >
+      The administrator assembles the public page that clinical partners use — welcome message,
+      announcements, rotation schedule, clinician resources, course documents and program contacts —
+      previews it, and shares its URL with sites.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "6/16 Setting Up Site Resources in Exxat Prism"
+      (lines 545-569): "The site resources page serves as a dedicated website to house these resources,
+      which can be easily shared with sites... sites can access the information shared by the school
+      without needing to log in. It is important to note that this page cannot be searched online";
+      "When you want to share the site resources page with sites, simply copy the URL of the page and
+      send it directly to them."
+    elements:
+      - element: "Welcome Message accordion (include bit, Add Welcome Message: title + body)"
+        type: "toggled content block"
+        data_shown: "The program's greeting at the top of the partner page."
+        gates_on: []
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor teardown documents an unauthenticated partner-facing resource portal at all."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Announcements accordion (include bit + open-new-page icon to the site announcement page; per-announcement start/end date-time, title, description, document, and a separate 'Show on Site Resources Page' bit)"
+        type: "toggled, time-boxed content with a second per-item switch"
+        data_shown: "Scheduled announcements for site partners."
+        gates_on: ["Two switches must both be on — the section-level include bit AND the per-announcement 'show on site resources page' bit"]
+        accreditation_citation: "None — platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "The double-switch pattern repeats for rotations, resources, course documents and contacts — five sections, each needing a page-level include bit plus a per-item bit set on a different screen. It is the most common 'why is my page empty?' failure mode in this stage."
+      - element: "Clinical Education Schedule accordion ('include selected rotation start dates and end dates' bit; per-rotation 'show on site resources page' bit set under Placements > course > Rotation Setup)"
+        type: "cross-module content inclusion"
+        data_shown: "Selected rotation date ranges, so partners can plan around the program's calendar."
+        gates_on: ["Requires rotations to already exist — a dependency on the courses/rotations stage of setup, not this one"]
+        accreditation_citation: "None directly; publishing rotation dates to partners supports the shared-learning-environment expectations behind LCME 1.4 without being evidence for it."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "The transcript notes 'the name of this section can be different based on your discipline terminology' (line 553) — one of the few explicit confirmations that Prism relabels UI sections per discipline."
+      - element: "Resources for Clinicians accordion ('include selected resources' bit; resources managed under Sites > Resources with categories and types document / link / video / FAQ)"
+        type: "toggled content library"
+        data_shown: "Syllabi, orientation material, FAQs for preceptors and site coordinators."
+        gates_on: ["Per-resource 'include on site resources page' choice at resource creation"]
+        accreditation_citation: "ACPE Standard 3 preceptor-orientation expectations (acpe.yaml, 3.3.c: 'Evidence that every preceptor completed orientation to the program's mission, the specific syllabus expectations for the experience, and effective evaluation technique before accepting a student'). This page is Prism's documented distribution channel for exactly that material — but see gap_note."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: "Distribution without proof of receipt, and this time it matters for a named standard: ACPE 3.3.c wants evidence that each preceptor completed orientation 'before accepting a student'. An anonymous, login-free page cannot record who read what. Programs needing that evidence must pair the page with a separate attested mechanism (a form from step 14, or the Experiential Supervisor Intake Form)."
+      - element: "Course Documents accordion ('include selected course documents' bit + per-course 'share with site' bit + per-resource 'show on site resource page' bit)"
+        type: "three-level content inclusion"
+        data_shown: "Course-specific syllabi and materials for partners."
+        gates_on: ["Three separate switches across three screens"]
+        accreditation_citation: "COCA Standard 6, Element 6.9 requires 'syllabi for every core/required rotation' — publishing them to sites is not the evidence itself, but it is the operational act that makes the syllabus expectation real at the site."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "Three switches for one document is the deepest instance of the layered-toggle pattern."
+      - element: "Clinical Education Contacts accordion ('include selected faculty and staff' bit + per-faculty 'share on site resources page' bit under their Contact Sharing screen + notes to sites)"
+        type: "toggled directory"
+        data_shown: "Named program contacts with details, published to partners."
+        gates_on: ["Depends on faculty existing and having contact sharing configured (step 20)"]
+        accreditation_citation: "None names it; operationally it is how a site knows whom to call, which LCME 1.4's shared-responsibility language assumes."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: "Privacy consideration a new administrator should be walked through and is not: this publishes staff names, titles and contact details to a URL that requires no login. The only stated protection is that the page 'cannot be searched online' — security by obscurity, appropriate for schedules, worth a deliberate decision for personal contact details."
+      - element: "View Site Resource Page link (preview) and the shareable URL"
+        type: "preview + distribution mechanism"
+        data_shown: "The live partner view; 'They will be able to access this page exactly as it appears on your end.'"
+        gates_on: ["Access control: none — possession of the URL is the credential"]
+        accreditation_citation: "None — platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. Worth noting against PT's documented competitive landscape: the PT playbook names myClinicalExchange, Clinician Nexus, ACEMAPP and CastleBranch Bridges as third-party site-onboarding vendors that 'require student account registration and payments' and 'will not integrate with us' — a login-free program page is a direct counter-positioning to that friction, though those vendors are outside content/competitors/ and have no teardown in this research."
+        gap_severity: "none"
+        gap_note: "Preview-then-share is the right pattern, and the friction advantage (no partner account, no password) is real and under-claimed in the existing competitive research."
+
+  - screen: "Faculty Compliance (setup, groups, assignment, review, auto-notifications)"
+    navigation_path: "Dashboard (or hamburger menu) > Faculty Compliance; setup under its Setup section"
+    action: >
+      A program subscribed to Exxat Approved configures faculty-side compliance requirements,
+      bundles them into groups, assigns groups to faculty, reviews submissions and schedules
+      reminder notifications.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, "Setting Up and Reviewing Faculty Compliance"
+      (lines 1935-1963): "Faculty compliance is a powerful feature that allows you to collect essential
+      information from your faculty, such as healthcare records, identity information, insurance
+      information, and licensure or certification information... To get started with faculty
+      compliance, you'll need to have Exxat Approved as part of your services."
+    elements:
+      - element: "Prepopulated requirement list with per-requirement editor (document name, document category, short name, Enabled bit, Mandatory bit, guidelines for faculty, guidelines for reviewer, template upload, sample upload)"
+        type: "compliance item definition"
+        data_shown: "Commonly used faculty requirements shipped ready to customise, with separate instructions for the submitter and the reviewer."
+        gates_on: ["Enabled/mandatory state drives the compliant / non-compliant calculation"]
+        accreditation_citation: "CODA Standard 2, Element 2-6 — coda.yaml's gap_notes state 'Compliance Management's item taxonomy is confirmed for students only; faculty-side calibration/credential tracking is an open Phase 2 question per the capability map.' This transcript RESOLVES that: faculty-side compliance with licensure/certification collection ships today. COCA Standard 5, Element 5.4 similarly assumes 'the same gating model for both students and faculty' — also supported here."
+        competitor_equivalent: "MedHub/E*Value's 'Automated Credentials Monitoring' with 'automated alerts for expiring credentials' (medhub.yaml, e-value.yaml) and CORE ELMS's compliance module with 'automated expiration reminders' (core-elms.yaml) are the documented analogs. Both are described at capability level only, so the field-level comparison (per-requirement reviewer guidance, template vs sample uploads, renameable field labels) is not possible from public sources — but the capability itself is at parity."
+        gap_severity: "configure-needed"
+        gap_note: "Gated on the Exxat Approved service, so it is not universally available to a day-one admin — and it covers FACULTY (Faculty & Staff records), not site personnel. The preceptor-license-expiry gap flagged in step 12 is not closed by this screen unless the preceptor also exists as a faculty record."
+      - element: "Per-requirement collected-field configuration (field selection e.g. expiration date, result date, file upload, test type, notes; per-field Required toggle; renameable Label)"
+        type: "field-level schema configuration"
+        data_shown: "Which sub-fields each requirement collects; 'you can also rename the field using the label text box, but keep in mind that this only changes the display name, not the type of data being collected.'"
+        gates_on: ["Expiration-date collection is what makes the 'compliant until' date possible (line 1953)"]
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.a (license status with expiration) and CODA 2-6 — the expiration sub-field is the specific element that turns a stored credential into a monitorable one."
+        competitor_equivalent: "MedHub's real-time license/DEA/controlled-substances tracking (medhub.yaml) is functionally comparable; field-level configurability is not documented on their side."
+        gap_severity: "none"
+        gap_note: "The relabel-without-retyping warning is a good guard against exactly the mistake a discipline-specific program would make when localising terminology."
+      - element: "Compliance Groups (Create Group: name, description, select documents) + Associate Faculty (select faculty > Assign Group, with 'override currently associated groups' checkbox)"
+        type: "bundling and assignment"
+        data_shown: "Requirement bundles assigned to selected faculty; override versus additive assignment."
+        gates_on: ["Which requirements a given faculty member sees on login"]
+        accreditation_citation: "CODA Standard 2, Element 2-6 — different site-facing faculty may need different calibration/credential bundles; groups are how that differentiation is expressed."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "The override checkbox is correctly explicit — but destructive if misread during a bulk reassignment."
+      - element: "Faculty Compliance dashboard (compliance group selector; 'by faculty' pie — green compliant / red non-compliant; 'by status' pie; status-count table) plus Faculty View, Document View and export"
+        type: "monitoring dashboards with export"
+        data_shown: "Compliance distribution by person and by document status; document view adds due dates, expiration dates, last update and last editor."
+        gates_on: ["A faculty member is non-compliant if any required document is missing or awaiting review; a 'compliant until' date appears when everything is approved but something expires soon"]
+        accreditation_citation: "CODA Standard 2, Element 2-6 (documented faculty participation and monitoring) and COCA Standard 5, Element 5.4 (proof supervision policies reached faculty) — this dashboard is the reportable artifact."
+        competitor_equivalent: "MedHub/E*Value's credentials monitoring with 'GME-office alerts on changes' (medhub.yaml) is the nearest documented analog; no competitor publishes dashboard composition."
+        gap_severity: "none"
+        gap_note: "The 'compliant until' concept — compliant today, expiring soon — is a sharper primitive than a binary flag and is worth calling out competitively."
+      - element: "Compliance auto-notifications (title, description, start date, frequency e.g. 1 / week / Monday, end date; requirement selection; summary then Create Notification; per-instance activate bit, pencil, trash)"
+        type: "scheduled reminder engine"
+        data_shown: "Recurring reminders covering documents in Get Started, In Progress, Not Approved, Expiring or Expired states."
+        gates_on: ["Only the requirements selected during setup are chased"]
+        accreditation_citation: "CODA Standard 2, Element 2-6 and ACPE 3.3.a — an expiry-chasing loop is the operational difference between 'we store licenses' and 'our supervising faculty are currently licensed', which is what a surveyor actually asks."
+        competitor_equivalent: "This is the clearest parity claim in stage 5: CORE ELMS ships 'automated expiration reminders' and MedHub/E*Value ships 'automated alerts for expiring credentials' (core-elms.yaml, e-value.yaml, medhub.yaml). Prism matches for faculty. Neither side publishes recipient/frequency configurability, so Prism's day/week/weekday scheduling is plausibly finer-grained but unproven as an advantage."
+        gap_severity: "none"
+        gap_note: "Note this is the THIRD independent auto-notification engine in stage 5 — expiring contracts (step 8), faculty compliance (here), and site communications/slot requests (out of scope for this stage). Each is configured in a different Setup area with different recipient models; there is no single notification console for a new administrator to review what their program will send."
+
+  - screen: "Sites > Reports, Sites Missing Contracts, and Explore Locations (verification of the finished directory)"
+    navigation_path: "Sites > Reports tab; Sites > Sites Missing Contracts tab; Sites > Explore Locations tab; Faculty and Staff > Reports tab"
+    action: >
+      With the directory built, the administrator verifies it — finding sites with no contract,
+      auditing personnel records for missing data, checking geographic coverage on the map, and
+      exporting the faculty roster.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 529-535: "Click on the Sites Missing
+      Contracts tab to view a list of sites in your program that do not have contracts added"; "we are
+      going to run the comprehensive personnel report... You will find helpful counts, total personnel,
+      total preceptors, and the number of personnel missing different types of information at the top
+      of the page"; and lines 1283-1287 for the Faculty Information Report ("this report gets updated
+      every 24 hours").
+    elements:
+      - element: "Sites Missing Contracts tab"
+        type: "exception list"
+        data_shown: "Every site in the program with no contract record attached."
+        gates_on: []
+        accreditation_citation: "The most directly citable verification element in stage 5: COCA Standard 6, Element 6.9 ('executed affiliation agreements for every contracted clinical site'), LCME Standard 1, Element 1.4, CODA Standard 4, Element 4-6, ACPE Standard 3, Key Element 3.5.b. All four demand agreement coverage for EVERY site; this single tab is the coverage check."
+        competitor_equivalent: "Neither eMedley's eKeeper nor CORE ELMS (emedley.yaml, core-elms.yaml) documents a missing-agreement exception report — both document expiration tracking, which catches lapses but not absences. If that holds, this is a small, specific, defensible Prism advantage; it is un-benchmarked and should be verified before being claimed."
+        gap_severity: "none"
+        gap_note: "Should arguably be the first screen a day-one administrator visits after the site build-out, and it is the last item in a 28-chapter tutorial."
+      - element: "Comprehensive Personnel Report (counts: total personnel, total preceptors, personnel missing information types; drill-through by clicking a count; Download Detailed Report; search/filter/wrench column editor)"
+        type: "roster completeness report with drill-through"
+        data_shown: "Data-quality census of the personnel directory."
+        gates_on: []
+        accreditation_citation: "ACPE Standard 3, Key Element 3.3.a (roster-level reporting on preceptor credentials) — the 'missing information' counts are the practical bridge between a directory and a defensible preceptor roster."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Purpose-built for exactly the post-migration data-quality problem that step 11's missing personnel import creates — a good mitigation, not a substitute."
+      - element: "HRSA Grant Details Raw report (one row per location with HRSA info; filter, search, export, wrench column editor)"
+        type: "grant-reporting extract"
+        data_shown: "All location HRSA grant information in one place; source data entered per location (line 525)."
+        gates_on: []
+        accreditation_citation: "None — HRSA is a federal grant program, not an accreditor. Explicitly not an accreditation element; pairs with the rural/underserved location attributes from step 9."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor teardown mentions federal grant reporting. (New Innovations' IRIS/Medicare Cost Report automation, new-innovations.yaml, is GME funding, a different program entirely.)"
+        gap_severity: "none"
+        gap_note: "A narrow but genuinely differentiated capability for HRSA-funded programs, notably relevant to nursing, PA and rural-track medicine."
+      - element: "Explore Locations map (search-type selector, filters by location area / settings / tags, Draw Miles Radius from the program address, Reset All, click-through location summary)"
+        type: "geographic verification view"
+        data_shown: "All ACTIVE locations plotted, with a distance-radius query from the program's address and a per-location summary popup."
+        gates_on: ["Active-only: inactive locations are invisible here, which is itself a verification signal"]
+        accreditation_citation: "LCME Standard 5, Element 5.5 (Resources for Clinical Instruction — adequate numbers and types of sites) and COCA Standard 6, Element 6.9 (capacity adequacy) are geographic-sufficiency questions; the mileage radius is the closest thing in Prism to a coverage analysis, though it answers 'where are they' rather than 'are they enough'."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor teardown documents a mapping or distance-radius view of the site directory."
+        gap_severity: "cosmetic"
+        gap_note: "Shows distribution, not capacity: neither slot counts nor placement volume appear on the map, so the LCME 5.5 / COCA 6.9 adequacy question still requires the Slot Sufficiency Report (a Custom report under Sites > Reports, per the Nursing playbook) rather than this view."
+      - element: "Faculty Information Report (all faculty with profile/demographic data; filter by status, rank, administrative position; export)"
+        type: "roster report on a 24-hour refresh"
+        data_shown: "Demographic and profile information for every faculty member in one table."
+        gates_on: ["Staleness: 'this report gets updated every 24 hours. Therefore, edits to faculty member profiles will not be reflected immediately'"]
+        accreditation_citation: "CODA Standard 3, Element 3-4 and the faculty-roster exhibits in LCME/COCA/ACPE self-studies — this plus Generate CV (step 20) is Prism's faculty-qualification evidence pair."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: "The 24-hour lag is the only stated non-realtime report in this stage and will confuse a day-one admin who fixes a record and re-runs the report expecting the correction."
+
+# ---------------------------------------------------------------------------
+# DISCIPLINE VARIANCE WITHIN THIS STAGE (11 disciplines in scope: the four
+# expansion domains — Medicine, DO, Dentistry, Pharmacy — plus PT, OT, PA,
+# Nursing, SLP, Social Work, Teacher Education). Recorded here because these
+# differences change what the SAME screens above mean, not what they do.
+# ---------------------------------------------------------------------------
+discipline_notes:
+  - discipline: "Physical Therapy (PT/PTA)"
+    note: >
+      Two distinct personnel roles must both exist on the Sites > Personnel record: the SCCE
+      (Site Coordinator for Clinical Education) who receives slot requests and assigns
+      instructors, and the Clinical Instructor (CI) who supervises — and per the PT playbook
+      "the SCCE is oftentimes also a CI", and a regional SCCE may cover many hospitals while one
+      facility may have several SCCEs (one for IP, one for OP). The per-location designation and
+      communication-preference overrides in step 11 are what make that expressible; a flat
+      one-person-one-role model would not.
+    source: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md"
+  - discipline: "Occupational Therapy (OT/OTA)"
+    note: >
+      Terminology is renamed wholesale: Sites -> Agencies, Rotations -> Fieldwork Education,
+      Preceptor -> Fieldwork Educator (and Site Mentor for the doctoral capstone). ACOTE C.1.2
+      (Student Access to Fieldwork Site Information) makes the 'Show on Explore Clinical
+      Locations' toggle (step 9) a standards-relevant control rather than a convenience, and
+      C.1.7/C.1.10/C.1.13 (fieldwork-educator ratios and qualifications) load the personnel
+      licensure/certification cards (step 12).
+    source: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - discipline: "Physician Assistant (PA)"
+    note: >
+      PA programs run two different slot-sourcing models that place different weight on the same
+      records: Site Based (the location provides slots, no advance preceptor assignment) versus
+      Preceptor Based (the preceptor provides slots and "all locations associated with a preceptor
+      are published to the student"). The Preceptor Based model makes the personnel-to-many-
+      locations association from step 11 load-bearing rather than optional, and pairs with the
+      'Follow the Preceptor' placement feature.
+    source: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - discipline: "Nursing"
+    note: >
+      The playbook is explicit that the preceptor lives "under Sites -> Personnel, not Faculty and
+      Staff" — which means the faculty compliance engine (step 21) does NOT cover them, and the
+      preceptor-license-expiry gap noted in step 12 lands hardest here. COA caps CRNA supervision
+      at a hard 2:1 ratio (Standard F.7) assigned and monitored at Sites > Slots, and site-visit
+      assessments map to COA F.4 with follow-up dates pushed to the Program Calendar. Site
+      sufficiency evidence (ACEN 4.9, CCNE II-C, COA A.10/F.1) is drawn from the Sites database
+      plus a Slot Sufficiency Report under Sites > Reports.
+    source: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+  - discipline: "Speech-Language Pathology (SLP)"
+    note: >
+      The supervisor is the Clinical Educator (the UI also calls them experiential supervisor in
+      at least one email template), and the playbook states plainly that affiliation agreements
+      are "stored, viewed, and monitored in the Sites module" — i.e. the step-7 Contracts tab is
+      SLP's documented accreditation artifact. Every SLP clinical-log report filters by Site,
+      Location and Clinical Educator, so directory hygiene in steps 4-12 directly determines
+      whether the 400-hour/KASA reporting is sliceable.
+    source: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md"
+  - discipline: "Social Work"
+    note: >
+      "Agency" is the consistent term for Site/Location, tracked in an Agencies module. Two
+      supervisor roles must coexist on one placement: the CSWE-qualified Field Instructor and an
+      on-site Task Supervisor who may lack the required SW degree ("alternative field
+      instruction"). Prism's personnel model supports two associated people, but the
+      qualification distinction that CSWE actually audits is not a structured attribute anywhere
+      in step 11-12 — it would have to be carried in personnel categories or designation free text.
+    source: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md"
+  - discipline: "Teacher Education"
+    note: >
+      The TE playbook explicitly warns that terminology (Cooperating Teacher / Mentor Teacher /
+      University Supervisor, school districts as sites) is NOT confirmed for Exxat and should not
+      be treated as Exxat-specific until verified. Structurally, a school district is a natural
+      Site with schools as Locations, and the step-10 Move Location capability maps onto district
+      reorganisation — but no TE source in this research confirms any of it, so this is the one
+      discipline where stage-5 fit is inferred rather than documented.
+    source: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md"
+  - discipline: "Medicine (MD) — expansion domain"
+    note: >
+      The clerkship model is a clinical TEAM (attending -> fellow -> resident -> intern), not a
+      single preceptor, so the one-personnel-record-per-supervisor model in step 11 under-describes
+      who actually supervised. LCME 1.4 demands clause-level affiliation-agreement content that
+      step 7 stores only as an uploaded PDF, and LCME 5.5 demands site-level case-mix/acuity
+      adequacy that no field in stage 5 captures. Site scarcity is the domain's defining pressure
+      (44% of AAMC-surveyed schools report pressure to pay community preceptors) — which makes the
+      step-5 Payment Details card unusually relevant here.
+    source: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/medicine.yaml"
+  - discipline: "Osteopathic Medicine (DO) — expansion domain"
+    note: >
+      COMs recruit hundreds of independent community preceptors across many small sites rather
+      than a few large affiliates, which multiplies the per-record cost of the manual Add Personnel
+      wizard (step 11) and makes the absence of a personnel importer the domain's sharpest
+      friction. COCA 6.10 needs filterable attributes ('supervising physician is a DO', 'residents
+      present at site', inpatient/outpatient) that stage 5 can only approximate through site
+      categories, settings and personnel designations. Health-system consolidation makes the
+      step-10 Move Location workflow disproportionately valuable — and its contracts-don't-move
+      caveat disproportionately dangerous.
+    source: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/do.yaml"
+  - discipline: "Dentistry — expansion domain"
+    note: >
+      Most instruction happens in the school's OWN teaching clinic with chairside, per-procedure
+      faculty supervision, so the site/location hierarchy is thin (often one site marked as its own
+      location via the step-4 checkbox) while the FACULTY side carries the weight. CODA 4-6 applies
+      to the off-campus community rotations, and CODA 2-6 (faculty calibration across sites) is the
+      standard that faculty compliance in step 21 partially answers — this file's step-21 analysis
+      is the direct evidence that coda.yaml's 'faculty-side calibration tracking is unconfirmed'
+      hedge is now resolvable. axiUm, the incumbent, is a practice-management system built around
+      that in-house clinic and documents no external site directory at all.
+    source: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/dentistry.yaml; /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+  - discipline: "Pharmacy — expansion domain"
+    note: >
+      One-to-one preceptor supervision with a hard 2:1 ratio cap (ACPE 3.3.e) and four mandatory
+      APPE settings (community, ambulatory care, hospital/health-system, inpatient adult) make the
+      Settings card (steps 5 and 10) the field the whole curriculum-coverage argument rests on, and
+      the personnel Slots/Placements grids (step 12) the ratio's raw data. ACPE also requires a
+      majority-U.S.-licensed-pharmacist calculation per student — a roster query against the
+      licensure cards. Note that this stage's evidence should trigger a re-rating of acpe.yaml
+      3.5.b from 'Gap' to 'Configure': the site contract repository it says does not exist is
+      documented in the primary transcript at lines 399-419.
+    source: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/pharmacy.yaml; /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+
+sources:
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — PRIMARY. '5/16 Setting up Sites and Locations in Exxat Prism' (lines 341-539, 28 chapters); '6/16 Setting Up Site Resources in Exxat Prism' (lines 541-571); '11/16 Setting up Faculty in Exxat Prism' (lines 1169-1217); '12/16 Managing Faculty in Exxat Prism' (lines 1219-1287); 'Linking Sites and Locations in Exxat One to Exxat Prism' (lines 1857-1891); 'Processing Schedules from Exxat One to Exxat Prism' (lines 1893-1929, for the downstream dependency only); 'Setting Up and Reviewing Faculty Compliance' (lines 1931-1965)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/ — SECONDARY corroboration: Adding and Managing Sites.md, Adding and Managing Locations.md, Managing Personnel.md, Managing Contracts.md, Managing Site Organization and Auto-Notifications.md, Understanding Site Sharing Model in Exxat Prism.md, Understanding Site vs. Location.md, Managing Experiential Supervisor Intake Form.md (the last covers a feature that post-dates the tutorial series: intake requests are sent 'one supervisor at a time from each personnel profile. Bulk sending is planned for a future release')."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Data Feed Integration.md — negative evidence for the step-11 import gap: the documented feeds are student registration and course registration only; no site, location, or personnel feed."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/ — Physical Therapy (PT) Playbook.md, Occupational Therapy (OT) Playbook.md, Physician Assistant (PA) Playbook.md, Nursing Playbook.md, Speech-Language Pathology (SLP) Playbook.md, Social Work (SW) Playbook.md, Teacher Education (TE) Playbook.md."
+  - "/Users/romitsoley/Downloads/PTPTAVideosTranscripts.md; /Users/romitsoley/Downloads/OTOTAVideosTranscripts.md; /Users/romitsoley/Downloads/PAVideosTranscripts.md; /Users/romitsoley/Downloads/SLPVideosTranscripts.md; /Users/romitsoley/Downloads/NursingTutorialsTranscripts.md; /Users/romitsoley/Downloads/TEVideosTranscripts.md — used for discipline supervisor terminology (clinical instructor / fieldwork educator / clinical educator / preceptor) and for confirming that site+location+supervisor are standard report filter dimensions across disciplines."
+  - "../accreditation/lcme.yaml (Standard 1 Element 1.4; Standard 5 Element 5.5; Standard 3 Element 3.1)"
+  - "../accreditation/coda.yaml (Standard 4 Element 4-6; Standard 2 Element 2-6; Standard 3 Element 3-4)"
+  - "../accreditation/coca.yaml (Standard 6 Elements 6.9, 6.10, 6.11; Standard 5 Element 5.4)"
+  - "../accreditation/acpe.yaml (Standard 3 Key Elements 3.3.a, 3.3.c, 3.3.e, 3.5.b; the multi-state regulatory-layer note)"
+  - "../competitors/core-elms.yaml; ../competitors/emedley.yaml; ../competitors/e-value.yaml; ../competitors/medhub.yaml; ../competitors/axium.yaml; ../competitors/elentra.yaml; ../competitors/new-innovations.yaml; ../competitors/one45.yaml; ../competitors/leo-davinci.yaml — searched in full for site-directory, contract/affiliation, credentialing, bulk-import, SSO and notification-template coverage; the recurring finding is that these teardowns document clinical/placement/accreditation capability, not admin-setup UX, which is why many elements above honestly record no comparison."
+  - "../domains/medicine.yaml; ../domains/do.yaml; ../domains/dentistry.yaml; ../domains/pharmacy.yaml"
+  - "../personas/role-program-admin.yaml; ../personas/role-clinical-coordinator.yaml"
+last_verified: "2026-08-24"

@@ -1,0 +1,76 @@
+domain: "MD"
+full_name: "Medicine (Allopathic)"
+credential: "MD"
+program_length_years: 4
+market:
+  program_count: "159-161 LCME-accredited MD-granting medical schools in the U.S. (count varies slightly by month as new schools reach accreditation; ~160 as of the 2025-2026 admissions cycle, ~96 public / 64 private)"
+  program_count_trend: "Growing. AAMC reports U.S. MD enrollment crossed 100,000 students for the first time in 2025-26 (100,723 total, +1.3% year over year), with first-year matriculants up 1.2% to 23,440; total applicants rose 5.3% in the same cycle, reversing three prior years of decline. Enrollment growth has outpaced growth in downstream clinical training capacity (see distinctive_pain_points)."
+  total_enrollment: "100,723 total MD students enrolled 2025-26 (AAMC); 23,440 first-year matriculants 2025-26"
+  sources:
+    - "https://www.aamc.org/news/us-medical-schools-enroll-record-number-students-2025"
+    - "https://www.aamc.org/news/medical-school-enrollment-reaches-new-high"
+    - "https://www.medcmp.com/statistics/medical-schools-important-statistics/"
+standards_bodies:
+  - name: "LCME (Liaison Committee on Medical Education)"
+    type: "institutional accreditor — jointly sponsored by AAMC and AMA; accredits all U.S. and Canadian MD-granting programs"
+  - name: "NBME / FSMB (USMLE)"
+    type: "licensure exam board — co-sponsor and administer the United States Medical Licensing Examination (Step 1, Step 2 CK, Step 3), the pathway to state medical licensure"
+  - name: "ACGME (Accreditation Council for Graduate Medical Education)"
+    type: "GME/residency accreditor — accredits the ~13,762 U.S. residency and fellowship programs (5,380 specialty, 7,024 subspecialty) that MD graduates enter after the degree"
+  - name: "NRMP (National Resident Matching Program)"
+    type: "residency placement body — runs the Main Residency Match that algorithmically places graduating students into ACGME-accredited residency positions"
+  - name: "AAMC (Association of American Medical Colleges)"
+    type: "professional association — represents MD-granting medical schools and teaching hospitals; publishes curriculum, MCAT, and workforce data"
+  - name: "AMA (American Medical Association)"
+    type: "professional association — co-sponsors LCME, publishes clerkship and residency guidance, represents practicing and student physicians"
+clinical_education_shape: >
+  MD clinical education is a two-phase, exam-gated structure that is
+  substantially more layered than a typical allied-health program. Years 1-2
+  are pre-clinical coursework; years 3-4 are clinical, organized into "core
+  clerkships" (internal medicine, surgery, OB/GYN, pediatrics, psychiatry,
+  family medicine, neurology, and often radiology), each running roughly
+  4-12 weeks (commonly cited as ~48 weeks of core clerkships total across
+  year 3) at teaching hospitals and affiliated outpatient sites, under a
+  layered supervision model: attending physician -> senior/chief resident ->
+  intern -> student, rather than a single preceptor-to-student relationship.
+  Year 4 adds "sub-internships" (near-resident-level responsibility) and, for
+  most students seeking residency positions outside their home institution,
+  "away rotations" (auditions at other institutions, coordinated through the
+  AAMC's VSLO platform) that are logistically and financially significant on
+  their own. What is structurally different from allied-health/nursing
+  programs on Prism today: (1) clinical training does not end the pathway —
+  it feeds into a separate, nationally match-based GME/residency system
+  (ACGME-accredited, placed via NRMP) that is itself 3-7+ additional years
+  and is licensure-gating; (2) two board exam milestones (USMLE Step 1 during
+  pre-clinical, Step 2 CK during/after core clerkships) sit inside the
+  clinical timeline itself and gate residency eligibility, not just program
+  graduation; (3) supervision is multi-tiered (attending/resident/intern)
+  rather than single-preceptor, so evaluation and sign-off responsibility is
+  distributed across a hierarchy that changes every few weeks as students
+  rotate services; (4) the "site" a student is evaluated at often changes
+  every 4-12 weeks across a hospital system rather than one placement
+  running a full term, and a meaningful share of fourth-year rotations are
+  "away" rotations at institutions with no prior relationship to the home
+  school.
+distinctive_pain_points:
+  - claim: "Clinical training-site capacity has not kept pace with rising medical-school enrollment: schools report growing difficulty finding clerkship sites and qualified preceptors as clinical education has shifted from inpatient to outpatient settings, and 44% of AAMC-surveyed schools feel moderate-to-severe pressure to pay community physicians/clinics to host students (something most don't currently do)."
+    source: "https://www.aamc.org/news/so-many-medical-students-so-few-clerkship-sites"
+  - claim: "Away/'audition' rotations impose a distinct financial and logistical burden layered on top of core clerkships: most students report $2,500-$10,000+ in total away-rotation costs, over half (54.9%) report declining at least one away rotation due to cost, and 75.9% say finances influenced which rotation offers they accepted."
+    source: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5109707/"
+  - claim: "The residency Match is a hard downstream bottleneck built into the pathway: even in the largest Match on record (2025), 6.5% of U.S. MD seniors and roughly a third or more of international medical graduates did not match to a PGY-1 position on Match Day, requiring the separate SOAP process to place remaining applicants."
+    source: "https://www.ama-assn.org/medical-students/preparing-residency/biggest-match-day-ever-here-s-what-2025-numbers-reveal"
+  - claim: "Medical school enrollment growth has outpaced growth in residency (GME) positions, meaning capacity constraints in clinical/GME training are a recognized structural issue for the pathway, not just an anecdotal one."
+    source: "https://www.aamc.org/news/medical-school-enrollments-grow-residency-slots-haven-t-kept-pace"
+sources:
+  - "https://www.aamc.org/news/us-medical-schools-enroll-record-number-students-2025"
+  - "https://www.aamc.org/news/medical-school-enrollment-reaches-new-high"
+  - "https://www.medcmp.com/statistics/medical-schools-important-statistics/"
+  - "https://www.aamc.org/news/so-many-medical-students-so-few-clerkship-sites"
+  - "https://www.aamc.org/news/medical-school-enrollments-grow-residency-slots-haven-t-kept-pace"
+  - "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5109707/"
+  - "https://www.ama-assn.org/medical-students/preparing-residency/biggest-match-day-ever-here-s-what-2025-numbers-reveal"
+  - "https://www.nrmp.org/wp-content/uploads/2025/05/Main_Match_Results_and_Data_20250529_FINAL.pdf"
+  - "https://www.acgme.org/newsroom/2026/1/acgme-releases-2024-2025-statistics-on-graduate-medical-education-programs-and-resident-physicians/"
+  - "https://www.ama-assn.org/medical-students/clinical-rotations/science-scheduling-when-do-key-medical-school-rotations"
+  - "https://www.aamc.org/data-reports/curriculum-reports/data/clerkship-requirements-discipline"
+  - "https://www.ama-assn.org/medical-students/usmle-step-1-2/what-usmle"

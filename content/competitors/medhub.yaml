@@ -1,0 +1,109 @@
+# Researched 2026-08-24. Every claim below carries a source URL found via public
+# web search/fetch. Where a fact could not be verified publicly, it is marked as such.
+competitor: "MedHub"
+slug: "medhub"
+domains_served: ["DO", "MD"]
+category: "Med-ed management (UME+GME), part of a combined MedHub/E*Value healthcare-education suite"
+company:
+  founded: "2002 (originated from projects for the University of Michigan Health System, including a web-based shift/call scheduling engine for surgery residents)"
+  hq: "Minneapolis, MN (510 Marquette Ave S, 3rd Floor, Minneapolis, MN 55402)"
+  ownership: "Owned by Ascend Learning, which acquired MedHub effective 01-Jan-2015; MedHub was then merged with E*Value (announced 13-Nov-2015) to form a single combined healthcare-education suite operating under the MedHub name. Ascend Learning also acquired myTIPreport (May 2025) to extend the MedHub offering."
+
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: "GME: rotation/call/clinic scheduling, timesheet-based duty-hour tracking with auto-alerts for violations, moonlighting request/approval, conference/didactic attendance tracking, API integration with QGenda/Amion/Symplr. UME (via eValue): clinical rotation scheduling across affiliate sites, course enrollment/waitlists/lottery scheduling, site eligibility verification."
+    depth_vs_prism: "at-parity"
+    evidence: "GME page describes 'Rotation, call, and clinic schedule management,' 'Intuitive timesheet interface with auto-alerts for violations,' and 'API integration with QGenda, Amion, Symplr and similar platforms.' UME page describes 'Clinical Rotation Scheduling' and 'Schedule Lottery: Create lotteries based on custom rules and preferences.'"
+    source: "https://www.medhub.com/software/residency-management-software/ ; https://medhub.com/software-solutions/gme/?pageid=12"
+  - pillar: "Compliance Management"
+    competitor_capability: "Automated credentials monitoring for state licenses, DEA, and Controlled Substances registrations; immunization and certification record tracking (eValue); FERPA and SOC 2 compliance, 128-bit SSL encryption, multifactor authentication, SAML/Shibboleth SSO, 99.95% uptime claim."
+    depth_vs_prism: "at-parity"
+    evidence: "'Automated credentials monitoring for state, DEA, and Controlled Substances licenses' (residency management page). eValue page: 'Immunization and certification record tracking.' Software page: '128-bit STRONG Encryption SSL, Multifactor authentication, FERPA compliance, SOC 2 compliance, 99.95% uptime.'"
+    source: "https://www.medhub.com/software/residency-management-software/ ; https://www.medhub.com/software/evalue/ ; https://www.medhub.com/software/"
+  - pillar: "Curriculum Mapping"
+    competitor_capability: "UME curriculum mapping tool: 'View linked learning objectives across institutional and course levels' with session-level granularity (instructional methods, duration, topic exposure), configurable keywords that supplement AAMC keywords, and non-linear reporting on curriculum-exposure data. eValue separately offers curriculum design/mapping tied to CIR (Curriculum Inventory Report) integration for accreditation reporting."
+    depth_vs_prism: "at-parity"
+    evidence: "'Curriculum Mapping: View linked learning objectives across institutional and course levels' and 'Non-Linear Reporting: Generate actionable insights using granular curriculum mapping data.' eValue: 'Design, manage, drive reporting, and CIR integration' through curriculum mapping."
+    source: "https://medhub.com/software-solutions/gme/?pageid=12 ; https://www.medhub.com/software/evalue/"
+  - pillar: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    competitor_capability: "Already shipped, not roadmap. eValue: build/manage evaluation forms 'for students, educators, activities, and sites,' offering more than simple scale-based questions, with reporting. MedHub GME: automated evaluation workflows/delivery, mobile completion with talk-to-text, ACGME Annual Program Evaluation (APE) with customizable questionnaires."
+    depth_vs_prism: "ahead"
+    evidence: "'eValue generates evaluations and assessment forms for students, educators, site rotations, and courses, offering more than simple scale-based questions with robust reporting capabilities.' GME page: 'Annual Program Evaluation (APE) functionality with customizable questionnaires.'"
+    source: "https://www.medhub.com/software/evalue/ ; https://www.medhub.com/software/residency-management-software/"
+  - pillar: "Exam Management (Prism roadmap Q2 2027)"
+    competitor_capability: "Already shipped via eValue, not roadmap. 'Efficient creation and management of coursework and exams, with the ability to build exams, set grade scales, and run summaries of learner performance,' positioned for 'low-stakes exams and pre/post-tests that track student progress over time.'"
+    depth_vs_prism: "ahead"
+    evidence: "eValue product page describes exam-building, grade-scale configuration, and performance-summary reporting as a live feature, not a future release."
+    source: "https://www.medhub.com/software/evalue/"
+  - pillar: "Accreditation Management (Prism roadmap Q3 2027)"
+    competitor_capability: "Already shipped, not roadmap. GME copy claims 'seamless accreditation management'; ACGME milestone/EPA tracking, ACGME survey/case-log/milestone data import, AAMC ERAS integration, NPDB/NPPES credentialing verification. UME: explicit 'LCME Support: Designed to fulfill accrediting body requirements' plus session-level exposure reporting for accreditation documentation. eValue adds 'Accreditation support with automated alerts' and CIR integration."
+    depth_vs_prism: "ahead"
+    evidence: "'MedHub streamlines residency management with modern scheduling, simplified evaluations, efficient resident onboarding, and seamless accreditation management' (software page). UME page: 'LCME Support: Designed to fulfill accrediting body requirements.' eValue page: 'Institutional Oversight ... Accreditation support with automated alerts.'"
+    source: "https://www.medhub.com/software/ ; https://medhub.com/software-solutions/gme/?pageid=12 ; https://www.medhub.com/software/evalue/"
+  - pillar: "not a Prism pillar — DO-specific positioning"
+    competitor_capability: "Dedicated public page positioning MedHub as an advocate for osteopathic (DO) institutions: commits to staying current with COCA policy/standards/curriculum changes, states its UME Learning Portal 'ensures inclusive osteopathic themes, foundations and terminology,' and offers implementation consultants described as understanding 'the osteopathic community's unique challenges and specific language/terminology.' MedHub also reports engaging directly with COCA and the Council of Osteopathic Student Government Presidents (COSGP)."
+    depth_vs_prism: "prism-only"
+    evidence: "Page title: 'Solutions for Osteopathic Education Programs.' Quotes: 'ensure we are creating tools and services for all medical education and institutions regardless of foundation' and consultants who understand 'the osteopathic community's unique challenges and specific language/terminology.'"
+    source: "https://www.medhub.com/a-committed-advocate-for-osteopathic-institutions/"
+
+strengths:
+  - claim: "Already ships the three capabilities Prism has only on its 2027 roadmap (surveys/evaluations, exam management, accreditation management), via the combined MedHub + eValue suite, rather than as separate future modules."
+    source: "https://www.medhub.com/software/evalue/ ; https://www.medhub.com/software/residency-management-software/"
+  - claim: "Explicit, public DO-focused positioning and a dedicated osteopathic-institutions page — a differentiator most GME/UME vendors don't publish — directly relevant given Prism is entering the DO domain."
+    source: "https://www.medhub.com/a-committed-advocate-for-osteopathic-institutions/"
+  - claim: "Large, entrenched installed base: reported to serve over 600 client organizations, 80 of the 119 U.S. academic health centers, and manage clinical training for more than 85,000 UME/GME students plus nearly 100,000 students in advanced-practice fields (pharmacy, nursing, veterinary, dentistry, PA, allied health) as of the 2015 merger announcement."
+    source: "https://www.medhub.com/leading-healthcare-education-management-providers-medhub-and-evalue-have-merged/"
+  - claim: "High reported reference-customer satisfaction: FeaturedCustomers lists a 4.8/5.0 rating based on 1,570 reference ratings across 13 testimonials and 14 case studies, with named customers at Samford University, Washington State University, and University of Michigan Health System praising workflow consolidation and time savings."
+    source: "https://www.featuredcustomers.com/vendor/medhub"
+  - claim: "Deep ACGME/AAMC ecosystem integration: imports ACGME survey, case-log, and milestone data; integrates AAMC ERAS resident demographic data; verifies credentials against NPDB/NPPES."
+    source: "https://www.medhub.com/software/"
+
+weaknesses:
+  - claim: "Mobile app reliability complaints: user reports describe the MedHub mobile app as 'very buggy,' freezing frequently and 'atrociously slow,' with evaluations that 'constantly glitch and skip fields — preventing proper completion' and weekly-hours submissions that 'often do not register the times entered.'"
+    source: "https://justuseapp.com/en/app/1126919433/medhub/reviews"
+  - claim: "Effectively zero independent third-party review coverage on the major B2B software review sites: G2 lists the 'MedHub-AI' seller page with 0 reviews, and Slashdot's MedHub listing has no user reviews at all — making it hard to verify satisfaction and complaint patterns outside vendor-curated testimonials."
+    source: "https://www.g2.com/sellers/medhub-ai ; https://slashdot.org/software/p/MedHub/"
+  - claim: "Pricing is customized/negotiated rather than published, and at least one public federal-procurement thread suggests MedHub's system 'costs significantly more than competing vendors' — not independently verifiable beyond that search summary."
+    source: "https://govtribe.com/opportunity/federal-contract-opportunity/medhub-gme-one-1-year-subscription-fee-hu000119qt013"
+  - claim: "The MedHub and eValue product lines remain visibly separate systems under one brand (UME/GME features live on medhub.com and eValue features on a distinct eValue product page/URL), suggesting the 2015 merger may not have fully unified the underlying platforms into a single system of record."
+    source: "https://www.medhub.com/software/evalue/ ; https://medhub.com/software-solutions/gme/?pageid=12"
+
+retention_anchor: "Long institutional tenure (platform traces to 2002) plus a very large, ACGME/AAMC/LCME-integrated installed base (600+ organizations, 80 of 119 U.S. academic health centers per the 2015 merger release) creates high switching cost: years of accumulated milestone/evaluation/procedure-log data, deep credentialing-body integrations (ACGME, ERAS, NPDB/NPPES), and institution-wide faculty/preceptor training on the platform. Being owned by Ascend Learning (a large healthcare-education portfolio company) also gives it bundling/consulting relationships that are hard for a single point-product to displace quickly."
+
+exxat_opportunity: >
+  MedHub's core weakness is not feature depth — on paper it already covers evaluations, exams,
+  and accreditation workflows that Prism has only as a 2027 roadmap — it is product cohesion and
+  modern execution. The MedHub+eValue combination still presents as two bolted-together legacy
+  systems from a 2015 M&A rollup, its mobile app draws real complaints about glitches and skipped
+  fields, and it has almost no independent review-site presence to validate quality claims beyond
+  vendor-selected testimonials. Prism can win by shipping its Accreditation Management pillar
+  scoped explicitly for COCA (DO) standards from day one — matching MedHub's public DO advocacy
+  with an actually-modern, single system-of-record product rather than a legacy two-brand suite,
+  and by using its "Intelligence Layer" (AI Insights, Early-risk Alerts) as a concrete answer to
+  MedHub's dated evaluation/mobile experience. Until Prism ships Surveys, Exams, and Accreditation,
+  it should lead competitive conversations with UX/reliability and unified system-of-record
+  positioning rather than a feature-by-feature comparison, where MedHub currently has parity or
+  an edge on paper.
+
+pricing_signal: "not publicly disclosed — MedHub does not publish list pricing; procurement is via direct quote/contract (evidenced by public sector RFP/subscription-fee postings referencing per-institution or per-resident annual subscription fees, with no rate disclosed)."
+
+last_researched: "2026-08-24"
+
+sources:
+  - "https://www.medhub.com/"
+  - "https://www.medhub.com/software/"
+  - "https://www.medhub.com/software/residency-management-software/"
+  - "https://medhub.com/software-solutions/gme/?pageid=12"
+  - "https://www.medhub.com/software/evalue/"
+  - "https://www.medhub.com/a-committed-advocate-for-osteopathic-institutions/"
+  - "https://www.medhub.com/medical-education-institutional-effectiveness/supported-program-types/"
+  - "https://www.medhub.com/leading-healthcare-education-management-providers-medhub-and-evalue-have-merged/"
+  - "https://www.medhub.com/about/"
+  - "https://www.featuredcustomers.com/vendor/medhub"
+  - "https://www.g2.com/sellers/medhub-ai"
+  - "https://www.gartner.com/reviews/product/medhub"
+  - "https://slashdot.org/software/p/MedHub/"
+  - "https://justuseapp.com/en/app/1126919433/medhub/reviews"
+  - "https://govtribe.com/opportunity/federal-contract-opportunity/medhub-gme-one-1-year-subscription-fee-hu000119qt013"
+  - "https://forums.studentdoctor.net/threads/residency-management-software-medhub-newinnovations-medsemantix-etc.1255853/"
+  - "https://pitchbook.com/profiles/company/99491-95"

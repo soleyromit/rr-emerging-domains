@@ -1,0 +1,180 @@
+# Cross-cutting ROLE persona (not a per-domain program archetype — see
+# _TEMPLATE_discipline.yaml for the discipline layer).
+# Titles vary: Director of Assessment & Accreditation, Assistant/Associate Dean
+# for Assessment and CQI, Accreditation Liaison Officer (ALO), Director of
+# Institutional Effectiveness. In smaller programs this is a half-time hat worn
+# by the program admin or an associate dean rather than a dedicated role.
+role_name: "Compliance / Accreditation Liaison"
+applies_across_domains: ["DO", "Pharmacy", "Dentistry", "Medicine"]
+
+day_in_the_life_summary: >
+  The person who has to prove, on demand and with documents, that everything
+  the program claims about itself is true. They live on two clocks at once: a
+  continuous one — the accreditors have all moved to language requiring ongoing
+  monitoring of compliance with every standard, not a burst of activity before
+  a visit — and a punctuated one, the self-study and site visit that consumes
+  twelve to eighteen months when it comes. Day to day they are chasing evidence
+  from people who do not report to them: a syllabus from a course director, a
+  capacity table from the clinical coordinator, an executed affiliation
+  agreement from legal, a pass-rate file from a national board, a survey
+  response rate from a cohort that has stopped opening email. They maintain the
+  crosswalk that maps each standard and element to the artifacts that
+  demonstrate it, and that crosswalk almost always lives in Word, Excel, and a
+  shared drive — because no shipped system in the stack maps program evidence
+  to named accreditor standards. They also own compliance in the narrower
+  sense: student immunizations, background checks, certifications, and policy
+  attestations, plus the site-level contracts that have to stay current while
+  students are placed. Their nightmare is not failing a standard; it is
+  discovering, three weeks before submission, that the evidence for a standard
+  they do meet was never captured in a form anyone can produce.
+
+top_tasks:
+  - "Maintain the standard-by-standard evidence crosswalk — every element mapped to the artifacts, data, and dates that demonstrate compliance."
+  - "Run the self-study: assemble narrative, evidence, and data tables; coordinate contributors; manage internal review cycles; prepare for the site visit and mock visit."
+  - "File the recurring interim reports on the accreditor's own cadence (COCA annual and mid-cycle reports; ACPE interim reporting during the term; CODA and LCME annual data submissions)."
+  - "Operate the CQI loop as an auditable record — finding, action, evidence, re-measurement — including concrete examples of changes made as a direct result of assessment review."
+  - "Publish the outcome data the accreditor requires on public webpages within the required window (COCA requires first-time COMLEX-USA Level 1/2/3 pass rates published within 30 days of each NBOME annual update, and a continually updated four-year PGY-1 placement rate)."
+  - "Track student-level compliance items that gate placement — immunizations, background checks, drug screens, CPR/BLS, HIPAA training, licensure/intern registration."
+  - "Track site-level and faculty-level compliance — affiliation agreement status and expiry, faculty calibration, supervision-policy attestation."
+  - "Monitor threshold-triggered obligations and file improvement plans before they become findings (COCA's under-90%/2-SD COMLEX trigger and its 95% GME placement floor, each with a three-consecutive-year out-of-compliance rule)."
+  - "Run the due-process and remediation documentation trail for students who fall below published criteria."
+  - "Field the operative-version question constantly — standards get renumbered, revised, suspended, and replaced between cycles."
+
+top_pains:
+  - pain: >
+      No system in the stack maps program evidence to named accreditor
+      standards, so the crosswalk is a manual artifact the liaison rebuilds
+      every cycle by hand — and this is the single most load-bearing gap in
+      the repo's own analysis, for the person whose entire job it is.
+    accreditation_link: >
+      LCME Standard 1, Element 1.1; ACPE Standard 7, Key Element 7.5.b;
+      CODA Standard 1, Element 1-2; COCA Standard 11, Elements 11.1 and 11.9.
+    source: "../accreditation/lcme.yaml (1.1 — prism_fit 'Gap', 'No shipped pillar currently maps program evidence to named accreditor standards/elements'; demands effective ongoing monitoring of compliance with EVERY standard); ../accreditation/acpe.yaml (7.5.b — 'Gap', demands documented processes for reviewing ongoing compliance); ../accreditation/coda.yaml (1-2 — 'the single item the capability map itself calls the most load-bearing gap', requires broad-based, systematic, continuous assessment); ../accreditation/coca.yaml (11.9 — 'the literal definition of the roadmap Accreditation Management pillar', requires timely, complete annual and mid-cycle report submissions); ../prism/capability-map.yaml (Accreditation Management, roadmap Q3 2027 — no shipped pillar aggregates evidence against named standard numbers; Curriculum Mapping maps content to a curriculum, not to an accreditor's element list)"
+    related_flows:
+      - flow: "accreditation-self-study--01-standards-intake-evidence-crosswalk-setup-cycle.yaml"
+
+  - pain: >
+      The closed loop — finding to action to evidence — is the thing every
+      accreditor asks for and the thing nothing records. Today it's meeting
+      minutes and memory, not a first-class record the liaison can produce
+      on demand.
+    accreditation_link: >
+      COCA Standard 11, Element 11.1; CODA Standard 5, Element 5-3;
+      ACPE Standard 7, Key Element 7.5.a; LCME Standard 1, Element 1.1.
+    source: "../accreditation/coca.yaml (11.1 — gap_notes: 'This closed-loop pattern recurs across most continuous improvement standards from every accreditor in this workstream', wants concrete examples of curriculum, pedagogy, or counseling changes made as a direct result of assessment review); ../accreditation/coda.yaml (5-3 — 'No confirmed patient-record sampling, deficiency-coding, or corrective-action-tracking capability exists today', wants root-cause analysis of treatment deficiencies with implemented corrective measures); ../accreditation/acpe.yaml (7.5.a — wants a demonstrated CQI cycle from data through analysis to programmatic change, communicated to stakeholders annually); ../accreditation/lcme.yaml (1.1 — wants a defensible audit trail of the CQI cycle)"
+    related_flows:
+      - flow: "accreditation-self-study--07-closing-the-cqi-loop-finding-to.yaml"
+
+  - pain: >
+      Compliance tracking is student-shaped, but a third of their obligations
+      are site-shaped or faculty-shaped — affiliation agreements, faculty
+      calibration, preceptor licensure, and affiliated-GME status all need a
+      different tracked entity, so the liaison keeps parallel trackers and
+      reconciles them by hand.
+    accreditation_link: >
+      ACPE 3.5.b and 3.3.a/3.3.c; LCME 1.4; CODA 4-6 and 2-6; COCA 5.4, 6.9,
+      and 10.2.
+    source: "../accreditation/acpe.yaml (3.5.b — 'Gap', no pillar models site-level compliance/contract documents; 3.3.a/3.3.c — preceptor orientation and licensure gating); ../accreditation/coda.yaml (2-6, 4-6 — 'Site-level (vs. student-level) compliance item tracking is unconfirmed', faculty calibration across sites); ../accreditation/lcme.yaml (1.4 — site-level affiliation agreements); ../accreditation/coca.yaml (5.4, 10.2 — 'tracking an affiliated GME program as the tracked entity is a new object type', policy attestation by faculty as well as students); ../prism/capability-map.yaml (Compliance Management — confirmed as a student-item tracker gating placement start and continuation; item taxonomy an open Phase 2 question)"
+    related_flows:
+      - flow: "preceptor-site-onboarding--03-preceptor-recruitment-credential-verification-licensure-gating.yaml"
+
+  - pain: >
+      Half the required evidence originates outside the program entirely, in
+      systems the liaison has no access to and no control over — nothing
+      shipped today ingests or reports licensure-exam results, so in practice
+      it's CSVs, PDFs, and re-keying.
+    accreditation_link: >
+      COCA Standard 11, Elements 11.4 (COMLEX-USA publication and improvement-
+      plan trigger) and 11.5 (GME placement rate); LCME Standard 8, Element 8.4
+      (national norms of accomplishment); ACPE Standard 7, Key Element 7.3.d
+      and the NAPLEX competency-statement alignment; CODA Standard 1, Element
+      1-2 (INBDE/DLOSCE and state licensure pass rates as outcomes evidence).
+    source: "../accreditation/coca.yaml (11.4, 11.5 — both prism_fit 'Gap'; 'Scope this as an NBOME data-import/reporting integration, not as exam delivery'; COMLEX-USA pass rates come from NBOME, PGY-1 placement outcomes from the NRMP Match and ACGME); ../accreditation/lcme.yaml (8.4 — 'Fully dependent on three roadmap pillars shipping AND being integrated with each other'; USMLE data from NBME/FSMB); ../accreditation/acpe.yaml (7.3.d, and gap_notes on ACPE retiring AAMS in favor of PHARMS as of Standards 2025/July 2025; NAPLEX and MPJE data from NABP; AACP standardized graduating-student, faculty, and preceptor surveys come from AACP); ../accreditation/coda.yaml (licensure_or_gme_layer — INBDE from JCNDE, regional clinical exam from ADEX)"
+    related_flows:
+      - flow: "accreditation-self-study--05-external-outcome-data-ingestion-board-exams.yaml"
+
+  - pain: >
+      Survey-based evidence is required by name, and the underlying collection
+      mechanism has shipped — but whether it satisfies each accreditor's
+      specific documentation requirements (confidentiality proof, a
+      curricular-improvement flowchart, a formal review-and-response process)
+      hasn't been re-verified. Four separate accreditor elements were marked
+      Gap against the prior "roadmap" framing and need reassessment now that
+      Surveys & Course Evaluations has shipped, while every major competitor
+      ships some form of this today too.
+    accreditation_link: >
+      ACPE Key Element 7.2.d and 7.5.a; COCA Elements 11.2 and 11.8;
+      LCME Standard 8, Element 8.5.
+    source: "../accreditation/acpe.yaml (7.5.a — cites 'Blocked on Surveys & Course Evaluations (Q1 2027)... programs must use an external survey tool alongside it' — CORRECTED 2026-08-26 per Exxat PM confirmation: Prism's Surveys & Course Evaluations pillar (../prism/capability-map.yaml, Surveys & Course Evaluations pillar) is shipped, not roadmap; this element's 'Gap' rating has not been re-verified against the shipped feature, so treat it as open, not closed; 7.2.d names the AACP standardized graduating-student, faculty, and preceptor surveys as required assessment-plan evidence); ../accreditation/coca.yaml (11.2, 11.8 — both 'Gap'; 11.2 requires confidential student evaluations of courses, clerkships, and faculty with proof of confidentiality, copies of the instruments, and a flowchart showing how the data drives curricular improvement; 11.8 requires proof the program actively promoted the mandatory COCA student survey plus a written review of findings — same correction applies, not re-verified against the shipped Surveys pillar); ../accreditation/lcme.yaml (8.5 — 'Gap', cites roadmap Q1 2027 — CORRECTED 2026-08-26 per Exxat PM confirmation, see ../prism/capability-map.yaml; requires formal processes for collecting and considering student evaluations of courses, clerkships, and teachers, not yet re-verified against the shipped pillar); ../competitors/core-elms.yaml, ../competitors/e-value.yaml, ../competitors/elentra.yaml, ../competitors/emedley.yaml, ../competitors/leo-davinci.yaml, ../competitors/one45.yaml (all ship surveys/evaluations today)"
+    related_flows:
+      - flow: "preceptor-site-onboarding--07-activating-the-preceptor-in-the-assessment.yaml"
+        step: "Location Evaluations tab (Sites > Locations > [Location] > Location Evaluations)"
+        element: "Per-evaluation View link"
+
+  - pain: >
+      Cross-site comparability requires statistics the liaison has no tool to
+      run — cross-site drift analytics isn't a confirmed report, so it gets
+      exported and analyzed in Excel, SPSS, or R by someone who isn't a
+      statistician.
+    accreditation_link: >
+      COCA Standard 6, Element 6.11; LCME Standard 8, Element 8.7;
+      ACPE Standard 7, Key Element 7.3.c; CODA Standard 2, Element 2-6.
+    source: "../accreditation/coca.yaml (6.11 — 'Statistical cross-site comparability reporting should be scoped explicitly into the Accreditation Management build', requires the most recent statistical-analysis report comparing student outcomes across all core and required sites plus a plan to address gaps); ../accreditation/lcme.yaml (8.7 — requires documented comparability of experience and equivalent assessment across every location a course or clerkship is taught); ../accreditation/acpe.yaml (7.3.c — requires evidence of standardized components and consistent assessment across all sites offering the same course); ../accreditation/coda.yaml (2-6 — requires documented faculty calibration across sites)"
+    related_flows:
+      - flow: "accreditation-self-study--06-cross-site-comparability-program-quality-analysis.yaml"
+
+  - pain: >
+      The standards themselves move underneath them, and citing the wrong
+      edition is its own risk — every accreditor in scope has recently
+      revised, resequenced, or partially suspended its standards document,
+      and the liaison's crosswalk has to track which version is actually in
+      force.
+    accreditation_link: >
+      Applies to every standard — this is a version-control problem across the
+      whole crosswalk, not a single element.
+    source: "../accreditation/acpe.yaml (standards_document — Standards 2025 supersedes Standards 2016, effective for evaluations beginning fall 2025); ../accreditation/coca.yaml (header note on the AI-use restriction — COCA publishes a notice prohibiting submission of its standards text into an AI platform without written permission; standards_document — 2026 COM Continuing Accreditation Standards take effect July 1, 2026 and apply to reviews after February 1, 2027); ../accreditation/coda.yaml (standards_document — August 8, 2025 Commission action suspending Standards 1-4 and 4-4 indefinitely and revising 1-3's Intent Statement); ../accreditation/lcme.yaml (header note — 'LCME does periodically renumber/retire elements after public comment', republishes Functions and Structure annually)"
+
+  - pain: >
+      Every incumbent's accreditation story is stronger on paper than the
+      current product's, and it's standard-specific in a way the liaison can
+      test in a demo — "show me my accreditor's standards in your product" is
+      the question the product answers worst today.
+    accreditation_link: >
+      All four accreditors' continuous-compliance elements (LCME 1.1,
+      ACPE 7.5.b, CODA 1-2, COCA 11.9) — this is the buying criterion those
+      elements create.
+    source: "../competitors/medhub.yaml (Accreditation Management row — ships ACGME NAS-aligned dashboards, CLER visit tracking, ADS-formatted report generation, and direct ACGME survey import); ../competitors/new-innovations.yaml (Accreditation Management row — ships APE with citation and concern tracking, NAS support, CLER visit management, and CCC milestone review); ../competitors/elentra.yaml (Accreditation Management row — names LCME, COCA, CACMS, ACPE, CODA, and ARC-PA and covers more than 40% of the CACMS DCI); ../competitors/leo-davinci.yaml (AAMC-authorized Curriculum Inventory vendor since 2013 with one-click CI submission); ../competitors/one45.yaml (a named customer credits it in a full eight-year LCME accreditation outcome, https://cdn.featuredcustomers.com/CustomerCaseStudy.document/one45_augusta-university_620704.pdf); ../competitors/axium.yaml (markets CODA-Ready Reporting)"
+
+tools_touched:
+  - "Microsoft Word and Excel plus SharePoint/Box/Google Drive — where the self-study, the evidence crosswalk, and the artifact library actually live"
+  - "Accreditor submission portals — ACPE PHARMS (replaced AACP AAMS as of Standards 2025), COCA annual and mid-cycle report forms, LCME DCI, CODA self-study submission"
+  - "AAMC Curriculum Inventory portal (MD/DO programs) — annual curriculum data submission"
+  - "The clinical-ed/compliance platform — Exxat Prism Compliance Management, CORE ELMS, eMedley eKeeper/Student Documents, MedHub credentials monitoring, New Innovations Credentialling Module"
+  - "External survey tooling — Qualtrics, AACP standardized surveys (AAMS/PHARMS-era instruments), the mandatory COCA student survey"
+  - "National board data files — NBOME (COMLEX-USA), NBME/FSMB (USMLE), NABP (NAPLEX/MPJE), JCNDE (INBDE/DLOSCE), ADEX regional clinical exam results"
+  - "NRMP Match results and ACGME program data — for GME placement-rate reporting"
+  - "The public program website — where COMLEX pass rates (within 30 days of NBOME's update) and the four-year PGY-1 placement rate must be published and kept current"
+  - "Excel, SPSS, or R — for the cross-site comparability statistics no platform produces"
+  - "The institution's legal/contracts office and DocuSign — for affiliation agreement execution and renewal"
+
+sources:
+  - "../accreditation/lcme.yaml (Elements 1.1, 1.4, 8.4, 8.5, 8.7)"
+  - "../accreditation/acpe.yaml (Key Elements 3.3.a, 3.3.c, 3.5.b, 7.2.d, 7.3.c, 7.3.d, 7.5.a, 7.5.b; PHARMS/AAMS transition)"
+  - "../accreditation/coca.yaml (Elements 5.4, 6.9, 6.11, 10.2, 11.1, 11.2, 11.4, 11.5, 11.8, 11.9; AI-use restriction notice)"
+  - "../accreditation/coda.yaml (Elements 1-2, 2-2, 2-6, 3-4, 4-6, 5-3; August 2025 Commission action)"
+  - "../prism/capability-map.yaml (Accreditation Management roadmap Q3 2027 — 'the single most load-bearing fact for the whole domain expansion initiative')"
+  - "../competitors/medhub.yaml"
+  - "../competitors/e-value.yaml"
+  - "../competitors/new-innovations.yaml"
+  - "../competitors/elentra.yaml"
+  - "../competitors/leo-davinci.yaml"
+  - "../competitors/one45.yaml"
+  - "../competitors/axium.yaml"
+  - "../competitors/core-elms.yaml"
+  - "../competitors/emedley.yaml"
+  - "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf"
+  - "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf"
+  - "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf"
+  - "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf"
+
+last_researched: "2026-08-24"

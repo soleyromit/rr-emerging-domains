@@ -1,0 +1,1219 @@
+# Element-level ground truth underneath admin-onboarding-product-setup.yaml, stage 2
+# ("Program details & settings setup").
+#
+# SCOPE NOTE — this is PRODUCT ONBOARDING, not clinical workflow. The four
+# existing journeys (rotation-lifecycle, preceptor-site-onboarding,
+# competency-verification, accreditation-self-study) all begin AFTER the
+# tenant is configured. This stage is the day-one work a brand-new Program
+# Administrator does inside Program Details before any student, site, course,
+# or placement record exists: identity/branding, the academic calendar
+# skeleton, mission/vision, the program-level accreditation record, grading
+# schemes, the clinical-settings taxonomy, AI consent, the Notification Hub
+# (email identity + template library), user roles, and the two program-wide
+# read surfaces (Program 360, Program Calendar).
+#
+# PRIMARY SOURCE DISCIPLINE — every step below is confirmed first against the
+# raw admin tutorial transcript at /Users/romitsoley/Downloads/exxat_transcripts.md,
+# "1/16 Administrator Navigation in Exxat Prism" (lines 35-65), which is the
+# single tutorial that walks this entire stage end to end. Help-center articles
+# are cited only as SECONDARY confirmation where they add field-level detail
+# the transcript narrates but does not enumerate (e.g. the exact Program
+# Information sub-sections, the named standard user roles, the SendGrid DNS
+# records). Nothing below is sourced ONLY from a help-center paraphrase of the
+# same video.
+#
+# SCHEMA v2: accreditation_citation / competitor_equivalent / gap_severity /
+# gap_note are per-ELEMENT, not per-step.
+
+flow_name: "Program Details & Settings Setup"
+maps_to_journey: "admin-onboarding-product-setup.yaml, stage 2"
+persona: >
+  Program Administrator, brand new to the platform and holding the Super
+  Program Administrator role (primary — this stage is almost entirely
+  self-service inside Program Details, and the transcript addresses this
+  persona directly: "Here we will learn how to manage basic information about
+  your school in the Program Details section").
+  Secondary roles that touch this stage: the Exxat CSR / Account Manager and
+  Support team (gatekeepers for the Program Information academic calendar,
+  new Type-of-program dropdown values, custom user roles, View-as-Student
+  access, and university-domain email sending — see gap notes below);
+  University IT / identity team (SSO enablement and the SendGrid CNAME/DMARC
+  DNS records); Compliance & Accreditation Liaison (secondary consumer of the
+  Accreditation record and Program 360). See ../personas/role-program-admin.yaml.
+
+steps:
+
+  # ---------------------------------------------------------------------
+  - screen: "Program Details > Setup > School Profile (Program Name + Logo + Details card)"
+    navigation_path: "Dashboard > Program section > Program Details  (or hamburger menu > Program Details) > Setup tab > School profile"
+    action: >
+      The new administrator establishes the program's identity in the tenant:
+      uploads the school logo, sets/corrects the program name, and opens the
+      Details drawer to record description, program type, degrees offered,
+      additional information, and the program address. Per the transcript this
+      is the literal first thing shown after navigation: "We will now walk you
+      through profile details section. Here we will learn how to manage basic
+      information about your school in the Program Details section. You can
+      access the Program Details section from your dashboard or the upper
+      left-hand hamburger menu."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation in Exxat Prism"
+      (line 35-37): "In the Setup section of the Program Details page, you can provide some general
+      information about the school. Click on your school logo box to change your school's logo. Then
+      click the Upload Image button to select an image to be used as your school's logo... To change
+      the name of your program, click on the pencil icon next to your program name... Click on the
+      pencil icon in the Details section to add a description of your program, assign a program type,
+      add degrees offered, provide additional information, and provide an address for your school.
+      After you have added these sections, click on the Save button."
+      SECONDARY (field enumeration only): .../Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Details via Setup.md
+    elements:
+      - element: "School logo box + Upload Image button"
+        type: "file upload"
+        data_shown: "Current program/school logo; replaced via an Upload Image picker."
+        gates_on:
+          - "Transcript is explicit that this is not cosmetic: 'this logo will be visible to all members of your school who have access to EXAT Prism' AND 'this logo can be used when sending communications with sites and experiential supervisors. Therefore, make sure to choose an appropriate image.' It therefore gates the visual identity of every outbound site/preceptor email sent later in preceptor-site-onboarding stages 3-5."
+        accreditation_citation: "None — this is a platform-branding element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. None of core-elms.yaml, axium.yaml, elentra.yaml, one45.yaml, medhub.yaml, e-value.yaml, emedley.yaml, leo-davinci.yaml, or new-innovations.yaml describes tenant logo upload or outbound-email branding as a documented feature — it is almost certainly present in all of them and simply below the granularity of public marketing/help material."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Program name pencil icon (opens text drawer)"
+        type: "input field (validated)"
+        data_shown: "Program name string. Transcript states the validation rule verbatim: 'your program name should start with an alphabetical character, cannot include any white space or numbers, and it can include hyphens, underscores, and apostrophes.' Help center adds it is a mandatory field."
+        gates_on:
+          - "The no-whitespace/no-numerals rule means a real program name cannot be entered literally. 'Doctor of Osteopathic Medicine' or 'PharmD Class of 2030' are both invalid; the admin must enter something like 'Doctor-of-Osteopathic-Medicine'. Whatever token is stored here is the program identifier that then appears across the tenant."
+        accreditation_citation: "None directly — but note that COCA, CODA, ACPE and LCME all publish and reference programs by their exact legal program name, so a slugified name here creates a cosmetic mismatch between the system of record and the accreditor's record. Not a standard violation."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file records a program-name validation rule."
+        gap_severity: "cosmetic"
+        gap_note: >
+          Day-one friction that lands on 100% of new administrators in every
+          discipline: the first field they touch rejects the natural value.
+          The constraint is unexplained in-product (the tutorial narrates it,
+          the field does not), so a new admin discovers it by failing.
+      - element: "Details drawer > Type of program (dropdown)"
+        type: "dropdown (vendor-controlled value list)"
+        data_shown: "The discipline/program-type taxonomy value for this tenant."
+        gates_on:
+          - "Vendor-gated: the help center states 'select the type of program from the dropdown. If you need additional dropdown options, please contact prism-support@exxat.com.' A new administrator in a discipline Prism has not yet enumerated cannot self-serve a correct value."
+        accreditation_citation: "None — a taxonomy element, not an evidence element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          This is the first hard vendor dependency of the whole onboarding, and
+          it lands squarely on the four expansion domains. A DO, MD, PharmD or
+          DDS/DMD program spinning up is the exact case where the existing
+          dropdown values (built around PT/OTA/PA/Nursing/SLP/SW/TE) are most
+          likely to be missing, and the remedy is a support ticket rather than
+          a self-service add. Severity is 'gap' not 'configure-needed' because
+          the admin cannot resolve it inside the product at all.
+      - element: "Details drawer > Description / Degree offered / Additional program information (free text)"
+        type: "input field set (free text)"
+        data_shown: "Narrative program description, degree(s) conferred, and an open catch-all field."
+        gates_on: []
+        accreditation_citation: "None as a gating element. Worth noting only that these free-text fields are where a program would informally park degree/credential facts that COCA Standard 1 / CODA Standard 1 self-studies restate — but they are not structured, exportable evidence fields and should not be sold as such."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Details drawer > Address"
+        type: "input field set (address)"
+        data_shown: "Physical location of the program."
+        gates_on: []
+        accreditation_citation: "None as an evidence element, though COCA's Standard 10/11 reporting and CODA's Standard 1 both key off institutional location/teaching-site identity; this field is descriptive only and does not feed those."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Save button (Details drawer)"
+        type: "button"
+        data_shown: "Commits the drawer; no confirmation/versioning described."
+        gates_on: []
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  # ---------------------------------------------------------------------
+  - screen: "Program Details > Setup > School Profile > Information (Terms, Professional Years, Program Clinical Settings)"
+    navigation_path: "Program Details > Setup > School profile > Information card > pencil icon per sub-section"
+    action: >
+      The administrator establishes the academic calendar skeleton — the term
+      names and the professional-year labels the entire course catalog,
+      course offerings and curriculum grid will hang off — plus the first pass
+      at the program's clinical-settings list. In practice this is the single
+      highest-consequence and least self-service screen in the stage.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" narrates the
+      Setup section and the clinical Settings sub-section at lines 46-48 ("We will now walk you through
+      how to add clinical settings to your program. Settings are the settings in which students are
+      placed for their placement experiences").
+      SECONDARY, for the Terms/Professional-years enumeration and the CSR warning the video does not
+      state: .../Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Details via Setup.md
+      — "The Information section will have the following sections... 1. Terms: Winter, Spring, etc.
+      2. Professional years: 1st year, 2nd year, etc. 3. Program clinical settings... Please note, any
+      edits done on program calendar will impact entire course catalog, course offering and curriculum
+      grid in the system. Kindly reach out to your CSR for any changes on this section."
+    elements:
+      - element: "Terms (pencil icon)"
+        type: "input field set / value list"
+        data_shown: "The program's term names (Winter, Spring, etc.)."
+        gates_on:
+          - "Every Course Offering, the Curriculum Grid, and the course catalog key off these values. The help center warns edits 'will impact entire course catalog, course offering and curriculum grid in the system' and directs the admin to their CSR."
+        accreditation_citation: "None directly. Indirect only: CODA Standard 1, Element 1-2 and COCA Standard 11, Element 11.9 both require year-over-year reporting cycles, and the term structure defined here is what any later cohort/term rollup is sliced by — but this field is not itself accreditation evidence."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. one45.yaml documents 'multi-layered concurrent schedules' and three named rotation-allocation algorithms but says nothing about how the underlying term taxonomy is defined or who can edit it."
+        gap_severity: "gap"
+        gap_note: >
+          Day-one blocker with a delayed blast radius. A new admin cannot
+          safely set up terms without CSR involvement, yet nothing downstream
+          (courses, curriculum grid, offerings) can be built until terms exist.
+          This is the structural reason admin onboarding is not actually
+          self-service today, and it is discipline-blind — it hits a PT program
+          and a PharmD program identically.
+      - element: "Professional years (pencil icon)"
+        type: "input field set / value list"
+        data_shown: "Professional-year labels (1st year, 2nd year, etc.)."
+        gates_on:
+          - "Same CSR-gated warning as Terms; drives cohort/year-level slicing across the curriculum grid and course offerings."
+        accreditation_citation: "None directly — but this is where discipline-native year nomenclature (OMS-1..4 for DO, P1-P4 for pharmacy, D1-D4 for dentistry, MS1-MS4 for MD, DPT1-3 for PT) would be encoded, and per content/domains/do.yaml DO clinical training is explicitly framed as 'OMS-3 and OMS-4'. Getting this label set wrong makes every later report read in the wrong dialect to the accreditor."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          Same CSR gate as Terms. The expansion-domain angle is that the four
+          new domains all use strong, non-generic year nomenclature (OMS, P,
+          D, MS) that the generic '1st year / 2nd year' default does not
+          match, so every new-domain tenant needs this edited on day one —
+          exactly the edit the help center says to route through a CSR.
+      - element: "Program clinical settings (entry point from the Information card)"
+        type: "value list (duplicate entry point)"
+        data_shown: "Same settings list also reachable via Setup > Grading and clinical settings — see the dedicated step below."
+        gates_on: []
+        accreditation_citation: "See the Program clinical settings drawer step below, where the substantive accreditation ties live."
+        competitor_equivalent: "See the dedicated step below."
+        gap_severity: "cosmetic"
+        gap_note: "The same list is exposed from two different Setup cards (Information, and Grading and clinical settings), which is a minor wayfinding inconsistency for a first-time admin following a tutorial."
+
+  # ---------------------------------------------------------------------
+  - screen: "Program Details > Setup > School Profile > Mission and Vision"
+    navigation_path: "Program Details > Setup > School profile > Mission and Vision card > + icon (pencil icon once populated)"
+    action: >
+      The administrator records the program's mission and vision statements as
+      free-text on the school profile.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (line 37-39):
+      "Click on the plus icon in the Mission and Vision section to add a mission and vision statement
+      to your school's profile. Provide your statements in the text area provided, then click on the
+      Save button."
+    elements:
+      - element: "+ icon / pencil icon (Mission and Vision)"
+        type: "button (add vs. edit state)"
+        data_shown: "Plus when empty, pencil once populated."
+        gates_on: []
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Mission and Vision free-text area"
+        type: "input field (free text, unstructured)"
+        data_shown: "Mission statement and vision statement as narrative text."
+        gates_on: []
+        accreditation_citation: >
+          Genuinely relevant, and the most accreditation-load-bearing field on
+          the School Profile. ACPE (per content/accreditation/acpe.yaml,
+          Element on preceptor orientation) requires evidence 'that every
+          preceptor completed orientation to the program's mission'; CODA
+          Standard 1, Element 1-2 requires that planning and improvement be
+          'tied to institutional goals'; ARC-PA B1.01 a-d (per the PA
+          playbook) requires the curriculum be 'aligned with mission/goals/
+          learning outcomes'. The mission text every one of those standards
+          points at is stored here — as unstructured prose.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. Notably, no competitor file describes a program mission/vision record at all, so this is not a place Prism is behind — it is a place nobody's public documentation goes."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The field exists and is free-text, which is fine for storage but
+          means the mission is not a linkable object: nothing in Curriculum
+          Mapping, Competency Management, or preceptor orientation can
+          reference or attest against this record. For ACPE's
+          orientation-to-mission evidence and ARC-PA B1.01's mission-alignment
+          evidence, the mission still has to be re-pasted into an orientation
+          document or a curriculum narrative elsewhere. Not a missing feature
+          so much as an unconnected one.
+
+  # ---------------------------------------------------------------------
+  - screen: "Program Details > Setup > School Profile > Accreditation (add/edit drawer)"
+    navigation_path: "Program Details > Setup > School profile > Accreditation card > + icon (pencil to edit; vertical ellipsis next to Save > Delete to remove)"
+    action: >
+      The administrator creates one structured, repeatable accreditation
+      instance per accrediting body the program answers to, capturing status,
+      type, narrative details, and the next/most-recent accreditation dates.
+      Multiple instances are supported — the transcript is explicit that
+      "You can add more accreditation instances by clicking on the plus icon
+      again," which is what a multiply-accredited program (e.g. a nursing
+      program holding both CCNE and state board approval) needs.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (line 39):
+      "To add accreditation information, click on the plus icon in the Accreditation section. You can
+      then provide the name of the accrediting body, the accreditation status, type of accreditation,
+      details about the accreditation, the next accreditation date, and the most recent accreditation
+      date. Please note that you need to fill all the sections marked with a red asterisk before you
+      can submit this accreditation instance. Click the Save button when you are finished. You can add
+      more accreditation instances by clicking on the plus icon again. To make changes to a previously
+      added accreditation instance, click on the pencil icon."
+      SECONDARY (delete path only): .../Program Details/Managing Program Details via Setup.md —
+      "Click on the vertical ellipsis next to the Save button and click Delete."
+      PRECEDENT: content/journeys/competency-verification.yaml stage 8 and content/prism/capability-map.yaml
+      ("Program-level accreditation record + Sites accreditation reports").
+    elements:
+      - element: "Name of accrediting body"
+        type: "input field"
+        data_shown: "The accrediting body this instance represents (COCA, ACPE, CODA, LCME, CAPTE, ACOTE, ARC-PA, CCNE/ACEN/COA, CAA-ASHA, CSWE, CAEP...)."
+        gates_on:
+          - "Required field (red asterisk) — the instance cannot be submitted without it."
+        accreditation_citation: >
+          Directly relevant. This is the field that names the standard-owner
+          for everything downstream. Per content/accreditation/coca.yaml
+          (Standard 11, Element 11.9 — 'COCA Annual and Mid-Cycle Reports')
+          and content/accreditation/coda.yaml (Standard 1, Element 1-2 —
+          'Institutional Effectiveness'), the accreditor's identity and cycle
+          are the frame for all periodic reporting; content/journeys/competency-verification.yaml
+          stage 8 already established this screen as the COCA 11.9 / CODA 1-2
+          anchor and that precedent is adopted here rather than re-derived.
+        competitor_equivalent: "elentra.yaml is the only competitor file that names specific accreditor standard sets (LCME/COCA/CACMS/ACPE/CODA/ARC-PA, with a >40% CACMS DCI coverage claim), but that is Elentra's standards-mapping library, not a program-level accreditation-status record — a different object. No competitor teardown in this research documents a program accreditation record with body/status/type/dates at this granularity."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Accreditation status"
+        type: "dropdown / input field"
+        data_shown: "The program's current standing with this body (e.g. continuing accreditation, provisional, probation)."
+        gates_on:
+          - "Required field (red asterisk)."
+        accreditation_citation: >
+          Relevant. COCA Standard 11 elements are keyed to a COM's held
+          accreditation status ('every COM holding accreditation status',
+          coca.yaml 11.9), and CODA's Standard 1 self-study cycle likewise
+          turns on current standing. This is where that standing is recorded.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Type of accreditation"
+        type: "dropdown / input field"
+        data_shown: "Category of the accreditation instance (e.g. programmatic vs. institutional)."
+        gates_on: []
+        accreditation_citation: >
+          Relevant for the expansion domains specifically, where programmatic
+          and institutional accreditation genuinely diverge — a COM answers to
+          COCA programmatically and to a regional institutional accreditor
+          separately, and a dental school answers to CODA (coda.yaml Standard
+          1) alongside its university's institutional accreditation. This is
+          the field that distinguishes them.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Accreditation details"
+        type: "input field (free text)"
+        data_shown: "Narrative notes on the accreditation instance."
+        gates_on: []
+        accreditation_citation: "None as a structured evidence field — it is a free-text note, and should not be positioned as self-study evidence."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Next accreditation date"
+        type: "date field"
+        data_shown: "The next scheduled accreditation action/site-visit date."
+        gates_on:
+          - "No documented downstream behavior — the transcript and help center describe capture and edit only. Nothing states that this date generates a Program Calendar event, a reminder, or a task."
+        accreditation_citation: >
+          Directly relevant and the sharpest gap in this step. COCA Standard
+          11, Element 11.9 requires 'timely, complete submission of COCA's own
+          required annual and mid-cycle reports,' and coca.yaml calls for
+          'deadline and submission-status tracking' as the required software
+          behavior. CODA 1-2 similarly requires 'broad-based, systematic, and
+          continuous' planning rather than a pre-visit scramble. This date
+          field is where that deadline lives — and it lives there inertly.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. Adjacent-but-different: new-innovations.yaml documents a Credentialling Module with 'expiration alerts' and 'automated notifications' for licenses/certifications, and emedley.yaml documents 'automated expiration notifications' — both prove the date-driven-alert pattern is table stakes in this market, but neither applies it to a program accreditation cycle."
+        gap_severity: "gap"
+        gap_note: >
+          The Next accreditation date is stored but does nothing. Prism ships
+          a Program Calendar (see the final step) that color-codes events by
+          module and supports due-date events, and it ships auto-notification
+          machinery elsewhere in the product (per the OT transcript's
+          form-automation drawer) — but no source confirms this date feeds
+          either one. Wiring it into the Program Calendar as a due-date event
+          would be a small change that directly serves COCA 11.9's
+          deadline-tracking requirement. Also note capability-map.yaml scopes
+          full Accreditation Management as a Q3 2027 roadmap pillar, so this
+          record is currently a stub, not a system of record.
+      - element: "Most recent accreditation date"
+        type: "date field"
+        data_shown: "Date of the last accreditation action."
+        gates_on: []
+        accreditation_citation: "Relevant to COCA 11.9 and CODA 1-2 as the cycle-start anchor (evidence gathered 'since the last accreditation cycle' is the standard framing — see coca.yaml Element 10.2, which literally asks for counts 'since the last accreditation cycle'). Nothing in Prism is documented as computing a since-last-cycle window from this field."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: "Same inert-date problem as Next accreditation date. A stored cycle-start with no downstream 'since last cycle' filtering on any report means the accreditation window has to be re-typed by hand into every report run during a self-study."
+      - element: "Add-another-instance + icon"
+        type: "button (repeatable record)"
+        data_shown: "Adds a further independent accreditation instance."
+        gates_on: []
+        accreditation_citation: >
+          Relevant to the multiply-accredited disciplines specifically. Per
+          the Nursing playbook a nursing program may answer to ACEN, CCNE and
+          COA simultaneously (ACEN 4.9 / CCNE II-C / COA A.10/F.1 are cited
+          together for the same evidence), and per the SLP playbook an SLP
+          program answers to CAA while its graduates certify through ASHA.
+          Repeatable instances are the right shape for that.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  # ---------------------------------------------------------------------
+  - screen: "Program Details > Setup > Grading and clinical settings > Grading Scheme"
+    navigation_path: "Program Details > Setup > Grading Scheme > Add New > (Letter Grade | Pass/Fail Grade)"
+    action: >
+      The administrator defines the program's grading schemes — the cutoff
+      tables that later get applied to course overall scores and to individual
+      learning activities. The transcript is precise about the downstream
+      reach: "These scales can be applied to courses for students' overall
+      score in the course. Additionally, grading scales added here can be
+      applied to specific learning activities. You can view the grade a
+      student received on a learning activity from within the course grade book."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (lines 41-45):
+      "Grading schemes are used for storing the cutoff values of students' grades... There are two
+      different types of grading schemes you can add here, letter grade-based or pass-and-fail-based...
+      To add a new grading scheme, click on the Add New button... enter the first letter grade you would
+      like to assign and minimum percentage for this letter grade. For example... you would enter A and
+      the minimum percentage should be 90. This means that if the student receives any score between 90
+      and 100, they would receive an A... Keep doing this until every possible percentage is accounted
+      for... When you are adding a pass or fail grading scheme, enter a title of the pass or fail grading
+      scheme, then enter a passing score percentage. This percentage is set, so any score above this
+      percentage will be considered passing."
+    elements:
+      - element: "Add New button > Letter Grade / Pass-Fail type selector"
+        type: "button + type selector (irreversible per scheme)"
+        data_shown: "Two and only two scheme archetypes."
+        gates_on:
+          - "The chosen type determines the entire editor that follows (a cutoff table vs. a single passing percentage)."
+        accreditation_citation: "None directly — grading policy is a program decision, not an accreditor-specified field. Indirect only: LCME and COCA both expect a documented, consistently applied grading policy, but neither prescribes a data structure."
+        competitor_equivalent: >
+          The one place in this stage where a competitor teardown IS granular
+          enough to compare. axium.yaml records axiUm's Evaluations Module as
+          letting faculty 'record student assessments using customizable
+          grading schemes' — but positioned inside a competency/clinical
+          evaluation module, not as a program-level scheme library reusable
+          across courses and learning activities. Directionally comparable,
+          architecturally different: Prism defines the scheme once at program
+          level and applies it in two places; axiUm's is described only at the
+          evaluation. This matters because axiUm is the incumbent in the
+          dentistry expansion domain.
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Grading scheme Title"
+        type: "input field"
+        data_shown: "Human name for the scheme."
+        gates_on: []
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Letter grade + Minimum percentage row (repeating, with + icon and trash icon)"
+        type: "input field set (repeating cutoff table)"
+        data_shown: "One row per letter grade: the letter, and the minimum percentage at which it is earned. Rows are added one at a time via the + icon 'until every possible percentage is accounted for.'"
+        gates_on:
+          - "The transcript states the completeness expectation ('every possible percentage is accounted for') but describes no validation that enforces it — the admin is trusted to leave no gap or overlap."
+        accreditation_citation: "None directly."
+        competitor_equivalent: "axium.yaml's 'customizable grading schemes' is the closest documented equivalent, but axiUm's public material does not describe a per-letter minimum-percentage cutoff table, so the comparison cannot be made row-for-row."
+        gap_severity: "cosmetic"
+        gap_note: >
+          Manual, row-at-a-time entry with no documented gap/overlap
+          validation and no starter template. Every new program in every
+          discipline hand-builds a standard A/B/C/D/F table on day one. A
+          seeded default (and a completeness check) would remove a
+          universal, error-prone chore. Low severity because the workaround
+          is trivial; high frequency because it is 100% of tenants.
+      - element: "Pass/Fail passing-score percentage"
+        type: "input field (single threshold)"
+        data_shown: "One percentage; 'any score above this percentage will be considered passing.'"
+        gates_on:
+          - "Boundary semantics are 'above,' per the transcript — meaning a score exactly at the threshold reads as not passing. Worth flagging to any program that writes its policy as '70% or above.'"
+        accreditation_citation: >
+          Indirectly relevant to the expansion domains more than to the
+          existing ones. Per content/domains/do.yaml, DO clinical training
+          runs as clerkship blocks in OMS-3/4, and US medical/osteopathic
+          education has largely moved preclinical coursework to pass/fail —
+          so for MD and DO tenants this is the primary scheme type, not the
+          secondary one. No accreditor standard specifies the field.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — axium.yaml's grading-scheme mention does not distinguish pass/fail from letter schemes."
+        gap_severity: "cosmetic"
+        gap_note: >
+          The 'above this percentage' boundary is exclusive, while most
+          written program policies are inclusive ('70 and above passes').
+          A one-word semantic that will be misconfigured somewhere.
+      - element: "Per-scheme edit pencil / delete trash icons"
+        type: "button"
+        data_shown: "Edit or remove a previously saved scheme."
+        gates_on:
+          - "No documented guard against deleting or re-cutting a scheme that is already applied to a course or learning activity — unlike the clinical Settings list below, which the transcript explicitly protects."
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          Asymmetry worth naming: the transcript explicitly states 'you will
+          not be able to edit settings which have placements or slots
+          associated with it' for clinical Settings, but states no equivalent
+          protection for grading schemes — which are applied to course grades
+          and learning-activity grades and are therefore arguably more
+          consequential to edit retroactively. Either the guard exists and is
+          undocumented, or it is genuinely missing; both are worth verifying
+          before this is claimed in a demo.
+
+  # ---------------------------------------------------------------------
+  - screen: "Program Details > Setup > Grading and clinical settings > Program clinical settings (edit drawer)"
+    navigation_path: "Program Details > Setup > Grading and clinical settings > Program clinical settings > pencil icon > Edit program clinical settings drawer"
+    action: >
+      The administrator builds the program's clinical-settings taxonomy — the
+      color-coded tag vocabulary that will later be attached to slots,
+      placements, sites and locations, and that becomes the group-by axis on
+      most downstream reports. Per the transcript: "Settings are the settings
+      in which students are placed for their placement experiences. You can
+      assign settings to slots, placements, sites, and locations to keep track
+      of the setting involved in the placement."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (lines 46-49):
+      "To make changes to your program settings, click on the pencil icon. To add a new setting, provide
+      the setting name, click on the Color dropdown to assign a color to this setting, then click on the
+      Add button... Click on the Edit Name button to unlock the setting name to edit the settings name.
+      To delete a setting, click on the trash bin icon. Once you are done, click on the Save button.
+      Please note, you will not be able to edit settings which have placements or slots associated with it."
+      SECONDARY (definition + navigation): .../Program Details/Add New Settings in Exxat Prism.md.
+      Discipline value lists: Playbooks/Physical Therapy (PT) Playbook.md ("Settings"),
+      Playbooks/Occupational Therapy (OT) Playbook.md ("Settings" + AOTA recommended settings),
+      Playbooks/Speech-Language Pathology (SLP) Playbook.md ("Placement Setting"),
+      Playbooks/Social Work (SW) Playbook.md (Agencies module setting type).
+    elements:
+      - element: "Setting name field + Add button"
+        type: "input field + button (repeating value list)"
+        data_shown: "One free-text setting name per row, added one at a time."
+        gates_on:
+          - "This list is the vocabulary later used on slots, placements, sites and locations, and is the group-by/filter axis on downstream reports (per the PT/OT/SLP/Nursing playbooks, e.g. the Nursing Patient Log Aggregate Report groups by 'course, rotation, setting, location, site, or student')."
+        accreditation_citation: >
+          Genuinely relevant and discipline-specific. Per the PA playbook,
+          SCPE settings are a mapped course-attribute category tied to
+          ARC-PA B3.xx; per the PT playbook, Practice Settings map to CAPTE
+          2024 6H / 2016 6L2 and pull from PTSE 1 Question 3; per the OT
+          playbook the settings list is explicitly organized against 'AOTA
+          Recommended Practice & Fieldwork Settings' for ACOTE. For the
+          expansion domains the analogue is COCA Element 6.9 (which per
+          coca.yaml requires core clerkships including 'more than one in an
+          inpatient setting') — meaning the setting tag on a placement is
+          literally the evidence that an inpatient requirement was met.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. No competitor file describes a program-owned, color-coded, program-editable setting taxonomy; the closest is one45.yaml's event-level tracking, which is about duty hours and leave, not setting classification."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The mechanism is proven and mature — the PT, OT and SLP playbooks
+          document large real-world value lists already in production (OT
+          alone lists ~25 settings organized against AOTA categories). But it
+          is an empty list on day one for every new tenant, with no
+          discipline-seeded starter set documented for ANY discipline, let
+          alone for the four expansion domains. A DO program needs a taxonomy
+          that satisfies COCA 6.9's inpatient/outpatient distinction; a
+          PharmD program needs community / hospital-health-system /
+          ambulatory-care to match APPE practice-setting language; a dental
+          program needs clinic vs. extramural rotation. All three are typed
+          by hand.
+      - element: "Color dropdown (per setting)"
+        type: "dropdown (visual encoding)"
+        data_shown: "A color assigned to each setting, carried through to calendar/schedule and report visualizations."
+        gates_on: []
+        accreditation_citation: "None, this is a presentation element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Edit Name button (unlock-to-edit) + trash icon"
+        type: "button (guarded)"
+        data_shown: "Renames or removes an existing setting; the name is deliberately locked until Edit Name is clicked."
+        gates_on:
+          - "Hard guard, stated verbatim in the transcript: 'you will not be able to edit settings which have placements or slots associated with it.' Once a setting is in use, it is effectively frozen."
+        accreditation_citation: "None as an element, but the guard has an accreditation consequence: it means the taxonomy chosen on day one is close to permanent once placements exist, which is exactly when a program discovers its accreditor wants a different cut (e.g. COCA 6.9's inpatient distinction) — see gap_note."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          The lock is correct behavior (it protects historical placement data)
+          but it converts a day-one guess into a long-lived commitment. Since
+          no seeded, accreditor-aligned starter taxonomy exists for the
+          expansion domains, a new COCA/CODA/ACPE/LCME tenant is guessing at
+          a vocabulary it cannot easily revise later. The fix is upstream —
+          ship a discipline-seeded default — not in this control.
+      - element: "Site Resources section (pointer from the same Setup page)"
+        type: "navigation pointer"
+        data_shown: "Entry point to the Site Resource Page builder (Welcome Message, Announcements, Clinical Education Schedule, Resources for Clinicians, Clinical Education Contacts, plus a shareable public URL)."
+        gates_on:
+          - "The Site Resource Page is a public, link-shared page — the help center's sharing instruction is literally to copy the browser URL and paste it into an email, with no documented access control on that link."
+        accreditation_citation: "None directly. Adjacent to ACPE's preceptor-orientation-to-mission evidence requirement (acpe.yaml) in that the Resources for Clinicians section is a natural home for orientation material — but the page itself is not accreditation evidence."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file describes a program-branded, publicly shareable site-partner resource page."
+        gap_severity: "none"
+        gap_note: >
+          In scope for this stage only as a pointer; the transcript itself
+          defers it ("For more information on how to set up and share the Site
+          Resources page, please watch our Setting Up Site Resources Page
+          tutorial"). Full element treatment belongs in
+          preceptor-site-onboarding--04. Flagged here because the
+          copy-the-URL sharing model contrasts sharply with the OTP-protected
+          delegator links configured two screens away in the Notification Hub.
+
+  # ---------------------------------------------------------------------
+  - screen: "Program Details > Setup > AI Features Hub > Legal Consent"
+    navigation_path: "Program Details > Setup > AI Features Hub > Legal Consent  (or: any AI-enabled screen's banner > Try Now)"
+    action: >
+      The administrator reviews and accepts the AI Policy & Data Usage terms,
+      which is what turns on Leo-powered features (today, Curriculum Mapping's
+      Map with Leo) for the whole program. Consent is revocable and is recorded
+      with policy version, timestamp, and consenting user.
+    confirmed_by: >
+      .../Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Agreeing to AI Usage Terms.md
+      — "Navigation: Exxat Prism Dashboard > Program Details > Setup > AI Features Hub"; "The system
+      records your consent with details such as: Policy version, Date and time, User who provided
+      consent"; "Currently, AI Legal Consent applies only to Curriculum Mapping."
+      NOTE ON SOURCING: this is the one screen in this stage the 1/16 tutorial transcript does NOT
+      cover — the AI Features Hub post-dates it. The transcript's Leo coverage is limited to the
+      Ask Leo chatbot ("16/16 Part 1 How to use Ask Leo", exxat_transcripts.md line 1683). Cited from
+      the help center by necessity, and flagged as such rather than laundered.
+    elements:
+      - element: "'I have read and accept the AI Policy & Data Usage terms' checkbox + Accept button"
+        type: "toggle + button (program-wide consent gate)"
+        data_shown: "Feature overview, AI policy, and data-usage detail; a required acceptance checkbox."
+        gates_on:
+          - "Gates Map with Leo in Curriculum Mapping for the entire program — see content/flows/competency-verification--01-define-the-competency-framework-and-map.yaml, where the Map with Leo element's gates_on already names 'AI Consent accepted at Program Details' as its precondition. This step is that precondition's home screen."
+        accreditation_citation: "None as an accreditor standard. Institutionally relevant though: the recorded policy-version + timestamp + user triple is the artifact a university's own data-governance or IRB review would ask for, which is a real procurement question in the medical/dental expansion domains."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. No competitor file (core-elms, elentra, one45, medhub, e-value, emedley, axium, new-innovations, leo-davinci) documents an AI feature at all, let alone an opt-in consent ledger — consistent with capability-map.yaml's assessment that Prism's AI-assist work is 'materially ahead of what any competitor teardown documented.'"
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Per-feature enable/disable toggle (AI Features Hub)"
+        type: "toggle"
+        data_shown: "One toggle per AI feature; today only Curriculum Mapping / Map with Leo."
+        gates_on:
+          - "Role-gated: the help center names exactly four roles that can see the AI Features Hub — Program Super Administrator, Non Compliance Program Administrator, PRISM Administrator's Single Program Access (Non View Other Programs), and Site and Personnel Program Admin."
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: "Worth noting for onboarding sequencing: a new admin who is NOT in one of those four roles cannot find this screen at all, and will see the Try Now banner in Curriculum Mapping with no way to act on it."
+      - element: "Revoke button (Legal Consent)"
+        type: "button (destructive, program-wide)"
+        data_shown: "Withdraws consent; 'All the AI feature are turned off for your program.'"
+        gates_on: []
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  # ---------------------------------------------------------------------
+  - screen: "Program Details > Standards tab"
+    navigation_path: "Program Details > Standards"
+    action: >
+      The administrator reviews the accreditation-standard library available
+      to map course measures against. Included here only for completeness of
+      the Program Details tab inventory — the transcript itself defers the
+      substance to another tutorial.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (line 49):
+      "Now let's move to the Standards tab. You can add standards to be mapped to course measures in
+      the Curriculum Mapping section. For more information about adding and mapping standards, please
+      refer to our curriculum mapping tutorial."
+    elements:
+      - element: "Standards library (activate/add/edit)"
+        type: "value list (cross-referenced, not re-analyzed here)"
+        data_shown: "Pre-populated accreditation standards for the tenant's registered domain, plus program-added standards/SLOs."
+        gates_on:
+          - "Gates what is selectable as a mapping target in Curriculum Mapping."
+        accreditation_citation: "COCA 6.4 / ACPE 2.2.d / CODA 2-8 / LCME 9.4 — but this element is already fully analyzed at element granularity in content/flows/competency-verification--01-define-the-competency-framework-and-map.yaml (step 'Program Details > Standards'). Not re-derived here; that file is the authority."
+        competitor_equivalent: "See competency-verification--01 (elentra.yaml's named standard-set support, at directional rather than element-for-element granularity)."
+        gap_severity: "configure-needed"
+        gap_note: "Cross-reference only. Per competency-verification--01, no COCA/ACPE/CODA/LCME standard set is confirmed pre-loaded today (only ARC-PA and ACOTE are), which makes this tab a day-one manual-entry burden for exactly the four expansion domains. Deliberately not duplicated in full to avoid two divergent copies of the same analysis."
+
+  # ---------------------------------------------------------------------
+  - screen: "Program Details > Notification Hub > Email Setup"
+    navigation_path: "Program Details > Notification Hub > left-menu: Email Setup > edit (pencil) icon"
+    action: >
+      The administrator sets the program's outbound email identity and the
+      security posture for externally shared links — the settings that govern
+      every email the system will later send to students, faculty, sites and
+      preceptors.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (line 51):
+      "Now, let's switch to the Notification Hub in xAP Prism, where you can manage all email
+      configurations and templates for your program in one centralized place. The Notification Hub
+      consists of two main sections, Email Setup and Email Templates. Email Setup lets you define how
+      emails are sent, including sender name, reply behavior, link expiration, and secure external
+      access. To configure email setup, select Email Setup and click the edit icon. Enter your email
+      display name, default reply to email address, and delegator link expiry duration. Then click
+      Save to apply the changes. To enable OTP verification, toggle the switch on in the Secure
+      External Access section."
+      SECONDARY (OTP behavioral detail): .../Program Details/Using Notification Hub.md — "OTP is sent
+      only to the original recipient's email address; Forwarded links cannot be accessed without
+      verification." Corroborated in content/prism/capability-map.yaml (OTP protection entry).
+    elements:
+      - element: "Email Display Name"
+        type: "input field"
+        data_shown: "The sender name recipients see on every system email."
+        gates_on:
+          - "Applies to all outbound program email; per the transcript it exists so recipients can 'verify the sender.'"
+        accreditation_citation: "None, this is a platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. e-value.yaml and new-innovations.yaml both document notification capability ('notifications for students'; 'automated notifications for duty hour compliance') but neither describes sender-identity configuration."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Default Reply-To Email Address (semicolon-separated, multi-value)"
+        type: "input field (multi-value)"
+        data_shown: "One or more reply-to addresses; the help center notes 'You will be able to add multiple email addresses if separated by a colon (;).'"
+        gates_on:
+          - "Every reply from a site, preceptor, or student to a system-generated email routes here. If unset or set to an unmonitored box, replies from clinical partners are silently lost — the help center's own guidance is 'Ensure the Reply-To email is actively monitored.'"
+        accreditation_citation: "None directly. Operationally adjacent to ACPE's preceptor-orientation evidence chain and CODA 1-2's 'continuous' expectation only insofar as site correspondence is the raw material for both; not itself an evidence field."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: >
+          The help center's own text says 'separated by a colon (;)' — colon
+          and semicolon confused in the documentation for a field where the
+          wrong delimiter silently breaks reply routing. Small, but it is a
+          day-one field that a new admin will get wrong by following the docs.
+      - element: "Delegator Link Expiry Duration (in days)"
+        type: "input field (numeric, security policy)"
+        data_shown: "How long an externally shared/delegated link stays live."
+        gates_on:
+          - "Governs the lifetime of every delegator link the program later issues to external users (e.g. a preceptor invited to complete an evaluation without a full account)."
+        accreditation_citation: >
+          No accreditor standard names this control. It is, however, the field
+          a university's FERPA/data-governance reviewer will ask about during
+          procurement in the medicine/DO/dentistry domains, where student
+          records intersect with clinical settings — an adjacent
+          consideration, not a standard citation.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. medhub.yaml documents platform-level security posture (FERPA and SOC 2 compliance, 128-bit SSL, multifactor authentication, SAML/Shibboleth SSO, 99.95% uptime) but that is vendor-level attestation, not an admin-configurable per-program link-expiry policy — a genuinely different kind of control, and one Prism exposes to the customer that MedHub's public material does not."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Secure External Access (OTP verification) toggle"
+        type: "toggle (security policy)"
+        data_shown: "On/off for one-time-password verification on externally shared links."
+        gates_on:
+          - "When on, an external recipient must verify with an OTP before opening a shared link, and — per the help center and corroborated in capability-map.yaml — 'OTP is sent only to the original recipient's email address,' so a forwarded link is unusable by the forwardee."
+        accreditation_citation: >
+          No accreditor standard prescribes OTP. Relevant to the expansion
+          domains as a data-handling control rather than an evidence
+          requirement: COCA Element 5.4 (patient care supervision, coca.yaml)
+          and LCME's clinical-supervision element both operate in
+          PHI-adjacent territory where shared student/placement data is
+          routinely emailed to clinical partners, and this toggle is the
+          control that keeps a forwarded link from becoming an unintended
+          disclosure. Cite as a security posture, not as standard compliance.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. medhub.yaml is the only competitor file documenting MFA, and it documents it for MedHub's own logged-in users — not for unauthenticated external recipients of a shared link, which is the harder and more specific case this toggle solves. Treat as a Prism differentiator that no competitor teardown contradicts, not as a scored win."
+        gap_severity: "none"
+        gap_note: >
+          Note the contrast worth raising in any onboarding narrative: the
+          Site Resource Page (same Program Details section) is shared by
+          copying a plain browser URL with no documented access control, while
+          delegator links two clicks away can be OTP-gated and time-boxed.
+          The program's data posture is therefore inconsistent by default
+          across two screens the same admin configures in the same sitting.
+
+  # ---------------------------------------------------------------------
+  - screen: "Program Details > Notification Hub > Email Templates (Email Template Manager)"
+    navigation_path: "Program Details > Notification Hub > left-menu: Email Templates > Add Template (or a Category's Add / Clone icon)"
+    action: >
+      The administrator reviews the template library, and creates or clones
+      the reusable email templates the program will send to students, faculty,
+      sites and preceptors — the transcript frames the point of the module as
+      "eliminating the need to navigate multiple workflows and ensuring
+      consistent messaging across students, faculty, and other stakeholders."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (lines 51-55):
+      "Email templates provide a single place to create, manage, and maintain reusable communication
+      templates... From here, you can choose a section and category to view templates. Click the View
+      icon to view template content, or use the search bar to quickly find templates by name, subject,
+      or keyword. There are different template types available within each category. First, we have the
+      locked templates, which cannot be edited or deleted. Next are the regular templates, where you can
+      create new templates, edit existing ones, clone templates, delete templates... Lastly, we have the
+      restricted template categories, where only one editable template can be maintained... From the
+      Email Templates page, click Add Template. Select a section and category, and either create from
+      scratch or use an existing template. When creating from scratch, enter the template name, subject,
+      and email body, optionally add attachments. Configure header and footer layouts, set it as default
+      if needed, and include dynamic merge fields for personalized content. To use or edit an existing
+      template, select the template, make the necessary updates, click Preview the template to view how
+      the email content will appear to recipients, then click Save."
+      SECONDARY (constraints + delete-recovery caveat): .../Program Details/Using Notification Hub.md.
+    elements:
+      - element: "Section > Category > Template hierarchy navigator"
+        type: "navigation / filter"
+        data_shown: "Modules (Student, Faculty, ...) > Categories (Invite Student, Bulk Placement, Announcements, ...) > individual templates."
+        gates_on:
+          - "Category cannot be changed after a template is created (help center: 'You cannot change the category of a template once created'), so the category chosen at Add-Template time is permanent for that template."
+        accreditation_citation: "None, this is a platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Template type: Locked / Regular / Restricted"
+        type: "read-only classification (permission model)"
+        data_shown: "Locked = view only, cannot edit or delete. Regular = full create/edit/clone/delete/multiple-per-category. Restricted = exactly one editable template per category, with add/clone/delete/set-default all disabled."
+        gates_on:
+          - "Determines which actions are even available on a given template — a new admin will find some templates simply cannot be branded or reworded."
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. This three-tier template permission model has no counterpart in any competitor file; notification capability is documented in e-value.yaml, emedley.yaml and new-innovations.yaml only as automated alerts, never as a governed template library."
+        gap_severity: "cosmetic"
+        gap_note: >
+          Not a gap in capability, but a discoverability cost during
+          onboarding: the three tiers are explained in the tutorial and help
+          center, and a new admin who skipped both will experience Locked and
+          Restricted templates as arbitrarily broken buttons.
+      - element: "Add Template > Create from scratch | Use an existing template"
+        type: "button + branching wizard"
+        data_shown: "Two creation paths; the second seeds the new template from any existing one."
+        gates_on:
+          - "Template name must be unique within its category."
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Merge fields (dynamic placeholders) + Configure Merge Fields"
+        type: "insertable token set"
+        data_shown: "Predefined dynamic data placeholders for personalization; configurable when editing or cloning."
+        gates_on: []
+        accreditation_citation: >
+          None as a standard citation. Indirect relevance to ACPE's
+          preceptor-orientation evidence requirement (acpe.yaml: evidence that
+          'every preceptor completed orientation to the program's mission')
+          — a merge-field-driven orientation email is the natural delivery
+          mechanism, but the template library does not itself record
+          completion, so this is not evidence capture.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Header and Footer layout configuration"
+        type: "layout selector (branding)"
+        data_shown: "Consistent header/footer applied to the template."
+        gates_on:
+          - "This is where the school logo uploaded in the first step of this stage surfaces to external recipients — closing the loop the transcript opened with 'this logo can be used when sending communications with sites and experiential supervisors.'"
+        accreditation_citation: "None, platform-branding element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Set as Default toggle"
+        type: "toggle"
+        data_shown: "Marks one template per category as the auto-selected default."
+        gates_on:
+          - "The default is used automatically unless the sender picks another; disabled entirely in Restricted categories."
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Preview button"
+        type: "button (read-only render)"
+        data_shown: "Renders the email as the recipient will see it, before save."
+        gates_on: []
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Clone icon / Delete icon"
+        type: "button (one destructive)"
+        data_shown: "Clone prompts for a new name; Delete asks for confirmation."
+        gates_on:
+          - "Deletion is unrecoverable in-product. Help center: 'Deleted email templates cannot be restored through the Notification Hub... contact the Exxat Support team... Restoration is subject to the availability of backup data.'"
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "configure-needed"
+        gap_note: >
+          No trash/restore or version history for templates — a
+          confirm-then-gone model with a support ticket as the only recourse
+          and no guarantee of recovery. Meaningful during onboarding
+          specifically, when a new admin is exploring the library and most
+          likely to delete something they did not understand.
+      - element: "Search bar (name / subject / content)"
+        type: "search"
+        data_shown: "Filters templates across modules and categories."
+        gates_on:
+          - "Requires a minimum of 2 characters before it returns results."
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Per-template metadata (last updated by/when, is-default, is-scheduled, attachment indicator)"
+        type: "read-only rollup"
+        data_shown: "Audit-ish metadata per template row."
+        gates_on: []
+        accreditation_citation: "None as a standard citation, though last-updated-by is the only change-tracking on communications configuration anywhere in this stage — worth noting given that no other Program Details screen documents an audit trail."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  # ---------------------------------------------------------------------
+  - screen: "University-domain email sending (SendGrid domain authentication) — off-platform setup"
+    navigation_path: "Not a Prism screen. Support ticket / Account Manager request > Exxat DevOps > SendGrid domain whitelisting > university IT adds DNS records"
+    action: >
+      To make system email come from the university's own domain rather than
+      exxat.com, the administrator raises a support ticket, nominates the from
+      address, and the university IT team adds SendGrid CNAME records (and
+      optionally a DMARC TXT record) to the university's DNS. Included in this
+      stage because it is a day-one deliverability decision that must be
+      started early — it is a multi-party, multi-week dependency, not a
+      setting.
+    confirmed_by: >
+      .../Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Sending Emails using University-s Email Address.md
+      — "Raise support ticket or request Account Manager's to initiate process... Exxat support team
+      will work with Exxat Devops team to setup domain whitelisting into SendGrid account and send
+      invitation email from SendGrid to whitelist CNAME records"; "Clinical sites won't need to
+      whitelist the Exxat Domain (exxat.com) – they'll simply whitelist your university domain."
+      NOTE ON SOURCING: not covered by the 1/16 tutorial transcript, which stops at in-product Email
+      Setup. Cited from the help center by necessity and flagged as such.
+    elements:
+      - element: "Support ticket / Account Manager request to initiate domain configuration"
+        type: "off-platform request (vendor-gated)"
+        data_shown: "n/a — a ticket, not a screen."
+        gates_on:
+          - "Gates whether program email is deliverable at scale. Until it is done, every outbound email originates from exxat.com and each clinical site must whitelist the vendor's domain."
+        accreditation_citation: "None, this is a platform-mechanics element with no direct accreditor tie."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file addresses outbound email deliverability or domain authentication at all."
+        gap_severity: "gap"
+        gap_note: >
+          A pure vendor dependency on the critical path of onboarding, with no
+          in-product status visibility: nothing in Program Details tells the
+          admin whether domain authentication is pending, verified, or failed.
+          For a new program whose entire first term depends on reaching
+          clinical sites by email, this is the highest-risk invisible
+          dependency in the stage.
+      - element: "University IT DNS entries (3x CNAME for SendGrid automated security; optional DMARC TXT)"
+        type: "external configuration (third-party DNS)"
+        data_shown: "CNAME records aliasing the university domain to SendGrid (handling SPF/DKIM automatically), plus an optional 'v=DMARC1; p=none;' TXT record."
+        gates_on:
+          - "Requires a third party (university IT/identity team) the program administrator does not control and often cannot prioritize."
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          Three-party coordination (program admin, Exxat support/DevOps,
+          university IT) with no shared tracker. Note this sits alongside the
+          other identity dependency the transcript describes at line 13 —
+          SSO, where 'support will let you know when you are ready to access
+          your account' — meaning both of the tenant's identity rails (login
+          and outbound mail) are vendor-and-IT-gated and invisible in-product.
+
+  # ---------------------------------------------------------------------
+  - screen: "Program Details > User Roles (By Name / By Role)"
+    navigation_path: "Program Details > User Roles > By Name (default) | By Role > Manage Roles / Manage Users > Assigned / Unassigned tabs"
+    action: >
+      The administrator provisions who else can do what: reviewing every user
+      with access, inspecting exactly what a role grants, and assigning or
+      unassigning roles individually (By Name) or in bulk against one role
+      (By Role).
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (lines 55-59):
+      "In the User Roles section, you can manage the faculty and administrators who have access to your
+      program. This section consists of two tabs: By Name and By Role... the table displays each person's
+      name, username, email, number of associated roles, the modules they have access to, and the date
+      and time of their last login. You will also see an action column. From here, you can click on
+      Manage Roles to assign or remove access for the selected user. A search box is available to help
+      you quickly find a specific user. Additionally, you can export this table into an Excel file using
+      the export icon. The By Role tab provides a different view. In this table, you will see the role
+      name, role type, total number of users, role description, and an action column to manage user
+      roles. Please note, if you see a black eye icon, it indicates that the date and time when the staff
+      member was assigned the role were not tracked. In such cases, the displayed date and time correspond
+      to when your school joined EXAP Prism."
+      SECONDARY (assign-before-unassign guidance, custom-role and View-as-Student gates, standard role
+      catalog): .../Program Details/Managing User Roles and Access.md and
+      .../Getting Started for Admin (includes User Guides)/Understanding User Roles in Exxat Prism.md.
+    elements:
+      - element: "By Name table (name, username, email, # roles, modules, last login)"
+        type: "read-only rollup + row actions"
+        data_shown: "One row per person with access, including last-login datetime and the modules that person can reach."
+        gates_on: []
+        accreditation_citation: "None as a standard citation. Adjacent: LCME and COCA both expect documented control over who can access student records; the last-login and modules columns are the closest thing to an access-review artifact in the product, though neither accreditor prescribes it."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. medhub.yaml documents MedHub's authentication posture (SAML/Shibboleth SSO, MFA, FERPA/SOC 2) but not an admin-facing user/role review table; core-elms.yaml notes only that 'generic SSO/LTI standards support is described' with no named integrations, explicitly calling integration depth 'hard to evaluate against Prism without a demo/RFP.' Prism's advantage here is real but unverifiable from competitor public docs."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Eye icon > role permission detail drawer"
+        type: "read-only permission viewer"
+        data_shown: "What permission and access a given role covers, section by section across the Prism system."
+        gates_on:
+          - "Per the transcript, a BLACK eye icon carries a specific meaning: the role-assignment timestamp was never tracked, so the date shown is the date the school joined Prism rather than the date of assignment."
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: >
+          The black-eye-icon convention means the assignment audit trail is
+          knowingly incomplete for legacy assignments and silently substitutes
+          the tenant-creation date. Harmless for a brand-new tenant (where all
+          assignments are new and tracked) but it means an admin cannot tell
+          'assigned at go-live' from 'untracked' by reading the date alone.
+      - element: "Manage Roles > Assigned / Unassigned tabs with per-role Assign / Unassign"
+        type: "button set (permission mutation)"
+        data_shown: "Two lists per user — roles held, roles available — each row with a single action."
+        gates_on:
+          - "Ordering matters and is not enforced: 'always assign the new role before removing the existing role... If you remove a user's existing role before assigning the replacement role, the user may temporarily lose access to the modules and features associated with that role.'"
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "cosmetic"
+        gap_note: >
+          The assign-before-unassign rule is documented guidance, not a
+          product guard — the UI will happily let a new admin strip a role
+          first and lock a colleague out mid-term. A swap action, or a warning
+          on unassigning a user's last role, would make the guidance
+          unnecessary.
+      - element: "By Role table (role name, role type, total users, description) + Manage Users"
+        type: "read-only rollup + bulk action"
+        data_shown: "One row per role including whether the access is standard or custom, and a clickable Total Users count that opens a drawer of the assigned users."
+        gates_on:
+          - "The catalog itself is fixed: standard Program-Level roles (Super Program Administrator, Curriculum Administrator, Faculty Compliance Administrator, Site & Contract Coordinator (Limited), Compliance Administrator (Approve Only), Read-Only Program Administrator, Non-Compliance Admin, Site & Placement Program Administrator, PRISM LITE, Site Management Program Admin (Limited), Exxat One Access) and Tenant-Level roles (CCS Institution Administrator, User Management Admin (Read-Only), Compliance Management Admin, Institutional Placement Admin)."
+        accreditation_citation: "None as a standard citation."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Custom role creation"
+        type: "ABSENT in-product (vendor-gated)"
+        data_shown: "Custom roles exist and are visible in the By Role table's role-type column, but cannot be created here."
+        gates_on:
+          - "Help center: 'You can create custom user roles tailored to your program's requirements. To request a new custom role, please contact Exxat Support.' The transcript corroborates that custom roles exist ('We support custom roles based on your program's needs. If you are assigned a custom role, you might have limited access to these sections') without offering a creation path."
+        accreditation_citation: "None as a standard citation. Practically relevant to the expansion domains: a COM's clerkship structure or a dental school's clinic-supervision hierarchy may not map onto the eleven standard program-level roles, and the mismatch surfaces as a support ticket."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor teardown documents role-model extensibility either way, so this cannot be scored as behind or ahead."
+        gap_severity: "gap"
+        gap_note: >
+          Second hard vendor dependency of the stage (after the Type of
+          program dropdown). Role modelling is exactly the kind of thing a
+          program discovers it needs mid-onboarding, and it is a ticket, not
+          a setting.
+      - element: "View as Student access"
+        type: "ABSENT in-product (vendor-gated)"
+        data_shown: "n/a — the help center states plainly: 'View as Student access cannot be assigned through the User Roles page. To enable View as Student access for a user, contact the Exxat Support Team.'"
+        gates_on:
+          - "Gates the admin's ability to see what students see, which is precisely what a new admin needs while configuring the student experience in later onboarding stages."
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          Third vendor dependency, and the one with the worst timing: a
+          brand-new administrator setting up cohorts, announcements,
+          attestations and student resources has no self-service way to
+          preview the result. Should be requested during onboarding kickoff,
+          not discovered later.
+      - element: "Export icon (Excel export of the By Name table)"
+        type: "button (export)"
+        data_shown: "The By Name access table as an Excel file."
+        gates_on: []
+        accreditation_citation: "None as a standard citation, though an exportable access roster is the artifact a university security review typically asks for during annual access recertification."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+
+  # ---------------------------------------------------------------------
+  - screen: "Program Details > Program 360"
+    navigation_path: "Program Details > Program 360"
+    action: >
+      The administrator opens the program-wide live rollup. On day one this
+      screen is almost entirely zeroes — which is exactly why it is useful
+      during onboarding: it is the completeness checklist for the rest of
+      product setup, showing which entities still have no records.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (lines 59-61):
+      "Next, let's move to the Program 360 tab. This tab gives program administrators instant visibility
+      into student activity, placements, curriculum data, and site operations... It includes high-level
+      overviews of core entities, academics, sites and contracts, slots, placements, and learning
+      activities, allowing you to track progress, identify trends, and make informed decisions efficiently."
+      SECONDARY (metric enumeration): .../Program Details/Using Program 360.md. Corroborated in
+      content/prism/capability-map.yaml ("Program 360 / Placement 360 dashboards").
+    elements:
+      - element: "Core Entities overview (Active Students, Faculty/Staff)"
+        type: "read-only rollup (live counts)"
+        data_shown: "Count of active students and of faculty/staff associated with the program."
+        gates_on: []
+        accreditation_citation: >
+          Weakly relevant: CODA Standard 1, Element 1-2 requires
+          'broad-based, systematic, and continuous' assessment rather than a
+          pre-visit compilation, and a live rollup is the right architectural
+          answer — but these two counts are not themselves 1-2 evidence.
+          Cite the pattern, not the numbers.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research. capability-map.yaml judges the drill-down dashboard pattern 'meaningfully different (more useful) than a report library,' but no competitor file documents a comparable program-wide live rollup to test that against."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Academics overview (course-offering distribution, Total courses, Curricula, Accreditation standards, Requiring vs. Not requiring placement)"
+        type: "read-only rollup"
+        data_shown: "Curriculum-side counts including how many accreditation standards are mapped."
+        gates_on: []
+        accreditation_citation: >
+          The 'Accreditation standards' tile is the one genuinely
+          accreditation-tied element on this screen — it counts standards
+          mapped to the curriculum, which is the coverage evidence COCA
+          Element 6.4, ACPE 2.2.d, CODA 2-8 and LCME 9.4 all ultimately want.
+          It is a count, not the evidence itself; the substantive analysis
+          lives in competency-verification--01 and --04.
+        competitor_equivalent: "elentra.yaml documents standard-set coverage claims (>40% CACMS DCI) as a marketing metric, which is the closest public analogue to a mapped-standards count — but Elentra's is a vendor claim about their library, not a live per-tenant tile, so the two are not comparable element-for-element."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Sites & Contracts overview (Sites, Locations, Contracts, Site assessments, Location assessments, Personnel)"
+        type: "read-only rollup"
+        data_shown: "Partner-network counts including active agreements and collected site/location assessments."
+        gates_on: []
+        accreditation_citation: >
+          Relevant to the sufficiency-of-clinical-resources family of
+          standards — the Nursing playbook cites ACEN 4.9, CCNE II-C and COA
+          A.10/F.1 together for exactly this evidence, and COCA Element 6.9
+          (core clerkships, coca.yaml) depends on a documented site network.
+          The counts here are a health indicator, not the submission-grade
+          evidence, which lives in the Sites module reports.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Slots overview (Total / Past / Ongoing / Future) and Placements overview (Total / Past / Ongoing / Future, Wishlists, My Request, Placement Assist)"
+        type: "read-only rollup (time-sliced)"
+        data_shown: "Placement pipeline health across time, plus counts of student wishlists, requests, and Placement Assist activity."
+        gates_on: []
+        accreditation_citation: "None on day one — these are all zero for a new tenant. Downstream these counts feed the rotation-lifecycle journey rather than this stage."
+        competitor_equivalent: "one45.yaml documents 'personalized learner dashboards' and multi-layered concurrent schedules, but a learner dashboard is a different object from a program-wide slot/placement rollup; not comparable element-for-element."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Learning Activities overview (Forms/Evaluations, Patient Log, Timesheet, Time Off record counts)"
+        type: "read-only rollup"
+        data_shown: "Volume of submitted learning-activity records by type."
+        gates_on: []
+        accreditation_citation: "None on day one. Downstream, Patient Log and Timesheet counts are the raw material for e.g. the SLP 400-hour ASHA requirement (per the SLP playbook, the report suite is 'built almost entirely around clinical log / clock hour data') and for COCA 6.9 rotation counts — but as counts on a dashboard they are not evidence."
+        competitor_equivalent: "leo-davinci.yaml documents encounter/duty-hour logging in detail and new-innovations.yaml documents duty-hour violation tracking, but neither describes a program-wide record-volume rollup; not comparable element-for-element."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Program 360 as an onboarding-completeness surface"
+        type: "ABSENT (opportunity, not a shipped element)"
+        data_shown: "n/a — Program 360 shows counts, not setup state. Nothing on it says 'terms not configured,' 'no grading scheme defined,' 'clinical settings list empty,' or 'accreditation record missing.'"
+        gates_on: []
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file documents a setup-progress or onboarding-checklist surface."
+        gap_severity: "gap"
+        gap_note: >
+          The single clearest product opportunity in this stage. Prism already
+          ships the exact screen where a day-one setup checklist belongs, and
+          it already computes the counts that would drive it, but it presents
+          them as steady-state metrics rather than as onboarding progress.
+          There is no in-product answer to a new administrator's actual
+          question — 'what have I not set up yet?' — anywhere in Program
+          Details. Today that answer lives only in a 16-video tutorial series
+          and a CSR's head.
+
+  # ---------------------------------------------------------------------
+  - screen: "Program Details > Calendar (Program Calendar)"
+    navigation_path: "Dashboard > Program section > calendar icon  (or hamburger menu > Program Details > Calendar) > Add Event"
+    action: >
+      The administrator reviews the program-wide event surface and creates any
+      program-level events or deadlines. Per the transcript this surface is
+      program-scoped and role-scoped: "The program calendar is specific to your
+      program and is available for program administrators only."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (lines 61-65):
+      "We will now cover how to use the program calendar to view, track, and manage all key events and
+      deadlines in one place... The month view provides a high-level overview of all events. The week
+      view gives a more detailed breakdown of events. The day view allows you to focus on daily
+      activities, and the agenda view which displays all the events in the list view. Events are color
+      coded by module, making it easy to identify where they originate. For example, purple indicates
+      attestations and blue indicates follow-ups. You can see all the different color codes in the event
+      type dropdown. Clicking on an event opens a detailed view where you can see the event title and
+      description, view relevant contextual details, and navigate directly to the associated record. To
+      create a new event on the program calendar page, click the Add Event button in the top right
+      corner. In the new event drawer, enter the event title and set the start and end dates. You can
+      choose to mark the event as an all-day event, set it as a recurring event, select both options, or
+      leave both unselected. You can also add a description for the event and click Save to create the event."
+      SECONDARY (event-type taxonomy: single-day vs. due-date events; Go To navigation):
+      .../Program Details/Using Program Calendar.md.
+    elements:
+      - element: "Month / Week / Day / Agenda view selector"
+        type: "view toggle"
+        data_shown: "Four presentations of the same event set. Note the transcript names four views including Agenda; the help-center article lists only three (Month/Week/Day) — the transcript is the more complete source and is preferred here."
+        gates_on: []
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Event Type dropdown (module color legend)"
+        type: "filter + legend"
+        data_shown: "Events color-coded by originating module — purple for Attestations, blue for Follow-Ups, and the rest enumerated in the dropdown."
+        gates_on:
+          - "Which modules currently emit calendar events is defined by this list, and it is the practical answer to 'what feeds this calendar?' Notably, nothing in either source says the Accreditation record's Next accreditation date is among them."
+        accreditation_citation: >
+          Relevant by omission. COCA Standard 11, Element 11.9 requires
+          'timely, complete submission' of annual and mid-cycle reports and
+          coca.yaml names 'deadline and submission-status tracking' as the
+          required software behavior; CODA 1-2 requires continuous rather
+          than episodic planning. A program-wide calendar with due-date
+          events is the natural home for those deadlines, and no source
+          confirms accreditation dates appear on it.
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "gap"
+        gap_note: >
+          Pairs with the Next-accreditation-date gap above: Prism ships both
+          halves of accreditation deadline tracking (a structured date field
+          and a due-date-aware program calendar) and no documented connection
+          between them.
+      - element: "Event detail view + Go To (navigate to associated record)"
+        type: "drill-down navigation"
+        data_shown: "Title, description, contextual detail, and a direct link to the originating record."
+        gates_on: []
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "Add Event drawer (title, start/end dates, all-day toggle, recurring toggle, description)"
+        type: "input field set + toggles"
+        data_shown: "Manually created program-level events; all-day and recurring are independent toggles ('select both options, or leave both unselected')."
+        gates_on: []
+        accreditation_citation: "None as a standard citation — manual events are unstructured and should not be positioned as accreditation deadline management."
+        competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
+        gap_severity: "none"
+        gap_note: ""
+      - element: "External calendar subscription / iCal feed"
+        type: "ABSENT"
+        data_shown: "n/a — neither the transcript nor the help-center article describes any export, iCal feed, or subscription from the Program Calendar."
+        gates_on: []
+        accreditation_citation: "None, platform-mechanics element."
+        competitor_equivalent: >
+          The clearest documented competitor advantage in this entire stage,
+          and one of the few element-level comparisons the competitor files
+          actually support. one45.yaml documents 'personalized learner
+          dashboards synced to Google Calendar/Apple iCal/Outlook';
+          leo-davinci.yaml documents 'a per-user central calendar [that]
+          surfaces rotation/session details (location, materials, mandatory
+          status, real-time iCal feed).' Two independent competitors publicly
+          document live external calendar sync; no Prism source documents any.
+        gap_severity: "gap"
+        gap_note: >
+          Caveat on scope before this is scored: one45's and Leo/DaVinci's
+          synced calendars are LEARNER-facing schedule feeds, while Prism's
+          Program Calendar is an admin-only program surface — related but not
+          identical objects, and the honest comparison is 'they publish
+          external sync for their calendar surface and Prism does not publish
+          it for its own,' not a like-for-like feature loss. Still worth
+          raising: an admin-only calendar with no feed means program deadlines
+          live in a tool the admin must remember to open.
+
+sources:
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '1/16 Administrator Navigation in Exxat Prism' (https://vimeo.com/933464453), lines 35-65. PRIMARY SOURCE for this stage: Program Details/Setup, logo and program name, Details drawer, Mission and Vision, Accreditation instances, Grading Schemes (letter and pass/fail), clinical Settings, Standards tab pointer, Notification Hub (Email Setup + Email Templates), User Roles (By Name / By Role), Program 360, and Program Calendar are all narrated in this one transcript."
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — line 13 (SSO activation: 'For single sign-on accounts, support will let you know when you are ready to access your account') and line 17 ('We support custom roles based on your program's needs')."
+  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '16/16 (Part 1) How to use Ask Leo' (line 1683) and '16/16 (Part 2) Using the Resource Center' (line 1701), for the distinction between Ask Leo (chatbot, covered in the 1/16 navigation transcript) and the newer AI Features Hub consent flow (not covered by any transcript)."
+  - ".../Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Details via Setup.md — SECONDARY: Program Information sub-sections (Terms, Professional years, Program clinical settings) and the CSR warning that calendar edits impact the entire course catalog, course offerings and curriculum grid."
+  - ".../Program Details/Managing Your Program Information.md — SECONDARY: Details-drawer field list and mandatory-field flags."
+  - ".../Program Details/Using Notification Hub.md — SECONDARY: OTP forward-protection behavior, template type definitions (Locked/Regular/Restricted), template constraints (unique name per category, category immutable, 2-character search minimum), and the unrecoverable-delete caveat."
+  - ".../Program Details/Managing User Roles and Access.md — SECONDARY: assign-before-unassign guidance, Manage Users bulk path, custom-role and View-as-Student support gates."
+  - ".../Getting Started for Admin (includes User Guides)/Understanding User Roles in Exxat Prism.md — SECONDARY: the standard Program-Level and Tenant-Level role catalog."
+  - ".../Getting Started for Admin (includes User Guides)/Sending Emails using University-s Email Address.md — SECONDARY: SendGrid domain authentication process, CNAME/DMARC records, support-ticket-initiated workflow."
+  - ".../Program Details/Using Program 360.md — SECONDARY: full metric-group enumeration."
+  - ".../Program Details/Using Program Calendar.md — SECONDARY: single-day vs. due-date event types, Go To navigation."
+  - ".../Program Details/Add New Settings in Exxat Prism.md — SECONDARY: definition of clinical settings and the Grading-and-clinical-settings navigation path."
+  - ".../Program Details/Agreeing to AI Usage Terms.md — AI Features Hub, consent ledger, per-feature toggles, role gating. Not covered by any transcript."
+  - "content/accreditation/coca.yaml — Standard 11 Element 11.9 (annual/mid-cycle reports, deadline tracking), Element 10.2 ('since the last accreditation cycle'), Element 6.9 (core clerkships incl. inpatient setting), Element 5.4 (patient care supervision)."
+  - "content/accreditation/coda.yaml — Standard 1 Element 1-2 (institutional effectiveness; continuous rather than pre-visit evidence)."
+  - "content/accreditation/acpe.yaml — preceptor orientation to program mission; PHARMS submission-platform scoping note."
+  - "content/accreditation/lcme.yaml — clinical supervision element (context for the OTP/data-handling posture)."
+  - "content/journeys/competency-verification.yaml stage 8 — precedent for the COCA 11.9 / CODA 1-2 tie on the program accreditation record; adopted rather than re-derived."
+  - "content/flows/competency-verification--01-define-the-competency-framework-and-map.yaml — authority for the Program Details > Standards tab elements and the Map with Leo AI-consent precondition."
+  - "content/prism/capability-map.yaml — OTP protection detail, Program 360 metric groups, program-level accreditation record, Accreditation Management as a Q3 2027 roadmap pillar."
+  - "content/competitors/axium.yaml — 'Evaluations Module: Record student assessments using customizable grading schemes' (the one directly comparable element in this stage; axiUm is the dentistry incumbent)."
+  - "content/competitors/one45.yaml — learner dashboards 'synced to Google Calendar/Apple iCal/Outlook' (external calendar sync)."
+  - "content/competitors/leo-davinci.yaml — 'per-user central calendar... real-time iCal feed'."
+  - "content/competitors/medhub.yaml — SAML/Shibboleth SSO, MFA, FERPA/SOC 2 (vendor-level security posture vs. Prism's admin-configurable link security)."
+  - "content/competitors/core-elms.yaml — 'only generic SSO/LTI standards support is described'; CompMS as a separately priced module."
+  - "content/competitors/new-innovations.yaml and content/competitors/emedley.yaml — 'expiration alerts' / 'automated expiration notifications' (proof the date-driven-alert pattern is table stakes, applied to credentials rather than accreditation cycles)."
+  - "content/competitors/elentra.yaml — named accreditor standard sets (LCME/COCA/CACMS/ACPE/CODA/ARC-PA), >40% CACMS DCI coverage claim."
+  - "Playbooks/Physical Therapy (PT) Playbook.md — PT clinical settings value list; Practice Settings mapped to CAPTE 2024 6H / 2016 6L2 via PTSE 1 Q3."
+  - "Playbooks/Occupational Therapy (OT) Playbook.md — ~25 OT settings organized against AOTA Recommended Practice & Fieldwork Settings, color-coded by category."
+  - "Playbooks/Physician Assistant (PA) Playbook.md — SCPE settings as a mapped course-attribute category (ARC-PA B3.xx); B1.01 a-d mission/goal alignment."
+  - "Playbooks/Nursing Playbook.md — triple accreditation (ACEN 4.9 / CCNE II-C / COA A.10/F.1); setting as a group-by axis on the Patient Log Aggregate Report."
+  - "Playbooks/Speech-Language Pathology (SLP) Playbook.md — Placement Setting as a configurable filter; CAA/ASHA; report suite built around clock-hour data."
+  - "Playbooks/Social Work (SW) Playbook.md — CSWE; Agencies module setting type/population/services rather than a clinical-settings list."
+  - "Playbooks/Teacher Education (TE) Playbook.md — CAEP; GoReact/Echo360 integration; no clinical-settings analogue."
+  - "content/domains/do.yaml — OMS-3/OMS-4 clinical years, 48 COMs, rotation-site capacity as a named bottleneck (context for Professional years labeling)."
+  - "/Users/romitsoley/Downloads/OTOTAVideosTranscripts.md (line 79) — auto-notification drawer with email-template selection, evidence that template-driven automation exists elsewhere in the product and could plausibly be pointed at accreditation dates."
+
+last_verified: "2026-08-24"

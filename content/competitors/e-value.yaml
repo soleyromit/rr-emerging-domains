@@ -1,0 +1,253 @@
+competitor: "E*Value (MedHub)"
+slug: "e-value"
+domains_served: ["DO", "MD", "Pharmacy"]
+category: "Med-ed management (UME + GME + advanced-practice health sciences)"
+company:
+  founded: "2002 (per CB Insights company profile; not independently confirmed on medhub.com itself)"
+  hq: "Minneapolis, MN"
+  ownership: >
+    MedHub and E*Value were separate companies that merged in November 2015
+    under Ascend Learning (MedHub's parent). MedHub had focused on UME/GME;
+    E*Value served advanced-practice fields (pharmacy, nursing, dentistry,
+    PA, veterinary). They now operate as one combined product line/company
+    ("MedHub and eValue") under Ascend Learning. In May 2025 Ascend Learning
+    also acquired myTIPreport, folded in "to enhance MedHub's offering."
+
+# One entry per Prism pillar (see ../prism/capability-map.yaml). All six
+# named pillars are covered below, including the three still on Prism's
+# 2027 roadmap, because MedHub/E*Value already ships public-facing features
+# touching all six today.
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: >
+      eValue: case logs for tracking competencies/interventions/encounters
+      during clinical rotations; time tracking with automated reminders and
+      summary reporting; mobile procedure logging; evaluation-driven
+      rotation/site/educator scheduling. Ships across 24+ named disciplines
+      (GME, UME, nursing, PT/OT, pharmacy, dentistry, osteopathic medicine,
+      PA, athletic training, social work, and more) from one platform.
+    depth_vs_prism: "at-parity"
+    evidence: >
+      "Log clinical experiences online or via mobile device; teachers
+      review and validate logs, and provide mentoring" and "Track and
+      validate hours, create summary reports, and automate reminder
+      notifications for students." Breadth across disciplines (24 listed
+      program types) is wider than Prism's confirmed current scope
+      (nursing + allied health) but per-discipline depth vs. Prism's
+      anchor-relative rotation-date engine is not independently verifiable
+      from public pages.
+    source: "https://www.medhub.com/software/evalue/"
+  - pillar: "Compliance Management"
+    competitor_capability: >
+      Automated document collection during onboarding (contracts, health
+      records, training documents) via dynamic forms; "Automated
+      Credentials Monitoring" for real-time tracking of state, DEA, and
+      controlled-substances licenses with GME-office alerts on changes;
+      automated alerts for expiring credentials; auto-alerts for late,
+      incomplete, or violation-triggering work hours.
+    depth_vs_prism: "unknown"
+    evidence: >
+      "Automated document collection for incoming and returning trainees,
+      including contracts, health records, and training documents" and
+      "Automated Credentials Monitoring enables real-time tracking of
+      state, DEA, and Controlled Substances licenses, alerting the GME
+      Office to any changes." Public pages do not explicitly name
+      immunization or background-check tracking as distinct line items,
+      so exact taxonomy vs. Prism's compliance module could not be
+      confirmed either way.
+    source: "https://www.medhub.com/software/residency-management-software/"
+  - pillar: "Curriculum Mapping"
+    competitor_capability: >
+      Curriculum mapping explicitly aligned to the AAMC Curriculum Survey
+      and MedBiquitous Curriculum Standards; searchable curriculum maps
+      linking courses, sessions, and programs to learning objectives and
+      accreditation criteria; gap/redundancy identification; visual
+      representations of standards coverage; supports AAMC Curriculum
+      Survey participation.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "MedHub follows national regulations like the Association of
+      American Medical Colleges (AAMC) Curriculum Survey and MedBiquitous
+      Curriculum Standards" and helps institutions "identify gaps and
+      redundancies" and link "course material to learning objectives and
+      accreditation criteria." Named-standard alignment (AAMC,
+      MedBiquitous) is a specific, publicly documented capability that
+      is not confirmed to exist for Prism's curriculum mapping pillar.
+    source: "https://www.medhub.com/curriculum-mapping-software-best-curriculum-mapping-software/"
+  - pillar: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    competitor_capability: >
+      eValue's evaluation-forms engine is already shipped and is the core
+      of the product: configurable evaluation forms to collect data on
+      students, educators, activities, and sites; pre-populated evaluation
+      results; automated low-score alerts; forced comments on low scores;
+      mid-point-to-end-of-rotation summary evaluations.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "Create and manage evaluation forms to collect data and report on
+      students, educators, activities, and sites" — this is a production
+      feature today, whereas Prism's own roadmap (capability-map.yaml)
+      lists Surveys & Course Evaluations as targeted for Q1 2027.
+    source: "https://www.medhub.com/software/evalue/"
+  - pillar: "Exam Management (Prism roadmap Q2 2027)"
+    competitor_capability: >
+      "Curriculum and Assessment Technology" module, built on a partnership
+      with BoardVitals: a question/content bank spanning UME and 30+ GME
+      specialties, LTI integration with institutional LMS for automatic
+      grade syncing, and "AI-powered risk assessment" analytics that flag
+      at-risk learners against board-exam benchmarks. Functions primarily
+      as assessment delivery + analytics on top of BoardVitals content,
+      not a from-scratch native exam-authoring tool.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "Unified solution for board exam readiness and curriculum
+      effectiveness with detailed performance analytics and AI risk
+      assessment," delivered via BoardVitals content integrated through
+      LTI for "automatic grade syncing and one-click access." Shipped
+      today vs. Prism's Q2 2027 roadmap target, though it is a
+      partner-content model rather than native exam creation.
+    source: "https://www.medhub.com/software/curriculum-and-assessment-technology/"
+  - pillar: "Accreditation Management (Prism roadmap Q3 2027)"
+    competitor_capability: >
+      Dedicated "Accreditation Automation" feature set: customizable
+      Annual Program Evaluation (APE) forms; ACGME NAS-aligned dashboards
+      and program scorecards; CLER visit/letter/response-action tracking;
+      direct import of ACGME survey results into scorecards; automated
+      ADS-formatted report generation; PubMed-sourced scholarly-activity
+      import; automated alerts for accreditation tasks and policy
+      expirations; benchmarking against national/institutional trends.
+    depth_vs_prism: "ahead"
+    evidence: >
+      "MedHub's accreditation management aligns with ACGME NAS and
+      facilitates CLER & ADS reporting" with "Customized Accreditation
+      Dashboards" that "measure performance across all programs... and
+      manage CLER site visits, letters and response actions," plus the
+      ability to "Directly import ACGME survey results for inclusion in
+      program scorecards" and generate "ADS formatted reports." This is
+      a shipped, named product page today; Prism's own roadmap lists
+      Accreditation Management as targeted for Q3 2027 — the single
+      biggest publicly-verifiable gap found in this research.
+    source: "https://www.medhub.com/accreditation-automation/"
+
+strengths:
+  - claim: >
+      20+ year incumbent spanning the full med-ed lifecycle (UME, GME, and
+      20+ advanced-practice disciplines including pharmacy, dentistry, and
+      osteopathic medicine) under one owner since the 2015 MedHub/E*Value
+      merger, serving 600+ client organizations and, at time of merger,
+      80 of 119 U.S. academic health centers plus 85,000+ medical students
+      and 100,000+ advanced-practice students.
+    source: "https://www.medhub.com/leading-healthcare-education-management-providers-medhub-and-evalue-have-merged/"
+  - claim: >
+      Accreditation Management is a shipped, ACGME-specific product today
+      (NAS-aligned dashboards, CLER visit tracking, ADS report generation,
+      direct ACGME data import) — a full pillar Prism does not plan to
+      ship until Q3 2027.
+    source: "https://www.medhub.com/accreditation-automation/"
+  - claim: >
+      Mobile app rated 4.7 out of 5 stars from roughly 5,000 App Store
+      ratings, with reviewers describing it as "pretty easy to use" and
+      "accurate, very easy to use and super handy" for logging hours and
+      evaluations.
+    source: "https://apps.apple.com/us/app/medhub/id1126919433"
+  - claim: >
+      Curriculum mapping is explicitly aligned to named external standards
+      (AAMC Curriculum Survey, MedBiquitous Curriculum Standards) rather
+      than a generic internal taxonomy.
+    source: "https://www.medhub.com/curriculum-mapping-software-best-curriculum-mapping-software/"
+  - claim: >
+      Explicitly supports osteopathic medicine (DO) and pharmacy programs
+      today as named, listed program types — directly overlapping two of
+      Exxat's target expansion domains.
+    source: "https://www.medhub.com/medical-education-institutional-effectiveness/supported-program-types/"
+
+weaknesses:
+  - claim: >
+      Recurring user complaints of slowness, bugs, and an unresponsive UI
+      in the mobile/web evaluation and time-logging workflow — reviews
+      describe hours-entry as "atrociously slow, buggy, laggy," report the
+      app is "very buggy, freezes and exits," and describe evaluation
+      forms that "skip fields" or fail to register submitted hours.
+    source: "https://play.google.com/store/apps/details?id=com.medhub.mobile ; https://justuseapp.com/en/app/1126919433/medhub/reviews"
+  - claim: >
+      Patient/procedure logging UX specifically called out as cumbersome:
+      one App Store reviewer wrote it "needs some major reworking to the
+      patient logging system so it is not so cumbersome and time
+      consuming," and separately criticized the age-entry field for using
+      a scrolling menu instead of numeric input.
+    source: "https://apps.apple.com/us/app/medhub/id1126919433"
+  - claim: >
+      No accessible public G2 or Capterra product listing/reviews for
+      MedHub or E*Value could be found as of August 2026 (search and
+      direct navigation attempts on both sites returned no matching
+      product page), and the Slashdot listing shows zero user reviews —
+      unlike many SaaS competitors, third-party review-site due diligence
+      is harder for buyers to do independently.
+    source: "unable to verify via public G2/Capterra product search, checked Aug 2026; https://slashdot.org/software/p/MedHub/"
+  - claim: >
+      Pricing model and cost structure are not publicly disclosed anywhere
+      found (no list pricing on medhub.com; a public-sector procurement
+      record for "MedHub E*Value Annual Subscription Fees" exists but does
+      not itself disclose the fee amount), consistent with an
+      enterprise/custom-quote sales motion that is slower for smaller or
+      newer programs to evaluate.
+    source: "https://www.instantmarkets.com/view/ID122497165622958580482426541824325296474/MedHub_EValue_Annual_Subscription_Fees"
+retention_anchor: >
+  Two decades of accumulated trainee, compliance, and accreditation history
+  (case logs, evaluations, ACGME ADS submissions, CLER response actions)
+  sits inside MedHub/E*Value as the system of record for 600+ institutions,
+  and GME offices build entire multi-year ACGME accreditation cycles
+  (NAS dashboards, ADS reporting, CLER visit tracking) directly on top of
+  it — switching mid-cycle risks losing continuity in accreditation-facing
+  reporting that program coordinators cannot easily reconstruct elsewhere.
+  Ownership by Ascend Learning, which folded myTIPreport into the MedHub
+  line in 2025, also signals ongoing bundling of adjacent ed-tech assets
+  that deepens the single-vendor footprint over time.
+  (Sources: https://www.medhub.com/accreditation-automation/ ,
+  https://www.medhub.com/leading-healthcare-education-management-providers-medhub-and-evalue-have-merged/ ,
+  https://www.cbinsights.com/company/medhub )
+
+exxat_opportunity: >
+  The clearest, most defensible opening is not on the pillars Prism already
+  ships — it's the fact that MedHub/E*Value has publicly-documented,
+  shipping products today for all three pillars still on Prism's roadmap
+  (Surveys & Course Evaluations, Exam Management, and especially
+  Accreditation Management with named ACGME NAS/CLER/ADS support), which
+  means Exxat is currently racing to close a gap against an incumbent, not
+  defending a lead. Prism's near-term win path is therefore twofold: (1)
+  ship Accreditation Management scoped explicitly against DO/Pharmacy
+  accreditors (COCA, ACPE) rather than only ACGME/LCME, since MedHub's
+  accreditation automation is documented as GME/ACGME-specific — a
+  DO/Pharmacy-native accreditation workflow would be a capability MedHub
+  has not publicly demonstrated; and (2) compete on product experience and
+  support responsiveness where MedHub has visible public complaints
+  (slow/buggy mobile workflows, cumbersome procedure logging, no
+  discoverable G2/Capterra presence for prospects to vet them against),
+  positioning Prism's WCAG AA compliance, 24/7 support, and dedicated
+  account management (per Prism's outer advantage ring) as concrete,
+  verifiable counterpoints during competitive evaluations.
+
+pricing_signal: >
+  Not publicly disclosed. No list pricing appears on medhub.com, and no
+  MedHub/E*Value listing with pricing tiers was found on G2 or Capterra. A
+  public-sector procurement record references a "MedHub E*Value Annual
+  Subscription Fees" bid (Alden, NY), confirming pricing is handled via
+  bid/RFP rather than published rate cards, but the actual fee figures are
+  not disclosed in that public document either.
+
+last_researched: "2026-08-24"
+
+sources:
+  - "https://www.medhub.com/software/"
+  - "https://www.medhub.com/software/evalue/"
+  - "https://www.medhub.com/software/residency-management-software/"
+  - "https://www.medhub.com/curriculum-mapping-software-best-curriculum-mapping-software/"
+  - "https://www.medhub.com/software/curriculum-and-assessment-technology/"
+  - "https://www.medhub.com/accreditation-automation/"
+  - "https://www.medhub.com/medical-education-institutional-effectiveness/supported-program-types/"
+  - "https://www.medhub.com/leading-healthcare-education-management-providers-medhub-and-evalue-have-merged/"
+  - "https://www.cbinsights.com/company/medhub"
+  - "https://apps.apple.com/us/app/medhub/id1126919433"
+  - "https://play.google.com/store/apps/details?id=com.medhub.mobile"
+  - "https://justuseapp.com/en/app/1126919433/medhub/reviews"
+  - "https://slashdot.org/software/p/MedHub/"
+  - "https://www.instantmarkets.com/view/ID122497165622958580482426541824325296474/MedHub_EValue_Annual_Subscription_Fees"

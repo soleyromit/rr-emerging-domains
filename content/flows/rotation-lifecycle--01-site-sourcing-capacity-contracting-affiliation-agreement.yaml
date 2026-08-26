@@ -1,0 +1,1959 @@
+# Element-level ground truth underneath rotation-lifecycle.yaml, stage 1.
+# See _TEMPLATE.yaml for field meanings (SCHEMA v2: analysis fields live per element).
+# Every accreditation_citation and competitor_equivalent claim below traces to a real
+# source file in confirmed_by — never to this journey's own narrative.
+#
+# SCOPE EXTENSION (2026-08-25): this file was originally built covering only the four
+# EXPANSION domains (DO, Medicine, Dentistry, Pharmacy). It now also covers the eight
+# disciplines Exxat/Prism ALREADY serves — PT/PTA, OT/OTA, PA, SLP, Nursing, Social Work,
+# Teacher Education, and CRNA (nurse anesthesia) — bringing this stage to the same
+# 11-to-12-discipline breadth as admin-onboarding--05. Discipline-specific findings are
+# carried two ways, matching the convention in admin-onboarding--05: as their own ELEMENT
+# where the discipline exercises a distinct field, control, or report that the four-domain
+# baseline never touched, and as an explicitly-flagged clause inside an existing element's
+# gap_note where the SAME control simply means something different for that discipline.
+# Three new steps were added for workflows with no four-domain equivalent at all:
+# Site/Agency Assessments (site vetting BEFORE contracting), the discipline-named site/slot
+# sufficiency report family, and student-sourced site entry.
+#
+# COMPETITIVE FRAME SHIFTS FOR THESE EIGHT. For the four expansion domains, the cited
+# competitor set (CORE ELMS, eMedley, MedHub, E*Value, Elentra, one45, New Innovations,
+# axiUm, Leo/DaVinci) is largely aspirational overlap. For PT/OT/PA/Nursing/SW the overlap
+# is direct and current: CORE ELMS markets to "15+ disciplines including pharmacy, dental,
+# nursing, PT, OT, PA, veterinary, social work" (../competitors/core-elms.yaml lines 27,
+# 113-114) and E*Value to "24+ named disciplines (GME, UME, nursing, PT/OT, pharmacy,
+# dentistry, osteopathic medicine, PA, athletic training, social work, and more)"
+# (../competitors/e-value.yaml lines 26-28). That makes their affiliation-agreement claims
+# same-buyer claims rather than adjacent ones — but it does NOT make them element-level
+# comparable, because neither publishes a contract-screen field list. Separately, the PT
+# playbook names a site-sourcing competitive set that has NO teardown file in this repo at
+# all: myClinicalExchange (mCE), Clinician Nexus, ACEMAPP, and CastleBranch Bridges, which
+# it describes as "third-party vendors that require student account registration and
+# payments for slot requests or onboarding — direct competitors of Exxat/Exxat One" that
+# "will not integrate with us" (Physical Therapy (PT) Playbook.md line 184). For the
+# site-sourcing half of this stage those four are the real competitors for PT/OT and this
+# repo has never researched them; that is recorded here as a known research hole, not
+# papered over with a comparison to CORE ELMS.
+flow_name: "Site Sourcing, Capacity Contracting & Affiliation-Agreement Execution"
+maps_to_journey: "rotation-lifecycle.yaml, stage 1"
+persona: >
+  Primary: Clinical/Experiential Education Coordinator (../personas/role-clinical-coordinator.yaml)
+  — creates/maintains the Site and Location records, executes and links contracts, configures
+  expiration alerts, and monitors the Placement Clearance Dashboard's Contract Status column.
+  Secondary: Compliance/Accreditation Liaison (../personas/role-compliance-accreditation-liaison.yaml)
+  — pulls the Contracts report ("Sites Missing Contracts") and the Site Payment Report ahead of a
+  self-study or site-visit request.
+
+steps:
+  - screen: "Sites — Add Site drawer"
+    navigation_path: "Sites (left menu/dashboard) > + Add Site"
+    elements:
+      - element: "Name / Alias Name"
+        type: "input fields"
+        data_shown: "Official site name (mandatory) plus one optional alternate/short name"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9; LCME Standard 1, Element 1.4; ACPE Standard 3, Key Element 3.5.b; CODA Standard 4, Element 4-6; CAPTE Standard 2, Element 2D9; ACOTE Standard C.1.5; ARC-PA Standard B3, Element B3.01 a-e; CAA Standard 3.0B, Standard 3.9B; ACEN Standard 4, Criterion 4.9; COA Standard F.2 with Standard A.3; CSWE Accreditation Standard 3.3, AS 3.3.4; CAEP Standard R2, Component R2.1"
+        competitor_equivalent: >
+          Not comparable at element level — CORE ELMS's and eMedley's public pages (see
+          ../competitors/core-elms.yaml, emedley.yaml) describe "centralized site/student/preceptor
+          management" at a marketing-feature level, with no screen-by-screen field list for site
+          creation to compare a name/alias field against. For the eight existing disciplines the
+          buyer overlap is closer but the evidence is no better: CORE ELMS explicitly sells the same
+          module into "nursing, PT, OT, PA... social work" (../competitors/core-elms.yaml line 27)
+          and E*Value into 24+ disciplines including social work and athletic training
+          (../competitors/e-value.yaml lines 26-28), yet neither publishes a site-creation field
+          list either, so the comparison stays at "both have a site directory."
+        gap_severity: "none"
+        gap_note: >
+          This is the named entity every standard's "each clinical site" language attaches to.
+          Per "Understanding Site vs. Location," a Site is defined as "the group or entity with
+          which a contractual relationship is established" — so the site name is the anchor the
+          Contract object later hangs off, not an arbitrary label. Resolves part of the journey's
+          prior object-model hedge directly: the model is not ambiguous.
+          DISCIPLINE-SPECIFIC (terminology, same field): OT and Social Work both rename this object
+          rather than use it differently. The OT playbook maps "Sites -> Agencies" outright and
+          Preceptor -> Fieldwork Educator / Site Mentor (Occupational Therapy (OT) Playbook.md
+          lines 53-56); Social Work uses "Agency" consistently as its term for Site/Location and
+          reaches the same records through an Agencies module (Social Work (SW) Playbook.md
+          lines 25, 131). Neither is a different data model — the same Site record carries the same
+          contract — which is why the Alias Name field matters more for them than for the four
+          expansion domains.
+          DISCIPLINE-SPECIFIC (the name is not sufficient evidence, PA): ARC-PA 6e B3.01 a-e is the
+          one standard in this file where naming the SITE correctly does not satisfy the standard,
+          because the agreement must also name the PROGRAM. The PA playbook is explicit that
+          "whether institution-wide or site-specific, the agreement must explicitly state 'Physician
+          Assistant students'," that broad "all learners" university agreements are "no longer
+          sufficient," that programs remediate this with an addendum reading "All learners in this
+          agreement include Physician Assistant students," and that for institutions with multiple
+          PA programs/campuses the agreement "should identify which campuses/programs are included —
+          generic university-wide language has been a common source of accreditation citations"
+          (Physician Assistant (PA) Playbook.md lines 141-152). Nothing on this screen or the
+          Contract screens models that; see the dedicated clause-content element in the Contracts
+          step.
+          DISCIPLINE-SPECIFIC (Teacher Education, inferred not confirmed): a school district is the
+          natural Site and its schools the Locations, and ../accreditation/caep.yaml calls the
+          chain-linked contract model "a near-exact structural match for a district MOU covering
+          many school locations." That structural read is this repo's, from the CAEP 2022 standards
+          workbook — NOT from any Exxat TE source. The TE playbook explicitly warns that TE
+          terminology and placement workflows are "NOT confirmed for Exxat" and that CAEP standard
+          numbers should not be treated as Exxat-specific "until confirmed against a TE-specific
+          source" (Teacher Education (TE) Playbook.md lines 12, 67-72). TE is therefore the one
+          discipline in this file whose fit is reasoned from the accreditor registry rather than
+          observed in a product source, and every TE clause below carries that caveat.
+      - element: "Active toggle"
+        type: "toggle"
+        data_shown: "Whether the site is available for new placements; inactive sites remain in the system but cannot receive new placements"
+        gates_on: ["eligibility for new placement/slot creation"]
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents an active/inactive
+          site flag or what it gates.
+        gap_severity: "none"
+        gap_note: >
+          Confirmed to gate new placement/slot creation, but it is a manually-set flag on the Site
+          record — nothing in the sources ties its state to contract validity. It is not itself an
+          accreditation evidence field; it is the one confirmed hard gate on this screen.
+      - element: "Address / Phone / Fax / Website / EIN"
+        type: "input fields"
+        data_shown: "Address is mandatory; the rest are optional contact/identifier fields"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9; LCME Standard 1, Element 1.4; ACPE Standard 3, Key Element 3.5.b; CODA Standard 4, Element 4-6"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file publishes a field list for
+          site demographics to compare address/EIN capture against.
+        gap_severity: "none"
+        gap_note: >
+          Mandatory Address is what makes a Site identifiable as a physical clinical site in the
+          document library each of these standards asks for; the remaining fields are optional
+          contact detail and carry no evidentiary weight on their own.
+      - element: "Programs"
+        type: "multi-select (only visible/editable if the tenant has site-sharing enabled)"
+        data_shown: "Which other programs at the same university can see this site"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents cross-program site
+          visibility controls.
+        gap_severity: "none"
+        gap_note: >
+          Tenant-conditional: only appears when site-sharing is enabled (see the Site Sharing Model
+          setting in the Institutional Level step). Relevant to multi-program positioning, not to
+          any single standard's evidence requirement.
+      - element: "Site/Location Categories"
+        type: "tag select, values configured centrally in Sites > Setup"
+        data_shown: "Program-defined grouping labels on the Site/Location record"
+        gates_on: ["filtering on the Contracts report and the site/location grids"]
+        accreditation_citation: "ACOTE Standard C.1.5 (the selection process and criteria for choosing fieldwork sites, evidenced per level); ACOTE Standard C.1.2 (student access to fieldwork site information); CSWE Accreditation Standard 3.3, AS 3.3.1 (agency setting type, population served, and services as structured fields)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a site-categorisation
+          taxonomy or what it drives. CORE ELMS's "centralized site/student/preceptor management"
+          claim (../competitors/core-elms.yaml) is the nearest, and is not granular enough to
+          compare a configurable category vocabulary against.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Invisible in the four-domain baseline because those domains have no per-level site
+          taxonomy, but for OT this field is how the whole ACOTE C.1.5 selection-criteria argument
+          is expressed. The OT playbook records a live, production category vocabulary — "Contract
+          Organization, Direct Patient Care 101, Level I, Level II, Observation Only" — alongside
+          Personnel Categories (Established / New) and a Location Area tag set used for geography
+          (Occupational Therapy (OT) Playbook.md lines 227-229), and states that OT sites are
+          categorised as Level I Fieldwork Sites, Level II Fieldwork Sites, and Capstone Project
+          Sites (line 221). Because C.1.5 requires the written-agreement test to be applied
+          separately across Level I (including field trips, observation, and service-learning) and
+          Level II, a site's category is what makes "which agreement rule applies here" answerable.
+          Rated configure-needed rather than none because the vocabulary is program-authored: none
+          of these values ships, so a new OT program gets the mechanism and none of the meaning.
+          DISCIPLINE-SPECIFIC (Social Work): CSWE AS 3.3.1 wants agency "setting type, population
+          served, and services" as structured fields so a program can prove field opportunities
+          across all five system levels; ../accreditation/cswe.yaml records that system-level
+          tagging "currently rides on generic placement/agency tags rather than a first-class CSWE
+          system-level field," which is this element doing double duty as a taxonomy it was not
+          designed for.
+      - element: "'Contract not required' site flag"
+        type: "ABSENT — no such flag exists on the Site record"
+        data_shown: "n/a"
+        gates_on: []
+        accreditation_citation: "ACOTE Standard C.1.5 (written agreements required 'for every entity outside the academic program,' including field trips, observation, and service-learning — which is precisely the population where programs argue no agreement is needed)"
+        competitor_equivalent: >
+          Not comparable at element level, and honestly not knowable: no cited competitor file
+          documents whether their site record can be exempted from a contract requirement, so it is
+          unknown whether this false-positive problem is Prism-specific or category-wide. Recorded
+          as an open question rather than a Prism-only weakness.
+        gap_severity: "gap"
+        gap_note: >
+          The sharpest OT-specific finding in this stage, and a true confirmed absence rather than
+          an unconfirmed one. The OT playbook records it as a named pain point with a named ask:
+          "Not all sites require a contract, but the system assumes a contract is required when a
+          site is added, so it flags missing contracts even when none is needed. Schools have
+          requested a way to mark a site as 'contract not required' so it isn't flagged as
+          missing/incomplete" (Occupational Therapy (OT) Playbook.md line 424).
+          ../accreditation/acote.yaml carries the same finding against C.1.5 and draws the
+          consequence out: "without it, the C.1.5 clearance view carries permanent false positives
+          that erode trust in the dashboard." This compounds the Placement Clearance Dashboard
+          finding later in this file in a specific way — that column is already display-only rather
+          than enforcing, and here it is also emitting known-wrong warnings, so the failure mode is
+          not just "a coordinator has to go look at it" but "a coordinator learns to ignore it."
+          Note the standard cuts against the ask: ACOTE C.1.5 requires agreements in effect for
+          every entity outside the academic program including field trips and observation, so the
+          right shape is probably a documented, auditable exemption reason on the site rather than a
+          silent suppression toggle.
+      - element: "Partner-school demographic profile (Teacher Education)"
+        type: "ABSENT — no confirmed field on the Site/Location record"
+        data_shown: "n/a"
+        gates_on: []
+        accreditation_citation: "CAEP Standard R2, Component R2.3 (Diversity: evidence every candidate had clinical experiences with diverse P-12 students, disaggregated and shown across three cycles of data)"
+        competitor_equivalent: >
+          Not comparable at element level — none of the nine competitor teardowns in this repo
+          covers Teacher Education at all (../competitors/ files address health-sciences and GME
+          products), so there is no competitor to benchmark a P-12 partner-school attribute against.
+          This is an honest coverage hole in the repo, not a finding about the market.
+        gap_severity: "gap"
+        gap_note: >
+          CAEP's diversity attribute is a property of the partner SCHOOL's student body, not of the
+          placement or the candidate — which is why it has to live on the site/location record and
+          nowhere else. ../accreditation/caep.yaml states the consequence directly: "Prism's
+          site/location record has no confirmed field for partner-school demographics, so
+          demographic-diversity evidence would today be a manual crosswalk against state
+          report-card data." Carrying the standing TE caveat: no Exxat TE source in this corpus
+          confirms or denies this, because the only TE product source available is a single video
+          tutorial on the GoReact/Echo360 LTI integration (Teacher Education (TE) Playbook.md
+          lines 12-16), which touches nothing in this stage. Rated a gap on the strength of the
+          registry's negative finding, with the absence of a TE product source stated rather than
+          hidden.
+    action: >
+      Coordinator creates the Site record before any Location, Slot, or Contract can be attached
+      to it. A Site is explicitly the entity that carries the contractual relationship — a
+      Location is an address under it — per "Understanding Site vs. Location": "A 'Site' is best
+      described as the group or entity with which a contractual relationship is established.
+      Just as a contract may cover one or many physical locations, a 'site' may include one or
+      many physical locations."
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Understanding Site vs.
+      Location.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      Therapy (OT) Playbook.md (lines 221, 227-229 site categories; line 424 the contract-not-
+      required pain point); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/
+      Playbooks/Social Work (SW) Playbook.md (lines 25, 131 Agencies module);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+      Assistant (PA) Playbook.md (lines 141-152 PA-student naming requirement);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher
+      Education (TE) Playbook.md (lines 12, 67-72 — the explicit "not confirmed for Exxat" caveat);
+      ../accreditation/acote.yaml (Standard C.1.5); ../accreditation/caep.yaml (Component R2.3)
+
+  # ---------------------------------------------------------------------------
+  # NEW STEP (2026-08-25). Site VETTING before contracting. No four-domain source
+  # required this screen — COCA 6.9, LCME 1.4, ACPE 3.5.b and CODA 4-6 all ask
+  # for an executed agreement, not for a documented site-selection process. Five
+  # of the eight existing disciplines' accreditors ask for the process itself,
+  # which makes this a step the original file could not have had.
+  # ---------------------------------------------------------------------------
+  - screen: "Sites — Site/Agency Assessments (Setup > Form Setup, and per-site Assessments tab)"
+    navigation_path: "Sites > Setup (ribbon) > Form Setup  |  Sites > [Site] > Assessments  |  Agencies > [Agency] > Assessments (Social Work labelling)"
+    elements:
+      - element: "Form Setup — self-service site-assessment form builder"
+        type: "form builder, 11 question types including attestation and e-signature"
+        data_shown: "Program-authored site-visit and site-vetting instruments"
+        gates_on: []
+        accreditation_citation: "ARC-PA Standard B3, Element B3.02 a-c (documented INITIAL and ONGOING evaluation of every SCPE site and preceptor, covering facilities, patient populations, and supervision); CSWE Accreditation Standard 3.3, AS 3.3.4 (documented process for identifying, approving, and engaging with field education settings); CAA Standard 3.0B, Standard 3.9B (written policies describing how the program determines whether a site has the appropriate clinical population and personnel); COA Standards F.4 and F.6; CCNE Standard II, Key Element II-C (a DEFINED, periodically-run process for determining site currency, availability, accessibility and adequacy)"
+        competitor_equivalent: >
+          Not comparable at element level. CORE ELMS's compliance module is marketed for
+          "accreditation and audits" (../competitors/core-elms.yaml) and E*Value for onboarding
+          document collection (../competitors/e-value.yaml lines 42, 51), but neither publishes
+          anything about a site-assessment instrument builder, so a question-type count or an
+          e-signature capability has nothing to compare against.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This is where the four-domain and eight-discipline pictures diverge most cleanly. The
+          expansion domains' standards care that an agreement EXISTS; five of these eight care how
+          the site was CHOSEN and how often it is re-checked. ../accreditation/arc-pa.yaml describes
+          the required behaviour as "a self-service form builder producing two distinct instruments
+          (pre-placement site visit and in-rotation site visit) with the three required access
+          dimensions as explicit questions," and confirms Prism ships the builder at Sites > Setup >
+          Form Setup with 11 question types including attestation and e-signature.
+          Rated configure-needed for a reason stated in the registry: "the three sub-standards
+          (facilities / patient populations / supervision) are conventions the program has to
+          remember to build into its own custom form — nothing ships a B3.02-shaped template." Same
+          for CSWE and CAA. A shipped, standard-shaped starter instrument per accreditor is a small
+          build with disproportionate value here, and there is precedent for it: the OT playbook
+          records that an "Exxat Standard Assessment Form" already coexists with school-specific
+          forms (Occupational Therapy (OT) Playbook.md line 235), so the pattern of shipping a
+          default instrument exists and simply has not been pointed at these standards.
+      - element: "'Initial Site Visit' / 'Ongoing Site Visit' form pair"
+        type: "two program-authored instruments (PA documented best practice), with student tagging for who was on rotation during a visit"
+        data_shown: "Pre-placement vetting findings and in-rotation monitoring findings, attributable to a named site/location/preceptor"
+        gates_on: []
+        accreditation_citation: "ARC-PA Standard B3, Element B3.02 a-c (SSR Appendix 15); CSWE Accreditation Standard 3.3, AS 3.3.4; COA Standards F.4 and F.6"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents distinct
+          pre-placement versus in-rotation site instruments.
+        gap_severity: "gap"
+        gap_note: >
+          The instruments exist; the RECURRENCE obligation they serve does not. PA's documented
+          practice is to build exactly two forms — "Use Prism's Site Assessment Form Setup
+          self-service feature to build two custom forms — 'Initial Site Visit' and 'Ongoing Site
+          Visit'" (Physician Assistant (PA) Playbook.md lines 154-160) — and OT's practice is to
+          revisit each site on a 5-10 year cycle tracked via the Assessment Details report
+          (Occupational Therapy (OT) Playbook.md line 291). Both are cadences, and
+          ../accreditation/arc-pa.yaml names the gap precisely: "nothing detects that a site has no
+          ONGOING assessment on record within a defined interval. 'Initial and ongoing' is a
+          recurrence obligation; the form builder has no recurrence semantics." So a program can
+          prove it assessed a site and cannot prove — or be warned — that it has stopped. That is
+          the same structural shape as the Contract Status finding: the artifact is captured, the
+          obligation is not monitored.
+          DISCIPLINE-SPECIFIC (CRNA/Nursing): the one place recurrence IS partially handled. The
+          Nursing playbook records "Site Assessments — structured site-visit tracking (date, mode,
+          type, custom assessment form) with follow-up dates pushed to the Program Calendar (COA
+          F.4)" (Nursing Playbook.md line 72). A follow-up date on the calendar is a per-visit
+          reminder rather than a per-site interval rule, so it mitigates the gap for a diligent
+          coordinator without closing it.
+      - element: "Site-assessment capture requires connectivity (no offline mode)"
+        type: "ABSENT — assessments cannot be logged offline"
+        data_shown: "n/a"
+        gates_on: []
+        accreditation_citation: "ACOTE Standard C.1.5 (the site-selection process evidence a site visit produces); ARC-PA Standard B3, Element B3.02 a-c"
+        competitor_equivalent: >
+          Not comparable at element level — offline capture is not addressed by any cited competitor
+          source, so it is unknown whether this is a Prism-specific limitation or a category norm.
+          Recorded as unbenchmarked.
+        gap_severity: "gap"
+        gap_note: >
+          A small, concrete, field-reported product limitation that only shows up once a discipline
+          with real site-visit volume is in scope. The OT playbook: site and location assessment
+          "cannot be logged offline — schools without internet access at a site take paper notes and
+          must re-enter data later, duplicating effort" (Occupational Therapy (OT) Playbook.md line
+          287). Worth carrying because it is the mechanism by which the recurrence gap above becomes
+          a real data gap — double entry is the step that gets skipped, and a skipped ongoing
+          assessment is invisible per the previous element. Note the contrast with the student-facing
+          mobile app, which the Nursing and PA playbooks both confirm exists (Nursing Playbook.md
+          line 103; Physician Assistant (PA) Playbook.md line 358): the mobile surface was built for
+          the student side, not for the coordinator standing in a hospital corridor.
+      - element: "Self-service authorship of assessment forms — SLP carve-out"
+        type: "support-gated for SLP: new custom forms require a prism-support@exxat.com ticket"
+        data_shown: "n/a"
+        gates_on: ["whether an SLP program can author its own site-suitability instrument at all"]
+        accreditation_citation: "CAA Standard 3.0B, Standard 3.9B (written policies and procedures describing how the program determines whether a clinical site has the appropriate clinical population and personnel)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents which of its
+          configuration surfaces are self-service versus support-gated, which is itself a notable
+          blind spot given how much of the real cost of ownership sits there.
+        gap_severity: "gap"
+        gap_note: >
+          The SLP-specific finding in this stage, and it is a permissions finding rather than a
+          feature one — the capability documented two elements up simply is not available to this
+          discipline on the same terms. The SLP playbook records the dependency three times and
+          flags it as a pattern: creating new forms is "not self-service — programs must contact
+          prism-support@exxat.com, a heavier CSS/support dependency than PT's largely self-serve
+          standard-form model" (Speech-Language Pathology (SLP) Playbook.md line 98), the same for
+          min/max hour thresholds (line 67) and notification rules (line 118), and the playbook's own
+          gap list calls it "worth flagging to CX/Product as a possible self-service gap for SLP
+          specifically" (line 149). ../accreditation/caa-asha.yaml draws the accreditation
+          consequence against 3.9B: "an SLP program cannot author its own 3.9B site-suitability
+          instrument without support involvement, unlike PT." Since 3.9B's site-suitability policy
+          is the SLP-specific half of the standard (the agreements half is served well by the
+          Contracts object), this is the point where SLP's stage-1 story is weakest.
+      - element: "Comprehensive Site Assessment report / Assessment Details report"
+        type: "report (Sites > Reports > Comprehensive Assessment Report > Select Form; Agencies > Reports > Assessment Details for Social Work)"
+        data_shown: "All responses across site visits for a selected form, readable as a cross-site trend rather than a stack of individual forms"
+        gates_on: []
+        accreditation_citation: "ARC-PA Standard B3, Element B3.02 a-c (Self-Study Report Appendix 15); ARC-PA Standard B3, Element B3.04 a-d; CSWE Accreditation Standard 3.3, AS 3.3.4; ACOTE Standard C.1.5"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a cross-site
+          assessment rollup, named or otherwise.
+        gap_severity: "none"
+        gap_note: >
+          The output that makes the whole step count as evidence rather than as filing. PA's guide
+          maps it to B3.02 a-c and places it at SSR Appendix 15 (Physician Assistant (PA)
+          Playbook.md lines 194-196, 288); SW reaches the same capability as Agencies > Reports >
+          Assessment Details (Social Work (SW) Playbook.md lines 132, 179); OT reaches it as
+          Assessment Details showing "where a site was previously assessed" (Occupational Therapy
+          (OT) Playbook.md line 291). Three disciplines, three names, one report — which is a good
+          illustration of the repo's cross-discipline thesis and also a reminder that discipline-
+          named reports are largely a labelling exercise over shared machinery.
+          The honest limit is the one ../accreditation/cswe.yaml records against AS 3.3.4(iii):
+          site and instructor EFFECTIVENESS evaluation — the leg that supports a documented
+          renew/re-approve/sunset decision — is "assembled by hand from Interventions &
+          Communications and Learning Activities reports," because what is missing is longitudinal,
+          agency-scoped and instructor-scoped trending rather than any single report.
+    action: >
+      Before (and periodically after) an agreement is signed, the coordinator vets the site: builds
+      or selects a site-assessment instrument, logs an initial site visit, repeats it on an ongoing
+      cadence during placements, and pulls the cross-site assessment report as self-study evidence.
+      For the four expansion domains this step is optional practice; for PA, OT, Social Work, SLP
+      and CRNA the process itself is what their accreditor asks to see.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+      Assistant (PA) Playbook.md (lines 154-165 Site/Location Assessment and the two-form best
+      practice; lines 194-196 Comprehensive Assessment Report; line 288 SSR Appendix 15);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      Therapy (OT) Playbook.md (lines 235, 285-295 — Form Setup, the offline limitation, and the
+      site/personnel report family); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/
+      documents/Playbooks/Social Work (SW) Playbook.md (lines 131-136, 162-166, 179 — Agency
+      Assessments, AS 3.3.4 mapping, Assessment Details);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language
+      Pathology (SLP) Playbook.md (lines 67, 95, 98, 118, 149 — the support-ticket dependency);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
+      Playbook.md (lines 72, 103 — COA F.4 site assessments and the student mobile app);
+      ../accreditation/arc-pa.yaml (Element B3.02 a-c); ../accreditation/cswe.yaml (AS 3.3.4);
+      ../accreditation/caa-asha.yaml (Standard 3.9B); ../accreditation/acote.yaml (Standard C.1.5);
+      ../accreditation/nursing.yaml (CCNE Key Element II-C)
+
+  # ---------------------------------------------------------------------------
+  # NEW STEP (2026-08-25). Sites entering the directory FROM STUDENTS rather than
+  # from a coordinator. Scoped deliberately to the site-record half — the
+  # interview-status tracking and placement-creation half of Social Work's
+  # workflow belongs to a later stage of this journey and is not analysed here.
+  # ---------------------------------------------------------------------------
+  - screen: "Process Field Application Forms — location & supervisor mapping (Social Work); MyRequest / questionnaire wishlist (PT, OT capstone, PA)"
+    navigation_path: "Dashboard/hamburger > Process Field Application Forms > All Requests > View by Rotations: Upcoming and Current > [Submitted] > View  |  Placements > Wishlist / MyRequest for the PT/OT/PA variants"
+    elements:
+      - element: "Student-entered location & supervisor, and the admin Map action"
+        type: "review-and-map control: admin maps a manually-entered agency/supervisor onto an existing Prism Location/Personnel record, or corrects the student's text first"
+        data_shown: "Up to 10 placement suggestions per Multi-Location Field Application Form, each with location info, supervisor info, interview status, schedule, and student comments"
+        gates_on: ["a placement cannot be created from a suggestion until its location is mapped; supervisor mapping requires the location to be mapped first; a location can be mapped ONLY ONCE and already-mapped locations become unavailable to other submissions"]
+        accreditation_citation: "CSWE Accreditation Standard 3.3, AS 3.3.4 (the documented process for identifying and APPROVING field education settings — student-proposed agencies are the population that process exists to police)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents student-proposed site
+          intake or a mapping/dedup step. CORE ELMS's SmartMatch is documented as matching students
+          to EXISTING sites (../competitors/core-elms.yaml), which is a different problem, so the
+          comparison would be misleading rather than merely thin.
+        gap_severity: "none"
+        gap_note: >
+          A genuinely different site-sourcing model from anything the four expansion domains do, and
+          the reason this step exists. In Social Work "many SW programs require students to interview
+          with multiple agencies before securing a placement," historically tracked "via temporary
+          placements or outside spreadsheets" (Social Work (SW) Playbook.md lines 86, 189) — so the
+          directory grows from the student side, and the mapping step is the approval gate that keeps
+          it from filling with duplicates and free text. The map-only-once rule is the dedup
+          mechanism and is a real constraint worth noting, not a detail: it means two students cannot
+          independently introduce the same agency.
+          Relevant to this stage specifically because a student-proposed agency arrives with NO
+          contract, no assessment, and no personnel credentials — it enters at the top of this file
+          rather than at the end. The SW playbook's own best-practice list reflects that: "encourage
+          students to select existing locations rather than manual entry, to avoid mapping delays"
+          and "review manually entered locations promptly" (lines 122-126).
+          DISCIPLINE-SPECIFIC (OT capstone): the same student-proposes-a-site pattern, different
+          mechanism — "students may propose their own site/location, via a questionnaire-based
+          wishlist and MyRequest-based wishlist to gather site details," with direct placement the
+          preferred capstone mode (Occupational Therapy (OT) Playbook.md lines 386, 393). ACOTE
+          D.1.5 requires a valid written agreement in effect before and throughout the capstone plus
+          an individualised capstone plan signed by all parties, and ../accreditation/acote.yaml
+          confirms the multi-party signed agreement runs as a custom form with a real documented
+          workflow (OTD Capstone Memorandum of Understanding: Student > Site Mentor Review > Faculty
+          Review > Admin Review). So OT's capstone agreement is a FORM, not a Contract record — a
+          second, parallel agreement mechanism inside the same product that this file's Contracts
+          steps do not cover.
+          DISCIPLINE-SPECIFIC (PT and PA): both use MyRequest for the same purpose at much lower
+          volume — PT "typically limited (e.g. a school may allow students to recommend one new
+          clinical site during their time in the program)" (Physical Therapy (PT) Playbook.md lines
+          91, 108), PA "depends on the program's process" (Physician Assistant (PA) Playbook.md line
+          86). Recorded so the SW-shaped workflow is not read as SW-only.
+      - element: "Employment-based placement flag (student's own employer as the site)"
+        type: "ABSENT — 'employment-concurrent placement' is not a placement or site attribute"
+        data_shown: "n/a"
+        gates_on: []
+        accreditation_citation: "CSWE Accreditation Standard 3.3, AS 3.3.7 (written policy on field placement at a student's place of employment; how field supervision is kept DISTINCT from employment supervision even when the same person provides both; and how the program helps a student continue or change field education if the job ends mid-placement)"
+        competitor_equivalent: >
+          Not comparable at element level — and there is no reason to expect a comparison to exist,
+          since no other discipline in this research has an accreditor standard governing
+          employment-based placements at all.
+        gap_severity: "gap"
+        gap_note: >
+          Included in this stage rather than a placement stage because AS 3.3.7 governs whether a
+          given agency may be used as a field site AT ALL for a given student — a site-eligibility
+          rule, which is this stage's subject. ../accreditation/cswe.yaml rates it a Gap and is
+          specific about why: Prism "can approximate the flag with a placement tag and the separation
+          with Timesheet Categories, but 'employment-concurrent placement' is not a placement
+          attribute, nothing enforces the supervision-time distinction the standard exists to police,
+          and mid-placement transfer on job loss is an unmodelled event (note the confirmed behavior
+          that deleting a placement sends NO automatic notification to student or preceptor)." The
+          registry also records the commercial read, which is worth carrying: this is "genuinely
+          social-work-specific... and therefore a real differentiator if built," scoped as a
+          placement-model extension rather than deferred to Accreditation Management. It is the only
+          site-eligibility rule found across twelve disciplines that turns on a fact about the
+          STUDENT rather than about the site.
+    action: >
+      A student proposes an agency/site that does not yet exist in Prism; the coordinator reviews the
+      submission, corrects the free text, maps it onto a real Location and Personnel record (or
+      creates them), and only then can a placement be built against it — at which point the site
+      re-enters the ordinary contracting and assessment path documented in the other steps.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work
+      (SW) Playbook.md (lines 84-127 the Field Application Form workflow, mapping rules and
+      interview statuses; lines 185-189 the temporary-placement workaround it replaced);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      Therapy (OT) Playbook.md (lines 386, 393 capstone site proposal; lines 499-505 capstone form
+      workflows including the OTD Capstone Memorandum of Understanding);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
+      Therapy (PT) Playbook.md (lines 91, 108); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/
+      99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (line 86);
+      ../accreditation/cswe.yaml (AS 3.3.4, AS 3.3.7); ../accreditation/acote.yaml (Standard D.1.5
+      with D.1.4)
+
+  - screen: "Site — Contracts tab (Add Contract drawer)"
+    navigation_path: "Sites > [Site] > Contracts (ribbon) > + icon"
+    elements:
+      - element: "Contract Name"
+        type: "input field (mandatory)"
+        data_shown: "Name of the affiliation agreement"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9 (executed affiliation agreement per contracted clinical site); LCME Standard 1, Element 1.4; ACPE Standard 3, Key Element 3.5.b; CODA Standard 4, Element 4-6"
+        competitor_equivalent: >
+          Not comparable at element level. CORE ELMS claims "affiliation agreement tracking"
+          (../competitors/core-elms.yaml, services.corehighered.com/student-clinical-experential-education)
+          and eMedley claims similar coverage via eKeeper (../competitors/emedley.yaml,
+          emedley.com/student-documents); the comparison can only be made at "both track a named
+          contract record," not field-for-field.
+        gap_severity: "none"
+        gap_note: >
+          The mandatory name on a first-class Contract object is the single most load-bearing
+          finding in this flow file: contract lifecycle is already its own named object type under
+          Sites — not a repointed student-compliance item. This directly resolves the gap note
+          shared by coca.yaml, lcme.yaml, and coda.yaml ("confirm whether Compliance Management's
+          item-expiry tracking can be repointed at site-level contracts, or whether contract
+          lifecycle needs a new object type") — the answer is: it already has its own object type.
+      - element: "Contract Number"
+        type: "system-generated, editable"
+        data_shown: "Auto-assigned identifier"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents contract identifier
+          generation.
+        gap_severity: "none"
+        gap_note: >
+          System-generated but editable, so it can be overwritten to match an institution's own
+          contract-numbering scheme. Not an evidence field for any standard.
+      - element: "Tax ID"
+        type: "input field (optional)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a tax identifier on
+          a contract record.
+        gap_severity: "none"
+        gap_note: >
+          Optional; captured on the contract as well as on the Site (EIN). No standard cited in
+          this repo asks for it.
+      - element: "Start Date / Expiration Date"
+        type: "date fields (mandatory)"
+        data_shown: "Agreement validity window"
+        gates_on: ["Contract Status computation on the Placement Clearance Dashboard (see later step)"]
+        accreditation_citation: "COCA Standard 6, Element 6.9 (executed affiliation agreement per contracted clinical site); LCME Standard 1, Element 1.4; CAPTE Standard 2, Element 2D9 (agreements must be CURRENT); ACOTE Standard C.1.5 (valid agreements 'in effect prior to the onset and through the duration' of fieldwork); ACEN Standard 4, Criterion 4.9 (current written agreements); COA Standard F.2 with Standard A.3; CAA Standard 3.0B, Standard 3.9B; CAEP Standard R2, Component R2.1 (MOU term/expiry)"
+        competitor_equivalent: >
+          The closest element-level parity claim in this flow. CORE ELMS's "affiliation agreement
+          tracking with expiration alerts" (../competitors/core-elms.yaml) and eMedley's eKeeper
+          (../competitors/emedley.yaml) both imply a stored expiration date, so "both track a
+          contract record with an expiration date" is supportable — but neither publishes the
+          field-level view needed to confirm mandatory-vs-optional, date semantics, or open-ended
+          handling. That framing gets sharper, not weaker, for the eight existing disciplines: CORE
+          ELMS sells the identical compliance module into nursing/PT/OT/PA/social work
+          (../competitors/core-elms.yaml lines 27, 113-114), so the differentiator cannot be "we
+          track expiry" — it has to be the placement-date-relative evaluation described below, which
+          no competitor source in this repo documents either way.
+        gap_severity: "none"
+        gap_note: >
+          Mandatory, and the input that everything downstream in this flow computes from: the
+          Contract Status rollup, the "valid through the placement dates or open-ended" rule, and
+          the Auto Notification lead-time all read this window.
+          DISCIPLINE-SPECIFIC (why the date pair, not the alert, is the real claim): five of the
+          eight existing disciplines' accreditors ask for a test that a calendar expiry date cannot
+          answer. ACOTE C.1.5 requires agreements "in effect prior to the onset and through the
+          duration" of fieldwork; ACEN 4.9 requires them "CURRENT" per environment; COA F.2 wants
+          validity checked so "a placement extending past a contract's expiry is caught before
+          students are on site rather than at audit"; CAA 3.9B wants "automated validity checking
+          against actual placement date ranges (not just an expiry date on a calendar)"; CAPTE 2D9
+          the same. All four registries (../accreditation/acote.yaml, nursing.yaml, coa.yaml,
+          caa-asha.yaml) independently record that Prism's Placement Clearance Contract Status check
+          does evaluate this window against the PLACEMENT's own dates and distinguishes "expires
+          before placement end" from "missing" — which is a materially harder test than any
+          competitor claim in this repo asserts. The caveat is one this file already establishes at
+          the dashboard: the test computes, it does not enforce.
+      - element: "Contract Status value set (institutional level)"
+        type: "select — Fully Executed / Awaiting Signoff / Draft / Finalized / In Development / On Hold / Terminated"
+        data_shown: "Where an agreement sits in its execution lifecycle, distinct from the program-level Active/Inactive Status field above"
+        gates_on: ["not confirmed — no source ties these values to the Placement Clearance Contract Status computation"]
+        accreditation_citation: "CAPTE Standard 2, Element 2D8 (developing programs must confirm FULLY EXECUTED written agreements and site-specific Letters of Intent); COA Standard F.2 with Standard A.3 ('legally binding' contract); COCA Standard 6, Element 6.9 ('executed' affiliation agreement)"
+        competitor_equivalent: >
+          Not comparable at element level — competitors market expiration alerting and document
+          storage but no cited file (../competitors/core-elms.yaml, emedley.yaml, e-value.yaml)
+          documents an execution-lifecycle state machine on a contract record, so the seven-value
+          set cannot be benchmarked.
+        gap_severity: "none"
+        gap_note: >
+          A materially more capable status model than the four-domain baseline in this file
+          documents, and it comes from an OT source: the OT playbook records the institutional-level
+          Contract Status vocabulary as "Fully Executed, Awaiting Signoff, Draft, Finalized, In
+          Development, On Hold, Terminated" (Occupational Therapy (OT) Playbook.md line 232). That
+          matters because several standards turn on EXECUTION, not existence — CAPTE 2D8 asks
+          developing programs to confirm "fully executed written agreements and site-specific
+          Letters of Intent," and COCA 6.9 and COA F.2 both say executed/legally binding rather than
+          merely present. A binary Active/Inactive cannot express "Awaiting Signoff," and this value
+          set can.
+          HONEST LIMIT ON THIS FINDING: the OT playbook labels these values institutional-level and
+          not editable per program, alongside the Routing Checklist, whereas the Status select
+          documented earlier in this step (from the Managing Contracts help guide) is a program-level
+          Active/Inactive field. No source in this research reconciles the two — whether they are the
+          same field rendered differently at different scopes, or two independent fields, is
+          unconfirmed. Cited as a confirmed OT-observed vocabulary, not as a confirmed second field
+          on the drawer above.
+      - element: "Contract Organization format"
+        type: "select, institution-configured — Old Format / New Format / Universal Contract Format"
+        data_shown: "Which generation of the institution's standard agreement paper this contract was written on"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents agreement-template
+          versioning on a contract record.
+        gap_severity: "none"
+        gap_note: >
+          Recorded in the OT playbook's site/location setup reference (Occupational Therapy (OT)
+          Playbook.md line 230). Useful precisely because it is the closest thing on the record to a
+          content descriptor: an institution migrating to a "Universal Contract Format" can find
+          every agreement still on the old paper. It is a proxy, though, not a substitute for the
+          clause-level tracking the next element covers — knowing a contract is "Old Format" does
+          not tell you which required clauses that format omitted.
+      - element: "Required-clause content of the agreement"
+        type: "ABSENT — the agreement's clauses are stored only inside the uploaded PDF; no structured field or checklist asserts what the document says"
+        data_shown: "n/a"
+        gates_on: []
+        accreditation_citation: "CAPTE Standard 2, Element 2D9 (five enumerated clauses every agreement must address); ARC-PA Standard B3, Element B3.01 a-e (agreements must explicitly name PA students); ACOTE Standard C.1.5 (agreements must document the responsibilities of the sponsoring institution and each site); COA Standard F.2 (expectations and responsibilities of both parties); ACEN Standard 4, Criterion 4.9 (agreements must specify expectations for all parties for the protection of the student); CAEP Standard R2, Component R2.1"
+        competitor_equivalent: >
+          Not comparable at element level, and the absence is almost certainly category-wide rather
+          than Prism-specific: CORE ELMS, eMedley (eKeeper) and E*Value all market affiliation-
+          agreement tracking as document storage plus expiry alerting
+          (../competitors/core-elms.yaml, emedley.yaml, e-value.yaml lines 42, 51), and none claims
+          to model agreement CONTENT. Stated as an unbenchmarkable gap rather than a competitive
+          weakness, because no competitor source is granular enough to prove either way.
+        gap_severity: "gap"
+        gap_note: >
+          The single highest-leverage cross-discipline finding this extension adds, and it is the
+          same hole seen from six accreditors at once. Prism's contract object is excellent at
+          WHETHER and WHEN and silent on WHAT. ../accreditation/capte.yaml puts it plainly: "The
+          gate is on dates and existence, not on CONTENT. CAPTE 2D9 enumerates five clauses every
+          agreement must address; Prism stores the document but does not assert or track
+          clause-level completeness. A 'required clauses present' checklist on the contract object
+          would convert this from a document library into actual 2D9 evidence, and would generalize
+          to every accreditor in this workstream."
+          DISCIPLINE-SPECIFIC (PA — this is not theoretical): ARC-PA is the discipline where the
+          missing capability already costs programs citations. The PA playbook records that 6e
+          B3.01 a-e requires agreements to "explicitly state they apply to PA students," that
+          "broad institution-wide agreements covering 'all learners' without naming PA students
+          specifically are no longer sufficient," that multi-campus institutions must identify which
+          campuses/programs are covered, that "generic university-wide language has been a common
+          source of accreditation citations," and that renewals must continue to restate PA-student
+          inclusion (Physician Assistant (PA) Playbook.md lines 141-152). A PA program cannot answer
+          "which of my 300 agreements name PA students?" from Prism today — it is a PDF-by-PDF read.
+          The remediation the playbook describes (an addendum reading "All learners in this
+          agreement include Physician Assistant students") also has no home: it is a second document
+          amending the first, and the contract record's file upload with archive treats documents as
+          versions of one agreement rather than as a base plus amendments.
+          DISCIPLINE-SPECIFIC (Teacher Education): CAEP R2.1 is the inverse problem — the MOU is
+          explicitly NOT the evidence CAEP wants. ../accreditation/caep.yaml: "the evidence CAEP
+          wants is the RELATIONSHIP record, not just the signed document," naming co-construction
+          meeting decisions, agenda topics, and advisory-board activity as the required proof that
+          partners co-constructed clinical arrangements. Standing TE caveat applies (no Exxat TE
+          source confirms any of this).
+      - element: "Contract Template"
+        type: "select (mandatory)"
+        data_shown: "Which saved program template the contract is generated from"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents template selection
+          at contract creation.
+        gap_severity: "none"
+        gap_note: >
+          Mandatory at creation and consumed by the Contract Generation tab (next step); on its own
+          it is a generation input, not accreditation evidence.
+      - element: "Status"
+        type: "select (mandatory; defaults to Active, can be set Inactive)"
+        data_shown: ""
+        gates_on: ["Contract Status computation on the Placement Clearance Dashboard"]
+        accreditation_citation: "COCA Standard 6, Element 6.9; LCME Standard 1, Element 1.4"
+        competitor_equivalent: >
+          Not comparable at element level — competitors' public docs describe expiration alerting
+          but never an explicit contract active/inactive state, so there is nothing to compare
+          this select against.
+        gap_severity: "none"
+        gap_note: >
+          Together with the date window this is the second input to the "fully executed, active,
+          and valid" test the Contract Status column runs. It records state; it does not enforce
+          anything at scheduling time (see the Placement Clearance Dashboard step).
+      - element: "Initiator / Primary Contact"
+        type: "input fields"
+        data_shown: "Faculty/staff who initiated the contract, plus the site-side primary contact"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents contract-side
+          contact capture.
+        gap_severity: "none"
+        gap_note: >
+          Useful for renewal outreach (these are plausible recipients for the expiration alerts
+          configured later), but not documented as feeding the notification recipient list
+          automatically.
+      - element: "Notes"
+        type: "free text"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — free-text notes are not documented by any cited
+          competitor.
+        gap_severity: "none"
+        gap_note: >
+          Unstructured; nothing computes against it.
+      - element: "chain icon (Link Contract)"
+        type: "button opening a drawer of existing contracts"
+        data_shown: "Full list of contracts already in the system, with contracts already tied to the current site greyed out"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9 (executed affiliation agreement per contracted clinical site); CODA Standard 4, Element 4-6; CAEP Standard R2, Component R2.1 (a district-level MOU covering many partner schools); COA Standard F.2 (one agreement covering a hospital where a university runs CRNA alongside BSN/DNP tracks)"
+        competitor_equivalent: >
+          Not comparable at element level — neither CORE ELMS nor eMedley documents whether one
+          agreement record can be attached to multiple sites, so the many-sites-one-agreement
+          capability cannot be benchmarked. Worth flagging that this is the capability most likely
+          to be a genuine differentiator against CORE ELMS and E*Value in the eight existing
+          disciplines, and it is precisely the one neither publishes anything about — so the
+          honest position is "unbenchmarked," not "ahead."
+        gap_severity: "none"
+        gap_note: >
+          This is what makes a university-wide master affiliation agreement expressible without
+          duplicate data entry — one signed agreement covering multiple sites, which is exactly the
+          shape COCA 6.9's "every clinical site linked to its executed agreement" evidence needs
+          when the agreement is institution-level rather than site-level. The greying-out of
+          already-linked contracts prevents double-linking.
+          DISCIPLINE-SPECIFIC (Teacher Education — the best structural fit found): a school district
+          signs one MOU and a program places candidates across many of its schools.
+          ../accreditation/caep.yaml calls the chain-icon linked-contract model "a near-exact
+          structural match for a district MOU covering many school locations without duplication"
+          against R2.1. Standing TE caveat: reasoned from the CAEP registry, unconfirmed by any
+          Exxat TE source.
+          DISCIPLINE-SPECIFIC (CRNA/Nursing): ../accreditation/coa.yaml names the same capability
+          against F.2 for the case where "a university runs CRNA alongside BSN/DNP tracks at the
+          same hospital" — one hospital agreement, several nursing programs.
+          DISCIPLINE-SPECIFIC (PA — the same capability is a compliance TRAP, not a win): this is
+          the one place in this file where a feature that helps the four expansion domains actively
+          increases risk for an existing discipline. Chain-linking a university-wide master
+          agreement across many sites is exactly the pattern ARC-PA 6e B3.01 a-e rules insufficient
+          unless the agreement names PA students, and the PA playbook records generic university-
+          wide language as "a common source of accreditation citations" (Physician Assistant (PA)
+          Playbook.md lines 144-152). Prism makes the risky pattern one click cheaper and, per the
+          clause-content element above, cannot tell a PA coordinator which linked agreements carry
+          the naming language. The mitigation is instructional today — the playbook's own advice is
+          "confirm whether PA students are explicitly named" (line 144) — not systemic.
+    action: >
+      Coordinator either adds a brand-new contract record scoped to this Site, or clicks the
+      chain icon to link an already-existing contract (e.g. a university-wide master
+      affiliation agreement) to this Site as well, avoiding duplicate data entry when one signed
+      agreement covers multiple sites.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      Therapy (OT) Playbook.md (lines 230, 232 — Contract Organization formats and the seven-value
+      institutional Contract Status set); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/
+      99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (lines 141-152 — ARC-PA
+      5e/6e affiliation-agreement content requirements and the addendum remediation);
+      ../accreditation/capte.yaml (Element 2D9 gap_notes, the five-clause finding);
+      ../accreditation/coa.yaml (Standard F.2 with A.3); ../accreditation/caep.yaml (Component R2.1)
+
+  - screen: "Contract — About / Contract Generation tabs"
+    navigation_path: "Sites > [Site] > Contracts > [Contract] > About tab / Contract Generation tab"
+    elements:
+      - element: "Programs covered"
+        type: "multi-select, editable via pencil icon (only when 'common contract sharing' is enabled for the tenant)"
+        data_shown: "Which of the university's other Exxat programs share this same contract"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — not documented at this granularity for any cited
+          competitor.
+        gap_severity: "none"
+        gap_note: >
+          Tenant-conditional (requires 'common contract sharing'). Supports the "one repo, many
+          disciplines" positioning — a single agreement counted as evidence by more than one
+          program's self-study — rather than satisfying a specific standard itself.
+      - element: "Categories"
+        type: "tag select, sourced from Sites > Setup"
+        data_shown: "Grouping labels used for filtering the Contracts report"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — not documented at this granularity for any cited
+          competitor.
+        gap_severity: "none"
+        gap_note: >
+          A reporting convenience: its only documented consumer is the Contracts report filter.
+          Values are configured centrally in Sites > Setup, so taxonomy is program-controlled.
+      - element: "Locations covered"
+        type: "multi-select"
+        data_shown: "Which of the site's physical locations this contract applies to"
+        gates_on: ["Contract Status computation is evaluated per Location"]
+        accreditation_citation: "COCA Standard 6, Element 6.9 (every clinical site linked to its executed agreement); CODA Standard 4, Element 4-6"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents whether contract
+          coverage is modelled per physical location.
+        gap_severity: "none"
+        gap_note: >
+          The join that makes site-level evidence provable at the address students actually report
+          to: Contract Status is computed per Location, so a location left out of this multi-select
+          reads as uncovered. More structure than COCA 6.9 strictly asks for.
+      - element: "Routing Checklist"
+        type: "checklist with completion dates, managed at the institutional level"
+        data_shown: "Internal approval/routing steps and the date each was completed"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — not documented at this granularity for any cited
+          competitor.
+        gap_severity: "none"
+        gap_note: >
+          Captures internal legal/administrative routing with dates. Institution-managed, so
+          individual programs cannot define their own steps; no standard cited here asks for
+          routing evidence.
+          DISCIPLINE-SPECIFIC (OT — confirms the shape with real values): the OT playbook records
+          an actual production routing checklist as "Date Signed by Dean, Date Signed by Provost,
+          Copy Sent to Dept, Date," explicitly flagged institutional-level and "not editable
+          per-program" (Occupational Therapy (OT) Playbook.md line 231). That corroborates the
+          institution-managed claim from a second, independent source and shows what the steps
+          actually are in practice — a dean/provost signature chain. Relevant to the Contract Status
+          element above: "Awaiting Signoff" and this checklist are describing the same real-world
+          state from two directions, and nothing documented connects them.
+      - element: "Contract documents"
+        type: "file upload with archive option"
+        data_shown: "The signed PDF(s); older versions can be archived rather than deleted"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9 (document library evidence); CODA Standard 4, Element 4-6"
+        competitor_equivalent: >
+          Not comparable at element level — CORE ELMS and eMedley both market document-management
+          modules, but neither documents versioning/archive behaviour on a contract document, so
+          the archive-not-delete detail cannot be benchmarked.
+        gap_severity: "none"
+        gap_note: >
+          This is the element the "document library linking every clinical site to its executed
+          affiliation agreement" evidence requirement actually resolves to — the signed artifact
+          itself. Archiving rather than deleting prior versions preserves the historical record a
+          site visit may ask for.
+      - element: "Contract Generation tab"
+        type: "template-driven document generator"
+        data_shown: "Auto-generates a downloadable contract document from the program's saved template"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9 (document library evidence); ACOTE Standard C.1.5 (Exxat's own ACOTE guide names Contract Templates as C.1.5 evidence — see gap_note)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents in-product contract
+          document generation from a template.
+        gap_severity: "none"
+        gap_note: >
+          Template-based generation is more than COCA 6.9's evidence requirement asks for; the
+          standard cares that an executed agreement exists and is linked, not how it was produced.
+          DISCIPLINE-SPECIFIC (OT — for ACOTE this is cited evidence, not a bonus): the OT playbook
+          lists "Contract Templates — consistent agreement generation" as one of four ways Prism
+          supports C.1.5, alongside Streamlined Contract Management, Comprehensive Contract
+          Tracking, and the Placement Clearance Dashboard (Occupational Therapy (OT) Playbook.md
+          lines 430-436), and ../accreditation/acote.yaml carries the same mapping. The reason
+          templates matter more here than for COCA: C.1.5 requires agreements documenting the
+          responsibilities of BOTH parties, and CONSISTENCY of those clauses across a large fieldwork
+          site portfolio is what a template actually buys. It is a partial mitigation of the
+          clause-content gap recorded in the previous step — but only for agreements Prism generated;
+          it does nothing for the far larger population of agreements drafted on the site's own
+          paper and uploaded.
+      - element: "Institution-to-institution agreement (COA A.3 joint-governance agreement)"
+        type: "NO NATURAL HOME — the Contract object is location-linked by design"
+        data_shown: "n/a"
+        gates_on: []
+        accreditation_citation: "COA Standard A.3 — CRITICAL (*) (legally binding written agreement delineating expectations and responsibilities where a program is conducted under an academic affiliation or joint arrangement between two or more entities with unshared governance)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents an institution-level
+          agreement object distinct from a clinical-site contract, so this cannot be benchmarked.
+        gap_severity: "gap"
+        gap_note: >
+          CRNA-specific and severity-inverted, which is why it is worth its own element.
+          ../accreditation/coa.yaml states it directly: "A.3 is an INSTITUTION-level agreement
+          between conducting entities, not a clinical-site contract; Prism's Contract object is
+          location-linked by design, so the joint-governance agreement has no natural home other
+          than the Program Details accreditation record or a generic document store. Small gap, but
+          A.3 is critical-flagged and F.2 is not, so the weaker coverage is on the more severe
+          standard." COA asterisks critical standards and treats failure on them as a matter of
+          critical concern in the accreditation decision — a distinction the Nursing playbook notes
+          "doesn't appear in the ACEN/CCNE guides" and recommends carrying into any nursing-facing
+          accreditation-readiness messaging (Nursing Playbook.md lines 118-120). Nurse-anesthesia
+          programs are commonly run jointly between a university and an anesthesia practice or
+          hospital, so this is the ordinary case for CRNA, not an edge case.
+    action: >
+      Coordinator finishes building out the contract record: which locations and programs it
+      covers, the internal routing checklist, and the signed document itself (either uploaded or
+      auto-generated from a template).
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      Therapy (OT) Playbook.md (line 231 routing-checklist values; lines 297-305 and 426-436 —
+      C.1.4 and C.1.5 contract support); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/
+      99-Assets/documents/Playbooks/Nursing Playbook.md (lines 118-120 — COA critical-standard
+      concept); ../accreditation/acote.yaml (Standard C.1.5); ../accreditation/coa.yaml (Standard
+      F.2 with Standard A.3)
+
+  - screen: "Institutional Level — Contracts & Sites Management"
+    navigation_path: "Institution Administrator login > Contracts & Sites Management (dashboard tile or menu)"
+    elements:
+      - element: "Summary dashboard"
+        type: "read-only rollup"
+        data_shown: "Counts of contracts and their status spread across all programs at the tenant"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9; CODA Standard 4, Element 4-6"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents an institution-wide,
+          cross-program contract rollup at this granularity.
+        gap_severity: "none"
+        gap_note: >
+          Read-only counts only — an orientation view, not an evidence export. A liaison can see
+          the status spread across programs here but has to use the list view below to produce
+          anything a self-study can cite.
+      - element: "List view — Add Contract / Export to Excel"
+        type: "button + report export"
+        data_shown: "All contracts across every program on the tenant, editable from a central screen"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9; CODA Standard 4, Element 4-6; CAPTE Standard 2, Element 2D9 (the export Exxat's own documented PT Annual Accreditation Report procedure uses — see gap_note); ACOTE Standard C.1.4 (sufficient fieldwork written agreements)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a cross-program
+          contract console with central add/export.
+        gap_severity: "none"
+        gap_note: >
+          The exportable, editable element on this screen and therefore the one that can actually
+          produce cross-program evidence. Real, shipped infrastructure for a university standing up
+          more than one of the four new domains at once — not aspirational.
+          DISCIPLINE-SPECIFIC (PT/PTA — this export has a documented, standard-mapped procedure):
+          the four expansion domains have no written instructions for turning contract data into
+          self-study evidence; PT does. The PT playbook's Annual Accreditation Report data-gathering
+          sequence opens with "Clinical education agreements/sites — Sites > Contracts, filtered to
+          Site Status = Active, exported to Excel (sort by Start Date)" as one of five defined pulls
+          (Physical Therapy (PT) Playbook.md lines 224-232), and ../accreditation/capte.yaml cites
+          that same procedure as the 2D9 evidence path. This is the strongest available answer to
+          "does anyone actually use this export for accreditation" — yes, annually, with a written
+          recipe. Note the filter is Site Status = Active, i.e. the Active toggle from the first
+          step of this file is load-bearing for the accreditation export, which is worth reading
+          back against that element's finding that nothing ties the toggle's state to contract
+          validity: a site left Active with a lapsed contract lands in the AAR export.
+          DISCIPLINE-SPECIFIC (OT): the OT playbook names the same screen more loosely — "Monitoring
+          Contracts — the Contracts tab under Sites (Sites > Contracts) gives an overview of active
+          sites and upcoming expirations" — as its C.1.4 sufficiency evidence (Occupational Therapy
+          (OT) Playbook.md lines 297-305). ACOTE C.1.4 asks whether agreements are sufficient in
+          NUMBER and provide varied practice experiences; a contract list answers the number half
+          and the Location Details Report (Sites > Report > Location Details) is what the playbook
+          points at for the variety half.
+      - element: "Site Sharing Model setting (Standard / All Sharing / No Sharing)"
+        type: "tenant-level configuration"
+        data_shown: "Which of a university's programs share Site/Location/Contract records with each other; Personnel is never auto-shared under any model"
+        gates_on: ["cross-program visibility of a given Site/Contract record"]
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a tenant-level
+          record-sharing model.
+        gap_severity: "none"
+        gap_note: >
+          Configuration, not evidence — but it is the switch that determines whether the two
+          elements above (and the Programs multi-selects on earlier screens) show anything at all.
+          Note the documented carve-out: Personnel is never auto-shared under any model.
+          DISCIPLINE-SPECIFIC (OT — confirms exactly WHAT crosses the boundary, field by field):
+          the OT playbook enumerates the shared payload per entity, which the four-domain sources do
+          not: Site (name, description, contact info, phone/website, programs list); Contract (basic
+          details, locations covered, routing checklist, contract documents, programs list);
+          Location (contact info, programs list, housing and parking); Personnel (Occupational
+          Therapy (OT) Playbook.md line 233). Two things follow. First, "contract documents" is in
+          the shared payload — so the signed PDF itself, not just metadata, crosses programs, which
+          is what makes a shared agreement usable as a second program's self-study exhibit rather
+          than just a status indicator. Second, Personnel IS listed as a shareable entity here,
+          which sits in tension with the never-auto-shared carve-out documented in the help guide;
+          the reconciliation is presumably auto-share versus opt-in share, but no source in this
+          research states it, so the tension is recorded rather than resolved.
+          DISCIPLINE-SPECIFIC (why this setting matters more for the eight than the four): the
+          existing disciplines are the ones already co-resident at a university. CAPTE 2D9 evidence
+          commonly covers "schools running PT alongside OT or PA" (../accreditation/capte.yaml), and
+          COA F.2 the case of "CRNA alongside BSN/DNP tracks at the same hospital"
+          (../accreditation/coa.yaml). The four expansion domains are the NEW program arriving into
+          a tenant this setting already governs — so for them this is a migration question, and for
+          the eight it is a live daily one.
+    action: >
+      An institution running multiple Exxat programs (e.g. a university standing up DO
+      alongside existing PT/OT) manages one common contract record centrally instead of each
+      program re-entering the same affiliation agreement, and controls the sharing model that
+      determines which programs can see it.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Institutional Users/Step-by-Step Guides (How-tos)/Institutional Level- Contracts and
+      Sites Management.md; /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Understanding Site Sharing
+      Model in Exxat Prism.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      Therapy (OT) Playbook.md (line 233 — per-entity shared payload; lines 297-305 — C.1.4);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
+      Therapy (PT) Playbook.md (lines 224-232 — the AAR five-pull sequence);
+      ../accreditation/capte.yaml (Element 2D9); ../accreditation/coa.yaml (Standard F.2)
+
+  - screen: "Sites — Setup > Auto Notifications (Add Notification drawer)"
+    navigation_path: "Sites > Setup (ribbon) > Auto Notifications > + Add Notifications"
+    elements:
+      - element: "Notification Type"
+        type: "select (defaults to, and today only offers, 'Expiring Contract')"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9 (renewal alerts); LCME Standard 1, Element 1.4 (renewal alerts)"
+        competitor_equivalent: >
+          Capability parity confirmed at this element: CORE ELMS and eMedley both market "automated
+          expiration reminders" (../competitors/core-elms.yaml, emedley.yaml), which is the same
+          category of feature this select exposes. Neither documents what other notification types
+          their equivalent offers, so breadth cannot be compared.
+        gap_severity: "none"
+        gap_note: >
+          Expiring Contract is the only type offered today — the renewal-alert requirement is met,
+          but this is a single-purpose notification engine, not a general one.
+      - element: "What to include in alerts"
+        type: "select (days/weeks/months before Contract end date)"
+        data_shown: "How far ahead of expiration the alert fires; default is 'Contract end date' + 'within'"
+        gates_on: []
+        accreditation_citation: "COCA Standard 6, Element 6.9 (renewal alerts); LCME Standard 1, Element 1.4 (renewal alerts); ACOTE Standard C.1.5 (Exxat's ACOTE guide names automated reminders as C.1.5 support); ACEN Standard 4, Criterion 4.9 (renewal alerting on current agreements); COA Standard F.2"
+        competitor_equivalent: >
+          Not comparable at element level — competitors market expiration reminders but neither
+          public source documents lead-time options, so element-level parity on configurable lead
+          time is not verifiable.
+        gap_severity: "none"
+        gap_note: >
+          Reads the contract's Expiration Date. Configurable lead time (e.g. 90 days, 6 months) is
+          what makes this a renewal alert rather than a post-hoc notification — it materially
+          undercuts any reading that Prism has no expiration-alerting capability at all.
+          DISCIPLINE-SPECIFIC (OT — a confirmed real-world configuration, not a hypothetical): the
+          four-domain analysis above reasons about what lead times are POSSIBLE; the OT playbook
+          records what a program actually sets, quoting the configuration as "2 months within
+          contract end date, send notification email, repeats weekly" (Occupational Therapy (OT)
+          Playbook.md line 234), and ../accreditation/acote.yaml repeats it as "the OT playbook's
+          documented default." Two months plus weekly recurrence is a usefully concrete anchor for
+          any renewal-cadence conversation, and it pairs the lead-time select with the Frequency
+          select below rather than treating them separately.
+          DISCIPLINE-SPECIFIC (PA): the PA playbook reduces this to a one-line operational
+          instruction — "Pro Tip: turn on the contract-expiring feature to stay in compliance"
+          (Physician Assistant (PA) Playbook.md line 149) — which is notable mainly because it is
+          advice, i.e. the feature is off by default and a program that never turns it on gets no
+          alerting at all. That is the difference between a shipped capability and a shipped
+          behaviour, and it applies to all twelve disciplines.
+      - element: "Program Calendar surfacing of contract expirations"
+        type: "calendar event, generated from the contract's Expiration Date"
+        data_shown: "Upcoming contract expirations as dated events on the program's calendar"
+        gates_on: []
+        accreditation_citation: "ACEN Standard 4, Criterion 4.9; CCNE Standard II, Key Element II-C; COA Standard F.2"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a calendar surface
+          for contract expirations; competitor claims stop at email reminders
+          (../competitors/core-elms.yaml, emedley.yaml).
+        gap_severity: "none"
+        gap_note: >
+          A second delivery channel the four-domain baseline never surfaced, documented only in the
+          nursing sources. The Nursing playbook describes the full chain in one sentence:
+          "Contracts — affiliation agreements with status/expiration tracking; Auto Notifications
+          alert on upcoming/expired renewals; expirations also surface as Program Calendar events.
+          This contract-tracking pattern (upload -> expiry alert -> calendar surfacing -> Placement
+          Clearance gate) recurs identically across ACEN, CCNE, and COA guides" (Nursing
+          Playbook.md line 69), and ../accreditation/nursing.yaml carries the same four-step chain
+          against ACEN 4.9. Worth having because the email notification above is push-only and
+          therefore missable; a calendar event is the one place a renewal shows up without anyone
+          having configured a recipient list. It remains a notification, not a gate — the chain the
+          nursing guides describe ends at "Placement Clearance gate," which this file confirms
+          elsewhere is diagnostic display rather than an actual gate.
+      - element: "Frequency"
+        type: "select (Daily / Weekly / Monthly / Yearly)"
+        data_shown: "How often the reminder repeats once triggered"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — recurrence frequency is not documented by any cited
+          competitor.
+        gap_severity: "none"
+        gap_note: >
+          Recurrence turns a one-shot alert into standing pressure, and the notification can be
+          paused, edited, or deleted later. Still a notification, not a gate — nothing here stops
+          scheduling against a lapsed contract.
+      - element: "Recipients tab"
+        type: "multi-select + free-text email add"
+        data_shown: "Who receives the reminder email; mode of communication is Email by default"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — recipient targeting is not documented by any cited
+          competitor.
+        gap_severity: "none"
+        gap_note: >
+          Free-text email add means site-side contacts outside the tenant can be alerted directly.
+          Not documented as auto-populating from the contract's Initiator / Primary Contact fields.
+    action: >
+      Coordinator sets up a recurring email reminder (e.g. contracts expiring within 90 days,
+      6 months) rather than relying on someone remembering to check the Contracts report, and can
+      pause, edit, or delete the notification later.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Planned Communications/Manage Contract Expirations Easily with
+      Exxat Prism.md;
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      Therapy (OT) Playbook.md (line 234 — the "2 months within contract end date... repeats
+      weekly" configuration); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/
+      Playbooks/Nursing Playbook.md (line 69 — the upload -> expiry alert -> Program Calendar ->
+      Placement Clearance chain); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/
+      documents/Playbooks/Physician Assistant (PA) Playbook.md (line 149);
+      ../accreditation/nursing.yaml (ACEN Criterion 4.9); ../accreditation/acote.yaml (C.1.5)
+
+  - screen: "Placement Clearance Dashboard — Contract Status column"
+    navigation_path: "Placements > [Course/Placement Group] > Placement Clearance"
+    elements:
+      - element: "Contract Status column"
+        type: "read-only rollup, computed per student/placement row against the associated Location's contract(s)"
+        data_shown: >
+          Valid Contract (contract fully executed, active, and valid through the placement dates
+          or open-ended) vs. Needs Attention (missing, invalid, or expiring before the placement
+          ends); a distinct 'Needs Attention (Missing Contracts)' state when no contract exists
+          for the Location; multi-contract Locations get an additional 'multiple contracts
+          associated' label and use an at-least-one-valid-contract rule
+        gates_on: ["nothing downstream — this is diagnostic display only, confirmed not to block scheduling; see gap_note"]
+        accreditation_citation: "COCA Standard 6, Element 6.9; LCME Standard 1, Element 1.4 (required_software_behavior explicitly asks for 'the ability to block new placements at a site whose agreement has lapsed'); ACOTE Standard C.1.5 (agreements in effect through the duration of fieldwork, 'with the result blocking or flagging the placement before it begins'); ACEN Standard 4, Criterion 4.9 (an automated check so 'current' is enforced rather than asserted); CAPTE Standard 2, Element 2D9; CAA Standard 3.0B, Standard 3.9B; COA Standard F.2; CSWE Accreditation Standard 3.3, AS 3.3.4"
+        competitor_equivalent: >
+          Not comparable at element level — CORE ELMS and eMedley both claim expiration alerting in
+          their compliance modules, but neither public source documents whether their own placement/
+          scheduling flow enforces a hard block on a lapsed site the way LCME 1.4's
+          required_software_behavior asks for, so this cannot be benchmarked competitor-to-competitor
+          either, only against the standard's own language.
+        gap_severity: "configure-needed"
+        gap_note: >
+          This element confirms, rather than merely asserts, the journey's "silent failure mode"
+          pain point: Contract Status is a diagnostic rollup a coordinator has to go look at, not an
+          enforcement gate. Nothing in this column or in the Add Slot flow (next step) blocks a new
+          placement from being created against a Location whose contract already shows Needs
+          Attention — the status is informational only. LCME 1.4's required_software_behavior
+          explicitly names this blocking capability; it is confirmed absent here, not merely
+          unconfirmed. The computation itself (per Location, at-least-one-valid rule, expiring-
+          before-placement-end detection) is sound — what is missing is enforcement, not logic.
+          DISCIPLINE-SPECIFIC (the most consequential correction this extension makes): the existing
+          discipline sources describe this column in language stronger than the element-level
+          evidence supports, and that discrepancy should not be quietly inherited. The OT playbook
+          says the "Placement Clearance Dashboard ... verifies students are placed only at sites with
+          active contracts" (Occupational Therapy (OT) Playbook.md line 435); the Nursing playbook
+          calls it "the gating checkpoint that consolidates preceptor CV/license/certification
+          status, contract validity, and (for CRNA) ACLS/PALS student certifications before a
+          placement is finalized" (Nursing Playbook.md line 71); ../accreditation/acote.yaml
+          summarises the required behaviour as the result "blocking or flagging the placement before
+          it begins" and ../accreditation/nursing.yaml describes ACEN 4.9's test as "computed rather
+          than reviewed by hand." All of that is true of the COMPUTATION and false of the
+          ENFORCEMENT. Verified against the help-center sources in confirmed_by, nothing on this
+          dashboard or in the Add Slot flow prevents a placement being created against a Location
+          showing Needs Attention. "Verifies," "gating checkpoint," and "blocking" are therefore
+          overstatements of a real and genuinely good diagnostic, and any customer-facing claim
+          built on the playbooks' wording would not survive a demo. The accurate claim is: Prism
+          computes contract validity against each placement's own dates — which is harder than an
+          expiry-date check and more than any competitor source in this repo documents — and then
+          shows the result to a human.
+          DISCIPLINE-SPECIFIC (OT, compounding): per the 'contract not required' element in the
+          first step, OT programs also see known-false Needs Attention rows for sites that
+          legitimately require no agreement. A display-only column that a coordinator must scan
+          manually AND that emits false positives is the worst combination of the two findings.
+          DISCIPLINE-SPECIFIC (CRNA/Nursing): the ACLS/PALS certifications the Nursing playbook
+          names here are student compliance items surfaced on the same row (see the compliance-column
+          element below), mapping to COA Standard C.5 with D.12, which requires them before a student
+          begins clinical activities. Same posture: displayed, not enforced.
+          DISCIPLINE-SPECIFIC (SLP): the SLP playbook states affiliation agreements are "stored,
+          viewed, and monitored in the Sites module" (Speech-Language Pathology (SLP) Playbook.md
+          line 48), which is CAA 3.9B's documented answer and is notably the WEAKER of the two
+          claims — "monitored" is exactly right for what this column does, and is the wording other
+          disciplines' guides should probably borrow.
+      - element: "Requirement Upload Status / Compliance Status columns"
+        type: "read-only rollups"
+        data_shown: "Student-side document and compliance-item status, run in parallel to Contract Status on the same row"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — student compliance rollups exist in CORE ELMS and
+          eMedley marketing material, but not at column-level granularity.
+        gap_severity: "none"
+        gap_note: >
+          Student-side, not site-contract evidence — included here only because they share the row
+          with Contract Status. They inherit the same display-only posture: informational columns
+          on a dashboard, not gates.
+          DISCIPLINE-SPECIFIC (CRNA): these are the columns carrying the ACLS and PALS certification
+          check the Nursing playbook names as part of CRNA placement clearance (Nursing Playbook.md
+          lines 71, 101), which maps to COA Standard C.5 with D.12 — certification required BEFORE
+          beginning clinical activities. A pre-condition standard being served by a display-only
+          column is the same structural finding as Contract Status, one row over.
+          DISCIPLINE-SPECIFIC (Social Work): SW's third-party compliance integrations run through
+          these columns — the SW playbook names CISIVE and Universal for background checks and drug
+          screenings and ComplianceJunction for HIPAA training, with completion syncing back to
+          Prism as Approved (Social Work (SW) Playbook.md lines 151-152). Site-relevant because SW
+          agencies commonly impose the background-check requirement as a condition of the placement,
+          so the site relationship and the student compliance item are contractually linked even
+          though Prism models them on different objects.
+      - element: "Field Instructor orientation-certificate status (Social Work)"
+        type: "read-only rollup, sourced from the Certification section of the Agencies > Personnel record"
+        data_shown: "Whether an assigned Field Instructor / Task Supervisor has a CV, licensure, and an orientation-completion certificate on file"
+        gates_on: ["nothing — same display-only posture as every other column on this dashboard"]
+        accreditation_citation: "CSWE Accreditation Standard 3.3, AS 3.3.4 (documented processes for orienting and engaging with field instructors); CSWE Accreditation Standard 3.3, AS B3.3.6 / M3.3.6 (Field Instructor degree plus two years' post-degree practice)"
+        competitor_equivalent: >
+          Not comparable at element level — CORE ELMS markets "preceptor license tracking"
+          (../competitors/core-elms.yaml) and E*Value "automated document collection during
+          onboarding (contracts, health records, and training documents)"
+          (../competitors/e-value.yaml lines 42, 51), which is the same category of capability, but
+          neither documents orientation-completion as a distinct tracked artifact or what surfaces
+          it, so the comparison stops at "both track preceptor documents."
+        gap_severity: "configure-needed"
+        gap_note: >
+          Called out separately because CSWE is the only accreditor in this file that makes SITE-SIDE
+          PERSON ORIENTATION a named prerequisite of the placement rather than a general quality
+          expectation, which puts it inside this stage's site-vetting scope rather than downstream.
+          The SW playbook confirms the mechanism: the Placement Clearance Dashboard "verifies whether
+          an assigned FI/Task Supervisor has CV, licensure, or certification on file; also flags
+          whether orientation-completion certificates are present," with the certificates stored in
+          the Agencies > Personnel Certification section (Social Work (SW) Playbook.md lines 133-135),
+          and ../accreditation/cswe.yaml records that "orientation certificates stored in the
+          Agencies > Personnel Certification section surface on the Placement Clearance Dashboard —
+          i.e. Compliance Management's multi-entity gate is already doing field-instructor
+          orientation tracking."
+          Rated configure-needed because the certificate is a generic document slot: nothing in the
+          sources defines an orientation certificate as a distinct type, sets its recurrence, or
+          expires it, so a program gets the surfacing for free and has to invent the taxonomy.
+          The harder CSWE-specific gap sits one level up and is NOT solved here: AS B3.3.6/M3.3.6
+          audits whether the Field Instructor holds a CSWE-accredited SW degree plus two years'
+          post-degree practice, and whether an on-site Task Supervisor who lacks that degree is
+          paired with an off-site qualified FI under "alternative field instruction." The SW
+          playbook confirms a placement can carry both supervisors (Social Work (SW) Playbook.md
+          line 137), but the QUALIFICATION distinction CSWE actually audits is not a structured
+          attribute — it would have to ride in personnel categories or designation free text. Same
+          finding as admin-onboarding--05's Social Work discipline note, reached independently from
+          the clearance side.
+          Also note the "verifies" wording in the SW playbook carries the same overstatement flagged
+          on the Contract Status element: this column displays, it does not block.
+      - element: "Preceptor CV / License / Certification columns"
+        type: "three-state rollup (Missing / Exists / NA)"
+        data_shown: "Whether the placement's assigned preceptor has a CV, a licence record, and a certification record on file"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — preceptor credential tracking is claimed by competitors
+          at module level, not per column with documented states.
+        gap_severity: "none"
+        gap_note: >
+          Preceptor-side rather than contract-side; the Missing/Exists/NA states are display only,
+          consistent with the rest of this dashboard. Out of scope for this stage's contract
+          evidence but available on the same screen.
+      - element: "Filter"
+        type: "report filter"
+        data_shown: "By course offering, Rotation, Setting, Requirement Upload Status, Contact, Student Attributes, Preceptor CV/License/Certification"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file enumerates the filter set on
+          an equivalent clearance view.
+        gap_severity: "none"
+        gap_note: >
+          Worth noting for the "coordinator has to go look at it" finding above: Contract Status is
+          not among the documented filter options, so isolating only the Needs Attention contract
+          rows is not confirmed available — the column is scanned visually. The source enumerates
+          the filter list but is not explicitly exhaustive, so this is an observation about what is
+          documented, not a confirmed absence.
+    action: >
+      Coordinator monitors this dashboard — Exxat's documented best practice is starting 6-8
+      weeks before rotations begin — to catch a Needs Attention contract before students are due
+      on site, and can bulk-download compliance documents or approve student-uploaded location
+      documents directly from here.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance
+      Dashboard.md; /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md
+      ("Contract Status on Clearance Dashboard" section);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      Therapy (OT) Playbook.md (lines 421-436 — placement-clearance requirements and the "verifies"
+      wording); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
+      Nursing Playbook.md (lines 71, 101 — "gating checkpoint" wording and CRNA ACLS/PALS);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work
+      (SW) Playbook.md (lines 133-137, 151-152 — FI orientation certificates, alternative field
+      instruction, third-party compliance vendors);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language
+      Pathology (SLP) Playbook.md (line 48); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/
+      99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (lines 130-135 — the four
+      PA placement-clearance requirements); ../accreditation/acote.yaml (C.1.5);
+      ../accreditation/nursing.yaml (ACEN 4.9); ../accreditation/cswe.yaml (AS 3.3.4, AS B3.3.6/
+      M3.3.6); ../accreditation/coa.yaml (Standard C.5 with D.12)
+
+  - screen: "Site/Location — Slots tab (Add Slot drawer)"
+    navigation_path: "Sites > [Site or Location] > Slots > + Add Slot"
+    elements:
+      - element: "Location"
+        type: "select (prefilled/locked when adding from a Location; open list, including 'Location not known,' when adding from a Site)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a capacity/slot data
+          model at this granularity.
+        gap_severity: "none"
+        gap_note: >
+          Notable that 'Location not known' is an accepted value when adding from a Site: capacity
+          can be recorded before the physical location is pinned down, which also means the slot is
+          not yet tied to a Location whose contract could be evaluated.
+      - element: "Rotation"
+        type: "select, restricted to current and future rotations only"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a capacity/slot data
+          model at this granularity.
+        gap_severity: "none"
+        gap_note: >
+          Restricted to current and future rotations, so historical capacity cannot be backfilled
+          through this drawer — relevant to the multi-year capacity math discussed on Number of
+          Offers below.
+      - element: "Number of Offers"
+        type: "input field (mandatory), locked after the slot is edited once a student is placed"
+        data_shown: "A single static integer for how many students this slot batch can take"
+        gates_on: ["how many students Placement Assist or manual placement can assign against this slot"]
+        accreditation_citation: "COCA Standard 6, Element 6.9 (3-year rolling average of students eligible for first-time/repeat/off-cycle rotations matched against demonstrated site capacity)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a capacity field or
+          any rolling-average capacity computation, so it is not knowable whether this gap is
+          Prism-specific or category-wide.
+        gap_severity: "gap"
+        gap_note: >
+          This is the field the journey's "no confirmed rolling-average capacity math" hedge was
+          about, and this pass does not resolve it — it confirms the hedge is correct. Number of
+          Offers is a manually-entered, static per-slot-batch count. Nothing found anywhere in the
+          help-center mirror, the discipline playbooks, or capability-map.yaml computes a rolling
+          average of students against demonstrated site capacity, or compares that average to
+          anything resembling a threshold. COCA 6.9's specific "3-year rolling average... matched
+          against demonstrated capacity" evidence would have to be assembled outside Prism today —
+          most plausibly by exporting Placement Reports and Slot data and doing the math in a
+          spreadsheet, the same workaround the journey's pain_or_gap already describes. Compounding
+          this: capacity is added by creating a new slot rather than editing an existing offer
+          count, so total demonstrated capacity is itself a sum across slot rows.
+          DISCIPLINE-SPECIFIC NUANCE ADDED 2026-08-25 — the hedge survives, but it needs qualifying.
+          The eight existing disciplines DO have shipped, standard-mapped reports reading this field:
+          PA's SCPE Details (Sites > Reports), Nursing's Slot Sufficiency Report (a Custom report
+          under Sites > Reports), PT/PTA's "Number and Variety of Clinical Slots," and PA's
+          Distribution of Slots Across Settings / by Location. Those are enumerated as their own
+          elements in the new "Sites — discipline-named site & slot sufficiency reports" step below.
+          So the corrected claim is narrower and stronger than the original: capacity is REPORTED,
+          per discipline, in accreditor-shaped exports — but no report in any discipline computes a
+          rolling average, and none returns a sufficiency VERDICT. Every registry reaches the same
+          conclusion independently: ../accreditation/arc-pa.yaml ("Sufficiency is asserted by
+          eyeballing offered-vs-used per setting in Excel, not computed. No shipped pillar produces
+          a pass/fail 'is capacity sufficient for this cohort' verdict"); ../accreditation/
+          nursing.yaml on CCNE II-C ("the report shows volume, not a judgment of adequacy against a
+          defined threshold"); ../accreditation/coa.yaml on F.1/A.10 ("no shipped report crosses
+          site capacity with the Appendix CASE-CATEGORY minimums, which is what F.1's
+          'individually' wording actually demands"); ../accreditation/capte.yaml on 2D8 (the
+          150%-of-charter-class projection "has no shipped equivalent"). COCA 6.9's rolling-average
+          math is therefore not an expansion-domain-specific hole — it is the same missing analytic
+          layer twelve disciplines share, which makes it a platform investment rather than a
+          go-to-market blocker for any one domain.
+      - element: "Supervision Type"
+        type: "select on the slot record (Sites > Location > Slots > Supervision Type)"
+        data_shown: "The planned student-to-supervisor ratio for this slot batch; the OT value set in production is 1 Student:1 CI, 1 Student:2 CIs, 2 Students:1 CI, 2 Students:2 CIs"
+        gates_on: ["nothing confirmed — no source describes the value being validated against actual assignments"]
+        accreditation_citation: "ACOTE Standard C.1.7 (fieldwork-educator-to-student ratio must enable proper supervision, protect consumers, permit role modelling and frequent assessment); COA Standard F.7 — CRITICAL (*) (no more than 2 students directly supervised by 1 clinical preceptor AT ANY TIME); ACPE Standard 3, Key Element 3.3.e (2:1 cap, already cited elsewhere in this repo); CCNE Standard II, Key Element II-F (recommended 1:8 faculty-to-student ratio for indirect NP-track supervision)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a supervision-ratio
+          field on a capacity record. Elentra's Clinical Experience Management module is documented
+          as supporting "learner-driven elective selection within admin-set capacity rules"
+          (../competitors/elentra.yaml line 14), which is the closest published concept, but a
+          capacity rule is not a supervision ratio and the source is not granular enough to tell
+          whether Elentra models supervisor load at all.
+        gap_severity: "gap"
+        gap_note: >
+          A first-class field the four-domain baseline of this file never surfaced, and the single
+          most important capacity element for two of the eight disciplines. Confirmed by the OT
+          playbook twice: as a setup-reference value list, "Supervision Type: 1 Student:1 CI, 1
+          Student:2 CIs, 2 Student:1 CI, 2 Student:2 CIs" (Occupational Therapy (OT) Playbook.md
+          line 237), and as the named ACOTE C.1.7 mechanism, "Supervision Ratio Tracking (Sites >
+          Location > Slots > Supervision Type) — enter/monitor supervision ratio when adding student
+          slots," paired with a Placements by Educator report for the realized ratio (line 403).
+          The Nursing playbook points CRNA programs at the same place: "Sites -> Slots — for CRNA
+          programs, this is where the student-to-preceptor supervision ratio is assigned and
+          monitored against COA's hard 2:1 cap (Standard F.7, critical)" (Nursing Playbook.md line
+          73).
+          RATED A GAP DESPITE THE FIELD EXISTING, for two documented reasons, and the severity is
+          driven by CRNA rather than OT. (1) Planned versus realized never reconcile:
+          ../accreditation/acote.yaml records that "planned Supervision Type and realized ratio live
+          in two different views with no reconciliation, so nothing flags a slot set up as 1:1 that
+          actually ran 2:1," and that the Placements by Educator report "explicitly EXCLUDES
+          placements with no assigned educator, so a program with incomplete educator assignment
+          silently under-reports its own ratios — the denominator quietly shrinks." On that basis
+          ACOTE C.1.7 is rated Configure. (2) COA F.7 is rated BUILD in ../accreditation/coa.yaml,
+          and the reasoning is the important part: "The unit of enforcement is preceptor-shift, not
+          placement," requiring per-clinical-day records of which named CRNA or anesthesiologist is
+          responsible for which students, an OBSERVED concurrent ratio computed from that assignment
+          data "rather than trusting a declared slot capacity number," a hard warn when a third
+          student would land on the same preceptor the same day, and a structured exception record
+          (date, reason, contingency action, approver) because COA permits brief exceedance only
+          with documented justification. A slot-level Supervision Type select is a DECLARATION about
+          a batch; F.7 asks a question about a shift. The field cannot answer it, and F.7 is
+          asterisked critical — failure is treated as a matter of critical concern in the
+          accreditation decision. This is the clearest example in this stage of a capability that
+          reads as parity on a feature grid and is not parity against the standard.
+      - element: "Slot Type"
+        type: "select on the slot record — FCFS / Resume Required / Interview Required / Must Be Filled / Requested By Student"
+        data_shown: "The terms on which a site is offering this capacity"
+        gates_on: ["how the slot is exposed to students in wishlist/placement flows (downstream of this stage)"]
+        accreditation_citation: "ARC-PA Standard A1, Element A1.10 a-b ('the method used to confirm site availability' is explicitly part of what a program must document)"
+        competitor_equivalent: >
+          Not comparable at element level, and this is the one area where the relevant competitors
+          are not in this repo at all. CORE ELMS's SmartMatch is documented as matching students to
+          sites "using customizable rules and preferences" (../competitors/core-elms.yaml), which
+          implies slot attributes exist, but no field list is published. More importantly the PT
+          playbook names the actual slot-sourcing competitors — myClinicalExchange, Clinician Nexus,
+          ACEMAPP, CastleBranch Bridges (Physical Therapy (PT) Playbook.md line 184) — and none has
+          a teardown file in ../competitors/, so the honest position for PT/OT slot sourcing is that
+          this repo has not researched the competitive set.
+        gap_severity: "none"
+        gap_note: >
+          Capacity in the eight existing disciplines is not a plain integer — it is an integer plus
+          the terms attached to it, and this select is where the terms live. Confirmed in the OT
+          playbook's setup reference: "Slot Type: FCFS, Resume Required, Interview Required, Must Be
+          Filled, Requested By Student. Schools typically don't change these" (Occupational Therapy
+          (OT) Playbook.md line 236) — a shipped, stable vocabulary rather than a program-authored
+          one, which is why it is rated none rather than configure-needed.
+          DISCIPLINE-SPECIFIC (PT/PTA — this is the industry's actual sourcing rhythm): the PT
+          playbook records the annual slot-request cycle as March 1 ("M1M"), where an M1M sent March
+          1 2025 requests slots for calendar year 2026, and SCCEs "respond to the M1M by offering a
+          mix of reserved or First Come First Serve (FCFS) slots," with the FCFS share "climbing" and
+          schools advertising those to students immediately to avoid "losing out... to other schools
+          competing for them" (Physical Therapy (PT) Playbook.md lines 79-84, 104). The four
+          expansion domains in this file have no equivalent seasonality documented, so FCFS-vs-
+          reserved is a distinction that only becomes load-bearing once PT/OT are in scope. Exxat One
+          (debuted March 2024) is documented as the year-round alternative to the M1M cycle for both
+          PT and OT (PT playbook line 85; Occupational Therapy (OT) Playbook.md line 380).
+          DISCIPLINE-SPECIFIC (PA): PA has "no fixed date for sending slot request emails (unlike
+          PT's M1M)" and runs two structurally different sourcing models — Site Based, where the
+          location provides slots, and Preceptor Based, where the preceptor provides them and "all
+          locations associated with a preceptor are published to the student" (Physician Assistant
+          (PA) Playbook.md lines 18-33, 99-102). Preceptor Based inverts the object that owns
+          capacity, which is why the PA-only cap element below is scoped to Location rather than to
+          the preceptor.
+      - element: "Max Placement Limit (PA-exclusive slot cap)"
+        type: "numeric cap on a Location + Setting + Cohort combination, set from the Slot Offering Drawer (step 2) by either the site delegator or an admin; surfaced in the Slots Grid and Slots List View with a 'Limit Exists' label"
+        data_shown: "How many students a site will actually accept, independently of how many slots it listed as offered"
+        gates_on: ["SOFT ONLY — warns at location-view student selection, at the Make Placement drawer for both Place Individually and Place as a Group, and at student-view placement; staff can proceed anyway"]
+        accreditation_citation: "ARC-PA Standard A1, Element A1.10 a-b (programs must document 'the number of students each site can accommodate'); ARC-PA Standard B3, Element B3.01 a-e"
+        competitor_equivalent: >
+          eMedley is the only cited competitor whose public material names the concept: its eSchedule
+          module is described as "scheduling with site capacity management"
+          (../competitors/emedley.yaml line 16), and Elentra as "learner-driven elective selection
+          within admin-set capacity rules" (../competitors/elentra.yaml line 14). Both are real
+          capacity claims at feature level, so "competitors also cap capacity" is supportable — but
+          neither publishes the scoping (location vs. site vs. preceptor), the enforcement strength
+          (hard block vs. soft warning), or the cohort semantics, which are exactly the three things
+          that make Prism's version distinctive. Comparison stands at concept level only.
+        gap_severity: "configure-needed"
+        gap_note: >
+          The most substantive capacity capability in this stage, and it exists for exactly one
+          discipline. Per the PA playbook it is "a discrete, PA-only capability (only available to
+          lockstep-based domains — not configurable for non-lockstep clients)" that "caps how many
+          students a site can actually accept, independent of how many slots it lists as offered" —
+          the worked example being a preceptor who lists 12 monthly slots across a year but caps
+          total intake at 7 students (Physician Assistant (PA) Playbook.md lines 323-334).
+          Mechanics that matter: the limit is scoped to Location + Setting + Cohort and falls back to
+          Location + Cohort when a slot has no Setting; it is NOT available at the site level, only
+          the location level; it must be explicitly enabled in Slot Request Configuration or site
+          personnel never see the field; and when a rotation is shared across cohorts, "each cohort's
+          placement limit stays fully independent of the other's and of the shared-slot consumption."
+          Why this belongs in this file rather than a placement-stage file: it is the direct answer
+          to the Number of Offers gap above. Number of Offers is what a site SAID; Max Placement
+          Limit is what a site will DO, and ARC-PA A1.10 a-b asks for the second — "the number of
+          students each site can accommodate." It is also the only element anywhere in this stage
+          that intervenes at assignment time at all.
+          Rated configure-needed, not none, for three reasons, each documented rather than inferred:
+          it is a SOFT cap ("staff can still proceed with the placement despite the warning"), which
+          leaves this stage with zero hard gates end to end; it is off unless enabled in Slot Request
+          Configuration; and it is PA-and-lockstep-only, so the OT, SW, and SLP programs whose
+          accreditors ask materially the same capacity question cannot have it. Note the tension with
+          the Preceptor Based sourcing model documented above: PA capacity is often offered BY a
+          preceptor, but the cap is enforceable only at Location + Setting + Cohort, so a preceptor
+          who works across three locations cannot be capped as a preceptor.
+      - element: "Start Date / End Date / Notes"
+        type: "input fields"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a capacity/slot data
+          model at this granularity.
+        gap_severity: "none"
+        gap_note: >
+          Bounds the slot batch in time. Not documented as being checked against the covering
+          contract's validity window — consistent with the non-enforcement finding on the Placement
+          Clearance Dashboard.
+    action: >
+      Coordinator manually enters how many students a site/location can take for a given
+      rotation, one slot batch at a time; to add more capacity for the same rotation/setting, a
+      new slot must be added rather than the existing one's offer count edited.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md
+      ("Adding Slots by Site" / "Adding Slots by Location" sections);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      Therapy (OT) Playbook.md (lines 236-237 Slot Type and Supervision Type value sets; line 403
+      C.1.7 supervision-ratio tracking; line 380 Exxat One);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+      Assistant (PA) Playbook.md (lines 18-33 and 99-102 Site Based vs. Preceptor Based sourcing;
+      lines 323-334 Max Placement Limit);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
+      Therapy (PT) Playbook.md (lines 79-85, 104, 184 — M1M cycle, FCFS mix, Exxat One, and the
+      four unresearched slot-sourcing competitors);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
+      Playbook.md (line 73 — CRNA 2:1 assigned and monitored at Sites > Slots);
+      ../accreditation/acote.yaml (Standard C.1.7); ../accreditation/coa.yaml (Standard F.7);
+      ../accreditation/arc-pa.yaml (Element A1.10 a-b)
+
+  # ---------------------------------------------------------------------------
+  # NEW STEP (2026-08-25, from a full read of the PT playbook rather than a
+  # per-stage sample). The OUTBOUND half of site sourcing. Every other step in
+  # this file documents what happens to a site record once Prism knows about it;
+  # this one documents the mass-email machinery that produces the slot offers and
+  # the site-data updates in the first place. It exists because PT's sourcing
+  # model is a single annual blast (the March 1 "M1M") to hundreds of SCCEs, and
+  # the failure modes are therefore deliverability failures, not data failures.
+  # No four-domain source describes this screen at all.
+  # ---------------------------------------------------------------------------
+  - screen: "Sites > Emails — M1M slot-request and site-update blast operations"
+    navigation_path: "Sites > Emails > Email Dashboard (delivery triage, Status filter) | Sites > Emails > recipient filters and template selection (composition) | Placements > [Course/Group] > Email & Publish for the placement-notification variant"
+    elements:
+      - element: "Email Dashboard — Status filter = Failed (delivery triage)"
+        type: "report filter over outbound email delivery state"
+        data_shown: "Which slot-request or site-update emails failed to deliver, per recipient"
+        gates_on: ["Whether a site was actually ASKED for slots at all — an undelivered M1M is indistinguishable from a site that declined to respond, unless someone checks this screen"]
+        accreditation_citation: "ARC-PA Standard A1, Element A1.10 a-b ('the method used to confirm site availability' is explicitly part of what a program must document — a documented method whose failures are invisible is not a method); CCNE Standard II, Key Element II-C (evidence of how the program is responsible for OBTAINING clinical placements, which is the outbound half of the sufficiency process); CAPTE Standard 2, Element 2D8"
+        competitor_equivalent: >
+          Not comparable at element level, and this is one of the places where the missing
+          teardowns matter most. The four vendors the PT playbook names as the real competitive
+          set for slot sourcing — myClinicalExchange (mCE), Clinician Nexus, ACEMAPP and
+          CastleBranch Bridges (Physical Therapy (PT) Playbook.md line 184) — invert this model
+          entirely: they make the SITE the account holder, so a slot request is a portal
+          transaction rather than an email, and deliverability is not a failure mode they have.
+          None of the four has a teardown file in ../competitors/, so the honest position is that
+          this repo cannot say whether email-based sourcing is a weakness or simply a different
+          bet. Recorded as a research hole, not as a verdict.
+        gap_severity: "configure-needed"
+        gap_note: >
+          NEW 2026-08-25. The single most operationally consequential screen in PT's sourcing
+          season and it had no representation in this file. The PT playbook enumerates the
+          documented failure causes and the documented fixes (lines 265-267): failures come from
+          "address typos, invalid/retired addresses, firewalls, full mailboxes," and the fixes are
+          to correct the address, to send Exxat's WHITELIST LETTER from a personal account, or to
+          resend from a personal account "to route around firewall blocks."
+          Two things worth stating plainly. First, two of the three documented remedies involve the
+          coordinator sending mail from OUTSIDE Prism, which means the system of record loses the
+          audit trail for exactly the sites that were hardest to reach — and those are
+          disproportionately the large hospital systems whose firewalls block bulk senders, i.e.
+          the acute and inpatient sites the same playbook records as the nationally scarcest
+          (line 186). Second, this is a diagnostic screen a human must remember to open. Nothing
+          described in any source pushes a "your M1M did not reach 40 of your 300 sites" summary,
+          so the sourcing season's largest silent failure mode has the same posture as the Contract
+          Status column documented earlier in this file: computed, displayed, not escalated.
+      - element: "Recipient targeting filters, including 'No Areas/Tags/Categories/Settings Assigned'"
+        type: "report filter over the site/location directory, used as an email audience selector"
+        data_shown: "Which sites and locations receive the blast, filterable by the same attribute taxonomy configured on the Site/Location records — plus an explicit inverse filter for records MISSING that attribute data"
+        gates_on: ["Which sites are in the audience at all"]
+        accreditation_citation: "ARC-PA Standard A1, Element A1.10 a-b; CCNE Standard II, Key Element II-C"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents audience selection
+          for site-directed communication, because no cited competitor documents site-directed
+          mass communication.
+        gap_severity: "none"
+        gap_note: >
+          The inverse filter is the interesting half and is a genuinely good piece of design: per
+          the PT playbook (line 268) the filter set "now includes 'No Areas/Tags/Categories/Settings
+          Assigned' so sites missing attribute data aren't silently excluded from a blast." That is
+          a direct fix for a failure mode this file documents from the other direction on the
+          Site/Location Categories element — a program-authored taxonomy that nobody finished
+          populating. Without the inverse filter, a site with no Setting tag would fall out of every
+          setting-filtered blast and simply stop being asked for slots, which reads downstream as
+          declining capacity rather than as a data-hygiene problem. Worth carrying to the four
+          expansion domains verbatim, because they are the programs most likely to have
+          half-populated taxonomies in year one.
+      - element: "Custom site-update template requirement — the @Request Link merge field"
+        type: "template validation requirement (documented convention, enforcement unconfirmed)"
+        data_shown: "A custom site-update request template must contain the @Request Link merge field, or the recipient has no way to submit updates; recipients should additionally be filtered to Site/Location Status = Active before sending"
+        gates_on: ["Whether the site can respond at all — a template missing the merge field produces an email with no action available in it"]
+        accreditation_citation: "ARC-PA Standard A1, Element A1.10 a-b (the confirm-availability method); ARC-PA Standard B3, Element B3.02 a-c (ONGOING evaluation of every SCPE site — a site-update request is the lightweight recurring touch that keeps site data current between formal assessments)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a merge-field
+          contract on an outbound template.
+        gap_severity: "gap"
+        gap_note: >
+          NEW 2026-08-25, and rated a gap rather than configure-needed for a specific reason: the
+          PT playbook states the requirement as INSTRUCTION ("custom site-update templates must
+          include the `@Request Link` merge field or the recipient has no way to submit updates",
+          line 269), and no source read states that the product validates it. A template author
+          can therefore ship a blast to several hundred site contacts in which the call to action
+          is missing, and the observable symptom is silence — which is indistinguishable from
+          sites choosing not to respond. That is the same class of failure as the delivery problem
+          two elements up, and the same class of fix: a pre-send validation, not a documentation
+          note. Small, cheap, and it protects the one annual event PT's entire capacity pipeline
+          depends on.
+      - element: "Selective field exposure in a site-update request (Notes, Requirements, Housing, Parking, Personnel)"
+        type: "per-blast field-visibility selector; basic site info is always visible"
+        data_shown: "Which parts of the site record the recipient can see and edit when responding to an update request — the playbook names Notes, Requirements, Housing, Parking and Personnel as the selectively-exposable set, with basic info always visible"
+        gates_on: ["What a site contact can self-serve versus what the coordinator must maintain by hand"]
+        accreditation_citation: "ARC-PA Standard B3, Element B3.02 a-c (documented ONGOING site evaluation — self-reported site data is one of its inputs); CSWE Accreditation Standard 3.3, AS 3.3.4 (engaging with field education settings); ACOTE Standard C.1.2 (student access to fieldwork site information — Housing and Parking are literally the student-facing fields this standard is about)"
+        competitor_equivalent: >
+          Not comparable at element level. Worth one directional note that is supportable: the four
+          unresearched marketplace competitors (PT playbook line 184) are built on the site holding
+          its own account, which makes site self-service their default rather than a per-blast
+          permission. If those teardowns are ever built, this element is the one to compare — the
+          question is not whether sites can update their own data but whether they must register to
+          do it.
+        gap_severity: "none"
+        gap_note: >
+          NEW 2026-08-25 (PT playbook line 270). Included because it resolves, in Prism's favour, a
+          question the rest of this file leaves open: site records are not purely coordinator-
+          maintained — there is a documented, granular, per-request mechanism for letting the site
+          maintain its own Requirements, Housing, Parking and Personnel. That last one matters for
+          rotation-lifecycle--02: Personnel is exposable here, which is a second path to preceptor
+          data alongside the Experiential Supervisor Intake Form, and unlike the PIF it is not
+          one-supervisor-at-a-time. Note the tension with the site-sharing carve-out documented in
+          the Institutional Level step of this file, where Personnel is described as never
+          auto-shared across programs; exposing Personnel outward to the site and sharing it
+          sideways between programs are different operations, but no source reconciles the two.
+      - element: "Exxat version of the CSIF (Clinical Site Information Form) distributable outside LAM"
+        type: "ABSENT — named as a roadmap enhancement, not a shipped capability"
+        data_shown: "n/a"
+        gates_on: []
+        accreditation_citation: "CAPTE Standard 2, Element 2D8 (sufficiency, quality, quantity and variety of clinical sites — the CSIF is the APTA profession's own standard instrument for capturing exactly that site profile); ACOTE Standard C.1.2 (student access to fieldwork site information); ARC-PA Standard B3, Element B3.02 a-c"
+        competitor_equivalent: >
+          Not comparable at element level, and genuinely unknowable from this repo: the CSIF is an
+          APTA-ecosystem artifact and the products that host it are the PT-specific slot
+          marketplaces (mCE, Clinician Nexus, ACEMAPP, CastleBranch Bridges) that have no teardown
+          in ../competitors/. Recorded as a research hole. What can be said is that Prism's own
+          documented ambition here is to REACH SITES OUTSIDE ITS OWN NETWORK, which is a
+          distribution question rather than a feature question.
+        gap_severity: "gap"
+        gap_note: >
+          NEW 2026-08-25, and recorded as a confirmed absence-with-intent rather than an
+          unconfirmed one, because the PT playbook lists it in its own enhancements section:
+          "Create an Exxat version of the CSIF (Clinical Site Information Form) that can be
+          distributed to sites outside of LAM" (line 197). The CSIF is the standardised site-profile
+          instrument PT programs already exchange with sites, so this is not a novel object — it is
+          the profession's existing form, absent from the product.
+          Why it belongs in THIS stage rather than in a backlog note: this file already documents a
+          self-service Site Assessment form builder (see the Site/Agency Assessments step) and
+          records that its weakness is the absence of shipped, standard-shaped starter instruments —
+          "nothing ships a B3.02-shaped template." The CSIF is the PT-specific instance of exactly
+          that gap, and it is the strongest available evidence that the shipped-starter-instrument
+          recommendation is a real customer ask rather than an analyst's inference.
+    action: >
+      Ahead of and during the March 1 slot-request season the coordinator composes the M1M and its
+      follow-up site-update requests, targets them across the site directory (including sites with
+      missing attribute data), confirms the template carries the response link, chooses which parts
+      of the site record the recipient may update, and then triages delivery failures on the Email
+      Dashboard — because an undelivered request and a declined request look identical downstream.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
+      Therapy (PT) Playbook.md — read IN FULL 2026-08-25. Lines 265-270 are the whole of this step
+      (failed-delivery triage at Sites > Emails > Email Dashboard with Status filter = Failed, the
+      four documented failure causes and three documented fixes including Exxat's whitelist letter;
+      the "No Areas/Tags/Categories/Settings Assigned" recipient filter; the @Request Link merge-field
+      requirement and the Site/Location Status = Active recipient filter; and the selectively
+      exposable Notes/Requirements/Housing/Parking/Personnel fields with basic info always visible).
+      Line 197 for the absent Exxat CSIF; lines 79-85 for the M1M cycle this machinery serves;
+      line 184 for the four unresearched marketplace competitors; line 186 for the national
+      competition for IP and acute-care slots. ../accreditation/arc-pa.yaml (Element A1.10 a-b,
+      Element B3.02 a-c); ../accreditation/nursing.yaml (CCNE Key Element II-C);
+      ../accreditation/capte.yaml (Element 2D8); ../accreditation/acote.yaml (Standard C.1.2)
+
+  - screen: "Site — About tab (Payment Details section) and Site Payment Report"
+    navigation_path: >
+      Sites > [Site] > About tab > Payment Details (+); report at Placements > [Placement Group] >
+      [Course] > Reports > Site Payment Report
+    elements:
+      - element: "Payee"
+        type: "multi-select (site, location, and/or personnel/preceptor)"
+        data_shown: "Who is being paid for hosting/supervising students"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          eMedley's eKeeper module is marketed as pairing affiliation-agreement tracking with
+          "preceptor pay automation" (../competitors/emedley.yaml, emedley.com/student-documents) —
+          the closest named competitor claim to this element — but eMedley's public docs do not
+          describe which payee types their equivalent supports, so the site/location/preceptor
+          breadth confirmed here cannot be compared.
+        gap_severity: "none"
+        gap_note: >
+          Supports paying the site, the location, or the individual preceptor, which is what makes
+          this usable for Medicine's preceptor-pay dynamic and not just institutional invoicing.
+          Not an accreditation-standard evidence field.
+      - element: "Rate / Rate Unit"
+        type: "input + select (Per Week / Per Rotation)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — eMedley claims "preceptor pay automation"
+          (../competitors/emedley.yaml) but publishes no rate-unit mechanics, so it is unknown
+          whether their equivalent supports the same Per Week / Per Rotation basis.
+        gap_severity: "none"
+        gap_note: >
+          Directly informs the journey's domain_variance claim that Medicine's pay-pressure dynamic
+          "turns the agreement record into a financial instrument, not just a legal one" — this is
+          the confirmed, site-linked rate field for exactly that instrument, contrary to any
+          assumption it would need to be built from scratch. It is stored on the Site, not on the
+          Contract, and is not confirmed to be integrated with Contract Status.
+      - element: "Vendor ID"
+        type: "input field (site payee only)"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents a finance-system
+          vendor identifier.
+        gap_severity: "none"
+        gap_note: >
+          Available only when the payee is a site; the obvious hook for reconciling against a
+          university finance system, though no integration is documented in the sources.
+      - element: "Payment Notes"
+        type: "free text"
+        data_shown: ""
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — free-text notes are not documented by any cited
+          competitor.
+        gap_severity: "none"
+        gap_note: >
+          Unstructured; nothing computes against it.
+      - element: "Site Payment Report"
+        type: "report"
+        data_shown: "Detailed record of school payments to sites, locations, or supervisors/preceptors per placement"
+        gates_on: []
+        accreditation_citation: ""
+        competitor_equivalent: >
+          Not comparable at element level — eMedley's "preceptor pay automation" claim
+          (../competitors/emedley.yaml) implies some reporting output, but no report-level detail is
+          published to compare against, and it is not confirmed whether Prism's Payment Details is
+          integrated with Contract Status the way "automation" implies eKeeper's is.
+        gap_severity: "none"
+        gap_note: >
+          The reconciliation output for the fields above, resolved per placement. Reporting only —
+          no payment execution or finance-system posting is documented.
+    action: >
+      Coordinator records the negotiated pay rate for a site/preceptor directly on the Site
+      record when the affiliation requires compensation, and can later pull the Site Payment
+      Report for reconciliation.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md
+      ("Adding Payment Details" / "Site Payments Report" sections)
+
+  # ---------------------------------------------------------------------------
+  # NEW STEP (2026-08-25). The discipline-named site/slot sufficiency report
+  # family. This is the screen the four-domain version of this file was missing
+  # when it recorded "no confirmed rolling-average capacity math": the reports
+  # DO exist, per discipline, in accreditor-shaped form — they just do not
+  # compute a verdict. Rated honestly rather than as either a win or a hole.
+  # ---------------------------------------------------------------------------
+  - screen: "Sites > Reports and Placements > [Placement Group] > Reports — discipline-named site & slot sufficiency exports"
+    navigation_path: "Sites > Reports > SCPE Details (PA)  |  Sites > Reports > Slot Sufficiency Report (Nursing, a Custom report)  |  Placements > Placements for Group > Reports > Number and Variety of Clinical Sites / Clinical Slots (PT/PTA)  |  Placements > Placement Group > Reports > Distribution of Slots Across Settings / by Location (PA)"
+    elements:
+      - element: "SCPE Details report (PA)"
+        type: "report, mirrors the ARC-PA Entry Level Program Portal's own SCPE data-entry format"
+        data_shown: "Cohort, site name, affiliation status, setting, slots offered, slots used — filterable by 'Written Agreements = Yes' and by state"
+        gates_on: []
+        accreditation_citation: "ARC-PA Standard A1, Element A1.10 a-b (Self-Study Report Appendix 11a, filtered by state); ARC-PA Standard B3, Element B3.01 a-e (SSR Appendix 11a, filtered by Written Agreements = Yes)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents an accreditor-portal-
+          shaped capacity export, and none names ARC-PA at all. CORE ELMS's accreditation claims are
+          documented as uneven across disciplines with explicit ACPE claims and no discipline-specific
+          accreditor naming on other pages (../competitors/core-elms.yaml lines 103, 153), which is
+          the closest thing to a comparison available and is a point in Prism's favour rather than a
+          parity finding.
+        gap_severity: "configure-needed"
+        gap_note: >
+          The strongest capacity artifact in the product, and it is worth understanding exactly what
+          makes it strong: the numbers are not an admin's estimate. Per the PA playbook, "the Slot
+          Request feature lets programs directly request confirmed slot availability from site
+          partners (by rotation and setting); site responses populate into the SCPE report
+          automatically ('true slots offered' data)," against an ARC-PA requirement that programs
+          "update confirmed slots per location/setting on an ongoing basis, not just annually"
+          (Physician Assistant (PA) Playbook.md lines 168-180). ../accreditation/arc-pa.yaml calls
+          this "already built and named for this standard."
+          Rated configure-needed, not none, because of the workflow the playbook itself prescribes:
+          "ensure site/location names in Prism exactly match the ARC-PA portal ('gold in, gold out')
+          ... download both the SCPE report from Prism and the ARC-PA portal's slots report ...
+          compare them side by side in Excel, line by line, to spot mismatches." A manual
+          line-by-line Excel diff against an external portal is the actual customer workflow, and
+          name-matching hygiene is a precondition nothing in Prism enforces. The registry's verdict
+          on the analytic half stands: "Sufficiency is asserted by eyeballing offered-vs-used per
+          setting in Excel, not computed."
+      - element: "Slot Sufficiency Report (Nursing)"
+        type: "Custom report under Sites > Reports"
+        data_shown: "Total Slots Offered / Total Placements / Completed Placements, by site"
+        gates_on: []
+        accreditation_citation: "CCNE Standard II, Key Element II-C (documentation of the sufficiency and availability of clinical sites, plus evidence of a DEFINED, periodically-run determination process); ACEN Standard 4, Criterion 4.9; COA Standard F.1 with Standard A.10 — BOTH CRITICAL (*)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents an offered-versus-
+          placed-versus-completed rollup, and neither CORE ELMS nor E*Value names CCNE, ACEN or COA
+          in the material captured in ../competitors/.
+        gap_severity: "configure-needed"
+        gap_note: >
+          Named in the Nursing playbook as the CCNE II-C evidence source: "Slot Sufficiency Report
+          (a Custom report under Sites > Reports) — Total Slots Offered / Total Placements /
+          Completed Placements by site, used as ongoing, data-driven evidence of clinical-site
+          adequacy" (Nursing Playbook.md line 70). The three-column shape is smarter than it looks —
+          offered-versus-placed exposes over-solicitation and placed-versus-completed exposes
+          attrition, which are different problems.
+          Two documented limits. ../accreditation/nursing.yaml: "the report shows volume, not a
+          judgment of adequacy against a defined threshold — the 'defined process' narrative and the
+          modifications-made record are still assembled by hand outside the product." And the label
+          "Custom report" is itself the configure-needed finding: unlike PT's and PA's, this one is
+          not a shipped standard report.
+          DISCIPLINE-SPECIFIC (CRNA — where volume genuinely cannot answer the question): COA F.1
+          asks whether resources are sufficient for graduates to INDIVIDUALLY meet requirements, and
+          ../accreditation/coa.yaml spells out why per-site volume misses it — "a program with enough
+          total slots can still fail if no site offers, say, enough open-heart or pediatric-under-2
+          cases for every student to hit the Appendix minimums," and "no shipped report crosses site
+          capacity with the Appendix CASE-CATEGORY minimums." Prism holds both halves of that join
+          (site capacity here, case categories in the CCE/Patient Log) and does not join them. Both
+          F.1 and A.10 are asterisked critical. This is the sharpest capacity gap in the file after
+          the supervision-ratio finding, and the two are the same discipline.
+      - element: "Number and Variety of Clinical Sites / Number and Variety of Clinical Slots (PT/PTA)"
+        type: "two shipped reports, run by selecting Group & Rotation and clicking Download Report; the slots report carries an include-cancelled-slots checkbox"
+        data_shown: "Count and categorical variety of contracted sites, and of clinical slots, scoped to a rotation"
+        gates_on: []
+        accreditation_citation: "CAPTE Standard 2, Element 2D8 (the 2024 home of this requirement — see gap_note for the labelling defect)"
+        competitor_equivalent: >
+          Not comparable at element level, and this is the clearest capability-level advantage in the
+          stage: no competitor file in ../competitors/ documents any report named after an
+          accreditation standard for any discipline. CORE ELMS's own material is characterised as
+          having "accreditation-body coverage... uneven across disciplines"
+          (../competitors/core-elms.yaml line 153). Stated as an advantage in KIND rather than a
+          field-level comparison, because there is no competitor artifact to compare against.
+        gap_severity: "cosmetic"
+        gap_note: >
+          Rated cosmetic because the DATA is right and only the printed citation is stale — but it is
+          a label defect with real downstream cost, so the rating should not be read as "ignore it."
+          ../accreditation/capte.yaml records it as an "IMPORTANT VERSION HAZARD": the two reports are
+          labelled "Standard 2C" and "Standard 8F", which is 2016 numbering, and "there IS no
+          Standard 8 in the 2024 PT or PTA documents (they stop at Standard 7), and 2024's 2C is
+          program assessment, not sites. The sites/slots content now lives at 2D8." The registry also
+          notes the fix is a known shape, because "Prism's other five CAPTE reports already carry
+          dual '2024 X / 2016 Y' labels; these two have not been renumbered." CAPTE expects programs
+          to meet the 2024 standards as of Jan 1 2026, so this is live now. The wider point the
+          registry draws is worth keeping: this is "the concrete argument for making the edition
+          crosswalk a first-class field in Accreditation Management" — a problem every accreditor in
+          this repo will have (ARC-PA's 5e-to-6e renumbering is the same shape, and the PA playbook
+          carries a whole crosswalk section for it).
+      - element: "150%-of-charter-class capacity projection for developing programs (PT/PTA)"
+        type: "ABSENT — no forward-looking required-versus-contracted capacity model"
+        data_shown: "n/a"
+        gates_on: []
+        accreditation_citation: "CAPTE Standard 2, Element 2D8 (developing programs must confirm fully executed written agreements and site-specific Letters of Intent covering clinical placements for 150% of the charter class size — e.g. 60 experiences for a charter class of 40 — plus a plan for obtaining more)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents capacity modelling
+          ahead of an enrolled cohort. Unbenchmarked rather than absent-in-market.
+        gap_severity: "gap"
+        gap_note: >
+          Kept as its own element because it is the one capacity requirement in this file that must
+          be answered BEFORE any student exists, which makes every report on this screen structurally
+          incapable of serving it — they all read placements and slots that have already happened.
+          ../accreditation/capte.yaml states the gap plainly: "the 150%-of-charter-class capacity
+          projection for developing programs has no shipped equivalent — Placement Assist allocates
+          against actual slots, it does not model required-versus-contracted capacity ahead of a
+          cohort existing."
+          Directly relevant to this repo's purpose rather than only to PT: a brand-new program in ANY
+          discipline is in exactly this position, and the four expansion domains are, by definition,
+          programs standing up from zero. CAPTE is simply the accreditor that wrote the requirement
+          down with a number attached, and it also names the artifact that fills the gap for a site
+          with no agreement yet — the site-specific Letter of Intent, which is a pre-contract
+          instrument the Contract object does not model (the closest available value would be
+          "In Development" or "Draft" from the OT-documented status set, which is not the same
+          thing).
+      - element: "Distribution of Slots Across Settings / Distribution of Slots by Location (PA)"
+        type: "two reports under Placements > Placement Group > Reports; select a rotation and download"
+        data_shown: "Slots filled versus offered per setting; total slots and locations used per cohort"
+        gates_on: []
+        accreditation_citation: "ARC-PA Standard B3, Element B3.01 a-e (sufficiency evidence, complementing rather than duplicating SCPE Details)"
+        competitor_equivalent: >
+          Not comparable at element level — no cited competitor file documents setting-level slot
+          distribution reporting.
+        gap_severity: "none"
+        gap_note: >
+          Included because filled-versus-offered per SETTING is the cut that matters for a discipline
+          with mandated core settings, and it is a different question from SCPE Details' per-site
+          view. The PA playbook names both reports and is explicit that they complement rather than
+          duplicate the SCPE report (Physician Assistant (PA) Playbook.md line 297). ARC-PA's seven
+          core settings (Emergency Medicine, General Surgery, Pediatrics, Family Medicine, Behavioral
+          Health, Women's Health/OB-GYN, Internal Medicine — playbook line 116) are the rows that
+          make it readable, which is the same structural point ACPE's four mandatory APPE settings
+          make for Pharmacy: the Settings taxonomy configured back in the site/location records is
+          what determines whether this report can answer the standard at all.
+    action: >
+      Ahead of a self-study, annual report, or accreditor-portal update, the compliance liaison pulls
+      the discipline's named site/slot sufficiency export, then assembles the sufficiency ARGUMENT by
+      hand — comparing offered against used in Excel, diffing against the accreditor's own portal
+      where one exists, and writing the narrative the standard actually asks for. Every report on
+      this screen produces volume; none produces a verdict.
+    confirmed_by: >
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+      Assistant (PA) Playbook.md (lines 116, 166-180 SCPE Details and the gold-in-gold-out workflow;
+      lines 284-297 the SSR appendix table and the two Distribution of Slots reports);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
+      Playbook.md (lines 68-70 — Sites database, Contracts, Slot Sufficiency Report; lines 116-118
+      CCNE Standard II and COA Standard F mappings);
+      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
+      Therapy (PT) Playbook.md (lines 210-232 — the seven CAPTE-mapped reports including "Number and
+      Variety of Clinical Sites (Standard 2C)" and "Number and Variety of Clinical Slots (Standard
+      8F)", and the AAR five-pull sequence); ../accreditation/capte.yaml (Element 2D8, the version
+      hazard and the 150% finding); ../accreditation/arc-pa.yaml (Element A1.10 a-b);
+      ../accreditation/nursing.yaml (CCNE Key Element II-C); ../accreditation/coa.yaml (Standard F.1
+      with Standard A.10)
+
+sources:
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Understanding Site vs. Location.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Understanding Site Sharing Model in Exxat Prism.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Institutional Users/Step-by-Step Guides (How-tos)/Institutional Level- Contracts and Sites Management.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Manage Contract Expirations Easily with Exxat Prism.md"
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/do.yaml"
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/medicine.yaml"
+
+  # --- Added 2026-08-25 with the eight existing-discipline extension (PT/PTA, OT/OTA, PA,
+  # SLP, Nursing, Social Work, Teacher Education, CRNA). NOTE ON PATHS: the discipline
+  # playbooks live under 99-Assets/documents/Playbooks/, not directly under 99-Assets/.
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — READ IN FULL 2026-08-25 (previously consulted per-stage; this pass added the whole M1M email-operations step). Lines 43 (the PT clinical-settings taxonomy the site/location Settings tags are populated from), 60 (per-setting Program Requirements — Rural, Underserved, School-based, Integrated Clinical Experience-Acute), 79-85 (M1M annual slot-request cycle, FCFS/reserved mix, Exxat One as the year-round alternative), 91 and 108 (MyRequest), 104 (FCFS competition and early publication to students), 110-113 (slot confirmation emails sent to the site contact and CI BEFORE a student is placed, and the obligation to cancel and release unused reserved slots so another school can use them), 184 (the four unresearched slot-sourcing competitors and the confirmed no-integration finding), 186 (national competition for IP and acute-care slots as an industry-level condition), 196-197 (expanding the Exxat One clinical-partner roster; the absent Exxat CSIF), 210-232 (the seven CAPTE-mapped reports and the AAR five-pull sequence), 265-270 (M1M email operations: failed-delivery triage, recipient targeting, the @Request Link template requirement, and selective field exposure in site-update requests)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md — lines 221 and 227-229 (site level categories, personnel categories, area tags), 230-237 (Contract Organization formats, institutional routing checklist, the seven-value Contract Status set, site sharing payload, auto-notification default, Slot Type, Supervision Type), 285-295 (site assessment, the offline limitation, site/personnel reports), 297-305 (C.1.4 contract monitoring), 377-403 (slot request, wishlist models, C.1.7 supervision-ratio tracking), 421-436 (placement-clearance requirements, the 'contract not required' pain point at line 424, and C.1.5 contract support), 499-505 (capstone form workflows incl. the OTD Capstone MOU)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md — lines 18-33 and 99-102 (Site Based vs. Preceptor Based slot sourcing), 86 (MyRequest), 116 (the seven ARC-PA core settings), 130-135 (the four placement-clearance requirements), 137-152 (Entering Contracts; the ARC-PA 6e B3.01 a-e requirement that agreements explicitly name 'Physician Assistant students', the addendum remediation, and multi-campus identification), 154-165 (Site/Location Assessment, the Initial/Ongoing Site Visit form pair, ARC-PA settings, personnel), 166-180 (SCPE Details and the 'gold in, gold out' portal-diff workflow), 194-196 (Comprehensive Assessment Report), 284-297 (SSR appendix table; Distribution of Slots Across Settings / by Location), 323-334 (Max Placement Limit — the PA-exclusive soft slot cap), 358 (student mobile app)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — READ IN FULL 2026-08-25. Line 48 (affiliation agreements 'stored, viewed, and monitored in the Sites module' — SLP's documented accreditation artifact for this stage, and the most accurate wording any playbook uses for the clearance dashboard), 67, 95, 98, 118 and 149 (the recurring prism-support@exxat.com dependency for custom forms, thresholds and notification rules — the SLP self-service carve-out)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — lines 68-73 (Sites database as sufficiency evidence; the contract chain 'upload -> expiry alert -> Program Calendar surfacing -> Placement Clearance gate'; Slot Sufficiency Report; Site Assessments with follow-up dates pushed to the Program Calendar; Sites > Slots as where the CRNA 2:1 ratio is assigned), 101-103 (CRNA ACLS/PALS student compliance; student mobile app), 116-120 (CCNE Standard II and COA Standard F mappings, and the COA 'critical standard' concept)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — READ IN FULL 2026-08-25. Line 25 (Agency = Site/Location, Agencies module), 84-127 (Multi-Location Field Application Forms, placement suggestions, the location/supervisor mapping rules incl. map-only-once, interview statuses, best practices), 129-137 (Agencies module and Agency Assessments; Personnel Certification for orientation certificates; Placement Clearance FI/Task Supervisor checks; alternative field instruction with two supervisors), 151-152 (CISIVE, Universal, ComplianceJunction integrations), 162-166 (CSWE AS 3.3.1 / 3.3.4 / B3.3.6 mappings), 179 (Assessment Details and Comprehensive Personnel reports), 185-189 (the temporary-placement/spreadsheet workaround this workflow replaced)."
+  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — READ IN FULL 2026-08-25 (all 73 lines). Lines 12-16 and 63-73. Cited ONLY for its own negative finding: the sole TE product source available is one video tutorial on the GoReact/Echo360 LTI integration, which touches nothing in this stage, and the playbook explicitly warns that TE terminology and placement workflows are 'NOT confirmed for Exxat' and that CAEP standard numbers should not be treated as Exxat-specific 'until confirmed against a TE-specific source.' Every TE clause in this file is reasoned from ../accreditation/caep.yaml and carries that caveat inline."
+  - "/Users/romitsoley/Downloads/CRNAVideosTranscripts.md — NEGATIVE EVIDENCE, recorded rather than omitted. All three transcribed CRNA administrator videos were read in full (lines 15-37 Daily Clinical Evaluation Report; 43-89 Managing Clinical Case Experience Log; 95-117 Echo360/GoReact assignments) and contain no mention of sites, locations, affiliation agreements, contracts, capacity, or slots. Every CRNA claim in this file therefore traces to the Nursing playbook and ../accreditation/coa.yaml, not to this transcript."
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/capte.yaml — Standard 2 Elements 2D8 (site sufficiency/variety, the developing-program 150%-of-charter-class projection, and the stale 2016 report-label version hazard) and 2D9 (current written agreements and the five-clause content finding)."
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acote.yaml — Standards C.1.2, C.1.4, C.1.5 (written agreements and the 'contract not required' false-positive finding), C.1.7 (fieldwork-educator ratio, planned-vs-realized reconciliation), D.1.5 with D.1.4 (doctoral capstone agreements)."
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/arc-pa.yaml — Standard A1 Element A1.10 a-b (site/preceptor sufficiency, students-each-site-can-accommodate, non-U.S. elective-only), Standard B3 Elements B3.01 a-e, B3.02 a-c (initial and ongoing site evaluation, and the missing recurrence semantics), B3.04 a-d."
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caa-asha.yaml — Standard 3.0B Standards 3.6B (setting/population/age-group breadth) and 3.9B (agreements governing external placements, site-suitability policy, and the SLP self-service gap)."
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/nursing.yaml — CCNE Standard II Key Elements II-C (clinical-site adequacy and the defined periodic process) and II-F (1:8 indirect NP supervision ratio); ACEN Standard 4 Criterion 4.9 (current written agreements)."
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coa.yaml — Standard F.7 CRITICAL (the hard 2:1 CRNA supervision cap, preceptor-shift-scoped, rated Build), Standard F.2 with Standard A.3 CRITICAL (legally binding site contracts, and the institution-level joint-governance agreement with no home), Standard F.1 with Standard A.10 BOTH CRITICAL (per-student sufficiency and the unjoined case-category minimums), Standards F.4 and F.6 (site assessments and orientation), Standard C.5 with D.12 (ACLS/PALS before clinical activities)."
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/cswe.yaml — Accreditation Standard 3.3, AS 3.3.1 (system-level field opportunities), AS 3.3.4 (identifying/approving field settings, FI orientation, effectiveness evaluation), AS 3.3.7 (employment-based placements — rated Gap), AS B3.3.6/M3.3.6 (Field Instructor qualification)."
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caep.yaml — Standard R2 Components R2.1 (partnerships for clinical preparation; district MOU across many school locations; the co-construction relationship record) and R2.3 (clinical experiences; the absent partner-school demographic field)."
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml — lines 26-28 (24+ named disciplines incl. nursing, PT/OT, PA, social work, athletic training) and 42, 51 (onboarding document collection incl. contracts)."
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml — line 14 (learner-driven elective selection within admin-set capacity rules — the closest published competitor concept to a slot cap)."
+  - "COMPETITOR-COVERAGE NOTE (2026-08-25): two honest findings recorded here rather than papered over. (1) For these eight disciplines the overlap with CORE ELMS and E*Value is same-buyer rather than adjacent — core-elms.yaml lines 27 and 113-114 name pharmacy, dental, nursing, PT, OT, PA, veterinary and social work; e-value.yaml lines 26-28 name 24+ including social work and athletic training — yet neither publishes a contract-screen or slot-screen field list, so nearly every element above still records 'not comparable at element level' honestly rather than inventing parity. (2) The PT playbook (line 184) names the real site-sourcing competitive set for PT/OT — myClinicalExchange (mCE), Clinician Nexus, ACEMAPP, and CastleBranch Bridges, 'direct competitors of Exxat/Exxat One' that 'will not integrate with us' — and NONE of the four has a teardown file in ../competitors/. That is a known research hole in this repo, not evidence of absence."
+  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/flows/admin-onboarding--05-sites-locations-personnel-management.yaml — style/precedent reference for how this repo writes discipline-specific element content alongside the four-domain baseline, and cross-checked against its Social Work discipline note (the Field Instructor qualification finding is reached independently here from the clearance side)."
+last_verified: "2026-08-25"

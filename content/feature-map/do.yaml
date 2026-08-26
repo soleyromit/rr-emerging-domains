@@ -1,0 +1,38 @@
+domain: "DO"
+pillars:
+  - pillar: "Clinical & Experiential Education"
+    status: opportunity
+    leader: null
+    summary: "Prism's anchor-relative scheduling primitive plus Placement Assist (a real weighted allocation engine — staged runs, difficulty-weighted specialties, wishlist-fed; confirmed in the PA/OT playbooks) is a genuinely strong placement layer — but COCA's DO-specific asks (3-yr rolling site-capacity average, per-student DO-supervision/resident/inpatient checklist, cross-site comparability stats) aren't covered by Prism OR any competitor."
+    opportunity: "Build COCA-specific capacity/comparability logic on top of the existing placement engine — nobody has done this yet, so it's a clean win, not a catch-up."
+    sources: ["content/accreditation/coca.yaml (6.9, 6.10, 6.11)"]
+  - pillar: "Compliance Management"
+    status: leading
+    leader: null
+    summary: "Prism already gates placement start/continuation — a real enforcement pattern. MedHub/E*Value only collect attestation documents, they don't gate on them (COCA 5.4)."
+    opportunity: "Extend gating to non-student entities (site, GME program, affiliated program status) to fully cover COCA 5.4 and 10.2/10.3."
+    sources: ["content/accreditation/coca.yaml (5.4, 10.2, 10.3)"]
+  - pillar: "Curriculum Mapping"
+    status: opportunity
+    leader: "Elentra, Leo, eMedley"
+    summary: "All three name the AACOM Osteopathic Core Competencies (including OMM/OMT) explicitly in their curriculum maps. Prism's mapping is generic, not COCA-taxonomy-aware."
+    opportunity: "Add named osteopathic competency taxonomy (incl. OMM/OMT) to curriculum mapping — a scoping fix, not a rebuild."
+    sources: ["content/accreditation/coca.yaml (6.4)", "content/competitors/elentra.yaml", "content/competitors/leo-davinci.yaml"]
+  - pillar: "Surveys & Course Evaluations"
+    status: opportunity
+    leader: "All 6 DO/MD competitors (MedHub, New Innovations, Elentra, eMedley, Leo, one45) — for comparison; Prism now ships this pillar too"
+    summary: "CORRECTED 2026-08-26 (per Exxat PM confirmation): this pillar is shipped, not roadmap — Prism ships a placement-evaluation Forms engine plus a separate general-purpose 'Exxat Surveys' builder (14 question types, multi-channel distribution, full analytics). See content/prism/capability-map.yaml's 'Surveys & Course Evaluations' pillar. The prior 'roadmap (Q1 2027)' framing was wrong and is retired."
+    opportunity: "Re-verify Prism's shipped Surveys/Evaluations depth against the 6 named DO/MD competitors' specific instruments — the platform-level gap this pillar used to represent (COCA 11.2, 11.8) is closed; what remains, if anything, is domain-specific instrument coverage, not availability."
+    sources: ["content/accreditation/coca.yaml (11.2, 11.8)", "content/prism/capability-map.yaml (Surveys & Course Evaluations pillar)"]
+  - pillar: "Exam Management"
+    status: behind
+    leader: "MedHub/E*Value, one45 (COMLEX/NBME data ingestion)"
+    summary: "MedHub/E*Value imports ACGME survey and case-log data; one45 ingests NBME CBSE/CCSE. Prism has no ingestion of NBOME's official score/pass-rate reports."
+    opportunity: "Scope Q2 2027 as an import/reporting integration with NBOME, not exam authoring — Prism cannot and should not try to administer COMLEX-USA itself."
+    sources: ["content/accreditation/coca.yaml (11.4)"]
+  - pillar: "Accreditation Management"
+    status: opportunity
+    leader: "MedHub/E*Value, New Innovations, Elentra (all ACGME/LCME-shaped)"
+    summary: "Every competitor with accreditation reporting ships it ACGME- or LCME-shaped. None natively models COCA's own report field taxonomy (Element 11.9) or its 30-day-publication / 2SD threshold triggers (11.4, 11.5)."
+    opportunity: "Four-accreditor-native — not ACGME-first — is the one axis no incumbent covers. This is the single biggest whitespace claim in the DO domain."
+    sources: ["content/synthesis/gap-analysis.md (§3.6)", "content/accreditation/coca.yaml (11.9)"]
