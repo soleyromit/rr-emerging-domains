@@ -5,6 +5,15 @@ accreditor: "Example Accreditor (full name)"
 slug: "example-accreditor"
 domain: "DO"                          # DO | Pharmacy | Dentistry | Medicine
 governs: "what programs/institutions it accredits"
+
+# Optional — only set when this accreditor has NOT been researched yet (e.g. a
+# domain named on a call but with no standards document read). Omit both fields
+# entirely once real standards land; their presence, not an empty `standards: []`
+# alone, is what marks a file as an honest stub rather than a completed accreditor
+# with zero standards. See content/accreditation/counseling.yaml for a real example.
+# research_status: "unresearched"
+# research_status_note: "why this is a stub, and what's known so far"
+
 standards_document:
   title: ""
   version_or_year: ""

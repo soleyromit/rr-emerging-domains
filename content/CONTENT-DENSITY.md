@@ -53,6 +53,10 @@ overage explicitly allowlisted with a reason, not silently shipped.
 | `prism/capability-map.yaml` `core_ring.pillars[].features[].detail` | 900 | 1,800 | p75/~p95 of the file's own distribution |
 | `prism/capability-map.yaml` `intelligence_layer.capabilities[]` | 1,500 | 2,700 | only 7 items, all inherently dense evidence claims |
 | `prism/capability-map.yaml` `open_questions_for_phase_2[]` | 450 | 900 | measured from the file's own distribution |
+| `accreditation/*.yaml` `standards[].evidence_programs_must_produce` | 640 | 1,450 | **new 2026-08-27** — soft is p75 of the file's own 165-standard corpus; hard is set above the corpus's observed max (not p95) since this directory was previously unmonitored and 25 existing entries haven't been individually spot-checked yet |
+| `accreditation/*.yaml` `standards[].required_software_behavior` | 385 | 950 | **new 2026-08-27** — same treatment as above |
+| `accreditation/*.yaml` `standards[].gap_notes` | 612 | 1,200 | **new 2026-08-27** — same treatment as above |
+| `lenses/standards-competitor-ratings.yaml` `ratings[].rationale` | 300 | 600 | **new 2026-08-27** — same order of magnitude as `competitors/*.yaml`'s `strengths[].claim`, since it's the same kind of single-sourced competitive claim |
 
 Run the check with `python3 scripts/check_content_density.py` from the repo root. A
 clean run prints one line; a dirty one lists every offending field with its actual

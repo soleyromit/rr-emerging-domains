@@ -37,10 +37,10 @@ function FlowElementsTable({ elements }: { elements: FlowElement[] }) {
           width: proportional(1),
           renderCell: (row) => (
             <Stack gap={0.5}>
-              <Text type="body" weight="semibold" size="sm">
+              <Text type="body" weight="semibold">
                 {row.element}
               </Text>
-              {row.type ? <Text type="supporting" size="xsm">{row.type}</Text> : null}
+              {row.type ? <Text type="supporting">{row.type}</Text> : null}
             </Stack>
           ),
         },
@@ -75,7 +75,6 @@ function FlowElementsTable({ elements }: { elements: FlowElement[] }) {
                 id={`${row._id}-gap-note`}
                 text={row.gap_note}
                 type="supporting"
-                size="xsm"
                 triggerLabel="Read full note"
               />
             </Stack>

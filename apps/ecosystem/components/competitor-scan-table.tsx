@@ -40,7 +40,7 @@ export function CompetitorScanTable({ competitors }: { competitors: Competitor[]
           width: pixel(200),
           renderCell: (row) => (
             <Stack gap={0.5}>
-              <Link href={`/competitors/${row.slug}`} type="body" weight="semibold" size="sm" color="accent" hasUnderline>
+              <Link href={`/competitors/${row.slug}`} type="body" weight="semibold" color="accent" hasUnderline>
                 {row.competitor}
               </Link>
               <Stack direction="horizontal" gap={1} wrap="wrap">

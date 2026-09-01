@@ -20,7 +20,7 @@ function scoreCell(domain: string) {
       <Text type="body" weight="semibold">
         {row.scores?.[domain] ?? 0}
       </Text>
-      <Text type="supporting" size="xsm" maxLines={4}>
+      <Text type="supporting" maxLines={4}>
         {row.rationale?.[domain]}
       </Text>
     </Stack>
@@ -45,7 +45,7 @@ export function ScorecardTable({ criteria }: { criteria: ScorecardCriterion[] })
               <Text type="body" weight="semibold">
                 {row.name}
               </Text>
-              <Text type="supporting" size="xsm">
+              <Text type="supporting">
                 weight {(row.weight * 100).toFixed(0)}%
               </Text>
             </Stack>

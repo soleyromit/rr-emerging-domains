@@ -10,24 +10,29 @@ export default function CrosswalkPage() {
     .map((d) => getStandardsCrosswalkForDomain(d))
     .filter((d): d is NonNullable<typeof d> => d != null);
   const totalStandards = domains.reduce((sum, d) => sum + d.rows.length, 0);
+  const ratedCompetitorCells = domains.reduce((sum, d) => sum + d.ratedCompetitorCellCount, 0);
+  const totalCompetitorCells = domains.reduce((sum, d) => sum + d.totalCompetitorCellCount, 0);
 
   return (
     <Stack gap={0}>
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
           <PageHeader
-            eyebrow="Wilson's crosswalk grid"
-            title="Standards × competitor crosswalk"
+            eyebrow="Market"
+            title="Standards crosswalk"
             description={
-              'Rows are individual accreditation standards, columns are Prism plus every ' +
-              'competitor active in that domain — the exact shape Wilson asked for on the ' +
-              '2026-08-26 call. Prism column is real, cited data; competitor columns show ' +
-              '"Not yet researched" — Wilson is sourcing per-standard competitor ratings directly.'
+              "Every domain's accreditation-standards coverage at a glance — Prism fit " +
+              "distribution and how much competitor research is done. Open a domain's full " +
+              "standards table (element-by-element, with competitor ratings) from the link on " +
+              "its row."
             }
           />
-          <MetadataList columns={2}>
+          <MetadataList columns={3}>
             <MetadataListItem label="Domains">{domains.length}</MetadataListItem>
             <MetadataListItem label="Standards tracked">{totalStandards}</MetadataListItem>
+            <MetadataListItem label="Competitor cells rated">
+              {ratedCompetitorCells} / {totalCompetitorCells}
+            </MetadataListItem>
           </MetadataList>
         </Stack>
       </Section>

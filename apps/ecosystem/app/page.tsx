@@ -189,8 +189,8 @@ export default function OverviewPage() {
             <NavCard href="/prism" title="PRISM capability map" desc="What Prism is today, and what's on its own roadmap." />
             <NavCard href="/feature-map" title="Feature map" desc="Every pillar × domain — who leads, and the whitespace nobody's built yet." />
             <NavCard href="/competitors" title="Competitor matrix" desc="Incumbents per domain, feature-level teardown vs. Prism." />
-            <NavCard href="/accreditation" title="Accreditation map" desc="Standard → evidence → required behavior → Prism fit, per accreditor." />
-            <NavCard href="/personas" title="Personas" desc="Discipline, role, and competitor-lens layers." />
+            <NavCard href="/domains" title="Domains" desc="One hub per discipline — accreditor structure, standards, competitors, and persona." />
+            <NavCard href="/roles" title="Roles" desc="Cross-cutting roles — top tasks, pains, and how each competitor implicitly serves them." />
             <NavCard href="/journeys" title="Journeys" desc="Current-state vs. gap-state, across the 4 domains." />
             <NavCard href="/scorecard" title="Where-to-play scorecard" desc="Which domain to enter first, and why." />
           </Grid>

@@ -34,10 +34,10 @@ export default async function RolePersonaPage({ params }: { params: Promise<{ sl
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
           <Breadcrumbs>
-            <BreadcrumbItem href="/personas">Personas</BreadcrumbItem>
+            <BreadcrumbItem href="/roles">Roles</BreadcrumbItem>
             <BreadcrumbItem isCurrent>{role.role_name}</BreadcrumbItem>
           </Breadcrumbs>
-          <PageHeader eyebrow="Role persona" title={role.role_name} />
+          <PageHeader eyebrow="Role" title={role.role_name} />
           {role.day_in_the_life_summary ? (
             // DENSITY-OK: dedicated persona detail page — shown in full, not the
             // index card's 3-line teaser
@@ -103,7 +103,7 @@ export default async function RolePersonaPage({ params }: { params: Promise<{ sl
               items={competitorReads.map((r) => ({
                 key: r.slug,
                 label: (
-                  <Link href={`/personas/lens/${r.slug}`} type="body" weight="semibold" color="accent" hasUnderline>
+                  <Link href={`/competitors/${r.slug}`} type="body" weight="semibold" color="accent" hasUnderline>
                     {r.competitor}
                   </Link>
                 ),

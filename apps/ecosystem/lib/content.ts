@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { load as loadYaml } from "js-yaml";
 import matter from "gray-matter";
+import { matchDisciplineMeta } from "./discipline-meta";
 
 // content/ lives one level above apps/ecosystem, at the repo root.
 const CONTENT_ROOT = path.join(process.cwd(), "..", "..", "content");
@@ -123,10 +124,12 @@ export interface AccreditationDoc {
   slug: string;
   domain: string;
   governs?: string;
+  research_status?: "unresearched";
+  research_status_note?: string;
   standards_document?: { title?: string; version_or_year?: string; url?: string };
   standards?: AccreditationStandard[];
   licensure_or_gme_layer?: { body: string; what_it_governs?: string; relevance_to_product?: string; source?: string }[];
-  last_researched?: string;
+  last_researched?: string | null;
 }
 
 export function listAccreditation(): AccreditationDoc[] {
@@ -653,9 +656,7 @@ export function getFeatureComparisonForDomain(domain: string): FeatureComparison
   };
 }
 
-// Canonical lens domain name -> accreditation/*.yaml file slug. Only domains with a
-// researched accreditation file are included — Counseling has none (a confirmed gap
-// per the 2026-08-26 Wilson call, not an oversight here).
+// Canonical lens domain name -> accreditation/*.yaml file slug.
 const DOMAIN_TO_ACCREDITATION_SLUG: Record<string, string> = {
   DO: "coca",
   Pharmacy: "acpe",
@@ -669,24 +670,56 @@ const DOMAIN_TO_ACCREDITATION_SLUG: Record<string, string> = {
   "Physician Assistant": "arc-pa",
   "Speech-Language Pathology": "caa-asha",
   CRNA: "coa",
+  Counseling: "counseling",
 };
 
-// Extend-next per the 2026-08-26 call, after PA/OT/Nursing (PRIORITY_DOMAINS above):
-// Education, Social Work, Counseling. Counseling has no accreditation file yet, so
-// it's excluded entirely here rather than shown empty.
+export function fitCounts(doc?: AccreditationDoc) {
+  const counts = { Transfer: 0, Configure: 0, Gap: 0 };
+  for (const s of doc?.standards ?? []) {
+    const fit = (s.prism_fit ?? "").toLowerCase();
+    if (fit.includes("transfer")) counts.Transfer += 1;
+    else if (fit.includes("configure")) counts.Configure += 1;
+    else if (fit.includes("gap")) counts.Gap += 1;
+  }
+  return counts;
+}
+
+export interface StandardsCompetitorRatingEntry {
+  domain: string;
+  element_id: string;
+  competitor_slug: string;
+  rating: "not-meeting" | "partially-meeting" | "fully-meeting";
+  rationale?: string;
+  source?: string;
+}
+
+export interface StandardsCompetitorRatings {
+  last_updated: string;
+  ratings: StandardsCompetitorRatingEntry[];
+}
+
+// Sparse Level 2 lens — see content/lenses/standards-competitor-ratings.yaml's own
+// header comment. Absence of an entry is the "unresearched" state, not an error.
+export function getStandardsCompetitorRatings(): StandardsCompetitorRatings | null {
+  return readYamlFile<StandardsCompetitorRatings>("lenses/standards-competitor-ratings.yaml");
+}
 
 export interface StandardsCrosswalkCompetitorCell {
   competitor: string;
   slug: string;
   rating: "not-meeting" | "partially-meeting" | "fully-meeting" | "unresearched";
   rationale?: string;
+  source?: string;
 }
 
 export interface StandardsCrosswalkRow {
   element_id: string;
   element_title?: string;
+  evidence_programs_must_produce?: string;
+  required_software_behavior?: string;
   prism_fit?: string;
   prism_fit_rationale?: string;
+  gap_notes?: string;
   competitors: StandardsCrosswalkCompetitorCell[];
 }
 
@@ -696,6 +729,9 @@ export interface StandardsCrosswalkForDomain {
   standardsDocument?: { title?: string; url?: string };
   competitors: { competitor: string; slug: string }[];
   rows: StandardsCrosswalkRow[];
+  researchStatus?: "unresearched";
+  ratedCompetitorCellCount: number;
+  totalCompetitorCellCount: number;
 }
 
 // Wilson's explicit ask (2026-08-26 call): "the accreditation being able to go
@@ -703,11 +739,10 @@ export interface StandardsCrosswalkForDomain {
 // similar to what we have in the feature crosswalk grid... but with each of the
 // standards... not meeting it, partially meeting it, fully meeting it." Rows are
 // individual accreditation elements (not pillars, unlike getFeatureComparisonForDomain
-// above), columns are competitors. Ships with only the Prism column populated with
-// real, cited data (each accreditation/*.yaml's own prism_fit) — no per-standard
-// competitor research exists in this repo yet, and Wilson said on that call he'd
-// source it himself ("I think that I can do it, that won't be a problem"). Competitor
-// cells default to "unresearched" rather than a fabricated rating.
+// above), columns are competitors. The Prism column is always real, cited data (each
+// accreditation/*.yaml's own prism_fit). Competitor cells pull from the sparse
+// lenses/standards-competitor-ratings.yaml lens where a real, sourced rating exists,
+// and fall back to "unresearched" — never a fabricated rating — everywhere else.
 export function getStandardsCrosswalkForDomain(domain: string): StandardsCrosswalkForDomain | null {
   const accreditationSlug = DOMAIN_TO_ACCREDITATION_SLUG[domain];
   if (!accreditationSlug) return null;
@@ -719,16 +754,32 @@ export function getStandardsCrosswalkForDomain(domain: string): StandardsCrosswa
     (c.domains_served ?? []).some((s) => matchesDomain(s, code) || matchesDomain(s, domain))
   );
 
+  const ratingsIndex = new Map(
+    (getStandardsCompetitorRatings()?.ratings ?? [])
+      .filter((r) => r.domain === domain)
+      .map((r) => [`${r.element_id}|${r.competitor_slug}`, r])
+  );
+
+  let ratedCompetitorCellCount = 0;
   const rows: StandardsCrosswalkRow[] = (doc.standards ?? []).map((s) => ({
     element_id: s.element_id,
     element_title: s.element_title,
+    evidence_programs_must_produce: s.evidence_programs_must_produce,
+    required_software_behavior: s.required_software_behavior,
     prism_fit: s.prism_fit,
     prism_fit_rationale: s.prism_fit_rationale,
-    competitors: competitors.map((c) => ({
-      competitor: c.competitor,
-      slug: c.slug,
-      rating: "unresearched" as const,
-    })),
+    gap_notes: s.gap_notes,
+    competitors: competitors.map((c) => {
+      const rated = ratingsIndex.get(`${s.element_id}|${c.slug}`);
+      if (rated) ratedCompetitorCellCount += 1;
+      return {
+        competitor: c.competitor,
+        slug: c.slug,
+        rating: rated?.rating ?? ("unresearched" as const),
+        rationale: rated?.rationale,
+        source: rated?.source,
+      };
+    }),
   }));
 
   return {
@@ -737,6 +788,9 @@ export function getStandardsCrosswalkForDomain(domain: string): StandardsCrosswa
     standardsDocument: doc.standards_document,
     competitors: competitors.map((c) => ({ competitor: c.competitor, slug: c.slug })),
     rows,
+    researchStatus: doc.research_status,
+    ratedCompetitorCellCount,
+    totalCompetitorCellCount: rows.length * competitors.length,
   };
 }
 
@@ -749,18 +803,22 @@ export interface DomainHubData {
   landscapeEntry: CompetitorLandscapeDomain | null;
   featureComparison: FeatureComparisonForDomain;
   standardsCrosswalk: StandardsCrosswalkForDomain | null;
+  accreditationDoc: AccreditationDoc | null;
+  disciplinePersona: DisciplinePersona | null;
 }
 
-// Bundles the 4 lens lookups for one domain into a single fs-backed call — the fetch
-// side of DomainHubSections (a client component, for Table's renderCell closures,
-// which can't itself call these fs-based loaders). The /domains/[slug] server
-// component (its only current caller) calls this and passes the plain-data result
-// down as props.
-export function getDomainHubData(domain: string): DomainHubData {
+// Bundles the per-domain lens/accreditation/persona lookups into a single fs-backed
+// call, shared by every tab under app/domains/[slug]/**. `domain` is the canonical
+// label (e.g. "Physical Therapy", matching AccreditorTierEntry.domain); `routeSlug`
+// is the URL segment (e.g. "pt"), used only for the discipline-persona lookup since
+// personas/discipline-*.yaml is keyed by that slug, not the label.
+export function getDomainHubData(domain: string, routeSlug: string): DomainHubData {
   return {
     tierEntry: getAccreditorTiers()?.domains.find((d) => d.domain === domain) ?? null,
     landscapeEntry: getCompetitorLandscape()?.domains.find((d) => d.domain === domain) ?? null,
     featureComparison: getFeatureComparisonForDomain(domain),
     standardsCrosswalk: getStandardsCrosswalkForDomain(domain),
+    accreditationDoc: listAccreditation().find((a) => a.slug === DOMAIN_TO_ACCREDITATION_SLUG[domain]) ?? null,
+    disciplinePersona: getDisciplinePersona(routeSlug),
   };
 }

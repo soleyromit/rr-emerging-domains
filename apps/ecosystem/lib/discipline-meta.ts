@@ -44,6 +44,7 @@ export const DISCIPLINES: DisciplineMeta[] = [
   { slug: "social-work", label: "Social Work", code: "SW", kind: "discipline", badgeVariant: "neutral" },
   { slug: "te", label: "Teacher Education", code: "TE", kind: "discipline", badgeVariant: "pink" },
   { slug: "crna", label: "CRNA (Nurse Anesthesia)", code: "CRNA", kind: "discipline", badgeVariant: "purple" },
+  { slug: "counseling", label: "Counseling", code: "COUN", kind: "discipline", badgeVariant: "info" },
 ];
 
 export const ALL_DISCIPLINE_META: DisciplineMeta[] = [...DOMAINS, ...DISCIPLINES];

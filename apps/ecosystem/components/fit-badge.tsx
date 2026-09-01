@@ -118,3 +118,20 @@ export function StandardsRatingBadge({ rating }: { rating?: string }) {
   const key = rating.toLowerCase().trim();
   return <Badge variant={STANDARDS_RATING_VARIANT[key] ?? "neutral"} label={STANDARDS_RATING_LABEL[key] ?? rating} />;
 }
+
+const DIVERGENCE_VARIANT: Record<string, BadgeVariant> = {
+  "native fit": "success",
+  configure: "warning",
+  gap: "error",
+  workaround: "error",
+  inverted: "error",
+  unconfirmed: "neutral",
+};
+
+// For product-vocabulary comparisons (e.g. how "Wishlist" or "Slot" behaves
+// per discipline) rather than accreditation fit — same five-state palette as
+// FitBadge/GapSeverityBadge so the color language stays consistent app-wide.
+export function DivergenceBadge({ label }: { label: string }) {
+  const key = label.toLowerCase().trim();
+  return <Badge variant={DIVERGENCE_VARIANT[key] ?? "neutral"} label={label} />;
+}

@@ -76,6 +76,23 @@ PRISM_CEILINGS = {
     "intelligence_layer.capabilities[]": (1500, 2700),
     "open_questions_for_phase_2[]": (450, 900),
 }
+# measured 2026-08-27 from the file's own 165-standard corpus. Soft ceiling is p75
+# (an early warning); hard ceiling is set above the corpus's own observed max (not
+# p95, unlike gap_note above) so bringing this previously-unmonitored directory under
+# the script doesn't retroactively FAIL 25 already-shipped, already-cited findings
+# nobody has individually reviewed yet — same "guards drift; non-blocking at time of
+# writing" treatment as the journey fields below. Tighten to a true p95 hard ceiling
+# only after those existing WARNs get a real spot-check pass, the way gap_note's did.
+ACCREDITATION_CEILINGS = {
+    "standards[].evidence_programs_must_produce": (640, 1450),
+    "standards[].required_software_behavior": (385, 950),
+    "standards[].gap_notes": (612, 1200),
+}
+# same order of magnitude as competitors/*.yaml's strengths[].claim — the closest
+# analog (a single-sourced competitive claim).
+STANDARDS_RATINGS_CEILINGS = {
+    "ratings[].rationale": (300, 600),
+}
 
 # Known, reviewed exceptions — a spot-checked genuine dense finding, not a bug.
 # Format: (file glob, field path, substring of the VALUE itself) -> reason. The
@@ -166,6 +183,88 @@ def check_file(fpath, ceilings, results, extra_id_field=None):
         results.append((severity, fpath.name, path, n, hard, value))
 
 
+# Mirrors DOMAIN_TO_ACCREDITATION_SLUG in apps/ecosystem/lib/content.ts — kept in
+# sync by hand, same as the ceiling tables above vs. CONTENT-DENSITY.md. This is the
+# canonical app-level domain label (e.g. "Physical Therapy"), which is NOT the same
+# string as that accreditor file's own `domain:` field (e.g. capte.yaml's is
+# "PT / PTA") — ratings entries use this label so they match what
+# getStandardsCrosswalkForDomain() looks up by.
+DOMAIN_TO_ACCREDITATION_SLUG = {
+    "DO": "coca",
+    "Pharmacy": "acpe",
+    "Dentistry": "coda",
+    "Medicine": "lcme",
+    "Nursing": "nursing",
+    "Teacher Education": "caep",
+    "Social Work": "cswe",
+    "Physical Therapy": "capte",
+    "Occupational Therapy": "acote",
+    "Physician Assistant": "arc-pa",
+    "Speech-Language Pathology": "caa-asha",
+    "CRNA": "coa",
+    "Counseling": "counseling",
+}
+
+
+def check_standards_ratings_integrity():
+    """Enforce ARCHITECTURE.md's citation rule for the one cross-registry file this
+    repo has: every rating in lenses/standards-competitor-ratings.yaml must resolve
+    to a real accreditation element and a real competitor slug, and carry a source
+    whenever it asserts a rating — the automatable version of "does the arrow point
+    down, and does it resolve" that's otherwise enforced only by human review."""
+    problems = []
+    ratings_path = CONTENT / "lenses" / "standards-competitor-ratings.yaml"
+    if not ratings_path.exists():
+        return problems
+    doc = yaml.safe_load(ratings_path.read_text()) or {}
+
+    elements_by_slug = {}  # accreditor slug -> set of element_ids
+    for f in sorted((CONTENT / "accreditation").glob("*.yaml")):
+        if f.name.startswith("_TEMPLATE"):
+            continue
+        adoc = yaml.safe_load(f.read_text()) or {}
+        if adoc.get("slug"):
+            elements_by_slug[adoc["slug"]] = {s.get("element_id") for s in (adoc.get("standards") or [])}
+
+    competitor_slugs = set()
+    for f in sorted((CONTENT / "competitors").glob("*.yaml")):
+        if f.name.startswith("_TEMPLATE"):
+            continue
+        cdoc = yaml.safe_load(f.read_text()) or {}
+        if cdoc.get("slug"):
+            competitor_slugs.add(cdoc["slug"])
+
+    for i, r in enumerate(doc.get("ratings") or []):
+        where = f"ratings[{i}]"
+        domain = r.get("domain")
+        element_id = r.get("element_id")
+        slug = r.get("competitor_slug")
+        accreditor_slug = DOMAIN_TO_ACCREDITATION_SLUG.get(domain)
+        if accreditor_slug is None:
+            problems.append(f"{where}: domain {domain!r} is not a recognized accreditation domain")
+        elif element_id not in elements_by_slug.get(accreditor_slug, set()):
+            problems.append(f"{where}: element_id {element_id!r} not found in {domain}'s accreditation file")
+        if slug not in competitor_slugs:
+            problems.append(f"{where}: competitor_slug {slug!r} not found in content/competitors/*.yaml")
+        if r.get("rating") and not r.get("source"):
+            problems.append(f"{where}: rating {r.get('rating')!r} has no source")
+    return problems
+
+
+def summarize_unresearched_accreditation():
+    """Unconditional — runs even on an otherwise-clean pass, so a stub file with
+    standards: [] can never read as "fully researched" just because nothing FAILed."""
+    lines = []
+    for f in sorted((CONTENT / "accreditation").glob("*.yaml")):
+        if f.name.startswith("_TEMPLATE"):
+            continue
+        doc = yaml.safe_load(f.read_text()) or {}
+        standards = doc.get("standards") or []
+        if doc.get("research_status") == "unresearched" or not standards:
+            lines.append(f"{f.name} ({len(standards)} standards)")
+    return lines
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--warn-only", action="store_true", help="never exit non-zero")
@@ -192,6 +291,13 @@ def main():
         check_file(f, COMPETITOR_CEILINGS, results)
     for f in sorted((CONTENT / "prism").glob("*.yaml")):
         check_file(f, PRISM_CEILINGS, results)
+    for f in sorted((CONTENT / "accreditation").glob("*.yaml")):
+        if f.name.startswith("_TEMPLATE"):
+            continue
+        check_file(f, ACCREDITATION_CEILINGS, results)
+    ratings_file = CONTENT / "lenses" / "standards-competitor-ratings.yaml"
+    if ratings_file.exists():
+        check_file(ratings_file, STANDARDS_RATINGS_CEILINGS, results)
 
     # Drop allowlisted entries — matched by filename + path + a substring of the
     # actual value, so allowlisting one entry doesn't silently exempt every other
@@ -207,25 +313,39 @@ def main():
             filtered.append((severity, fname, path, n, hard))
     results = filtered
 
-    if not results:
+    integrity_problems = check_standards_ratings_integrity()
+    unresearched = summarize_unresearched_accreditation()
+
+    if not results and not integrity_problems:
         print("check_content_density: 0 WARN, 0 FAIL — all fields within ceiling.")
-        return 0
+    else:
+        warns = [r for r in results if r[0] == "WARN"]
+        fails = [r for r in results if r[0] == "FAIL"]
 
-    warns = [r for r in results if r[0] == "WARN"]
-    fails = [r for r in results if r[0] == "FAIL"]
+        for severity, fname, path, n, hard in results:
+            print(f"{severity}  {fname}  {path}  {n} chars (hard ceiling {hard})")
+        for problem in integrity_problems:
+            print(f"FAIL  standards-competitor-ratings.yaml  {problem}")
 
-    for severity, fname, path, n, hard in results:
-        print(f"{severity}  {fname}  {path}  {n} chars (hard ceiling {hard})")
+        print(f"\n{len(warns)} WARN, {len(fails) + len(integrity_problems)} FAIL")
 
-    print(f"\n{len(warns)} WARN, {len(fails)} FAIL")
-    if fails and not args.warn_only:
-        print(
-            "\nFAIL means a field is over its hard ceiling. If this is a genuine dense\n"
-            "finding (not padding or an unedited essay), add it to ALLOWLIST in this\n"
-            "script with a one-line reason and today's date — don't silently ignore it.\n"
-            "See content/CONTENT-DENSITY.md for the ceiling table and rationale."
-        )
-        return 1
+    # Unconditional — runs even on a clean pass, so an empty/stub accreditation file
+    # can never silently read as "fully researched" just because nothing FAILed.
+    if unresearched:
+        print(f"\n{len(unresearched)} accreditation file(s) marked unresearched: " + ", ".join(unresearched))
+
+    if (results or integrity_problems) and not args.warn_only:
+        fails = [r for r in results if r[0] == "FAIL"]
+        if fails or integrity_problems:
+            print(
+                "\nFAIL means a field is over its hard ceiling, or a standards-competitor-\n"
+                "ratings.yaml entry doesn't resolve to a real element/competitor/source. If a\n"
+                "density FAIL is a genuine dense finding (not padding or an unedited essay),\n"
+                "add it to ALLOWLIST in this script with a one-line reason and today's date —\n"
+                "don't silently ignore it. See content/CONTENT-DENSITY.md for the ceiling\n"
+                "table and rationale."
+            )
+            return 1
     return 0
 
 

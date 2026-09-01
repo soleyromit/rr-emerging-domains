@@ -4,14 +4,17 @@ import { Heading } from "@astryxdesign/core/Heading";
 import { Text } from "@astryxdesign/core/Text";
 import { Divider } from "@astryxdesign/core/Divider";
 import { Markdown } from "@astryxdesign/core/Markdown";
+import { Link } from "@astryxdesign/core/Link";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList";
 import { Collapsible, CollapsibleGroup } from "@astryxdesign/core/Collapsible";
 import { PageHeader } from "@/components/page-header";
 import { Takeaway } from "@/components/takeaway";
 import { GlossaryTabs } from "@/components/glossary-tabs";
-import { readMarkdownFile } from "@/lib/content";
-import { parseGlossary } from "@/lib/glossary";
+import { RosettaCards } from "@/components/rosetta-cards";
+import { VocabularyNavProvider } from "@/components/vocabulary-nav-context";
+import { readMarkdownFile, listAccreditation } from "@/lib/content";
+import { parseGlossary, buildRosettaTermIndex } from "@/lib/glossary";
 
 export default function VocabularyPage() {
   const content = readMarkdownFile("synthesis/vocabulary-glossary.md");
@@ -25,8 +28,11 @@ export default function VocabularyPage() {
   }
 
   const glossary = parseGlossary(content);
+  const accreditationDocs = listAccreditation();
+  const rosettaTermIndex = buildRosettaTermIndex(glossary.groups);
 
   return (
+    <VocabularyNavProvider>
     <Stack gap={0}>
       {/* ---------- Bite-sized: what this is, how much of it there is ---------- */}
       <Section padding={6} dividers={["bottom"]}>
@@ -39,7 +45,12 @@ export default function VocabularyPage() {
           <Takeaway title="Nobody reads a glossary end to end — look up the four terms that will come up on your call">
             Start with the Rosetta Stone below: every term here has an allied-health equivalent the team already
             uses daily. Then open the tab for the domain you&rsquo;re walking into and scan the term names —
-            each row expands to the full entry only if you need it.
+            each row expands to the full entry only if you need it. Looking for Prism&rsquo;s own product terms —
+            Placement, Slot, Wishlist — instead? See{" "}
+            <Link href="/prism/vocabulary" hasUnderline>
+              System vocabulary
+            </Link>
+            .
           </Takeaway>
         </Stack>
       </Section>
@@ -53,14 +64,12 @@ export default function VocabularyPage() {
       </Section>
 
       {/* ---------- The on-ramp: the translation table, in full, uncollapsed ---------- */}
-      {glossary.rosetta ? (
+      {glossary.rosettaRows.length ? (
         <Section padding={6} dividers={["bottom"]}>
           <Stack gap={3}>
-            <Heading level={2}>{glossary.rosetta.title.replace(/^\d+\.\s*/, "")}</Heading>
-            {/* SCAN-LAYER: intentional on-ramp table, not prose — do not gate behind Collapsible */}
-            <Markdown headingLevelStart={3} contentWidth={860}>
-              {glossary.rosetta.body}
-            </Markdown>
+            <Heading level={2}>{glossary.rosetta?.title.replace(/^\d+\.\s*/, "")}</Heading>
+            {/* SCAN-LAYER: intentional on-ramp cards, not prose — do not gate behind Collapsible */}
+            <RosettaCards rows={glossary.rosettaRows} termIndex={rosettaTermIndex} />
           </Stack>
         </Section>
       ) : null}
@@ -80,7 +89,7 @@ export default function VocabularyPage() {
                 to say to a dean, and the source file it came from.
               </Text>
             </Stack>
-            <GlossaryTabs groups={glossary.groups} />
+            <GlossaryTabs groups={glossary.groups} accreditationDocs={accreditationDocs} />
           </Stack>
         </Section>
       ) : null}
@@ -104,5 +113,6 @@ export default function VocabularyPage() {
         </CollapsibleGroup>
       </Section>
     </Stack>
+    </VocabularyNavProvider>
   );
 }

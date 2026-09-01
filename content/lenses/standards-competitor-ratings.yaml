@@ -1,0 +1,16 @@
+# Level 2 reframing — cites content/accreditation/*.yaml (by element_id) and
+# content/competitors/*.yaml (by slug) by name; never asserts a new competitive fact
+# not already grounded in one of those two Level-1 registries. This is Wilson's
+# per-standard "where do we meet versus the competitors meet" ask
+# (2026-08-26 call), scoped to the cross-registry claim specifically — how a named
+# competitor stacks up against ONE accreditation element.
+#
+# Sparse by design: absence of an entry for a given (domain, element_id,
+# competitor_slug) triple IS the "unresearched" state that
+# getStandardsCrosswalkForDomain() renders by default — do not pre-populate empty
+# rows for every cell, that would be 1,000+ rows of noise for zero information. Add an
+# entry only after checking a competitor's public docs/site/reviewer notes against one
+# specific accreditation standard, with a real source. Run
+# scripts/list_missing_competitor_ratings.py to see what's still unrated.
+last_updated: "2026-08-27"
+ratings: []

@@ -4,25 +4,30 @@ import { Stack } from "@astryxdesign/core/Stack";
 import { Grid } from "@astryxdesign/core/Grid";
 import { Card } from "@astryxdesign/core/Card";
 import { Text } from "@astryxdesign/core/Text";
-import { Breadcrumbs, BreadcrumbItem } from "@astryxdesign/core/Breadcrumbs";
 import { Collapsible } from "@astryxdesign/core/Collapsible";
 import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList";
-import { PageHeader } from "@/components/page-header";
-import { DisciplineChip } from "@/components/discipline-chip";
-import { FieldBlock } from "@/components/field-block";
+import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { PersonaSpecList } from "@/components/persona-spec-list";
 import { ProseItemList } from "@/components/prose-item-list";
 import { SentenceList } from "@/components/sentence-list";
-import { listDisciplinePersonas, getDisciplinePersona, resolveRelatedFlows } from "@/lib/content";
+import { FieldBlock } from "@/components/field-block";
+import { getAccreditorTiers, getDomainHubData, resolveRelatedFlows } from "@/lib/content";
+import { matchDisciplineMeta } from "@/lib/discipline-meta";
 
-export function generateStaticParams() {
-  return listDisciplinePersonas().map((p) => ({ slug: p.slug }));
-}
-
-export default async function DisciplinePersonaPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function DomainPersonaPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const persona = getDisciplinePersona(slug);
-  if (!persona) notFound();
+  const entry = getAccreditorTiers()?.domains.find((d) => matchDisciplineMeta(d.domain)?.slug === slug);
+  if (!entry) notFound();
+
+  const { disciplinePersona: persona } = getDomainHubData(entry.domain, slug);
+
+  if (!persona) {
+    return (
+      <Section padding={6}>
+        <EmptyState title="No discipline persona yet" description="Populates as research completes for this domain." />
+      </Section>
+    );
+  }
 
   const jtbdItems = (persona.jtbd ?? []).map((j) => ({
     primary: j.job,
@@ -32,17 +37,9 @@ export default async function DisciplinePersonaPage({ params }: { params: Promis
   }));
 
   return (
-    <Stack gap={0}>
+    <>
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
-          <Breadcrumbs>
-            <BreadcrumbItem href="/personas">Personas</BreadcrumbItem>
-            <BreadcrumbItem isCurrent>{persona.persona_name}</BreadcrumbItem>
-          </Breadcrumbs>
-          <Stack gap={2}>
-            <DisciplineChip subject={persona.domain} />
-            <PageHeader eyebrow="Discipline persona" title={persona.persona_name ?? persona.domain} />
-          </Stack>
           <MetadataList columns={4}>
             <MetadataListItem label="Pressure points">{persona.accreditation_pressure?.length ?? 0}</MetadataListItem>
             <MetadataListItem label="Current tools">{persona.current_tools?.length ?? 0}</MetadataListItem>
@@ -50,8 +47,7 @@ export default async function DisciplinePersonaPage({ params }: { params: Promis
             <MetadataListItem label="Sources cited">{persona.sources?.length ?? 0}</MetadataListItem>
           </MetadataList>
           {persona.archetype_summary ? (
-            // DENSITY-OK: dedicated persona detail page — the archetype summary is
-            // this page's whole reason to exist, shown in full, not the index card's
+            // DENSITY-OK: dedicated persona tab — shown in full, not an index card's
             // 3-line teaser
             <Text type="body">{persona.archetype_summary}</Text>
           ) : null}
@@ -116,6 +112,6 @@ export default async function DisciplinePersonaPage({ params }: { params: Promis
           </Collapsible>
         </Section>
       ) : null}
-    </Stack>
+    </>
   );
 }

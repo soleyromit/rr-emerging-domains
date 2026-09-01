@@ -8,19 +8,24 @@ import { Stack } from "@astryxdesign/core/Stack";
 
 const SECTIONS = [
   { title: "Overview", items: [{ href: "/", label: "Executive summary" }] },
-  { title: "Product", items: [{ href: "/prism", label: "PRISM capability map" }] },
+  {
+    title: "Product",
+    items: [
+      { href: "/prism", label: "PRISM capability map" },
+      { href: "/prism/vocabulary", label: "System vocabulary" },
+    ],
+  },
   {
     title: "Market",
     items: [
       { href: "/feature-map", label: "Feature map" },
       { href: "/competitors", label: "Competitor matrix" },
-      { href: "/accreditation", label: "Accreditation map" },
     ],
   },
   {
     title: "Customer",
     items: [
-      { href: "/personas", label: "Personas" },
+      { href: "/roles", label: "Roles" },
       { href: "/journeys", label: "Journeys" },
     ],
   },
@@ -35,14 +40,23 @@ const SECTIONS = [
     ],
   },
   {
-    title: "Lenses",
+    title: "Domains",
     items: [
-      { href: "/lenses", label: "Lenses" },
-      { href: "/crosswalk", label: "Crosswalk" },
       { href: "/domains", label: "Domains" },
+      { href: "/crosswalk", label: "Crosswalk" },
     ],
   },
 ];
+
+const ALL_HREFS = SECTIONS.flatMap((s) => s.items.map((i) => i.href));
+
+// Longest-prefix match only — otherwise a parent route like "/prism" stays
+// highlighted alongside a more specific child like "/prism/vocabulary".
+function isNavItemSelected(href: string, pathname: string): boolean {
+  if (href === "/") return pathname === "/";
+  if (!pathname.startsWith(href)) return false;
+  return !ALL_HREFS.some((other) => other !== href && other.length > href.length && pathname.startsWith(other));
+}
 
 export function AppNav({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -76,11 +90,7 @@ export function AppNav({ children }: { children: React.ReactNode }) {
                   key={item.href}
                   label={item.label}
                   href={item.href}
-                  isSelected={
-                    item.href === "/" || item.href === "/lenses"
-                      ? pathname === item.href
-                      : pathname.startsWith(item.href)
-                  }
+                  isSelected={isNavItemSelected(item.href, pathname)}
                 />
               ))}
             </SideNavSection>

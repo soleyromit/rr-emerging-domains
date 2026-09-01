@@ -14,7 +14,16 @@ import { CompetitorCompanyFacts } from "@/components/competitor-company-facts";
 import { CompetitorProsCons } from "@/components/competitor-pros-cons";
 import { CompetitorFeatureDossier } from "@/components/competitor-feature-dossier";
 import { CompetitorDepthChart } from "@/components/charts/competitor-depth-chart";
-import { listCompetitors, getCompetitor } from "@/lib/content";
+import { ComparisonCardGrid } from "@/components/comparison-card-grid";
+import { SentenceList, type SentenceListItem } from "@/components/sentence-list";
+import {
+  listCompetitors,
+  getCompetitor,
+  getCompetitorLensPersona,
+  listRolePersonas,
+  roleNameMatches,
+  resolveRelatedFlows,
+} from "@/lib/content";
 
 export function generateStaticParams() {
   return listCompetitors().map((c) => ({ slug: c.slug }));
@@ -24,6 +33,17 @@ export default async function CompetitorDetailPage({ params }: { params: Promise
   const { slug } = await params;
   const competitor = getCompetitor(slug);
   if (!competitor) notFound();
+
+  // Competitor "lens" content — how this competitor implicitly serves each role,
+  // and where Prism can exploit a gap. Merged in from the retired /personas/lens
+  // pages so "lens" no longer needs to exist as a separate, confusingly-named page.
+  const lens = getCompetitorLensPersona(slug);
+  const rolePersonas = listRolePersonas();
+  const findRoleSlug = (shortName: string) =>
+    rolePersonas.find((r) => roleNameMatches(shortName, r.role_name))?.slug;
+  const gapItems: SentenceListItem[] = (lens?.gaps_prism_can_exploit ?? []).map((g) =>
+    typeof g === "string" ? g : { text: g.claim, relatedFlows: resolveRelatedFlows(g.related_flows) }
+  );
 
   return (
     <Stack gap={0}>
@@ -58,6 +78,46 @@ export default async function CompetitorDetailPage({ params }: { params: Promise
             </Text>
             <CompetitorDepthChart competitors={[competitor]} />
             <CompetitorFeatureDossier features={competitor.feature_teardown} />
+          </Stack>
+        </Section>
+      ) : null}
+
+      {lens?.how_they_implicitly_serve_roles?.length ? (
+        <Section padding={6} dividers={["bottom"]}>
+          <Stack gap={3}>
+            <Text type="label" color="secondary">
+              How {competitor.competitor} implicitly serves each role
+            </Text>
+            <ComparisonCardGrid
+              items={lens.how_they_implicitly_serve_roles.map((r) => {
+                const roleSlug = findRoleSlug(r.role);
+                return {
+                  key: r.role,
+                  label: roleSlug ? (
+                    <Link href={`/roles/${roleSlug}`} type="body" weight="semibold" color="accent" hasUnderline>
+                      {r.role}
+                    </Link>
+                  ) : (
+                    <Text type="body" weight="semibold">
+                      {r.role}
+                    </Text>
+                  ),
+                  text: r.read,
+                  relatedFlows: resolveRelatedFlows(r.related_flows),
+                };
+              })}
+            />
+          </Stack>
+        </Section>
+      ) : null}
+
+      {lens?.gaps_prism_can_exploit?.length ? (
+        <Section padding={6} dividers={["bottom"]}>
+          <Stack gap={2}>
+            <Text type="label" color="secondary">
+              Gaps Prism can exploit ({lens.gaps_prism_can_exploit.length})
+            </Text>
+            <SentenceList items={gapItems} maxLines={3} fallbackIcon="funnel" />
           </Stack>
         </Section>
       ) : null}
@@ -106,28 +166,31 @@ export default async function CompetitorDetailPage({ params }: { params: Promise
               Last researched {competitor.last_researched}
             </Text>
           ) : null}
-          {competitor.sources?.length ? (
-            <Collapsible defaultIsOpen={false} trigger={`Sources (${competitor.sources.length})`}>
-              <List hasDividers density="compact">
-                {competitor.sources.map((s, i) => (
-                  <ListItem
-                    key={i}
-                    label={
-                      s.startsWith("http") ? (
-                        <Link href={s} isExternalLink size="sm">
-                          {s}
-                        </Link>
-                      ) : (
-                        <Text type="supporting" size="sm">
-                          {s}
-                        </Text>
-                      )
-                    }
-                  />
-                ))}
-              </List>
-            </Collapsible>
-          ) : null}
+          {(() => {
+            const allSources = Array.from(new Set([...(competitor.sources ?? []), ...(lens?.sources ?? [])]));
+            return allSources.length ? (
+              <Collapsible defaultIsOpen={false} trigger={`Sources (${allSources.length})`}>
+                <List hasDividers density="compact">
+                  {allSources.map((s, i) => (
+                    <ListItem
+                      key={i}
+                      label={
+                        s.startsWith("http") ? (
+                          <Link href={s} isExternalLink size="sm">
+                            {s}
+                          </Link>
+                        ) : (
+                          <Text type="supporting" size="sm">
+                            {s}
+                          </Text>
+                        )
+                      }
+                    />
+                  ))}
+                </List>
+              </Collapsible>
+            ) : null;
+          })()}
         </Stack>
       </Section>
     </Stack>

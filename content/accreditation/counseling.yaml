@@ -1,0 +1,25 @@
+accreditor: "CACREP (Council for Accreditation of Counseling and Related Educational Programs) — UNCONFIRMED, not yet independently verified against a public standards document"
+slug: "counseling"
+domain: "Counseling"
+governs: "Not yet researched."
+research_status: "unresearched"
+research_status_note: >
+  OPEN QUESTION, not a resolved entry — Counseling was named alongside Education and
+  Social Work as a target discipline on the 2026-08-26 call ("we should do this for
+  education, social work, and counseling as well... PT PA OT nursing social work
+  counseling education"), but no persona, accreditation, or feature-map research
+  exists for it in this repo yet. This file exists so Counseling stops being silently
+  absent from domain/crosswalk lists and instead renders an honest "not yet
+  researched" state. See the matching Counseling entry in ../lenses/accreditor-tiers.yaml
+  and ../lenses/competitor-landscape.yaml (Experiential Learning Cloud is already a
+  confirmed, researched competitor active in this domain).
+standards_document:
+  title: ""
+  version_or_year: ""
+  url: ""
+standards: []
+licensure_or_gme_layer: []
+last_researched: null
+sources:
+  - "../lenses/accreditor-tiers.yaml"
+  - "../interviews/2026-08-26-wilson-nursing-crosswalk.md"
