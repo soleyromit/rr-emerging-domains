@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { fetchPharmacyFeatureGaps } from "@/lib/zendesk/client";
 
 function requireEnv(name: string): string {
   const value = process.env[name];
@@ -43,13 +44,33 @@ export async function GET(request: Request) {
 
   const { access_token: accessToken } = (await tokenResponse.json()) as { access_token: string };
 
+  const gaps = await fetchPharmacyFeatureGaps(accessToken);
+  const byCategory = new Map<string, typeof gaps>();
+  for (const gap of gaps) {
+    byCategory.set(gap.category, [...(byCategory.get(gap.category) ?? []), gap]);
+  }
+  const sections = [...byCategory.entries()]
+    .map(
+      ([category, items]) => `
+    <h2>${category} (${items.length})</h2>
+    <ul>
+      ${items
+        .map(
+          (i) =>
+            `<li><a href="${i.url}">#${i.ticketId}</a> — ${i.subject} <em>(${i.organizationName}, ${i.status})</em></li>`,
+        )
+        .join("\n")}
+    </ul>`,
+    )
+    .join("\n");
+
   return new NextResponse(
     `<!doctype html>
 <html>
-  <body style="font-family: system-ui; max-width: 640px; margin: 4rem auto; line-height: 1.5;">
-    <h1>Zendesk OAuth connected</h1>
-    <p>Copy this token into the <code>ZENDESK_OAUTH_TOKEN</code> environment variable, then discard this page. It will not be shown again.</p>
-    <textarea readonly style="width: 100%; height: 4rem; font-family: monospace;">${accessToken}</textarea>
+  <body style="font-family: system-ui; max-width: 720px; margin: 4rem auto; line-height: 1.5;">
+    <h1>Zendesk OAuth connected — pharmacy feature-gap query via OAuth token</h1>
+    <p>Fetched ${gaps.length} tickets using the Bearer token from this OAuth exchange (no static API token used).</p>
+    ${sections}
   </body>
 </html>`,
     { headers: { "Content-Type": "text/html" } },
