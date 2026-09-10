@@ -915,6 +915,52 @@ export function buildComputedUseCaseIndex(
   return index;
 }
 
+/** Orders and de-duplicates one element's computed matches before the cap is applied.
+ *
+ * Three things this fixes, all of them only visible once the list is capped at
+ * COMPUTED_USE_CASE_MATCH_CAP:
+ *
+ * 1. buildComputedUseCaseIndex walks flows before journeys, so the raw array is always
+ *    "every flow match, then every journey match". Any element with 4+ flow matches
+ *    therefore never showed a journey at all — the CORE-to-Exxat migration journey
+ *    cites 10 ACPE elements and was reaching the rendered list on 2 of them. Journeys
+ *    go first here: a journey is the more valuable read (it's the end-to-end story the
+ *    flow is a step of), and a flow that loses its slot is still reachable from the
+ *    journey page that contains it. Flows then fill whatever slots remain.
+ *
+ * 2. A flow already shown as a curated `related_flows` chip directly above the computed
+ *    list restated itself inside it (2.2.d spent 2 of its 4 slots that way). Curated
+ *    hrefs are filtered out — the chip above is strictly richer, since it renders the
+ *    matched element's own prose.
+ *
+ * 3. A journey that names the same element on several stages pushed one entry per
+ *    stage. Harmless while journeys were starved at the end of the list; with journeys
+ *    first it would spend 3 of 4 slots on one journey (3.3.a) and emit duplicate React
+ *    keys in the renderer. First occurrence wins, so the earliest stage's context is
+ *    the one kept.
+ *
+ * The returned length is what `computedMatchTotal` should report, so the "N more" line
+ * counts only references a reader can't already see.
+ */
+export function rankComputedUseCaseMatches(
+  allComputed: ComputedUseCaseMatch[],
+  useCases: StandardUseCase[]
+): ComputedUseCaseMatch[] {
+  const curatedHrefs = new Set(
+    useCases.flatMap((u) => u.relatedFlows.map((r) => `/flows/${r.flow.slug}`))
+  );
+  const seen = new Set<string>();
+  const ordered = [
+    ...allComputed.filter((m) => m.kind === "journey"),
+    ...allComputed.filter((m) => m.kind !== "journey"),
+  ];
+  return ordered.filter((m) => {
+    if (curatedHrefs.has(m.href) || seen.has(m.href)) return false;
+    seen.add(m.href);
+    return true;
+  });
+}
+
 export interface SourceRegistryEntry {
   id: string;
   title?: string;
@@ -997,8 +1043,15 @@ export interface StandardsCrosswalkForDomain {
   researchStatus?: "unresearched";
   ratedCompetitorCellCount: number;
   totalCompetitorCellCount: number;
-  /** Rows with at least one curated use case OR at least one computed match. */
-  standardsWithUseCaseCount: number;
+  /** Rows with at least one curated use case OR at least one computed match. Must be
+   * labelled as such in the UI: a computed match is an existing flow/journey that names
+   * the element, NOT a use case anyone wrote. Labelling this "standards with a use case"
+   * made the scan layer claim 14/20 for Pharmacy where the detail panel's own copy says
+   * "computed — not a curated use case" on 3 of them. */
+  standardsWithUseCaseOrReferenceCount: number;
+  /** Strict subset: rows with at least one CURATED use case from
+   * lenses/standards-use-cases.yaml. This is the "someone wrote this down" number. */
+  standardsWithCuratedUseCaseCount: number;
   /** Subset of ratedCompetitorCellCount carrying evidence_strength: "directional". */
   directionalRatingCount: number;
 }
@@ -1051,7 +1104,8 @@ export function getStandardsCrosswalkForDomain(domain: string): StandardsCrosswa
 
   let ratedCompetitorCellCount = 0;
   let directionalRatingCount = 0;
-  let standardsWithUseCaseCount = 0;
+  let standardsWithUseCaseOrReferenceCount = 0;
+  let standardsWithCuratedUseCaseCount = 0;
 
   const rows: StandardsCrosswalkRow[] = (doc.standards ?? []).map((s) => {
     const personaSet = new Set<string>();
@@ -1076,8 +1130,9 @@ export function getStandardsCrosswalkForDomain(domain: string): StandardsCrosswa
     });
 
     const useCases = useCasesByElement.get(s.element_id) ?? [];
-    const allComputed = computedIndex.get(s.element_id) ?? [];
-    if (useCases.length || allComputed.length) standardsWithUseCaseCount += 1;
+    const allComputed = rankComputedUseCaseMatches(computedIndex.get(s.element_id) ?? [], useCases);
+    if (useCases.length) standardsWithCuratedUseCaseCount += 1;
+    if (useCases.length || allComputed.length) standardsWithUseCaseOrReferenceCount += 1;
 
     return {
       element_id: s.element_id,
@@ -1107,7 +1162,8 @@ export function getStandardsCrosswalkForDomain(domain: string): StandardsCrosswa
     researchStatus: doc.research_status,
     ratedCompetitorCellCount,
     totalCompetitorCellCount: rows.length * competitors.length,
-    standardsWithUseCaseCount,
+    standardsWithUseCaseOrReferenceCount,
+    standardsWithCuratedUseCaseCount,
     directionalRatingCount,
   };
 }

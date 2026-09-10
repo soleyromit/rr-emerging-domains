@@ -54,10 +54,17 @@ export default async function DomainStandardsPage({ params }: { params: Promise<
                 value={standardsCrosswalk.ratedCompetitorCellCount}
                 max={standardsCrosswalk.totalCompetitorCellCount || 1}
               />
+              {/* Two different figures, deliberately. The bar counts any element a
+                  reader can follow somewhere from — a curated use case OR an existing
+                  flow/journey that names it. The metadata item below counts only the
+                  curated ones. Showing the broader number under the word "use case"
+                  (as this bar used to) made the scan layer claim 14/20 for Pharmacy
+                  while the detail panel says "computed — not a curated use case" on
+                  three of those rows. */}
               <ProgressBar
-                label="Standards with a proposed use case"
+                label="Standards with a use case or existing reference"
                 hasValueLabel
-                value={standardsCrosswalk.standardsWithUseCaseCount}
+                value={standardsCrosswalk.standardsWithUseCaseOrReferenceCount}
                 max={standardsCrosswalk.rows.length}
               />
             </Stack>
@@ -66,8 +73,8 @@ export default async function DomainStandardsPage({ params }: { params: Promise<
               <MetadataListItem label="Competitor cells rated">
                 {standardsCrosswalk.ratedCompetitorCellCount} / {standardsCrosswalk.totalCompetitorCellCount}
               </MetadataListItem>
-              <MetadataListItem label="Standards with a use case">
-                {standardsCrosswalk.standardsWithUseCaseCount} / {standardsCrosswalk.rows.length}
+              <MetadataListItem label="Standards with a curated use case">
+                {standardsCrosswalk.standardsWithCuratedUseCaseCount} / {standardsCrosswalk.rows.length}
               </MetadataListItem>
             </MetadataList>
             <CoverageGapsCallout
@@ -77,7 +84,12 @@ export default async function DomainStandardsPage({ params }: { params: Promise<
               trendCount={trendCount}
               directionalCount={standardsCrosswalk.directionalRatingCount}
             />
-            {standardsCrosswalk.directionalRatingCount > 0 ? (
+            {/* Pharmacy-gated as well as directional-gated: the attribution below names
+                a specific pharmacy domain expert on a specific date, so it must never
+                render on another domain's page just because that domain later acquires
+                its own directional rating. The domain-generic "N directional" sentence
+                lives inside CoverageGapsCallout above and is unaffected. */}
+            {slug === "pharmacy" && standardsCrosswalk.directionalRatingCount > 0 ? (
               <Text type="supporting" size="sm" color="secondary">
                 Ratings marked <strong>Directional</strong> are a first-pass read of public vendor
                 material, not element-by-element verification. Exxat&apos;s pharmacy domain expert
