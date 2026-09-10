@@ -95,6 +95,16 @@ ACCREDITATION_CEILINGS = {
 # analog (a single-sourced competitive claim).
 STANDARDS_RATINGS_CEILINGS = {
     "ratings[].rationale": (300, 600),
+    # added 2026-09-10 with evidence_strength: a one-line statement of what the
+    # directional rating actually rests on, not a second rationale.
+    "ratings[].evidence_note": (150, 300),
+}
+# content/lenses/standards-use-cases.yaml — added 2026-09-10. `use_case` is a
+# scannable one-liner (same register as a trends[].trend headline); `detail` is the
+# sourced paragraph behind it (same numbers as a lens gaps_prism_can_exploit[].detail).
+STANDARDS_USE_CASES_CEILINGS = {
+    "use_cases[].use_case": (120, 220),
+    "use_cases[].detail": (300, 600),
 }
 # content/trends/*.yaml — one-line trend + a short decomposed detail, same order
 # of magnitude as a persona jtbd.job / accreditation gap_notes entry.
@@ -293,6 +303,23 @@ def check_standards_ratings_integrity():
         if r.get("rating") and not r.get("source") and not has_sources_list:
             problems.append(f"{where}: rating {r.get('rating')!r} has no source (neither `source` nor `sources[]`)")
 
+        # evidence_strength/evidence_note (added 2026-09-10). "directional" means a
+        # first-pass read of public vendor material, NOT the element-by-element
+        # verification the unflagged entries carry. Requiring the note makes a future
+        # "promote to verified" pass a visible diff instead of a silent
+        # reclassification — see the design spec's caveat mechanism, layer 1.
+        strength = r.get("evidence_strength")
+        if strength is not None and strength != "directional":
+            problems.append(
+                f"{where}: evidence_strength {strength!r} is not a recognized value (only 'directional', or omit the field)"
+            )
+        if strength == "directional" and not (r.get("evidence_note") or "").strip():
+            problems.append(f"{where}: evidence_strength 'directional' requires a non-empty evidence_note")
+        if r.get("evidence_note") and strength != "directional":
+            problems.append(
+                f"{where}: evidence_note is set but evidence_strength is not 'directional' — an unflagged note reads as verified"
+            )
+
         for j, s in enumerate(r.get("sources") or []):
             sid = s.get("source_id")
             if sid and sid not in source_ids:
@@ -307,6 +334,71 @@ def check_standards_ratings_integrity():
         for p in r.get("persona_relevance") or []:
             if p not in persona_slugs:
                 problems.append(f"{where}: persona_relevance {p!r} not found in content/personas/*.yaml")
+
+    return problems
+
+
+def check_standards_use_cases_integrity():
+    """Same automatable "does the arrow point down, and does it resolve" check that
+    check_standards_ratings_integrity() applies to the ratings lens, applied to
+    content/lenses/standards-use-cases.yaml (added 2026-09-10): every entry must
+    resolve to a real accreditation element for its domain, carry a recognized
+    status, and have every audience persona / source id / related flow resolve.
+
+    `no-fit-yet` is a first-class value, not an absence — but it must say WHY in
+    `detail`, otherwise it's indistinguishable from an unfinished entry."""
+    problems = []
+    path = CONTENT / "lenses" / "standards-use-cases.yaml"
+    if not path.exists():
+        return problems
+    doc = yaml.safe_load(path.read_text()) or {}
+
+    elements_by_slug = {}
+    for f in sorted((CONTENT / "accreditation").glob("*.yaml")):
+        if f.name.startswith("_TEMPLATE"):
+            continue
+        adoc = yaml.safe_load(f.read_text()) or {}
+        if adoc.get("slug"):
+            elements_by_slug[adoc["slug"]] = {s.get("element_id") for s in (adoc.get("standards") or [])}
+
+    source_ids = _load_source_ids()
+    persona_slugs = _load_persona_slugs()
+    flow_slugs = {f.stem for f in (CONTENT / "flows").glob("*.yaml") if not f.name.startswith("_TEMPLATE")}
+    valid_statuses = {"proposed", "in-flight", "documented", "no-fit-yet"}
+
+    for i, u in enumerate(doc.get("use_cases") or []):
+        where = f"use_cases[{i}]"
+        domain = u.get("domain")
+        element_id = u.get("element_id")
+        accreditor_slug = DOMAIN_TO_ACCREDITATION_SLUG.get(domain)
+        if accreditor_slug is None:
+            problems.append(f"{where}: domain {domain!r} is not a recognized accreditation domain")
+        elif element_id not in elements_by_slug.get(accreditor_slug, set()):
+            problems.append(f"{where}: element_id {element_id!r} not found in {domain}'s accreditation file")
+
+        status = u.get("status")
+        if status not in valid_statuses:
+            problems.append(f"{where}: status {status!r} not in {sorted(valid_statuses)}")
+        if status == "no-fit-yet" and not (u.get("detail") or "").strip():
+            problems.append(f"{where}: status 'no-fit-yet' requires a detail saying why — a blank gap reads as unfinished")
+        if not (u.get("use_case") or "").strip():
+            problems.append(f"{where}: use_case is empty")
+
+        for p in u.get("audience") or []:
+            if p not in persona_slugs:
+                problems.append(f"{where}: audience {p!r} not found in content/personas/*.yaml")
+
+        for j, s in enumerate(u.get("sources") or []):
+            sid = s.get("source_id")
+            if sid and sid not in source_ids:
+                problems.append(f"{where}.sources[{j}]: source_id {sid!r} not found in content/sources/registry.yaml")
+        if not (u.get("sources") or []):
+            problems.append(f"{where}: no sources[] — a use case asserts something and must cite where it came from")
+
+        for j, rf in enumerate(u.get("related_flows") or []):
+            slug = (rf.get("flow") or "").replace(".yaml", "")
+            if slug and slug not in flow_slugs:
+                problems.append(f"{where}.related_flows[{j}]: flow {rf.get('flow')!r} not found in content/flows/")
 
     return problems
 
@@ -402,6 +494,9 @@ def main():
     ratings_file = CONTENT / "lenses" / "standards-competitor-ratings.yaml"
     if ratings_file.exists():
         check_file(ratings_file, STANDARDS_RATINGS_CEILINGS, results)
+    use_cases_file = CONTENT / "lenses" / "standards-use-cases.yaml"
+    if use_cases_file.exists():
+        check_file(use_cases_file, STANDARDS_USE_CASES_CEILINGS, results)
     for f in sorted((CONTENT / "trends").glob("*.yaml")):
         if f.name.startswith("_TEMPLATE"):
             continue
@@ -425,6 +520,7 @@ def main():
     results = filtered
 
     integrity_problems = check_standards_ratings_integrity()
+    integrity_problems += check_standards_use_cases_integrity()
     integrity_problems += check_trends_integrity()
     integrity_problems += check_research_sources_integrity()
     unresearched = summarize_unresearched_accreditation()

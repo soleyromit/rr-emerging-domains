@@ -57,6 +57,9 @@ overage explicitly allowlisted with a reason, not silently shipped.
 | `accreditation/*.yaml` `standards[].required_software_behavior` | 385 | 950 | **new 2026-08-27** — same treatment as above |
 | `accreditation/*.yaml` `standards[].gap_notes` | 612 | 1,200 | **new 2026-08-27** — same treatment as above |
 | `lenses/standards-competitor-ratings.yaml` `ratings[].rationale` | 300 | 600 | **new 2026-08-27** — same order of magnitude as `competitors/*.yaml`'s `strengths[].claim`, since it's the same kind of single-sourced competitive claim |
+| `lenses/standards-use-cases.yaml` `use_cases[].use_case` | 120 | 220 | **new 2026-09-10** — a one-line "what a program would actually do with this standard," same register as a `trends[].trend` headline (120/220) and for the same reason: it is a scannable label, not the argument. The argument goes in `detail`. |
+| `lenses/standards-use-cases.yaml` `use_cases[].detail` | 300 | 600 | **new 2026-09-10** — same numbers as `personas/lens-*.yaml`'s `gaps_prism_can_exploit[].detail`, since it is the same shape of claim: one paragraph of sourced supporting evidence behind a plain-language headline. An entry that can't fit decomposes into two `use_cases[]` entries. |
+| `lenses/standards-competitor-ratings.yaml` `ratings[].evidence_note` | 150 | 300 | **new 2026-09-10** — a one-line statement of *what evidence the directional rating actually rests on* ("first-pass read of the vendor's public product page only"), not a second rationale. Same order of magnitude as `sources[].what_it_supports`, the closest analog. |
 
 Run the check with `python3 scripts/check_content_density.py` from the repo root. A
 clean run prints one line; a dirty one lists every offending field with its actual
