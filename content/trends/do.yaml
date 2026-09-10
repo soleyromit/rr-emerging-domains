@@ -1,0 +1,87 @@
+# Level 2 reframing — see _TEMPLATE.yaml for schema/rules. Cites
+# content/prism/capability-map.yaml (for exxat_status/exxat_ref),
+# content/competitors/*.yaml, and content/sources/registry.yaml. Sparse by
+# design: 4 trends researched 2026-09-09, plus 3 more researched 2026-09-10
+# (reviews/newsletters/videos research pass — see the 3 new sources' ids
+# below). Not padded to a round number.
+domain: "DO"
+trends:
+  - id: "do-record-enrollment-2025-26"
+    trend: "Osteopathic enrollment sets another record — 40,806 students, 11,538 first-years"
+    detail: "AACOM's Sept-2026 report: total enrollment +2.6%, first-year +3.2%, graduates +2.3%, applicants +4.6% year over year. Every one of those students needs core rotations placed, supervised and evidenced. The pressure is volume — placement has to scale per cohort, not per coordinator spreadsheet."
+    exxat_status: "shipped"
+    exxat_ref: "Placement Assist"
+    addressed_by_competitors: []
+    sources:
+      - "doc-aacom-enrollment-graduates-2025-26"
+
+  - id: "do-clinical-site-scarcity-and-cost"
+    trend: "Clinical training sites, not classroom seats, now cap COM growth"
+    detail: "AACOM's Apr-2024 issue brief puts DO first-year enrollment up 70% since 2011 against 17.8% MD growth since 2012, and names site availability and cost as the limit on school growth. Competition is cross-profession, so slot capture and site-relationship history become operational assets."
+    exxat_status: "shipped"
+    exxat_ref: "Slot Request"
+    addressed_by_competitors: []
+    sources:
+      - "doc-aacom-expanding-clinical-education-2024"
+
+  - id: "do-public-outcome-reporting-standard-11"
+    trend: "COCA Standard 11 forces continually published COMLEX and GME placement rates"
+    detail: "COMs must publish first-time COMLEX-USA pass rates as NBOME reports them and a rolling 4-year PGY-1 placement rate, with an improvement plan below threshold and a finding after three straight years. Public-facing, deadline-bound outcome data no rotation system holds today."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors: []
+    sources:
+      - "doc-coca-2026-continuing-accreditation-standards"
+
+  - id: "do-cross-site-comparability-statistical"
+    trend: "Site comparability becomes a statistical claim, not an assertion"
+    detail: "COCA Element 6.11 asks for a statistical analysis comparing student outcomes across all core and required sites, plus a plan for any gaps found. With students spread across hundreds of community sites, every assessment record must carry a site tag and roll into a by-site variance report."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors: []
+    sources:
+      - "doc-coca-2026-continuing-accreditation-standards"
+
+  - id: "do-nutrition-education-mandate-2025"
+    trend: "COCA adds a standalone nutrition-education accreditation requirement"
+    detail: "COCA adopted a new accreditation requirement (Aug 2025) mandating evidence-based nutrition education, responding to federal health initiatives — a curricular mandate that needs its own trackable competency/evidence trail alongside OMM/OMT, not folded into a generic 'curriculum covers X' checkbox."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors: []
+    sources:
+      - "press-aoa-coca-nutrition-education-requirement-2025"
+
+  # --- Added 2026-09-10: reviews/newsletters/videos research pass. No usable
+  # G2/Capterra/TrustRadius reviews exist for this niche vertical (Exxat,
+  # MedHub, E*Value, New Innovations, CORE ELMS all show 0 verified reviews on
+  # G2 as of this pass) and no video source had independently verifiable
+  # metadata/content — see final report. The 3 entries below are the genuinely
+  # new, verifiable finds: 2 peer-reviewed research papers + 1 vendor
+  # newsletter/blog recap.
+  - id: "do-com-tech-survey-evalue-decline"
+    trend: "National COM tech survey shows eValue losing share to custom builds"
+    detail: "AACOM's Technology in Medical Education working group surveyed COMs pre- and post-COVID: eValue usage fell from 44.8% to 28.6% of programs while internal/custom clinical-education/scheduling builds rose from 3.4% to 10.2% — real incumbent share loss with no single commercial platform yet capturing it."
+    exxat_status: "shipped"
+    exxat_ref: "Clinical & Experiential Education"
+    addressed_by_competitors: []
+    sources:
+      - "article-jom-tech-use-satisfaction-coms-2026"
+
+  - id: "do-aacom-ai-hub-2026"
+    trend: "AACOM launches an AI hub for institution-wide guidance, not solo tools"
+    detail: "Educating Leaders 2026 (AACOM's April conference) unveiled a dedicated AI hub with practical guidance for integrating AI across curriculum management, assessment, feedback analysis, admissions, advising, simulation and faculty development — AI adoption is becoming official institutional guidance, not ad hoc faculty/student experimentation."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors: []
+    sources:
+      - "newsletter-elentra-aacom-2026-recap"
+
+  - id: "do-ai-use-clinical-phase-spike"
+    trend: "AI tool use jumps once DO students reach clinical rotations"
+    detail: "A Sept-2026 JMIR digital-diary pilot across 2 COMs found AI tools filled ~19% of total study time, with clinical-phase (MS3-MS4) students using AI significantly more than pre-clinical peers — a 19-point jump (p=0.003). Rotation-stage AI use is now measurable, not just a preclinical study habit."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors: []
+    sources:
+      - "article-jmir-ai-tool-use-do-students-2026"
+last_updated: "2026-09-10"

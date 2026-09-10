@@ -43,6 +43,8 @@ standards:
       shipped). "Program Quality Analytics" in the intelligence layer is
       adjacent but its depth against this kind of continuous, multi-source
       evidence rollup is unconfirmed.
+    exxat_compliance: "gap"
+    exxat_compliance_rationale: "Exxat does not currently meet \"Institutional Effectiveness — ongoing planning, assessment, improvement\" — no shipped or roadmapped Prism pillar addresses this requirement (Prism fit: Gap), making it an open compliance gap today."
     gap_notes: >
       No shipped pillar today assembles cross-pillar evidence into an
       ongoing, exportable self-study narrative. This is the single item the
@@ -66,6 +68,8 @@ standards:
       courses/activities against a curriculum; publishing syllabus content
       tied to that structure is a direct use of an existing pillar, not new
       construction.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat already meets \"Instruction — advance course information\" natively today (Prism fit: Transfer) — no configuration or engineering work required."
     gap_notes: ""
     source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 2, p.24)"
 
@@ -88,6 +92,8 @@ standards:
       Alerts" (intelligence layer) can plausibly surface the trigger — but a
       formal due-process case-management trail distinct from a compliance
       checklist item is not confirmed in the capability map.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Individual evaluation and due process for students not meeting criteria\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: >
       Case-management/due-process documentation (vs. simple compliance
       gating) is an open question per the capability map's Phase 2 items.
@@ -112,6 +118,8 @@ standards:
       (intelligence layer) is the natural aggregation layer — but true
       exam-style delivery (e.g., a proctored OSCE) overlaps with "Exam
       Management," which is roadmap Q2 2027.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Student evaluation methods must measure defined competencies\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Exam-grade assessment delivery is not yet shipped (Q2 2027 roadmap)."
     source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 2, p.25)"
 
@@ -133,6 +141,8 @@ standards:
       fact per the capability map). Extending "Compliance Management" item
       tracking to faculty (not just students) would deliver this, but that
       extension is unconfirmed.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Comparable instruction and assessment across all clinical sites\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: >
       Compliance Management's item taxonomy is confirmed for students only;
       faculty-side calibration/credential tracking is an open Phase 2
@@ -156,6 +166,8 @@ standards:
       This is squarely the shipped "Curriculum Mapping" pillar's job —
       mapping courses/activities to a curriculum structure is exactly what
       this element requires evidence of maintaining.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat already meets \"Curriculum management plan — ongoing review and evaluation\" natively today (Prism fit: Transfer) — no configuration or engineering work required."
     gap_notes: ""
     source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 2, p.24-25)"
 
@@ -177,6 +189,8 @@ standards:
       (assignment scheduling, forms/evaluations tied to placements), combined
       with "Competency Tracking" from the intelligence layer for the
       per-competency rollup.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat already meets \"Adequate patient experiences to achieve competency\" natively today (Prism fit: Transfer) — no configuration or engineering work required."
     gap_notes: ""
     source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 2, p.25)"
 
@@ -204,6 +218,8 @@ standards:
       CDT-code-level procedure logging or per-category competency roll-ups.
       This granularity is closer to what dedicated dental clinic-management
       systems provide and is not evidenced anywhere in the capability map.
+    exxat_compliance: "gap"
+    exxat_compliance_rationale: "Exxat does not currently meet \"Minimum competencies within the scope of general dentistry\" — no shipped or roadmapped Prism pillar addresses this requirement (Prism fit: Gap), making it an open compliance gap today."
     gap_notes: >
       No confirmed dental-procedure-code-level logging or per-category
       competency taxonomy in Prism today. Likely the single largest
@@ -211,6 +227,11 @@ standards:
       "procedure log" data model (CDT-coded, tooth/surface-level) feeding
       Competency Tracking.
     source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 2, p.29-30)"
+    # ADDED 2026-09-10: peer-reviewed JDE analysis of this exact standard
+    # element — patient preference has shifted to implants over FPDs,
+    # leaving programs short of cases to evidence 2-24h by procedure count.
+    # See content/sources/registry.yaml.
+    research_sources: ["article-pubmed-coda-2-24h-replacement-teeth-2023"]
 
   - element_id: "Standard 4, Element 4-6"
     element_title: "Written agreements for sites not owned by the sponsoring institution"
@@ -230,6 +251,8 @@ standards:
       site-level affiliation agreements (rather than only student-level
       items like immunizations) is a configuration extension of an existing
       pillar, not new construction.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Written agreements for sites not owned by the sponsoring institution\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Site-level (vs. student-level) compliance item tracking is unconfirmed."
     source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 4, p.34)"
 
@@ -254,10 +277,17 @@ standards:
       depth against structured chart-audit data is unconfirmed) and overlaps
       with the roadmap "Accreditation Management" pillar (Q3 2027). No
       shipped pillar confirms a chart-audit/corrective-action workflow.
+    exxat_compliance: "gap"
+    exxat_compliance_rationale: "Exxat does not currently meet \"Continuous quality improvement for the patient care program\" — no shipped or roadmapped Prism pillar addresses this requirement (Prism fit: Gap), making it an open compliance gap today."
     gap_notes: >
       No confirmed patient-record sampling, deficiency-coding, or
       corrective-action-tracking capability exists today.
     source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 5, p.37)"
+    # ADDED 2026-09-10: peer-reviewed account of a live CQI/chart-audit
+    # workflow — adverse-outcome forms tied to the procedure code, a QA
+    # committee running deficiency reports, findings fed back into teaching
+    # and faculty calibration. See content/sources/registry.yaml.
+    research_sources: ["other-jde-axium-adverse-outcome-qa-2025"]
 
   - element_id: "Standard 3, Element 3-4"
     element_title: "Faculty evaluation process"
@@ -277,8 +307,16 @@ standards:
       "Clinical & Experiential Education" is architecturally reusable for
       recurring faculty evaluations; would need a faculty-facing evaluation
       template, not a new module.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Faculty evaluation process\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Faculty-facing (vs. student-facing) evaluation workflow is unconfirmed."
     source: "https://coda.ada.org/-/media/project/ada-organization/ada/coda/files/predoc_standards.pdf (Standard 3, p.32)"
+    # ADDED 2026-09-10: a dental school's own axiUm training video shows the
+    # faculty-approval-of-student-evaluation workflow this standard's
+    # evidence rests on in practice (student-facing, not the faculty-facing
+    # gap noted above, but confirms the sign-off mechanism axiUm ships).
+    # See content/sources/registry.yaml.
+    research_sources: ["video-augusta-axium-faculty-evaluation-2021"]
 
 licensure_or_gme_layer:
   - body: "JCNDE (Joint Commission on National Dental Examinations)"

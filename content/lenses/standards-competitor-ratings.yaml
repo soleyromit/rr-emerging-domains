@@ -12,5 +12,150 @@
 # entry only after checking a competitor's public docs/site/reviewer notes against one
 # specific accreditation standard, with a real source. Run
 # scripts/list_missing_competitor_ratings.py to see what's still unrated.
-last_updated: "2026-08-27"
-ratings: []
+#
+# Schema, per entry (added 2026-09-09, additive to the original 5 fields):
+#   domain, element_id, competitor_slug, rating, rationale   — original fields, unchanged
+#   source: "https://..."                                   — original single-URL field, still
+#     accepted; kept for back-compat with any entry that only has one plain citation
+#   competitor_feature_ref: "which content/competitors/<slug>.yaml feature_teardown[].pillar
+#     (or capability) actually meets this standard" — optional, add when known
+#   sources: [{source_id: "..."}]                            — optional list of ids resolving
+#     into content/sources/registry.yaml, used instead of (or alongside) `source` when there's
+#     more than one citation or a webinar needs structured metadata (publisher/date/type)
+#   persona_relevance: ["role-..." | "discipline-..."]        — optional list of
+#     content/personas/*.yaml filenames (no extension) this standard affects. Tag-only,
+#     not an evidentiary citation — same tolerated-sideways-reference status as an
+#     existing file's `related_flows`.
+last_updated: "2026-09-09"
+ratings:
+  # --- Pharmacy / ACPE ---
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.5.b"
+    competitor_slug: "core-elms"
+    rating: "partially-meeting"
+    rationale: "CORE's pharmacy ELMS page stores contracts and affiliation agreements centrally with automated expiration alerts, and does the same for preceptor licenses. Repository plus expiry alerting is confirmed; nothing public says a lapsed agreement blocks new placements at that site."
+    competitor_feature_ref: "Compliance Management"
+    sources:
+      - source_id: "product-page-core-elms-pharmacy-affiliation-agreements-2026"
+    persona_relevance: ["role-compliance-accreditation-liaison", "role-clinical-coordinator"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.5.b"
+    competitor_slug: "core-elms"
+    rating: "partially-meeting"
+    rationale: "CompMS markets ACPE-named standards alignment with real-time dashboards, gap analysis and one-click reports, and CORE's Aug-2026 pharmacy webinar recap pitches it for the 2016-to-2025 transition. Continuous evidence-to-standard mapping, but ACPE owns PHARMS, the submission system of record."
+    competitor_feature_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+    sources:
+      - source_id: "product-page-core-compms-accreditation-2026"
+      - source_id: "press-peoplegrove-pharmacy-acpe-readiness-2026"
+      - source_id: "doc-acpe-dear-dean-standards-2025-2024"
+    persona_relevance: ["role-compliance-accreditation-liaison", "role-dean"]
+
+  # --- Dentistry / CODA ---
+  - domain: "Dentistry"
+    element_id: "Standard 1, Element 1-2"
+    competitor_slug: "axium"
+    rating: "partially-meeting"
+    rationale: "axiUm markets automated CODA accreditation reporting over its own clinic and grading data, covering the outcomes-evidence half of 1-2. It is report generation from a query engine, not a continuous goals-versus-outcomes loop or the self-study-ready export CODA's seven-year cycle asks for."
+    competitor_feature_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+    sources:
+      - source_id: "product-page-axium-academic-coda-reporting-2026"
+      - source_id: "press-ada-news-coda-five-things-2025"
+    persona_relevance: ["role-compliance-accreditation-liaison", "role-dean"]
+
+  - domain: "Dentistry"
+    element_id: "Standard 2, Element 2-24"
+    competitor_slug: "axium"
+    rating: "fully-meeting"
+    rationale: "axiUm assigns students to patients against their own competency requirements, grades competencies against configurable rubrics with faculty approval, and keeps a full history of assignments, progress and ratings — procedure-level evidence falling out of the school's EHR, not re-entered."
+    competitor_feature_ref: "Exam Management (Prism roadmap Q2 2027)"
+    sources:
+      - source_id: "product-page-axium-faculty-student-management-2026"
+      - source_id: "product-page-axium-academic-coda-reporting-2026"
+    persona_relevance: ["role-program-admin", "discipline-dentistry"]
+
+  - domain: "Dentistry"
+    element_id: "Standard 5, Element 5-3"
+    competitor_slug: "axium"
+    rating: "partially-meeting"
+    rationale: "A 2022 vendor webisode (UNLV) shows axiUm's configurable Chart Audit Report finding incomplete patient records, and a 2025 Journal of Dental Education paper shows UIC running adverse-outcome QA inside axiUm. That deficiency-and-corrective-action loop is school-built, not a shipped module."
+    competitor_feature_ref: "Clinical & Experiential Education"
+    sources:
+      - source_id: "webinar-axium-chart-audit-report-2022"
+      - source_id: "other-jde-axium-adverse-outcome-qa-2025"
+    persona_relevance: ["role-compliance-accreditation-liaison", "discipline-dentistry"]
+
+  # --- DO / COCA ---
+  - domain: "DO"
+    element_id: "Standard 11, Element 11.1"
+    competitor_slug: "new-innovations"
+    rating: "partially-meeting"
+    rationale: "New Innovations treats the Annual Program Evaluation as year-round, tracking notification-letter citations, PEC minutes and action plans — the closed finding-to-action loop 11.1 wants. Scope is the ACGME residency program, not the COM's own three-year learning-outcomes review."
+    competitor_feature_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+    sources:
+      - source_id: "doc-new-innovations-annual-program-evaluation-2024"
+    persona_relevance: ["role-compliance-accreditation-liaison"]
+
+  - domain: "DO"
+    element_id: "Standard 11, Element 11.1"
+    competitor_slug: "medhub"
+    rating: "partially-meeting"
+    rationale: "MedHub's Accreditation Automation ships dynamic Annual Program Evaluation plus institutional dashboards and scorecards fed by automated imports. Same shape as 11.1's assessment-to-change loop, but built around ACGME review, not a COM-level assessment queryable by academic year."
+    competitor_feature_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+    sources:
+      - source_id: "press-medhub-accreditation-automation-release-2016"
+    persona_relevance: ["role-compliance-accreditation-liaison"]
+
+  - domain: "DO"
+    element_id: "Standard 11, Element 11.9"
+    competitor_slug: "elentra"
+    rating: "partially-meeting"
+    rationale: "Elentra's UME page names COCA alongside LCME and CACMS, with curriculum reports and learner-performance data aligned to those expectations per named element. That feeds a COCA report; it is not COCA's own annual/mid-cycle field taxonomy with deadline tracking."
+    competitor_feature_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+    sources:
+      - source_id: "product-page-elentra-medicine-undergraduate-2026"
+    persona_relevance: ["role-compliance-accreditation-liaison", "role-dean"]
+
+  - domain: "DO"
+    element_id: "Standard 11, Element 11.9"
+    competitor_slug: "medhub"
+    rating: "not-meeting"
+    rationale: "MedHub's shipped accreditation tooling is ACGME-shaped (APE, CLER, ADS reports) and its UME page names LCME as the body it tracks toward. No public MedHub page names COCA or its annual/mid-cycle report structure — an argument from documented absence, not a stated limit."
+    competitor_feature_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+    sources:
+      - source_id: "product-page-medhub-ume-lcme-2026"
+      - source_id: "press-medhub-accreditation-automation-release-2016"
+    persona_relevance: ["role-compliance-accreditation-liaison"]
+
+  # --- Medicine / LCME ---
+  - domain: "Medicine"
+    element_id: "Standard 1, Element 1.1"
+    competitor_slug: "elentra"
+    rating: "partially-meeting"
+    rationale: "Elentra centralizes key metrics against named LCME elements (it cites ED-5, ED-7 and Standard 8.3) for internal reviews and site visits — the evidence-to-element mapping 1.1 asks for. No public page shows CQI action-item status tracked against a standard trending out of compliance."
+    competitor_feature_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+    sources:
+      - source_id: "product-page-elentra-medicine-undergraduate-2026"
+    persona_relevance: ["role-compliance-accreditation-liaison", "role-dean"]
+
+  - domain: "Medicine"
+    element_id: "Standard 1, Element 1.1"
+    competitor_slug: "one45"
+    rating: "partially-meeting"
+    rationale: "One45's Analytics dashboards are described as purpose-built for medical schools' LCME reporting and for spotting performance issues in real time, over a warehouse spanning ~30 systems. A live CQI data layer, but organized by data domain, not mapped element-by-element."
+    competitor_feature_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+    sources:
+      - source_id: "product-page-acuity-one45-analytics-2026"
+      - source_id: "product-page-one45-program-management-2026"
+    persona_relevance: ["role-compliance-accreditation-liaison", "role-dean"]
+
+  - domain: "Medicine"
+    element_id: "Standard 8, Element 8.4"
+    competitor_slug: "one45"
+    rating: "fully-meeting"
+    rationale: "One45 Analytics centralizes pre-clinical and clinical grades, gateway (NBME) exams, matriculation data, course evaluations and residency match data in one warehouse with longitudinal cohort tracking — 8.4's during-enrollment and after-completion set, both named exemplars included."
+    competitor_feature_ref: "Exam Management (Prism roadmap Q2 2027)"
+    sources:
+      - source_id: "product-page-acuity-one45-analytics-2026"
+      - source_id: "product-page-one45-program-management-2026"
+    persona_relevance: ["role-dean", "role-compliance-accreditation-liaison"]

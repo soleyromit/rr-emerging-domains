@@ -1,0 +1,107 @@
+# Level 2 reframing — see _TEMPLATE.yaml for schema/rules. Cites
+# content/prism/capability-map.yaml (for exxat_status/exxat_ref),
+# content/competitors/*.yaml, and content/sources/registry.yaml. Sparse by
+# design: 10 trends (9 researched 2026-09-09: 4 ACPE-standards trends, then 5 from
+# the pedagogy/capacity/AI research pass; 1 added 2026-09-10 from the
+# reviews/newsletters/videos research pass), not padded to a round number.
+domain: "Pharmacy"
+trends:
+  - id: "acpe-standards-2025-in-force"
+    trend: "ACPE Standards 2025 took effect 1 July 2025, collapsing 25 standards into 7"
+    detail: "Experiential learning is now its own standard rather than scattered across four. ACPE's final change list tightens experiential hour definitions, removes the 480-hour cap on APPEs outside the U.S., and clarifies IPPE placement across settings. Programs re-map a whole curriculum mid-cycle."
+    exxat_status: "shipped"
+    exxat_ref: "Pre-loaded + custom standards"
+    addressed_by_competitors: []
+    sources:
+      - "doc-acpe-dear-dean-standards-2025-2024"
+
+  - id: "acpe-pharms-replaces-aams"
+    trend: "PHARMS replaces AACP's AAMS as the ACPE self-study platform"
+    detail: "ACPE's July-2024 dean letter retires AAMS for self-studies with Standards 2025; programs evaluated before July 2025 stay on AAMS. The accreditor, not a vendor, owns the system of record — so a clinical-education platform's job is evidence aggregation and export into PHARMS, not a rival portal."
+    exxat_status: "roadmap"
+    exxat_ref: "Accreditation Management"
+    addressed_by_competitors:
+      - competitor_slug: "core-elms"
+        capability_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+        source_id: "product-page-core-compms-accreditation-2026"
+    sources:
+      - "doc-acpe-dear-dean-standards-2025-2024"
+
+  - id: "acpe-epas-own-key-element"
+    trend: "EPAs get their own key element in Standards 2025"
+    detail: "Entrustable Professional Activities were separated out under Standard 2's professional development activities, deliberately letting programs use EPA sets they built themselves rather than a prescribed list. Assessment moves from hour counts toward entrustment across IPPE and APPE."
+    exxat_status: "shipped"
+    exxat_ref: "Competency Tracking"
+    addressed_by_competitors:
+      - competitor_slug: "core-elms"
+        capability_ref: "Curriculum Mapping"
+        source_id: "product-page-core-compms-accreditation-2026"
+    sources:
+      - "doc-acpe-dear-dean-standards-2025-2024"
+
+  - id: "acpe-preceptor-credentials-and-ratios"
+    trend: "Standards 2025 tightened preceptor credentials and student-to-preceptor ratios"
+    detail: "ACPE's change list drops 'academic' from preceptor credentials (3.3.b) and adds wording making the student-to-preceptor ratio explicit for each IPPE and APPE (3.3.e). Preceptor evidence becomes per-experience-type and per-ratio, not one blanket roster claim filed once per cycle."
+    exxat_status: "shipped"
+    exxat_ref: "Personnel compliance"
+    addressed_by_competitors:
+      - competitor_slug: "core-elms"
+        capability_ref: "Compliance Management"
+        source_id: "product-page-core-elms-pharmacy-affiliation-agreements-2026"
+    sources:
+      - "doc-acpe-dear-dean-standards-2025-2024"
+
+  - id: "epa-cbpe-assessment-shift"
+    trend: "Assessment is shifting from hour-counting to EPA-based entrustment"
+    detail: "A 2025 scoping review of 24 studies (2016-2025) finds EPAs adopted mostly inside practice experiences, with direct practice observation the dominant assessment method — and no single competency-based model agreed on yet. Unaddressed because the capability map shows no entrustment-specific instrument, only Competency Tracking's 1-5/custom scale against a pass threshold."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors: []
+    sources:
+      - "article-pmc-epa-scoping-review-2025"
+
+  - id: "preceptor-entrustment-calibration"
+    trend: "Preceptor entrustment ratings need year-based calibration to be trustworthy"
+    detail: "A study of 509 students, 12,426 assessments and 557 preceptors applied the Jarrett entrustment scale with year-based rating ceilings — max 2b for P1-P2 IPPE, 3a for P3 IPPE, 4 for P4 APPE — so a rating means the same thing across preceptors and cohorts. Unaddressed on explicit absence of evidence: no repo file shows Prism capping a scale per program year."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors: []
+    sources:
+      - "article-pmc-entrustment-scale-calibration-2025"
+
+  - id: "appe-readiness-undefined"
+    trend: "APPE readiness has no agreed definition or consistent assessment"
+    detail: "No professionally recognized definition of 'APPE-ready' exists; the study instead surveyed preceptors on which EPAs matter most and which indicators signal a student is not ready. Every program is inventing its own readiness gate, so there is no standard instrument for a platform to ship — and no shipped or roadmap Prism pillar runs a readiness determination."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors: []
+    sources:
+      - "article-sciencedirect-appe-readiness"
+
+  - id: "site-capacity-preceptor-supply-crunch"
+    trend: "Experiential site capacity and preceptor supply are structurally constrained"
+    detail: "Named barriers: programs competing for the same sites, site saturation, and preceptor workplace demands and burnout. This is the demand-side half of the existing gap at ACPE Standard 3, key element 3.5.b (affiliation agreements). Recorded 'unaddressed' rather than 'gap' only because exxat_status has no gap value — with no competitor on it either, it renders as a gap."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors: []
+    sources:
+      - "article-pubmed-site-capacity-barriers"
+
+  - id: "ai-in-experiential-education"
+    trend: "AACP is running dedicated programming on AI for experiential education"
+    detail: "AACP's AI institute carries an experiential-education track on AI for rotation design and for reducing preceptor workload. Prism ships an AI layer, but Leo AI's two confirmed surfaces — curriculum-mapping suggestion assist and 'Ask Leo' (BETA) natural-language query — target neither rotation design nor preceptor workload, so this specific trend is unaddressed despite Leo AI existing."
+    exxat_status: "unaddressed"
+    exxat_ref: "AI Insights (Leo AI) — exists, but doesn't cover rotation design or preceptor workload"
+    addressed_by_competitors: []
+    sources:
+      - "event-aacp-ai-institute-2025"
+
+  - id: "aacp-experiential-education-institute-2026"
+    trend: "AACP ran a dedicated 2026 Experiential Education Institute on workload and automation"
+    detail: "Held virtually April 15-17, 2026 for EE coordinators, preceptors and academic leaders, sessions named leveraging data/metrics to optimize EE operations and workload strategies addressing compliance, automation, and task prioritization directly -- a cross-institutional demand signal for the operational load Compliance Management and scheduling already target."
+    exxat_status: "shipped"
+    exxat_ref: "Compliance Management"
+    addressed_by_competitors: []
+    sources:
+      - "event-aacp-experiential-education-institute-2026"
+last_updated: "2026-09-10"

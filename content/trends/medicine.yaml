@@ -1,0 +1,122 @@
+# Level 2 reframing — see _TEMPLATE.yaml for schema/rules. Cites
+# content/prism/capability-map.yaml (for exxat_status/exxat_ref),
+# content/competitors/*.yaml, and content/sources/registry.yaml. Sparse by
+# design: 10 trends researched 2026-09-09/10, not padded to a round number.
+# The 5 entries appended 2026-09-10 near the bottom of the list target source
+# types the registry was missing (third-party review, video/webinar,
+# newsletter) — their `sources` ids are proposed content/sources/registry.yaml
+# additions, not yet merged; check_content_density.py will FAIL on those ids
+# until that merge happens (expected, not a content error).
+domain: "Medicine"
+trends:
+  - id: "step1-passfail-shifts-weight-to-clinical"
+    trend: "Step 1 pass/fail pushed selection weight onto the MSPE, Step 2 CK and clerkship performance"
+    detail: "The 2024 NRMP program-director survey puts the MSPE at 85%, in-specialty letters at 84% and Step 2 CK at 83% among top interview factors, with 30% setting a Step 2 CK bar. Clerkship grades and narratives — made inside the clinical-education system — now carry match weight they lacked pre-2022."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors:
+      - competitor_slug: "one45"
+        capability_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+        source_id: "product-page-one45-program-management-2026"
+    sources:
+      - "press-ama-step1-passfail-selection-2025"
+
+  - id: "aamc-foundational-competencies-replace-pcrs"
+    trend: "AAMC Foundational Competencies (Dec 2024) replace the 2013 PCRS"
+    detail: "AAMC released a single UME competency framework covering all medical students regardless of degree type or future specialty, and says use of the 13 Core EPAs is now being re-evaluated against it. Every school's curriculum map and assessment blueprint has to be re-anchored to a new standard set."
+    exxat_status: "shipped"
+    exxat_ref: "Pre-loaded + custom standards"
+    addressed_by_competitors:
+      - competitor_slug: "elentra"
+        capability_ref: "Curriculum Mapping"
+        source_id: "product-page-elentra-medicine-undergraduate-2026"
+      - competitor_slug: "elentra"
+        capability_ref: "Curriculum Mapping — customer accreditation-reporting proof point (University of Miami LCME mock visit)"
+        source_id: "press-elentra-university-of-miami-lcme-case-study-2026"
+    sources:
+      - "doc-aamc-cbme-foundational-competencies-2024"
+
+  - id: "institutional-demand-grade-assessment-dashboards"
+    trend: "AAMC member institutions are actively building/sharing grade- and clinical-assessment-tracking dashboards, not just requesting them"
+    detail: "AAMC's Group on Information Resources scheduled a Feb-2026 work-group session specifically on enhancing grade-tracking and clinical-assessment-tracking dashboards, following a Dec-2025 session on using AI to tag curriculum keywords to learning objectives. This is cross-institutional IT/ed-tech demand, not one vendor's pitch — it corroborates the Element-1.1 CQI-dashboard gap already flagged in accreditation/lcme.yaml."
+    exxat_status: "roadmap"
+    exxat_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+    addressed_by_competitors: []
+    sources:
+      - "newsletter-aamc-gir-news-bytes-2026"
+
+  - id: "aamc-ai-principles-governance"
+    trend: "AAMC published seven principles for responsible AI use in medical education"
+    detail: "Version 1.0 landed Jan 2025 and 2.0 in Jul 2025, covering human judgment over AI output, disclosure to patients, equal learner access, data privacy across admissions, teaching and assessment, and ongoing monitoring. AI features now need an auditable human-approval step, not just accuracy."
+    exxat_status: "shipped"
+    exxat_ref: "AI Insights (Leo AI)"
+    addressed_by_competitors: []
+    sources:
+      - "doc-aamc-principles-ai-medical-education-2025"
+
+  - id: "md-clerkship-capacity-pressure"
+    trend: "MD clerkship capacity tightens as enrollment outpaces available sites"
+    detail: "AACOM's Apr-2024 brief records 17.8% MD first-year growth since 2012 against a clinical-site supply constrained by health-system consolidation and cross-profession competition, with site costs rising. Site relationships and slot forecasting move from admin chore to strategic capacity management."
+    exxat_status: "shipped"
+    exxat_ref: "Placement Assist"
+    addressed_by_competitors: []
+    sources:
+      - "doc-aacom-expanding-clinical-education-2024"
+
+  # --- 5 entries below added 2026-09-10, researching specifically for review /
+  # video / newsletter source types the registry was missing (see header note).
+  - id: "lcme-standard7-drops-health-equity-teaching-mandate"
+    trend: "LCME's incoming 2027-28 Standard 7 drops the health-inequities teaching mandate for a self-directed-learning-skills requirement"
+    detail: "Following a Jan 2026 public-comment close and a May 2025 executive order targeting DEI-based accreditor standards, LCME's 2027-28 edition removes language requiring schools to teach \"health care disparities and health inequities\" and substitutes a self-directed-learning-skills objective. Every school's curriculum map and objective tags built against the old language need re-anchoring before the 2027-28 cycle takes effect."
+    exxat_status: "shipped"
+    exxat_ref: "Curriculum Mapping"
+    addressed_by_competitors:
+      - competitor_slug: "elentra"
+        capability_ref: "Curriculum Mapping"
+        source_id: "product-page-elentra-medicine-undergraduate-2026"
+    sources:
+      - "press-statnews-lcme-standard7-dei-removal-2026"
+
+  - id: "aamc-mspe-format-reimagining-phase1-2026"
+    trend: "AAMC's multi-year MSPE reimagining kicked off with Phase 1 guidance for the 2026 cycle's Noteworthy Characteristics section"
+    detail: "Phase 1 (Jan-Mar 2026) invites schools to add a clarifying statement explaining how the Noteworthy Characteristics section was produced, without changing the MSPE template itself. Phase 2 (Mar 2026-Jun 2027) opens a broader review of whether the MSPE still serves its purpose and how \"technology-enabled, learner-centered approaches\" might replace it — a live opening for whoever builds the next MSPE-generation feature."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors:
+      - competitor_slug: "one45"
+        capability_ref: "MSPE letter generation"
+        source_id: "product-page-one45-program-management-2026"
+    sources:
+      - "doc-aamc-mspe-reimagining-2026"
+
+  - id: "one45-third-party-reviews-flag-ui-friction"
+    trend: "Third-party G2/TrustRadius reviews credit One45's evaluation depth but flag a dated, multi-window UI"
+    detail: "Reviewers praise 360-degree evaluations, ACGME duty-hour tracking and cross-institution grading at scale, but repeatedly cite windows that must be opened separately, unclear navigation back to completed evaluations, and a materially limited mobile site. First public multi-platform review signal found in this pass for an MD-domain incumbent — a concrete UX bar for a competing evaluation workflow to clear."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors:
+      - competitor_slug: "one45"
+        capability_ref: "Assessment and Evaluation"
+        source_id: "review-g2-one45-evaluation-ui-2026"
+    sources:
+      - "review-g2-one45-evaluation-ui-2026"
+      - "review-trustradius-one45-pros-cons-2026"
+
+  - id: "ume-gme-data-feedforward-medhub-webinar"
+    trend: "Vendor webinar names the UME-to-GME data handoff itself as the unsolved problem, not just the Match outcome"
+    detail: "MedHub's Oct 2025 on-demand webinar (Farnan, Park) argues residency programs need structured \"feed-forward\" data — unified assessment terminology carried from clerkship performance into GME onboarding — not just the Dean's Letter/MSPE. No specific automated feed-forward feature is named in the recording itself, on either side of the UME/GME divide."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors: []
+    sources:
+      - "video-medhub-ume-gme-feedforward-webinar-2025"
+
+  - id: "ai-drafted-residency-letters-of-recommendation"
+    trend: "Faculty are drafting residency letters of recommendation with AI, under AAMC-flagged privacy and disclosure guardrails"
+    detail: "An AAMCNews Jan 2026 piece profiles faculty at five schools using ChatGPT, Copilot, Claude and Gemini to draft or edit residency LORs; AAMC's Dana Dunleavy warns against uploading a student profile without meaningful faculty input. A small WVU study found faculty rated AI-assisted letters superior; a Canadian ortho-surgery study found program directors preferred human-written ones."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors: []
+    sources:
+      - "newsletter-aamcnews-ai-drafted-lor-2026"
+last_updated: "2026-09-10"

@@ -53,7 +53,15 @@ domains:
         slug: "leo-davinci"
         threat: "medium"
         rationale: "Active in Pharmacy per domains_served."
-    sources: ["../competitors/core-elms.yaml", "../competitors/e-value.yaml", "../competitors/leo-davinci.yaml"]
+      - competitor: "PharmAcademic (McCreadie Group)"
+        slug: "pharmacademic"
+        threat: "low"
+        rationale: "Mandatory for ASHP-accredited residency programs, but that's a different program type than the PharmD didactic+experiential buyer; PharmD-side evidence is one sentence deep."
+      - competitor: "RxPreceptor"
+        slug: "rxpreceptor"
+        threat: "low"
+        rationale: "Named once alongside CORE ELMS and PharmAcademic as APPE hour/assessment tracking software — thin research, one source, no teardown to rate against."
+    sources: ["../competitors/core-elms.yaml", "../competitors/e-value.yaml", "../competitors/leo-davinci.yaml", "../competitors/pharmacademic.yaml", "../competitors/rxpreceptor.yaml"]
 
   - domain: "Dentistry"
     competitors:

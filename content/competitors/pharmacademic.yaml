@@ -1,0 +1,87 @@
+# Researched 2026-09-09. Deliberately thin: only two verifiable public facts were
+# found (a vendor product page and ASHP's own residency-program resource page), so
+# the teardown covers only what those two sentences actually support. Nothing here
+# is inferred from CORE ELMS's shape or from what a pharmacy platform "must" have.
+competitor: "PharmAcademic (McCreadie Group)"
+slug: "pharmacademic"
+domains_served: ["Pharmacy"]
+category: "Pharmacy residency + experiential education management (ASHP residency documentation, experiential education, curricular mapping, assessment)"
+company:
+  founded: "not publicly stated"
+  hq: "not publicly stated"
+  ownership: "McCreadie Group (PharmAcademic is a McCreadie Group product line)"
+
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: >
+      Manages experiential education for schools of pharmacy, and serves as the
+      learning-management and documentation platform for ASHP-accredited residency
+      programs — resident evaluations, competency tracking, and hour logging.
+    depth_vs_prism: "unknown"
+    evidence: >
+      Two sources, both single sentences: the vendor page states PharmAcademic
+      "manages experiential education, curricular mapping, and assessment for schools
+      of pharmacy"; ASHP's residency-resources page states PharmAcademic is mandatory
+      for all ASHP-accredited residency programs, used for resident evaluations,
+      competency tracking, and hour logging. Neither describes matching/scheduling,
+      site management, or timesheet approval depth, so nothing about depth relative to
+      Prism's placement engine can be claimed — rated "unknown", not "at-parity".
+    source: "https://www.ashp.org/professional-development/residency-information/residency-program-resources/pharmacademic"
+  - pillar: "Curriculum Mapping"
+    competitor_capability: >
+      Curricular mapping for schools of pharmacy, named alongside experiential
+      education and assessment as one of the three things the product manages.
+    depth_vs_prism: "unknown"
+    evidence: >
+      The vendor's own one-line product description names "curricular mapping"
+      explicitly. No public material was found describing what is mapped (course
+      objectives, ACPE standards, CAPE outcomes, EPAs), gap-analysis reporting, or
+      accreditation-report output — so the capability is confirmed to exist by name
+      only, with no depth evidence to compare against Prism's Curriculum Mapping
+      pillar.
+    source: "https://mccreadiegroup.com/pharmacademic/"
+
+strengths:
+  - claim: >
+      Mandatory for all ASHP-accredited residency programs — an accreditor-imposed
+      install base no competitor can displace by selling against features.
+    source: "https://www.ashp.org/professional-development/residency-information/residency-program-resources/pharmacademic"
+  - claim: >
+      Spans both sides of pharmacy training in one product line: PharmD-school
+      experiential education, curricular mapping and assessment, plus residency
+      documentation.
+    source: "https://mccreadiegroup.com/pharmacademic/"
+
+weaknesses:
+  - claim: >
+      Thin public research — two sourced sentences total. No public evidence was found
+      on compliance tracking, surveys/course evaluations, exam management, or
+      accreditation reporting, so those are unassessed rather than absent.
+    source: "https://mccreadiegroup.com/pharmacademic/"
+
+retention_anchor: >
+  The ASHP mandate is itself the retention anchor: for a residency program,
+  PharmAcademic is not a vendor choice at all — it is the platform the accreditor
+  requires evaluations, competency records, and hours to live in. Displacement is not
+  a product decision for that buyer.
+
+exxat_opportunity: >
+  Read the ASHP mandate carefully before treating this as head-to-head competition:
+  it binds residency (post-graduate/GME-equivalent) programs, which is a different
+  program type — and often a different buyer inside the same institution — from the
+  PharmD didactic + IPPE/APPE programs that Exxat/Prism's ACPE work targets (see
+  content/accreditation/acpe.yaml). PharmAcademic's presence in a college of pharmacy
+  therefore does not mean the PharmD experiential system of record is taken. The
+  honest posture is coexistence on the residency side and competition only on the
+  PharmD experiential/curricular-mapping side, where PharmAcademic's public evidence
+  is one sentence deep and Prism's is a documented placement engine and competency
+  framework. Before building a displacement pitch, this file needs real research on
+  the PharmD-side product — the current two facts do not support one.
+
+pricing_signal: "not publicly disclosed"
+
+last_researched: "2026-09-09"
+
+sources:
+  - "https://mccreadiegroup.com/pharmacademic/"
+  - "https://www.ashp.org/professional-development/residency-information/residency-program-resources/pharmacademic"

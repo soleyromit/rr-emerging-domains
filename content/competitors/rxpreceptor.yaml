@@ -1,0 +1,58 @@
+# Researched 2026-09-09. THIN — one source, a single named mention. RxPreceptor is
+# recorded here because it was named as an incumbent in the APPE-scheduling market,
+# not because a teardown exists. Every field below says what the one source supports
+# and stops there; nothing is filled in by analogy to CORE ELMS or PharmAcademic.
+competitor: "RxPreceptor"
+slug: "rxpreceptor"
+domains_served: ["Pharmacy"]
+category: "Pharmacy experiential / rotation tracking (APPE scheduling, hours and assessments)"
+company:
+  founded: "not publicly stated"
+  hq: "not publicly stated"
+  ownership: "not publicly stated"
+
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: >
+      Named as software pharmacy programs use to track rotation hours and assessments
+      when scheduling APPEs. That is the whole of the claim — no named feature,
+      module, or workflow is evidenced.
+    depth_vs_prism: "unknown"
+    evidence: >
+      Single named-mention, not independently verified depth: RxPreceptor appears
+      alongside CORE ELMS and PharmAcademic in one sentence listing the software
+      "programs use... to track hours and assessments" for APPE scheduling. No vendor
+      page, review site, or customer list was checked for this file, so nothing about
+      matching, compliance, evaluation forms, or reporting can be compared to Prism.
+    source: "Internal: Pharmacy education in US eBook.docx (Google Drive, Emerging Domains folder), APPE scheduling chapter"
+
+strengths:
+  - claim: >
+      Named as an incumbent in APPE scheduling alongside CORE ELMS and PharmAcademic
+      — enough to expect it in a competitive deal, not enough to characterise it.
+    source: "Internal: Pharmacy education in US eBook.docx (Google Drive, Emerging Domains folder), APPE scheduling chapter"
+
+weaknesses:
+  - claim: >
+      None evidenced. Thin research — one source, one sentence. Absence of a weakness
+      here is absence of research, not a finding.
+    source: "Internal: Pharmacy education in US eBook.docx (Google Drive, Emerging Domains folder), APPE scheduling chapter"
+
+retention_anchor: >
+  Unknown. Thin research — one source. Hour and assessment records accumulated per
+  cohort would be the expected anchor for any experiential tracker, but nothing in
+  the one available source establishes that for RxPreceptor specifically.
+
+exxat_opportunity: >
+  Not assessable yet — thin research, one source. RxPreceptor should be treated as a
+  name to qualify against in a pharmacy deal, not a competitor with a known wedge. The
+  next useful step is a real teardown pass (vendor site, pricing signal, review sites,
+  customer references), after which this file can carry an opportunity claim that
+  isn't guesswork.
+
+pricing_signal: "not publicly disclosed"
+
+last_researched: "2026-09-09"
+
+sources:
+  - "Internal: Pharmacy education in US eBook.docx (Google Drive, Emerging Domains folder), APPE scheduling chapter"

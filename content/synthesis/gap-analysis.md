@@ -1,10 +1,20 @@
 # Exxat PRISM — 4-Domain Expansion Gap Analysis
 
-**Scope:** DO (COCA) · Pharmacy (ACPE) · Dentistry (CODA) · Medicine (LCME)
+**Scope:** Pharmacy (ACPE) · DO (COCA) · Dentistry (CODA) · Medicine (LCME)
 **Date:** 2026-08-24
 **Sources:** every claim below traces to a file in `content/` or to a URL recorded in one of those files. Primary inputs: `content/prism/capability-map.yaml`, `content/domains/*.yaml`, `content/accreditation/{coca,lcme,acpe,coda}.yaml`, `content/competitors/*.yaml`, `content/journeys/*.yaml`.
 
 ---
+
+> **ADDED 2026-09-10, per stakeholder direction:** Pharmacy is the confirmed
+> first GTM target — see `scorecard/where-to-play.yaml`'s `actual_gtm_target`
+> field and `synthesis/prism-positioning.md`. This is a business call, not a
+> correction to the research below: this document's per-domain fit analysis
+> (§2) is unaffected and every accreditor's data stays exactly as researched.
+> The per-domain subsection order below (§2.1 DO first, historically written
+> before this override) is left as-is rather than renumbered, to avoid
+> corrupting the internal element-ID cross-references throughout an already
+> fact-checked document — §2.2 is the Pharmacy section to start with.
 
 > **Correction (2026-08-24), added after reading Exxat's internal PA and OT discipline
 > playbooks (`content/prism/capability-map.yaml`, "Physician Assistant" and "Occupational
@@ -45,15 +55,33 @@
 
 ## 0. The numbers first
 
-48 numbered accreditation elements were researched against the standards documents themselves (not summary pages) and rated for Prism fit. The distribution is the headline:
+56 numbered accreditation elements were researched against the standards documents themselves (not summary pages) and rated for Prism fit. The distribution is the headline:
 
 | Accreditor (domain) | Elements rated | Transfer | Configure | **Gap** |
 |---|---|---|---|---|
-| COCA (DO) | 12 | **0** | 5 | **7** |
-| LCME (Medicine) | 13 | 3 | 7 | 3 |
-| ACPE (Pharmacy) | 12 | 4 | 5 | 3 |
+| COCA (DO) | 12 | **0** | **7** | **5** |
+| LCME (Medicine) | 13 | 3 | **8** | **2** |
+| ACPE (Pharmacy) | 20 | 4 | **12** | **4** |
 | CODA (Dentistry) | 11 | 3 | 5 | 3 |
-| **Total** | **48** | **10** | **22** | **16** |
+| **Total** | **56** | **10** | **32** | **14** |
+
+<!-- CORRECTED 2026-09-02: the Configure/Gap counts above were miscounted against
+their own source files (accreditation/coca.yaml, lcme.yaml, acpe.yaml) — COCA's
+Configure and Gap columns were swapped, and LCME/ACPE were each off by one in
+both columns. Recounted directly from each file's `standards[].prism_fit` field;
+CODA's count was already correct. Per ARCHITECTURE.md, this is an annotated
+correction, not a silent rewrite — the original claim was 10/22/16. -->
+
+<!-- CORRECTED 2026-09-10: `accreditation/acpe.yaml` grew from 12 to 20 Standard-3
+(Experiential Learning) elements — the 6 missing sub-elements of Standards 3.2/3.3
+plus 3.4.a and 3.5.a — after a completeness check found Standard 3 was only 44%
+covered (7 of 16 real key elements) despite being the standard most directly in
+Exxat's product lane. ACPE's row and the Total row above are updated to match;
+COCA/LCME/CODA are unchanged and still only partially cover their own standards
+documents (each ~10-13 of 100+ real key elements in the actual PDFs — this is a
+deliberate scope, not a gap: only elements plausibly relevant to clinical/
+experiential-education software were researched, not governance/faculty-HR/
+resource standards no rotation platform would touch). See §2.2 for the 8 new rows. -->
 
 Counts derived from the `prism_fit` field on every entry in `content/accreditation/coca.yaml`, `lcme.yaml`, `acpe.yaml`, `coda.yaml`.
 
@@ -157,10 +185,10 @@ Standards doc: COCA 2026 COM Continuing Accreditation Standards, effective July 
 | 5.4 | Patient-care supervision policy + distribution/attestation proof | Configure | MedHub/E\*Value (automated onboarding document collection — collection, not gating) |
 | 10.2 | Affiliated GME registry, accreditation status, PGY-1 position counter | Configure | MedHub, New Innovations (native ACGME program modelling) |
 | 11.1 | **Program assessment — 3 yrs of outcomes + changes made as a direct result** | **Gap** | MedHub/E\*Value (APE + CLER response-action tracking); New Innovations (APE + citation/concern tracking) |
-| 11.2 | **Student evaluation of instruction (confidential, forms on file, improvement flowchart)** | **Gap** | Elentra, one45, eMedley (eValuate+), Leo, MedHub/E\*Value, CORE ELMS — **all six ship surveys today** |
+| 11.2 | Student evaluation of instruction (confidential, forms on file, improvement flowchart) | Configure *(corrected 2026-09-02, was mislabeled Gap)* | Elentra, one45, eMedley (eValuate+), Leo, MedHub/E\*Value, CORE ELMS all ship surveys today — Prism's Surveys pillar is shipped too, per capability-map.yaml; this is instrument/cadence configuration |
 | 11.4 | **COMLEX-USA pass rates: 30-day public publication + 2SD/<90% improvement trigger** | **Gap** | MedHub/E\*Value (ACGME survey/case-log import); one45 (NBME CBSE/CCSE ingest) |
 | 11.5 | **GME placement rate: public 4-yr PGY-1 rate, <95% improvement plan** | **Gap** | MedHub (AAMC ERAS integration); New Innovations (GME-native) |
-| 11.8 | **Mandatory COCA student survey — promotion proof + findings/actions report** | **Gap** | All six survey-shipping vendors above |
+| 11.8 | Mandatory COCA student survey — promotion proof + findings/actions report | Configure *(corrected 2026-09-02, was mislabeled Gap)* | Same as 11.2 — survey delivery is shipped; the promotion-proof/findings-report format is the configuration work |
 | 11.9 | **COCA annual & mid-cycle report submission mapped to COCA's field taxonomy** | **Gap** | Elentra (names COCA explicitly); Leo (LCME/COCA site-visit readiness); MedHub/E\*Value (ADS-formatted report generation); New Innovations (NAS tools) |
 
 **DO-specific structural note:** the OMM/OMT competency — 200-500 hours of hands-on manipulative medicine assessed **during** clerkships (https://www.aacom.org/become-a-doctor/about-osteopathic-medicine/omm-explained) — has no analog in any other domain and must live on the rotation record, not just the pre-clinical curriculum. And COCA 10.3 requires modelling "Osteopathic Recognition" (an AOA/ACGME joint credential) as its own status, not collapsed into generic ACGME accreditation.
@@ -172,16 +200,36 @@ Standards doc: ACPE Standards 2025, effective fall 2025 — https://www.acpe-acc
 |---|---|---|---|
 | 3.1.a | IPPE structure & sequencing across Pre-APPE curriculum | Transfer | CORE ELMS (SmartMatch, 90% of U.S. pharmacy programs) |
 | 3.1.b | IPPE hours: ≥300 total, ≥75 community, ≥75 hospital, **simulation excluded** | Configure | None documented enforcing setting-category sub-thresholds with simulation exclusion |
+| 3.2.a | APPE continuity of care + diverse patient-population exposure (age/gender/race/socioeconomic) | **Gap** | None documented — no vendor rolls up patient-population demographics per rotation |
 | 3.2.b / 3.2.d | APPE: ≥1,440 hrs, ≥160/APPE, four required settings, NTPD assessed-equivalent record | Configure | CORE ELMS (hours/timesheets); MedHub/E\*Value (hour tracking + reminders) |
+| 3.2.c | APPE timing: sequenced after IPPE/didactic completion; capstone excluded from the 1,440-hr count | Configure | None documented — a prerequisite-gating rule, not a shipped feature elsewhere |
+| 3.2.e | Elective APPE non-patient-care hour cap (≤320 of 1,440) | Configure | None documented enforcing the cap in real time |
 | 3.3.a | Preceptor criteria: licensure record, majority-U.S.-licensed test per student | Configure | CORE ELMS (preceptor license tracking); New Innovations (Credentialling Module); MedHub (NPDB/NPPES) |
+| 3.3.b | Preceptor credentials/expertise explicitly linked to the course they precept | Configure | CORE ELMS / New Innovations track credentials, but not course-linked |
 | 3.3.c | Preceptor orientation **before** accepting a student + PD log | Configure | MedHub/E\*Value (document collection — no vendor documents a *blocking* orientation gate) |
+| 3.3.d | Preceptor engagement in curriculum CQI, especially the experiential component | Configure | None documented — survey participation tracking exists generically, not CQI-scoped |
 | 3.3.e | Student-to-preceptor ratio 2:1 maximum, real-time block | Transfer | None documented enforcing the cap at assignment time |
+| 3.4.a | Practice facility quality criteria: licensure + outcome-achievement evaluation | Configure | CORE ELMS (Site Assessment); axiUm (site profiles, dental-specific) |
+| 3.5.a | Experiential education personnel: leader qualifications + staffing adequacy | **Gap** | None documented — no vendor models institutional staffing ratios |
 | 3.5.b | **Executed, current affiliation agreement per practice facility** | **Gap** | CORE ELMS; eMedley eKeeper — both ship agreement tracking with expiry alerts today |
+| 3.5.c | Student remuneration/employment attestation (no pay, no self-placement conflict) | Configure | None documented as a distinct attestation type |
 | 2.2.d | Curriculum/APPE mapping to 2.1.a-m outcomes (from AACP COEPA 2022) | Transfer | CORE CompMS; Leo; Elentra; eMedley — all rated "ahead" on named-taxonomy depth |
 | 7.3.c | Experiential QA: standardized components + consistent assessment across sites | Transfer | None on drift analytics — CORE's own reviewers call its reporting suite shallow |
 | 7.3.d | APPE-ready / Practice-ready / Team-ready attainment + readiness **gate** | Configure | CORE CompMS; New Innovations CCC Milestone Review; eMedley EPA growth curves |
-| 7.5.a | **CQI using AACP standardized graduating-student/faculty/preceptor surveys** | **Gap** | CORE ELMS survey module; E\*Value; eMedley eValuate+; Elentra; one45; Leo |
+| 7.5.a | CQI using AACP standardized graduating-student/faculty/preceptor surveys | Configure *(corrected 2026-09-02, was mislabeled Gap — Surveys pillar is shipped per capability-map.yaml, confirmed 2026-08-26)* | CORE ELMS survey module; E\*Value; eMedley eValuate+; Elentra; one45; Leo |
 | 7.5.b | **Continuous compliance — standards-to-evidence repository, gap tracking, self-study assembly** | **Gap** | CORE CompMS (explicit ACPE/CAPE alignment); Elentra (names ACPE) |
+
+<!-- ADDED 2026-09-10: the four rows above the original 12 existed at time of
+writing but were never captured (3.2.a, 3.2.c, 3.2.e, 3.3.b, 3.3.d, 3.4.a, 3.5.a,
+3.5.c — 8 total). Same sourcing as the rest of this table:
+accreditation/acpe.yaml, researched against the live ACPE Standards 2025 PDF. -->
+
+**The academic literature agrees with 7.3.d and 3.3.a/3.3.c specifically, not just this repo's own read.** A 2026-09-10 research pass (`content/trends/pharmacy.yaml`, `content/sources/registry.yaml`) found real peer-reviewed evidence that the "readiness gate" and "preceptor gating" elements above are live, unsolved problems in the field, not just this repo's own inference:
+- **7.3.d's "APPE-ready" gate has no agreed definition anywhere in the literature** — a 2025 study found no professionally recognized definition of "APPE-ready" exists; programs instead survey preceptors on which EPAs matter most and which indicators signal non-readiness (ScienceDirect, `article-sciencedirect-appe-readiness`). A companion 2025 scoping review of 24 studies found EPA-based assessment is trending toward direct practice observation as the dominant method, not a hardened instrument any vendor ships (PMC, `article-pmc-epa-scoping-review-2025`).
+- **3.3.a/3.3.c's preceptor gating needs to be *calibrated*, not just enforced.** A study of 509 students, 12,426 assessments, and 557 preceptors found raw preceptor ratings need year-based calibration ceilings (max rating capped by program year) to mean the same thing across preceptors and cohorts (PMC, `article-pmc-entrustment-scale-calibration-2025`) — a real, sourced answer to *how* a preceptor-orientation gate should actually score, not just whether one exists.
+- **3.4.a/3.5.a's site-and-staffing gaps are named as structural, not incidental**, in a PubMed-indexed account of experiential-site capacity: inter-program competition for the same sites, site saturation, and preceptor workplace demands/burnout (`article-pubmed-site-capacity-barriers`).
+
+These are cited in full, with URLs, publishers, and access dates, in `content/sources/registry.yaml` and rendered on `/domains/pharmacy/trends` — not repeated here to avoid two copies of the same citation drifting apart.
 
 **Pharmacy-specific scoping constraint:** ACPE retired AACP's AAMS and now operates its **own** submission platform, **PHARMS**, effective with Standards 2025 (July 2025). `acpe.yaml` is emphatic: Prism's Accreditation Management pillar should be scoped as an evidence-aggregation/**export** layer feeding PHARMS, not a competing self-study portal — ACPE, not the vendor, owns the system of record for submission. Also: state boards license the practice **facilities**, and multi-campus/distance programs routinely cross state lines, so site records need a per-state licensure dimension, not one national status.
 
@@ -217,7 +265,7 @@ Standards doc: *Functions and Structure of a Medical School*, March 2023 edition
 | 5.5 | Resources for clinical instruction — patient volume, acuity, case mix per site | Configure | eMedley eduSched (site capacity mgmt); one45 (event-level duty-hour/leave tracking) |
 | 6.2 | Required clinical experiences — published condition/skill list + per-student evidence | Configure | Leo (PET: diagnoses/procedures mapped to curriculum themes); eMedley eCLAS (ICD-10/CPT); Elentra Logbook |
 | 8.4 | **Program outcomes incl. national norms (USMLE, Match), during and after enrollment** | **Gap** | MedHub/E\*Value (ACGME + ERAS import); one45 (NBME CBSE/CCSE ingest) |
-| 8.5 | **Medical student feedback on courses, clerkships, teachers** | **Gap** | All six survey-shipping vendors |
+| 8.5 | Medical student feedback on courses, clerkships, teachers | Configure *(corrected 2026-09-02, was mislabeled Gap)* | All six survey-shipping vendors ship this; Prism's Surveys pillar is shipped too — instrument/cadence configuration, not new capability |
 | 8.6 | Central monitoring of required clinical experience completion | **Transfer** — *"the strongest fit of any standard in this document"* | — |
 | 8.7 | Comparability of education/assessment across locations | Configure | None documented shipping a purpose-built comparability report |
 | 9.3 | Clinical supervision attestation (named supervisor, role/level, per encounter) | Configure | New Innovations (Procedure Logger with supervision-level tracking) |
