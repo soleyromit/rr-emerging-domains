@@ -54,11 +54,20 @@ export default async function DomainStandardsPage({ params }: { params: Promise<
                 value={standardsCrosswalk.ratedCompetitorCellCount}
                 max={standardsCrosswalk.totalCompetitorCellCount || 1}
               />
+              <ProgressBar
+                label="Standards with a proposed use case"
+                hasValueLabel
+                value={standardsCrosswalk.standardsWithUseCaseCount}
+                max={standardsCrosswalk.rows.length}
+              />
             </Stack>
-            <MetadataList columns={2}>
+            <MetadataList columns={3}>
               <MetadataListItem label="Standards tracked">{standardsCrosswalk.rows.length}</MetadataListItem>
               <MetadataListItem label="Competitor cells rated">
                 {standardsCrosswalk.ratedCompetitorCellCount} / {standardsCrosswalk.totalCompetitorCellCount}
+              </MetadataListItem>
+              <MetadataListItem label="Standards with a use case">
+                {standardsCrosswalk.standardsWithUseCaseCount} / {standardsCrosswalk.rows.length}
               </MetadataListItem>
             </MetadataList>
             <CoverageGapsCallout
@@ -66,7 +75,18 @@ export default async function DomainStandardsPage({ params }: { params: Promise<
               totalCount={standardsCrosswalk.totalCompetitorCellCount}
               domain={entry.domain}
               trendCount={trendCount}
+              directionalCount={standardsCrosswalk.directionalRatingCount}
             />
+            {standardsCrosswalk.directionalRatingCount > 0 ? (
+              <Text type="supporting" size="sm" color="secondary">
+                Ratings marked <strong>Directional</strong> are a first-pass read of public vendor
+                material, not element-by-element verification. Exxat&apos;s pharmacy domain expert
+                stated on 4 September 2026 that a real pharmacy standards-gap study has never been
+                run, and that the working &ldquo;25% gap&rdquo; figure is &ldquo;research that
+                remains to be done.&rdquo; These ratings are the starting point for that audit, not
+                its result.
+              </Text>
+            ) : null}
             {standardsCrosswalk.competitors.length === 0 ? (
               <Text type="supporting" size="sm" color="secondary">
                 No competitor research yet covers this domain — the table below shows only the Prism column.

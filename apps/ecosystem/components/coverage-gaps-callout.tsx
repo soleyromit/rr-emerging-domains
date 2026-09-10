@@ -20,6 +20,7 @@ export function CoverageGapsCallout({
   totalCount,
   domain,
   trendCount,
+  directionalCount,
   isCompact = false,
 }: {
   ratedCount: number;
@@ -27,6 +28,11 @@ export function CoverageGapsCallout({
   domain?: string;
   /** Omit when trends aren't relevant to this surface; 0 means "sourced nothing yet". */
   trendCount?: number;
+  /** How many of `ratedCount` are first-pass directional reads rather than verified
+   * element-by-element research. Optional — every existing caller omits it and is
+   * unaffected. Layer 3 of the design spec's caveat mechanism: a reader must not be
+   * able to see the rated fraction without also seeing how much of it is provisional. */
+  directionalCount?: number;
   isCompact?: boolean;
 }) {
   const lines: string[] = [];
@@ -35,6 +41,10 @@ export function CoverageGapsCallout({
     lines.push(`${ratedCount} of ${totalCount} standard × competitor cells rated`);
   } else {
     lines.push("No competitor research covers this domain's standards yet");
+  }
+
+  if (directionalCount && directionalCount > 0) {
+    lines.push(`${directionalCount} directional first-pass, pending a full standards-gap audit`);
   }
 
   if (trendCount === 0) {
