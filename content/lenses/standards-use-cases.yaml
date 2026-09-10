@@ -29,4 +29,93 @@
 #
 # Gated by scripts/check_content_density.py's check_standards_use_cases_integrity().
 last_updated: "2026-09-10"
-use_cases: []
+use_cases:
+  # --- Pharmacy / ACPE — the pilot and the two live schools ---
+  - domain: "Pharmacy"
+    element_id: "Standard 2, Key Element 2.2.d"
+    use_case: "Map an ACPE curriculum in Prism, import ExamSoft didactic scores, and correlate them to NAPLEX outcomes"
+    status: "in-flight"
+    audience: ["role-dean", "role-compliance-accreditation-liaison"]
+    detail: >
+      A non-customer PharmD school running CORE today is piloting ACPE curriculum
+      mapping in Prism, with ExamSoft scores imported for key pharmacotherapy courses
+      and correlated against NAPLEX outcomes. Data collection is at a preliminary
+      stage; the target is an AACP abstract, deadline November 2026.
+    related_flows:
+      - flow: "accreditation-self-study--04-curriculum-competency-coverage-mapping-to-the.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 2, Key Element 2.2.d"
+    use_case: "AI-flagged curriculum coverage gap with an hours-reallocation recommendation, not just a report"
+    status: "proposed"
+    audience: ["role-dean", "role-compliance-accreditation-liaison"]
+    detail: >
+      Roadmap concept, not shipped. The stated vision is insight plus remedy: name the
+      uncovered competency, propose the lecture that fills it, and name the
+      over-covered hours to cut to make room. The worked example given was trimming
+      geriatric-drug coverage to insert an IPEC competency that is nowhere in the map.
+    related_flows:
+      - flow: "admin-onboarding--06-courses-rotations-curriculum-mapping.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.3.d"
+    use_case: "Bulk-import ExamSoft reports so didactic and clinical performance sit in one longitudinal view"
+    status: "proposed"
+    audience: ["role-dean", "role-program-admin"]
+    detail: >
+      The September 12 2026 release lets programs already using Prism for clinical
+      management bulk-import ExamSoft data at no extra charge. It is the first time
+      didactic and clinical records sit on one platform, and it is the direct answer
+      to the CORE plus ExamSoft plus Influx stack this market defaults to.
+    related_flows:
+      - flow: "accreditation-self-study--05-external-outcome-data-ingestion-board-exams.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.3.d"
+    use_case: "Stand up competency tracking for a PharmD program during onboarding"
+    status: "in-flight"
+    audience: ["role-compliance-accreditation-liaison", "role-program-admin"]
+    detail: >
+      University of Maryland is implementing Prism now, with competency tracking named
+      as the capability they want help with, and strategic setup calls in progress. The
+      specific workflow they land on is not documented anywhere yet — do not describe
+      one until the implementation has actually been interviewed.
+    related_flows:
+      - flow: "competency-verification--06-roll-up-to-a-per-student.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Elements 3.2.b & 3.2.d"
+    use_case: "Run a PharmD program's full APPE placement cycle in Prism"
+    status: "documented"
+    audience: ["role-clinical-coordinator", "discipline-pharmacy"]
+    detail: >
+      OHSU School of Pharmacy has used Prism for clinical placement management for
+      roughly a year — the one pharmacy reference where the experiential workflow is
+      live rather than proposed. They have not adopted the other parts of the product,
+      so the evidence here is placement-side only and should not be stretched further.
+    related_flows:
+      - flow: "rotation-lifecycle--04-placement-allocation-scheduling-capacity-balancing.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.1.a"
+    use_case: "Publish a pharmacy placement-management reference story as a webinar and white paper"
+    status: "proposed"
+    audience: ["role-clinical-coordinator", "role-dean"]
+    detail: >
+      Proposed marketing motion, not a shipped asset: interview OHSU on how they manage
+      IPPE and APPE placements in Prism, then turn it into a testimonial, a white paper
+      and a webinar. Named as the strongest pharmacy clinical reference available today.
+    related_flows:
+      - flow: "preceptor-site-onboarding--06-student-assignment-ratio-capacity-and-eligibility.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
