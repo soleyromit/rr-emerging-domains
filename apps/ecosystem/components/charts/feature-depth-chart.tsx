@@ -41,7 +41,7 @@ export function FeatureDepthChart({ domain }: { domain: FeatureComparisonForDoma
       options={(width) => ({
         width,
         height: Math.max(160, domain.competitors.length * 34),
-        marginLeft: 170,
+        marginLeft: 220,
         marginRight: 20,
         x: { label: "Pillars rated" },
         y: { label: null },

@@ -44,7 +44,7 @@ export function JourneyStageSection({
       {stage.domain_variance || stage.discipline_variance || stage.discipline_notes?.length ? (
         <Stack gap={3}>
           <FieldBlock
-            label="Domain variance (DO · Pharmacy · Dentistry · Medicine)"
+            label="Domain variance (Pharmacy · DO · Dentistry · Medicine)"
             text={stage.domain_variance}
           />
           {stage.discipline_notes?.length ? (

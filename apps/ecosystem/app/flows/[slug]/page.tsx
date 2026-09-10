@@ -5,10 +5,13 @@ import { Divider } from "@astryxdesign/core/Divider";
 import { Breadcrumbs, BreadcrumbItem } from "@astryxdesign/core/Breadcrumbs";
 import { Collapsible } from "@astryxdesign/core/Collapsible";
 import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList";
+import { Link } from "@astryxdesign/core/Link";
 import { PageHeader } from "@/components/page-header";
 import { FlowDetail } from "@/components/flow-detail";
 import { FlowDiagram, buildFlowDiagramSteps } from "@/components/charts/flow-diagram";
 import { SentenceList } from "@/components/sentence-list";
+import { DisciplineChip } from "@/components/discipline-chip";
+import { matchDisciplineMeta } from "@/lib/discipline-meta";
 import { listFlows, getFlowBySlug, getJourneyContextForFlow } from "@/lib/content";
 
 export function generateStaticParams() {
@@ -47,6 +50,21 @@ export default async function FlowDetailPage({ params }: { params: Promise<{ slu
             title={flow.flow_name}
             description={flow.persona ? `Persona: ${flow.persona}` : undefined}
           />
+          {journeyContext?.journey.domain_scope?.length ? (
+            <Stack direction="horizontal" gap={1.5} wrap="wrap">
+              {journeyContext.journey.domain_scope.map((d) => {
+                const routeSlug = matchDisciplineMeta(d)?.slug;
+                const chip = <DisciplineChip subject={d} />;
+                return routeSlug ? (
+                  <Link key={d} href={`/domains/${routeSlug}`}>
+                    {chip}
+                  </Link>
+                ) : (
+                  <span key={d}>{chip}</span>
+                );
+              })}
+            </Stack>
+          ) : null}
           <MetadataList columns={4}>
             <MetadataListItem label="Steps">{stepCount}</MetadataListItem>
             <MetadataListItem label="Elements verified">{elementCount}</MetadataListItem>

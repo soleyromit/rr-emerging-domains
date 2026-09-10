@@ -3,6 +3,7 @@ import { Stack } from "@astryxdesign/core/Stack";
 import { Heading } from "@astryxdesign/core/Heading";
 import { Text } from "@astryxdesign/core/Text";
 import { Badge } from "@astryxdesign/core/Badge";
+import { Icon } from "@astryxdesign/core/Icon";
 import { Divider } from "@astryxdesign/core/Divider";
 import { Markdown } from "@astryxdesign/core/Markdown";
 import { Collapsible, CollapsibleGroup } from "@astryxdesign/core/Collapsible";
@@ -11,6 +12,7 @@ import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { PageHeader } from "@/components/page-header";
 import { Takeaway } from "@/components/takeaway";
 import { DisciplineChip } from "@/components/discipline-chip";
+import { IconTile } from "@/components/status-pill";
 import { FitDistributionChart } from "@/components/charts/fit-distribution-chart";
 import { readMarkdownFile, listAccreditation } from "@/lib/content";
 import {
@@ -129,6 +131,11 @@ export default function GapAnalysisPage() {
             eyebrow="Strategy"
             title={`${standards.length} standards, 5 gaps, ${letteredPatterns.length} platform-level patterns — the full evidence trail`}
             description="Scan the numbers and the platform patterns below; every section of the underlying analysis is still here, one click down."
+            endContent={
+              <IconTile variant="warning">
+                <Icon icon="warning" size="lg" />
+              </IconTile>
+            }
           />
           <Takeaway
             status="warning"

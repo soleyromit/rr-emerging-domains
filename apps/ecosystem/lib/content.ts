@@ -115,8 +115,14 @@ export interface AccreditationStandard {
   required_software_behavior?: string;
   prism_fit?: "Transfer" | "Configure" | "Build" | "Gap" | string;
   prism_fit_rationale?: string;
+  exxat_compliance?: "compliant" | "partial" | "gap" | "not-applicable" | string;
+  exxat_compliance_rationale?: string;
   gap_notes?: string;
   source?: string;
+  /** source ids into content/sources/registry.yaml — peer-reviewed/analyst
+   * literature backing this standard's real-world difficulty, distinct from
+   * `source` (the accreditor's own standards document). */
+  research_sources?: string[];
 }
 
 export interface AccreditationDoc {
@@ -393,6 +399,46 @@ export function getFlowBySlug(slug: string): Flow | null {
   return listFlows().find((f) => f.slug === slug) ?? null;
 }
 
+export interface DisciplineJourneyStage {
+  index: number; // 0-based, matches the journey's own stage order
+  stageLabel: string;
+  headline?: string; // present when sourced from a key_finding, absent for a plain discipline_note
+  disciplineDetail: string;
+  flowSlug?: string;
+  flowName?: string;
+}
+
+// Journeys are cross-domain narratives; a domain page wants only the stages
+// where that domain/discipline actually has something written, not the full
+// 8-stage journey — this is what makes the journey content visible from
+// inside a domain tab instead of only reachable via the separate top-level
+// Journeys nav. Discipline-specific content lands in one of two fields
+// depending on how that journey was authored: a plain discipline_notes
+// {subject, detail} entry, or a key_findings {subject, headline, detail}
+// entry (the richer, headline-bearing shape — e.g. rotation-lifecycle.yaml's
+// Pharmacy callouts) — check both rather than assuming one.
+export function getJourneyStagesForDiscipline(journeySlug: string, subject: string): DisciplineJourneyStage[] {
+  const journey = getJourney(journeySlug);
+  if (!journey?.stages) return [];
+  const flowsByStage = getFlowsByStageForJourney(journeySlug);
+  const out: DisciplineJourneyStage[] = [];
+  journey.stages.forEach((stage, i) => {
+    const finding = (stage.key_findings ?? []).find((f) => f.subject === subject);
+    const note = (stage.discipline_notes ?? []).find((n) => n.subject === subject);
+    if (!finding && !note) return;
+    const flow = flowsByStage[i + 1];
+    out.push({
+      index: i,
+      stageLabel: stage.stage,
+      headline: finding?.headline,
+      disciplineDetail: finding?.detail ?? note?.detail ?? "",
+      flowSlug: flow?.slug,
+      flowName: flow?.flow_name,
+    });
+  });
+  return out;
+}
+
 export interface FlowJourneyContext {
   journey: Journey;
   stageNumber: number;
@@ -463,6 +509,9 @@ export interface Scorecard {
   criteria: ScorecardCriterion[];
   recommended_beachhead?: string;
   rationale?: string;
+  actual_gtm_target?: string;
+  actual_gtm_target_rationale?: string;
+  actual_gtm_target_decided?: string;
   last_updated?: string;
 }
 
@@ -509,7 +558,19 @@ export function listFeatureMaps(): FeatureMap[] {
 // real footing in — PA/OT ~50% penetration, Nursing 5-8% — before the 4 new expansion
 // domains. "We already have footing in there... having the same analysis will be
 // helpful." Applied to every lens's domain ordering, not just the standards crosswalk.
-export const PRIORITY_DOMAINS = ["Physician Assistant", "Occupational Therapy", "Nursing"];
+// Pharmacy leads — confirmed 2026-09-10 as the first GTM target, ahead of DO
+// (the where-to-play scorecard's own analytical pick — see
+// scorecard/where-to-play.yaml's `actual_gtm_target` field). Existing/legacy
+// discipline priority (PA/OT/Nursing) kept after the 4 expansion domains.
+export const PRIORITY_DOMAINS = [
+  "Pharmacy",
+  "DO",
+  "Dentistry",
+  "Medicine",
+  "Physician Assistant",
+  "Occupational Therapy",
+  "Nursing",
+];
 
 export function sortDomainsByPriority<T>(items: T[], getDomain: (item: T) => string): T[] {
   const rank = (domain: string) => {
@@ -691,6 +752,9 @@ export interface StandardsCompetitorRatingEntry {
   rating: "not-meeting" | "partially-meeting" | "fully-meeting";
   rationale?: string;
   source?: string;
+  competitor_feature_ref?: string;
+  sources?: { source_id: string }[];
+  persona_relevance?: string[];
 }
 
 export interface StandardsCompetitorRatings {
@@ -704,12 +768,50 @@ export function getStandardsCompetitorRatings(): StandardsCompetitorRatings | nu
   return readYamlFile<StandardsCompetitorRatings>("lenses/standards-competitor-ratings.yaml");
 }
 
+export interface SourceRegistryEntry {
+  id: string;
+  title?: string;
+  url?: string;
+  type?: "webinar" | "doc" | "press" | "product-page" | "analyst" | "other" | string;
+  publisher?: string;
+  date?: string;
+  what_it_supports?: string;
+  accessed?: string;
+}
+
+export interface SourcesRegistry {
+  sources: SourceRegistryEntry[];
+}
+
+// content/sources/registry.yaml — Level 0.5 normalized citation registry, added
+// 2026-09-09 alongside the standards x competitor crosswalk research pass, so a
+// webinar can carry publisher/date/type metadata a bare `source:` string can't.
+export function getSourcesRegistry(): SourcesRegistry | null {
+  return readYamlFile<SourcesRegistry>("sources/registry.yaml");
+}
+
+function resolveSourceIds(ids: { source_id: string }[] | undefined): SourceRegistryEntry[] {
+  if (!ids?.length) return [];
+  const registry = getSourcesRegistry()?.sources ?? [];
+  const bySid = new Map(registry.map((s) => [s.id, s]));
+  return ids.map((s) => bySid.get(s.source_id)).filter((s): s is SourceRegistryEntry => Boolean(s));
+}
+
+function resolveSourceIdStrings(ids: string[] | undefined): SourceRegistryEntry[] {
+  if (!ids?.length) return [];
+  const registry = getSourcesRegistry()?.sources ?? [];
+  const bySid = new Map(registry.map((s) => [s.id, s]));
+  return ids.map((id) => bySid.get(id)).filter((s): s is SourceRegistryEntry => Boolean(s));
+}
+
 export interface StandardsCrosswalkCompetitorCell {
   competitor: string;
   slug: string;
   rating: "not-meeting" | "partially-meeting" | "fully-meeting" | "unresearched";
   rationale?: string;
   source?: string;
+  competitorFeatureRef?: string;
+  sources: SourceRegistryEntry[];
 }
 
 export interface StandardsCrosswalkRow {
@@ -719,7 +821,13 @@ export interface StandardsCrosswalkRow {
   required_software_behavior?: string;
   prism_fit?: string;
   prism_fit_rationale?: string;
+  exxat_compliance?: string;
+  exxat_compliance_rationale?: string;
   gap_notes?: string;
+  personaRelevance: string[];
+  /** Resolved from `research_sources` — peer-reviewed/analyst literature
+   * backing this standard's real-world difficulty, always an array. */
+  researchSources: SourceRegistryEntry[];
   competitors: StandardsCrosswalkCompetitorCell[];
 }
 
@@ -761,26 +869,39 @@ export function getStandardsCrosswalkForDomain(domain: string): StandardsCrosswa
   );
 
   let ratedCompetitorCellCount = 0;
-  const rows: StandardsCrosswalkRow[] = (doc.standards ?? []).map((s) => ({
-    element_id: s.element_id,
-    element_title: s.element_title,
-    evidence_programs_must_produce: s.evidence_programs_must_produce,
-    required_software_behavior: s.required_software_behavior,
-    prism_fit: s.prism_fit,
-    prism_fit_rationale: s.prism_fit_rationale,
-    gap_notes: s.gap_notes,
-    competitors: competitors.map((c) => {
+  const rows: StandardsCrosswalkRow[] = (doc.standards ?? []).map((s) => {
+    const personaSet = new Set<string>();
+    const cellCompetitors = competitors.map((c) => {
       const rated = ratingsIndex.get(`${s.element_id}|${c.slug}`);
-      if (rated) ratedCompetitorCellCount += 1;
+      if (rated) {
+        ratedCompetitorCellCount += 1;
+        for (const p of rated.persona_relevance ?? []) personaSet.add(p);
+      }
       return {
         competitor: c.competitor,
         slug: c.slug,
         rating: rated?.rating ?? ("unresearched" as const),
         rationale: rated?.rationale,
         source: rated?.source,
+        competitorFeatureRef: rated?.competitor_feature_ref,
+        sources: resolveSourceIds(rated?.sources),
       };
-    }),
-  }));
+    });
+    return {
+      element_id: s.element_id,
+      element_title: s.element_title,
+      evidence_programs_must_produce: s.evidence_programs_must_produce,
+      required_software_behavior: s.required_software_behavior,
+      prism_fit: s.prism_fit,
+      prism_fit_rationale: s.prism_fit_rationale,
+      exxat_compliance: s.exxat_compliance,
+      exxat_compliance_rationale: s.exxat_compliance_rationale,
+      gap_notes: s.gap_notes,
+      personaRelevance: Array.from(personaSet),
+      researchSources: resolveSourceIdStrings(s.research_sources),
+      competitors: cellCompetitors,
+    };
+  });
 
   return {
     domain,
@@ -798,6 +919,70 @@ export function listStandardsCrosswalkDomains(): string[] {
   return sortDomainsByPriority(Object.keys(DOMAIN_TO_ACCREDITATION_SLUG), (d) => d);
 }
 
+export interface TrendCompetitorRef {
+  competitor_slug: string;
+  capability_ref?: string;
+  source_id?: string;
+}
+
+export interface TrendEntry {
+  id: string;
+  trend: string;
+  detail?: string;
+  exxat_status: "shipped" | "roadmap" | "unaddressed" | string;
+  exxat_ref?: string | null;
+  addressed_by_competitors?: TrendCompetitorRef[];
+  // Flat list of content/sources/registry.yaml ids — simpler than the
+  // {source_id} object shape ratings entries use, since a trend has no other
+  // per-source metadata to hang alongside it.
+  sources?: string[];
+}
+
+export interface TrendsDoc {
+  domain: string;
+  trends: TrendEntry[];
+  last_updated?: string;
+}
+
+export interface ResolvedTrendCompetitorRef {
+  competitor?: string;
+  slug: string;
+  capabilityRef?: string;
+  source?: SourceRegistryEntry;
+}
+
+export interface ResolvedTrendEntry extends Omit<TrendEntry, "addressed_by_competitors" | "sources"> {
+  addressedByCompetitors: ResolvedTrendCompetitorRef[];
+  sources: SourceRegistryEntry[];
+}
+
+// content/trends/<slug>.yaml — one file per top-level domain (dentistry, do,
+// medicine, pharmacy), keyed the same way DOMAIN_TO_ACCREDITATION_SLUG's
+// domain labels lowercase to their file slug. Sparse by design, same
+// convention as the standards-competitor-ratings lens.
+const TRENDS_DOMAINS = ["Dentistry", "DO", "Medicine", "Pharmacy"];
+
+export function listTrendsDomains(): string[] {
+  return TRENDS_DOMAINS;
+}
+
+export function getTrendsForDomain(domain: string): ResolvedTrendEntry[] {
+  const slug = domain.toLowerCase();
+  const doc = readYamlFile<TrendsDoc>(`trends/${slug}.yaml`);
+  if (!doc?.trends) return [];
+  const competitorsBySlug = new Map(listCompetitors().map((c) => [c.slug, c]));
+  return doc.trends.map((t) => ({
+    ...t,
+    addressedByCompetitors: (t.addressed_by_competitors ?? []).map((ref) => ({
+      competitor: competitorsBySlug.get(ref.competitor_slug)?.competitor,
+      slug: ref.competitor_slug,
+      capabilityRef: ref.capability_ref,
+      source: ref.source_id ? resolveSourceIdStrings([ref.source_id])[0] : undefined,
+    })),
+    sources: resolveSourceIdStrings(t.sources),
+  }));
+}
+
 export interface DomainHubData {
   tierEntry: AccreditorTierEntry | null;
   landscapeEntry: CompetitorLandscapeDomain | null;
@@ -812,6 +997,14 @@ export interface DomainHubData {
 // label (e.g. "Physical Therapy", matching AccreditorTierEntry.domain); `routeSlug`
 // is the URL segment (e.g. "pt"), used only for the discipline-persona lookup since
 // personas/discipline-*.yaml is keyed by that slug, not the label.
+// content/synthesis/{slug}/SALES.md exists for 4 of the 13 tracked domains today
+// (pharmacy, do, dentistry, medicine) — this is the cheap existence check
+// DomainHubTabs needs to conditionally show the "How we win" tab without
+// parsing the file. See lib/sales-brief.ts for the actual parse.
+export function hasSalesBrief(routeSlug: string): boolean {
+  return readMarkdownFile(`synthesis/${routeSlug}/SALES.md`) !== null;
+}
+
 export function getDomainHubData(domain: string, routeSlug: string): DomainHubData {
   return {
     tierEntry: getAccreditorTiers()?.domains.find((d) => d.domain === domain) ?? null,

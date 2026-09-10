@@ -10,6 +10,7 @@ import { Table, pixel, proportional } from "@astryxdesign/core/Table";
 import { Link } from "@astryxdesign/core/Link";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { DisciplineChip } from "@/components/discipline-chip";
+import { CompetitorLogoStrip } from "@/components/competitor-logo";
 import { FitBadge } from "@/components/fit-badge";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
 import type { StandardsCrosswalkForDomain } from "@/lib/content";
@@ -122,9 +123,22 @@ export function CrosswalkView({
               },
             },
             {
+              key: "competitor_logos",
+              header: "Competitors",
+              width: pixel(180),
+              renderCell: (r) =>
+                r.domain.competitors.length ? (
+                  <CompetitorLogoStrip competitors={r.domain.competitors} />
+                ) : (
+                  <Text type="body" color="secondary">
+                    None researched
+                  </Text>
+                ),
+            },
+            {
               key: "competitors",
-              header: "Competitor cells rated",
-              width: pixel(160),
+              header: "Cells rated",
+              width: pixel(130),
               renderCell: (r) => (
                 <Text type="body">
                   {r.domain.ratedCompetitorCellCount} / {r.domain.totalCompetitorCellCount}

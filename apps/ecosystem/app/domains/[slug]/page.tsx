@@ -9,6 +9,9 @@ import { Tooltip } from "@astryxdesign/core/Tooltip";
 import { Collapsible } from "@astryxdesign/core/Collapsible";
 import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList";
 import { Takeaway } from "@/components/takeaway";
+import { ExxatGapAnswer } from "@/components/exxat-gap-answer";
+import { ClinicalEducationTimeline, type ClinicalEducationTimelineStage } from "@/components/clinical-education-timeline";
+import { DomainScenario } from "@/components/domain-scenario";
 import { FieldBlock } from "@/components/field-block";
 import { SentenceList } from "@/components/sentence-list";
 import { humanizeSourceRef } from "@/lib/strip-file-citations";
@@ -18,8 +21,26 @@ import {
   getDomainHubData,
   fitCounts,
   listDomains,
+  getJourney,
+  getJourneyStagesForDiscipline,
   type AccreditationDoc,
 } from "@/lib/content";
+
+// Keyed by route slug -> {journey slug, the exact key_findings/discipline_notes
+// `subject` string it was tagged with}. Every one of the 5 content/journeys/*.yaml
+// files cites all 4 expansion domains at multiple stages; this picks each
+// domain's single richest journey by citation count (via
+// getJourneyStagesForDiscipline) rather than surfacing all 5 journeys on one
+// Overview page. Recompute by re-running the count if a journey gets
+// substantially rewritten — this isn't derived at request time because it's a
+// one-time editorial pick, not something that should silently change on a
+// content edit elsewhere.
+const DOMAIN_SCENARIO_JOURNEY: Partial<Record<string, { journeySlug: string; subject: string }>> = {
+  do: { journeySlug: "accreditation-self-study", subject: "DO" },
+  pharmacy: { journeySlug: "competency-verification", subject: "Pharmacy" },
+  dentistry: { journeySlug: "accreditation-self-study", subject: "Dentistry" },
+  medicine: { journeySlug: "preceptor-site-onboarding", subject: "Medicine" },
+};
 
 const STATE_VARIATION_VARIANT: Record<string, "success" | "warning" | "neutral"> = {
   confirmed: "warning",
@@ -84,6 +105,35 @@ const DOMAIN_EDITORIAL: Partial<Record<string, DomainEditorial>> = {
   },
 };
 
+// Hand-authored, same rationale as DOMAIN_EDITORIAL: a timeline is a claim about
+// real structure (which years, how many hours, which rotation types), so it's
+// only written for domains this repo has actually researched to that level —
+// Pharmacy first, per the storytelling-redesign proof of concept. Sourced from
+// content/domains/pharmacy.yaml's own clinical_education_shape field, just
+// decomposed into stops instead of one paragraph.
+const DOMAIN_CLINICAL_TIMELINE: Partial<Record<string, ClinicalEducationTimelineStage[]>> = {
+  pharmacy: [
+    {
+      when: "Years 1-2 (didactic)",
+      label: "IPPE",
+      headlineStat: "300 hrs min",
+      detail: "Short, recurring placements woven concurrently through coursework — 75 hrs community + 75 hrs hospital/health-system + 150 hrs patient-care.",
+    },
+    {
+      when: "Year 4 (capstone)",
+      label: "APPE",
+      headlineStat: "1,440 hrs / 36 wks",
+      detail: "6-7 full-time block rotations, 4-6 weeks each, no concurrent coursework. 4 mandatory settings: community, institutional/health-system, general medicine, ambulatory care.",
+    },
+    {
+      when: "After graduation",
+      label: "Licensure",
+      headlineStat: "2 exams + state hours",
+      detail: "NAPLEX (clinical competence) and MPJE (jurisprudence), both NABP-administered, plus state-tracked intern hours beyond the 1,440 APPE hours.",
+    },
+  ],
+};
+
 // Deterministic fallback for domains without hand-authored DOMAIN_EDITORIAL —
 // headline and takeaway are built entirely from this domain's own real, already-
 // cited standards data, never synthesized prose standing in for research that
@@ -123,6 +173,12 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
   );
   const editorial = DOMAIN_EDITORIAL[slug] ?? computedEditorial(accreditationDoc);
   const domainProfile = listDomains().find((d) => d.domain?.toLowerCase() === slug);
+  const timelineStages = DOMAIN_CLINICAL_TIMELINE[slug] ?? [];
+  const scenarioConfig = DOMAIN_SCENARIO_JOURNEY[slug];
+  const scenarioJourney = scenarioConfig ? getJourney(scenarioConfig.journeySlug) : null;
+  const scenarioStages = scenarioConfig
+    ? getJourneyStagesForDiscipline(scenarioConfig.journeySlug, scenarioConfig.subject)
+    : [];
 
   if (!tierEntry) return null;
 
@@ -142,11 +198,30 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
         </Stack>
       </Section>
 
+      <Section padding={6} dividers={["bottom"]}>
+        <ExxatGapAnswer standardsCrosswalk={standardsCrosswalk} landscapeEntry={landscapeEntry} slug={slug} />
+      </Section>
+
+      {scenarioJourney && scenarioStages.length ? (
+        <Section padding={6} dividers={["bottom"]}>
+          <DomainScenario
+            domainLabel={entry.domain}
+            journeyName={scenarioJourney.journey_name}
+            journeySlug={scenarioJourney.slug}
+            stages={scenarioStages}
+          />
+        </Section>
+      ) : null}
+
       {domainProfile ? (
         <Section padding={6} dividers={["bottom"]} variant="muted">
           <Stack gap={2}>
             <Text type="label" color="secondary">Domain context</Text>
-            <Text type="body" maxLines={2}>{domainProfile.clinical_education_shape}</Text>
+            {timelineStages.length ? (
+              <ClinicalEducationTimeline stages={timelineStages} />
+            ) : (
+              <Text type="body" maxLines={2}>{domainProfile.clinical_education_shape}</Text>
+            )}
             <Collapsible
               value="context"
               defaultIsOpen={false}

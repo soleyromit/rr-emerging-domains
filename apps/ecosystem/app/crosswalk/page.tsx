@@ -3,6 +3,7 @@ import { Stack } from "@astryxdesign/core/Stack";
 import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList";
 import { PageHeader } from "@/components/page-header";
 import { CrosswalkView } from "@/components/crosswalk-view";
+import { CoverageGapsCallout } from "@/components/coverage-gaps-callout";
 import { listStandardsCrosswalkDomains, getStandardsCrosswalkForDomain, PRIORITY_DOMAINS } from "@/lib/content";
 
 export default function CrosswalkPage() {
@@ -34,6 +35,10 @@ export default function CrosswalkPage() {
               {ratedCompetitorCells} / {totalCompetitorCells}
             </MetadataListItem>
           </MetadataList>
+          {/* Compact form: the MetadataList directly above already carries the
+              raw numbers, so this restates the coverage gap in one honest line
+              rather than a second, louder tile beside it. */}
+          <CoverageGapsCallout ratedCount={ratedCompetitorCells} totalCount={totalCompetitorCells} isCompact />
         </Stack>
       </Section>
       <Section padding={6}>

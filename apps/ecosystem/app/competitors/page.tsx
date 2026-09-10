@@ -4,10 +4,10 @@ import { Grid } from "@astryxdesign/core/Grid";
 import { ClickableCard } from "@astryxdesign/core/ClickableCard";
 import { Text } from "@astryxdesign/core/Text";
 import { Heading } from "@astryxdesign/core/Heading";
-import { Badge } from "@astryxdesign/core/Badge";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { PageHeader } from "@/components/page-header";
 import { Takeaway } from "@/components/takeaway";
+import { DisciplineChip } from "@/components/discipline-chip";
 import { CompetitorDepthChart } from "@/components/charts/competitor-depth-chart";
 import { CompetitorScanTable } from "@/components/competitor-scan-table";
 import { leadSentence } from "@/lib/text";
@@ -80,7 +80,7 @@ export default function CompetitorsPage() {
                       ) : null}
                       <Stack direction="horizontal" gap={1.5} wrap="wrap">
                         {(c.domains_served ?? []).map((d) => (
-                          <Badge key={d} variant="neutral" label={d} />
+                          <DisciplineChip key={d} subject={d} />
                         ))}
                       </Stack>
                       {signal ? (

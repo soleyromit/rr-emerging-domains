@@ -16,6 +16,8 @@ import { CompetitorFeatureDossier } from "@/components/competitor-feature-dossie
 import { CompetitorDepthChart } from "@/components/charts/competitor-depth-chart";
 import { ComparisonCardGrid } from "@/components/comparison-card-grid";
 import { SentenceList, type SentenceListItem } from "@/components/sentence-list";
+import { DisciplineChip } from "@/components/discipline-chip";
+import { matchDisciplineMeta } from "@/lib/discipline-meta";
 import {
   listCompetitors,
   getCompetitor,
@@ -58,6 +60,26 @@ export default async function CompetitorDetailPage({ params }: { params: Promise
             title={competitor.competitor}
             description={competitor.category}
           />
+          {competitor.domains_served?.length ? (
+            <Stack gap={1}>
+              <Text type="label" color="secondary" size="xsm">
+                Compared in
+              </Text>
+              <Stack direction="horizontal" gap={1.5} wrap="wrap">
+                {competitor.domains_served.map((d) => {
+                  const routeSlug = matchDisciplineMeta(d)?.slug;
+                  const chip = <DisciplineChip subject={d} />;
+                  return routeSlug ? (
+                    <Link key={d} href={`/domains/${routeSlug}/competitors`}>
+                      {chip}
+                    </Link>
+                  ) : (
+                    <span key={d}>{chip}</span>
+                  );
+                })}
+              </Stack>
+            </Stack>
+          ) : null}
           <CompetitorCompanyFacts company={competitor.company} />
           <MetadataList columns={2}>
             <MetadataListItem label="Strengths">{competitor.strengths?.length ?? 0}</MetadataListItem>

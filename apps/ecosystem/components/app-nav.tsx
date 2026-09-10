@@ -71,7 +71,7 @@ export function AppNav({ children }: { children: React.ReactNode }) {
             <SideNavHeading
               heading="Domain Expansion"
               superheading="Exxat PRISM"
-              subheading="DO · Pharmacy · Dentistry · Medicine"
+              subheading="Pharmacy · DO · Dentistry · Medicine"
               headingHref="/"
             />
           }

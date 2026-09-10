@@ -4,6 +4,8 @@ import { Stack } from "@astryxdesign/core/Stack";
 import { Grid } from "@astryxdesign/core/Grid";
 import { Card } from "@astryxdesign/core/Card";
 import { Text } from "@astryxdesign/core/Text";
+import { Icon } from "@astryxdesign/core/Icon";
+import { Link } from "@astryxdesign/core/Link";
 import { Collapsible } from "@astryxdesign/core/Collapsible";
 import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
@@ -36,10 +38,52 @@ export default async function DomainPersonaPage({ params }: { params: Promise<{ 
     relatedFlows: resolveRelatedFlows(j.related_flows),
   }));
 
+  // Opening vignette: this persona's own first sentence, not new prose — a
+  // scenario needs a hook line before the metric strip, and archetype_summary
+  // already opens with one; pulling it out just gives it visual weight.
+  const vignette = persona.archetype_summary?.split(/(?<=[.!?])\s+/)[0];
+
+  // The three sections below (pressure -> tools -> switching trigger) are a
+  // causal sequence today rendered as unlinked cards; this connects them as
+  // one thread, each node jumping to its real section rather than restating it.
+  const narrativeSteps = [
+    { id: "pressure", label: "Today's pressure", count: persona.accreditation_pressure?.length ?? 0 },
+    { id: "tools", label: "Current tools", count: persona.current_tools?.length ?? 0 },
+    { id: "trigger", label: "What triggers switching", count: persona.switching_trigger ? 1 : 0 },
+  ].filter((s) => s.count > 0);
+
   return (
     <>
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
+          {vignette ? (
+            <Text type="body" size="lg" weight="semibold" style={{ fontStyle: "italic" }}>
+              "{vignette}"
+            </Text>
+          ) : null}
+          {narrativeSteps.length ? (
+            <Stack direction="horizontal" wrap="nowrap" isScrollable gap={0} vAlign="stretch">
+              {narrativeSteps.map((step, i) => (
+                <Stack key={step.id} direction="horizontal" gap={0} vAlign="center" style={{ flexShrink: 0 }}>
+                  <Link href={`#${step.id}`}>
+                    <Card variant="muted" padding={2}>
+                      <Stack gap={0.5} width={160}>
+                        <Text type="label" color="secondary" size="xsm">
+                          {i + 1}
+                        </Text>
+                        <Text type="body" weight="semibold" size="sm">
+                          {step.label}
+                        </Text>
+                      </Stack>
+                    </Card>
+                  </Link>
+                  {i < narrativeSteps.length - 1 ? (
+                    <Icon icon="chevronRight" size="sm" color="secondary" aria-hidden="true" />
+                  ) : null}
+                </Stack>
+              ))}
+            </Stack>
+          ) : null}
           <MetadataList columns={4}>
             <MetadataListItem label="Pressure points">{persona.accreditation_pressure?.length ?? 0}</MetadataListItem>
             <MetadataListItem label="Current tools">{persona.current_tools?.length ?? 0}</MetadataListItem>
@@ -48,8 +92,13 @@ export default async function DomainPersonaPage({ params }: { params: Promise<{ 
           </MetadataList>
           {persona.archetype_summary ? (
             // DENSITY-OK: dedicated persona tab — shown in full, not an index card's
-            // 3-line teaser
-            <Text type="body">{persona.archetype_summary}</Text>
+            // 3-line teaser. maxWidth keeps it a readable column (same 720px
+            // measure PageHeader's own description uses) instead of running
+            // full-bleed across the content area — full-length prose set that
+            // wide is a wall of text no matter how good the writing is.
+            <Text type="body" style={{ maxWidth: 720, lineHeight: 1.6 }}>
+              {persona.archetype_summary}
+            </Text>
           ) : null}
         </Stack>
       </Section>
@@ -57,26 +106,30 @@ export default async function DomainPersonaPage({ params }: { params: Promise<{ 
       <Section padding={6} dividers={["bottom"]}>
         <Grid columns={{ minWidth: 340 }} gap={5}>
           {persona.accreditation_pressure?.length ? (
-            <Stack gap={2}>
-              <Text type="label" color="secondary">
-                Accreditation pressure ({persona.accreditation_pressure.length})
-              </Text>
-              <PersonaSpecList
-                items={persona.accreditation_pressure.map((p) => ({ label: p.point, text: p.detail }))}
-                fallbackIcon="clock"
-              />
-            </Stack>
+            <div id="pressure">
+              <Stack gap={2}>
+                <Text type="label" color="secondary">
+                  Accreditation pressure ({persona.accreditation_pressure.length})
+                </Text>
+                <PersonaSpecList
+                  items={persona.accreditation_pressure.map((p) => ({ label: p.point, text: p.detail }))}
+                  fallbackIcon="clock"
+                />
+              </Stack>
+            </div>
           ) : null}
           {persona.current_tools?.length ? (
-            <Stack gap={2}>
-              <Text type="label" color="secondary">
-                Current tools ({persona.current_tools.length})
-              </Text>
-              <PersonaSpecList
-                items={persona.current_tools.map((p) => ({ label: p.point, text: p.detail }))}
-                fallbackIcon="wrench"
-              />
-            </Stack>
+            <div id="tools">
+              <Stack gap={2}>
+                <Text type="label" color="secondary">
+                  Current tools ({persona.current_tools.length})
+                </Text>
+                <PersonaSpecList
+                  items={persona.current_tools.map((p) => ({ label: p.point, text: p.detail }))}
+                  fallbackIcon="wrench"
+                />
+              </Stack>
+            </div>
           ) : null}
         </Grid>
       </Section>
@@ -94,14 +147,16 @@ export default async function DomainPersonaPage({ params }: { params: Promise<{ 
 
       {persona.switching_trigger ? (
         <Section padding={6} dividers={["bottom"]}>
-          <Card variant="pink" padding={4}>
-            <Stack gap={2}>
-              <Text type="label" weight="semibold" size="sm">
-                Switching trigger
-              </Text>
-              <FieldBlock text={persona.switching_trigger} maxLines={4} triggerLabel="Read the full section" />
-            </Stack>
-          </Card>
+          <div id="trigger">
+            <Card variant="pink" padding={4}>
+              <Stack gap={2}>
+                <Text type="label" weight="semibold" size="sm">
+                  Switching trigger
+                </Text>
+                <FieldBlock text={persona.switching_trigger} maxLines={4} triggerLabel="Read the full section" />
+              </Stack>
+            </Card>
+          </div>
         </Section>
       ) : null}
 

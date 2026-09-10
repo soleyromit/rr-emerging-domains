@@ -3,6 +3,7 @@ import { Stack } from "@astryxdesign/core/Stack";
 import { Heading } from "@astryxdesign/core/Heading";
 import { Text } from "@astryxdesign/core/Text";
 import { Badge } from "@astryxdesign/core/Badge";
+import { Icon } from "@astryxdesign/core/Icon";
 import { Divider } from "@astryxdesign/core/Divider";
 import { Markdown } from "@astryxdesign/core/Markdown";
 import { Collapsible, CollapsibleGroup } from "@astryxdesign/core/Collapsible";
@@ -10,6 +11,7 @@ import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList"
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { PageHeader } from "@/components/page-header";
 import { Takeaway } from "@/components/takeaway";
+import { IconTile } from "@/components/status-pill";
 import { readMarkdownFile } from "@/lib/content";
 import { splitSectionsAtLevel, getPreamble } from "@/lib/markdown-sections";
 
@@ -160,6 +162,11 @@ export default function RepoComparisonPage() {
             eyebrow="Strategy"
             title={`${tools.length} repository tools, ${requirementCount} hard requirements, 1 decision: a git repo of Markdown/YAML`}
             description="Scan the requirement scorecard below; the full decision memo — every option, every price, every source — is still here, one click down."
+            endContent={
+              <IconTile variant="success">
+                <Icon icon="arrowsUpDown" size="lg" />
+              </IconTile>
+            }
           />
           <Takeaway
             status="success"

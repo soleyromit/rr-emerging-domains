@@ -8,6 +8,7 @@ import { List, ListItem } from "@astryxdesign/core/List";
 import { ThreatBadge } from "@/components/fit-badge";
 import { FeatureDepthChart } from "@/components/charts/feature-depth-chart";
 import { DomainFeatureComparisonTable } from "@/components/domain-feature-comparison-table";
+import { CompetitorLogo } from "@/components/competitor-logo";
 import { humanizeSourceRef } from "@/lib/strip-file-citations";
 import { SentenceList } from "@/components/sentence-list";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
@@ -48,6 +49,7 @@ export default async function DomainCompetitorsPage({ params }: { params: Promis
                   <ListItem
                     key={c.slug}
                     href={`/competitors/${c.slug}`}
+                    startContent={<CompetitorLogo slug={c.slug} competitor={c.competitor} size={28} />}
                     label={c.competitor}
                     description={<Text type="supporting" size="sm" maxLines={2}>{c.rationale}</Text>}
                     endContent={<ThreatBadge threat={c.threat} />}
@@ -61,6 +63,7 @@ export default async function DomainCompetitorsPage({ params }: { params: Promis
                       <ListItem
                         key={c.slug}
                         href={`/competitors/${c.slug}`}
+                        startContent={<CompetitorLogo slug={c.slug} competitor={c.competitor} size={28} />}
                         label={c.competitor}
                         description={<Text type="supporting" size="sm" maxLines={2}>{c.rationale}</Text>}
                         endContent={<ThreatBadge threat={c.threat} />}
@@ -94,8 +97,8 @@ export default async function DomainCompetitorsPage({ params }: { params: Promis
             />
           ) : (
             <Stack gap={4}>
-              <DomainFeatureComparisonTable featureComparison={featureComparison} />
               <FeatureDepthChart domain={featureComparison} />
+              <DomainFeatureComparisonTable featureComparison={featureComparison} />
             </Stack>
           )}
         </Stack>

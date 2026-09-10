@@ -1,0 +1,84 @@
+"use client";
+
+// Client component only because it hands lucide icon *components* to Icon —
+// a function prop can't cross the server/client boundary (see feature-status.tsx,
+// same reason). Nothing here is interactive.
+
+import { BarChart3, FileText, Globe, Link2, Newspaper, Video } from "lucide-react";
+import { Badge } from "@astryxdesign/core/Badge";
+import { Icon } from "@astryxdesign/core/Icon";
+import { Stack } from "@astryxdesign/core/Stack";
+import { Text } from "@astryxdesign/core/Text";
+import { SourceLine } from "@/components/source-line";
+import type { SourceRegistryEntry } from "@/lib/content";
+import type { BadgeVariant } from "@/lib/discipline-meta";
+
+type KindMeta = { label: string; variant: BadgeVariant; icon: typeof Video };
+
+// `webinar` is the one kind that gets a non-neutral color: a recorded product
+// webinar is the strongest first-party evidence in this research base (it's a
+// competitor demoing their own behavior), so it should pop out of a reference
+// list that's otherwise mostly docs and product pages.
+const KIND_META: Record<string, KindMeta> = {
+  webinar: { label: "Webinar", variant: "purple", icon: Video },
+  doc: { label: "Doc", variant: "neutral", icon: FileText },
+  press: { label: "Press", variant: "neutral", icon: Newspaper },
+  "product-page": { label: "Product page", variant: "neutral", icon: Globe },
+  analyst: { label: "Analyst", variant: "neutral", icon: BarChart3 },
+  other: { label: "Other", variant: "neutral", icon: Link2 },
+};
+
+const UNKNOWN_KIND: KindMeta = { label: "Source", variant: "neutral", icon: Link2 };
+
+export function SourceBadge({ kind }: { kind?: string }) {
+  const meta = KIND_META[kind?.toLowerCase().trim() ?? ""] ?? UNKNOWN_KIND;
+  return <Badge variant={meta.variant} label={meta.label} icon={<Icon icon={meta.icon} size="xsm" />} />;
+}
+
+// A tight reference list for an already-open detail panel — deliberately not a
+// Card grid or a ReferencesList-style bibliography, both of which would dominate
+// the panel they sit inside. One row per source: kind pill, title, link, and the
+// publisher/date line that makes a citation checkable.
+export function SourceList({
+  sources,
+  label = "Sources",
+}: {
+  sources: SourceRegistryEntry[];
+  label?: string;
+}) {
+  if (!sources.length) return null;
+  return (
+    <Stack gap={1}>
+      {label ? (
+        <Text type="label" color="secondary" size="xsm">
+          {label}
+        </Text>
+      ) : null}
+      <Stack gap={1}>
+        {sources.map((s) => {
+          const meta = [s.publisher, s.date].filter(Boolean).join(" · ");
+          return (
+            <Stack key={s.id} direction="horizontal" gap={1.5} vAlign="start" wrap="wrap">
+              <SourceBadge kind={s.type} />
+              <Stack gap={0}>
+                {/* Only render the title separately when there's also a URL —
+                    otherwise SourceLine below already renders it as prose. */}
+                {s.title && s.url ? (
+                  <Text type="supporting" size="xsm" maxLines={2}>
+                    {s.title}
+                  </Text>
+                ) : null}
+                <SourceLine source={s.url ?? s.title} size="xsm" />
+                {meta ? (
+                  <Text type="supporting" size="xsm" color="secondary">
+                    {meta}
+                  </Text>
+                ) : null}
+              </Stack>
+            </Stack>
+          );
+        })}
+      </Stack>
+    </Stack>
+  );
+}

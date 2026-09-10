@@ -6,10 +6,12 @@ import { Card } from "@astryxdesign/core/Card";
 import { Text } from "@astryxdesign/core/Text";
 import { Heading } from "@astryxdesign/core/Heading";
 import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList";
+import { ProgressBar } from "@astryxdesign/core/ProgressBar";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { AccreditationStandardsTable } from "@/components/accreditation-standards-table";
+import { CoverageGapsCallout } from "@/components/coverage-gaps-callout";
 import { FitDistributionChart } from "@/components/charts/fit-distribution-chart";
-import { getAccreditorTiers, getDomainHubData } from "@/lib/content";
+import { getAccreditorTiers, getDomainHubData, getTrendsForDomain, hasSalesBrief } from "@/lib/content";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
 
 export default async function DomainStandardsPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -18,6 +20,7 @@ export default async function DomainStandardsPage({ params }: { params: Promise<
   if (!entry) notFound();
 
   const { standardsCrosswalk, accreditationDoc } = getDomainHubData(entry.domain, slug);
+  const trendCount = getTrendsForDomain(entry.domain).length;
 
   return (
     <Section padding={6} dividers={["bottom"]}>
@@ -38,19 +41,43 @@ export default async function DomainStandardsPage({ params }: { params: Promise<
           />
         ) : (
           <>
+            <Stack gap={3}>
+              <ProgressBar
+                label="Exxat compliance"
+                hasValueLabel
+                value={standardsCrosswalk.rows.filter((r) => (r.exxat_compliance ?? "").toLowerCase() === "compliant").length}
+                max={standardsCrosswalk.rows.length}
+              />
+              <ProgressBar
+                label="Competitor research coverage"
+                hasValueLabel
+                value={standardsCrosswalk.ratedCompetitorCellCount}
+                max={standardsCrosswalk.totalCompetitorCellCount || 1}
+              />
+            </Stack>
             <MetadataList columns={2}>
               <MetadataListItem label="Standards tracked">{standardsCrosswalk.rows.length}</MetadataListItem>
               <MetadataListItem label="Competitor cells rated">
                 {standardsCrosswalk.ratedCompetitorCellCount} / {standardsCrosswalk.totalCompetitorCellCount}
               </MetadataListItem>
             </MetadataList>
+            <CoverageGapsCallout
+              ratedCount={standardsCrosswalk.ratedCompetitorCellCount}
+              totalCount={standardsCrosswalk.totalCompetitorCellCount}
+              domain={entry.domain}
+              trendCount={trendCount}
+            />
             {standardsCrosswalk.competitors.length === 0 ? (
               <Text type="supporting" size="sm" color="secondary">
                 No competitor research yet covers this domain — the table below shows only the Prism column.
               </Text>
             ) : null}
             <FitDistributionChart docs={[accreditationDoc]} />
-            <AccreditationStandardsTable standardsCrosswalk={standardsCrosswalk} />
+            <AccreditationStandardsTable
+              standardsCrosswalk={standardsCrosswalk}
+              slug={slug}
+              hasWinBrief={hasSalesBrief(slug)}
+            />
           </>
         )}
 

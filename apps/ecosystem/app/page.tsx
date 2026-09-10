@@ -6,6 +6,7 @@ import { ClickableCard } from "@astryxdesign/core/ClickableCard";
 import { Heading } from "@astryxdesign/core/Heading";
 import { Text } from "@astryxdesign/core/Text";
 import { Badge } from "@astryxdesign/core/Badge";
+import { Icon } from "@astryxdesign/core/Icon";
 import { List, ListItem } from "@astryxdesign/core/List";
 import { Item } from "@astryxdesign/core/Item";
 import { StatusDot } from "@astryxdesign/core/StatusDot";
@@ -21,21 +22,27 @@ import {
   computeWeightedTotals,
 } from "@/lib/content";
 
+// "H1/H2/H3" was internal shorthand leaking straight onto the page as a badge
+// label — meaningless to a reader who wasn't in the planning doc it came
+// from. These three are a real sequence (today's base -> the active research
+// -> where the roadmap ultimately lands), so they're named and rendered as
+// one now, chevron-chained like every other causal/sequential content shape
+// in this app (see DESIGN.md).
 const HORIZONS = [
   {
-    label: "H1",
+    phase: "Today",
     title: "Deepen current disciplines",
     body: "Nursing + allied health (PT, OT, PA, SLP, athletic training, social work, public health, nutrition) — Prism's proven base today.",
   },
   {
-    label: "H2",
+    phase: "This research",
     title: "Four new domains",
     body: "DO, Pharmacy, Dentistry, Medicine — larger budgets, higher-stakes accreditation, multi-year student lifecycles. This research initiative.",
   },
   {
-    label: "H3",
+    phase: "Where it lands",
     title: "AI-native accreditation intelligence",
-    body: "Where Prism's own Q3 2027 Accreditation Management pillar should ultimately land — de-risked by H2's standards research.",
+    body: "Where Prism's own Q3 2027 Accreditation Management pillar should ultimately land — de-risked by the new-domains research.",
   },
 ];
 
@@ -87,40 +94,49 @@ export default function OverviewPage() {
         <Stack gap={6}>
           <PageHeader
             eyebrow="Leadership layer — read this section first"
-            title="Start with DO — the fastest-growing market and the toughest accreditation build in the portfolio"
-            description="Prism today is the system of record for clinical and experiential education in nursing and allied health. Four adjacent doctoral-level domains run the same workflow — didactic → clinical rotations → competency verification → accreditation reporting — served today by aging, fragmented incumbents. This site is the cited evidence base behind that recommendation: every claim traces to a competitor page, an accreditor's own standards document, or a primary Exxat product doc."
+            title="Start with Pharmacy — the confirmed first domain to enter"
+            description="Prism today is the system of record for clinical and experiential education in nursing and allied health. Four adjacent doctoral-level domains run the same workflow — didactic → clinical rotations → competency verification → accreditation reporting — served today by aging, fragmented incumbents. This site is the cited evidence base behind the research: every claim traces to a competitor page, an accreditor's own standards document, or a primary Exxat product doc."
           />
 
-          <Takeaway status="warning" title="The market case and the accreditation-fit case point in opposite directions">
-            DO wins the where-to-play score (4.40 / 5) on growth (40,905 students, an all-time high, +59% over a decade)
-            and incumbent disruption (three of six DO/MD vendors are mid-acquisition right now). But COCA is the{" "}
-            <strong>worst</strong> accreditation fit of the four accreditors researched — zero of 12 mapped elements
-            transfer as-is, and seven are hard gaps, mostly threshold-triggered public reporting (COMLEX pass rates,
-            PGY-1 placement) with no analog anywhere else in the corpus. See the{" "}
-            <Link href="/scorecard" hasUnderline>scorecard</Link> and{" "}
-            <Link href="/synthesis/gap-analysis" hasUnderline>gap analysis</Link> for the full evidence.
+          <Takeaway status="info" title="Pharmacy is the confirmed GTM target — per stakeholder direction, 2026-09-10">
+            The where-to-play scorecard's own math still names DO the analytical leader (4.40 / 5, on growth and
+            incumbent disruption) with Pharmacy a close second (4.05 / 5) — that scoring is real and unedited, see the{" "}
+            <Link href="/scorecard" hasUnderline>scorecard</Link>. Pharmacy is the domain actually being targeted
+            first, for reasons outside that weighted model. The two conclusions aren&apos;t in conflict: Pharmacy
+            also has the highest pillar-fit ratio of any domain researched (4 Transfer / 12 Configure / 4 Gap on
+            ACPE), the smallest accreditation build, and a live switching-cost window as ACPE retires AAMS for its
+            own PHARMS platform — see the{" "}
+            <Link href="/domains/pharmacy" hasUnderline>Pharmacy domain hub</Link>,{" "}
+            <Link href="/synthesis/gap-analysis" hasUnderline>gap analysis</Link>, or{" "}
+            <Link href="/domains/pharmacy/win" hasUnderline>how we win Pharmacy</Link> for the full
+            evidence.
           </Takeaway>
 
-          <Grid columns={{ minWidth: 260 }} gap={4}>
-            {HORIZONS.map((h) => (
-              <Card key={h.label}>
-                <Stack gap={2}>
-                  <Badge variant="neutral" label={h.label} />
-                  <Text type="body" weight="semibold">
-                    {h.title}
-                  </Text>
-                  {/* DENSITY-OK: h.body is a short hardcoded HORIZONS const above, not a content/ field */}
-                  <Text type="supporting">{h.body}</Text>
-                </Stack>
-              </Card>
+          <Stack direction="horizontal" gap={2} wrap="wrap" vAlign="stretch">
+            {HORIZONS.map((h, i) => (
+              <Stack key={h.phase} direction="horizontal" gap={2} vAlign="center" style={{ flex: "1 1 260px" }}>
+                <Card style={{ flex: 1 }}>
+                  <Stack gap={2}>
+                    <Badge variant={i === 1 ? "info" : "neutral"} label={h.phase} />
+                    <Text type="body" weight="semibold">
+                      {h.title}
+                    </Text>
+                    {/* DENSITY-OK: h.body is a short hardcoded HORIZONS const above, not a content/ field */}
+                    <Text type="supporting">{h.body}</Text>
+                  </Stack>
+                </Card>
+                {i < HORIZONS.length - 1 ? (
+                  <Icon icon="chevronRight" size="md" color="secondary" aria-hidden="true" />
+                ) : null}
+              </Stack>
             ))}
-          </Grid>
+          </Stack>
 
           <MetadataList columns={4}>
-            <MetadataListItem label="Domains in scope">DO · Pharmacy · Dentistry · Medicine</MetadataListItem>
+            <MetadataListItem label="Confirmed GTM target">Pharmacy</MetadataListItem>
+            <MetadataListItem label="Domains in scope">Pharmacy · DO · Dentistry · Medicine</MetadataListItem>
             <MetadataListItem label="Domain profiles researched">{domains.length} / 4</MetadataListItem>
-            <MetadataListItem label="Competitors torn down">{competitors.length}</MetadataListItem>
-            <MetadataListItem label="Leading beachhead candidate">
+            <MetadataListItem label="Scorecard's analytical leader">
               {leader ? `${leader[0]} — ${leader[1].toFixed(2)} / 5` : "Not yet scored"}
             </MetadataListItem>
           </MetadataList>

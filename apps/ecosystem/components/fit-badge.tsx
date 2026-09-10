@@ -119,6 +119,61 @@ export function StandardsRatingBadge({ rating }: { rating?: string }) {
   return <Badge variant={STANDARDS_RATING_VARIANT[key] ?? "neutral"} label={STANDARDS_RATING_LABEL[key] ?? rating} />;
 }
 
+// Exxat's *own* compliance against a standard element — a different question
+// from StandardsRatingBadge above (which rates a competitor) and from FitBadge
+// (which rates how Prism would have to be built to satisfy it). Same five-state
+// palette and the same "absence is a real, named state" rule, so the Exxat
+// column and the competitor columns stay comparable at a glance while their
+// vocabularies stay distinct.
+const EXXAT_COMPLIANCE_VARIANT: Record<string, BadgeVariant> = {
+  compliant: "success",
+  partial: "warning",
+  gap: "error",
+  "not-applicable": "neutral",
+};
+
+const EXXAT_COMPLIANCE_LABEL: Record<string, string> = {
+  compliant: "Compliant",
+  partial: "Partial",
+  gap: "Gap",
+  "not-applicable": "Not yet rated",
+};
+
+export function ExxatComplianceBadge({ compliance }: { compliance?: string }) {
+  if (!compliance) return <Badge variant="neutral" label="Not yet rated" />;
+  const key = compliance.toLowerCase().trim();
+  return (
+    <Badge
+      variant={EXXAT_COMPLIANCE_VARIANT[key] ?? "neutral"}
+      label={EXXAT_COMPLIANCE_LABEL[key] ?? compliance}
+    />
+  );
+}
+
+// Trend coverage, keyed by the *same* gap_severity vocabulary GapSeverityBadge
+// uses (none | configure-needed | gap) so KeyFindingList's severity contract is
+// unchanged — only the labels differ, because "Configure needed" is meaningless
+// for a market trend. Selected via KeyFindingList's `severityVocabulary="trend"`.
+const TREND_SEVERITY_LABEL: Record<string, string> = {
+  none: "Exxat ships it",
+  "configure-needed": "Competitors ahead",
+  gap: "Nobody addresses it",
+};
+
+const TREND_SEVERITY_VARIANT: Record<string, BadgeVariant> = {
+  none: "success",
+  "configure-needed": "warning",
+  gap: "error",
+};
+
+export function TrendCoverageBadge({ severity }: { severity?: string }) {
+  if (!severity) return <Badge variant="neutral" label="Unrated" />;
+  const key = severity.toLowerCase().trim();
+  return (
+    <Badge variant={TREND_SEVERITY_VARIANT[key] ?? "neutral"} label={TREND_SEVERITY_LABEL[key] ?? severity} />
+  );
+}
+
 const DIVERGENCE_VARIANT: Record<string, BadgeVariant> = {
   "native fit": "success",
   configure: "warning",

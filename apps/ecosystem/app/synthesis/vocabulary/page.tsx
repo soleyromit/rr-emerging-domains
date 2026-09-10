@@ -2,6 +2,7 @@ import { Section } from "@astryxdesign/core/Section";
 import { Stack } from "@astryxdesign/core/Stack";
 import { Heading } from "@astryxdesign/core/Heading";
 import { Text } from "@astryxdesign/core/Text";
+import { Icon } from "@astryxdesign/core/Icon";
 import { Divider } from "@astryxdesign/core/Divider";
 import { Markdown } from "@astryxdesign/core/Markdown";
 import { Link } from "@astryxdesign/core/Link";
@@ -10,6 +11,7 @@ import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList"
 import { Collapsible, CollapsibleGroup } from "@astryxdesign/core/Collapsible";
 import { PageHeader } from "@/components/page-header";
 import { Takeaway } from "@/components/takeaway";
+import { IconTile } from "@/components/status-pill";
 import { GlossaryTabs } from "@/components/glossary-tabs";
 import { RosettaCards } from "@/components/rosetta-cards";
 import { VocabularyNavProvider } from "@/components/vocabulary-nav-context";
@@ -41,6 +43,11 @@ export default function VocabularyPage() {
             eyebrow="Strategy"
             title="Speak COCA, ACPE, CODA, and LCME before the first call"
             description="Organized by domain: term → plain-English definition → which Prism pillar it touches → how to say it to a dean. Roadmap pillars are labeled honestly, not oversold."
+            endContent={
+              <IconTile variant="neutral">
+                <Icon icon="search" size="lg" />
+              </IconTile>
+            }
           />
           <Takeaway title="Nobody reads a glossary end to end — look up the four terms that will come up on your call">
             Start with the Rosetta Stone below: every term here has an allied-health equivalent the team already

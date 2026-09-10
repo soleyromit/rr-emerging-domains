@@ -32,9 +32,11 @@ export default function ScorecardPage() {
           <PageHeader
             eyebrow="Strategy"
             title={
-              scorecard.recommended_beachhead
-                ? `${scorecard.recommended_beachhead} is the recommended beachhead`
-                : "Where-to-play scorecard"
+              scorecard.actual_gtm_target
+                ? `${scorecard.actual_gtm_target} is the confirmed first domain to enter`
+                : scorecard.recommended_beachhead
+                  ? `${scorecard.recommended_beachhead} is the recommended beachhead`
+                  : "Where-to-play scorecard"
             }
             description={
               <>
@@ -45,18 +47,34 @@ export default function ScorecardPage() {
           />
           {isPlaceholder ? (
             <Banner status="warning" title="Scores are still placeholders" description="This view will fill in once the synthesis pass completes." />
-          ) : scorecard.recommended_beachhead ? (
-            <Card variant="pink">
-              <Stack gap={2}>
-                <Text type="label" color="secondary">
-                  Why it wins
-                </Text>
-                <Text type="body" maxLines={3}>
-                  {scorecard.rationale}
-                </Text>
-              </Stack>
-            </Card>
-          ) : null}
+          ) : (
+            <Stack gap={3}>
+              {scorecard.actual_gtm_target ? (
+                <Card variant="blue">
+                  <Stack gap={2}>
+                    <Text type="label" color="secondary">
+                      Confirmed GTM target{scorecard.actual_gtm_target_decided ? ` — ${scorecard.actual_gtm_target_decided}` : ""}
+                    </Text>
+                    <Text type="body" maxLines={6}>
+                      {scorecard.actual_gtm_target_rationale}
+                    </Text>
+                  </Stack>
+                </Card>
+              ) : null}
+              {scorecard.recommended_beachhead ? (
+                <Card variant="pink">
+                  <Stack gap={2}>
+                    <Text type="label" color="secondary">
+                      {scorecard.actual_gtm_target ? "What the scorecard's own math says wins" : "Why it wins"}
+                    </Text>
+                    <Text type="body" maxLines={3}>
+                      {scorecard.rationale}
+                    </Text>
+                  </Stack>
+                </Card>
+              ) : null}
+            </Stack>
+          )}
         </Stack>
       </Section>
 
