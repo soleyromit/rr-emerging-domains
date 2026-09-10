@@ -26,7 +26,15 @@
 #     content/personas/*.yaml filenames (no extension) this standard affects. Tag-only,
 #     not an evidentiary citation — same tolerated-sideways-reference status as an
 #     existing file's `related_flows`.
-last_updated: "2026-09-09"
+#   evidence_strength: "directional"                         — optional, added 2026-09-10. Present
+#     ONLY on a first-pass rating read off public vendor material, not verified element by element.
+#     The two original 2026-09-09 core-elms entries below deliberately omit it and stay unflagged.
+#   evidence_note: "..."                                     — REQUIRED whenever evidence_strength is
+#     "directional". States what the rating actually rests on ("first-pass read of the vendor's
+#     public product page only"), not a second rationale. Enforced in
+#     scripts/check_content_density.py's check_standards_ratings_integrity(): directional without a
+#     note fails, and a note without the flag also fails — an unflagged note reads as verified.
+last_updated: "2026-09-10"
 ratings:
   # --- Pharmacy / ACPE ---
   - domain: "Pharmacy"
@@ -50,6 +58,388 @@ ratings:
       - source_id: "press-peoplegrove-pharmacy-acpe-readiness-2026"
       - source_id: "doc-acpe-dear-dean-standards-2025-2024"
     persona_relevance: ["role-compliance-accreditation-liaison", "role-dean"]
+
+  # --- Pharmacy / ACPE, 2026-09-10 directional first pass ---
+  # Every entry below is flagged evidence_strength: "directional". They cover the ten
+  # GTM-load-bearing ACPE elements against the five competitors serving Pharmacy;
+  # the cells left empty are unresearched, NOT "the vendor doesn't do this".
+  # ---- CORE ELMS ----
+  - domain: "Pharmacy"
+    element_id: "Standard 2, Key Element 2.2.d"
+    competitor_slug: "core-elms"
+    rating: "partially-meeting"
+    rationale: "CompMS links courses, objectives and competencies with built-in curricular gap assessment, and PeopleGrove lists ACPE first among the accreditors it aligns to. Mapping each APPE's outcomes to the 2.1.a-m set is not shown, and CompMS is a separately positioned module, not bundled ELMS."
+    competitor_feature_ref: "Curriculum Mapping"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of two public CORE/PeopleGrove CompMS pages only — no demo, no customer confirmation, not verified element by element."
+    sources:
+      - source_id: "product-page-core-compms-accreditation-2026"
+      - source_id: "product-page-core-compms-curriculum-mapping-2026"
+    persona_relevance: ["role-program-admin", "role-compliance-accreditation-liaison"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.1.b"
+    competitor_slug: "core-elms"
+    rating: "partially-meeting"
+    rationale: "ELMS tracks time sheets and absences, with students submitting time under optional GPS and optional preceptor confirmation — the auditable, verified hour log 3.1.b rests on. No public page shows hours rolled up by practice-setting category, the 300/75/75 minimums enforced, or simulation excluded."
+    competitor_feature_ref: "Clinical & Experiential Education"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of CORE's public pharmacy ELMS and PeopleGrove ELMS pages — no demo, no customer confirmation, not verified element by element."
+    sources:
+      - source_id: "product-page-core-elms-pharmacy-affiliation-agreements-2026"
+      - source_id: "product-page-core-elms-platform-features-2026"
+    persona_relevance: ["role-clinical-coordinator", "discipline-pharmacy"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Elements 3.2.b & 3.2.d"
+    competitor_slug: "core-elms"
+    rating: "partially-meeting"
+    rationale: "The same timesheet engine plus SmartMatch, which assigns students to sites and preceptors on configurable rules, gives a per-student APPE record carrying hours. Nothing public shows the four required settings as a tracked taxonomy, the 1,440/160-hour rules, graduation gating, or an NTPD equivalent."
+    competitor_feature_ref: "Clinical & Experiential Education"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of CORE's public pharmacy ELMS and PeopleGrove ELMS pages — no demo, no customer confirmation, not verified element by element."
+    sources:
+      - source_id: "product-page-core-elms-pharmacy-affiliation-agreements-2026"
+      - source_id: "product-page-core-elms-platform-features-2026"
+    persona_relevance: ["role-clinical-coordinator", "role-program-admin"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.3.a"
+    competitor_slug: "core-elms"
+    rating: "partially-meeting"
+    rationale: "CORE's pharmacy ELMS page states it collects preceptor licenses and issues automated expiry alerts — the credentialing-record half of 3.3.a. Nothing public shows roster-level reporting on the licensed-pharmacist share of a student's assigned preceptors, or evaluation forms bound to each assignment."
+    competitor_feature_ref: "Compliance Management"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of the vendor's public pharmacy product page only — no demo, no customer confirmation, not verified element by element."
+    sources:
+      - source_id: "product-page-core-elms-pharmacy-affiliation-agreements-2026"
+    persona_relevance: ["role-clinical-coordinator", "role-compliance-accreditation-liaison"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.3.c"
+    competitor_slug: "core-elms"
+    rating: "partially-meeting"
+    rationale: "CORE's ELMS overview says the product can host and track preceptor training material and completion rates for training and development initiatives — the orientation record and development log 3.3.c asks for. Nothing public ties completion to a named course, or gates a student assignment on it."
+    competitor_feature_ref: "Compliance Management"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of one CORE product-overview page — no demo, and no view of how a program actually configures these training records."
+    sources:
+      - source_id: "product-page-core-elms-clinical-experiential-overview-2026"
+    persona_relevance: ["role-clinical-coordinator", "role-preceptor"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.3.e"
+    competitor_slug: "core-elms"
+    rating: "partially-meeting"
+    rationale: "A CORE compliance session says the suite optimizes site management by tracking site availability and student-to-preceptor ratios — the only CORE page found naming ratios. It reads as utilization reporting, not a 2:1 threshold blocking an assignment or logging an exception."
+    competitor_feature_ref: "Clinical & Experiential Education"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of one undated CORE compliance-session page. The ratio wording is marketing copy about site utilization, not a documented rule engine."
+    sources:
+      - source_id: "webinar-core-simplifying-compliance-2026"
+    persona_relevance: ["role-clinical-coordinator", "role-compliance-accreditation-liaison"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.3.c"
+    competitor_slug: "core-elms"
+    rating: "partially-meeting"
+    rationale: "Customizable evaluation forms for students, preceptors and sites deploy with automated reminders and low-score alerts, so one instrument object is reused across every site running the course. No public page describes cross-site or cross-preceptor comparison that would surface grading drift."
+    competitor_feature_ref: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of two public CORE/PeopleGrove product pages — no demo, and no sight of the reports a program can actually run."
+    sources:
+      - source_id: "product-page-core-elms-pharmacy-affiliation-agreements-2026"
+      - source_id: "product-page-core-elms-platform-features-2026"
+    persona_relevance: ["role-clinical-coordinator", "role-compliance-accreditation-liaison"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.5.a"
+    competitor_slug: "core-elms"
+    rating: "partially-meeting"
+    rationale: "ELMS ships customizable surveys to students, preceptors, clinical coordinators and school contacts on top of two-way rotation evaluations with low-score alerts — 7.5.a's collection half. Nothing public shows cycle-over-cycle comparison or an exportable annual findings-and-actions report."
+    competitor_feature_ref: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of two public CORE/PeopleGrove product pages — no demo, no customer confirmation, not verified element by element."
+    sources:
+      - source_id: "product-page-core-elms-clinical-experiential-overview-2026"
+      - source_id: "product-page-core-elms-platform-features-2026"
+    persona_relevance: ["role-dean", "role-compliance-accreditation-liaison"]
+
+  # ---- E*Value ----
+  - domain: "Pharmacy"
+    element_id: "Standard 2, Key Element 2.2.d"
+    competitor_slug: "e-value"
+    rating: "partially-meeting"
+    rationale: "eValue ships Curriculum Mapping with CIR integration, and MedHub's mapping page links course material to objectives and accreditation criteria and flags gaps. The named standards are AAMC's Curriculum Survey and MedBiquitous; no fetched page names ACPE, CAPE outcomes or APPE mapping."
+    competitor_feature_ref: "Curriculum Mapping"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of two public MedHub pages — no demo, no customer confirmation, and no pharmacy-specific mapping documentation found."
+    sources:
+      - source_id: "product-page-evalue-health-science-programs-2026"
+      - source_id: "product-page-medhub-curriculum-mapping-2026"
+    persona_relevance: ["role-program-admin", "role-compliance-accreditation-liaison"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.1.b"
+    competitor_slug: "e-value"
+    rating: "partially-meeting"
+    rationale: "eValue's Time Tracking is described as tracking and validating hours, creating summary reports and automating reminder notifications for students — logging, validation and an off-pace nudge. No fetched page shows setting-category rollup, the 300/75/75 minimums, or simulation exclusion."
+    competitor_feature_ref: "Clinical & Experiential Education"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of two public MedHub eValue product pages — no demo, no customer confirmation, not verified element by element."
+    sources:
+      - source_id: "product-page-evalue-health-science-programs-2026"
+      - source_id: "product-page-medhub-evalue-2026"
+    persona_relevance: ["role-clinical-coordinator", "discipline-pharmacy"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Elements 3.2.b & 3.2.d"
+    competitor_slug: "e-value"
+    rating: "partially-meeting"
+    rationale: "MedHub's WSU pharmacy case study has eValue holding the six six-week APPE rotations, carrying type of site, site availability and requirements — so setting is a tracked placement attribute. The 1,440/160-hour rules, four-category completion gating and the NTPD pathway are not shown."
+    competitor_feature_ref: "Clinical & Experiential Education"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of a vendor-published customer story plus the eValue product page — the school's words as edited by the vendor, not an inspection."
+    sources:
+      - source_id: "press-evalue-wsu-pharmacy-case-study-2026"
+      - source_id: "product-page-evalue-health-science-programs-2026"
+    persona_relevance: ["role-clinical-coordinator", "role-program-admin"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.3.a"
+    competitor_slug: "e-value"
+    rating: "partially-meeting"
+    rationale: "eValue centralizes student, preceptor and faculty data with immunization and certification records, and the WSU pharmacy case study lists preceptors in the same repository. No fetched page shows pharmacist licence status, licensed-share reporting per student, or evaluations bound to an assignment."
+    competitor_feature_ref: "Compliance Management"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of the eValue page plus a vendor-published pharmacy story. MedHub's named credentials monitoring is GME-side, so not counted here."
+    sources:
+      - source_id: "product-page-medhub-evalue-2026"
+      - source_id: "press-evalue-wsu-pharmacy-case-study-2026"
+    persona_relevance: ["role-clinical-coordinator", "role-compliance-accreditation-liaison"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.5.b"
+    competitor_slug: "e-value"
+    rating: "partially-meeting"
+    rationale: "The WSU pharmacy case study names affiliation agreements among the things eValue is the repository for, across 325 practice sites, and Site Management is marketed for eligibility verification. No fetched page shows agreement expiry alerting, or a lapsed agreement blocking scheduling at that site."
+    competitor_feature_ref: "Compliance Management"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of a vendor-published pharmacy story plus the eValue product page — 'eligibility verification' is not evidence of a blocking rule."
+    sources:
+      - source_id: "press-evalue-wsu-pharmacy-case-study-2026"
+      - source_id: "product-page-evalue-health-science-programs-2026"
+    persona_relevance: ["role-compliance-accreditation-liaison", "role-clinical-coordinator"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.3.c"
+    competitor_slug: "e-value"
+    rating: "partially-meeting"
+    rationale: "One evaluation-forms engine collects and reports on students, educators, activities and sites, so one instrument covers every site running it. Samford's case study describes low scores and corresponding actions tracked, but names the Educator Scorecard for cross-preceptor comparison as planned."
+    competitor_feature_ref: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of the eValue page plus a vendor-published pharmacy story. The cross-preceptor scorecard is described there as planned, not shipped."
+    sources:
+      - source_id: "product-page-medhub-evalue-2026"
+      - source_id: "press-evalue-samford-pharmacy-case-study-2026"
+    persona_relevance: ["role-clinical-coordinator", "role-compliance-accreditation-liaison"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.5.a"
+    competitor_slug: "e-value"
+    rating: "partially-meeting"
+    rationale: "Configurable evaluation forms span students, educators, activities and sites, and Samford's pharmacy case describes low scores and the corresponding actions taken tracked with automated chase reminders — a feedback-to-action loop. No AACP standardized survey set or annual findings export is shown."
+    competitor_feature_ref: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of the eValue page plus a vendor-published pharmacy story — no demo, and no sight of the analytics behind the evaluation data."
+    sources:
+      - source_id: "press-evalue-samford-pharmacy-case-study-2026"
+      - source_id: "product-page-medhub-evalue-2026"
+    persona_relevance: ["role-dean", "role-compliance-accreditation-liaison"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.5.b"
+    competitor_slug: "e-value"
+    rating: "partially-meeting"
+    rationale: "MedHub claims eValue serves 80-plus pharmacy schools for experiential education, assessment and accreditation management, and markets accreditation-visit tasks with automated alerts. Every named standards structure is ACGME or AAMC; no fetched page maps ACPE elements or mentions PHARMS."
+    competitor_feature_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of a 2016 vendor press release and the eValue product page. The 80-plus-schools figure is an unaudited vendor claim from 2016."
+    sources:
+      - source_id: "press-evalue-appe-anchoring-study-2016"
+      - source_id: "product-page-evalue-health-science-programs-2026"
+    persona_relevance: ["role-compliance-accreditation-liaison", "role-dean"]
+
+  # ---- Leo (DaVinci Education) ----
+  - domain: "Pharmacy"
+    element_id: "Standard 2, Key Element 2.2.d"
+    competitor_slug: "leo-davinci"
+    rating: "partially-meeting"
+    rationale: "Leo's pharmacy page sells curriculum mapping to ace an ACPE site visit, and Leo maps every session in every course, didactic or clinical, against multiple competency sets and EPAs. The gap-flag dashboard behind it is built on AAMC Curriculum Inventory blocks and LCME tables, not ACPE's taxonomy."
+    competitor_feature_ref: "Curriculum Mapping"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of DaVinci's public pharmacy page and Insights Dashboard write-up — no demo, not verified element by element."
+    sources:
+      - source_id: "product-page-leo-pharmacy-curriculum-2026"
+      - source_id: "doc-leo-insights-dashboard-mapping-2026"
+    persona_relevance: ["role-program-admin", "role-compliance-accreditation-liaison"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.1.b"
+    competitor_slug: "leo-davinci"
+    rating: "partially-meeting"
+    rationale: "Leo keeps each student's duty hours, downloadable as a spreadsheet, captured on the patient-encounter log next to procedures and observed conditions. That is hour capture with no preceptor verification step, no setting-category rollup and no threshold alerting, and no Leo page mentions IPPE."
+    competitor_feature_ref: "Clinical & Experiential Education"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of one DaVinci feature write-up. The hours field sits in a med-ed encounter module; nothing pharmacy-specific on hours was found."
+    sources:
+      - source_id: "doc-leo-patient-encounter-tracking-2026"
+      - source_id: "product-page-leo-pharmacy-curriculum-2026"
+    persona_relevance: ["role-clinical-coordinator", "discipline-pharmacy"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.5.b"
+    competitor_slug: "leo-davinci"
+    rating: "not-meeting"
+    rationale: "Four DaVinci pages read 2026-09-10 — pharmacy, FAQ, encounter tracking, Insights Dashboard — cover mapping, evaluations, encounter logs and accreditation reporting but never a site contract or affiliation-agreement repository. An argument from documented absence, not a stated limit."
+    competitor_feature_ref: "Compliance Management"
+    evidence_strength: "directional"
+    evidence_note: "Rests on absence across four DaVinci pages fetched 2026-09-10, not on a vendor statement. A demo or RFP answer could overturn it."
+    sources:
+      - source_id: "product-page-leo-pharmacy-curriculum-2026"
+      - source_id: "doc-leo-faqs-2026"
+    persona_relevance: ["role-compliance-accreditation-liaison", "role-clinical-coordinator"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.3.c"
+    competitor_slug: "leo-davinci"
+    rating: "partially-meeting"
+    rationale: "Leo's 360-degree evaluations cover courses, students and faculty including clinical assessments, with configurable anonymity and no-login links for clinical faculty, and one gradebook spans all rotations of a course at all campuses. Cross-site scoring-drift analytics are not described."
+    competitor_feature_ref: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of DaVinci's public FAQ and pharmacy page — no demo, no customer confirmation, not verified element by element."
+    sources:
+      - source_id: "doc-leo-faqs-2026"
+      - source_id: "product-page-leo-pharmacy-curriculum-2026"
+    persona_relevance: ["role-clinical-coordinator", "role-compliance-accreditation-liaison"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.5.a"
+    competitor_slug: "leo-davinci"
+    rating: "partially-meeting"
+    rationale: "Evaluations of courses, students and faculty run scheduled or on demand and support formative assessment, peer review and self-reflection, and every question links back to objectives and competencies. No preceptor survey set, cycle-over-cycle comparison or annual findings report is described."
+    competitor_feature_ref: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of DaVinci's public FAQ and pharmacy page — no demo, and the FAQ does not treat surveys as a feature distinct from evaluations."
+    sources:
+      - source_id: "doc-leo-faqs-2026"
+      - source_id: "product-page-leo-pharmacy-curriculum-2026"
+    persona_relevance: ["role-dean", "role-compliance-accreditation-liaison"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.5.b"
+    competitor_slug: "leo-davinci"
+    rating: "partially-meeting"
+    rationale: "Leo's pharmacy page claims it keeps a program accreditation-ready for an ACPE site visit, and the Insights Dashboard lets a school spot and fix accreditation concerns. The instrument tables behind it are the AAMC Curriculum Inventory and LCME DCI, with COCA future — ACPE elements are not modelled."
+    competitor_feature_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of DaVinci's pharmacy page and Insights Dashboard write-up. The ACPE claim is a marketing headline; no ACPE instrument was found."
+    sources:
+      - source_id: "product-page-leo-pharmacy-curriculum-2026"
+      - source_id: "doc-leo-insights-dashboard-mapping-2026"
+    persona_relevance: ["role-compliance-accreditation-liaison", "role-dean"]
+
+  # ---- PharmAcademic ----
+  - domain: "Pharmacy"
+    element_id: "Standard 2, Key Element 2.2.d"
+    competitor_slug: "pharmacademic"
+    rating: "partially-meeting"
+    rationale: "The vendor-authored guide shows a rotation's Educational Objectives tab: pick a Curricular Set, flag each objective taught (T) or taught and evaluated (TE), set a competency level, and map learning activities to them. Rotation-level APPE-to-outcome mapping; no didactic coverage-gap report is found."
+    competitor_feature_ref: "Curriculum Mapping"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of a 2018 vendor-authored preceptor guide plus a partner case study — the preceptor's view of mapping, never the administrator's."
+    sources:
+      - source_id: "doc-pharmacademic-preceptor-guide-2018"
+      - source_id: "press-pharmacademic-closeloop-case-study-2026"
+    persona_relevance: ["role-program-admin", "discipline-pharmacy"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.3.a"
+    competitor_slug: "pharmacademic"
+    rating: "partially-meeting"
+    rationale: "A License Management tab holds licences and certifications with renewal dates and file attachments, and assessments attach to a named rotation — the credential record plus per-assignment evaluation halves of 3.3.a. No expiry alerting or licensed-pharmacist-share reporting is documented."
+    competitor_feature_ref: "Compliance Management"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of two college-hosted preceptor guides. Storing a renewal date is not evidence of alerting on it; no admin screen was shown."
+    sources:
+      - source_id: "doc-pharmacademic-preceptor-instructions-2026"
+      - source_id: "doc-pharmacademic-preceptor-guide-2018"
+    persona_relevance: ["role-clinical-coordinator", "role-compliance-accreditation-liaison"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.3.e"
+    competitor_slug: "pharmacademic"
+    rating: "partially-meeting"
+    rationale: "Preceptor availability carries a Maximum Number of Students Accepted for this Match, and the guide's examples state the match engine will not schedule the preceptor for more than two students per block — a cap enforced at scheduling. It is preceptor-declared capacity, not a program 2:1 rule."
+    competitor_feature_ref: "Clinical & Experiential Education"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of a 2018 vendor-authored preceptor guide. It names a 'match engine' that the rest of PharmAcademic's public material never describes."
+    sources:
+      - source_id: "doc-pharmacademic-preceptor-guide-2018"
+    persona_relevance: ["role-clinical-coordinator", "role-preceptor"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.3.c"
+    competitor_slug: "pharmacademic"
+    rating: "partially-meeting"
+    rationale: "Assessments are pushed to a Global Task List with delivery, due and expiry dates, run as multi-section forms with required questions and cosignature, and attach to a named rotation — one instrument reaching every site offering it. No cross-site or cross-preceptor comparison report is documented."
+    competitor_feature_ref: "Surveys & Course Evaluations"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of two college-hosted preceptor guides — the form as a preceptor fills it in, not the machinery that builds or analyses it."
+    sources:
+      - source_id: "doc-pharmacademic-preceptor-guide-2018"
+      - source_id: "doc-pharmacademic-preceptor-instructions-2026"
+    persona_relevance: ["role-clinical-coordinator", "role-compliance-accreditation-liaison"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.5.a"
+    competitor_slug: "pharmacademic"
+    rating: "partially-meeting"
+    rationale: "Evaluation runs both ways: preceptors are subjects of assessments, and the college can release Blinded Preceptor Evaluation Summaries — one 7.5.a stakeholder group collected from and aggregated. No graduating-student or faculty instrument, cycle comparison, or annual findings export is documented."
+    competitor_feature_ref: "Surveys & Course Evaluations"
+    evidence_strength: "directional"
+    evidence_note: "First-pass read of two college-hosted preceptor guides. Both are preceptor-facing, so a missing student or faculty survey may be a documentation gap."
+    sources:
+      - source_id: "doc-pharmacademic-preceptor-instructions-2026"
+      - source_id: "doc-pharmacademic-preceptor-guide-2018"
+    persona_relevance: ["role-dean", "role-compliance-accreditation-liaison"]
+
+  # ---- RxPreceptor (CORE ELMS's legacy brand — see competitors/rxpreceptor.yaml) ----
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.1.b"
+    competitor_slug: "rxpreceptor"
+    rating: "partially-meeting"
+    rationale: "On the RXpreceptor-branded surface students submit hours and the preceptor confirms or denies them, denied hours going back to the student to edit, plus an absentee log — hour capture with a verification step. Nothing shows setting-category rollup, the 300/75/75 minimums, or off-pace alerting."
+    competitor_feature_ref: "Clinical & Experiential Education"
+    evidence_strength: "directional"
+    evidence_note: "One undated college-hosted RXpreceptor deck. RxPreceptor looks like CORE ELMS's legacy brand, so treat this as weaker than the core-elms rating."
+    sources:
+      - source_id: "doc-rxpreceptor-preceptor-training-2026"
+      - source_id: "other-rxpreceptor-peoplegrove-elms-login-2026"
+    persona_relevance: ["role-preceptor", "role-clinical-coordinator"]
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.3.e"
+    competitor_slug: "rxpreceptor"
+    rating: "partially-meeting"
+    rationale: "Availability is submitted per rotation date with how many students the preceptor can take, so a per-preceptor student count is captured. Nothing on the RXpreceptor surface computes a live ratio, blocks a third concurrent student, or records an exception — the school builds the schedule off-screen."
+    competitor_feature_ref: "Clinical & Experiential Education"
+    evidence_strength: "directional"
+    evidence_note: "One undated college-hosted RXpreceptor deck, preceptor-side only. RxPreceptor looks like CORE ELMS's legacy brand — not independent of CORE."
+    sources:
+      - source_id: "doc-rxpreceptor-preceptor-training-2026"
+      - source_id: "other-rxpreceptor-core-elms-admin-training-2018"
+    persona_relevance: ["role-preceptor", "role-clinical-coordinator"]
 
   # --- Dentistry / CODA ---
   - domain: "Dentistry"
