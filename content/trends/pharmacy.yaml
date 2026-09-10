@@ -1,9 +1,10 @@
 # Level 2 reframing — see _TEMPLATE.yaml for schema/rules. Cites
 # content/prism/capability-map.yaml (for exxat_status/exxat_ref),
 # content/competitors/*.yaml, and content/sources/registry.yaml. Sparse by
-# design: 10 trends (9 researched 2026-09-09: 4 ACPE-standards trends, then 5 from
+# design: 14 trends (9 researched 2026-09-09: 4 ACPE-standards trends, then 5 from
 # the pedagogy/capacity/AI research pass; 1 added 2026-09-10 from the
-# reviews/newsletters/videos research pass), not padded to a round number.
+# reviews/newsletters/videos research pass; 4 added 2026-09-10 from the Vishaka
+# pharmacy interview), not padded to a round number.
 domain: "Pharmacy"
 trends:
   - id: "acpe-standards-2025-in-force"
@@ -104,4 +105,43 @@ trends:
     addressed_by_competitors: []
     sources:
       - "event-aacp-experiential-education-institute-2026"
+
+  - id: "core-examsoft-influx-stack"
+    trend: "Pharmacy programs run CORE plus ExamSoft plus Influx to get one longitudinal student view"
+    detail: "Influx owns no original data — it integrates with CORE for clinical records and ExamSoft for didactic records, then sells the analysis on top. Three vendors, three training burdens, one question. The 12 September 2026 ExamSoft bulk import lands both halves in Prism at no extra charge, which makes the analytics vendor redundant."
+    exxat_status: "shipped"
+    exxat_ref: "ExamSoft bulk import (September 2026 release)"
+    addressed_by_competitors:
+      - competitor_slug: "core-elms"
+        capability_ref: "Clinical & Experiential Education"
+        source_id: "product-page-core-elms-pharmacy-affiliation-agreements-2026"
+    sources:
+      - "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - id: "lms-encroaching-on-assessment"
+    trend: "LMS platforms are moving into assessment, so the exam module competes with Canvas as well as ExamSoft"
+    detail: "Canvas and Brightspace have both added AI and assessment building in the last two years, and some programs already run full hundred-question midterms and finals in the LMS rather than in a dedicated exam tool. Exxat's own exam module has a January soft launch, so it lands against two categories of incumbent, not one."
+    exxat_status: "roadmap"
+    exxat_ref: "Exam Management"
+    addressed_by_competitors: []
+    sources:
+      - "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - id: "pharmacy-buyer-is-not-the-dce"
+    trend: "Curriculum mapping and competency tracking are sold to deans and assessment chairs, not to Directors of Clinical Education"
+    detail: "Most pharmacy outreach today targets the Director of Clinical Education, for whom curriculum mapping and accreditation are outside their purview — described internally as barking up the wrong tree. Dean, program director, curriculum chair and assessment chair lists don't exist yet for the current schools, so the assets can't be routed by role."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors: []
+    sources:
+      - "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - id: "central-technology-adoption-office"
+    trend: "Larger universities decide clinical-education software centrally, not program by program"
+    detail: "Bigger institutions increasingly run a central office for faculty development and technology adoption that chooses enterprise software — LMS, SIS, often ExamSoft — and runs implementation across programs from an institution-level budget. Where one exists, the pharmacy program is an influencer, not the decision maker, and pharmacy can pull PT, OT and PA along with it."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors: []
+    sources:
+      - "interview-vishaka-pharmacy-understanding-2026-09-04"
 last_updated: "2026-09-10"
