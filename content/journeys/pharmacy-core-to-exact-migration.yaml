@@ -20,8 +20,7 @@ persona: >
   chain that must stay unbroken across the cutover. In a pharmacy program these are
   usually two people in one independent school with its own budget — not a shared
   services function — which is why a platform switch here is a program-level decision
-  and not an institutional one. See ../personas/role-clinical-coordinator.yaml and
-  ../personas/role-compliance-accreditation-liaison.yaml.
+  and not an institutional one.
 
 stages:
   - stage: "1. Decision trigger — why a pharmacy program leaves its incumbent"
