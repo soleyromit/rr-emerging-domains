@@ -11,7 +11,10 @@
 journey_name: "Pharmacy Platform Migration — CORE ELMS to Exxat Prism"
 domain_scope: ["Pharmacy"]
 persona: >
-  Centers on the Director of Experiential (or Clinical) Education, who owns the site,
+  NOT A RECORDED CUSTOMER OUTCOME: this journey describes a hypothetical migration shape
+  derived from what ACPE requires and what both platforms are documented to hold — no
+  pharmacy program has made this move on record (see the SCOPE HONESTY note at the top of
+  this file). Centers on the Director of Experiential (or Clinical) Education, who owns the site,
   preceptor and hour records that have to survive the move, working alongside the
   Assistant/Associate Dean for Assessment & Accreditation, who owns the ACPE evidence
   chain that must stay unbroken across the cutover. In a pharmacy program these are
