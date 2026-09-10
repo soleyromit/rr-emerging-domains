@@ -627,7 +627,7 @@ sources:
     url: "https://closeloop.com/case-study/mccreadie-pharmacademic/"
     type: "press"
     publisher: "Closeloop Technologies (McCreadie Group development partner)"
-    what_it_supports: "Quotes the fuller vendor product line: PharmAcademic 'integrates the management of experiential education, assessment, courses, curricular outcomes and mapping, and a portfolio'. Also lists the tech stack (ASP.Net, MySQL, Backbone, Twilio)."
+    what_it_supports: "Primary surviving source for PharmAcademic's PharmD-side scope: it 'integrates the management of experiential education, assessment, courses, curricular outcomes and mapping, and a portfolio'. The vendor's own page dropped this language by 2026-09-10."
     accessed: "2026-09-10"
 
   - id: "other-rxpreceptor-peoplegrove-elms-login-2026"
@@ -635,7 +635,7 @@ sources:
     url: "https://login.peoplegrove.com/login-elms"
     type: "other"
     publisher: "PeopleGrove"
-    what_it_supports: "Identity evidence: https://www.rxpreceptor.com/ returns HTTP 302 to this page, which shows a CORE ELMS logo, a '© PeopleGrove' footer and a password-reset link on rxpreceptor.com — RxPreceptor is the legacy front door of CORE ELMS."
+    what_it_supports: "Identity evidence: rxpreceptor.com returns HTTP 302 here; the page shows a CORE ELMS logo, a '© PeopleGrove' footer and a password-reset link on rxpreceptor.com. The legacy academicsuiterx.com logins separately 301 to corehighered.com."
     accessed: "2026-09-10"
 
   - id: "doc-rxpreceptor-preceptor-training-2026"

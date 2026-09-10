@@ -2,7 +2,8 @@
 # (vendor domain, the login it redirects to, school-hosted preceptor training material,
 # a CORE-provided CE listing). That pass found the fact the first pass missed:
 # RxPreceptor is not a separate product. rxpreceptor.com redirects to PeopleGrove's CORE
-# ELMS login, and CORE's own training listing calls the software "CORE ELMS /
+# ELMS login, the legacy academicsuiterx.com logins redirect to corehighered.com, and
+# CORE's own training listing calls the software "CORE ELMS /
 # RXpreceptor". This file therefore records only what is evidenced about the
 # RxPreceptor-branded surface itself; platform depth belongs in core-elms.yaml and is
 # NOT copied across. Nothing is filled in by analogy to CORE ELMS or PharmAcademic — the
@@ -18,10 +19,14 @@ company:
     PeopleGrove, via CORE Higher Education Group. Verified 2026-09-10: https://www.rxpreceptor.com/
     returns HTTP 302 to https://login.peoplegrove.com/login-elms, a page titled "ELMS
     Login" carrying a CORE ELMS logo, a "© PeopleGrove" footer, and a password-reset link
-    still pointing at rxpreceptor.com. Earlier operation was under RXinsider: school
-    pages at ULM and UT Tyler both tell preceptors their account-activation email arrives
-    from support@rxinsider.com, and logins go to academicsuiterx.com. No public statement
-    of a founding date, HQ or transaction was found for the RxPreceptor brand itself.
+    still pointing at rxpreceptor.com. The legacy login hosts corroborate independently:
+    both https://academicsuiterx.com/login.php and
+    https://www.academicsuiterx.com/experiential_login.php return HTTP 301 to
+    https://corehighered.com/ (checked 2026-09-10) — the old RxPreceptor login URLs school
+    pages still publish now land on CORE's marketing homepage. Earlier operation was under
+    RXinsider: school pages at ULM and UT Tyler both tell preceptors their
+    account-activation email arrives from support@rxinsider.com. No public statement of a
+    founding date, HQ or transaction was found for the RxPreceptor brand itself.
 
 feature_teardown:
   - pillar: "Clinical & Experiential Education"
@@ -112,8 +117,10 @@ retention_anchor: >
   Not RxPreceptor's own — it is CORE ELMS's, recorded in core-elms.yaml (multi-year
   placement, compliance, evaluation and competency records per cohort). What the
   RxPreceptor brand adds on top is inertia: preceptors and schools have bookmarked
-  rxpreceptor.com and academicsuiterx.com logins for years, and those URLs still work,
-  so the switching friction includes retraining people off a name, not just a system.
+  rxpreceptor.com and academicsuiterx.com logins for years, and the vendor still catches
+  those URLs rather than letting them break — rxpreceptor.com lands on the live CORE ELMS
+  login, academicsuiterx.com on corehighered.com. Switching friction therefore includes
+  retraining people off a name, not just off a system.
 
 exxat_opportunity: >
   The single most useful outcome of this pass is a disqualification: stop treating
@@ -121,12 +128,15 @@ exxat_opportunity: >
   ELMS login and CORE's own administrator-training listing calls the software "CORE ELMS
   / RXpreceptor", so a school that says "we use RxPreceptor" is on CORE under a legacy
   name. Practically: a deal naming RxPreceptor is a CORE displacement deal, and
-  core-elms.yaml's wedge applies unchanged (reporting depth and module cohesion are
-  CORE's own reviewers' complaints; exam management is white space). Qualify the name
-  early — "is that CORE ELMS?" — rather than scoping a second teardown. One genuine
-  caution: the identity is established by a live redirect plus a vendor-provided training
-  listing, not by a vendor statement that the products are the same, so confirm with the
-  account before writing it into a proposal.
+  core-elms.yaml's wedge applies unchanged — reporting depth and module cohesion are
+  CORE's own reviewers' complaints, so lead there. Do not lead on exam management: that
+  is unverified on CORE's side too, flagged "unable to verify" rather than absent in
+  core-elms.yaml, and it is not a proven gap. Qualify the name early — "is that CORE
+  ELMS?" — rather than scoping a second teardown. One genuine caution: the identity is
+  established by live redirects (rxpreceptor.com to CORE ELMS's login, academicsuiterx.com
+  to corehighered.com) plus a vendor-provided training listing, not by a vendor statement
+  that the products are the same, so confirm with the account before writing it into a
+  proposal.
 
 pricing_signal: "not publicly disclosed"
 

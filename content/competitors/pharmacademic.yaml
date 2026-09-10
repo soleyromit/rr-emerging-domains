@@ -5,6 +5,11 @@
 # page fetched that day. Nothing here is inferred from CORE ELMS's shape or from what a
 # pharmacy platform "must" have; every entry stays "unknown" on depth because no fetched
 # page describes how the underlying engines (matching, alerting, reporting) work.
+# Sourcing correction made 2026-09-10 (fix round 1): mccreadiegroup.com/pharmacademic/
+# has been rewritten to residency-only content and no longer carries the
+# curricular-mapping / experiential-education language the 2026-09-09 pass cited it for.
+# Claims that rested on it were re-pointed at the two sources that still carry them; the
+# narrowing is itself recorded as a weakness rather than quietly patched over.
 competitor: "PharmAcademic (McCreadie Group)"
 slug: "pharmacademic"
 domains_served: ["Pharmacy"]
@@ -47,21 +52,25 @@ feature_teardown:
       Information, plus "PharmPortfolio", the student e-portfolio a preceptor can view.
     depth_vs_prism: "unknown"
     evidence: >
-      The vendor's own one-line product description names "curricular mapping"
-      explicitly, and a development-partner case study quotes the fuller vendor line:
-      "PharmAcademic integrates the management of experiential education, assessment,
-      courses, curricular outcomes and mapping, and a portfolio designed to support
-      pharmacists' education throughout their careers"
-      (https://closeloop.com/case-study/mccreadie-pharmacademic/). The
-      McCreadie-authored preceptor guide confirms "Curricular Sets" and
-      "Courses" exist as first-class objects and that "My Portfolio allows you to access
-      your electronic portfolio"
-      (https://oep.pharmacy.ufl.edu/files/2019/01/Guide-to-PharmAcademic.pdf). Still no
-      public material describing what is mapped to (ACPE standards, CAPE outcomes, EPAs),
-      gap-analysis reporting, or accreditation-report output — the capability is confirmed
-      to exist by name and to have named containers, with no depth evidence to compare
-      against Prism's Curriculum Mapping pillar.
-    source: "https://mccreadiegroup.com/pharmacademic/"
+      The vendor line is quoted by McCreadie's development partner: "PharmAcademic
+      integrates the management of experiential education, assessment, courses, curricular
+      outcomes and mapping, and a portfolio designed to support pharmacists' education
+      throughout their careers." The McCreadie-authored preceptor guide independently
+      confirms "Curricular Sets" and "Courses" exist as first-class objects and that "My
+      Portfolio allows you to access your electronic portfolio"
+      (https://oep.pharmacy.ufl.edu/files/2019/01/Guide-to-PharmAcademic.pdf).
+      IMPORTANT sourcing correction, 2026-09-10: the 2026-09-09 pass cited
+      https://mccreadiegroup.com/pharmacademic/ for the phrase "curricular mapping". That
+      page has since been rewritten — re-fetched twice on 2026-09-10, it is now titled
+      "PharmAcademic™ — The Residency Program Management Solution" and contains zero
+      occurrences of "curricular", "mapping", "experiential", "assessment" or "schools of
+      pharmacy". The claim is not withdrawn (two other fetched sources carry it), but its
+      citation has moved off the vendor page. Still no public material describing what is
+      mapped to (ACPE standards, CAPE outcomes, EPAs), gap-analysis reporting, or
+      accreditation-report output — the capability is confirmed to exist by name and to
+      have named containers, with no depth evidence to compare against Prism's Curriculum
+      Mapping pillar.
+    source: "https://closeloop.com/case-study/mccreadie-pharmacademic/"
   - pillar: "Compliance Management"
     competitor_capability: >
       Preceptor-credential storage, not a compliance engine on the evidence available: a
@@ -136,8 +145,9 @@ strengths:
   - claim: >
       Spans both sides of pharmacy training in one product line: PharmD-school
       experiential education, curricular mapping and assessment, plus residency
-      documentation.
-    source: "https://mccreadiegroup.com/pharmacademic/"
+      documentation. (Sourced to the development-partner case study and the
+      McCreadie-authored preceptor guide — the vendor's own page no longer says this.)
+    source: "https://closeloop.com/case-study/mccreadie-pharmacademic/"
 
 weaknesses:
   - claim: >
@@ -149,6 +159,12 @@ weaknesses:
       Public product surface is one page. The vendor page carries no feature sub-pages, no
       pricing, no customer case studies; the most detailed public documentation found is
       the August 2018 revision of a preceptor guide a college hosts.
+    source: "https://mccreadiegroup.com/pharmacademic/"
+  - claim: >
+      The PharmD side has vanished from public positioning. As of 2026-09-10 the vendor
+      page is titled "The Residency Program Management Solution" and contains no mention
+      of experiential education, curricular mapping, assessment, or schools of pharmacy —
+      the PharmD story now survives only in third-party and college-hosted material.
     source: "https://mccreadiegroup.com/pharmacademic/"
   - claim: >
       Compliance evidence is preceptor-side only — licenses, immunisations, CV. No
