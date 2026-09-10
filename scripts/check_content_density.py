@@ -87,11 +87,25 @@ ACCREDITATION_CEILINGS = {
     "standards[].evidence_programs_must_produce": (640, 1450),
     "standards[].required_software_behavior": (385, 950),
     "standards[].gap_notes": (612, 1200),
+    # exxat_compliance_rationale is a one-sentence derivation from prism_fit,
+    # not independent research — same order of magnitude as a competitor claim.
+    "standards[].exxat_compliance_rationale": (350, 700),
 }
 # same order of magnitude as competitors/*.yaml's strengths[].claim — the closest
 # analog (a single-sourced competitive claim).
 STANDARDS_RATINGS_CEILINGS = {
     "ratings[].rationale": (300, 600),
+}
+# content/trends/*.yaml — one-line trend + a short decomposed detail, same order
+# of magnitude as a persona jtbd.job / accreditation gap_notes entry.
+TRENDS_CEILINGS = {
+    "trends[].trend": (120, 220),
+    "trends[].detail": (300, 600),
+}
+# content/sources/registry.yaml — a citation's "what it supports" is a one-line
+# pointer, not a summary of the source itself.
+SOURCES_CEILINGS = {
+    "sources[].what_it_supports": (150, 300),
 }
 
 # Known, reviewed exceptions — a spot-checked genuine dense finding, not a bug.
@@ -206,19 +220,41 @@ DOMAIN_TO_ACCREDITATION_SLUG = {
 }
 
 
+def _load_source_ids():
+    sources_path = CONTENT / "sources" / "registry.yaml"
+    if not sources_path.exists():
+        return set()
+    doc = yaml.safe_load(sources_path.read_text()) or {}
+    return {s.get("id") for s in (doc.get("sources") or []) if s.get("id")}
+
+
+def _load_persona_slugs():
+    slugs = set()
+    for f in sorted((CONTENT / "personas").glob("*.yaml")):
+        if f.name.startswith("_TEMPLATE"):
+            continue
+        slugs.add(f.stem)
+    return slugs
+
+
 def check_standards_ratings_integrity():
-    """Enforce ARCHITECTURE.md's citation rule for the one cross-registry file this
+    """Enforce ARCHITECTURE.md's citation rule for the cross-registry files this
     repo has: every rating in lenses/standards-competitor-ratings.yaml must resolve
     to a real accreditation element and a real competitor slug, and carry a source
     whenever it asserts a rating — the automatable version of "does the arrow point
-    down, and does it resolve" that's otherwise enforced only by human review."""
+    down, and does it resolve" that's otherwise enforced only by human review.
+
+    A rating's source requirement is satisfied by either the original single-URL
+    `source` field or a non-empty `sources[]` list (added 2026-09-09) — either is
+    a real, checkable citation. `sources[].source_id` and `persona_relevance[]`
+    entries (also added 2026-09-09) are optional but must resolve if present."""
     problems = []
     ratings_path = CONTENT / "lenses" / "standards-competitor-ratings.yaml"
     if not ratings_path.exists():
         return problems
     doc = yaml.safe_load(ratings_path.read_text()) or {}
 
-    elements_by_slug = {}  # accreditor slug -> set of element_ids
+    elements_by_slug = {}  # accreditor slug -> element_id -> set of feature_teardown pillars
     for f in sorted((CONTENT / "accreditation").glob("*.yaml")):
         if f.name.startswith("_TEMPLATE"):
             continue
@@ -226,13 +262,19 @@ def check_standards_ratings_integrity():
         if adoc.get("slug"):
             elements_by_slug[adoc["slug"]] = {s.get("element_id") for s in (adoc.get("standards") or [])}
 
-    competitor_slugs = set()
+    competitor_pillars = {}  # slug -> set of feature_teardown pillar names
     for f in sorted((CONTENT / "competitors").glob("*.yaml")):
         if f.name.startswith("_TEMPLATE"):
             continue
         cdoc = yaml.safe_load(f.read_text()) or {}
         if cdoc.get("slug"):
-            competitor_slugs.add(cdoc["slug"])
+            competitor_pillars[cdoc["slug"]] = {
+                t.get("pillar") for t in (cdoc.get("feature_teardown") or []) if t.get("pillar")
+            }
+    competitor_slugs = set(competitor_pillars)
+
+    source_ids = _load_source_ids()
+    persona_slugs = _load_persona_slugs()
 
     for i, r in enumerate(doc.get("ratings") or []):
         where = f"ratings[{i}]"
@@ -246,8 +288,70 @@ def check_standards_ratings_integrity():
             problems.append(f"{where}: element_id {element_id!r} not found in {domain}'s accreditation file")
         if slug not in competitor_slugs:
             problems.append(f"{where}: competitor_slug {slug!r} not found in content/competitors/*.yaml")
-        if r.get("rating") and not r.get("source"):
-            problems.append(f"{where}: rating {r.get('rating')!r} has no source")
+
+        has_sources_list = bool(r.get("sources"))
+        if r.get("rating") and not r.get("source") and not has_sources_list:
+            problems.append(f"{where}: rating {r.get('rating')!r} has no source (neither `source` nor `sources[]`)")
+
+        for j, s in enumerate(r.get("sources") or []):
+            sid = s.get("source_id")
+            if sid and sid not in source_ids:
+                problems.append(f"{where}.sources[{j}]: source_id {sid!r} not found in content/sources/registry.yaml")
+
+        ref = r.get("competitor_feature_ref")
+        if ref and slug in competitor_pillars and competitor_pillars[slug] and ref not in competitor_pillars[slug]:
+            problems.append(
+                f"{where}: competitor_feature_ref {ref!r} not found among {slug}'s feature_teardown pillars"
+            )
+
+        for p in r.get("persona_relevance") or []:
+            if p not in persona_slugs:
+                problems.append(f"{where}: persona_relevance {p!r} not found in content/personas/*.yaml")
+
+    return problems
+
+
+def check_trends_integrity():
+    """content/trends/*.yaml's `sources` is a flat list of ids (not the
+    {source_id} object shape ratings entries use — there's no other per-source
+    metadata to hang alongside a trend); confirm every id, including inside
+    addressed_by_competitors[], resolves into content/sources/registry.yaml."""
+    problems = []
+    source_ids = _load_source_ids()
+    for f in sorted((CONTENT / "trends").glob("*.yaml")):
+        if f.name.startswith("_TEMPLATE"):
+            continue
+        doc = yaml.safe_load(f.read_text()) or {}
+        for t in doc.get("trends") or []:
+            tid = t.get("id")
+            for sid in t.get("sources") or []:
+                if sid not in source_ids:
+                    problems.append(f"{f.name} trend {tid!r}: source id {sid!r} not found in content/sources/registry.yaml")
+            for ref in t.get("addressed_by_competitors") or []:
+                sid = ref.get("source_id")
+                if sid and sid not in source_ids:
+                    problems.append(
+                        f"{f.name} trend {tid!r}: addressed_by_competitors source_id {sid!r} not found in content/sources/registry.yaml"
+                    )
+    return problems
+
+
+def check_research_sources_integrity():
+    """content/accreditation/*.yaml's `standards[].research_sources` (added
+    2026-09-10, distinct from the accreditor's own `source` field) — confirm
+    every id resolves into content/sources/registry.yaml."""
+    problems = []
+    source_ids = _load_source_ids()
+    for f in sorted((CONTENT / "accreditation").glob("*.yaml")):
+        if f.name.startswith("_TEMPLATE"):
+            continue
+        doc = yaml.safe_load(f.read_text()) or {}
+        for s in doc.get("standards") or []:
+            for sid in s.get("research_sources") or []:
+                if sid not in source_ids:
+                    problems.append(
+                        f"{f.name} {s.get('element_id')!r}: research_sources id {sid!r} not found in content/sources/registry.yaml"
+                    )
     return problems
 
 
@@ -298,6 +402,13 @@ def main():
     ratings_file = CONTENT / "lenses" / "standards-competitor-ratings.yaml"
     if ratings_file.exists():
         check_file(ratings_file, STANDARDS_RATINGS_CEILINGS, results)
+    for f in sorted((CONTENT / "trends").glob("*.yaml")):
+        if f.name.startswith("_TEMPLATE"):
+            continue
+        check_file(f, TRENDS_CEILINGS, results)
+    sources_file = CONTENT / "sources" / "registry.yaml"
+    if sources_file.exists():
+        check_file(sources_file, SOURCES_CEILINGS, results)
 
     # Drop allowlisted entries — matched by filename + path + a substring of the
     # actual value, so allowlisting one entry doesn't silently exempt every other
@@ -314,6 +425,8 @@ def main():
     results = filtered
 
     integrity_problems = check_standards_ratings_integrity()
+    integrity_problems += check_trends_integrity()
+    integrity_problems += check_research_sources_integrity()
     unresearched = summarize_unresearched_accreditation()
 
     if not results and not integrity_problems:
@@ -325,7 +438,7 @@ def main():
         for severity, fname, path, n, hard in results:
             print(f"{severity}  {fname}  {path}  {n} chars (hard ceiling {hard})")
         for problem in integrity_problems:
-            print(f"FAIL  standards-competitor-ratings.yaml  {problem}")
+            print(f"FAIL  {problem}")
 
         print(f"\n{len(warns)} WARN, {len(fails) + len(integrity_problems)} FAIL")
 

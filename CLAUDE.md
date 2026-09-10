@@ -35,6 +35,16 @@ Both checks are enforced, not optional. A `Collapsible`-wrapping component that 
 right in the source but wraps non-collapsible children will pass `next build` and still
 be wrong — open the page in a browser and actually click things before calling it done.
 
+## Research and orchestration
+
+For research questions that need facts outside this repo (competitor details,
+standards, market data), use WebSearch/WebFetch directly rather than answering from
+memory.
+
+When spawning subagents in this repo via the `Agent` tool or a `Workflow` script, pass
+`model: "opus"` so Opus orchestrates the work, unless the user asks for a different
+model for that call.
+
 ## Both checks exist because a request alone didn't hold
 
 An audit of this repo's own content found a written brief ("1-2 sentences") that a
