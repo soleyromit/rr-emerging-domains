@@ -108,9 +108,9 @@ trends:
 
   - id: "core-examsoft-influx-stack"
     trend: "Pharmacy programs run CORE plus ExamSoft plus Influx to get one longitudinal student view"
-    detail: "Influx owns no original data — it integrates with CORE for clinical records and ExamSoft for didactic records, then sells the analysis on top. Three vendors, three training burdens, one question. The 12 September 2026 ExamSoft bulk import lands both halves in Prism at no extra charge, which makes the analytics vendor redundant."
-    exxat_status: "shipped"
-    exxat_ref: "ExamSoft bulk import (September 2026 release)"
+    detail: "Influx owns no original data — it integrates with CORE for clinical records and ExamSoft for didactic records, then sells the analysis on top. Three vendors, three training burdens, one question. The ExamSoft bulk import releasing 12 September 2026 will land both halves in Prism at no extra charge, which removes the analytics vendor's data-aggregation reason to exist."
+    exxat_status: "roadmap"
+    exxat_ref: "ExamSoft bulk import (releases 12 September 2026)"
     addressed_by_competitors:
       - competitor_slug: "core-elms"
         capability_ref: "Clinical & Experiential Education"
@@ -120,7 +120,7 @@ trends:
 
   - id: "lms-encroaching-on-assessment"
     trend: "LMS platforms are moving into assessment, so the exam module competes with Canvas as well as ExamSoft"
-    detail: "Canvas and Brightspace have both added AI and assessment building in the last two years, and some programs already run full hundred-question midterms and finals in the LMS rather than in a dedicated exam tool. Exxat's own exam module has a January soft launch, so it lands against two categories of incumbent, not one."
+    detail: "Canvas and Brightspace have both added AI and assessment building in the last two years, so Exxat's exam module — which has a January soft launch — lands against two categories of incumbent, not one."
     exxat_status: "roadmap"
     exxat_ref: "Exam Management"
     addressed_by_competitors: []
