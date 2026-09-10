@@ -128,7 +128,7 @@ The aspirational AI-gap-detection idea from her Cohere deck goes in, if at all, 
 own `proposed` entry whose `detail` opens with "Roadmap concept, not shipped" — never
 folded into the live pilot entry.
 
-**New journey:** `content/journeys/pharmacy-core-to-exact-migration.yaml` — 5 stages
+**New journey:** `content/journeys/pharmacy-core-to-exxat-migration.yaml` — 5 stages
 (decision trigger → data inventory → program re-setup → bulk ExamSoft import → first
 self-study cycle), each stage citing full ACPE element_id strings so it auto-appears in
 the computed join. Authored well under the existing ceilings (target 800–1,400 chars
@@ -199,7 +199,7 @@ possibility that only shows up in a browser, not in a build.
   hover a `RelatedFlowsPreview` chip inside the panel and confirm the HoverCard isn't
   clipped; confirm the two pre-existing `core-elms` ratings are *not* flagged
   directional while new ones are; check `/domains/do/standards` (no use-case content
-  yet) still degrades cleanly; check the new `/journeys/pharmacy-core-to-exact-
+  yet) still degrades cleanly; check the new `/journeys/pharmacy-core-to-exxat-
   migration` route renders.
 
 ## Sequencing

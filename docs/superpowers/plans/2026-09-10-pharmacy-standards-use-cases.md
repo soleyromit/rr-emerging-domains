@@ -1621,17 +1621,17 @@ export function CoverageGapsCallout({
 
 ---
 
-### Task 10: `pharmacy-core-to-exact-migration` journey
+### Task 10: `pharmacy-core-to-exxat-migration` journey
 
 **Files:**
-- Create: `content/journeys/pharmacy-core-to-exact-migration.yaml`
+- Create: `content/journeys/pharmacy-core-to-exxat-migration.yaml`
 - Test: `python3 scripts/check_content_density.py` + `cd apps/ecosystem && npx next build` + the browser check in Step 4
 
 **Interfaces:**
 - Consumes: nothing from earlier tasks at author time.
 - Produces: a journey whose `stages[].accreditation_link` fields contain full ACPE `element_id` strings **and** the token `ACPE`, so `buildComputedUseCaseIndex` (Task 3) picks them up automatically. After this task, `Standard 3, Key Element 3.5.b` gains a computed journey match and its `computedMatchTotal` rises by one.
 
-- [ ] **Step 1: Create `content/journeys/pharmacy-core-to-exact-migration.yaml`** with exactly this content. Note the deliberate discipline used throughout: every `accreditation_link` names full ACPE element_id strings and the accreditor's short name; `key_findings[].detail` is held under 260 chars (soft ceiling) because this is the exact field that overran on `rotation-lifecycle.yaml`:
+- [ ] **Step 1: Create `content/journeys/pharmacy-core-to-exxat-migration.yaml`** with exactly this content. Note the deliberate discipline used throughout: every `accreditation_link` names full ACPE element_id strings and the accreditor's short name; `key_findings[].detail` is held under 260 chars (soft ceiling) because this is the exact field that overran on `rotation-lifecycle.yaml`:
 
 ```yaml
 # Journey: Pharmacy Platform Migration — CORE ELMS to Exxat Prism
@@ -1901,12 +1901,12 @@ sources:
 last_updated: "2026-09-10"
 ```
 
-- [ ] **Step 2: Verify every journey field is inside its ceiling** — Run from the repo root: `python3 scripts/check_content_density.py --warn-only | grep "pharmacy-core-to-exact" || echo "clean"`. Expected: `clean`. Any `key_findings[].detail` line means an entry is over 260 chars — shorten it rather than allowlisting a brand-new file.
+- [ ] **Step 2: Verify every journey field is inside its ceiling** — Run from the repo root: `python3 scripts/check_content_density.py --warn-only | grep "pharmacy-core-to-exxat" || echo "clean"`. Expected: `clean`. Any `key_findings[].detail` line means an entry is over 260 chars — shorten it rather than allowlisting a brand-new file.
 - [ ] **Step 3: Verify the computed join picked the new journey up** — Run from the repo root:
   ```bash
   python3 -c "
 import yaml, pathlib
-j = yaml.safe_load(open('content/journeys/pharmacy-core-to-exact-migration.yaml'))
+j = yaml.safe_load(open('content/journeys/pharmacy-core-to-exxat-migration.yaml'))
 a = yaml.safe_load(open('content/accreditation/acpe.yaml'))
 els = [s['element_id'] for s in a['standards']]
 for i, st in enumerate(j['stages'], 1):
@@ -1916,10 +1916,10 @@ for i, st in enumerate(j['stages'], 1):
 "
   ```
   Expected: every one of the 5 stages reports at least one hit, and stage 2 reports three (`3.1.b`, `3.2.b & 3.2.d`, `3.5.b`).
-- [ ] **Step 4: Build and manual browser check** — Run `cd apps/ecosystem && npx next build`, then with `npm run dev`: open `/journeys` and confirm a sixth card, "Pharmacy Platform Migration — CORE ELMS to Exxat Prism", showing "5 stages" and a "Pharmacy" badge. Open `/journeys/pharmacy-core-to-exact-migration` and confirm the page renders with the two-zone shape and stages closed by default. Then open `/domains/pharmacy/standards`, expand `Standard 3, Key Element 3.5.b`, and confirm the new journey now appears in the computed "Also cited by existing research" list under its full name.
+- [ ] **Step 4: Build and manual browser check** — Run `cd apps/ecosystem && npx next build`, then with `npm run dev`: open `/journeys` and confirm a sixth card, "Pharmacy Platform Migration — CORE ELMS to Exxat Prism", showing "5 stages" and a "Pharmacy" badge. Open `/journeys/pharmacy-core-to-exxat-migration` and confirm the page renders with the two-zone shape and stages closed by default. Then open `/domains/pharmacy/standards`, expand `Standard 3, Key Element 3.5.b`, and confirm the new journey now appears in the computed "Also cited by existing research" list under its full name.
 - [ ] **Step 5: Commit**
   ```bash
-  git add content/journeys/pharmacy-core-to-exact-migration.yaml
+  git add content/journeys/pharmacy-core-to-exxat-migration.yaml
   git commit -m "Add CORE-to-Exxat pharmacy migration journey"
   ```
 
@@ -2015,7 +2015,7 @@ Nothing new is authored here. This task exists because this repo has shipped a b
 
 - [ ] **Step 1: Content density and integrity, full run** — Run from the repo root: `python3 scripts/check_content_density.py; echo "exit=$?"`. Expected: the summary line reports exactly `31 FAIL`, and `grep`ing the output for any file this work touched returns nothing:
   ```bash
-  python3 scripts/check_content_density.py --warn-only | grep -E "standards-use-cases|standards-competitor-ratings|pharmacy-core-to-exact|pharmacy\.yaml|pharmacademic|rxpreceptor|registry\.yaml" || echo "no FAIL/WARN on touched files"
+  python3 scripts/check_content_density.py --warn-only | grep -E "standards-use-cases|standards-competitor-ratings|pharmacy-core-to-exxat|pharmacy\.yaml|pharmacademic|rxpreceptor|registry\.yaml" || echo "no FAIL/WARN on touched files"
   ```
   A WARN on `registry.yaml`'s `what_it_supports` is acceptable (it's between soft and hard). A **FAIL** on any of these files is not — fix it or add it to `ALLOWLIST` with a one-line reason and today's date.
 - [ ] **Step 2: All four integrity checks print zero problems** — Run from the repo root:
@@ -2037,7 +2037,7 @@ for fn in (m.check_standards_ratings_integrity, m.check_standards_use_cases_inte
   3. Hover a `RelatedFlowsPreview` chip inside an expanded panel. Confirm the `HoverCard` renders fully and is **not clipped** by the surrounding `<td>`. (Spec's named known risk — this `HoverCard` has never been rendered inside this hand-rolled detail-panel plugin before.)
   4. Expand `Standard 3, Key Element 3.5.b` and `Standard 7, Key Element 7.5.b`. Confirm the two pre-existing `core-elms` ratings are **not** flagged Directional, while ratings added in Task 8 are.
   5. `/domains/do/standards` (no curated use-case content). Confirm the page degrades cleanly: computed COCA matches or the empty state, no crash, no ACPE content bleeding through.
-  6. `/journeys/pharmacy-core-to-exact-migration`. Confirm the route renders and the stages are closed by default.
+  6. `/journeys/pharmacy-core-to-exxat-migration`. Confirm the route renders and the stages are closed by default.
 - [ ] **Step 5: Confirm no raw filename or slug reached the screen** — while on `/domains/pharmacy/standards` with several rows expanded, use the browser's find-in-page for `.yaml` and for `--0`. Expected: zero matches in rendered text. Every flow and journey reference must show its `flow_name` / `journey_name` (`UI-DENSITY-PATTERNS.md`'s standing rule).
 - [ ] **Step 6: Confirm the numbers on the page match the data** — on `/domains/pharmacy/standards`, read the three progress bars and the metadata row, then verify against the source of truth:
   ```bash
