@@ -755,6 +755,14 @@ export interface StandardsCompetitorRatingEntry {
   competitor_feature_ref?: string;
   sources?: { source_id: string }[];
   persona_relevance?: string[];
+  /** Added 2026-09-10. Present only on first-pass ratings read off public vendor
+   * material rather than verified element by element. The existing verified
+   * entries deliberately omit it. Enforced in check_content_density.py's
+   * check_standards_ratings_integrity(): "directional" requires evidence_note. */
+  evidence_strength?: "directional";
+  /** What the directional rating actually rests on — required whenever
+   * evidence_strength is "directional". */
+  evidence_note?: string;
 }
 
 export interface StandardsCompetitorRatings {
@@ -766,6 +774,130 @@ export interface StandardsCompetitorRatings {
 // header comment. Absence of an entry is the "unresearched" state, not an error.
 export function getStandardsCompetitorRatings(): StandardsCompetitorRatings | null {
   return readYamlFile<StandardsCompetitorRatings>("lenses/standards-competitor-ratings.yaml");
+}
+
+// ---------- standards use cases (Level 2 lens + computed fallback) ----------
+
+// content/lenses/standards-use-cases.yaml — added 2026-09-10, structural sibling of
+// standards-competitor-ratings.yaml above: sparse, keyed by (domain, element_id),
+// citing accreditation/*.yaml downward by element_id and carrying related_flows as
+// the already-tolerated Level 2 -> Level 3 navigational pointer (see
+// content/ARCHITECTURE.md). Absence of an entry is the "not curated yet" state, not
+// an error — the computed join below fills the remaining elements as a distinctly
+// labeled fallback.
+export type StandardUseCaseStatus = "proposed" | "in-flight" | "documented" | "no-fit-yet";
+
+export interface StandardUseCaseEntry {
+  domain: string;
+  element_id: string;
+  use_case: string;
+  status: StandardUseCaseStatus | string;
+  audience?: string[];
+  detail?: string;
+  related_flows?: RelatedFlow[];
+  sources?: { source_id: string }[];
+}
+
+export interface StandardsUseCasesDoc {
+  last_updated: string;
+  use_cases: StandardUseCaseEntry[];
+}
+
+export function getStandardsUseCases(): StandardsUseCasesDoc | null {
+  return readYamlFile<StandardsUseCasesDoc>("lenses/standards-use-cases.yaml");
+}
+
+/** One curated use case, resolved for rendering. */
+export interface StandardUseCase {
+  useCase: string;
+  status: StandardUseCaseStatus | string;
+  audience: string[];
+  detail?: string;
+  relatedFlows: ResolvedRelatedFlow[];
+  sources: SourceRegistryEntry[];
+}
+
+/** One computed (not curated) reference: an existing flow or journey whose own
+ * accreditation prose already names this element. Zero authoring — it's a reverse
+ * lookup over research that already exists. */
+export interface ComputedUseCaseMatch {
+  kind: "flow" | "journey";
+  /** flow_name or journey_name — never a slug or filename (UI-DENSITY-PATTERNS.md). */
+  label: string;
+  href: string;
+  context?: string;
+}
+
+// Standard 3 Key Element 3.3.a alone matches 9 flow files; rendering all of them
+// buries the curated entries above. Cap the rendered list and report the remainder
+// as a count.
+export const COMPUTED_USE_CASE_MATCH_CAP = 4;
+
+// Matching is deliberately strict: the FULL element_id string ("Standard 3, Key
+// Element 3.3.a") AND the accreditor's short name must both appear in the same prose
+// field. Loosening to bare numbers would false-positive across accreditors — COCA and
+// LCME both use "Standard N, Element N.N" numbering, and CODA reuses "Standard N,
+// Element N-N". Verified 2026-09-10: the accreditor-name guard changes nothing for
+// ACPE (still 12 of 20 elements covered, still 9 flows for 3.3.a) while removing the
+// cross-accreditor collision risk.
+function elementProseHit(prose: string | undefined, elementId: string, accreditorShort: string): boolean {
+  if (!prose) return false;
+  if (!prose.includes(elementId)) return false;
+  return !accreditorShort || prose.includes(accreditorShort);
+}
+
+/** "ACPE (Accreditation Council for Pharmacy Education)" -> "ACPE". Derived from the
+ * accreditation file's own `accreditor` field rather than a hand-kept map, so a new
+ * accreditor file needs no code change. */
+export function accreditorShortName(doc: AccreditationDoc): string {
+  return (doc.accreditor ?? "").split("(")[0].trim();
+}
+
+/** One pass over flows + journeys for every element at once. Built as an index
+ * rather than a per-element function because the naive shape re-reads all 41 flow
+ * files and all 5 journey files once per element (20x on the pharmacy page). */
+export function buildComputedUseCaseIndex(
+  elementIds: string[],
+  accreditorShort: string
+): Map<string, ComputedUseCaseMatch[]> {
+  const index = new Map<string, ComputedUseCaseMatch[]>();
+  for (const id of elementIds) index.set(id, []);
+
+  for (const flow of listFlows()) {
+    const prose = (flow.steps ?? []).flatMap((s) =>
+      (s.elements ?? []).map((e) => e.accreditation_citation ?? "")
+    );
+    if (!prose.length) continue;
+    let ctxResolved: FlowJourneyContext | null | undefined;
+    for (const id of elementIds) {
+      if (!prose.some((p) => elementProseHit(p, id, accreditorShort))) continue;
+      if (ctxResolved === undefined) ctxResolved = getJourneyContextForFlow(flow);
+      index.get(id)!.push({
+        kind: "flow",
+        label: flow.flow_name,
+        href: `/flows/${flow.slug}`,
+        context: ctxResolved
+          ? `${ctxResolved.journey.journey_name} — stage ${ctxResolved.stageNumber}`
+          : undefined,
+      });
+    }
+  }
+
+  for (const journey of listJourneys()) {
+    (journey.stages ?? []).forEach((stage, i) => {
+      for (const id of elementIds) {
+        if (!elementProseHit(stage.accreditation_link, id, accreditorShort)) continue;
+        index.get(id)!.push({
+          kind: "journey",
+          label: journey.journey_name,
+          href: `/journeys/${journey.slug}`,
+          context: `Stage ${i + 1} — ${stage.stage}`,
+        });
+      }
+    });
+  }
+
+  return index;
 }
 
 export interface SourceRegistryEntry {
@@ -812,6 +944,10 @@ export interface StandardsCrosswalkCompetitorCell {
   source?: string;
   competitorFeatureRef?: string;
   sources: SourceRegistryEntry[];
+  /** "directional" = first-pass read of public vendor material, not element-by-element
+   * verification. Absent on the pre-existing verified entries, by design. */
+  evidenceStrength?: "directional";
+  evidenceNote?: string;
 }
 
 export interface StandardsCrosswalkRow {
@@ -829,6 +965,12 @@ export interface StandardsCrosswalkRow {
    * backing this standard's real-world difficulty, always an array. */
   researchSources: SourceRegistryEntry[];
   competitors: StandardsCrosswalkCompetitorCell[];
+  /** Curated entries from lenses/standards-use-cases.yaml. Rendered first. */
+  useCases: StandardUseCase[];
+  /** Computed fallback, already capped at COMPUTED_USE_CASE_MATCH_CAP. */
+  computedMatches: ComputedUseCaseMatch[];
+  /** Uncapped count, so the UI can say "N more" honestly. */
+  computedMatchTotal: number;
 }
 
 export interface StandardsCrosswalkForDomain {
@@ -840,6 +982,10 @@ export interface StandardsCrosswalkForDomain {
   researchStatus?: "unresearched";
   ratedCompetitorCellCount: number;
   totalCompetitorCellCount: number;
+  /** Rows with at least one curated use case OR at least one computed match. */
+  standardsWithUseCaseCount: number;
+  /** Subset of ratedCompetitorCellCount carrying evidence_strength: "directional". */
+  directionalRatingCount: number;
 }
 
 // Wilson's explicit ask (2026-08-26 call): "the accreditation being able to go
@@ -868,13 +1014,37 @@ export function getStandardsCrosswalkForDomain(domain: string): StandardsCrosswa
       .map((r) => [`${r.element_id}|${r.competitor_slug}`, r])
   );
 
+  // Curated use cases, grouped by element. Sparse — most elements have none.
+  const useCasesByElement = new Map<string, StandardUseCase[]>();
+  for (const u of getStandardsUseCases()?.use_cases ?? []) {
+    if (u.domain !== domain) continue;
+    const list = useCasesByElement.get(u.element_id) ?? [];
+    list.push({
+      useCase: u.use_case,
+      status: u.status,
+      audience: u.audience ?? [],
+      detail: u.detail,
+      relatedFlows: resolveRelatedFlows(u.related_flows),
+      sources: resolveSourceIds(u.sources),
+    });
+    useCasesByElement.set(u.element_id, list);
+  }
+
+  // Computed fallback — one pass over flows/journeys for all elements at once.
+  const elementIds = (doc.standards ?? []).map((s) => s.element_id);
+  const computedIndex = buildComputedUseCaseIndex(elementIds, accreditorShortName(doc));
+
   let ratedCompetitorCellCount = 0;
+  let directionalRatingCount = 0;
+  let standardsWithUseCaseCount = 0;
+
   const rows: StandardsCrosswalkRow[] = (doc.standards ?? []).map((s) => {
     const personaSet = new Set<string>();
     const cellCompetitors = competitors.map((c) => {
       const rated = ratingsIndex.get(`${s.element_id}|${c.slug}`);
       if (rated) {
         ratedCompetitorCellCount += 1;
+        if (rated.evidence_strength === "directional") directionalRatingCount += 1;
         for (const p of rated.persona_relevance ?? []) personaSet.add(p);
       }
       return {
@@ -885,8 +1055,15 @@ export function getStandardsCrosswalkForDomain(domain: string): StandardsCrosswa
         source: rated?.source,
         competitorFeatureRef: rated?.competitor_feature_ref,
         sources: resolveSourceIds(rated?.sources),
+        evidenceStrength: rated?.evidence_strength,
+        evidenceNote: rated?.evidence_note,
       };
     });
+
+    const useCases = useCasesByElement.get(s.element_id) ?? [];
+    const allComputed = computedIndex.get(s.element_id) ?? [];
+    if (useCases.length || allComputed.length) standardsWithUseCaseCount += 1;
+
     return {
       element_id: s.element_id,
       element_title: s.element_title,
@@ -900,6 +1077,9 @@ export function getStandardsCrosswalkForDomain(domain: string): StandardsCrosswa
       personaRelevance: Array.from(personaSet),
       researchSources: resolveSourceIdStrings(s.research_sources),
       competitors: cellCompetitors,
+      useCases,
+      computedMatches: allComputed.slice(0, COMPUTED_USE_CASE_MATCH_CAP),
+      computedMatchTotal: allComputed.length,
     };
   });
 
@@ -912,6 +1092,8 @@ export function getStandardsCrosswalkForDomain(domain: string): StandardsCrosswa
     researchStatus: doc.research_status,
     ratedCompetitorCellCount,
     totalCompetitorCellCount: rows.length * competitors.length,
+    standardsWithUseCaseCount,
+    directionalRatingCount,
   };
 }
 
