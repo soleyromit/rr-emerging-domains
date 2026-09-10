@@ -37,11 +37,17 @@ feature_teardown:
       above in its table of contents. The University of Cincinnati preceptor instructions
       add a "Sites and Rotations" tab, a "Preceptor Availability" tab, a "Schedule" tab
       carrying a "Match" column "displayed after the experiential education office has
-      released the match to preceptors", and a "rotation ranking process". What no fetched
-      page establishes: how a match is produced. No algorithm, rules engine, auto-match or
-      optimiser is named anywhere public — only that a match exists and gets released. Site
-      capacity, affiliation agreements and timesheet approval are likewise absent. Rated
-      "unknown", not "at-parity". ASHP mandate per
+      released the match to preceptors", and a "rotation ranking process". A scheduling
+      component IS named: the McCreadie guide's availability examples say "the match
+      engine will not schedule the preceptor for more than 2 students for each block, but
+      can schedule all 5 blocks with a possible of 10 students total", and preceptors set
+      a "Maximum Number of Students Accepted for this Match" and a "Maximum Number of
+      Blocks to Schedule for this Match". So the match engine's constraint inputs are
+      documented. What no fetched page establishes is how it produces a match: no
+      algorithm, ranking rule or optimisation objective is described, and whether it runs
+      automatically or only assists a manual pass by the experiential office is unstated.
+      Site capacity, affiliation agreements and timesheet approval are likewise absent.
+      Rated "unknown", not "at-parity". ASHP mandate per
       https://www.ashp.org/professional-development/residency-information/residency-program-resources/pharmacademic
     source: "https://oep.pharmacy.ufl.edu/files/2019/01/Guide-to-PharmAcademic.pdf"
   - pillar: "Curriculum Mapping"
@@ -151,10 +157,11 @@ strengths:
 
 weaknesses:
   - claim: >
-      No placement engine is documented anywhere public. Preceptor guides describe
-      entering availability, a "rotation ranking process", and a match "released" by the
-      experiential office — never how the match is generated.
-    source: "https://sitefinityuc.blob.core.windows.net/pharm-dev/docs/default-source/default-document-library/how-to-use-pharmacademic-preceptor-instructions.pdf?sfvrsn=ceee7840_0"
+      A "match engine" is named but never described. The guide documents only what
+      constrains it — preceptor-declared caps per match and per block ("no more than 2
+      students for each block ... 10 students total") — not how it generates a match, nor
+      whether it runs automatically.
+    source: "https://oep.pharmacy.ufl.edu/files/2019/01/Guide-to-PharmAcademic.pdf"
   - claim: >
       Public product surface is one page. The vendor page carries no feature sub-pages, no
       pricing, no customer case studies; the most detailed public documentation found is
@@ -196,9 +203,10 @@ exxat_opportunity: >
   posture is coexistence on the residency side and competition only on the PharmD
   experiential/curricular-mapping side. The 2026-09-10 pass sharpened where that
   competition is winnable: the product's evaluation and task-list machinery is genuinely
-  deep and well documented, but nothing public describes a matching engine — preceptors
-  enter availability and wait for the office to "release" a match — and nothing public
-  describes student-side compliance or ACPE standards mapping. Prism's placement engine
+  deep and well documented, but its "match engine" is named without ever being described
+  — the guide documents the capacity caps preceptors feed it, not how it builds a
+  schedule — and nothing public describes student-side compliance or ACPE standards
+  mapping. Prism's placement engine
   and compliance tracking are therefore the two places to probe in a PharmD deal, and
   "how does your office actually build the schedule today?" is the qualifying question.
   Do not build a pitch on the compliance or exam gaps as if they were proven absences:
