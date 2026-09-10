@@ -840,9 +840,24 @@ export const COMPUTED_USE_CASE_MATCH_CAP = 4;
 // Element N-N". Verified 2026-09-10: the accreditor-name guard changes nothing for
 // ACPE (still 12 of 20 elements covered, still 9 flows for 3.3.a) while removing the
 // cross-accreditor collision risk.
+//
+// The id must also END on a token boundary. A bare substring test made every citation
+// of CODA "Standard 2, Element 2-24" also count as evidence for "Standard 2, Element
+// 2-2" — the one such collision among the 173 element_ids in content/accreditation/,
+// and it was live (Dentistry's 2-2 row absorbed 6 matches belonging only to 2-24).
+//
+// The lookahead rejects a following ALPHANUMERIC only. A following hyphen must stay
+// legal: flows cite ACPE ranges as "Standard 3, Key Element 3.3.a-e" / "3.3.a-d", and
+// that range genuinely covers 3.3.a — rejecting "-" here silently dropped a real
+// 3.3.a match (verified 2026-09-10). The digit rule still kills the CODA collision,
+// because there the extra character is the digit in "2-2" + "4", not a range dash.
+// Everything else — period, comma, quote, paren, space, end-of-string — still matches,
+// so "...Key Element 3.3.a." at the end of a sentence is unaffected. Escaping keeps
+// "3.3.a" matching literally rather than as a wildcard pattern ("3x3xa").
 function elementProseHit(prose: string | undefined, elementId: string, accreditorShort: string): boolean {
   if (!prose) return false;
-  if (!prose.includes(elementId)) return false;
+  const escaped = elementId.replace(/[.*+?^${}()|[\]\\-]/g, "\\$&");
+  if (!new RegExp(`${escaped}(?![0-9A-Za-z])`).test(prose)) return false;
   return !accreditorShort || prose.includes(accreditorShort);
 }
 
