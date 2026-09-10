@@ -594,3 +594,12 @@ sources:
     date: "2020-08-02"
     what_it_supports: "Vendor product-tutorial video (homepage/navigation walkthrough) — verified only via search-result title/snippet, not full transcript (YouTube pages aren't fetchable). Treat as existence/topic evidence only."
     accessed: "2026-09-10"
+
+  # --- Interviews (Level 0, in-repo) ---
+  - id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+    title: "Interview — Pharmacy understanding with Vishaka and Ruchi (Exxat, 2026-09-04)"
+    type: "interview"
+    publisher: "Exxat (internal)"
+    date: "2026-09-04"
+    what_it_supports: "Exxat's pharmacy domain expert states the 80% product-fit and 25%-gap figures are anecdotal and the real standards-gap research remains undone; names the CORE/ExamSoft/Influx stack, the two live pharmacy customers, and the pilot."
+    accessed: "2026-09-10"
