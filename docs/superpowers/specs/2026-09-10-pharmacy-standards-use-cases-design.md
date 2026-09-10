@@ -120,7 +120,7 @@ rendered matches at 4 + "N more" — Standard 3 KE 3.3.a alone matches 9 flow fi
 **Curated use cases (~15 entries)** built from Vishaka's named items: the pilot
 (curriculum mapping + ExamSoft + NAPLEX → AACP abstract), OHSU (clinical-placement
 management, `documented` since it's an active customer), Maryland (flagged `detail`
-that the specific workflow isn't yet documented — do not invent one), the Core→Exact
+that the specific workflow isn't yet documented — do not invent one), the Core→Exxat
 migration case (`proposed`), the Sep-12 bulk ExamSoft import (`proposed`). Two of the
 8 computed-join gaps get an honest `no-fit-yet` (patient-population diversity tracking)
 or are left unmapped entirely (student remuneration, 3.5.c) rather than forcing a match.
