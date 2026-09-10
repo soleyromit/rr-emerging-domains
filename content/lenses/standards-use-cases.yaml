@@ -119,3 +119,137 @@ use_cases:
       - flow: "preceptor-site-onboarding--06-student-assignment-ratio-capacity-and-eligibility.yaml"
     sources:
       - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  # --- Migration, GTM motions, roadmap, and one honest gap ---
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.5.b"
+    use_case: "Inventory sites and affiliation agreements in the incumbent before cutting over to Prism"
+    status: "proposed"
+    audience: ["role-clinical-coordinator", "role-compliance-accreditation-liaison"]
+    detail: >
+      Proposed. A program leaving CORE mid-accreditation-cycle has to move every active
+      site record and affiliation agreement without losing its expiry dates. Prism's
+      contracts-with-expiry-alerts feature is the destination; the migration path itself
+      is unexercised — no pharmacy program has done this move on record.
+    related_flows:
+      - flow: "preceptor-site-onboarding--02-affiliation-agreement-execution-contract-lifecycle-management.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.5.b"
+    use_case: "Survive the first ACPE self-study cycle after switching platforms mid-cycle"
+    status: "proposed"
+    audience: ["role-compliance-accreditation-liaison", "role-dean"]
+    detail: >
+      Proposed. The migration story the GTM team asked for is a program that moved from
+      CORE to Exxat and can say why. Its hardest stage is the first self-study after the
+      switch, where evidence has to span both platforms. No such customer exists yet —
+      this entry names the target, it does not record an outcome.
+    related_flows:
+      - flow: "accreditation-self-study--08-self-study-assembly-submission-site-visit.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.1.b"
+    use_case: "Carry historical IPPE hour records across a mid-cycle platform switch"
+    status: "proposed"
+    audience: ["role-clinical-coordinator", "role-program-admin"]
+    detail: >
+      Proposed. ACPE's 300-hour IPPE total, with its 75-hour community and 75-hour
+      hospital minimums, is a per-student cumulative record — so a program switching
+      mid-cohort must import prior-year hours rather than start counting from zero. No
+      documented import path for an incumbent's hour logs exists in this repo.
+    related_flows:
+      - flow: "rotation-lifecycle--05-in-rotation-capture-hours-encounters-procedures.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.5.a"
+    use_case: "Run the AACP graduating-student, faculty and preceptor surveys inside Prism"
+    status: "proposed"
+    audience: ["role-compliance-accreditation-liaison", "role-dean"]
+    detail: >
+      Proposed. Programs are actively trying to shrink their technology stack, and Exxat
+      Surveys plus the Forms and Evaluations engine already cover the instrument types
+      7.5.a names. What has not been built is the specific AACP instrument set and its
+      annual cadence — that is configuration work nobody has done yet.
+    related_flows:
+      - flow: "accreditation-self-study--07-closing-the-cqi-loop-finding-to.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.3.c"
+    use_case: "Push finalized rotation grades to Canvas so the LMS stays the official student record"
+    status: "in-flight"
+    audience: ["role-program-admin", "role-clinical-coordinator"]
+    detail: >
+      Canvas integration has shipped; Brightspace is next, then Blackboard. LMS
+      integration was named the second biggest pharmacy buying driver — one dean said to
+      come back once it existed. What it removes is re-keying grades from the clinical
+      system into the channel the program actually communicates through.
+    related_flows:
+      - flow: "rotation-lifecycle--07-summative-evaluation-grading-turnaround-completion-verification.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.5.a"
+    use_case: "Serve one university's pharmacy, PT, OT and PA placements from a single office and platform"
+    status: "proposed"
+    audience: ["role-dean", "role-clinical-coordinator"]
+    detail: >
+      Proposed. Pharmacy usually runs its own office of clinical education, but some
+      universities centralize a clinical-coordinator role across programs, and larger
+      institutions have a central technology-adoption office that makes the enterprise
+      software decision. Where that office exists, pharmacy can carry the smaller programs.
+    related_flows:
+      - flow: "admin-onboarding--05-sites-locations-personnel-management.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.2.a"
+    use_case: "Report each student's APPE exposure across the patient-population diversity categories"
+    status: "no-fit-yet"
+    audience: ["role-compliance-accreditation-liaison"]
+    detail: >
+      Stated as an honest gap, not a proposal. ACPE asks for aggregate exposure across
+      age, gender, neurodivergent status, race and ethnicity, socioeconomic factors and
+      disease states. No shipped or roadmap Prism pillar carries patient-population
+      demographics at the rotation level, so there is nothing to propose here yet.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.3.d"
+    use_case: "Replace ExamSoft with Exxat's own exam module once it soft-launches"
+    status: "proposed"
+    audience: ["role-dean", "role-program-admin"]
+    detail: >
+      Proposed, and the module is unshipped — a January soft launch was the date given.
+      The competitive read matters as much as the date: Canvas and Brightspace have both
+      added assessment building in the last two years, so this module lands against the
+      LMS as well as against ExamSoft.
+    related_flows:
+      - flow: "competency-verification--02-build-and-deploy-the-assessment-instruments.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.1.a"
+    use_case: "Replace an aging e-Value experiential setup at a pharmacy program"
+    status: "proposed"
+    audience: ["role-clinical-coordinator", "role-program-admin"]
+    detail: >
+      Proposed. CORE holds the large majority of pharmacy programs; e-Value still holds
+      some but was described as archaic and not receiving significant enhancements. Booth
+      leads at a prior AACP named e-Value and were shopping alternatives, with four
+      programs flagged for immediate demos — whether those demos happened is unknown.
+    related_flows:
+      - flow: "admin-onboarding--02-program-details-settings-setup.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
