@@ -190,3 +190,39 @@ export function DivergenceBadge({ label }: { label: string }) {
   const key = label.toLowerCase().trim();
   return <Badge variant={DIVERGENCE_VARIANT[key] ?? "neutral"} label={label} />;
 }
+
+// A directional rating is a first-pass read of a vendor's public material, not the
+// element-by-element verification the unflagged entries carry. Neutral on purpose:
+// the spec explicitly rules out a new color in the shared palette and a numeric
+// "confidence score" — both would invent vocabulary this repo doesn't have. Renders
+// nothing when the rating isn't directional, so callers need no emptiness guard.
+export function DirectionalBadge({ evidenceStrength }: { evidenceStrength?: string }) {
+  if (evidenceStrength?.toLowerCase().trim() !== "directional") return null;
+  return <Badge variant="neutral" label="Directional" />;
+}
+
+// Status of a proposed use case against one accreditation element. Same five-state
+// palette as FitBadge/GapSeverityBadge so the color language stays consistent
+// app-wide, and the same "absence is a real, named state" rule: `no-fit-yet` is an
+// explicit answer, not a blank.
+const USE_CASE_STATUS_VARIANT: Record<string, BadgeVariant> = {
+  documented: "success",
+  "in-flight": "warning",
+  proposed: "info",
+  "no-fit-yet": "error",
+};
+
+const USE_CASE_STATUS_LABEL: Record<string, string> = {
+  documented: "Documented",
+  "in-flight": "In flight",
+  proposed: "Proposed",
+  "no-fit-yet": "No fit yet",
+};
+
+export function UseCaseStatusBadge({ status }: { status?: string }) {
+  if (!status) return <Badge variant="neutral" label="Unrated" />;
+  const key = status.toLowerCase().trim();
+  return (
+    <Badge variant={USE_CASE_STATUS_VARIANT[key] ?? "neutral"} label={USE_CASE_STATUS_LABEL[key] ?? status} />
+  );
+}

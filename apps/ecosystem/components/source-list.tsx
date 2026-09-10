@@ -4,7 +4,7 @@
 // a function prop can't cross the server/client boundary (see feature-status.tsx,
 // same reason). Nothing here is interactive.
 
-import { BarChart3, FileText, Globe, Link2, Newspaper, Video } from "lucide-react";
+import { BarChart3, FileText, Globe, Link2, MessagesSquare, Newspaper, Video } from "lucide-react";
 import { Badge } from "@astryxdesign/core/Badge";
 import { Icon } from "@astryxdesign/core/Icon";
 import { Stack } from "@astryxdesign/core/Stack";
@@ -21,6 +21,10 @@ type KindMeta = { label: string; variant: BadgeVariant; icon: typeof Video };
 // list that's otherwise mostly docs and product pages.
 const KIND_META: Record<string, KindMeta> = {
   webinar: { label: "Webinar", variant: "purple", icon: Video },
+  // A first-party internal interview is the only source kind in this registry that
+  // isn't publicly checkable — neutral variant (no new color), distinct icon/label so
+  // a reader can tell it apart from a vendor page at a glance.
+  interview: { label: "Interview", variant: "neutral", icon: MessagesSquare },
   doc: { label: "Doc", variant: "neutral", icon: FileText },
   press: { label: "Press", variant: "neutral", icon: Newspaper },
   "product-page": { label: "Product page", variant: "neutral", icon: Globe },

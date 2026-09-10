@@ -1,0 +1,32 @@
+# Level 2 reframing — cites content/accreditation/*.yaml (by element_id) and
+# content/sources/registry.yaml (by source_id) downward; never asserts a claim that
+# isn't grounded in a cited Level-0/Level-1 source. Structural sibling of
+# standards-competitor-ratings.yaml: same sparse, keyed-by-(domain, element_id)
+# shape, same "absence is the unresearched state" convention.
+#
+# WHY THIS FILE EXISTS AND NOT A FIELD ON accreditation/*.yaml: flows already cite
+# acpe.yaml as ground truth. Having acpe.yaml point back at flows would create a
+# citation cycle — exactly what content/ARCHITECTURE.md's citation rule forbids, and
+# Level 1 is not where the repo's one tolerated sideways-pointer exception
+# (`related_flows`, documented for Level 2 -> Level 3) applies. See
+# docs/superpowers/specs/2026-09-10-pharmacy-standards-use-cases-design.md.
+#
+# Schema, per entry:
+#   domain           — canonical domain label ("Pharmacy"), matching the key
+#                      getStandardsCrosswalkForDomain() looks up by
+#   element_id       — the FULL element_id string from that domain's accreditation file
+#   use_case         — one scannable line: what a program would actually do. <= 220 chars
+#   status           — proposed | in-flight | documented | no-fit-yet
+#                      `no-fit-yet` is a first-class value, not an absence: never leave a
+#                      real gap blank, say it and say why in `detail`
+#   audience         — optional content/personas/*.yaml filenames (no extension). Encodes
+#                      who actually buys this, not just who operates it
+#   detail           — the sourced paragraph behind the headline. <= 600 chars; decompose
+#                      into two entries rather than write past it
+#   related_flows    — optional [{flow, step?, element?}] navigational pointer into
+#                      content/flows/ (Level 3). Wayfinding, not evidence
+#   sources          — [{source_id}] into content/sources/registry.yaml. Required
+#
+# Gated by scripts/check_content_density.py's check_standards_use_cases_integrity().
+last_updated: "2026-09-10"
+use_cases: []

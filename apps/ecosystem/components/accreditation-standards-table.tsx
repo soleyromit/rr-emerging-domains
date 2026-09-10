@@ -9,10 +9,17 @@ import { Link } from "@astryxdesign/core/Link";
 import { Grid } from "@astryxdesign/core/Grid";
 import { Divider } from "@astryxdesign/core/Divider";
 import { Badge } from "@astryxdesign/core/Badge";
-import { ExxatComplianceBadge, FitBadge, StandardsRatingBadge } from "@/components/fit-badge";
+import {
+  DirectionalBadge,
+  ExxatComplianceBadge,
+  FitBadge,
+  StandardsRatingBadge,
+  UseCaseStatusBadge,
+} from "@/components/fit-badge";
 import { FieldBlock } from "@/components/field-block";
 import { CompetitorLogo } from "@/components/competitor-logo";
 import { SourceList } from "@/components/source-list";
+import { RelatedFlowsPreview } from "@/components/related-flows-preview";
 import type { StandardsCrosswalkForDomain, StandardsCrosswalkRow } from "@/lib/content";
 
 // content/personas/*.yaml filenames minus extension ("role-compliance-accreditation-liaison").
@@ -266,6 +273,80 @@ function StandardDetail({
         </Stack>
       ) : null}
 
+      {/* Proposed use cases sit ABOVE competitor ratings: "what would a program do
+          with this standard" is the question a reader has before "and how do the
+          incumbents score on it." Curated entries render first; the computed
+          flow/journey join is a distinctly-labeled fallback, never presented as
+          curated research. */}
+      <Divider label="PROPOSED USE CASES" />
+      {row.useCases.length ? (
+        <Stack gap={3}>
+          {row.useCases.map((u, i) => (
+            <Stack key={`${u.useCase}-${i}`} gap={1.5}>
+              <Stack direction="horizontal" gap={2} vAlign="center" wrap="wrap">
+                <UseCaseStatusBadge status={u.status} />
+                <Text type="body" weight="semibold" textWrap="wrap">
+                  {u.useCase}
+                </Text>
+              </Stack>
+              <FieldBlock text={u.detail} type="supporting" maxLines={3} />
+              {u.audience.length ? (
+                <Stack direction="horizontal" gap={1} wrap="wrap">
+                  {u.audience.map((a) => (
+                    <Badge key={a} variant="neutral" label={personaLabel(a)} />
+                  ))}
+                </Stack>
+              ) : null}
+              <RelatedFlowsPreview items={u.relatedFlows} />
+              <SourceList sources={u.sources} />
+            </Stack>
+          ))}
+        </Stack>
+      ) : null}
+
+      {row.computedMatches.length ? (
+        <Stack gap={1.5}>
+          <Text type="label" color="secondary" size="xsm">
+            Also cited by existing research (computed — not a curated use case)
+          </Text>
+          <Stack gap={1}>
+            {row.computedMatches.map((m) => (
+              <Stack
+                key={`${m.kind}-${m.href}-${m.label}`}
+                direction="horizontal"
+                gap={2}
+                vAlign="center"
+                wrap="wrap"
+              >
+                <Badge variant="neutral" label={m.kind === "flow" ? "Flow" : "Journey"} />
+                <Link href={m.href} color="accent" hasUnderline>
+                  {m.label}
+                </Link>
+                {m.context ? (
+                  <Text type="supporting" size="xsm" color="secondary" maxLines={1}>
+                    {m.context}
+                  </Text>
+                ) : null}
+              </Stack>
+            ))}
+          </Stack>
+          {row.computedMatchTotal > row.computedMatches.length ? (
+            <Text type="supporting" size="xsm" color="secondary">
+              {row.computedMatchTotal - row.computedMatches.length} more flow and journey
+              references name this element — open the linked flows above to follow the chain.
+            </Text>
+          ) : null}
+        </Stack>
+      ) : null}
+
+      {!row.useCases.length && !row.computedMatches.length ? (
+        <Text type="supporting" size="sm" color="secondary" style={{ fontStyle: "italic" }}>
+          No use case or journey is mapped to this standard yet — unmapped, not unsupported.
+          Nothing here says a program can't do this in Prism; it says nobody has written
+          down what doing it looks like.
+        </Text>
+      ) : null}
+
       <Divider label="COMPETITOR RATINGS" />
       {row.competitors.length ? (
         // Every competitor tracked for this domain gets a card here, rated or
@@ -290,6 +371,29 @@ function StandardDetail({
                   <>
                     {c.rationale ? (
                       <FieldBlock text={c.rationale} type="supporting" maxLines={4} />
+                    ) : null}
+                    {/* Directional flag lives here, in the expanded card — NOT in the
+                        collapsed table cell. A second pill per cell across 5 competitor
+                        columns breaks the row's scan strip. The note reuses the same
+                        italic supporting-text treatment as "not yet researched" below. */}
+                    {c.evidenceStrength === "directional" ? (
+                      // hAlign="start" (align-items on a vertical Stack) keeps the
+                      // pill at its own width — without it the Badge stretches the
+                      // full column and reads as a banner, not a badge.
+                      <Stack gap={1} hAlign="start">
+                        <DirectionalBadge evidenceStrength={c.evidenceStrength} />
+                        {c.evidenceNote ? (
+                          <Text
+                            type="supporting"
+                            size="xsm"
+                            color="secondary"
+                            maxLines={3}
+                            style={{ fontStyle: "italic" }}
+                          >
+                            {c.evidenceNote}
+                          </Text>
+                        ) : null}
+                      </Stack>
                     ) : null}
                     <SourceList sources={c.sources} />
                   </>
