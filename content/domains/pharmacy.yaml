@@ -19,6 +19,85 @@ market:
     - "AACP, 'Academic Pharmacy's Vital Statistics' (enrollment figures): https://www.aacp.org/article/academic-pharmacys-vital-statistics"
     - "AACP, 'Pharmacy School Interest Rises as Applications Jump 6%': https://www.aacp.org/article/pharmacy-school-interest-rises-applications-jump-6"
     - "WVU Today, University of Charleston pharmacy program closure (Dec 2024): https://wvutoday.wvu.edu/stories/2024/12/19/wvu-school-of-pharmacy-offers-support-to-university-of-charleston-students-affected-by-program-closure"
+
+# Numeric, machine-readable sibling to the prose `market:` block above. The two
+# coexist deliberately and neither replaces the other: `market:` holds the cited
+# narrative a reader reads, `market_sizing:` holds the numbers a scorecard
+# criterion or an integrity check can point at. This is the block
+# content/dissection/pharmacy.yaml's "market-size" question names as
+# `domains/pharmacy.yaml#market_sizing`, alongside `market/programs/pharmacy.yaml`.
+#
+# Every number below is null on purpose. The figures in `market:` above are real
+# but carry only bare URLs, no registered source_id, and no per-field as-of date
+# — copying them down here would turn uncited prose into uncited machine-readable
+# numbers, which is worse, not better. An all-null block with confidence: "low"
+# is the honest state. Phase 2/3 populates it from a registered source_id and the
+# per-program registry in content/market/programs/pharmacy.yaml.
+market_sizing:
+  as_of: "2026-09-11"          # YYYY-MM-DD — when the numbers below were last set
+  unit: "program"              # the thing being counted in every count below
+  tam:
+    programs: null             # every program in the domain, once sourced
+    basis: null                # <=150 soft / 300 hard chars — what this count
+                               # actually represents, once known
+    source_id: null            # a registered source_id (see content/sources/)
+  accredited_programs:
+    count: null
+    qualifier: null            # e.g. "accredited PharmD programs" — stays null
+                               # while tam.programs is null
+    source_id: null
+    variance_note: null        # <=200 soft / 400 hard chars — only when tam and
+                               # accredited_programs genuinely disagree
+  sam:
+    programs: null
+    basis: null                # <=150 soft / 300 hard chars
+    derived_from: []           # the filters applied to tam to get to this number
+  som:
+    programs: null
+    basis: "Not sized — no named target list or win-rate assumption exists yet"
+  enrollment:
+    students: null
+    as_of_year: null
+    trend: null                # growing | stable | declining | recovering | unknown
+    yoy_pct: null
+    source_id: null
+  current_clients:
+    count: null
+    named: []
+    source_id: null
+  churned_clients:
+    count: null
+    named: []
+    source_id: null
+  penetration_pct: null        # computed only once tam.programs and
+                               # current_clients.count are both real numbers
+  acv:
+    value_usd: null
+    basis: "Not sourced — no pricing artifact exists in this repo"
+    confidence: "unknown"      # unknown | low | medium | high
+  revenue_potential_usd: null  # HARD RULE: may only be non-null when
+                               # acv.value_usd is non-null and sourced. A revenue
+                               # number standing on an unsourced ACV is a guess
+                               # wearing a dollar sign
+  adjacency:
+    claim: null
+    cross_discipline_overlap_institutions: null
+    source_id: null
+  confidence: "low"            # low | medium | high — "low" is the correct,
+                               # honest value for an all-null block
+
+# Shape only, no content yet: where this domain's programs sit inside an
+# institution and who actually signs. Populated alongside market_sizing in
+# Phase 2/3 — an empty buying_roles list means nobody has researched it, which
+# is a countable state, not a missing field.
+org_structure:
+  typical_parent: null         # <=200 soft / 400 hard chars, once known
+  buying_roles: []             # [{persona_ref, title_in_domain, decision_role, note?}]
+                               # persona_ref  — a content/personas/ file slug
+                               # decision_role — economic-buyer | champion | user
+                               #                 | blocker | influencer
+                               # note          — optional, <=200 soft / 400 hard
+  sources: []
 standards_bodies:
   - name: "ACPE"
     type: "institutional accreditor"

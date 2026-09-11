@@ -129,6 +129,30 @@ DISSECTION_CEILINGS = {
     "questions[].gap_note": (200, 400),
     "incumbent_set[].exclusion_reason": (150, 300),
 }
+# content/domains/*.yaml — added 2026-09-11 with the `market_sizing:` and
+# `org_structure:` blocks. Only the new prose fields inside those two blocks are
+# ceilinged; the pre-existing `market:` prose, `clinical_education_shape` and
+# `distinctive_pain_points` are deliberately left alone, since retrofitting a ceiling
+# onto already-shipped, already-cited narrative is a separate editorial pass (the same
+# call ACCREDITATION_CEILINGS documents above). Wired up now, while every field here
+# is null, so the first real number is gated on arrival rather than retrofitted.
+DOMAIN_CEILINGS = {
+    "market_sizing.tam.basis": (150, 300),
+    "market_sizing.sam.basis": (150, 300),
+    "market_sizing.som.basis": (150, 300),
+    "market_sizing.acv.basis": (150, 300),
+    "market_sizing.accredited_programs.variance_note": (200, 400),
+    "org_structure.typical_parent": (200, 400),
+    "org_structure.buying_roles[].note": (200, 400),
+}
+# content/market/programs/*.yaml — added 2026-09-11 with the family itself, which holds
+# only _TEMPLATE.yaml today. `notes` is one line about one program in a file of hundreds
+# of rows; `pii_policy` is the single paragraph saying what is deliberately not mirrored
+# out of the source export.
+MARKET_PROGRAMS_CEILINGS = {
+    "programs[].notes": (150, 300),
+    "source_of_record.pii_policy": (300, 500),
+}
 
 # Known, reviewed exceptions — a spot-checked genuine dense finding, not a bug.
 # Format: (file glob, field path, substring of the VALUE itself) -> reason. The
@@ -737,6 +761,14 @@ def main():
         if f.name.startswith("_TEMPLATE"):
             continue
         check_file(f, DISSECTION_CEILINGS, results)
+    for f in sorted((CONTENT / "domains").glob("*.yaml")):
+        if f.name.startswith("_TEMPLATE"):
+            continue
+        check_file(f, DOMAIN_CEILINGS, results)
+    for f in sorted((CONTENT / "market" / "programs").glob("*.yaml")):
+        if f.name.startswith("_TEMPLATE"):
+            continue
+        check_file(f, MARKET_PROGRAMS_CEILINGS, results)
     sources_file = CONTENT / "sources" / "registry.yaml"
     if sources_file.exists():
         check_file(sources_file, SOURCES_CEILINGS, results)

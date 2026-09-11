@@ -2,9 +2,21 @@
 # Scores 1-5, weights must sum to 1.0. Scored 2026-08-24 as a full synthesis over
 # content/domains/, content/accreditation/, content/competitors/, content/personas/,
 # and content/prism/capability-map.yaml.
+# `scoring_basis` (added 2026-09-11) records what a criterion's 1-5 scores
+# actually rest on, so a reader can tell a sourced number from an expert read
+# without reverse-engineering the rationale. Every criterion is "qualitative"
+# today: the scores are a synthesis over content/domains/, content/accreditation/,
+# content/competitors/ and content/personas/, and no numeric market-sizing data
+# exists yet to back any of them. Values: "qualitative" | "qualitative-with-
+# metric-refs". The second value pairs with a `metric_refs:` block pointing at
+# real `domains/<slug>.yaml#market_sizing` fields, and becomes available only
+# once Phase 2 populates that block for at least one domain — there is nothing
+# to point at yet, so no criterion carries metric_refs here. Adding this field
+# changed no score and no rationale.
 criteria:
   - name: "Market size & growth (programs x budget)"
     weight: 0.20
+    scoring_basis: "qualitative"
     scores: { DO: 4, Pharmacy: 3, Dentistry: 3, Medicine: 5 }
     rationale:
       DO: "Only 48 COMs but 75 teaching locations and the steepest growth curve of the four — 40,905 students in 2025-26 (all-time high, +2.9% YoY, +59% over the decade), first-year enrollment +62% over ten years, and 2026-27 applications +12.8% to 26,506 -> growing budgets chasing capacity = 4."
@@ -14,6 +26,7 @@ criteria:
 
   - name: "Accreditation pressure (pain intensity)"
     weight: 0.20
+    scoring_basis: "qualitative"
     scores: { DO: 5, Pharmacy: 5, Dentistry: 4, Medicine: 4 }
     rationale:
       DO: "Brand-new COCA 2026 standards (effective July 1 2026, governing reviews after Feb 1 2027) demand computed evidence, not documents — 6.9's 3-year rolling capacity average plus an executed agreement per site, 6.10's explicitly 'system-generated' per-student DO-supervision/GME-resident/inpatient proof, 6.11's cross-site statistical comparability — layered on 11.4/11.5 bright-line public thresholds (COMLEX within 30 days of NBOME's update; 95% PGY-1 floor) that auto-escalate to out-of-compliance after three years, and 11.9's annual + mid-cycle report cadence = 5."
@@ -23,6 +36,7 @@ criteria:
 
   - name: "Incumbent weakness / switching openness"
     weight: 0.20
+    scoring_basis: "qualitative"
     scores: { DO: 5, Pharmacy: 3, Dentistry: 2, Medicine: 3 }
     rationale:
       DO: "The most disrupted incumbent field of the four — New Innovations acquired by QGenda (Jul 2025), Leo/DaVinci merged into Elentra under Achieve Partners with Elentra now publicly marketing migration paths OFF Leo, MedHub/E*Value under Ascend Learning — while the two strongest curriculum/accreditation players (Elentra, Leo) ship NO compliance module at all, and every incumbent's shipped accreditation automation is ACGME/LCME-shaped (MedHub's COCA commitment is a marketing page, not a workflow) -> forced-migration windows plus a provable COCA coverage gap = 5."
@@ -32,6 +46,7 @@ criteria:
 
   - name: "Prism pillar fit (transfer vs build)"
     weight: 0.25
+    scoring_basis: "qualitative"
     scores: { DO: 4, Pharmacy: 5, Dentistry: 2, Medicine: 4 }
     rationale:
       DO: "CORRECTED 2026-09-02 (was mis-tallied as 5 Configure / 7 Gap — see coca.yaml): zero outright Transfers across the 12 COCA elements assessed but 7 clean Configures on shipped pillars — 6.9/6.10 are the rotation/placement engine with added metadata fields, 6.4's seven osteopathic competencies (OMM included) is a Curriculum Mapping taxonomy, 5.4 policy attestation and 10.2 accredited-GME tracking are Compliance Management item types, 11.2/11.8 (student evaluation of instruction, student survey) land on the Surveys pillar — and 4-week core clerkship blocks across individually-recruited sites are structurally Prism's home turf; the 5 real Gaps (6.11 cross-site statistics, 11.1 program assessment, 11.4 COMLEX-USA, 11.5 GME placement rates, 11.9 annual/mid-cycle reports) are the same roadmap pillars every domain hits = 4."
@@ -41,6 +56,7 @@ criteria:
 
   - name: "Reachability (existing campus relationships)"
     weight: 0.15
+    scoring_basis: "qualitative"
     scores: { DO: 4, Pharmacy: 4, Dentistry: 3, Medicine: 3 }
     rationale:
       DO: "39 of 48 COMs are private and a large share sit inside health-sciences universities that already run the PA/PT/OT programs Prism serves today (Touro, NSU, PCOM-type institutions), the buying center is the clinical education office and accreditation liaison rather than a hospital GME office, and AACOM's annual meeting is a named, single-channel route to essentially the whole field of 48 = 4."

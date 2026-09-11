@@ -1,0 +1,63 @@
+# TEMPLATE — copy to content/market/programs/{slug}.yaml for a real domain
+# (pharmacy.yaml, do.yaml, dentistry.yaml, medicine.yaml). Files beginning with
+# _TEMPLATE are skipped by this repo's YAML directory readers and by
+# scripts/check_content_density.py, so this file is documentation — never
+# rendered, never checked as content.
+#
+# WHAT THIS FAMILY IS FOR
+# Level 1 — a ground-truth registry (see content/ARCHITECTURE.md), one file per
+# domain, one row per tracked program. It is the row-level evidence under
+# content/domains/{slug}.yaml's `market_sizing:` block: TAM/SAM counts up there
+# should be derivable from the rows down here rather than asserted separately.
+# Each row cites Level 0 (the spreadsheet/CRM export, an accreditor directory, a
+# program's own page) and nothing above it.
+#
+# Source of record stays the originating spreadsheet/CRM export; this file holds
+# counts, status, and structure only, never contact PII (names/emails/phone stay
+# in the source system, not mirrored into git).
+
+# The canonical APP-LEVEL domain label, which is NOT always the same string as
+# the domain registry's own `domain:` field. The authoritative list is the key
+# set of DOMAIN_TO_ACCREDITATION_SLUG, kept in sync by hand in two places:
+# apps/ecosystem/lib/content.ts and scripts/check_content_density.py. Today:
+# DO | Pharmacy | Dentistry | Medicine | Nursing | Teacher Education | Social
+# Work | Physical Therapy | Occupational Therapy | Physician Assistant |
+# Speech-Language Pathology | CRNA | Counseling.
+# MEDICINE IS THE TRAP: content/domains/medicine.yaml's own field is
+# `domain: "MD"`, but the label every lens uses — and the only one that resolves
+# — is "Medicine". DO, Pharmacy and Dentistry happen to be spelled identically in
+# both places, which is why the difference is easy to miss.
+domain: "REPLACE — a canonical domain label from the list above"
+
+source_of_record:
+  source_id: "REPLACE — a crm-export type source_id, once one is registered"
+  sheet: null                  # the tab/sheet name inside the export, if any
+  extracted: null              # YYYY-MM-DD the export was taken
+  row_count: 0                 # must equal len(programs) — validated by a later
+                               # integrity check, so update both together
+  pii_policy: >
+    Contact names/emails/phone numbers are deliberately NOT mirrored here. The
+    source spreadsheet remains the system of record for contact data; this file
+    holds counts, status, and structure only so content/ stays shareable.
+
+programs: []
+# Real row shape, once populated. Documented here as a comment on purpose — an
+# example row in a template gets copied into a real file and shipped as a fake
+# program, the same way a placeholder score ships as a real one.
+#   - slug: string, unique, kebab-case, "{institution-slug}-{domain-slug}"
+#     institution: string
+#     program_name: string or null
+#     state: string (2-letter) or null
+#     region: string or null
+#     accreditation_status: enum — accredited | candidate | precandidate |
+#                           probation | closing | unknown
+#     class_size: number or null
+#     exxat_status: enum — client | churned | prospect | not-tracked
+#     exxat_since: string (year) or null
+#     other_disciplines_on_campus: array of strings, or empty
+#     incumbent_vendor: string (a content/competitors/ slug) or "unknown" —
+#                       never guessed. "unknown" is a real, countable answer
+#     incumbent_evidence: source_id string, REQUIRED when incumbent_vendor is
+#                         anything other than "unknown"
+#     notes: string or null, <=150 soft / 300 hard chars
+#     sources: array of {source_id, locator?}, at least one entry, REQUIRED
