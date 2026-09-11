@@ -78,6 +78,34 @@ sources:
     accessed: "2026-09-11"
 
   # --- Pharmacy / ACPE ---
+  # Internal eBook. No `url:` by design — a local .docx authored inside Exxat, so it
+  # carries `path:` and `access: "internal"`, the same shape as the CRM export above.
+  # `date` is the file's own docProps modified timestamp; the document states no
+  # publication year of its own, and its "145+" program count carries no as-of year.
+  - id: "doc-pharmacy-education-us-ebook-2026"
+    title: "Understanding Pharmacy Education in the United States (Exxat internal eBook)"
+    path: "/Users/romitsoley/Downloads/Pharmacy education in US eBook.docx"
+    type: "doc"
+    origin: "first-party"
+    access: "internal"
+    publisher: "Exxat (internal)"
+    date: "2026-03-17"
+    what_it_supports: "145+ accredited US PharmD programs; ~70% in an independent college of pharmacy reporting to the Provost/Academic VP; Dean's-office role portfolios."
+    accessed: "2026-09-11"
+
+  # The numeric enrollment table behind content/domains/pharmacy.yaml's `market:` prose,
+  # which cited this page by bare URL. Registered here so market_sizing.enrollment can
+  # cite an id. Quoted figures are what the page states as fetched on 2026-09-11.
+  - id: "dataset-aacp-vital-statistics-2023"
+    title: "Academic Pharmacy's Vital Statistics (AACP)"
+    url: "https://www.aacp.org/article/academic-pharmacys-vital-statistics"
+    type: "dataset"
+    origin: "third-party"
+    access: "public"
+    publisher: "AACP"
+    what_it_supports: "PharmD first-professional enrollment 44,403 in fall 2023, down 3% on fall 2022; 142 accredited-or-candidate US colleges of pharmacy, Dec 2023."
+    accessed: "2026-09-11"
+
   - id: "product-page-core-elms-pharmacy-affiliation-agreements-2026"
     title: "CORE ELMS for Pharmacy — Experiential Learning Management System"
     url: "https://services.corehighered.com/elms/pharmacy-experiential-learning-management-software"
