@@ -4,7 +4,17 @@
 // a function prop can't cross the server/client boundary (see feature-status.tsx,
 // same reason). Nothing here is interactive.
 
-import { BarChart3, FileText, Globe, Link2, MessagesSquare, Newspaper, Video } from "lucide-react";
+import {
+  BarChart3,
+  BookOpen,
+  CalendarDays,
+  FileText,
+  Globe,
+  Link2,
+  MessagesSquare,
+  Newspaper,
+  Video,
+} from "lucide-react";
 import { Badge } from "@astryxdesign/core/Badge";
 import { Icon } from "@astryxdesign/core/Icon";
 import { Stack } from "@astryxdesign/core/Stack";
@@ -29,6 +39,11 @@ const KIND_META: Record<string, KindMeta> = {
   press: { label: "Press", variant: "neutral", icon: Newspaper },
   "product-page": { label: "Product page", variant: "neutral", icon: Globe },
   analyst: { label: "Analyst", variant: "neutral", icon: BarChart3 },
+  // `analyst` used to cover peer-reviewed papers too; they're `research-paper`
+  // as of the 2026-09-11 registry re-type, and 15 of the 16 entries that moved
+  // land here. Without these two the badge falls back to a bare "Source".
+  "research-paper": { label: "Research paper", variant: "neutral", icon: BookOpen },
+  conference: { label: "Conference", variant: "neutral", icon: CalendarDays },
   other: { label: "Other", variant: "neutral", icon: Link2 },
 };
 
