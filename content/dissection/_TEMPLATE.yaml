@@ -57,7 +57,7 @@ incumbent_set:
 questions:
   - key: "features-to-build"
     # Relative paths under content/. A "#" fragment may name a key within the file
-    # (e.g. "domains/pharmacy.yaml#market"). A value beginning "computed — " is a
+    # (e.g. "domains/pharmacy.yaml#market_sizing"). A value beginning "computed — " is a
     # prose marker, not a path, and resolves to no file (see the last question below).
     answered_in: ["lenses/product-gaps.yaml"]
     coverage: "none"          # none | stub | partial | researched
@@ -72,10 +72,13 @@ questions:
     confidence: "low"
     gap_note: "No per-domain differentiation lens entries yet; competitors/*.yaml carries feature teardowns but no head-to-head read for this domain."
   - key: "market-size"
-    # Market facts live in the domain registry's own `market:` block (program_count,
-    # program_count_trend, total_enrollment, sources). There is no content/market/
-    # family in this repo — do not point at one.
-    answered_in: ["domains/<slug>.yaml#market"]
+    # Both targets are forward references, same as the lens files above: Task 1.4 adds
+    # the `market_sizing:` block to content/domains/<slug>.yaml and creates the
+    # content/market/programs/ family. Until it lands, market facts live in the domain
+    # registry's existing `market:` block (program_count, program_count_trend,
+    # total_enrollment, sources) — point a real manifest at `#market_sizing` once 1.4
+    # has created it rather than at the older `market:` block.
+    answered_in: ["domains/<slug>.yaml#market_sizing", "market/programs/<slug>.yaml"]
     coverage: "none"
     confidence: "low"
     gap_note: "domains/<slug>.yaml's market block is present but its program_count and enrollment figures are uncited."
