@@ -35,6 +35,11 @@
 #     by exact name; 37 by a hand-reviewed variant/former-name/same-campus-unit
 #     match); Larkin University, Manchester University and South Carolina
 #     College of Pharmacy have no Logo Grid row at all and are honestly empty.
+#     An empty list therefore carries TWO meanings, which `notes` keeps apart:
+#     on 146 matched rows it is a checked negative (the grid marks no other
+#     discipline "Yes" for that campus), and on those 3 unmatched rows it is
+#     unknown — each of the 3 says so in its own `notes`, so no later count can
+#     read an unmatched row as a confirmed no-cross-sell.
 #     Two universities in one system (UNC-Chapel Hill vs UNC-Charlotte, Texas
 #     Tech vs TTU Health Sciences Center) were never merged.
 #     Discipline labels: the grid's column headers are rewritten to this repo's
@@ -598,7 +603,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Sheet status 'Candidate Status' (type: Focused – Advancement to Accredited)."
+    notes: "Sheet status 'Candidate Status' (type: Focused – Advancement to Accredited). No Logo Grid match, so the empty disciplines list is unknown, not none."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "Pharmacy!A36"
@@ -902,7 +907,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: null
+    notes: "No Logo Grid row matched this institution, so the empty disciplines list means unknown, not a confirmed none."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "Pharmacy!A55"
@@ -1942,7 +1947,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Sheet status 'Discontinued' (type: Program Closure)."
+    notes: "Sheet status 'Discontinued' (type: Program Closure). No Logo Grid match, so the empty disciplines list is unknown, not none."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "Pharmacy!A120"
