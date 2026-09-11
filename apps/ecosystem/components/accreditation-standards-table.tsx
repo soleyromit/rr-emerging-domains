@@ -283,9 +283,15 @@ function StandardDetail({
 
         <Collapsible
           value="rationale"
+          // A bare string here, NOT wrapped in <Text> — Collapsible's trigger span
+          // applies its own fixed ~17px/semibold styling directly to a plain string
+          // child, matching the other three (string) triggers exactly. Wrapping the
+          // label in <Text> made this the one trigger to render smaller/lighter than
+          // its siblings, because Text sets its own font-size that overrides what it
+          // would otherwise inherit from the trigger span.
           trigger={
             <Stack direction="horizontal" gap={2} vAlign="center" wrap="wrap">
-              <Text textWrap="wrap">Why Exxat is rated this way</Text>
+              Why Exxat is rated this way
               <ExxatComplianceBadge compliance={row.exxat_compliance} />
               <FitBadge fit={row.prism_fit} />
             </Stack>
@@ -322,7 +328,13 @@ function StandardDetail({
                       <UseCaseStatusBadge status={u.status} />
                       <PrismFeatureBadge feature={u.prismFeatureRef} />
                     </Stack>
-                    <Text type="body" weight="semibold" size="lg" textWrap="wrap">
+                    {/* No size override here — `size="lg"` (font-size-lg) landed at
+                        nearly the same step as the Collapsible trigger's own ~17px
+                        type, so the item headline and the section header above it
+                        were visually indistinguishable. Default body size + semibold
+                        weight keeps it bolder than the supporting detail below while
+                        staying clearly smaller than "Proposed use cases (N)" above. */}
+                    <Text type="body" weight="semibold" textWrap="wrap">
                       {u.useCase}
                     </Text>
                     <FieldBlock text={u.detail} type="supporting" maxLines={3} />
