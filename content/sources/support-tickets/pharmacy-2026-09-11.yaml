@@ -12,7 +12,11 @@
 # REAL — transcribed from committed code/content, re-checkable today:
 #   - ticket_ids, and their order: apps/ecosystem/lib/zendesk/client.ts,
 #     `PHARMACY_FEATURE_GAP_TICKET_IDS = [295130, 223572, 395324, 319389]`.
-#   - selection_method: paraphrases that constant's own docstring in client.ts.
+#   - selection_method: paraphrases that constant's own docstring in client.ts (which names
+#     the two false-positive sources by name), plus the filter step stated in the Takeaway
+#     on the page this snapshot replaces. Both named exclusions — the internal "Exxat"
+#     sales-demo org and MCPHS tickets tagged Nursing — are transcribed, not inferred.
+#     Institution names are not personal data.
 #   - organizations_observed: the human-authored headline of the page this snapshot
 #     replaces (apps/ecosystem/app/zendesk/pharmacy-feature-gaps/page.tsx, deleted in the
 #     same commit) — "Only one pharmacy program shows this pattern: Oregon Health &
@@ -44,10 +48,13 @@ snapshot:
   access: "internal"
   taken: "2026-09-11"
   domain: "Pharmacy"
-  selection_method: >
-    Curated ticket-id list, not a query. Zendesk's own Domain taxonomy has no Pharmacy value, and a
-    full-text "pharmacy" search is dominated by unrelated results. These 4 ids were manually
-    identified and hardcoded in apps/ecosystem/lib/zendesk/client.ts.
+  selection_method: >-
+    Curated ticket-id list, not a query. Zendesk's own Domain taxonomy has no Pharmacy value, so
+    candidates came from a full-text "pharmacy" search, which is dominated by false positives:
+    internal sales-demo tickets under the "Exxat" org, and MCPHS tickets that are actually tagged
+    as its Nursing department. Both were excluded, then only tickets Zendesk itself tagged
+    rejected, parked, or not-served-by-module were kept. The surviving ids are hardcoded in
+    apps/ecosystem/lib/zendesk/client.ts.
   selection_query: null
   ticket_ids: [295130, 223572, 395324, 319389]
   # Real, but note its scope. The replaced page asserted, as a human-authored headline over

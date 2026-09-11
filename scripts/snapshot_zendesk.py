@@ -43,13 +43,37 @@ REPO = pathlib.Path(__file__).resolve().parents[1]
 OUT_DIR = REPO / "content" / "sources" / "support-tickets"
 FETCHER = REPO / "scripts" / "snapshot_zendesk_fetch.mjs"
 
-# Quoted verbatim from the docstring on PHARMACY_FEATURE_GAP_TICKET_IDS in
-# apps/ecosystem/lib/zendesk/client.ts. Kept here so the snapshot carries the
-# reasoning as content, not only as a code comment.
-SELECTION_METHOD = (
-    'Curated ticket-id list, not a query. Zendesk\'s own Domain taxonomy has no Pharmacy value, and a\n'
-    'full-text "pharmacy" search is dominated by unrelated results. These 4 ids were manually\n'
-    "identified and hardcoded in apps/ecosystem/lib/zendesk/client.ts.\n"
+# The single most load-bearing field in a snapshot: moving this reasoning out of a
+# source-code comment and into citable content is the whole point of this script.
+#
+# Keep it AUDITABLE, not merely true. "A full-text search is dominated by unrelated
+# results" is unfalsifiable; naming the actual false positives that were excluded, and the
+# filter that was applied afterwards, gives a future reader something they can go check and
+# correct. Both specifics below are transcribed from the docstring on
+# PHARMACY_FEATURE_GAP_TICKET_IDS in apps/ecosystem/lib/zendesk/client.ts and from the
+# Takeaway on the live page this script replaced. Institution names are not PII.
+#
+# Target length is 300-600 chars, matching `ratings[].rationale` in
+# content/CONTENT-DENSITY.md — the closest existing analog for a rationale-style field.
+# (content/sources/** is not walked by the density checker yet; that lands in Task 0.5.)
+#
+# Keyed by domain because the Zendesk-taxonomy fact is domain-specific: a Dentistry
+# snapshot must not silently inherit Pharmacy's reasoning. An unknown domain gets an
+# explicit placeholder that a human has to replace, not a plausible-looking default.
+SELECTION_METHOD_BY_DOMAIN = {
+    "Pharmacy": (
+        'Curated ticket-id list, not a query. Zendesk\'s own Domain taxonomy has no Pharmacy value, so '
+        'candidates came from a full-text "pharmacy" search, which is dominated by false positives: '
+        'internal sales-demo tickets under the "Exxat" org, and MCPHS tickets that are actually tagged '
+        "as its Nursing department. Both were excluded, then only tickets Zendesk itself tagged "
+        "rejected, parked, or not-served-by-module were kept. The surviving ids are hardcoded in "
+        "apps/ecosystem/lib/zendesk/client.ts."
+    ),
+}
+
+UNKNOWN_SELECTION_METHOD = (
+    "TODO — replace before committing. No selection rationale is recorded for this domain. "
+    "State how these ticket ids were chosen, what was excluded and why, and where the list lives."
 )
 
 REVIEW_REMINDER = (
@@ -85,6 +109,21 @@ def fetch_tickets() -> list[dict]:
     return json.loads(proc.stdout)
 
 
+def coverage_caveat(n_tickets: int, n_orgs: int) -> str:
+    """The honest limit of what a snapshot this size can support.
+
+    This is an interpretive claim being generated automatically, so it has to be right at
+    the edges: "1 tickets" or a zero-ticket snapshot described as "one account's repeated
+    experience" reads as carelessness in exactly the field meant to induce care.
+    """
+    tickets_phrase = f"{n_tickets} ticket{'' if n_tickets == 1 else 's'}"
+    if n_orgs == 0:
+        return f"{tickets_phrase}, no organization recorded — provenance incomplete, not citable as a signal."
+    if n_orgs == 1:
+        return f"{tickets_phrase}, 1 organization — one account's repeated experience, not a market signal."
+    return f"{tickets_phrase} across {n_orgs} organizations — a curated slice, not a market signal."
+
+
 def build_snapshot(tickets: list[dict], domain: str, taken: str) -> dict:
     """Map FeatureGapTicket[] onto the content/sources/support-tickets schema.
 
@@ -98,6 +137,8 @@ def build_snapshot(tickets: list[dict], domain: str, taken: str) -> dict:
     ticket_ids = [t["ticketId"] for t in tickets]
 
     return {
+        # This dict is assembled in the order the schema is documented in _TEMPLATE.yaml;
+        # yaml.safe_dump is called with sort_keys=False so that order survives to the file.
         "snapshot": {
             "id": f"support-tickets-{slug}-{taken}",
             "type": "support-ticket",
@@ -106,18 +147,11 @@ def build_snapshot(tickets: list[dict], domain: str, taken: str) -> dict:
             "access": "internal",
             "taken": taken,
             "domain": domain,
-            "selection_method": SELECTION_METHOD,
+            "selection_method": SELECTION_METHOD_BY_DOMAIN.get(domain, UNKNOWN_SELECTION_METHOD),
             "selection_query": None,
             "ticket_ids": ticket_ids,
             "organizations_observed": org_names,
-            "coverage_caveat": (
-                f"{len(ticket_ids)} tickets, {len(org_names)} organization"
-                f"{'' if len(org_names) == 1 else 's'} — "
-                "one account's repeated experience, not a market signal."
-                if len(org_names) <= 1
-                else f"{len(ticket_ids)} tickets across {len(org_names)} organizations — "
-                "a curated slice, not a market signal."
-            ),
+            "coverage_caveat": coverage_caveat(len(ticket_ids), len(org_names)),
         },
         "tickets": [
             {

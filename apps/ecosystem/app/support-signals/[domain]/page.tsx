@@ -54,6 +54,28 @@ function ticketDescription(ticket: SupportTicketEntry): string {
   return parts.join(" · ");
 }
 
+// The PII-review state of a snapshot, derived from the data rather than asserted.
+//
+// This function exists because the first version of this page stated, as static JSX prose,
+// that "every ticket here has been reviewed for personal data before being committed."
+// That was an unearned claim on the one surface this whole page exists to clean up: it was
+// not true of a snapshot whose fields are all null (nothing was reviewed because there was
+// nothing to review), and on a future script-written snapshot — where every ticket arrives
+// `redacted: false` — it would have flatly contradicted the "Awaiting PII review" count
+// computed three sections above it. Never restate a property of the data in prose; read it.
+function redactionState(tickets: SupportTicketEntry[]): string {
+  const unreviewed = tickets.filter((t) => t.redacted !== true).length;
+  const hasCapturedContent = tickets.some((t) => t.subject || t.finding);
+
+  if (unreviewed > 0) {
+    return `${unreviewed} of ${tickets.length} tickets are still awaiting a personal-data review. Until a human has read a ticket and marked it reviewed, treat its text as unscreened.`;
+  }
+  if (!hasCapturedContent) {
+    return "No ticket text is captured in this snapshot, so it holds no personal data to review. That is not the same as a human having read these tickets — nothing here has been read, because there is nothing here to read.";
+  }
+  return `All ${tickets.length} tickets are marked as reviewed for personal data.`;
+}
+
 export default async function SupportSignalsPage({ params }: { params: Promise<{ domain: string }> }) {
   const { domain } = await params;
   const snapshot = getLatestSupportTicketSnapshot(domain);
@@ -168,9 +190,16 @@ export default async function SupportSignalsPage({ params }: { params: Promise<{
               <Text type="body">
                 A snapshot records only what the helpdesk actually returned when it was taken. Fields shown
                 as &quot;Not captured&quot; were left deliberately empty rather than filled with a plausible
-                guess, and a re-run with live credentials fills them in. Every ticket here has been reviewed
-                for personal data before being committed.
+                guess, and a re-run with live credentials fills them in.
               </Text>
+            </Stack>
+            <Stack gap={1}>
+              <Text type="label" color="secondary" size="xsm">
+                Personal-data review
+              </Text>
+              {/* Derived from each ticket's own `redacted:` field — never asserted. See
+                  redactionState() above for why this is not a static sentence. */}
+              <Text type="body">{redactionState(tickets)}</Text>
             </Stack>
             <Stack gap={1}>
               <Text type="label" color="secondary" size="xsm">

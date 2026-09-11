@@ -41,13 +41,22 @@ snapshot:
   # How these tickets were chosen, in enough detail that a reader can judge the bias.
   # If the selection was a curated id list rather than a query, say so and say why —
   # that reasoning is the single most important field in the file.
-  selection_method: >
+  #
+  # Make it AUDITABLE, not merely true. "Search results were mostly irrelevant" is
+  # unfalsifiable and worthless to a future reader; NAME what was excluded and what filter
+  # was applied afterwards, so someone can go check it and correct you if you were wrong.
+  # Organization and institution names are not personal data — do not redact them here.
+  # Aim for 300-600 characters.
+  selection_method: >-
     <How were these tickets chosen? A saved search? A tag? A hand-picked id list? If
-    hand-picked, what was rejected and why?>
+    hand-picked: which specific sources of false positives were excluded, by name, and
+    what filter was applied to what survived?>
   # The literal query string if one was used; null for a curated id list.
   selection_query: null
-  # Every ticket id in this snapshot, in the same order as `tickets:` below.
-  ticket_ids: []
+  # Every ticket id in this snapshot, in the same order as `tickets:` below. Kept
+  # deliberately consistent with the single placeholder entry under `tickets:` — a
+  # template is copied verbatim, so it must not ship a contradiction to inherit.
+  ticket_ids: [0]
   # Distinct customer organizations the snapshot spans, deduplicated. This is the number
   # that tells a reader whether they are looking at a pattern or at one unhappy account.
   organizations_observed: []
