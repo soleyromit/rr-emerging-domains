@@ -9,7 +9,7 @@ participants:
 domains: ["Pharmacy"]
 programs: []
 access: "internal"
-evidence_status: "verbatim-cleaned"
+evidence_status: "summary-only"
 claims_are_speaker_opinion: true
 topics: ["gtm-taxonomy", "research-methodology", "scope-discipline"]
 supersedes: []
@@ -19,9 +19,11 @@ supersedes: []
 
 **Date:** 2026-09-11
 **Participants:** Romit Soley (Exxat, research), Ruchi (Exxat, consultant — four emerging domains)
-**Status:** Level 0 raw source. Lightly cleaned, not summarized. No recording id is
-recorded for this session; anything downstream that cites it should quote the specific
-point, not the file generally.
+**Status:** **Not a transcript.** Written up after the fact from the session's
+load-bearing points — no recording was captured, and apart from the one quoted sentence
+at the end, nothing here is verbatim. Unlike the three Granola-sourced files beside it,
+this one is `summary-only`: cite it for the decisions and scope it records, not as
+primary speech, and do not attribute its wording to a speaker.
 
 ---
 
@@ -30,9 +32,7 @@ point, not the file generally.
 The session named the shape of the go-to-market research effort itself: seven kinds of
 input that a domain gets dissected with — **competitive analysis, market sizing,
 program-level research, domain-expert research, conference research, interviews, and
-consultants**. They are inputs, not deliverables: they feed product development first,
-and sales second. Everything this repo collects is meant to land in one of those seven
-buckets rather than accumulate as undifferentiated notes.
+consultants**. They feed product development first, and sales second.
 
 ## The template already exists
 
@@ -46,15 +46,13 @@ The question this whole effort exists to answer, stated plainly: **what are the 
 us to launch Exxat Prism in pharmacy** — starting from what Exxat already has for
 nursing, PT and OT, what transfers as-is, and what is a real gap. Account manager
 **Ashish** was named as the next person to talk to; he is working with one university's
-pharmacy implementation and can say what the product actually does and doesn't cover
-there.
+pharmacy implementation.
 
 ## Scope discipline
 
 An explicit decision to hold scope: **pharmacy only for now** (pharmacy technician
-possibly alongside it). Not alumni engagement, not career readiness, not the other
-adjacent areas that keep presenting themselves as natural extensions. The scope stays
-narrow until the pharmacy gap picture is actually finished.
+possibly alongside it). Not alumni engagement, not career readiness, not other adjacent
+areas.
 
 ## Collateral is someone else's job
 

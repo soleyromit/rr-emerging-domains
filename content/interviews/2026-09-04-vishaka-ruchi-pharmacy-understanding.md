@@ -1,9 +1,10 @@
 ---
 # NOTE: `id` intentionally omits "ruchi" so it matches the already-frozen
-# registry id for this same session (content/sources/registry.yaml), which 20+
-# existing `source_id`/`sources` citations in content/trends/pharmacy.yaml and
-# content/lenses/standards-use-cases.yaml already point at. One canonical id
-# per session; see the registry's "an entry's id is frozen once written" rule.
+# registry id for this same session (content/sources/registry.yaml), which 19
+# existing citations already point at (15 `sources[].source_id` entries in
+# content/lenses/standards-use-cases.yaml, 4 `sources[]` entries in
+# content/trends/pharmacy.yaml, counted 2026-09-11). One canonical id per
+# session; see the registry's "an entry's id is frozen once written" rule.
 id: "interview-vishaka-pharmacy-understanding-2026-09-04"
 type: "domain-expert"
 date: "2026-09-04"
