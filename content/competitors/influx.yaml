@@ -1,0 +1,214 @@
+# Researched 2026-09-11.
+#
+# NAME RECONCILIATION — read this first, it governs how every row below should be read.
+# The 2026-09-04 Vishaka session names this company "Influx" (transcribed from speech). No
+# company called "Influx" serving pharmacy education was found in any search run on
+# 2026-09-11. What was found is ENFLUX (enflux.com), and the match is close enough to act
+# on but is an identification, not a confirmed fact: Enflux is an analytics/decision-support
+# platform that holds no primary data of its own, its own FAQ names ExamSoft, Canvas and
+# CORE as its integrations, and a fetched case study shows a school of pharmacy running it
+# on top of exactly the ExamSoft + CORE ELMS pair the session describes. Every one of the
+# session's distinguishing details lands on Enflux. This file is therefore written about
+# Enflux, and says "Enflux" wherever a claim comes from public research.
+# The slug stays "influx" deliberately: it is the identifier Tasks 2.6 and 2.8 were written
+# against. If the identification is ever disconfirmed, the slug is what needs revisiting —
+# flagged here rather than silently renamed.
+#
+# SOURCING NOTE: the strongest evidence below is vendor-published (enflux.com pages and one
+# vendor-published case study, all fetched 2026-09-11). No independent review corpus exists
+# — Enflux has no Capterra or G2 listing that search surfaced — so unlike core-elms.yaml
+# there is no third-party check on the vendor's claims here. Treat capability claims as
+# vendor-asserted and outcome numbers as vendor-published customer results.
+competitor: "Enflux (recorded in the 2026-09-04 session as \"Influx\")"
+slug: "influx"
+# Vendor lists 15+ health-sciences disciplines including pharmacy, PA, PT, veterinary,
+# nursing, medicine, business and education. Pharmacy is the only one of this repo's four
+# tracked domains with named customers and a dedicated product page; Medicine is listed by
+# the vendor without a named customer found. No DO- or dentistry-specific evidence found.
+domains_served: ["Pharmacy", "Medicine"]
+category: "Cross-system academic data aggregation, learning analytics and accreditation reporting — an analytics layer over other vendors' systems, not a system of record"
+company:
+  founded: "2015"
+  hq: "San Antonio, TX (4039 Broadway, per 2020 local reporting)"
+  ownership: >
+    Independent and venture-backed. Founded by Avery Booker and Cameron Powell; ~$3M raised
+    in a single round reported as a Series A on 2019-11-20, with no acquisition found as of
+    2026-09-11. Small: 17 employees reported in 2020, 28 reported as of 2026-05-31 in a
+    third-party company profile. This is a materially smaller company than CORE or Turnitin.
+
+# NOTE ON WHAT IS NOT HERE: there is no "Exam Management" row. Enflux delivers no exams —
+# its entire exam footprint is reading ExamSoft's output — and Prism's own Exam Management
+# pillar is roadmap (Q2 2027). Neither side ships it, so the pillar is not a competitive
+# axis between these two products and a depth rating would be noise. Same reasoning applies
+# to Compliance Management: no compliance capability was found on any Enflux page, and
+# nothing suggests the company claims one.
+feature_teardown:
+  - pillar: "Accreditation Management"
+    competitor_capability: >
+      The strongest pillar, and the reason the company exists. Alignment to ACPE Standards
+      2025 with "clear documentation, audit trails, and on-demand reporting", plus
+      ActionPlans for continuous improvement — create, assign and track improvement
+      initiatives and retain the documentation trail a continuous-quality-improvement
+      standard asks for. Positioned directly at the self-study.
+    depth_vs_prism: "ahead"
+    evidence: >
+      Rated on shipped-vs-roadmap, which is a timing statement, not a feature-by-feature
+      win: Prism's Accreditation Management pillar is status roadmap, target Q3 2027, per
+      capability-map.yaml, while Enflux ships this today with a documented accreditation
+      outcome behind it. The University of Charleston School of Pharmacy case study reports
+      an 8-year ACPE reaccreditation in 2024 with three Noteworthy Practices, and quotes its
+      self-study chair: "With strategic implementation and ready access to data through
+      Enflux, we were able to streamline our workflow and complete the self-study far more
+      efficiently than we could have otherwise." Two limits on that rating: the case study
+      is vendor-published, and a reaccreditation outcome is not attributable to one vendor.
+    source: "https://enflux.com/case-studies/learning-analytics-for-student-retention-and-accreditation-readiness/"
+  - pillar: "Curriculum Mapping"
+    competitor_capability: >
+      Real, but derived from assessment data rather than owning the curriculum. The named
+      feature is CompetencyGenie, described as AI-powered and used to "Tag years of ExamSoft
+      assessments to ACPE Standards, program outcomes, and competency frameworks in minutes"
+      with audit trails and tagging dashboards. Note what the object of the mapping is: the
+      tags sit on another vendor's assessments. The curriculum structure itself — courses,
+      offerings, catalog, syllabi — lives elsewhere.
+    depth_vs_prism: "unknown"
+    evidence: >
+      Vendor claims only, fetched 2026-09-11 from the pharmacy solution page and the
+      homepage ("AI-powered CompetencyGenie™ and curriculum mapping tools streamline exam
+      tagging"). Nothing found describes course/offering data modelling, cloning, syllabus
+      generation, gap analysis against unmapped standards, or what happens to the map for a
+      course with no ExamSoft assessment attached to it — which is the obvious structural
+      question and is unanswered on every fetched page. Rated "unknown" rather than compared
+      to Prism's shipped Curriculum Mapping pillar, because retro-tagging an assessment
+      archive and maintaining a curriculum map are not established to be the same job.
+    source: "https://enflux.com/who-we-serve/pharmacy-school-accreditation-analytics/"
+  - pillar: "Surveys & Course Evaluations"
+    competitor_capability: >
+      Analyses survey data; no evidence it administers surveys. AACP Program Quality Survey
+      results are one of the named inputs it consolidates and reports on, alongside
+      NAPLEX/MPJE outcomes, but every fetched description puts surveys on the intake side.
+    depth_vs_prism: "unknown"
+    evidence: >
+      The platform "seamlessly consolidate[s] data from a range of sources, including your
+      institution's assessment tools, learning management systems, surveys, and exam
+      results", and the pharmacy page names AACP survey analysis among its reporting.
+      No survey builder, distribution workflow, response-rate tracking, reminder engine or
+      evaluation-cycle scheduling was found on any fetched page — the capabilities Prism's
+      shipped Surveys & Course Evaluations pillar covers. Reading a survey's results and
+      running a survey are different products; this is rated "unknown" because the fetched
+      evidence only establishes the former.
+    source: "https://enflux.com/faq/"
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: >
+      None of its own. CORE ELMS is listed as a data source Enflux reads, which means
+      experiential data reaches Enflux only because a different vendor collected it first.
+    depth_vs_prism: "prism-only"
+    evidence: >
+      The FAQ names the integration set as "ExamSoft®, Canvas, and CORE", and the University
+      of Charleston case study lists CORE ELMS explicitly among the connected sources
+      (alongside ExamSoft, Moodle, AACP Program Quality Surveys and NAPLEX/MPJE results).
+      No placement, scheduling, matching, site/preceptor management, hour-logging or
+      patient-logging capability appears on any Enflux page fetched 2026-09-11. This is the
+      clearest positively-evidenced absence in the file: the vendor's own materials describe
+      reading this data, not producing it.
+    source: "https://enflux.com/faq/"
+
+strengths:
+  - claim: >
+      Owns the cross-system view no single system of record can produce. It sits above
+      ExamSoft, the LMS, CORE ELMS, AACP surveys and NAPLEX/MPJE results at once — a
+      position that exists precisely because programs run several unconnected vendors.
+    source: "https://enflux.com/case-studies/learning-analytics-for-student-retention-and-accreditation-readiness/"
+  - claim: >
+      Aimed at the accreditation buyer, not the operational one. ACPE Standards 2025
+      alignment, audit trails and ActionPlans for continuous improvement target the dean of
+      assessment and self-study chair — the buyer the 2026-09-04 session says Exxat is not
+      currently reaching.
+    source: "https://enflux.com/who-we-serve/pharmacy-school-accreditation-analytics/"
+  - claim: >
+      Distribution through the incumbent it depends on: a 2020 partnership gave Enflux
+      access to ExamSoft assessment data and reach into ExamSoft's institutional network,
+      reported at the time as 1,700+ academic institutions.
+    source: "https://www.startupssanantonio.com/a-big-partnership-for-higher-ed-data-analytics-enflux-partners-with-examsoft/"
+  - claim: >
+      Fast to stand up because it owns no workflow: initial setup "within a week" and
+      typical completion "within 30 days of signing their contract" — a far lower adoption
+      barrier than replacing a system of record.
+    source: "https://enflux.com/faq/"
+  - claim: >
+      Publishes concrete outcome numbers, which most competitors in this repo do not: 100%
+      student retention, a 6% reduction in course failures, and 6 administrative hours saved
+      per semester at one pharmacy school. Vendor-published, so directional.
+    source: "https://enflux.com/case-studies/learning-analytics-for-student-retention-and-accreditation-readiness/"
+
+weaknesses:
+  - claim: >
+      Structurally dependent on the systems it reads. It owns no primary data, so every
+      insight is downstream of another vendor's collection quality, data model and continued
+      willingness to integrate — including CORE's, a direct competitor to Prism.
+    source: "https://enflux.com/faq/"
+  - claim: >
+      Adds a third vendor, and a third bill, to a program already paying CORE and ExamSoft.
+      The 2026-09-04 session frames the counter-position directly as "one platform, all data
+      in one place, cost savings, and fewer systems for staff to be trained on."
+    source: "content/interviews/2026-09-04-vishaka-ruchi-pharmacy-understanding.md (registry id interview-vishaka-pharmacy-understanding-2026-09-04)"
+  - claim: >
+      Small and thinly capitalised against its neighbours: ~28 employees and ~$3M raised in
+      one round in 2019, with no funding event found since, versus Turnitin-owned ExamSoft
+      and PE-backed PeopleGrove/CORE.
+    source: "https://pitchbook.com/profiles/company/454309-48"
+  - claim: >
+      No independent review evidence exists. No Capterra, G2 or TrustRadius listing was
+      found on 2026-09-11, so every capability claim in this file is vendor-asserted with no
+      third-party corroboration — the opposite of CORE's position.
+    source: "unable to verify — searched capterra.com, g2.com and general web search for Enflux product reviews on 2026-09-11; no listing found"
+  - claim: >
+      Touches several pillars shallowly and owns none of them deeply. It reports on
+      curriculum, surveys and clinical data without collecting any of it — a reporting layer
+      is not a system of record, and a program still needs the underlying systems.
+    source: "https://enflux.com/higher-education-solutions/"
+
+retention_anchor: >
+  Weaker than any system-of-record competitor in this repo, and honestly so. Nothing
+  operational breaks when a program cancels Enflux — students still sit exams in ExamSoft
+  and still log rotations in CORE ELMS — so there is no workflow hostage, only a reporting
+  one. What does anchor it is the accreditation cycle: a program that built its ACPE
+  self-study out of Enflux dashboards, carries tagged assessment history in CompetencyGenie,
+  and holds an audit trail of ActionPlans has bound the vendor to a multi-year narrative it
+  must be able to continue reporting against. That anchor is real but time-shaped — it grips
+  hardest approaching a self-study and loosens immediately after one, which is also the
+  window in which the account is most and least winnable.
+
+exxat_opportunity: >
+  Enflux is the clearest statement of the opportunity in pharmacy, because its whole
+  business is selling the integration Prism could make unnecessary. It exists only because
+  didactic data (ExamSoft) and clinical data (CORE ELMS) sit in different systems; a program
+  running Prism for clinical management plus the September 12, 2026 ExamSoft bulk-import
+  gets both halves in one platform with no third vendor and no third bill — Vishaka's "one
+  platform, all data in one place, cost savings, and fewer systems for staff to be trained
+  on." Handle the internal history carefully and precisely: per the 2026-09-04 session Exxat
+  was once on a path to integrate with Influx and stopped, because Prism's own roadmap is to
+  do the same thing. That is company-internal reasoning captured in one session, not a
+  public or announced position, and it should not be repeated outside that framing or
+  presented as a formal strategic decision. Two things to respect rather than dismiss.
+  Enflux ships accreditation reporting today against a Prism pillar targeted for Q3 2027, so
+  a program mid-self-study has a real reason to buy it now — the honest play there is
+  timing, not feature superiority. And its ACPE-facing pitch reaches the dean of assessment
+  and self-study chair, the buyer the same session says Exxat is missing by selling to DCEs;
+  winning this displacement is a targeting change before it is a product change.
+
+pricing_signal: >
+  Not publicly disclosed. No pricing page, tier or per-student rate was found on enflux.com
+  or any third-party listing on 2026-09-11; the site offers a demo request and a free-trial
+  call to action, with no figures attached.
+
+last_researched: "2026-09-11"
+
+sources:
+  - "https://enflux.com/"
+  - "https://enflux.com/faq/"
+  - "https://enflux.com/higher-education-solutions/"
+  - "https://enflux.com/who-we-serve/pharmacy-school-accreditation-analytics/"
+  - "https://enflux.com/case-studies/learning-analytics-for-student-retention-and-accreditation-readiness/"
+  - "https://www.startupssanantonio.com/a-big-partnership-for-higher-ed-data-analytics-enflux-partners-with-examsoft/"
+  - "https://pitchbook.com/profiles/company/454309-48"
+  - "content/interviews/2026-09-04-vishaka-ruchi-pharmacy-understanding.md"

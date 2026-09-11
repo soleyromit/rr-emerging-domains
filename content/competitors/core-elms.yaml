@@ -1,5 +1,10 @@
 # Researched 2026-08-24. Every non-trivial factual claim carries a source URL found via
 # public web search/fetch. Anything not independently verifiable is marked accordingly.
+# AMENDED 2026-09-11 (one change only, no re-research): a second, directional figure for
+# CORE's pharmacy share was added alongside the existing 90% vendor claim in strengths[].
+# See the SHARE-FIGURE VARIANCE comment there. `last_researched` deliberately stays
+# 2026-08-24 — the product research below was not redone, and moving the date would
+# overstate how fresh these capability rows are.
 competitor: "CORE ELMS (CORE Higher Ed)"
 slug: "core-elms"
 domains_served: ["Pharmacy", "Dentistry"]   # also serves broad "allied health" (nursing, PT, OT, PA, social work, etc.) but not DO/Medicine-specific per template categories
@@ -114,10 +119,35 @@ strengths:
       veterinary, social work, law, undergraduate medicine, etc.) from one platform,
       positioned explicitly against "unique solutions" per program.
     source: "https://services.corehighered.com/student-clinical-experential-education"
+  # SHARE-FIGURE VARIANCE, recorded 2026-09-11. Two real sources give two different
+  # numbers for the same fact, and this file states both rather than picking one. The
+  # 90% claim below is unchanged: it is the vendor's own public marketing claim and stays
+  # exactly as researched on 2026-08-24. The ~80%+ figure in the entry after it comes from
+  # the 2026-09-04 Vishaka session — an internal domain expert's recollection, which is a
+  # different KIND of evidence, not a correction to the first. Neither is averaged, and
+  # neither is deleted. This follows the precedent set in
+  # content/scorecard/where-to-play.yaml, where the scorecard's own DO recommendation and
+  # the actual Pharmacy GTM decision are both stated with their sources and reasoning
+  # rather than one silently overwriting the other.
+  # On `evidence_strength`: this file's schema (competitors/_TEMPLATE.yaml) has no such
+  # field — it exists only on lenses/standards-competitor-ratings.yaml `ratings[]`. Adding
+  # it to one strengths[] entry here would invent a field the template does not define, so
+  # the "directional" caveat is stated in prose in the claim instead, per the brief.
+  # Worth noting what the variance does and does not change: both figures describe
+  # overwhelming incumbency, and no conclusion anywhere in this repo turns on the
+  # difference between 80% and 90%. The reason to record it is traceability, not doubt.
   - claim: >
       Deep incumbency in pharmacy specifically — CORE claims 90% of U.S. pharmacy programs
       partner with them.
     source: "https://corehighered.com/core-for-pharmacy"
+  - claim: >
+      Second, directional data point on that same incumbency, from a different kind of
+      source: Exxat's pharmacy domain expert put it lower on 2026-09-04 — "they have, I
+      think, about 80 or more than 80% of pharmacy programs subscribed to Core." A hedged
+      internal recollection stated as speaker opinion; it does not supersede the vendor's
+      90% claim above. Both stand — CORE holds roughly four in five to nine in ten U.S.
+      pharmacy programs, with the vendor claiming the top of that band.
+    source: "content/interviews/2026-09-04-vishaka-ruchi-pharmacy-understanding.md (registry id interview-vishaka-pharmacy-understanding-2026-09-04)"
   - claim: >
       Ships curriculum-to-accreditation-standard mapping (CompMS gap analysis + ACPE
       standards alignment) today, a capability Prism has only as a Q3 2027 roadmap item.
