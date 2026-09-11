@@ -49,15 +49,17 @@ first fixing the stratum itself.
 
 ```mermaid
 flowchart BT
-    L0["Level 0 — RAW SOURCES (not in git)\n7 transcript files · 322-file help-center mirror ·\n3 discipline-playbook PDF captures — all in the\nObsidian vault 99-Assets — plus public accreditor\nPDFs & competitor pages, cited by URL"]
+    L0["Level 0 — RAW SOURCES (not in git)\n7 transcript files · 322-file help-center mirror ·\n7 discipline playbooks — all in the\nObsidian vault 99-Assets — plus public accreditor\nPDFs & competitor pages, cited by URL"]
+    L05["Level 0.5 — SOURCE INDEXES (in git)\ncontent/sources/ — registry.yaml ·\nhelp-center.yaml · playbooks.yaml"]
     L1["Level 1 — GROUND-TRUTH REGISTRIES\nprism/ · domains/ · accreditation/ · competitors/"]
     L2["Level 2 — REFRAMINGS\npersonas/ (discipline·role·lens) · feature-map/"]
     L3["Level 3 — ELEMENT-LEVEL VERIFICATION\nflows/ (33+ files, v2 schema, per-element analysis)"]
     L4["Level 4 — NARRATIVE\njourneys/ (5 cross-domain journey maps)"]
     L5["Level 5 — INTERPRETATION\n5a: scorecard/ → 5b: synthesis/"]
     L6["Level 6 — PRESENTATION\napps/ecosystem (Next.js) · Obsidian vault mirror ·\nExcel tracker (via scripts/sync_to_*.py)"]
-    L0 --> L1 --> L2 --> L3 --> L4 --> L5 --> L6
+    L0 --> L05 --> L1 --> L2 --> L3 --> L4 --> L5 --> L6
     L0 -.->|"flows' confirmed_by cites raw\nsources directly — that's fine,\ndown-citation skips levels freely"| L3
+    L05 -.->|"any level may cite a\nsource id directly"| L5
 ```
 
 Arrows point in the *citation* direction inverted — each level may cite anything at
@@ -72,7 +74,8 @@ No level cites its own level or above.
 |---|---|
 | 7 transcript files (16-part admin tutorial series + 6 discipline video sets: TE, SLP, PT/PTA, PA, OT/OTA, Nursing) | `PRISM-Expansion-Vault/99-Assets/` |
 | 322-file help-center mirror (Exxat Prism Help Center extraction) | `99-Assets/documents/Exxat-Help-Guides/` |
-| 3 internal discipline-playbook PDF captures (PA, OT, PT — CSS & CX Zendesk knowledge base) | `99-Assets/` |
+| 7 internal discipline playbooks (PT, OT, PA, SLP, Nursing, Social Work, Teacher Education) — indexed in `content/sources/playbooks.yaml` | `99-Assets/documents/Playbooks/` |
+| 3 CSS & CX Zendesk knowledge-base screen captures (PA, OT, PT — "FireShot Capture 002/003/004"), named only in `prism/capability-map.yaml`'s source list; nothing else cites them | `99-Assets/` |
 | Public accreditor standards PDFs (COCA 2026, ACPE 2025, CODA, LCME) and competitor marketing/docs pages | cited by URL from Level 1 |
 
 These are the testimony. They are deliberately *outside* git (size, copyright,
@@ -80,21 +83,29 @@ internal-doc hygiene) but every in-repo claim that rests on them names the exact
 or article path in a `source:` / `confirmed_by:` field, so the chain of custody
 survives the repo boundary.
 
-**Level 0.5 — `content/sources/`.** Three in-repo index files stand between the raw
-sources and Level 1: they are citable by any file and cite nothing themselves.
-`registry.yaml` is the general one — sparse, curated, one entry per individually
-found-and-checked source, referenced by `source_id`. `help-center.yaml` and
-`playbooks.yaml` are dedicated *corpus* indexes for the two Level 0 bodies that are too
-large and too internally-addressed for a flat registry entry: the 322-file help-center
-mirror and the three PA/OT/PT discipline-playbook captures. Use a corpus index when a
-citation needs a per-citation `locator:` (a page, section, or anchor *within* one
-document) alongside the `source_id`, which a flat registry entry can't express cleanly;
-their ids are prefixed `help-center-` and `playbook-` respectively.
-
 `interviews/` is the in-repo slot for real CS/AM/leadership interviews as Romit
 conducts them. First populated 2026-08-26 with two Granola meeting transcripts
 (lightly cleaned of tech-support tangents, substance kept verbatim) — interview files
 are raw testimony and nothing in them cites upward.
+
+## Level 0.5 — Source indexes (`content/sources/`, in git, cite nothing)
+
+Three in-repo index files stand between the raw sources and Level 1. They are citable
+by any file at any level and cite nothing themselves. `registry.yaml` is the general
+one — sparse, curated, one entry per individually found-and-checked source, referenced
+by `source_id`. `help-center.yaml` and `playbooks.yaml` are dedicated *corpus* indexes
+for the two Level 0 bodies too large and too internally-addressed for a flat registry
+entry: the 322-file help-center mirror and the seven discipline playbooks. Use a corpus
+index when a citation needs a per-citation `locator:` (a page, section, line range or
+anchor *within* one document) alongside the `source_id`, which a flat registry entry
+can't express cleanly; their ids are prefixed `help-center-` and `playbook-`.
+
+An index entry is a pointer, not evidence. Both corpus files record a `path_status:` /
+provenance note distinguishing a path quoted verbatim from an existing in-repo citation
+from one nobody has opened, and both state that their `what_it_supports:` summaries
+restate what an in-repo Level-1/Level-3 file asserts rather than a fresh reading of the
+Level-0 document. Citing an index id back at the file its summary was derived from
+would launder a claim, not corroborate it.
 
 ## Level 1 — Ground-truth registries (cite only Level 0)
 
