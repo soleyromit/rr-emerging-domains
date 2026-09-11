@@ -36,6 +36,16 @@
 #                  indexed in their own files (content/sources/help-center.yaml,
 #                  content/sources/playbooks.yaml), not duplicated here.
 #   sales-collateral  comparison charts and one-pagers — NOT citable as fact.
+#                  Indexed in its own file (content/sources/vendor-comparison-
+#                  chart.yaml), not here, and carrying `citable_as_fact: false`.
+#
+# citable_as_fact: — absent on every entry in THIS file, because everything here is
+# citable by definition; that is what the registry is for. The field is written
+# explicitly, and only as `false`, on a Level 0.5 source home whose ids must never
+# appear as a `source_id` anywhere in content/ (so far: vendor-comparison-chart.yaml,
+# Exxat sales' own vendor chart). Read it as a quarantine marker, not a confidence
+# score: it says "this artifact is a record of what someone claimed," never "this
+# claim is weak." A Phase 1 integrity check enforces the rule mechanically.
 #
 # origin: "first-party" (Exxat's own material) | "third-party" (everyone
 # else's). access: "public" | "internal" | "confidential" — as a rule, an entry
