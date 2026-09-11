@@ -90,7 +90,7 @@ sources:
     access: "internal"
     publisher: "Exxat (internal)"
     date: "2026-03-17"
-    what_it_supports: "145+ accredited US PharmD programs; ~70% in an independent college of pharmacy reporting to the Provost/Academic VP; Dean's-office role portfolios."
+    what_it_supports: "145+ accredited US PharmD programs; ~70% in an independent college of pharmacy reporting to the Provost/Academic VP; Dean's-office role portfolios. Also Standards 2025's 25-to-7 consolidation, COEPA 2022, IPPE/APPE hours, and state intern-hour ranges."
     accessed: "2026-09-11"
 
   # The numeric enrollment table behind content/domains/pharmacy.yaml's `market:` prose,

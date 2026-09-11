@@ -2,9 +2,21 @@ accreditor: "ACPE (Accreditation Council for Pharmacy Education)"
 slug: "acpe"
 domain: "Pharmacy"
 governs: "Professional degree programs leading to the Doctor of Pharmacy (PharmD) degree at U.S. colleges and schools of pharmacy (plus international/technician-education evaluation programs outside the scope of this file)"
+# ADDED 2026-09-11: Standards 2025's structural shape, per the Exxat internal eBook
+# "Understanding Pharmacy Education in the United States" Ch.2
+# (doc-pharmacy-education-us-ebook-2026). The ACPE Board approved Standards 2025 at its
+# June 12-14, 2024 meeting with an effective date of July 1, 2025, and the revision
+# consolidated Standards 2016's 25 standards into 7: 1 Organization and Governance,
+# 2 Curriculum, 3 Experiential Learning, 4 Students and Student Services, 5 Faculty and
+# Staff, 6 Resources, 7 Assessment. The separate guidance document that accompanied
+# Standards 2016 was folded into the Standards 2025 document itself.
+#
+# This consolidation renumbered the STANDARDS, not the key elements. Every element_id
+# below already uses the 2025 scheme and is referenced by id from other content files
+# (lenses/standards-competitor-ratings.yaml among them), so nothing here is renumbered.
 standards_document:
   title: "Accreditation Standards and Key Elements for the Professional Program in Pharmacy Leading to the Doctor of Pharmacy Degree (\"Standards 2025\")"
-  version_or_year: "Standards 2025 — approved June 14, 2024; updated June 12, 2025; effective for evaluations beginning fall 2025 (supersedes Standards 2016)"
+  version_or_year: "Standards 2025 — approved June 14, 2024; updated June 12, 2025; effective July 1, 2025, for evaluations beginning fall 2025; consolidates Standards 2016's 25 standards into 7"
   url: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf"
 
 standards:
@@ -21,14 +33,18 @@ standards:
 
   - element_id: "Standard 3, Key Element 3.1.b"
     element_title: "IPPE duration — minimum clock hours by practice setting"
-    evidence_programs_must_produce: "Auditable, student-level hour logs proving at least 300 total IPPE clock hours, including a minimum of 75 hours in community settings and 75 hours in hospital/health-system settings (simulation hours excluded from the 300)."
-    required_software_behavior: "Aggregate logged/verified hours per student by placement-setting category (community, hospital/health-system, other), enforce the two 75-hour minimums plus the 300-hour total, exclude simulation-tagged activities from the count, and alert advisors when a student is off-pace before the IPPE window closes."
+    evidence_programs_must_produce: "Auditable, student-level hour logs proving at least 300 total IPPE clock hours, composed of a minimum 75 hours in community settings, 75 hours in hospital/health-system settings, and 150 hours in patient care settings, accumulated across the P1-P3 years. Simulation cannot satisfy any part of the 300 under Standards 2025."
+    required_software_behavior: "Aggregate logged/verified hours per student by placement-setting category (community, hospital/health-system, patient care), enforce the two 75-hour minimums, the 150-hour patient-care minimum and the 300-hour total, exclude simulation-tagged activities from every category, and alert advisors when a student is off-pace before the IPPE window closes."
     prism_fit: "Configure"
     prism_fit_rationale: "Clinical & Experiential Education already tracks placements and (per the confirmed anchor-date scheduling primitive) time relative to a rotation; ACPE's specific setting-category taxonomy and hour-threshold rules would need to be configured on top of that engine, not built new."
     exxat_compliance: "compliant"
     exxat_compliance_rationale: "Exxat meets \"IPPE duration — minimum clock hours by practice setting\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
-    gap_notes: "Unconfirmed whether Prism's placement engine currently aggregates hours by a custom setting-category taxonomy and enforces sub-thresholds (vs. only tracking a single total per placement) — open question for Phase 2."
+    gap_notes: "Unconfirmed whether Prism's placement engine currently aggregates hours by a custom setting-category taxonomy and enforces sub-thresholds (vs. only tracking a single total per placement) — open question for Phase 2. Note the simulation prohibition is new in Standards 2025 (Standards 2016 permitted simulation toward IPPE), so a program migrating historical IPPE data needs to re-classify and exclude simulation-tagged hours retroactively, not just going forward."
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, pp.10-11, Standard 3.1.b"
+    # ADDED 2026-09-11: the 150-hour patient-care component and the P1-P3 window come
+    # from the eBook's Standard 3 summary; the file previously carried only the two
+    # 75-hour minimums and the 300 total.
+    research_sources: ["doc-pharmacy-education-us-ebook-2026"]
 
   - element_id: "Standard 3, Key Element 3.2.a"
     element_title: "APPE expectations — continuity of care and diverse patient-population exposure"
@@ -43,14 +59,20 @@ standards:
 
   - element_id: "Standard 3, Key Elements 3.2.b & 3.2.d"
     element_title: "APPE duration and the four required practice settings"
-    evidence_programs_must_produce: "Transcript-level records showing at least 1,440 APPE hours (each APPE ≥160 hours) and completion of all four required settings — community pharmacy, ambulatory care, hospital/health-system pharmacy, and inpatient adult patient care — per student, including how Nontraditional PharmD (NTPD) pathway students met the same four requirements via formalized faculty assessment."
-    required_software_behavior: "Tag every APPE placement with a required-setting category and hours; roll up per-student progress against all four categories plus the 1,440-hour/160-hour-minimum rules; block/flag graduation clearance for any student missing a required category; support an alternate 'assessed equivalent' record type for NTPD students."
+    evidence_programs_must_produce: "Transcript-level records showing at least 1,440 APPE hours — equivalently 36 weeks, taken full-time across the P4 year — with each APPE ≥160 hours, and completion of all four required settings (community pharmacy, ambulatory care, hospital/health-system pharmacy, and inpatient adult patient care) per student. Programs typically deliver this as 4 core plus 2-3 elective rotations of roughly 5 weeks each. Must also show how Nontraditional PharmD (NTPD) pathway students met the same four requirements via formalized faculty assessment."
+    required_software_behavior: "Tag every APPE placement with a required-setting category and hours; roll up per-student progress against all four categories plus the 1,440-hour/36-week/160-hour-minimum rules; block/flag graduation clearance for any student missing a required category; support an alternate 'assessed equivalent' record type for NTPD students."
     prism_fit: "Configure"
     prism_fit_rationale: "Same rotation/placement data model as Clinical & Experiential Education, but ACPE's four-required-setting taxonomy and the graduation-gating rule against it is program-specific configuration, not an out-of-the-box report."
     exxat_compliance: "compliant"
     exxat_compliance_rationale: "Exxat meets \"APPE duration and the four required practice settings\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
-    gap_notes: "The NTPD 'formalized faculty assessment' equivalent-completion pathway is a non-standard record type that likely needs custom configuration or a small build."
+    gap_notes: "The NTPD 'formalized faculty assessment' equivalent-completion pathway is a non-standard record type that likely needs custom configuration or a small build. Separately, ACPE's 1,440 hours are only one of two ledgers a P4 student is counted against: state boards require 1,500-1,800 logged intern hours before NAPLEX eligibility. Most states let APPE hours count but differ on what percentage, so the same placement data must roll up twice under two rule sets — and no confirmed Prism capability maintains that second, state-specific ledger. See licensure_or_gme_layer's State Boards entry."
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.11, Standard 3.2.b, 3.2.d"
+    # ADDED 2026-09-11: the 36-week equivalence and the 4-core-plus-2-3-elective,
+    # ~5-week rotation shape come from the eBook (Ch.2 Standard 3 summary, Ch.5).
+    # The eBook names the four core rotations Ambulatory Care, Community/Retail,
+    # Acute Care/Inpatient and Health-System/Institutional — common program usage, but
+    # looser than ACPE's own wording, which is what this element keeps.
+    research_sources: ["doc-pharmacy-education-us-ebook-2026"]
 
   - element_id: "Standard 3, Key Element 3.2.c"
     element_title: "Timing — APPE sequencing and capstone activities"
@@ -62,6 +84,9 @@ standards:
     exxat_compliance_rationale: "Exxat meets \"Timing — APPE sequencing and capstone activities\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Requires confirming the placement engine can gate on didactic-course completion status, not only compliance-item completion."
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.11, Standard 3.2.c"
+    # ADDED 2026-09-11: the eBook independently confirms capstone activities cannot
+    # count toward the 1,440 APPE hours, as a named Standards 2025 change.
+    research_sources: ["doc-pharmacy-education-us-ebook-2026"]
 
   - element_id: "Standard 3, Key Element 3.2.e"
     element_title: "Elective APPE — non-patient-care hour cap"
@@ -71,8 +96,11 @@ standards:
     prism_fit_rationale: "Same family as the shipped 2:1 preceptor-ratio check (3.3.e) — a running-total threshold query against existing rotation/hours data, not new architecture."
     exxat_compliance: "compliant"
     exxat_compliance_rationale: "Exxat meets \"Elective APPE — non-patient-care hour cap\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
-    gap_notes: ""
+    gap_notes: "The 320-hour cap is new in Standards 2025, so the patient-care vs. non-patient-care classification is a field programs did not previously have to carry on an elective rotation — existing rotation catalogs will need a backfill pass before the cap can be enforced."
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.11, Standard 3.2.e"
+    # ADDED 2026-09-11: the eBook independently confirms the 320-of-1,440 cap on
+    # non-patient-care APPE electives as a named Standards 2016 -> 2025 change.
+    research_sources: ["doc-pharmacy-education-us-ebook-2026"]
 
   - element_id: "Standard 3, Key Element 3.3.a"
     element_title: "Preceptor criteria — recruitment, orientation, performance, and evaluation"
@@ -186,14 +214,18 @@ standards:
 
   - element_id: "Standard 2, Key Element 2.2.d"
     element_title: "Content breadth and depth — curriculum mapping to educational outcomes"
-    evidence_programs_must_produce: "Documentation, through mapping or a comparable method, of the didactic curriculum's coverage of required content areas (Appendix 1), plus mapping of every APPE experience's learning outcomes to the 2.1.a-m educational-outcome elements and any college-specific competencies."
-    required_software_behavior: "A curriculum-mapping tool that links every course, activity, and APPE rotation to a taxonomy of outcome/content elements, with coverage-gap reporting across the full four-year curriculum."
+    evidence_programs_must_produce: "Documentation, through mapping or a comparable method, of the didactic curriculum's coverage of required content areas (Appendix 1), plus mapping of every APPE experience's learning outcomes to the 2.1.a-m educational-outcome elements and any college-specific competencies. Under Standards 2025 those outcomes are adapted from AACP's COEPA 2022 — 3 domains and 12 Educational Outcomes, which replaced CAPE 2013 — and programs must also show COEPA's 13 EPAs integrated into the experiential curriculum."
+    required_software_behavior: "A curriculum-mapping tool that links every course, activity, and APPE rotation to a taxonomy of outcome/content elements, with coverage-gap reporting across the full four-year curriculum. The taxonomy has to carry both COEPA's 12 Educational Outcomes and its 13 EPAs, and record EPA assessments on a supervision-description entrustment scale rather than numeric levels."
     prism_fit: "Transfer"
     prism_fit_rationale: "This is exactly what the Curriculum Mapping pillar is built for — mapping courses/activities to a curriculum structure — applied to ACPE's 2.1.a-m outcome taxonomy instead of a different discipline's."
     exxat_compliance: "compliant"
     exxat_compliance_rationale: "Exxat already meets \"Content breadth and depth — curriculum mapping to educational outcomes\" natively today (Prism fit: Transfer) — no configuration or engineering work required."
-    gap_notes: ""
+    gap_notes: "COEPA 2022 revised the entrustment scale to supervision descriptions rather than numeric levels, with reactive (indirect) supervision as the expectation at graduation. Unconfirmed whether Curriculum Mapping's competency model can hold a non-numeric, ordinal supervision scale, or whether EPA entrustment assessment needs a separate instrument alongside the outcome map."
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.7, Standard 2.2.d"
+    # ADDED 2026-09-11: COEPA 2022's structure (3 domains / 12 EOs / 13 EPAs, the fifth
+    # iteration of pharmacy educational outcomes after 1994, 1998, 2004 and 2013) and the
+    # revised entrustment scale come from the eBook Ch.4.
+    research_sources: ["doc-pharmacy-education-us-ebook-2026"]
 
   - element_id: "Standard 7, Key Element 7.3.c"
     element_title: "Experiential quality assurance across sites"
@@ -249,9 +281,16 @@ licensure_or_gme_layer:
     source: "https://nabp.pharmacy/programs/examinations/naplex/"
 
   - body: "State Boards of Pharmacy"
-    what_it_governs: "Each U.S. state/territory board of pharmacy is the actual licensing authority — it requires an ACPE-accredited PharmD degree plus passing NAPLEX and MPJE (or a state-specific jurisprudence exam) before issuing a pharmacist license, and it also licenses the practice facilities where IPPEs/APPEs occur."
-    relevance_to_product: "Because affiliation agreements and site licensure (Standard 3.4.a, 3.5.b) must satisfy the specific state the rotation occurs in, and rotations routinely cross state lines for multi-campus/distance programs, site records need a per-state licensure/compliance dimension, not just a single national standard."
+    what_it_governs: "Each U.S. state/territory board of pharmacy is the actual licensing authority — it requires an ACPE-accredited PharmD degree plus passing NAPLEX and MPJE (or a state-specific jurisprudence exam) before issuing a pharmacist license, and it also licenses the practice facilities where IPPEs/APPEs occur. Boards additionally set their own practice-experience (intern) hour minimum for NAPLEX eligibility, and most require students to hold a pharmacy intern license while enrolled."
+    relevance_to_product: "Because affiliation agreements and site licensure (Standard 3.4.a, 3.5.b) must satisfy the specific state the rotation occurs in, and rotations routinely cross state lines for multi-campus/distance programs, site records need a per-state licensure/compliance dimension, not just a single national standard. The bigger product consequence is a dual hour ledger: state boards require roughly 1,500-1,800 logged intern hours before a candidate may sit the NAPLEX, so ACPE's 1,440 APPE hours alone may not qualify a graduate in every state. Most states let APPE hours count toward the intern total but differ on what percentage counts; some let graduates close the gap through a post-graduation licensed internship; and the verified logs are the student's responsibility to submit, not the program's. A product serving PharmD programs therefore has to roll the same placement data up twice — once against ACPE's 1,440-hour rule and once against a state-specific intern-hour rule set — and produce a student-exportable verified log for the board."
+    # The eBook states the intern-hour range three different ways and does not reconcile
+    # them: the Ch.5 narrative callout says 1,500-1,800, the state-variation table
+    # immediately below it says 1,500-1,740, and the closing "At a Glance" page says
+    # ">=1,740". "Roughly 1,500-1,800" above is the widest of the three, deliberately
+    # hedged. Before this number is used in anything customer-facing it needs a primary
+    # source — NABP's state-by-state licensure survey, not this eBook.
     source: "https://nabp.pharmacy/"
+    research_sources: ["doc-pharmacy-education-us-ebook-2026"]
 
   - body: "ASHP (American Society of Health-System Pharmacists)"
     what_it_governs: "Accredits PGY1 and PGY2 post-PharmD pharmacy residency programs, and — per ACPE's own history — has collaborated with ACPE since 2014 to accredit pharmacy technician education and training programs."
@@ -264,8 +303,8 @@ licensure_or_gme_layer:
     source: "https://www.bpsweb.org/"
 
   - body: "AACP (American Association of Colleges of Pharmacy)"
-    what_it_governs: "The academic association (not a regulator) whose Curriculum Outcomes and Entrustable Professional Activities (COEPA, 2022) framework Standards 2025's own Standard 2.1 outcomes are explicitly adapted from, and whose standardized graduating-student/faculty/preceptor surveys are named as required assessment-plan evidence in Standard 7.2.d."
+    what_it_governs: "The academic association (not a regulator) whose Curricular Outcomes and Entrustable Professional Activities (COEPA, 2022) framework Standards 2025's own Standard 2.1 outcomes are explicitly adapted from, and whose standardized graduating-student/faculty/preceptor surveys are named as required assessment-plan evidence in Standard 7.2.d. The AACP Board approved COEPA in November 2022; it carries 3 domains, 12 Educational Outcomes and 13 EPAs, replaces both CAPE 2013 and the separate 2016 EPAs, and is the fifth iteration of pharmacy educational outcomes (after 1994, 1998, 2004 and 2013)."
     relevance_to_product: "AACP's own Assessment and Accreditation Management System (AAMS) was the prior self-study platform and has been discontinued in favor of ACPE's own PHARMS system as of Standards 2025 — meaning both the outcomes taxonomy (COEPA) a Curriculum Mapping pillar should target and the survey instruments a Surveys pillar should replicate originate with AACP, even though ACPE now owns submission."
     source: "https://www.aacp.org/"
 
-last_researched: "2026-09-10"
+last_researched: "2026-09-11"
