@@ -102,16 +102,26 @@ market_sizing:
                                # number standing on an unsourced ACV is a guess
                                # wearing a dollar sign
   adjacency:
-    # The "sell one Exxat for the university" count. Denominator is 146, not 149:
-    # Larkin University, Manchester University and South Carolina College of
-    # Pharmacy matched no Logo Grid row at all, so their empty
-    # other_disciplines_on_campus means UNKNOWN, not a confirmed no-cross-sell
-    # (each says so in its own `notes`). Excluding them: 100 programs sit on a
-    # campus with at least one other Exxat discipline, 46 are checked negatives.
-    # Folding the 3 into the negatives would overstate "confirmed no overlap" by
-    # exactly 3.
-    claim: "100 of 146 grid-matched Pharmacy programs sit on a campus already running Exxat for another discipline; 3 unmatched rows excluded as unknown."
-    cross_discipline_overlap_institutions: 100
+    # The "sell one Exxat for the university" count. This field counts
+    # INSTITUTIONS, not rows, and the two differ: the registry holds program and
+    # application records, so one institution can occupy two rows. Deduplicated
+    # by institution name across the whole file — only two institutions repeat,
+    # MCPHS University (Worcester + Boston) and California Health Sciences
+    # University (2013 + 2021 application records).
+    #
+    # Two exclusions, then a dedup:
+    #   * Larkin University, Manchester University and South Carolina College of
+    #     Pharmacy matched no Logo Grid row at all, so their empty
+    #     other_disciplines_on_campus means UNKNOWN, not a confirmed
+    #     no-cross-sell (each says so in its own `notes`). Folding them into the
+    #     negatives would overstate "confirmed no overlap" by exactly 3.
+    #   * 149 rows - 3 unmatched = 146 matched rows = 144 distinct institutions.
+    #
+    # Of those 144: 99 already run Exxat for at least one other discipline
+    # (100 rows, MCPHS counted once) and 45 are checked negatives (46 rows, CHSU
+    # counted once). 99 + 45 = 144, which is the arithmetic check on this number.
+    claim: "99 of 144 grid-matched Pharmacy institutions already run Exxat for another discipline; 3 unmatched programs excluded as unknown."
+    cross_discipline_overlap_institutions: 99
     source_id: "crm-export-new-logo-grid-2026"
   confidence: "medium"         # low | medium | high — counts and client status are
                                # first-party and exact; the accredited count is a

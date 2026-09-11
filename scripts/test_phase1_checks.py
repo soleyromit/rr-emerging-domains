@@ -238,6 +238,20 @@ ms["enrollment"]["trend"] = "wobbling"
 ms["sam"]["programs"] = 100
 ms["som"]["programs"] = 10
 ms["som"]["basis"] = ""
+# This fixture starts from the REAL pharmacy.yaml, so every field the assertions
+# below expect to be NULL must be nulled here explicitly rather than inherited.
+# Task 2.2 populated Pharmacy's market_sizing with real data and silently disabled
+# three assertions that had been free-riding on the empty schema (the number-set-
+# but-source_id-null rule, and both sam-derivation rules). The check regressed to
+# 30/31 while still reporting green, because expect() bails on the first missing
+# needle. Set them, don't assume them.
+ms["accredited_programs"]["source_id"] = None   # -> count set but source_id null
+ms["tam"]["source_id"] = None                   # -> sam derived from an unsourced tam
+ms["sam"]["derived_from"] = []                  # -> sam.programs set, no stated filters
+# Same class of latent free-ride, nulled now rather than after it breaks: the
+# revenue-without-acv assertion below needs acv.value_usd null, which is true of
+# the real file only until someone sources a price.
+ms["acv"]["value_usd"] = None                   # -> revenue_potential_usd set, acv null
 ms["current_clients"]["count"] = 20
 ms["current_clients"]["source_id"] = SRC
 ms["penetration_pct"] = 99.0
@@ -261,7 +275,8 @@ write("domains/pharmacy.yaml", dom)
 expect("7 market sizing: penetration_pct disagreement is a WARN, not a FAIL",
        ccd.check_market_sizing_integrity, ["penetration_pct: states 99.0"], channel="warnings")
 shutil.copy(REPO / "content" / "domains" / "pharmacy.yaml", C / "domains" / "pharmacy.yaml")
-expect_clean("7 market sizing: the four real all-null blocks pass", ccd.check_market_sizing_integrity)
+expect_clean("7 market sizing: the four real blocks pass — 3 all-null, Pharmacy fully populated",
+             ccd.check_market_sizing_integrity)
 
 # ---------------------------------------------------------------- 8. market programs
 write("market/programs/pharmacy.yaml", {
