@@ -1060,9 +1060,12 @@ interface PlaybooksDoc {
   }[];
 }
 
-function readInterviewFrontMatter(): { file: string; data: Record<string, any> }[] {
+function readInterviewFrontMatter(): { file: string; data: Record<string, unknown> }[] {
   const dir = path.join(CONTENT_ROOT, "interviews");
-  if (!fs.existsSync(dir)) return [];
+  if (!fs.existsSync(dir)) {
+    warnSourceHome("content/interviews/ is missing — interview source ids cannot resolve");
+    return [];
+  }
   return fs
     .readdirSync(dir)
     .filter((f) => f.endsWith(".md") && !f.startsWith("_TEMPLATE"))
@@ -1072,23 +1075,77 @@ function readInterviewFrontMatter(): { file: string; data: Record<string, any> }
         // gray-matter, already used by readMarkdownFile, is a real YAML front-matter
         // parse — matching the checker, which `yaml.safe_load`s the block rather than
         // regexing for `id:` (an interview's `id:` can sit below comment lines).
-        return { file: f, data: (matter(fs.readFileSync(path.join(dir, f), "utf8")).data ?? {}) as Record<string, any> };
+        return { file: f, data: (matter(fs.readFileSync(path.join(dir, f), "utf8")).data ?? {}) as Record<string, unknown> };
       } catch {
-        return { file: f, data: {} as Record<string, any> };
+        warnSourceHome(`content/interviews/${f} front-matter is not valid YAML, so its source id cannot resolve`);
+        return { file: f, data: {} as Record<string, unknown> };
       }
     });
+}
+
+const warnedSourceHomeProblems = new Set<string>();
+
+/** The Python checker names a source-home load problem as a loud FAIL
+ * (`check_source_homes_integrity()`), precisely so a home that quietly loads as empty
+ * doesn't turn every citation into it into an apparent dangling reference. This
+ * resolution path cannot do that — it has to keep rendering the pages it can — so it
+ * degrades silently by design, and `scripts/check_content_density.py` remains the
+ * source of truth for these five homes' structural validity. Warning here is the
+ * consolation prize: it puts a renamed key or a YAML typo in the dev/build log instead
+ * of leaving it to be inferred from a citation that mysteriously renders as nothing.
+ * Deduped because with the cache off in development the index rebuilds on every call. */
+function warnSourceHome(message: string): void {
+  if (warnedSourceHomeProblems.has(message)) return;
+  warnedSourceHomeProblems.add(message);
+  console.warn(`[source-index] ${message} — see scripts/check_content_density.py for the enforced check`);
+}
+
+/** Load one corpus-index home, distinguishing "missing" from "unparseable" — readYamlFile
+ * collapses both to null. Two of the three failure modes Python's `_load_listed_ids`
+ * reports by name; `sourceHomeList` below covers the third (a renamed list key). */
+function loadSourceHomeDoc<T>(relPath: string): T | null {
+  const doc = readYamlFile<T>(relPath);
+  if (doc == null) {
+    warnSourceHome(
+      fs.existsSync(path.join(CONTENT_ROOT, relPath))
+        ? `content/${relPath} could not be read as YAML, so the source ids it defines cannot resolve`
+        : `content/${relPath} is missing, so the source ids it defines cannot resolve`
+    );
+  }
+  return doc;
+}
+
+/** The home's top-level list, warning when the key has been renamed away — the failure
+ * that would otherwise drop a whole home's ids with no signal at all. */
+function sourceHomeList<T>(entries: T[] | undefined, relPath: string, listKey: string): T[] {
+  if (Array.isArray(entries)) return entries;
+  warnSourceHome(`content/${relPath} has no top-level \`${listKey}:\` list, so none of its source ids resolve`);
+  return [];
 }
 
 let sourceIndexCache: Map<string, SourceRegistryEntry> | null = null;
 
 /** Every id a citation may legitimately resolve to, across all five Level 0.5 source
- * homes, keyed by id. Cached: every resolve call would otherwise re-parse ~56KB of
- * registry.yaml plus four more homes, and a static build resolves thousands of ids. */
+ * homes, keyed by id.
+ *
+ * Cached in production only. A resolve call would otherwise re-parse ~56KB of
+ * registry.yaml plus four more homes, and a static build resolves thousands of ids —
+ * but caching for the life of the process would make `next dev` serve stale citations
+ * until the server is restarted, and this repo's working convention is to keep that dev
+ * server alive. Nothing else in this file caches (`readYamlFile`/`readYamlDir` re-read
+ * every call), so uncached-in-dev is also the file's established behavior. */
 export function getSourceIndex(): Map<string, SourceRegistryEntry> {
-  if (sourceIndexCache) return sourceIndexCache;
+  if (sourceIndexCache && process.env.NODE_ENV === "production") return sourceIndexCache;
   const index = new Map<string, SourceRegistryEntry>();
-  const add = (entry: SourceRegistryEntry | null) => {
-    if (!entry?.id || index.has(entry.id)) return;
+  // `where` names the entry so an id-less one is reported the way the checker reports
+  // it, rather than vanishing. First writer wins; see the precedence note above.
+  const add = (entry: SourceRegistryEntry | null, where: string) => {
+    if (!entry) return;
+    if (!entry.id) {
+      warnSourceHome(`${where} has no id, so it defines no citable source id`);
+      return;
+    }
+    if (index.has(entry.id)) return;
     index.set(entry.id, entry);
   };
 
@@ -1100,8 +1157,9 @@ export function getSourceIndex(): Map<string, SourceRegistryEntry> {
   // 2. help-center.yaml — articles are internal vault files: no url, so SourceList
   //    falls back to rendering the title as prose, which is how the registry's own
   //    url-less internal entries already render.
-  const helpCenter = readYamlFile<HelpCenterDoc>("sources/help-center.yaml");
-  for (const a of helpCenter?.articles ?? []) {
+  const helpCenter = loadSourceHomeDoc<HelpCenterDoc>("sources/help-center.yaml");
+  const articles = helpCenter ? sourceHomeList(helpCenter.articles, "sources/help-center.yaml", "articles") : [];
+  articles.forEach((a, n) => {
     add({
       id: optStr(a?.id) ?? "",
       title: optStr(a?.title),
@@ -1113,13 +1171,16 @@ export function getSourceIndex(): Map<string, SourceRegistryEntry> {
       access: optStr(helpCenter?.corpus?.access),
       path: optStr(a?.path),
       home: "help-center",
-    });
-  }
+    }, `content/sources/help-center.yaml articles[${n}]`);
+  });
 
   // 3. playbooks.yaml — same shape, per-entry origin/access. `zendesk_capture` is
   //    deliberately ignored: it looks like an id and is not one.
-  const playbooks = readYamlFile<PlaybooksDoc>("sources/playbooks.yaml");
-  for (const p of playbooks?.playbooks ?? []) {
+  const playbooks = loadSourceHomeDoc<PlaybooksDoc>("sources/playbooks.yaml");
+  const playbookEntries = playbooks
+    ? sourceHomeList(playbooks.playbooks, "sources/playbooks.yaml", "playbooks")
+    : [];
+  playbookEntries.forEach((p, n) => {
     add({
       id: optStr(p?.id) ?? "",
       title: optStr(p?.title),
@@ -1133,8 +1194,8 @@ export function getSourceIndex(): Map<string, SourceRegistryEntry> {
       access: optStr(p?.access),
       path: optStr(p?.path),
       home: "playbooks",
-    });
-  }
+    }, `content/sources/playbooks.yaml playbooks[${n}]`);
+  });
 
   // 4. support-tickets/*.yaml — the snapshot is citable AND each ticket in it is.
   //    readYamlDir already skips _TEMPLATE.yaml, same exclusion as the checker.
@@ -1142,11 +1203,17 @@ export function getSourceIndex(): Map<string, SourceRegistryEntry> {
   //    missing domain/taken — a snapshot still defines citable ids without them,
   //    and the checker resolves them, so dropping one here would re-open this gap.
   //    (RawSupportTicketSnapshot is declared further down; type decls hoist.)
-  for (const { data } of readYamlDir<Partial<RawSupportTicketSnapshot>>("sources/support-tickets")) {
+  if (!fs.existsSync(path.join(CONTENT_ROOT, "sources/support-tickets"))) {
+    warnSourceHome("content/sources/support-tickets/ is missing — support-ticket source ids cannot resolve");
+  }
+  for (const { slug, data } of readYamlDir<Partial<RawSupportTicketSnapshot>>("sources/support-tickets")) {
     const snap = data?.snapshot;
     const origin = optStr(snap?.origin);
     const access = optStr(snap?.access);
     const taken = optStr(snap?.taken);
+    if (!optStr(snap?.id)) {
+      warnSourceHome(`content/sources/support-tickets/${slug}.yaml has no \`snapshot.id:\`, so the snapshot defines no citable source id`);
+    }
     if (snap?.id) {
       const domain = optStr(snap.domain);
       const system = optStr(snap.system);
@@ -1165,13 +1232,13 @@ export function getSourceIndex(): Map<string, SourceRegistryEntry> {
         origin,
         access,
         home: "support-tickets",
-      });
+      }, `content/sources/support-tickets/${slug}.yaml snapshot`);
     }
-    for (const t of data?.tickets ?? []) {
+    const tickets = sourceHomeList(data?.tickets, `sources/support-tickets/${slug}.yaml`, "tickets");
+    tickets.forEach((t, n) => {
       const id = optStr(t?.source_id);
-      if (!id) continue;
       add({
-        id,
+        id: id ?? "",
         // `subject` is null on any snapshot transcribed without live API access.
         title: optStr(t?.subject) ?? (t?.ticket_id ? `Ticket #${t.ticket_id}` : id),
         url: optStr(t?.url),
@@ -1186,17 +1253,15 @@ export function getSourceIndex(): Map<string, SourceRegistryEntry> {
         origin,
         access,
         home: "support-tickets",
-      });
-    }
+      }, `content/sources/support-tickets/${slug}.yaml tickets[${n}]`);
+    });
   }
 
   // 5. interviews/*.md — id in the YAML front-matter. Note: interview front-matter
   //    has an `access:` field but no `origin:`, so `origin` stays undefined here.
   for (const { file, data } of readInterviewFrontMatter()) {
-    const id = optStr(data?.id);
-    if (!id) continue;
     add({
-      id,
+      id: optStr(data?.id) ?? "",
       title: optStr(data?.title),
       type: "interview",
       date: optStr(data?.date),
@@ -1204,7 +1269,7 @@ export function getSourceIndex(): Map<string, SourceRegistryEntry> {
       origin: optStr(data?.origin),
       path: `content/interviews/${file}`,
       home: "interviews",
-    });
+    }, `content/interviews/${file} front-matter`);
   }
 
   sourceIndexCache = index;
