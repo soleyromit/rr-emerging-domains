@@ -117,6 +117,18 @@ TRENDS_CEILINGS = {
 SOURCES_CEILINGS = {
     "sources[].what_it_supports": (150, 300),
 }
+# content/dissection/*.yaml — added 2026-09-11 with the family itself. A dissection
+# manifest asserts nothing, so both ceilinged fields are one-liners about scope and
+# absence, not findings: `gap_note` says what research is missing and why (two clauses,
+# hence slightly above evidence_note), `exclusion_reason` says why a vendor is out of
+# scope for this domain (same numbers as evidence_note, its closest analog). Wired up
+# now, while content/dissection/ holds only _TEMPLATE.yaml, so the first real manifest
+# is gated on arrival rather than retrofitted — the failure mode CONTENT-DENSITY.md's
+# "unceilinged field" sections exist to prevent.
+DISSECTION_CEILINGS = {
+    "questions[].gap_note": (200, 400),
+    "incumbent_set[].exclusion_reason": (150, 300),
+}
 
 # Known, reviewed exceptions — a spot-checked genuine dense finding, not a bug.
 # Format: (file glob, field path, substring of the VALUE itself) -> reason. The
@@ -721,6 +733,10 @@ def main():
         if f.name.startswith("_TEMPLATE"):
             continue
         check_file(f, TRENDS_CEILINGS, results)
+    for f in sorted((CONTENT / "dissection").glob("*.yaml")):
+        if f.name.startswith("_TEMPLATE"):
+            continue
+        check_file(f, DISSECTION_CEILINGS, results)
     sources_file = CONTENT / "sources" / "registry.yaml"
     if sources_file.exists():
         check_file(sources_file, SOURCES_CEILINGS, results)
