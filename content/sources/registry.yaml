@@ -62,6 +62,21 @@
 # later: other files cite these ids, so a few ids carry a stale type prefix
 # (e.g. `analyst-bmc-...`, `event-aacp-...`). Follow the id, not the prefix.
 sources:
+  # --- First-party CRM exports ---
+  # No `url:` by design — this is a local spreadsheet, not a web page, so it carries
+  # `path:` instead and `access: "internal"`. Contact columns in it (dean name, title,
+  # email, address, phone, fax) are never mirrored into content/; see the pii_policy in
+  # content/market/programs/_TEMPLATE.yaml.
+  - id: "crm-export-new-logo-grid-2026"
+    title: "New logo grid (1).xlsx — Exxat new-logo tracking workbook"
+    path: "/Users/romitsoley/Downloads/New logo grid (1).xlsx"
+    type: "crm-export"
+    origin: "first-party"
+    access: "internal"
+    publisher: "Exxat (internal)"
+    what_it_supports: "Master Logo Grid of 2,751 schools x 36 discipline Yes/No columns, plus 29 per-discipline sheets. Its Pharmacy sheet holds 149 program rows."
+    accessed: "2026-09-11"
+
   # --- Pharmacy / ACPE ---
   - id: "product-page-core-elms-pharmacy-affiliation-agreements-2026"
     title: "CORE ELMS for Pharmacy — Experiential Learning Management System"
