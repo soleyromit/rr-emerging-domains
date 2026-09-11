@@ -139,6 +139,19 @@ const EXXAT_COMPLIANCE_LABEL: Record<string, string> = {
   "not-applicable": "Not yet rated",
 };
 
+// Same compliance value, mapped to a Banner-compatible status instead of a Badge
+// variant — reused by StandardDetail's scan-layer Takeaway so the one-line verdict
+// at the top of the panel and the badge inside the deep-dive agree on what
+// "compliant"/"gap"/"partial" actually mean, rather than two components each
+// guessing their own color for the same word.
+export function exxatComplianceStatus(compliance?: string): "success" | "warning" | "error" | "info" {
+  const key = (compliance ?? "").toLowerCase().trim();
+  if (key === "compliant") return "success";
+  if (key === "gap") return "error";
+  if (key === "partial") return "warning";
+  return "info";
+}
+
 export function ExxatComplianceBadge({ compliance }: { compliance?: string }) {
   if (!compliance) return <Badge variant="neutral" label="Not yet rated" />;
   const key = compliance.toLowerCase().trim();
