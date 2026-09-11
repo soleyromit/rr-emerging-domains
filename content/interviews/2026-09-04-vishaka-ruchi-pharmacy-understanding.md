@@ -1,3 +1,29 @@
+---
+# NOTE: `id` intentionally omits "ruchi" so it matches the already-frozen
+# registry id for this same session (content/sources/registry.yaml), which 20+
+# existing `source_id`/`sources` citations in content/trends/pharmacy.yaml and
+# content/lenses/standards-use-cases.yaml already point at. One canonical id
+# per session; see the registry's "an entry's id is frozen once written" rule.
+id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+type: "domain-expert"
+date: "2026-09-04"
+title: "Pharmacy understanding — product fit, competitors, use cases, with Vishaka and Ruchi"
+participants:
+  - { name: "Romit Soley", org: "Exxat", role: "Research" }
+  - { name: "Ruchi", org: "Exxat", role: "Consultant — four emerging domains" }
+  - { name: "Vishaka", org: "Exxat", role: "Customer Experience", is_domain_expert: true }
+domains: ["Pharmacy"]
+programs: []
+recording:
+  platform: "granola"
+  external_id: "b818e417-61ab-4f49-894c-d11a270fb320"
+access: "internal"
+evidence_status: "verbatim-cleaned"
+claims_are_speaker_opinion: true
+topics: ["product-gaps", "gtm", "competitors"]
+supersedes: []
+---
+
 # Pharmacy understanding — product fit, competitors, use cases, with Vishaka and Ruchi
 
 **Date:** 2026-09-04

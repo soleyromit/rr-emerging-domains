@@ -43,8 +43,10 @@
 # Both fields were backfilled onto all 90 pre-existing entries on 2026-09-11 as
 # third-party/public, which was true of every one of them except
 # `interview-vishaka-pharmacy-understanding-2026-09-04` — an internal
-# first-party interview with no url, left as-is here because interviews move
-# out of this registry into their own sessions index.
+# first-party interview with no url, corrected to first-party/internal on
+# 2026-09-11. That session now also has a full record with its own front-matter
+# at content/interviews/2026-09-04-vishaka-ruchi-pharmacy-understanding.md,
+# which reuses this same id so there is one canonical id for the session.
 #
 # An entry's `id` is frozen once written, even when its `type` is corrected
 # later: other files cite these ids, so a few ids carry a stale type prefix
@@ -771,8 +773,8 @@ sources:
   - id: "interview-vishaka-pharmacy-understanding-2026-09-04"
     title: "Interview — Pharmacy understanding with Vishaka and Ruchi (Exxat, 2026-09-04)"
     type: "interview"
-    origin: "third-party"
-    access: "public"
+    origin: "first-party"
+    access: "internal"
     publisher: "Exxat (internal)"
     date: "2026-09-04"
     what_it_supports: "Exxat's pharmacy domain expert states the 80% product-fit and 25%-gap figures are anecdotal and the real standards-gap research remains undone; names the CORE/ExamSoft/Influx stack, the two live pharmacy customers, and the pilot."
