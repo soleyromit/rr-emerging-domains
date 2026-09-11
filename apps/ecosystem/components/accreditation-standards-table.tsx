@@ -7,12 +7,13 @@ import { Stack } from "@astryxdesign/core/Stack";
 import { Text } from "@astryxdesign/core/Text";
 import { Link } from "@astryxdesign/core/Link";
 import { Grid } from "@astryxdesign/core/Grid";
-import { Divider } from "@astryxdesign/core/Divider";
+import { Card } from "@astryxdesign/core/Card";
 import { Badge } from "@astryxdesign/core/Badge";
 import {
   DirectionalBadge,
   ExxatComplianceBadge,
   FitBadge,
+  PrismFeatureBadge,
   StandardsRatingBadge,
   UseCaseStatusBadge,
 } from "@/components/fit-badge";
@@ -223,206 +224,249 @@ function StandardDetail({
 
   return (
     <Stack gap={4}>
-      <Grid columns={{ minWidth: 280, max: 2 }} gap={4}>
-        <FieldBlock label="Evidence required" text={stripFileCitations(row.evidence_programs_must_produce)} maxLines={5} />
-        <FieldBlock label="Required software behavior" text={stripFileCitations(row.required_software_behavior)} maxLines={5} />
-      </Grid>
-
-      <Grid columns={{ minWidth: 280, max: 2 }} gap={4}>
-        <Stack gap={1.5}>
-          <Stack direction="horizontal" gap={2} vAlign="center">
-            <Text type="label" color="secondary" size="sm">
-              Exxat today
-            </Text>
-            <ExxatComplianceBadge compliance={row.exxat_compliance} />
-          </Stack>
-          <FieldBlock text={stripFileCitations(row.exxat_compliance_rationale)} maxLines={5} />
-        </Stack>
-
-        <Stack gap={1.5}>
-          <Stack direction="horizontal" gap={2} vAlign="center">
-            <Text type="label" color="secondary" size="sm">
-              Prism fit
-            </Text>
-            <FitBadge fit={row.prism_fit} />
-          </Stack>
-          <FieldBlock text={stripFileCitations(row.prism_fit_rationale)} maxLines={5} />
-        </Stack>
-      </Grid>
-
-      {row.gap_notes ? <FieldBlock label="Gap notes" text={stripFileCitations(row.gap_notes)} maxLines={5} /> : null}
-
-      {row.personaRelevance.length ? (
-        <Stack gap={1}>
-          <Text type="label" color="secondary" size="xsm">
-            Who this matters to
-          </Text>
-          <Stack direction="horizontal" gap={1} wrap="wrap">
-            {row.personaRelevance.map((p) => (
-              <Badge key={p} variant="neutral" label={personaLabel(p)} />
-            ))}
-          </Stack>
-        </Stack>
-      ) : null}
-
-      {row.researchSources.length ? (
-        <Stack gap={1}>
-          <Text type="label" color="secondary" size="xsm">
-            What the literature says about this standard
-          </Text>
-          <SourceList sources={row.researchSources} />
-        </Stack>
-      ) : null}
-
-      {/* Proposed use cases sit ABOVE competitor ratings: "what would a program do
-          with this standard" is the question a reader has before "and how do the
-          incumbents score on it." Curated entries render first; the computed
-          flow/journey join is a distinctly-labeled fallback, never presented as
-          curated research. */}
-      <Divider label="PROPOSED USE CASES" />
-      {row.useCases.length ? (
+      {/* Zone 1 — the standard itself: official, static, identical for every vendor.
+          `muted` de-emphasizes it relative to the three zones below, which are the
+          actual answer to "what does Exxat do about this." */}
+      <Card variant="muted" padding={3}>
         <Stack gap={3}>
-          {row.useCases.map((u, i) => (
-            <Stack key={`${u.useCase}-${i}`} gap={1.5}>
-              <Stack direction="horizontal" gap={2} vAlign="center" wrap="wrap">
-                <UseCaseStatusBadge status={u.status} />
-                <Text type="body" weight="semibold" textWrap="wrap">
-                  {u.useCase}
+          <Text type="label" color="secondary" size="xsm">
+            What the standard requires
+          </Text>
+          <Grid columns={{ minWidth: 280, max: 2 }} gap={4}>
+            <FieldBlock label="Evidence required" text={stripFileCitations(row.evidence_programs_must_produce)} maxLines={5} />
+            <FieldBlock label="Required software behavior" text={stripFileCitations(row.required_software_behavior)} maxLines={5} />
+          </Grid>
+          {row.researchSources.length ? (
+            <Stack gap={1}>
+              <Text type="label" color="secondary" size="xsm">
+                What the literature says about this standard
+              </Text>
+              <SourceList sources={row.researchSources} />
+            </Stack>
+          ) : null}
+        </Stack>
+      </Card>
+
+      {/* Zone 2 — Exxat's own position: the highest-confidence content on this
+          panel (it's about Exxat, not a forecast or a third party), so it gets the
+          bordered `default` card — the same visual weight a reader's eye should
+          land on first. */}
+      <Card variant="default" padding={3}>
+        <Stack gap={3}>
+          <Text type="label" color="secondary" size="xsm">
+            Exxat's position today
+          </Text>
+          <Grid columns={{ minWidth: 280, max: 2 }} gap={4}>
+            <Stack gap={1.5}>
+              <Stack direction="horizontal" gap={2} vAlign="center">
+                <Text type="label" color="secondary" size="sm">
+                  Exxat today
                 </Text>
+                <ExxatComplianceBadge compliance={row.exxat_compliance} />
               </Stack>
-              <FieldBlock text={u.detail} type="supporting" maxLines={3} />
-              {u.audience.length ? (
-                <Stack direction="horizontal" gap={1} wrap="wrap">
-                  {u.audience.map((a) => (
-                    <Badge key={a} variant="neutral" label={personaLabel(a)} />
+              <FieldBlock text={stripFileCitations(row.exxat_compliance_rationale)} maxLines={5} />
+            </Stack>
+
+            <Stack gap={1.5}>
+              <Stack direction="horizontal" gap={2} vAlign="center">
+                <Text type="label" color="secondary" size="sm">
+                  Prism fit
+                </Text>
+                <FitBadge fit={row.prism_fit} />
+              </Stack>
+              <FieldBlock text={stripFileCitations(row.prism_fit_rationale)} maxLines={5} />
+            </Stack>
+          </Grid>
+
+          {row.gap_notes ? <FieldBlock label="Gap notes" text={stripFileCitations(row.gap_notes)} maxLines={5} /> : null}
+
+          {row.personaRelevance.length ? (
+            <Stack gap={1}>
+              <Text type="label" color="secondary" size="xsm">
+                Who this matters to
+              </Text>
+              <Stack direction="horizontal" gap={1} wrap="wrap">
+                {row.personaRelevance.map((p) => (
+                  <Badge key={p} variant="neutral" label={personaLabel(p)} />
+                ))}
+              </Stack>
+            </Stack>
+          ) : null}
+        </Stack>
+      </Card>
+
+      {/* Zone 3 — proposed use cases sit ABOVE competitor ratings: "what would a
+          program do with this standard" is the question a reader has before "and
+          how do the incumbents score on it." `blue` marks this whole zone as
+          editorial/proposed content — distinct in kind from Zone 2's "this is our
+          current status" and Zone 4's "this is researched fact about a
+          competitor." Curated entries render first; the computed flow/journey
+          join is a distinctly-labeled fallback, never presented as curated
+          research. */}
+      <Card variant="blue" padding={3}>
+        <Stack gap={3}>
+          <Text type="label" color="secondary" size="xsm">
+            PROPOSED USE CASES
+          </Text>
+          {row.useCases.length ? (
+            <Stack gap={3}>
+              {row.useCases.map((u, i) => (
+                <Stack key={`${u.useCase}-${i}`} gap={1.5}>
+                  <Stack direction="horizontal" gap={2} vAlign="center" wrap="wrap">
+                    <UseCaseStatusBadge status={u.status} />
+                    <PrismFeatureBadge feature={u.prismFeatureRef} />
+                    <Text type="body" weight="semibold" textWrap="wrap">
+                      {u.useCase}
+                    </Text>
+                  </Stack>
+                  <FieldBlock text={u.detail} type="supporting" maxLines={3} />
+                  {u.audience.length ? (
+                    <Stack direction="horizontal" gap={1} wrap="wrap">
+                      {u.audience.map((a) => (
+                        <Badge key={a} variant="neutral" label={personaLabel(a)} />
+                      ))}
+                    </Stack>
+                  ) : null}
+                  <RelatedFlowsPreview items={u.relatedFlows} />
+                  <SourceList sources={u.sources} />
+                </Stack>
+              ))}
+            </Stack>
+          ) : null}
+
+          {row.computedMatches.length ? (
+            <Card variant="transparent" padding={2}>
+              <Stack gap={1.5}>
+                <Text type="label" color="secondary" size="xsm">
+                  Also cited by existing research (computed — not a curated use case)
+                </Text>
+                <Stack gap={1}>
+                  {row.computedMatches.map((m) => (
+                    <Stack
+                      key={`${m.kind}-${m.href}-${m.label}`}
+                      direction="horizontal"
+                      gap={2}
+                      vAlign="center"
+                      wrap="wrap"
+                    >
+                      <Badge variant="neutral" label={m.kind === "flow" ? "Flow" : "Journey"} />
+                      <Link href={m.href} color="accent" hasUnderline>
+                        {m.label}
+                      </Link>
+                      {m.context ? (
+                        <Text type="supporting" size="xsm" color="secondary" maxLines={1}>
+                          {m.context}
+                        </Text>
+                      ) : null}
+                    </Stack>
                   ))}
                 </Stack>
-              ) : null}
-              <RelatedFlowsPreview items={u.relatedFlows} />
-              <SourceList sources={u.sources} />
-            </Stack>
-          ))}
-        </Stack>
-      ) : null}
-
-      {row.computedMatches.length ? (
-        <Stack gap={1.5}>
-          <Text type="label" color="secondary" size="xsm">
-            Also cited by existing research (computed — not a curated use case)
-          </Text>
-          <Stack gap={1}>
-            {row.computedMatches.map((m) => (
-              <Stack
-                key={`${m.kind}-${m.href}-${m.label}`}
-                direction="horizontal"
-                gap={2}
-                vAlign="center"
-                wrap="wrap"
-              >
-                <Badge variant="neutral" label={m.kind === "flow" ? "Flow" : "Journey"} />
-                <Link href={m.href} color="accent" hasUnderline>
-                  {m.label}
-                </Link>
-                {m.context ? (
-                  <Text type="supporting" size="xsm" color="secondary" maxLines={1}>
-                    {m.context}
+                {row.computedMatchTotal > row.computedMatches.length ? (
+                  <Text type="supporting" size="xsm" color="secondary">
+                    {row.computedMatchTotal - row.computedMatches.length} more flow and journey
+                    references name this element — open the linked flows above to follow the chain.
                   </Text>
                 ) : null}
               </Stack>
-            ))}
-          </Stack>
-          {row.computedMatchTotal > row.computedMatches.length ? (
-            <Text type="supporting" size="xsm" color="secondary">
-              {row.computedMatchTotal - row.computedMatches.length} more flow and journey
-              references name this element — open the linked flows above to follow the chain.
+            </Card>
+          ) : null}
+
+          {!row.useCases.length && !row.computedMatches.length ? (
+            <Text type="supporting" size="sm" color="secondary" style={{ fontStyle: "italic" }}>
+              No use case or journey is mapped to this standard yet — unmapped, not unsupported.
+              Nothing here says a program can't do this in Prism; it says nobody has written
+              down what doing it looks like.
             </Text>
           ) : null}
         </Stack>
-      ) : null}
+      </Card>
 
-      {!row.useCases.length && !row.computedMatches.length ? (
-        <Text type="supporting" size="sm" color="secondary" style={{ fontStyle: "italic" }}>
-          No use case or journey is mapped to this standard yet — unmapped, not unsupported.
-          Nothing here says a program can't do this in Prism; it says nobody has written
-          down what doing it looks like.
-        </Text>
-      ) : null}
-
-      <Divider label="COMPETITOR RATINGS" />
-      {row.competitors.length ? (
-        // Every competitor tracked for this domain gets a card here, rated or
-        // not — this is the exhaustive Standards tab, not the Overview
-        // answer-key, so silently dropping the unrated majority read as "we
-        // didn't check," not "unresearched." A rated card carries the full
-        // rationale/sources; an unrated one says so plainly instead of
-        // vanishing.
-        <Grid columns={{ minWidth: 220, max: 3 }} gap={3}>
-          {row.competitors.map((c) => {
-            const isRated = !!c.rating && c.rating !== "unresearched";
-            return (
-              <Stack key={c.slug} gap={1.5}>
-                <Stack direction="horizontal" gap={2} vAlign="center" wrap="wrap">
-                  <CompetitorLogo slug={c.slug} competitor={c.competitor} size={20} />
-                  <Text type="body" weight={isRated ? "semibold" : undefined} color={isRated ? undefined : "secondary"}>
-                    {c.competitor}
-                  </Text>
-                  <StandardsRatingBadge rating={c.rating} />
-                </Stack>
-                {isRated ? (
-                  <>
-                    {c.rationale ? (
-                      <FieldBlock text={c.rationale} type="supporting" maxLines={4} />
-                    ) : null}
-                    {/* Directional flag lives here, in the expanded card — NOT in the
-                        collapsed table cell. A second pill per cell across 5 competitor
-                        columns breaks the row's scan strip. The note reuses the same
-                        italic supporting-text treatment as "not yet researched" below. */}
-                    {c.evidenceStrength === "directional" ? (
-                      // hAlign="start" (align-items on a vertical Stack) keeps the
-                      // pill at its own width — without it the Badge stretches the
-                      // full column and reads as a banner, not a badge.
-                      <Stack gap={1} hAlign="start">
-                        <DirectionalBadge evidenceStrength={c.evidenceStrength} />
-                        {c.evidenceNote ? (
-                          <Text
-                            type="supporting"
-                            size="xsm"
-                            color="secondary"
-                            maxLines={3}
-                            style={{ fontStyle: "italic" }}
-                          >
-                            {c.evidenceNote}
-                          </Text>
+      {/* Zone 4 — competitor ratings: externally-sourced research about someone
+          else's product, the opposite end of the confidence spectrum from Zone 2.
+          `gray` keeps it visually distinct from both Zone 2's bordered `default`
+          and Zone 3's `blue`, so a reader always knows which kind of claim
+          they're reading without re-reading the section label. */}
+      <Card variant="gray" padding={3}>
+        <Stack gap={3}>
+          <Text type="label" color="secondary" size="xsm">
+            COMPETITOR RATINGS
+          </Text>
+          {row.competitors.length ? (
+            // Every competitor tracked for this domain gets a card here, rated or
+            // not — this is the exhaustive Standards tab, not the Overview
+            // answer-key, so silently dropping the unrated majority read as "we
+            // didn't check," not "unresearched." A rated card carries the full
+            // rationale/sources; an unrated one says so plainly instead of
+            // vanishing.
+            <Grid columns={{ minWidth: 220, max: 3 }} gap={3}>
+              {row.competitors.map((c) => {
+                const isRated = !!c.rating && c.rating !== "unresearched";
+                return (
+                  <Stack key={c.slug} gap={1.5}>
+                    <Stack direction="horizontal" gap={2} vAlign="center" wrap="wrap">
+                      <CompetitorLogo slug={c.slug} competitor={c.competitor} size={20} />
+                      <Text type="body" weight={isRated ? "semibold" : undefined} color={isRated ? undefined : "secondary"}>
+                        {c.competitor}
+                      </Text>
+                      <StandardsRatingBadge rating={c.rating} />
+                    </Stack>
+                    {isRated ? (
+                      <>
+                        {c.rationale ? (
+                          <FieldBlock text={c.rationale} type="supporting" maxLines={4} />
                         ) : null}
-                      </Stack>
-                    ) : null}
-                    <SourceList sources={c.sources} />
-                  </>
-                ) : (
-                  <Text type="supporting" size="xsm" color="secondary" style={{ fontStyle: "italic" }}>
-                    Not yet researched against this specific standard — unresearched, not "doesn't
-                    solve it."
-                  </Text>
-                )}
-              </Stack>
-            );
-          })}
-        </Grid>
-      ) : (
-        <Text type="supporting" size="sm" color="secondary" style={{ fontStyle: "italic" }}>
-          No competitor research covers this domain yet.{" "}
-          <Link href={`/domains/${slug}/competitors`} color="accent" hasUnderline>
-            See who's active in this market →
-          </Link>
-        </Text>
-      )}
-      {row.competitors.length && !hasRated ? (
-        <Text type="supporting" size="xsm" color="secondary">
-          <Link href={`/domains/${slug}/competitors`} color="accent" hasUnderline>
-            See who's active in this market →
-          </Link>
-        </Text>
-      ) : null}
+                        {/* Directional flag lives here, in the expanded card — NOT in the
+                            collapsed table cell. A second pill per cell across 5 competitor
+                            columns breaks the row's scan strip. The note reuses the same
+                            italic supporting-text treatment as "not yet researched" below. */}
+                        {c.evidenceStrength === "directional" ? (
+                          // hAlign="start" (align-items on a vertical Stack) keeps the
+                          // pill at its own width — without it the Badge stretches the
+                          // full column and reads as a banner, not a badge.
+                          <Stack gap={1} hAlign="start">
+                            <DirectionalBadge evidenceStrength={c.evidenceStrength} />
+                            {c.evidenceNote ? (
+                              <Text
+                                type="supporting"
+                                size="xsm"
+                                color="secondary"
+                                maxLines={3}
+                                style={{ fontStyle: "italic" }}
+                              >
+                                {c.evidenceNote}
+                              </Text>
+                            ) : null}
+                          </Stack>
+                        ) : null}
+                        <SourceList sources={c.sources} />
+                      </>
+                    ) : (
+                      <Text type="supporting" size="xsm" color="secondary" style={{ fontStyle: "italic" }}>
+                        Not yet researched against this specific standard — unresearched, not "doesn't
+                        solve it."
+                      </Text>
+                    )}
+                  </Stack>
+                );
+              })}
+            </Grid>
+          ) : (
+            <Text type="supporting" size="sm" color="secondary" style={{ fontStyle: "italic" }}>
+              No competitor research covers this domain yet.{" "}
+              <Link href={`/domains/${slug}/competitors`} color="accent" hasUnderline>
+                See who's active in this market →
+              </Link>
+            </Text>
+          )}
+          {row.competitors.length && !hasRated ? (
+            <Text type="supporting" size="xsm" color="secondary">
+              <Link href={`/domains/${slug}/competitors`} color="accent" hasUnderline>
+                See who's active in this market →
+              </Link>
+            </Text>
+          ) : null}
+        </Stack>
+      </Card>
 
       {/* Same "Text label xsm + Link" idiom as exxat-gap-answer.tsx's and
           domain-scenario.tsx's single out-links, just three in a row — keeps

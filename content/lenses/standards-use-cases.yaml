@@ -25,16 +25,27 @@
 #                      into two entries rather than write past it
 #   related_flows    — optional [{flow, step?, element?}] navigational pointer into
 #                      content/flows/ (Level 3). Wayfinding, not evidence
+#   prism_feature_ref — optional, one of content/prism/capability-map.yaml's 6 top-level
+#                      pillar names verbatim ("Clinical & Experiential Education",
+#                      "Compliance Management", "Curriculum Mapping", "Surveys & Course
+#                      Evaluations", "Exam Management", "Accreditation Management").
+#                      Names WHICH Exxat capability actually does the work this use case
+#                      describes — added 2026-09-11 because a use case that only tells a
+#                      market/customer story without naming the Prism feature behind it
+#                      reads as a generic idea, not a product answer. Omit only when the
+#                      use case genuinely has no home in any shipped or roadmap pillar
+#                      (status: no-fit-yet) — never guess a pillar to fill the field.
 #   sources          — [{source_id}] into content/sources/registry.yaml. Required
 #
 # Gated by scripts/check_content_density.py's check_standards_use_cases_integrity().
-last_updated: "2026-09-10"
+last_updated: "2026-09-11"
 use_cases:
   # --- Pharmacy / ACPE — the pilot and the two live schools ---
   - domain: "Pharmacy"
     element_id: "Standard 2, Key Element 2.2.d"
     use_case: "Map an ACPE curriculum in Prism, import ExamSoft didactic scores, and correlate them to NAPLEX outcomes"
     status: "in-flight"
+    prism_feature_ref: "Curriculum Mapping"
     audience: ["role-dean", "role-compliance-accreditation-liaison"]
     detail: >
       A non-customer PharmD school running CORE today is piloting ACPE curriculum
@@ -50,6 +61,7 @@ use_cases:
     element_id: "Standard 2, Key Element 2.2.d"
     use_case: "AI-flagged curriculum coverage gap with an hours-reallocation recommendation, not just a report"
     status: "proposed"
+    prism_feature_ref: "Curriculum Mapping"
     audience: ["role-dean", "role-compliance-accreditation-liaison"]
     detail: >
       Roadmap concept, not shipped. The stated vision is insight plus remedy: name the
@@ -65,6 +77,7 @@ use_cases:
     element_id: "Standard 7, Key Element 7.3.d"
     use_case: "Bulk-import ExamSoft reports so didactic and clinical performance sit in one longitudinal view"
     status: "proposed"
+    prism_feature_ref: "Exam Management"
     audience: ["role-dean", "role-program-admin"]
     detail: >
       The September 12 2026 release lets programs already using Prism for clinical
@@ -80,6 +93,7 @@ use_cases:
     element_id: "Standard 7, Key Element 7.3.d"
     use_case: "Stand up competency tracking for a PharmD program during onboarding"
     status: "in-flight"
+    prism_feature_ref: "Curriculum Mapping"
     audience: ["role-compliance-accreditation-liaison", "role-program-admin"]
     detail: >
       University of Maryland is implementing Prism now, with competency tracking named
@@ -95,6 +109,7 @@ use_cases:
     element_id: "Standard 3, Key Elements 3.2.b & 3.2.d"
     use_case: "Run a PharmD program's full APPE placement cycle in Prism"
     status: "documented"
+    prism_feature_ref: "Clinical & Experiential Education"
     audience: ["role-clinical-coordinator", "discipline-pharmacy"]
     detail: >
       OHSU School of Pharmacy has used Prism for clinical placement management for
@@ -110,6 +125,7 @@ use_cases:
     element_id: "Standard 3, Key Element 3.1.a"
     use_case: "Publish a pharmacy placement-management reference story as a webinar and white paper"
     status: "proposed"
+    prism_feature_ref: "Clinical & Experiential Education"
     audience: ["role-clinical-coordinator", "role-dean"]
     detail: >
       Proposed marketing motion, not a shipped asset: interview OHSU on how they manage
@@ -125,6 +141,7 @@ use_cases:
     element_id: "Standard 3, Key Element 3.5.b"
     use_case: "Inventory sites and affiliation agreements in the incumbent before cutting over to Prism"
     status: "proposed"
+    prism_feature_ref: "Compliance Management"
     audience: ["role-clinical-coordinator", "role-compliance-accreditation-liaison"]
     detail: >
       Proposed. A program leaving CORE mid-accreditation-cycle has to move every active
@@ -140,6 +157,7 @@ use_cases:
     element_id: "Standard 7, Key Element 7.5.b"
     use_case: "Survive the first ACPE self-study cycle after switching platforms mid-cycle"
     status: "proposed"
+    prism_feature_ref: "Accreditation Management"
     audience: ["role-compliance-accreditation-liaison", "role-dean"]
     detail: >
       Proposed. The migration story the GTM team asked for is a program that moved from
@@ -155,6 +173,7 @@ use_cases:
     element_id: "Standard 3, Key Element 3.1.b"
     use_case: "Carry historical IPPE hour records across a mid-cycle platform switch"
     status: "proposed"
+    prism_feature_ref: "Clinical & Experiential Education"
     audience: ["role-clinical-coordinator", "role-program-admin"]
     detail: >
       Proposed. ACPE's 300-hour IPPE total, with its 75-hour community and 75-hour
@@ -170,6 +189,7 @@ use_cases:
     element_id: "Standard 7, Key Element 7.5.a"
     use_case: "Run the AACP graduating-student, faculty and preceptor surveys inside Prism"
     status: "proposed"
+    prism_feature_ref: "Surveys & Course Evaluations"
     audience: ["role-compliance-accreditation-liaison", "role-dean"]
     detail: >
       Proposed. Programs are actively trying to shrink their technology stack, and Exxat
@@ -185,6 +205,7 @@ use_cases:
     element_id: "Standard 7, Key Element 7.3.c"
     use_case: "Push finalized rotation grades to Canvas so the LMS stays the official student record"
     status: "in-flight"
+    prism_feature_ref: "Clinical & Experiential Education"
     audience: ["role-program-admin", "role-clinical-coordinator"]
     detail: >
       Canvas integration has shipped; Brightspace is next, then Blackboard. LMS
@@ -200,6 +221,7 @@ use_cases:
     element_id: "Standard 3, Key Element 3.5.a"
     use_case: "Serve one university's pharmacy, PT, OT and PA placements from a single office and platform"
     status: "proposed"
+    prism_feature_ref: "Clinical & Experiential Education"
     audience: ["role-dean", "role-clinical-coordinator"]
     detail: >
       Proposed. Pharmacy usually runs its own office of clinical education, but some
@@ -228,6 +250,7 @@ use_cases:
     element_id: "Standard 7, Key Element 7.3.d"
     use_case: "Replace ExamSoft with Exxat's own exam module once it soft-launches"
     status: "proposed"
+    prism_feature_ref: "Exam Management"
     audience: ["role-dean", "role-program-admin"]
     detail: >
       Proposed, and the module is unshipped — a January soft launch was the date given.
@@ -243,6 +266,7 @@ use_cases:
     element_id: "Standard 3, Key Element 3.1.a"
     use_case: "Replace an aging e-Value experiential setup at a pharmacy program"
     status: "proposed"
+    prism_feature_ref: "Clinical & Experiential Education"
     audience: ["role-clinical-coordinator", "role-program-admin"]
     detail: >
       Proposed. CORE holds the large majority of pharmacy programs; e-Value still holds

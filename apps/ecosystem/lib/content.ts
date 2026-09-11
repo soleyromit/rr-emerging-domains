@@ -795,6 +795,10 @@ export interface StandardUseCaseEntry {
   audience?: string[];
   detail?: string;
   related_flows?: RelatedFlow[];
+  /** One of capability-map.yaml's 6 top-level pillar names verbatim — which Exxat
+   * capability actually does the work this use case describes. Optional: omitted
+   * only when status is "no-fit-yet" and no pillar addresses it. */
+  prism_feature_ref?: string;
   sources?: { source_id: string }[];
 }
 
@@ -814,6 +818,7 @@ export interface StandardUseCase {
   audience: string[];
   detail?: string;
   relatedFlows: ResolvedRelatedFlow[];
+  prismFeatureRef?: string;
   sources: SourceRegistryEntry[];
 }
 
@@ -1093,6 +1098,7 @@ export function getStandardsCrosswalkForDomain(domain: string): StandardsCrosswa
       audience: u.audience ?? [],
       detail: u.detail,
       relatedFlows: resolveRelatedFlows(u.related_flows),
+      prismFeatureRef: u.prism_feature_ref,
       sources: resolveSourceIds(u.sources),
     });
     useCasesByElement.set(u.element_id, list);

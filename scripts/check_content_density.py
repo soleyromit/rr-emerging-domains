@@ -366,6 +366,15 @@ def check_standards_use_cases_integrity():
     flow_slugs = {f.stem for f in (CONTENT / "flows").glob("*.yaml") if not f.name.startswith("_TEMPLATE")}
     valid_statuses = {"proposed", "in-flight", "documented", "no-fit-yet"}
 
+    # Which Exxat capability actually does the work — read live from capability-map.yaml
+    # rather than hardcoded, so a renamed/added pillar there doesn't silently drift out
+    # of sync with what this file accepts.
+    capability_map_path = CONTENT / "prism" / "capability-map.yaml"
+    prism_pillars = set()
+    if capability_map_path.exists():
+        cap_doc = yaml.safe_load(capability_map_path.read_text()) or {}
+        prism_pillars = {p.get("name") for p in (cap_doc.get("core_ring", {}).get("pillars") or []) if p.get("name")}
+
     for i, u in enumerate(doc.get("use_cases") or []):
         where = f"use_cases[{i}]"
         domain = u.get("domain")
@@ -399,6 +408,22 @@ def check_standards_use_cases_integrity():
             slug = (rf.get("flow") or "").replace(".yaml", "")
             if slug and slug not in flow_slugs:
                 problems.append(f"{where}.related_flows[{j}]: flow {rf.get('flow')!r} not found in content/flows/")
+
+        # prism_feature_ref names WHICH Exxat capability does the work — added
+        # 2026-09-11 because a use case telling only a market/customer story without
+        # naming the Prism feature behind it reads as a generic idea, not a product
+        # answer. Required whenever a real pillar could plausibly do this work;
+        # "no-fit-yet" is the one status allowed to omit it, since by definition no
+        # pillar addresses it.
+        feature_ref = u.get("prism_feature_ref")
+        if feature_ref and feature_ref not in prism_pillars:
+            problems.append(
+                f"{where}: prism_feature_ref {feature_ref!r} not found among capability-map.yaml's pillar names"
+            )
+        if not feature_ref and status != "no-fit-yet":
+            problems.append(
+                f"{where}: status {status!r} requires a prism_feature_ref — only 'no-fit-yet' may omit it"
+            )
 
     return problems
 

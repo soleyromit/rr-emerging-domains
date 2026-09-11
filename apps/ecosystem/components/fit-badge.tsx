@@ -226,3 +226,15 @@ export function UseCaseStatusBadge({ status }: { status?: string }) {
     <Badge variant={USE_CASE_STATUS_VARIANT[key] ?? "neutral"} label={USE_CASE_STATUS_LABEL[key] ?? status} />
   );
 }
+
+// Which Exxat/Prism capability actually does the work a proposed use case describes —
+// added 2026-09-11 because a use case that only tells a market/customer story without
+// naming the product feature behind it reads as a generic idea, not a product answer
+// (mirrors competitor cards' competitor_feature_ref, one level up). "teal" is unclaimed
+// elsewhere in this badge vocabulary — not one of the red/yellow/green/blue severity
+// colors, so it can't be misread as a fit/gap signal. Renders nothing when absent
+// (the honest "no-fit-yet" case), so callers need no emptiness guard.
+export function PrismFeatureBadge({ feature }: { feature?: string }) {
+  if (!feature) return null;
+  return <Badge variant="teal" label={feature} />;
+}
