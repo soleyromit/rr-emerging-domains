@@ -1,0 +1,92 @@
+# NOT part of the citation DAG — see content/ARCHITECTURE.md's "Outside the strata"
+# section, which this family was added to. This file tracks WORK, not facts.
+#
+# THE ISOLATION RULE, which runs in exactly one direction:
+#   - a row here MAY point AT content/ (via `produces:`, and at Level 0.5 ids via
+#     `inputs:`);
+#   - nothing under content/ outside content/gtm/ may EVER cite a content/gtm/ path or
+#     id as evidence. A later integrity check, check_gtm_isolation() in
+#     scripts/check_content_density.py (added by Task 1.7 of this plan), enforces that
+#     mechanically; until it lands, this comment is the rule.
+# Why the asymmetry: "we intend to interview ten deans" and "this stage is blocked on
+# Ashish's availability" assert nothing about the world. Requiring such a row to carry a
+# `source:` would be a category error, and letting a research file cite it would launder
+# an intention into evidence — the same failure content/sources/vendor-comparison-
+# chart.yaml is quarantined (`citable_as_fact: false`) to prevent from the other
+# direction.
+#
+# WHAT THIS FILE IS FOR: who is doing what research work, on which domain, at which of
+# the seven fixed stages, at what status. It is a work tracker. The findings the work
+# produces land in the files named in `produces:` — never here.
+last_updated: "2026-09-11"
+
+# The seven fixed research stages, always all seven, in the order stated in
+# content/interviews/2026-09-11-romit-ruchi-gtm-taxonomy.md, which names them verbatim as
+# "competitive analysis, market sizing, program-level research, domain-expert research,
+# conference research, interviews, and consultants" and records that they "feed product
+# development first, and sales second" (the `feeds:` enum below).
+# Do not add, remove, or reorder. A stage that turns out not to apply to a domain is
+# recorded as a workstream with status "dropped", not by deleting a key here.
+stages:
+  - key: "competitive-analysis"
+  - key: "market-sizing"
+  - key: "program-level-research"
+  - key: "domain-expert-research"
+  - key: "conference-research"
+  - key: "interviews"
+  - key: "consultants"
+
+# Per-domain, per-stage work items. SPARSE BY DESIGN, the same contract as
+# content/lenses/product-gaps.yaml and content/lenses/standards-competitor-ratings.yaml:
+# an absent row means NOT YET STARTED, never "started and found nothing." Deliberately
+# empty at creation (2026-09-11); a workstream is added when real work actually begins,
+# and an invented example row would be indistinguishable from a real one the moment it is
+# committed.
+workstreams: []
+# Real row shape, once populated. Documented as a comment on purpose — an example row in
+# a tracker gets read as a real assignment, the same way a placeholder score ships as a
+# real one.
+#   - id: string, unique across this file, kebab-case,
+#          "{domain-slug}-{stage-key}" or "{domain-slug}-{stage-key}-{qualifier}"
+#     domain: string — the canonical APP-LEVEL domain label, NOT always the same string
+#       as the domain registry's own `domain:` field. The authoritative list is the key
+#       set of DOMAIN_TO_ACCREDITATION_SLUG, kept in sync by hand in two places:
+#       apps/ecosystem/lib/content.ts and scripts/check_content_density.py. Today:
+#       DO | Pharmacy | Dentistry | Medicine | Nursing | Teacher Education | Social Work
+#       | Physical Therapy | Occupational Therapy | Physician Assistant |
+#       Speech-Language Pathology | CRNA | Counseling.
+#       MEDICINE IS THE TRAP: content/domains/medicine.yaml's own field is
+#       `domain: "MD"`, but the label every lens uses — and the only one that resolves —
+#       is "Medicine". Use "Medicine" here, because this field is joined against the
+#       sibling lenses' domain column, not against the domain file's raw value. (The one
+#       field in this repo that deliberately takes the raw value instead is
+#       content/dissection/<slug>.yaml's top-level `domain:`, which mirrors the domain
+#       file's own field by design.) DO, Pharmacy and Dentistry are spelled identically
+#       in both places, which is why the difference is easy to miss
+#     stage: string — must be one of the 7 stage keys above, verbatim
+#     status: enum — not-started | in-progress | blocked | done | dropped
+#     owner: string or null. null is honest ("nobody is on this yet"); do not default to
+#       whoever wrote the row
+#     started: string (YYYY-MM-DD) or null
+#     target: string (YYYY-MM-DD) or null. A real agreed date only, never an aspiration
+#     blocked_by: string, <=150 soft / 300 hard chars — REQUIRED when status is
+#       "blocked", forbidden otherwise. What is actually blocking it, named concretely
+#     objective: string, <=200 soft / 350 hard chars — what this workstream is trying to
+#       find out, not what it has found. Findings go in the `produces:` files
+#     inputs: array of {source_id} this workstream is working from, or empty. Ids resolve
+#       against the union of the Level 0.5 source homes, exactly as
+#       scripts/check_content_density.py's _load_source_ids() does it:
+#       content/sources/registry.yaml (sources[].id), help-center.yaml (articles[].id),
+#       playbooks.yaml (playbooks[].id), support-tickets/*.yaml (snapshot.id and
+#       tickets[].source_id), and content/interviews/*.md front-matter `id:`.
+#       content/sources/vendor-comparison-chart.yaml is NOT one of them — it is
+#       quarantined and no id from it may appear here
+#     produces: array of content/ relative paths this workstream writes its findings to,
+#       or empty. Each path must either exist today or be a documented Phase 2/3 forward
+#       reference already named in an earlier committed schema — today that means
+#       content/lenses/product-gaps.yaml (exists), content/dissection/<slug>.yaml and
+#       content/market/programs/<slug>.yaml (both families have a committed _TEMPLATE,
+#       per-domain files land in Phase 2/3). Keep a forward reference rather than
+#       deleting it; a target that does not exist yet is the point of the field
+#     feeds: array of enum values — product-development | sales. Per the interview above,
+#       the default order is product development first, sales second

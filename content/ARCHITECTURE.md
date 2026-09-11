@@ -270,6 +270,30 @@ source, or it stays opinion and stays here.
 - **`_TEMPLATE*.yaml`** — each YAML folder carries its schema as a template file;
   templates are the enforcement mechanism for this document's rules at
   point-of-writing.
+- **`gtm/`** (`research-pipeline.yaml`, `collateral.yaml`, new 2026-09-11) — internal
+  planning and work status: who is doing which of the seven research stages on which
+  domain and at what status, and what collateral (whitepapers, podcasts, webinars,
+  videos, sandboxes, use-case one-pagers, conference abstracts) is planned, in review,
+  or published. **These are not research findings.** A row saying "we intend to
+  interview ten deans" or "this webinar is in drafting" asserts nothing about the
+  market, so it carries no `source:` — requiring one would be a category error.
+
+  The isolation rule runs one way only: a `gtm/` file may point **at** `content/` (via
+  `produces:` / `grounded_in:`), but nothing in `content/` may ever cite a `content/gtm/`
+  path or id as evidence. Otherwise a plan would launder itself into a finding — the
+  same failure `sources/vendor-comparison-chart.yaml` is quarantined to prevent from the
+  other direction. This is mechanically enforced by `check_gtm_isolation()` in
+  `scripts/check_content_density.py`; until that check lands, the rule lives in each
+  file's header comment.
+
+  The one legitimate bridge back into the citation DAG is `collateral.yaml`'s
+  `becomes_source_id:`. Once an asset is actually published it exists in the world, and
+  the published artifact — not the tracking row — gets a normal Level 0.5 source entry
+  (`sources/registry.yaml` already carries `webinar`, `podcast`, `video` and
+  `conference` types) and is cited by that id like any other source. Registering it
+  doesn't make its claims true: a first-party sales/marketing artifact is
+  `type: "sales-collateral"` and belongs in a `citable_as_fact: false` home, uncitable
+  as fact by the same rule as the vendor chart.
 
 ## Quick reference — "where does my claim go?"
 
@@ -283,6 +307,7 @@ source, or it stays opinion and stays here.
 | A weighted domain-priority score | **`scorecard/`** (Level 5a) |
 | An argument, pattern, glossary entry, or message | **`synthesis/`** (Level 5b) |
 | A way to *show* any of the above | **`apps/ecosystem/`** (Level 6) |
+| A work assignment, a research intention, or a piece of planned/published collateral — a statement about *us*, not about the world | **`gtm/`** (outside the strata — it may point *at* `content/`, but nothing in `content/` may cite it) |
 
 And the test before committing any citation: **does the arrow point down?** If the
 file you're about to cite is at your level or above, the claim either moves down to

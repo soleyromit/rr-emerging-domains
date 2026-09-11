@@ -1,0 +1,71 @@
+# NOT part of the citation DAG — same isolation rule as research-pipeline.yaml beside it,
+# and see content/ARCHITECTURE.md's "Outside the strata" section. A row here MAY point AT
+# content/ (via `grounded_in:`); nothing under content/ outside content/gtm/ may ever cite
+# a content/gtm/ path or id as evidence. check_gtm_isolation() in
+# scripts/check_content_density.py (added by Task 1.7 of this plan) enforces that
+# mechanically; until it lands, this comment is the rule.
+#
+# WHAT THIS FILE IS FOR: what collateral is planned, in flight, or published — and what
+# research it is supposed to stay inside. Per
+# content/interviews/2026-09-11-romit-ruchi-gtm-taxonomy.md, collateral is owned by
+# MARKETING (Isha, Virangi) and SALES (Sam), not by this research effort: "This repo
+# tracks that collateral and points at it; it does not produce it." A row here is a
+# tracking record about someone else's artifact, never a claim about the market.
+#
+# THE ONE BRIDGE BACK INTO THE DAG is `becomes_source_id` (see below): once an asset is
+# actually published it exists in the world, and the published artifact — not this
+# tracking row — can be registered as a real Level 0.5 source and cited. The tracking row
+# stays uncitable either way.
+last_updated: "2026-09-11"
+
+# SPARSE BY DESIGN: an absent asset means NOBODY HAS PLANNED ONE YET, never "we looked
+# and there is no collateral here." Deliberately empty at creation (2026-09-11) — marketing
+# and sales own the real pipeline, and a made-up row here would read as a real commitment
+# to someone scanning the file.
+assets: []
+# Real row shape, once populated. Documented as a comment on purpose — an example row in a
+# tracker gets read as a real plan.
+#   - id: string, unique across this file, kebab-case
+#     kind: enum — whitepaper | podcast | webinar | video | sandbox | use-case-one-pager
+#           | conference-abstract
+#     title: string, <=150 soft / 300 hard chars
+#     domain: string — the canonical APP-LEVEL domain label, same convention and same trap
+#       as research-pipeline.yaml's `workstreams[].domain`: the authoritative list is the
+#       key set of DOMAIN_TO_ACCREDITATION_SLUG (apps/ecosystem/lib/content.ts and
+#       scripts/check_content_density.py), and Medicine's label is "Medicine" even though
+#       content/domains/medicine.yaml's own field says "MD"
+#     status: enum — idea | drafting | in-review | published | retired
+#     owner_team: enum — marketing | sales | product | research. Per the interview above,
+#       most collateral is marketing or sales; "research" is the exception, not the default
+#     owner: string or null. null when no named person owns it yet
+#     target_date: string (YYYY-MM-DD) or null
+#     published_url: string or null — non-null ONLY when status is "published"
+#     audience: array of content/personas/*.yaml filenames without extension (role-* /
+#       discipline-* / lens-* slugs), or empty. Tag-only, not an evidentiary citation
+#     grounded_in: array of content/ relative paths whose claims this asset must not
+#       outrun, or empty. Same existence/forward-reference rule as research-pipeline.yaml's
+#       `produces:`: each path exists today, or is a documented Phase 2/3 forward reference
+#       already named in an earlier committed schema (content/lenses/product-gaps.yaml
+#       exists; content/dissection/<slug>.yaml and content/market/programs/<slug>.yaml have
+#       committed _TEMPLATEs with per-domain files still to come). This is the field that
+#       makes "the webinar said X, where did X come from?" answerable
+#     claims_review_status: enum — not-reviewed | reviewed-against-content |
+#       contains-unverified-claims. Use the WEAKEST honest value: "not-reviewed" is the
+#       default and is not a criticism, while "contains-unverified-claims" is a real,
+#       useful state to be able to count, not a failure to hide
+#     becomes_source_id: string or null — the Level 0.5 source id this asset becomes once
+#       published. REQUIRED to be non-null when status is "published"; MUST be null for
+#       every other status, including "retired" (a retired draft was never published, so
+#       it never became a source). This is the ONE legitimate bridge back into the
+#       citation DAG, and it points at the source home, not at this file: a published
+#       webinar/podcast/video/conference-abstract gets a normal
+#       content/sources/registry.yaml entry (those four `type:` values already exist
+#       there) with origin: "first-party", and is cited by that id like any other source.
+#       Note the exception the registry already documents: first-party sales/marketing
+#       artifacts of the comparison-chart and one-pager sort are `type: "sales-collateral"`
+#       and are NOT citable as fact — they live in a quarantined home carrying
+#       `citable_as_fact: false` (today content/sources/vendor-comparison-chart.yaml), and
+#       an id from such a home may never appear as a `source_id` anywhere in content/.
+#       Registering the asset does not make its claims true; it makes the artifact
+#       referenceable
+#     notes: string, <=150 soft / 300 hard chars, or null
