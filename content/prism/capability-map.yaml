@@ -16,6 +16,42 @@ sources:
   - "Discipline video transcript: NursingTutorialsTranscripts.md"
 last_updated: "2026-08-24"
 
+# Optional `roadmap:` sub-object, attachable to any pillar or feature carrying
+# `status: roadmap`. Added 2026-09-11, because until now `status: roadmap` was a
+# bare enum value with no target date, no confidence level, and no citation for
+# why it is dated the way it is:
+#
+#   roadmap:
+#     target:      string — "YYYY-MM" or "YYYY-Qn", the committed/planned
+#                  timeframe.
+#     commitment:  enum — committed | planned | exploratory.
+#     scope_note:  string, <=200/400 chars (see content/CONTENT-DENSITY.md) —
+#                  what the release actually contains, not why it matters. The
+#                  "why" stays in `why_it_matters`, which has its own ceiling.
+#     source_id:   string — a source_id, ideally of type "roadmap-doc"
+#                  (content/sources/registry.yaml), naming the internal
+#                  document/commitment this date rests on.
+#
+# A `status: roadmap` entry with no `roadmap:` object is a valid, honest state
+# (target/timing not yet documented) — this is WARN-only in the integrity
+# checker, not a hard FAIL, since no existing entry currently has one. Same
+# treatment for a `roadmap:` object that states a `target` but carries
+# `source_id: null`: honestly incomplete, not wrong. Non-blocking at time of
+# writing, the same convention content/CONTENT-DENSITY.md uses for a check
+# introduced before any existing content can pass it.
+#
+# Partial objects are expected, not sloppy. The two pillars below state a date
+# this file already asserted and nothing else: `commitment` and `scope_note` are
+# absent because the file does not state them anywhere, and this schema is not a
+# licence to infer them. Populating them (and replacing `source_id: null` with a
+# real roadmap-doc citation) is Phase 2/3 work, once such a source exists.
+#
+# Mirror rule for the flat pillar-level `target:` field: both roadmap pillars
+# below already carry a `target:` that apps/ecosystem/app/prism/page.tsx renders
+# ("Target: Q2 2027"). That field stays until a UI change moves the reader onto
+# `roadmap.target`; while both exist, `roadmap.target` MUST mirror it verbatim —
+# one date stated twice, never allowed to diverge.
+
 core_ring:
   description: >
     Six modules arranged around a "Courses / Faculty / Students" core in the
@@ -907,9 +943,15 @@ core_ring:
     - name: "Exam Management"
       status: roadmap
       target: "Q2 2027"
+      roadmap:
+        target: "Q2 2027"
+        source_id: null
     - name: "Accreditation Management"
       status: roadmap
       target: "Q3 2027"
+      roadmap:
+        target: "Q3 2027"
+        source_id: null
       why_it_matters: >
         This is the single most load-bearing fact for the whole domain
         expansion initiative: Exxat's own public roadmap already names
