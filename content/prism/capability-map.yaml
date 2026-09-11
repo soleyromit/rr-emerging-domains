@@ -22,8 +22,14 @@ last_updated: "2026-08-24"
 # why it is dated the way it is:
 #
 #   roadmap:
-#     target:      string — "YYYY-MM" or "YYYY-Qn", the committed/planned
-#                  timeframe.
+#     target:      string — the committed/planned timeframe, in one of exactly
+#                  two forms: "Qn YYYY" at quarter precision (e.g. "Q2 2027") or
+#                  "YYYY-MM" at month precision (e.g. "2027-06"). A validator
+#                  can match /^Q[1-4] \d{4}$|^\d{4}-(0[1-9]|1[0-2])$/. Quarter
+#                  precision is what every entry in this file uses today, and it
+#                  is deliberately written in the same "Qn YYYY" form the flat
+#                  pillar-level `target:` field already uses — see the mirror
+#                  rule at the bottom of this block.
 #     commitment:  enum — committed | planned | exploratory.
 #     scope_note:  string, <=200/400 chars (see content/CONTENT-DENSITY.md) —
 #                  what the release actually contains, not why it matters. The
@@ -49,8 +55,13 @@ last_updated: "2026-08-24"
 # Mirror rule for the flat pillar-level `target:` field: both roadmap pillars
 # below already carry a `target:` that apps/ecosystem/app/prism/page.tsx renders
 # ("Target: Q2 2027"). That field stays until a UI change moves the reader onto
-# `roadmap.target`; while both exist, `roadmap.target` MUST mirror it verbatim —
-# one date stated twice, never allowed to diverge.
+# `roadmap.target`; while both exist, `roadmap.target` MUST mirror it verbatim,
+# character for character — one date stated twice, never allowed to diverge.
+# That verbatim requirement is why `target` is documented above in the "Qn YYYY"
+# form the flat field already uses, rather than a year-first form: it keeps the
+# mirror a literal string equality a checker can assert with `==`, instead of a
+# format-normalizing comparison that has to parse two date shapes to notice the
+# two fields disagree.
 
 core_ring:
   description: >
