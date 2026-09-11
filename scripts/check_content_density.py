@@ -230,12 +230,207 @@ DOMAIN_TO_ACCREDITATION_SLUG = {
 }
 
 
-def _load_source_ids():
-    sources_path = CONTENT / "sources" / "registry.yaml"
-    if not sources_path.exists():
+# ---------------------------------------------------------------------------
+# Level 0.5 source homes.
+#
+# A citable `source_id` used to live in exactly one place: content/sources/
+# registry.yaml. Phase 0 of the domain-dissection work added four more homes,
+# each a corpus index (one file indexing many sources) rather than one registry
+# entry per source. Every source_id check in this file resolves against the
+# UNION of all five, through the single _load_source_ids() below — deliberately
+# one loader, not five lookups scattered through the individual checks.
+#
+# The shapes below were read off the real committed files, not assumed, and are
+# load-bearing:
+#   content/sources/registry.yaml           sources[].id
+#   content/sources/help-center.yaml        articles[].id
+#   content/sources/playbooks.yaml          playbooks[].id   <- under a `playbooks:`
+#                                                               key, not a bare list
+#   content/sources/support-tickets/*.yaml  snapshot.id  AND  tickets[].source_id
+#   content/interviews/*.md                 `id:` in the YAML front-matter block
+#
+# Two things that look like ids and are not: playbooks[].zendesk_capture is a
+# plain string label for an unverified screen capture, and the support-ticket
+# _TEMPLATE.yaml's placeholder ids are skipped the same way _TEMPLATE files are
+# skipped everywhere else in this checker.
+#
+# Interview ids are NOT derivable from filenames — one of them deliberately
+# differs from its filename slug so it matches an already-frozen registry id
+# that existing citations point at. They are always read from front-matter.
+SOURCE_HOMES_DESC = (
+    "any source home (content/sources/registry.yaml, help-center.yaml, "
+    "playbooks.yaml, support-tickets/*.yaml, content/interviews/*.md)"
+)
+
+_SOURCE_IDS_CACHE = None
+_SOURCE_HOME_PROBLEMS = []
+
+
+def _rel(path):
+    try:
+        return str(path.relative_to(REPO))
+    except ValueError:
+        return str(path)
+
+
+def _load_source_home_yaml(path, problems):
+    """Parse one source-home file, reporting rather than swallowing a failure.
+
+    A home that exists but won't parse must never read as "no ids here": that
+    would silently turn every citation into it into a dangling-source FAIL,
+    which reads as a content error when it is actually a parse error.
+    """
+    try:
+        return yaml.safe_load(path.read_text()) or {}
+    except (yaml.YAMLError, OSError) as exc:
+        problems.append(
+            f"{_rel(path)}: could not be read as YAML, so the source ids it defines "
+            f"cannot resolve — {exc.__class__.__name__}: {exc}"
+        )
+        return None
+
+
+def _load_listed_ids(path, list_key, id_field, problems):
+    """Ids from a corpus-index file shaped `<list_key>: [ {<id_field>: ...}, ... ]`."""
+    if not path.exists():
+        problems.append(
+            f"{_rel(path)}: missing — citations to the ids this source home defines cannot resolve"
+        )
         return set()
-    doc = yaml.safe_load(sources_path.read_text()) or {}
-    return {s.get("id") for s in (doc.get("sources") or []) if s.get("id")}
+    doc = _load_source_home_yaml(path, problems)
+    if doc is None:
+        return set()
+    entries = doc.get(list_key)
+    if not isinstance(entries, list):
+        problems.append(
+            f"{_rel(path)}: expected a top-level `{list_key}:` list of entries carrying "
+            f"an `{id_field}:`; found {type(entries).__name__}"
+        )
+        return set()
+    ids = set()
+    for n, entry in enumerate(entries):
+        value = entry.get(id_field) if isinstance(entry, dict) else None
+        if not value:
+            problems.append(f"{_rel(path)}: {list_key}[{n}] has no `{id_field}:`, so it defines no citable source id")
+            continue
+        ids.add(value)
+    return ids
+
+
+def _load_front_matter(path, problems):
+    """Parse the YAML front-matter block between a markdown file's first two
+    `---` fence lines. Interview files carry their `id:` there, sometimes below
+    comment lines explaining the id, so this is a real YAML parse rather than a
+    regex for `id:`."""
+    lines = path.read_text().splitlines()
+    if not lines or lines[0].strip() != "---":
+        problems.append(
+            f"{_rel(path)}: no YAML front-matter block (file does not open with a `---` line), "
+            "so its source id cannot resolve"
+        )
+        return None
+    block = None
+    for i in range(1, len(lines)):
+        if lines[i].strip() == "---":
+            block = "\n".join(lines[1:i])
+            break
+    if block is None:
+        problems.append(f"{_rel(path)}: front-matter block is never closed by a second `---` line")
+        return None
+    try:
+        return yaml.safe_load(block) or {}
+    except yaml.YAMLError as exc:
+        problems.append(
+            f"{_rel(path)}: front-matter is not valid YAML — {exc.__class__.__name__}: {exc}"
+        )
+        return None
+
+
+def _load_source_ids():
+    """The union of every id a citation may legitimately resolve to, across all
+    five Level 0.5 source homes.
+
+    Cached: each integrity check calls this, and every call would otherwise
+    re-parse 56KB of registry.yaml and re-report the same load problems once per
+    caller.
+    """
+    global _SOURCE_IDS_CACHE
+    if _SOURCE_IDS_CACHE is not None:
+        return _SOURCE_IDS_CACHE
+
+    problems = _SOURCE_HOME_PROBLEMS
+    ids = set()
+
+    # 1. registry.yaml — original behaviour, deliberately unchanged, including
+    #    tolerating a missing registry silently.
+    registry_path = CONTENT / "sources" / "registry.yaml"
+    if registry_path.exists():
+        doc = _load_source_home_yaml(registry_path, problems)
+        if doc is not None:
+            ids |= {s.get("id") for s in (doc.get("sources") or []) if isinstance(s, dict) and s.get("id")}
+
+    # 2. help-center.yaml, 3. playbooks.yaml — corpus indexes.
+    ids |= _load_listed_ids(CONTENT / "sources" / "help-center.yaml", "articles", "id", problems)
+    ids |= _load_listed_ids(CONTENT / "sources" / "playbooks.yaml", "playbooks", "id", problems)
+
+    # 4. support-tickets/*.yaml — each snapshot is itself citable (snapshot.id)
+    #    AND each ticket inside it is citable (tickets[].source_id).
+    tickets_dir = CONTENT / "sources" / "support-tickets"
+    if not tickets_dir.is_dir():
+        problems.append(f"{_rel(tickets_dir)}: missing — support-ticket snapshot ids cannot resolve")
+    else:
+        for f in sorted(tickets_dir.glob("*.yaml")):
+            if f.name.startswith("_TEMPLATE"):
+                continue
+            doc = _load_source_home_yaml(f, problems)
+            if doc is None:
+                continue
+            snapshot = doc.get("snapshot")
+            if not isinstance(snapshot, dict) or not snapshot.get("id"):
+                problems.append(f"{_rel(f)}: no `snapshot.id:`, so the snapshot defines no citable source id")
+            else:
+                ids.add(snapshot["id"])
+            tickets = doc.get("tickets")
+            if not isinstance(tickets, list):
+                problems.append(
+                    f"{_rel(f)}: expected a top-level `tickets:` list of entries carrying a "
+                    f"`source_id:`; found {type(tickets).__name__}"
+                )
+                continue
+            for n, ticket in enumerate(tickets):
+                sid = ticket.get("source_id") if isinstance(ticket, dict) else None
+                if not sid:
+                    problems.append(f"{_rel(f)}: tickets[{n}] has no `source_id:`, so it defines no citable source id")
+                    continue
+                ids.add(sid)
+
+    # 5. interviews/*.md — id lives in YAML front-matter.
+    interviews_dir = CONTENT / "interviews"
+    if not interviews_dir.is_dir():
+        problems.append(f"{_rel(interviews_dir)}: missing — interview source ids cannot resolve")
+    else:
+        for f in sorted(interviews_dir.glob("*.md")):
+            if f.name.startswith("_TEMPLATE"):
+                continue
+            front_matter = _load_front_matter(f, problems)
+            if front_matter is None:
+                continue
+            if not front_matter.get("id"):
+                problems.append(f"{_rel(f)}: front-matter has no `id:`, so this interview defines no citable source id")
+                continue
+            ids.add(front_matter["id"])
+
+    _SOURCE_IDS_CACHE = ids
+    return ids
+
+
+def check_source_homes_integrity():
+    """Report, as a named FAIL, any problem hit while loading the five source
+    homes. Without this a home that quietly loaded as empty would make every
+    citation into it look like a dangling reference, and the real cause (a
+    renamed key, a YAML typo, a deleted file) would never be named."""
+    _load_source_ids()
+    return list(_SOURCE_HOME_PROBLEMS)
 
 
 def _load_persona_slugs():
@@ -323,7 +518,7 @@ def check_standards_ratings_integrity():
         for j, s in enumerate(r.get("sources") or []):
             sid = s.get("source_id")
             if sid and sid not in source_ids:
-                problems.append(f"{where}.sources[{j}]: source_id {sid!r} not found in content/sources/registry.yaml")
+                problems.append(f"{where}.sources[{j}]: source_id {sid!r} not found in {SOURCE_HOMES_DESC}")
 
         ref = r.get("competitor_feature_ref")
         if ref and slug in competitor_pillars and competitor_pillars[slug] and ref not in competitor_pillars[slug]:
@@ -400,7 +595,7 @@ def check_standards_use_cases_integrity():
         for j, s in enumerate(u.get("sources") or []):
             sid = s.get("source_id")
             if sid and sid not in source_ids:
-                problems.append(f"{where}.sources[{j}]: source_id {sid!r} not found in content/sources/registry.yaml")
+                problems.append(f"{where}.sources[{j}]: source_id {sid!r} not found in {SOURCE_HOMES_DESC}")
         if not (u.get("sources") or []):
             problems.append(f"{where}: no sources[] — a use case asserts something and must cite where it came from")
 
@@ -432,7 +627,7 @@ def check_trends_integrity():
     """content/trends/*.yaml's `sources` is a flat list of ids (not the
     {source_id} object shape ratings entries use — there's no other per-source
     metadata to hang alongside a trend); confirm every id, including inside
-    addressed_by_competitors[], resolves into content/sources/registry.yaml."""
+    addressed_by_competitors[], resolves into one of the five source homes."""
     problems = []
     source_ids = _load_source_ids()
     for f in sorted((CONTENT / "trends").glob("*.yaml")):
@@ -443,12 +638,12 @@ def check_trends_integrity():
             tid = t.get("id")
             for sid in t.get("sources") or []:
                 if sid not in source_ids:
-                    problems.append(f"{f.name} trend {tid!r}: source id {sid!r} not found in content/sources/registry.yaml")
+                    problems.append(f"{f.name} trend {tid!r}: source id {sid!r} not found in {SOURCE_HOMES_DESC}")
             for ref in t.get("addressed_by_competitors") or []:
                 sid = ref.get("source_id")
                 if sid and sid not in source_ids:
                     problems.append(
-                        f"{f.name} trend {tid!r}: addressed_by_competitors source_id {sid!r} not found in content/sources/registry.yaml"
+                        f"{f.name} trend {tid!r}: addressed_by_competitors source_id {sid!r} not found in {SOURCE_HOMES_DESC}"
                     )
     return problems
 
@@ -456,7 +651,7 @@ def check_trends_integrity():
 def check_research_sources_integrity():
     """content/accreditation/*.yaml's `standards[].research_sources` (added
     2026-09-10, distinct from the accreditor's own `source` field) — confirm
-    every id resolves into content/sources/registry.yaml."""
+    every id resolves into one of the five source homes."""
     problems = []
     source_ids = _load_source_ids()
     for f in sorted((CONTENT / "accreditation").glob("*.yaml")):
@@ -467,7 +662,7 @@ def check_research_sources_integrity():
             for sid in s.get("research_sources") or []:
                 if sid not in source_ids:
                     problems.append(
-                        f"{f.name} {s.get('element_id')!r}: research_sources id {sid!r} not found in content/sources/registry.yaml"
+                        f"{f.name} {s.get('element_id')!r}: research_sources id {sid!r} not found in {SOURCE_HOMES_DESC}"
                     )
     return problems
 
@@ -544,7 +739,10 @@ def main():
             filtered.append((severity, fname, path, n, hard))
     results = filtered
 
-    integrity_problems = check_standards_ratings_integrity()
+    # First, so a broken source home is named as its own FAIL rather than only
+    # showing up as a cascade of "source_id not found" failures downstream.
+    integrity_problems = check_source_homes_integrity()
+    integrity_problems += check_standards_ratings_integrity()
     integrity_problems += check_standards_use_cases_integrity()
     integrity_problems += check_trends_integrity()
     integrity_problems += check_research_sources_integrity()
