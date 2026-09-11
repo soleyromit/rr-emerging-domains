@@ -44,8 +44,8 @@ artifact:
   provenance_note: >
     Authored by Exxat sales. Exxat is marked present on all 81 feature rows with no
     per-row evidence, and Sheet1 (7 named vendors) contradicts Sheet2 (3 masked vendors)
-    on 7 rows. Treat this as a record of what Exxat sales has been claiming, not of what
-    is true.
+    on 7 rows. Treat this as a record of what Exxat sales has been claiming, not of
+    what is true.
   scope_note: >
     A generic clinical-education product comparison. Contains none of pharmacy's actual
     APPE-tracking incumbents (RxPreceptor, PharmAcademic, Influx, ExamSoft, eValue) — it
@@ -55,18 +55,15 @@ artifact:
     # Tab order as stored in the file. Sheet2 is first despite the name; Sheet1 is last.
     - { sheet: "Sheet2", position: 1, vendor_columns: 4, masked: true, transcribed_here: "sections[].rows[].sheet2" }
     - { sheet: "Module Based", position: 2, vendor_columns: 4, masked: true, transcribed_here: "module_grouping" }
-    - { sheet: "Sheet1", position: 3, vendor_columns: 7, masked: false, transcribed_here: "known_contradictions only" }
-  # Rows where Sheet2's four masked columns and Sheet1's four corresponding named columns
-  # disagree outright — same vendor, same row, different answer. Computed exhaustively by
-  # diffing the two sheets, not spot-checked. `kind: masked-columns-disagree`.
+    - { sheet: "Sheet1", position: 3, vendor_columns: 7, masked: false, transcribed_here: "known_contradictions + unmasked_only_vendor_rows only" }
+  # EVERY entry below is a row where Sheet2's four masked columns and Sheet1's four
+  # corresponding named columns disagree outright — same vendor, same row, different
+  # answer. Computed exhaustively by diffing the two sheets, not spot-checked, so
+  # len(known_contradictions) == 7 IS the contradiction count: a consumer can count this
+  # list and render the number without filtering. Rows that are not contradictions live in
+  # unmasked_only_vendor_rows below and never in here.
   #
-  # Two further rows are recorded with `kind: unmasked-only-vendor`: the masked and named
-  # columns agree, but Sheet1 credits a vendor Sheet2 has no column for. That class is NOT
-  # exhaustive here — 46 of the 81 rows have marks from Sheet1-only vendors, which is a
-  # property of the masked sheet's narrower scope rather than a contradiction. These two
-  # are listed because the planning brief called them out by name.
-  #
-  # Field semantics, identical for both kinds so the two values are always like-for-like:
+  # Field semantics, identical across both lists so the two values are always like-for-like:
   #   sheet2:               who is marked in Sheet2's 4 masked columns
   #   sheet1:               who is marked in the 4 Sheet1 columns those masks resolve to
   #   sheet1_extra_vendors: who else Sheet1 marks in its 3 unmasked-only columns, or null
@@ -76,55 +73,54 @@ artifact:
       sheet2: "EXXAT"
       sheet1: "EXXAT, Typhon, Core ELMS"
       sheet1_extra_vendors: "Trajecsys, Experiential Learning Cloud, Project Concert"
-      kind: "masked-columns-disagree"
     - row_id: "learning-activity-management-competency-tracking"
       row: "Competency Tracking"
       sheet2: "EXXAT, Vendor 3"
       sheet1: "EXXAT, Typhon, Core ELMS"
       sheet1_extra_vendors: "Trajecsys, Experiential Learning Cloud, Project Concert"
-      kind: "masked-columns-disagree"
     - row_id: "learning-activity-management-customizable-reports"
       row: "Customizable reports"
       sheet2: "EXXAT, Vendor 3"
       sheet1: "EXXAT, Typhon, Core ELMS"
       sheet1_extra_vendors: "Trajecsys, Experiential Learning Cloud, Project Concert"
-      kind: "masked-columns-disagree"
     - row_id: "student-performance-tracking-skills-checklist"
       row: "Skills Checklist"
       sheet2: "EXXAT, Vendor 3"
       sheet1: "EXXAT"
       sheet1_extra_vendors: null
-      kind: "masked-columns-disagree"
     - row_id: "student-performance-tracking-early-risk-identification-low-score-indicators-notifications"
       row: "Early Risk Identification (Low Score Indicators & Notifications)"
       sheet2: "EXXAT, Vendor 3"
       sheet1: "EXXAT"
       sheet1_extra_vendors: null
-      kind: "masked-columns-disagree"
     - row_id: "support-onboarding-white-glove-implementation"
       row: "White Glove Implementation"
       sheet2: "EXXAT, Vendor 3"
       sheet1: "EXXAT, Typhon, Core ELMS"
       sheet1_extra_vendors: "Experiential Learning Cloud, Project Concert"
-      kind: "masked-columns-disagree"
     - row_id: "support-onboarding-free-importing-of-data-into-system"
       row: "Free Importing of Data into system"
       sheet2: "EXXAT"
       sheet1: "EXXAT, CastleBranch, Typhon, Core ELMS"
       sheet1_extra_vendors: "Experiential Learning Cloud"
-      kind: "masked-columns-disagree"
+  # NOT contradictions, and deliberately not in the list above: on these rows the masked
+  # and named columns AGREE, and Sheet1 merely credits a vendor Sheet2 has no column for.
+  # This list is NOT exhaustive — on 41 of the 81 rows the masked columns agree and
+  # Sheet1 still credits an unmasked-only vendor, which is a property of the masked sheet's
+  # narrower scope, not a defect in the artifact. These 2 are recorded only because the
+  # planning brief named them as contradictions; they are kept here, out of the count, so
+  # that correction isn't silently lost.
+  unmasked_only_vendor_rows:
     - row_id: "security-soc2-type-ii-certified"
       row: "SOC2 Type II Certified"
       sheet2: "EXXAT, Vendor 2"
       sheet1: "EXXAT, Typhon"
       sheet1_extra_vendors: "Experiential Learning Cloud"
-      kind: "unmasked-only-vendor"
     - row_id: "support-onboarding-annual-user-conference"
       row: "Annual User Conference"
       sheet2: "EXXAT"
       sheet1: "EXXAT"
       sheet1_extra_vendors: "Experiential Learning Cloud"
-      kind: "unmasked-only-vendor"
 # Sheet1 row 2 maps Sheet2's masked labels onto real vendor names. sheet2_label: null
 # means Sheet1 carries a column the masked sheet simply does not have.
 unmasking_key:
@@ -486,8 +482,8 @@ sections:
         maps_to_capability_id: null
 # The 'Module Based' tab reorganises the same rows, with identical X marks (verified cell
 # by cell), into 3 purchasable modules — and drops System, Security and Support &
-# Onboarding entirely: 55 of the 81 rows survive. What a module does NOT include is the
-# commercially interesting part, so the dropped 26 are named below rather than implied.
+# Onboarding entirely: 55 of the 81 rows survive. What a module does NOT include is
+# the commercially interesting part, so the dropped 26 are named below, not implied.
 module_grouping:
   - module: "Clinical Education"
     row_count: 39
