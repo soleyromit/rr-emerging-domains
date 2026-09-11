@@ -975,7 +975,25 @@ export interface SourceRegistryEntry {
   date?: string;
   what_it_supports?: string;
   accessed?: string;
+  /** "first-party" (Exxat's own material) | "third-party". Added to registry.yaml
+   * 2026-09-11; the four corpus-index homes below carry it too (interviews don't). */
+  origin?: string;
+  /** "public" | "internal" | "confidential". An entry without a real public `url:`
+   * is not "public" — that is how the four internal homes below read. */
+  access?: string;
+  /** Vault- or repo-relative location of an internal source that has no public
+   * `url:` (help-center article, playbook, interview record). Not rendered today. */
+  path?: string;
+  /** Which of the five Level 0.5 source homes this entry was resolved from. */
+  home?: SourceHome;
 }
+
+export type SourceHome =
+  | "registry"
+  | "help-center"
+  | "playbooks"
+  | "support-tickets"
+  | "interviews";
 
 export interface SourcesRegistry {
   sources: SourceRegistryEntry[];
@@ -988,17 +1006,220 @@ export function getSourcesRegistry(): SourcesRegistry | null {
   return readYamlFile<SourcesRegistry>("sources/registry.yaml");
 }
 
+// ---------- the five-home source-id union ----------
+//
+// A citable `source_id` used to live in exactly one place: sources/registry.yaml.
+// The domain-dissection work added four more homes, each a corpus index (one file
+// indexing many sources) rather than one registry entry per source. This mirrors
+// `_load_source_ids()` in scripts/check_content_density.py so the app resolves
+// exactly the set of ids the content checker considers valid — before this, a
+// citation the checker passed (help-center-*, playbook-*, support-ticket-*,
+// interview-*) was silently `.filter(Boolean)`-ed away and rendered as nothing.
+//
+//   content/sources/registry.yaml           sources[].id
+//   content/sources/help-center.yaml        articles[].id
+//   content/sources/playbooks.yaml          playbooks[].id
+//   content/sources/support-tickets/*.yaml  snapshot.id AND tickets[].source_id
+//   content/interviews/*.md                 `id:` in the YAML front-matter
+//
+// Deliberately NOT a home: content/sources/vendor-comparison-chart.yaml, which is
+// quarantined `citable_as_fact: false` and whose ids must never appear as a
+// source_id. The checker excludes it too.
+//
+// Precedence is registry-first, and a later home never overwrites an id an earlier
+// one already defined. That is load-bearing, not incidental: the 2026-09-04 Vishaka
+// session deliberately reuses its frozen registry id
+// (`interview-vishaka-pharmacy-understanding-2026-09-04`) in its interview
+// front-matter so one session has one canonical id. Registry-first means the richer,
+// human-written registry entry keeps rendering exactly as it does today.
+
+/** YAML nulls are everywhere in these files (a support-ticket snapshot taken without
+ * live API credentials is almost all nulls). Normalize to undefined so optional
+ * rendering (`s.title && s.url`, `[publisher, date].filter(Boolean)`) behaves. */
+function optStr(value: unknown): string | undefined {
+  if (typeof value !== "string") return undefined;
+  const trimmed = value.trim();
+  return trimmed ? trimmed : undefined;
+}
+
+interface HelpCenterDoc {
+  corpus?: { origin?: string; access?: string; mirror_root?: string };
+  articles?: { id?: string; title?: string; path?: string; what_it_supports?: string; accessed?: string }[];
+}
+
+interface PlaybooksDoc {
+  playbooks?: {
+    id?: string;
+    title?: string;
+    discipline?: string;
+    path?: string;
+    origin?: string;
+    access?: string;
+    accessed?: string;
+    caveat?: string;
+  }[];
+}
+
+function readInterviewFrontMatter(): { file: string; data: Record<string, any> }[] {
+  const dir = path.join(CONTENT_ROOT, "interviews");
+  if (!fs.existsSync(dir)) return [];
+  return fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith(".md") && !f.startsWith("_TEMPLATE"))
+    .sort()
+    .map((f) => {
+      try {
+        // gray-matter, already used by readMarkdownFile, is a real YAML front-matter
+        // parse — matching the checker, which `yaml.safe_load`s the block rather than
+        // regexing for `id:` (an interview's `id:` can sit below comment lines).
+        return { file: f, data: (matter(fs.readFileSync(path.join(dir, f), "utf8")).data ?? {}) as Record<string, any> };
+      } catch {
+        return { file: f, data: {} as Record<string, any> };
+      }
+    });
+}
+
+let sourceIndexCache: Map<string, SourceRegistryEntry> | null = null;
+
+/** Every id a citation may legitimately resolve to, across all five Level 0.5 source
+ * homes, keyed by id. Cached: every resolve call would otherwise re-parse ~56KB of
+ * registry.yaml plus four more homes, and a static build resolves thousands of ids. */
+export function getSourceIndex(): Map<string, SourceRegistryEntry> {
+  if (sourceIndexCache) return sourceIndexCache;
+  const index = new Map<string, SourceRegistryEntry>();
+  const add = (entry: SourceRegistryEntry | null) => {
+    if (!entry?.id || index.has(entry.id)) return;
+    index.set(entry.id, entry);
+  };
+
+  // 1. registry.yaml — unchanged behavior, and first so it wins every id collision.
+  for (const s of getSourcesRegistry()?.sources ?? []) {
+    if (s?.id) index.set(s.id, { ...s, home: "registry" });
+  }
+
+  // 2. help-center.yaml — articles are internal vault files: no url, so SourceList
+  //    falls back to rendering the title as prose, which is how the registry's own
+  //    url-less internal entries already render.
+  const helpCenter = readYamlFile<HelpCenterDoc>("sources/help-center.yaml");
+  for (const a of helpCenter?.articles ?? []) {
+    add({
+      id: optStr(a?.id) ?? "",
+      title: optStr(a?.title),
+      type: "help-center-article",
+      what_it_supports: optStr(a?.what_it_supports),
+      accessed: optStr(a?.accessed),
+      // origin/access live once on the `corpus:` block, not per article.
+      origin: optStr(helpCenter?.corpus?.origin),
+      access: optStr(helpCenter?.corpus?.access),
+      path: optStr(a?.path),
+      home: "help-center",
+    });
+  }
+
+  // 3. playbooks.yaml — same shape, per-entry origin/access. `zendesk_capture` is
+  //    deliberately ignored: it looks like an id and is not one.
+  const playbooks = readYamlFile<PlaybooksDoc>("sources/playbooks.yaml");
+  for (const p of playbooks?.playbooks ?? []) {
+    add({
+      id: optStr(p?.id) ?? "",
+      title: optStr(p?.title),
+      type: "playbook",
+      // `discipline:` is deliberately not mapped to `publisher:` — a playbook's
+      // discipline is not who published it, and SourceRegistryEntry has no field
+      // for it. See the report's field-mapping gaps.
+      what_it_supports: optStr(p?.caveat),
+      accessed: optStr(p?.accessed),
+      origin: optStr(p?.origin),
+      access: optStr(p?.access),
+      path: optStr(p?.path),
+      home: "playbooks",
+    });
+  }
+
+  // 4. support-tickets/*.yaml — the snapshot is citable AND each ticket in it is.
+  //    readYamlDir already skips _TEMPLATE.yaml, same exclusion as the checker.
+  //    Deliberately NOT listSupportTicketSnapshots(), which drops any snapshot
+  //    missing domain/taken — a snapshot still defines citable ids without them,
+  //    and the checker resolves them, so dropping one here would re-open this gap.
+  //    (RawSupportTicketSnapshot is declared further down; type decls hoist.)
+  for (const { data } of readYamlDir<Partial<RawSupportTicketSnapshot>>("sources/support-tickets")) {
+    const snap = data?.snapshot;
+    const origin = optStr(snap?.origin);
+    const access = optStr(snap?.access);
+    const taken = optStr(snap?.taken);
+    if (snap?.id) {
+      const domain = optStr(snap.domain);
+      const system = optStr(snap.system);
+      // A snapshot carries no `title:` field. Compose one from fields it does
+      // carry rather than render a titleless, urlless row as blank.
+      const title = [domain, "support tickets", system ? `— ${system} snapshot` : null, taken ? `(${taken})` : null]
+        .filter(Boolean)
+        .join(" ");
+      add({
+        id: snap.id,
+        title: title || snap.id,
+        type: optStr(snap.type) ?? "support-ticket",
+        date: taken,
+        what_it_supports: optStr(snap.coverage_caveat),
+        accessed: taken,
+        origin,
+        access,
+        home: "support-tickets",
+      });
+    }
+    for (const t of data?.tickets ?? []) {
+      const id = optStr(t?.source_id);
+      if (!id) continue;
+      add({
+        id,
+        // `subject` is null on any snapshot transcribed without live API access.
+        title: optStr(t?.subject) ?? (t?.ticket_id ? `Ticket #${t.ticket_id}` : id),
+        url: optStr(t?.url),
+        type: "support-ticket",
+        // The customer organization is the nearest thing a ticket has to an
+        // attribution line; it is null on any snapshot transcribed without live
+        // API access, which is every snapshot in the repo today.
+        publisher: optStr(t?.organization),
+        date: taken,
+        what_it_supports: optStr(t?.finding),
+        accessed: taken,
+        origin,
+        access,
+        home: "support-tickets",
+      });
+    }
+  }
+
+  // 5. interviews/*.md — id in the YAML front-matter. Note: interview front-matter
+  //    has an `access:` field but no `origin:`, so `origin` stays undefined here.
+  for (const { file, data } of readInterviewFrontMatter()) {
+    const id = optStr(data?.id);
+    if (!id) continue;
+    add({
+      id,
+      title: optStr(data?.title),
+      type: "interview",
+      date: optStr(data?.date),
+      access: optStr(data?.access),
+      origin: optStr(data?.origin),
+      path: `content/interviews/${file}`,
+      home: "interviews",
+    });
+  }
+
+  sourceIndexCache = index;
+  return index;
+}
+
 function resolveSourceIds(ids: { source_id: string }[] | undefined): SourceRegistryEntry[] {
   if (!ids?.length) return [];
-  const registry = getSourcesRegistry()?.sources ?? [];
-  const bySid = new Map(registry.map((s) => [s.id, s]));
+  const bySid = getSourceIndex();
   return ids.map((s) => bySid.get(s.source_id)).filter((s): s is SourceRegistryEntry => Boolean(s));
 }
 
 function resolveSourceIdStrings(ids: string[] | undefined): SourceRegistryEntry[] {
   if (!ids?.length) return [];
-  const registry = getSourcesRegistry()?.sources ?? [];
-  const bySid = new Map(registry.map((s) => [s.id, s]));
+  const bySid = getSourceIndex();
   return ids.map((id) => bySid.get(id)).filter((s): s is SourceRegistryEntry => Boolean(s));
 }
 
