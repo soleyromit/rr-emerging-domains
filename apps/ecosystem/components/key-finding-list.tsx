@@ -5,6 +5,7 @@ import { Stack } from "@astryxdesign/core/Stack";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { DisciplineChip } from "@/components/discipline-chip";
 import { GapSeverityBadge, TrendCoverageBadge } from "@/components/fit-badge";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import type { KeyFinding } from "@/lib/content";
 
 // The scan-first layer for a block of research prose: one line per finding — subject
@@ -43,7 +44,7 @@ export function KeyFindingList({
           key={i}
           startContent={<DisciplineChip subject={f.subject} />}
           label={f.headline}
-          description={f.detail}
+          description={stripFileCitations(f.detail)}
           endContent={
             f.severity ? (
               <Stack align="end">

@@ -1,14 +1,3 @@
-// Some flow-element prose (accreditation_citation, competitor_equivalent) embeds
-// parenthetical source-file citations inline, e.g. "...(competitors/emedley.yaml,
-// e-value.yaml)..." — real content, correct as research, but a literal raw-filename
-// violation of the "no partial URLs visible as UI text" rule once rendered. Source
-// attribution belongs in the underlying source: fields, not the reader-facing prose,
-// so strip it at render time rather than rewriting the content fields themselves.
-export function stripFileCitations(text?: string): string | undefined {
-  if (!text) return text;
-  return text.replace(/\s*\([^()]*\.ya?ml[^()]*\)/gi, "").replace(/\s{2,}/g, " ").trim();
-}
-
 function titleCase(slug: string): string {
   return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
@@ -21,7 +10,32 @@ const FOLDER_NOUN: Record<string, string> = {
   flows: "flow",
   journeys: "journey",
   lenses: "lens data",
+  prism: "Prism reference",
+  sources: "source registry",
 };
+
+// A bare (non-parenthesized) relative citation, e.g. "content/prism/capability-map.yaml"
+// or "../flows/rotation-lifecycle--05-....yaml" — the folder segment is a single
+// lowercase word (no dots), so this can't accidentally swallow surrounding prose.
+const BARE_YAML_PATH = /(?:\.\.\/|content\/)[a-z][a-z-]*\/[\w.-]+\.ya?ml/gi;
+
+// Some flow-element prose (accreditation_citation, competitor_equivalent) embeds
+// parenthetical source-file citations inline, e.g. "...(competitors/emedley.yaml,
+// e-value.yaml)..." — real content, correct as research, but a literal raw-filename
+// violation of the "no partial URLs visible as UI text" rule once rendered. Source
+// attribution belongs in the underlying source: fields, not the reader-facing prose,
+// so strip it at render time rather than rewriting the content fields themselves.
+//
+// A bare inline path ("documented in ../prism/capability-map.yaml — a shipped
+// capability") can't just be deleted like a parenthetical can — that leaves a
+// dangling "documented in — a shipped capability". Substitute it with
+// humanizeSourceRef's readable label instead, so the sentence still reads.
+export function stripFileCitations(text?: string): string | undefined {
+  if (!text) return text;
+  const withoutParens = text.replace(/\s*\([^()]*\.ya?ml[^()]*\)/gi, "");
+  const humanized = withoutParens.replace(BARE_YAML_PATH, (match) => humanizeSourceRef(match));
+  return humanized.replace(/\s{2,}/g, " ").trim();
+}
 
 // content/lenses/*.yaml's `sources:` field is a relative-file citation (e.g.
 // "../accreditation/coca.yaml") — correct at the content layer per ARCHITECTURE.md's
@@ -29,7 +43,7 @@ const FOLDER_NOUN: Record<string, string> = {
 // UI text. Real URLs (persona sources are full https:// links) pass through unchanged.
 export function humanizeSourceRef(ref: string): string {
   if (/^https?:\/\//i.test(ref)) return ref;
-  const clean = ref.replace(/^(\.\.\/)+/, "");
+  const clean = ref.replace(/^(\.\.\/)+/, "").replace(/^content\//, "");
   const parts = clean.split("/");
   const folder = parts.length > 1 ? parts[0] : undefined;
   const filename = parts[parts.length - 1].replace(/\.(ya?ml|md)$/i, "");

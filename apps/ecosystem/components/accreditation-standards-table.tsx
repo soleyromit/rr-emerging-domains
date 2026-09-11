@@ -20,6 +20,7 @@ import { FieldBlock } from "@/components/field-block";
 import { CompetitorLogo } from "@/components/competitor-logo";
 import { SourceList } from "@/components/source-list";
 import { RelatedFlowsPreview } from "@/components/related-flows-preview";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import type { StandardsCrosswalkForDomain, StandardsCrosswalkRow } from "@/lib/content";
 
 // content/personas/*.yaml filenames minus extension ("role-compliance-accreditation-liaison").
@@ -223,8 +224,8 @@ function StandardDetail({
   return (
     <Stack gap={4}>
       <Grid columns={{ minWidth: 280, max: 2 }} gap={4}>
-        <FieldBlock label="Evidence required" text={row.evidence_programs_must_produce} maxLines={5} />
-        <FieldBlock label="Required software behavior" text={row.required_software_behavior} maxLines={5} />
+        <FieldBlock label="Evidence required" text={stripFileCitations(row.evidence_programs_must_produce)} maxLines={5} />
+        <FieldBlock label="Required software behavior" text={stripFileCitations(row.required_software_behavior)} maxLines={5} />
       </Grid>
 
       <Grid columns={{ minWidth: 280, max: 2 }} gap={4}>
@@ -235,7 +236,7 @@ function StandardDetail({
             </Text>
             <ExxatComplianceBadge compliance={row.exxat_compliance} />
           </Stack>
-          <FieldBlock text={row.exxat_compliance_rationale} maxLines={5} />
+          <FieldBlock text={stripFileCitations(row.exxat_compliance_rationale)} maxLines={5} />
         </Stack>
 
         <Stack gap={1.5}>
@@ -245,11 +246,11 @@ function StandardDetail({
             </Text>
             <FitBadge fit={row.prism_fit} />
           </Stack>
-          <FieldBlock text={row.prism_fit_rationale} maxLines={5} />
+          <FieldBlock text={stripFileCitations(row.prism_fit_rationale)} maxLines={5} />
         </Stack>
       </Grid>
 
-      {row.gap_notes ? <FieldBlock label="Gap notes" text={row.gap_notes} maxLines={5} /> : null}
+      {row.gap_notes ? <FieldBlock label="Gap notes" text={stripFileCitations(row.gap_notes)} maxLines={5} /> : null}
 
       {row.personaRelevance.length ? (
         <Stack gap={1}>

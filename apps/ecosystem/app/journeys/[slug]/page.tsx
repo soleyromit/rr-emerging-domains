@@ -16,6 +16,7 @@ import { SeverityDistributionChart } from "@/components/charts/severity-distribu
 import { JourneyStepper } from "@/components/charts/journey-stepper";
 import { DisciplineChip } from "@/components/discipline-chip";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import { listJourneys, getJourney, getFlowsByStageForJourney } from "@/lib/content";
 
 export function generateStaticParams() {
@@ -83,7 +84,7 @@ export default async function JourneyDetailPage({ params }: { params: Promise<{ 
               <Text type="label" color="secondary">
                 Persona
               </Text>
-              <Text type="body">{journey.persona}</Text>
+              <Text type="body">{stripFileCitations(journey.persona)}</Text>
             </Stack>
           ) : null}
           <Stack direction="horizontal" gap={1.5} wrap="wrap">
