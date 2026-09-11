@@ -1,6 +1,7 @@
 # Level 2 reframing — per-(domain, competitor) differentiation claims: why they win or
 # Exxat does, on which axis, and what the counter-move is. Cites content/domains/*.yaml
-# (by `domain:`), content/competitors/*.yaml (by slug and feature_teardown pillar),
+# (by domain label, see `domain` below), content/competitors/*.yaml (by slug and
+# feature_teardown pillar),
 # content/prism/capability-map.yaml (by pillar name) and the Level 0.5 source namespace
 # (by source_id) downward; never asserts a competitive fact not grounded in one of those.
 #
@@ -29,8 +30,18 @@
 # on most, since that artifact is itself a competitive-differentiation document.
 #
 # Schema, per entry:
-#   domain                 — exact match to a content/domains/*.yaml `domain:` value
-#                            (DO | Pharmacy | Dentistry | Medicine)
+#   domain                 — the canonical APP-LEVEL domain label, NOT necessarily the
+#                            domain registry's own `domain:` field. Authoritative list =
+#                            the key set of DOMAIN_TO_ACCREDITATION_SLUG, mirrored by hand
+#                            in apps/ecosystem/lib/content.ts and
+#                            scripts/check_content_density.py: DO | Pharmacy | Dentistry |
+#                            Medicine | Nursing | Teacher Education | Social Work |
+#                            Physical Therapy | Occupational Therapy | Physician Assistant
+#                            | Speech-Language Pathology | CRNA | Counseling.
+#                            MEDICINE IS THE TRAP: content/domains/medicine.yaml says
+#                            `domain: "MD"`, but the label that resolves — and the one all
+#                            3 Medicine rows in standards-competitor-ratings.yaml use — is
+#                            "Medicine". "MD" is rejected as an unrecognized domain
 #   competitor_slug        — exact match to a content/competitors/<slug>.yaml file
 #   axis                   — product | data | integration | distribution | price |
 #                            incumbency | compliance | services
@@ -55,13 +66,25 @@
 #   counter_move_status    — proposed | in-flight | shipped | rejected | no-answer-yet.
 #                            `no-answer-yet` is the honest value when the gap is understood
 #                            and the answer isn't — never leave it blank to avoid saying so
-#   evidence_strength      — directional | verified
+#   evidence_strength      — directional | verified. REQUIRED on every entry; there is no
+#                            "omit it" state. NOTE THIS DIVERGES FROM THE PRECEDENT FILE,
+#                            deliberately: in lenses/standards-competitor-ratings.yaml
+#                            evidence_strength is an OPTIONAL single-valued flag — the only
+#                            accepted value is "directional", there is no "verified"
+#                            literal at all, and an omitted field is what implicitly means
+#                            verified. Here the verified state is written down instead of
+#                            inferred from an absence, so a reader never has to decide
+#                            whether a missing field means "verified" or "nobody filled
+#                            this in." A checker written for the precedent file will
+#                            reject "verified"; Task 1.7 needs a separate rule for these
+#                            three files, not a copy of the existing one
 #   evidence_note          — <=150 soft / 300 hard chars. REQUIRED whenever
 #                            evidence_strength is "directional"; FORBIDDEN (absent or null)
-#                            when "verified". Same pairing rule as
-#                            lenses/standards-competitor-ratings.yaml, and for the same
-#                            reason: an unflagged note reads as verified, and a directional
-#                            claim with no note hides what it actually rests on. States
+#                            when "verified". The BEHAVIOR matches
+#                            lenses/standards-competitor-ratings.yaml even though the enum
+#                            above does not, and for the same reason: an unflagged note
+#                            reads as verified, and a directional claim with no note hides
+#                            what it actually rests on. States
 #                            WHAT THE CLAIM RESTS ON ("first-pass read of the vendor's
 #                            public pricing page only"), not a second rationale
 #   persona_relevance      — array of content/personas/*.yaml filenames without extension
@@ -70,7 +93,9 @@
 #   sources                — array of {source_id, locator?}, at least one entry, REQUIRED
 #
 # The evidence_strength/evidence_note pairing is enforced later (Task 1.7 adds it to
-# scripts/check_content_density.py, alongside the equivalent check that already gates
-# lenses/standards-competitor-ratings.yaml); until then it is this comment.
+# scripts/check_content_density.py). The existing check that gates
+# lenses/standards-competitor-ratings.yaml is NOT reusable as-is here: it accepts only
+# "directional" and treats any other value — including "verified" — as unrecognized. Until
+# a rule for this file's two-value enum lands, the pairing is this comment.
 last_updated: "2026-09-11"
 differentiators: []

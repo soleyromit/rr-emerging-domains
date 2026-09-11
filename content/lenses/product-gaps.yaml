@@ -1,4 +1,4 @@
-# Level 2 reframing — cites content/domains/*.yaml (by `domain:`),
+# Level 2 reframing — cites content/domains/*.yaml (by domain label, see `domain` below),
 # content/accreditation/*.yaml (by element_id), content/prism/capability-map.yaml (by
 # pillar name), content/competitors/*.yaml (by slug), and the Level 0.5 source namespace
 # by source_id. Never asserts a product fact that isn't grounded in one of those.
@@ -27,8 +27,22 @@
 # Schema, per entry:
 #   id                — string, unique across this file, kebab-case,
 #                       "{domain-slug}-{short-description}"
-#   domain            — exact match to a content/domains/*.yaml `domain:` value
-#                       (DO | Pharmacy | Dentistry | Medicine)
+#   domain            — the canonical APP-LEVEL domain label, which is NOT always the
+#                       same string as the domain registry's own `domain:` field. The
+#                       authoritative list is the key set of DOMAIN_TO_ACCREDITATION_SLUG,
+#                       kept in sync by hand in two places: apps/ecosystem/lib/content.ts
+#                       and scripts/check_content_density.py. Today: DO | Pharmacy |
+#                       Dentistry | Medicine | Nursing | Teacher Education | Social Work |
+#                       Physical Therapy | Occupational Therapy | Physician Assistant |
+#                       Speech-Language Pathology | CRNA | Counseling.
+#                       MEDICINE IS THE TRAP: content/domains/medicine.yaml's own field is
+#                       `domain: "MD"`, but the label every lens uses — and the only one
+#                       that resolves — is "Medicine". The 3 Medicine rows in
+#                       lenses/standards-competitor-ratings.yaml all say "Medicine", and a
+#                       row saying "MD" fails check_standards_ratings_integrity() with
+#                       "domain 'MD' is not a recognized accreditation domain". DO,
+#                       Pharmacy and Dentistry happen to be spelled identically in both
+#                       places, which is why the difference is easy to miss
 #   gap               — the scannable one-line headline, NOT the argument. <=120 soft /
 #                       220 hard chars. The argument goes in `detail`
 #   kind              — missing-module | shallow-integration | wrong-depth | wrong-entity

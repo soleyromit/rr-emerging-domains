@@ -1,13 +1,18 @@
 # Level 2 reframing — the feature-level (not just standard-level) sibling of
-# lenses/standards-competitor-ratings.yaml. Cites content/domains/*.yaml (by `domain:`),
+# lenses/standards-competitor-ratings.yaml. Cites content/domains/*.yaml (by domain label,
+# see `domain` below),
 # content/prism/capability-map.yaml (by pillar name), content/competitors/*.yaml (by slug
 # and feature_teardown pillar), content/accreditation/*.yaml (by element_id) and the
 # Level 0.5 source namespace (by source_id) downward.
 #
-# SAME EVIDENTIARY CONTRACT, EXACTLY: sparse — an absent cell is UNRESEARCHED, never "the
-# vendor doesn't do this"; every cell carries at least one source; any first-pass rating
-# read off public vendor material is flagged evidence_strength: "directional" with a
-# REQUIRED evidence_note. Deliberately empty at creation (2026-09-11): real cells arrive
+# SAME EVIDENTIARY CONTRACT: sparse — an absent cell is UNRESEARCHED, never "the vendor
+# doesn't do this"; every cell carries at least one source; any first-pass rating read off
+# public vendor material is flagged evidence_strength: "directional" with a REQUIRED
+# evidence_note. ONE DELIBERATE DIFFERENCE from that precedent, spelled out under
+# evidence_strength below: there the flag is optional and single-valued ("directional" or
+# omitted, with the omission implying verified); here it is a required two-value enum, so
+# the verified state is written down rather than inferred from a missing field.
+# Deliberately empty at creation (2026-09-11): real cells arrive
 # with the per-domain research passes, and an invented example cell would be
 # indistinguishable from a researched one the moment it is committed.
 #
@@ -29,9 +34,19 @@
 # front-matter — as scripts/check_content_density.py's _load_source_ids() does it.
 #
 # cells[] — one (domain, capability, competitor) verdict:
-#   domain                 — exact match to a content/domains/*.yaml `domain:` value
-#                            (DO | Pharmacy | Dentistry | Medicine)
-#   pillar                 — one of content/prism/capability-map.yaml's 6 core_ring pillar
+#   domain                 — the canonical APP-LEVEL domain label, NOT necessarily the
+#                            domain registry's own `domain:` field. Authoritative list =
+#                            the key set of DOMAIN_TO_ACCREDITATION_SLUG, mirrored by hand
+#                            in apps/ecosystem/lib/content.ts and
+#                            scripts/check_content_density.py: DO | Pharmacy | Dentistry |
+#                            Medicine | Nursing | Teacher Education | Social Work |
+#                            Physical Therapy | Occupational Therapy | Physician Assistant
+#                            | Speech-Language Pathology | CRNA | Counseling.
+#                            MEDICINE IS THE TRAP: content/domains/medicine.yaml says
+#                            `domain: "MD"`, but the label that resolves — and the one all
+#                            3 Medicine rows in standards-competitor-ratings.yaml use — is
+#                            "Medicine". "MD" is rejected as an unrecognized domain
+#   pillar                — one of content/prism/capability-map.yaml's 6 core_ring pillar
 #                            names verbatim: "Clinical & Experiential Education",
 #                            "Compliance Management", "Curriculum Mapping", "Surveys &
 #                            Course Evaluations", "Exam Management", "Accreditation
@@ -47,12 +62,19 @@
 #   rationale              — <=300 soft / 600 hard chars
 #   competitor_feature_ref — resolves into that competitor's feature_teardown pillar names
 #                            in content/competitors/<slug>.yaml, or null
-#   evidence_strength      — directional | verified
+#   evidence_strength      — directional | verified. REQUIRED on every cell; there is no
+#                            "omit it" state. This is a real two-value enum and therefore
+#                            NOT identical to lenses/standards-competitor-ratings.yaml,
+#                            where the field is optional, "directional" is the only
+#                            accepted value, and an omitted field is what implicitly means
+#                            verified. The behavior below carries over; the enum does not,
+#                            so Task 1.7 needs a rule of its own rather than a copy of the
+#                            existing check (which rejects "verified" outright)
 #   evidence_note          — <=150 soft / 300 hard chars. REQUIRED whenever
 #                            evidence_strength is "directional"; FORBIDDEN (absent or null)
-#                            when "verified" — same pairing rule as
-#                            lenses/standards-competitor-ratings.yaml. States what the
-#                            rating rests on, not a second rationale
+#                            when "verified" — the same BEHAVIORAL rule
+#                            lenses/standards-competitor-ratings.yaml enforces. States what
+#                            the rating rests on, not a second rationale
 #   element_ids            — array of accreditation element_id strings, or empty
 #   persona_relevance      — array of content/personas/*.yaml filenames without extension
 #                            (role-* / discipline-* / lens-* slugs), or empty. Tag-only
@@ -84,9 +106,12 @@
 #   prism_feature_ref      — one of the 6 pillar names verbatim (listed above), or null
 #   rating                 — fully-meeting | partially-meeting | not-meeting
 #   rationale              — <=300 soft / 600 hard chars
-#   evidence_strength      — directional | verified
-#   evidence_note          — <=150 soft / 300 hard chars. Required iff directional, same
-#                            pairing rule as cells[] above
+#   evidence_strength      — directional | verified. Required on every cell that carries a
+#                            rating, exactly as in cells[] above — omissible only on a row
+#                            marked exxat_coverage: "unresearched", which has no rating to
+#                            classify
+#   evidence_note          — <=150 soft / 300 hard chars. Required iff directional,
+#                            forbidden when verified — same rule as cells[] above
 #   sources                — array of {source_id, locator?}, at least one entry, REQUIRED
 #
 # INTEGRITY RULE, enforced later (Task 1.7 adds it to scripts/check_content_density.py;
