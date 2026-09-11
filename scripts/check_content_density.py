@@ -112,6 +112,16 @@ ACCREDITATION_CEILINGS = {
     # exxat_compliance_rationale is a one-sentence derivation from prism_fit,
     # not independent research — same order of magnitude as a competitor claim.
     "standards[].exxat_compliance_rationale": (350, 700),
+    # new 2026-09-11. This field was entirely unceilinged, and a Task 2.3 review
+    # caught the consequence: acpe.yaml's State Boards entry had ballooned to 1,041
+    # chars (2.2x the next-longest entry in its own file) while the checker stayed
+    # green, because no row reached it. Same treatment as the standards[] rows above:
+    # soft is p75 of the 52-entry corpus across all accreditation files; hard is set
+    # just above the observed max (1,424, coa.yaml's NBCRNA entry) rather than a true
+    # p95, since these existing entries have never had an individual spot-check pass.
+    # So this guards drift without retroactively failing content nobody has reviewed.
+    # Tighten to a real p95 hard ceiling once that pass happens.
+    "licensure_or_gme_layer[].relevance_to_product": (921, 1500),
 }
 # same order of magnitude as competitors/*.yaml's strengths[].claim — the closest
 # analog (a single-sourced competitive claim).
