@@ -80,6 +80,17 @@ internal-doc hygiene) but every in-repo claim that rests on them names the exact
 or article path in a `source:` / `confirmed_by:` field, so the chain of custody
 survives the repo boundary.
 
+**Level 0.5 — `content/sources/`.** Three in-repo index files stand between the raw
+sources and Level 1: they are citable by any file and cite nothing themselves.
+`registry.yaml` is the general one — sparse, curated, one entry per individually
+found-and-checked source, referenced by `source_id`. `help-center.yaml` and
+`playbooks.yaml` are dedicated *corpus* indexes for the two Level 0 bodies that are too
+large and too internally-addressed for a flat registry entry: the 322-file help-center
+mirror and the three PA/OT/PT discipline-playbook captures. Use a corpus index when a
+citation needs a per-citation `locator:` (a page, section, or anchor *within* one
+document) alongside the `source_id`, which a flat registry entry can't express cleanly;
+their ids are prefixed `help-center-` and `playbook-` respectively.
+
 `interviews/` is the in-repo slot for real CS/AM/leadership interviews as Romit
 conducts them. First populated 2026-08-26 with two Granola meeting transcripts
 (lightly cleaned of tech-support tangents, substance kept verbatim) — interview files

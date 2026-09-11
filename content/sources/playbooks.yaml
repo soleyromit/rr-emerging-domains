@@ -1,0 +1,40 @@
+# Level 0.5 — a corpus index of internal discipline playbooks (PDF captures), see content/ARCHITECTURE.md.
+# Citations from content/*.yaml use {source_id, locator} where source_id is one of these ids and
+# locator is the page/section within the capture.
+#
+# Filenames below are the ones content/prism/capability-map.yaml's `sources:` list names verbatim
+# ("FireShot Capture 002/003/004"). That list gives no capture date and no file extension; the
+# captures live loose in the vault's 99-Assets root per content/ARCHITECTURE.md's Level 0 table.
+playbooks:
+  - id: "playbook-pa-css-cx-2026"
+    discipline: "Physician Assistant"
+    title: "PA discipline playbook (CSS & CX knowledge base capture)"
+    path: "PRISM-Expansion-Vault/99-Assets/FireShot Capture 003"
+    origin: "first-party"
+    access: "internal"
+    captured: "2026-08-20"
+
+  - id: "playbook-ot-css-cx-2026"
+    discipline: "Occupational Therapy"
+    title: "OT discipline playbook (CSS & CX knowledge base capture)"
+    path: "PRISM-Expansion-Vault/99-Assets/FireShot Capture 004"
+    origin: "first-party"
+    access: "internal"
+    captured: "2026-08-20"
+
+  - id: "playbook-pt-css-cx-2026"
+    discipline: "Physical Therapy"
+    title: "PT discipline playbook (CSS & CX knowledge base capture)"
+    path: "PRISM-Expansion-Vault/99-Assets/FireShot Capture 002"
+    origin: "first-party"
+    access: "internal"
+    captured: "2026-08-20"
+
+# `captured:` is a placeholder on all three: capability-map.yaml's source list states no capture
+# date. 2026-08-20 is the task brief's stated fallback, not an observed date — replace it if the
+# real capture dates surface.
+
+coverage_note: >
+  Playbooks exist today for PA, OT, and PT only — no Pharmacy, DO, Dentistry, or Medicine playbook
+  exists in this repo. This is a real, named gap, not an oversight: treat any future dissection
+  content for those four domains as unable to cite a playbook until one is captured.
