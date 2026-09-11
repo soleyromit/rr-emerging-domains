@@ -1,0 +1,79 @@
+# Level 2 reframing — cites content/domains/*.yaml (by `domain:`),
+# content/accreditation/*.yaml (by element_id), content/prism/capability-map.yaml (by
+# pillar name), content/competitors/*.yaml (by slug), and the Level 0.5 source namespace
+# by source_id. Never asserts a product fact that isn't grounded in one of those.
+#
+# WHAT THIS FILE IS FOR: the "what should we build for this domain" question, answered as
+# a countable list of specific gaps rather than a paragraph of strategy. It is the file
+# content/dissection/<slug>.yaml's `features-to-build` question points at.
+#
+# SPARSE BY DESIGN, the same contract as lenses/standards-competitor-ratings.yaml: an
+# unlisted gap is UNRESEARCHED, never "we checked and there is no gap here." Do not
+# pre-populate rows to make a domain look covered. This file is deliberately empty at
+# creation (2026-09-11) — real entries arrive with the per-domain research passes, and an
+# invented example entry would be indistinguishable from a researched one the moment it
+# is committed.
+#
+# Citable source_ids resolve against the UNION of the Level 0.5 source homes, exactly as
+# scripts/check_content_density.py's _load_source_ids() does it:
+#   content/sources/registry.yaml           sources[].id
+#   content/sources/help-center.yaml        articles[].id
+#   content/sources/playbooks.yaml          playbooks[].id
+#   content/sources/support-tickets/*.yaml  snapshot.id AND tickets[].source_id
+#   content/interviews/*.md                 `id:` in the YAML front-matter block
+# content/sources/vendor-comparison-chart.yaml is NOT one of them: it is quarantined
+# (`citable_as_fact: false`) and no id from it may ever appear in `sources:` here.
+#
+# Schema, per entry:
+#   id                — string, unique across this file, kebab-case,
+#                       "{domain-slug}-{short-description}"
+#   domain            — exact match to a content/domains/*.yaml `domain:` value
+#                       (DO | Pharmacy | Dentistry | Medicine)
+#   gap               — the scannable one-line headline, NOT the argument. <=120 soft /
+#                       220 hard chars. The argument goes in `detail`
+#   kind              — missing-module | shallow-integration | wrong-depth | wrong-entity
+#                       | data-not-ingested | ux | non-product
+#   prism_feature_ref — one of content/prism/capability-map.yaml's 6 core_ring pillar
+#                       names verbatim: "Clinical & Experiential Education",
+#                       "Compliance Management", "Curriculum Mapping", "Surveys & Course
+#                       Evaluations", "Exam Management", "Accreditation Management".
+#                       null — not an empty string — when nothing in the current pillar
+#                       set owns this gap at all. Never guess a pillar to fill the field
+#   prism_status      — shipped | roadmap | absent. MUST agree with what
+#                       capability-map.yaml actually states for prism_feature_ref's
+#                       pillar/feature (today the file marks four pillars `shipped` and
+#                       two — Exam Management, Accreditation Management — `roadmap`).
+#                       `absent` is the value that pairs with prism_feature_ref: null.
+#                       A later integrity check cross-checks this pair; get it right when
+#                       the row is written rather than leaving it for the check to catch
+#   build_shape       — transfer | configure | build | partner | buy. "transfer" means the
+#                       capability already exists in another discipline's configuration
+#                       and moves across; "build" means net-new engineering
+#   blocks            — array, at least one of: deal | standard | renewal | expansion.
+#                       What is actually blocked by the gap, not who complained about it
+#   severity          — blocking | material | nice-to-have
+#   demand_evidence   — rfp | support-ticket | lost-deal | customer-request |
+#                       expert-assertion | inferred. Use the WEAKEST, most honest value
+#                       the evidence supports; do not round up to a stronger one
+#   element_ids       — array of accreditation element_id strings this gap relates to, or
+#                       empty. Full element_id strings from that domain's accreditation
+#                       file, not abbreviations
+#   competitor_has_it — array of {competitor_slug, source_id}, or empty. competitor_slug
+#                       must match a real content/competitors/<slug>.yaml file. Empty
+#                       means unresearched, not "no competitor has it"
+#   audience          — array of content/personas/*.yaml filenames without extension
+#                       (role-* / discipline-* / lens-* slugs), or empty. Tag-only, not
+#                       an evidentiary citation
+#   target            — "YYYY-MM" or "YYYY-Qn", or null. Only ever set when a cited
+#                       roadmap document actually states a date — never a guess or an
+#                       aspiration
+#   detail            — one sourced paragraph behind the headline. <=300 soft / 600 hard
+#                       chars. An entry that can't fit decomposes into two entries
+#   sources           — array of {source_id, locator?}, at least one entry, REQUIRED
+#
+# INTEGRITY RULE, enforced later (Task 1.7 adds it to scripts/check_content_density.py;
+# until then it is this comment): severity: "blocking" combined with demand_evidence:
+# "inferred" is a hard FAIL — a blocking claim needs stronger evidence than an inference.
+# If a gap really is blocking, go find the RFP, ticket or lost deal that says so.
+last_updated: "2026-09-11"
+gaps: []

@@ -1,0 +1,100 @@
+# Level 2 reframing — the feature-level (not just standard-level) sibling of
+# lenses/standards-competitor-ratings.yaml. Cites content/domains/*.yaml (by `domain:`),
+# content/prism/capability-map.yaml (by pillar name), content/competitors/*.yaml (by slug
+# and feature_teardown pillar), content/accreditation/*.yaml (by element_id) and the
+# Level 0.5 source namespace (by source_id) downward.
+#
+# SAME EVIDENTIARY CONTRACT, EXACTLY: sparse — an absent cell is UNRESEARCHED, never "the
+# vendor doesn't do this"; every cell carries at least one source; any first-pass rating
+# read off public vendor material is flagged evidence_strength: "directional" with a
+# REQUIRED evidence_note. Deliberately empty at creation (2026-09-11): real cells arrive
+# with the per-domain research passes, and an invented example cell would be
+# indistinguishable from a researched one the moment it is committed.
+#
+# ROWS ARE KEYED ON capability-map.yaml's PILLAR VOCABULARY, not on any external
+# spreadsheet's row taxonomy. See content/sources/vendor-comparison-chart.yaml for why:
+# that artifact is quarantined, non-citable sales collateral (`citable_as_fact: false`) —
+# its 81 feature rows are a positioning document's taxonomy, and no id from it may appear
+# in `sources:` anywhere in this file.
+#
+# EXXAT'S OWN COLUMN IS A SEPARATE LIST (exxat_cells), not a competitor_slug value. Two
+# reasons: there is no content/competitors/exxat.yaml, and Exxat's evidence class is
+# different (help-center articles, playbooks, capability-map — not vendor marketing).
+# This separation is also what makes "Exxat: X on every row" structurally impossible here,
+# unlike the quarantined sales chart: Exxat's cells require the same sourced-evidence
+# treatment as every competitor's cells, in a list a reader can count.
+#
+# Citable source_ids resolve against the UNION of the Level 0.5 source homes — registry
+# .yaml, help-center.yaml, playbooks.yaml, support-tickets/*.yaml, and interviews/*.md
+# front-matter — as scripts/check_content_density.py's _load_source_ids() does it.
+#
+# cells[] — one (domain, capability, competitor) verdict:
+#   domain                 — exact match to a content/domains/*.yaml `domain:` value
+#                            (DO | Pharmacy | Dentistry | Medicine)
+#   pillar                 — one of content/prism/capability-map.yaml's 6 core_ring pillar
+#                            names verbatim: "Clinical & Experiential Education",
+#                            "Compliance Management", "Curriculum Mapping", "Surveys &
+#                            Course Evaluations", "Exam Management", "Accreditation
+#                            Management"
+#   capability             — the human-readable row label. <=120 soft / 220 hard chars.
+#                            A label, not the argument — the argument goes in `rationale`
+#   capability_id          — unique, stable, kebab-case, "{domain-slug}-{short-capability
+#                            -slug}". Stable means: once written, it is not renamed, since
+#                            exxat_cells[] joins on it
+#   competitor_slug        — exact match to a content/competitors/<slug>.yaml file
+#   rating                 — fully-meeting | partially-meeting | not-meeting. Same three
+#                            values lenses/standards-competitor-ratings.yaml uses
+#   rationale              — <=300 soft / 600 hard chars
+#   competitor_feature_ref — resolves into that competitor's feature_teardown pillar names
+#                            in content/competitors/<slug>.yaml, or null
+#   evidence_strength      — directional | verified
+#   evidence_note          — <=150 soft / 300 hard chars. REQUIRED whenever
+#                            evidence_strength is "directional"; FORBIDDEN (absent or null)
+#                            when "verified" — same pairing rule as
+#                            lenses/standards-competitor-ratings.yaml. States what the
+#                            rating rests on, not a second rationale
+#   element_ids            — array of accreditation element_id strings, or empty
+#   persona_relevance      — array of content/personas/*.yaml filenames without extension
+#                            (role-* / discipline-* / lens-* slugs), or empty. Tag-only
+#   sources                — array of {source_id, locator?}, at least one entry, REQUIRED
+#
+# exxat_cells[] — Exxat's own side of the same rows, held to the same standard:
+#   domain                 — as above
+#   capability_id          — must match a capability_id that appears somewhere in cells[]
+#                            (or carry exxat_coverage: "unresearched", below, when Exxat's
+#                            side genuinely hasn't been checked for a capability_id that so
+#                            far only appears in cells[])
+#   exxat_coverage         — optional, the single value "unresearched". Present ONLY on a
+#                            row whose Exxat side has not been checked yet; on such a row
+#                            rating/rationale/evidence_strength/sources may be omitted,
+#                            because there is no finding to source. Its whole job is to
+#                            make "we haven't looked at our own product here" a visible,
+#                            countable state instead of a missing row
+#   prism_status           — shipped | roadmap | partial | absent. MUST agree with what
+#                            capability-map.yaml states for prism_feature_ref's pillar or
+#                            feature (today the file marks four pillars `shipped` and two —
+#                            Exam Management, Accreditation Management — `roadmap`).
+#                            `partial` is for a pillar that ships but whose specific
+#                            capability on this row does not; `absent` pairs with
+#                            prism_feature_ref: null. NOTE the enum differs from
+#                            lenses/product-gaps.yaml's prism_status (shipped | roadmap |
+#                            absent) by this extra `partial` value — deliberate, because a
+#                            matrix row is narrower than a gap and can land between shipped
+#                            and absent. Don't unify them without deciding which is right
+#   prism_feature_ref      — one of the 6 pillar names verbatim (listed above), or null
+#   rating                 — fully-meeting | partially-meeting | not-meeting
+#   rationale              — <=300 soft / 600 hard chars
+#   evidence_strength      — directional | verified
+#   evidence_note          — <=150 soft / 300 hard chars. Required iff directional, same
+#                            pairing rule as cells[] above
+#   sources                — array of {source_id, locator?}, at least one entry, REQUIRED
+#
+# INTEGRITY RULE, enforced later (Task 1.7 adds it to scripts/check_content_density.py;
+# until then it is this comment): every capability_id appearing in cells[] must also appear
+# in exxat_cells[] — either as a real sourced verdict or carrying exxat_coverage:
+# "unresearched". That join is the mechanical guarantee that the sales chart's failure mode
+# ("Exxat: present on everything", 81 of 81 rows, zero evidence) cannot recur here, because
+# Exxat's own coverage requires the same sourced treatment as every competitor's.
+last_updated: "2026-09-11"
+cells: []
+exxat_cells: []

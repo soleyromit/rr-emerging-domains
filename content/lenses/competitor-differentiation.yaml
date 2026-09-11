@@ -1,0 +1,76 @@
+# Level 2 reframing — per-(domain, competitor) differentiation claims: why they win or
+# Exxat does, on which axis, and what the counter-move is. Cites content/domains/*.yaml
+# (by `domain:`), content/competitors/*.yaml (by slug and feature_teardown pillar),
+# content/prism/capability-map.yaml (by pillar name) and the Level 0.5 source namespace
+# (by source_id) downward; never asserts a competitive fact not grounded in one of those.
+#
+# WHY THIS FILE AND NOT AN EXISTING ONE:
+#   content/competitors/<slug>.yaml   — per-vendor feature teardown, one vendor at a time,
+#                                       not scoped to a domain
+#   content/feature-map/<domain>.yaml — pillar x domain verdict for Exxat, no vendor axis
+#   THIS FILE                         — the head-to-head reasoning itself, per domain, and
+#                                       the only home in this repo for NON-product axes
+#                                       (distribution, incumbency, price, services) that
+#                                       decide deals and fit nowhere in a feature teardown
+# It is the file content/dissection/<slug>.yaml's `competitor-differentiation` question
+# points at.
+#
+# SPARSE BY DESIGN, same contract as lenses/standards-competitor-ratings.yaml: an absent
+# (domain, competitor, axis) entry is UNRESEARCHED, never "there is no difference here."
+# Deliberately empty at creation (2026-09-11); real entries arrive with the per-domain
+# research passes. An invented example row would be indistinguishable from a researched
+# one the moment it is committed.
+#
+# Citable source_ids resolve against the UNION of the Level 0.5 source homes — registry
+# .yaml, help-center.yaml, playbooks.yaml, support-tickets/*.yaml, and interviews/*.md
+# front-matter — as scripts/check_content_density.py's _load_source_ids() does it.
+# content/sources/vendor-comparison-chart.yaml is quarantined (`citable_as_fact: false`)
+# and no id from it may appear in `sources:` here — which matters more on this file than
+# on most, since that artifact is itself a competitive-differentiation document.
+#
+# Schema, per entry:
+#   domain                 — exact match to a content/domains/*.yaml `domain:` value
+#                            (DO | Pharmacy | Dentistry | Medicine)
+#   competitor_slug        — exact match to a content/competitors/<slug>.yaml file
+#   axis                   — product | data | integration | distribution | price |
+#                            incumbency | compliance | services
+#   direction              — competitor-advantage | exxat-advantage | parity | unknown.
+#                            `unknown` is a first-class value: a researched entry that
+#                            could not settle the direction is worth more than no entry
+#   claim                  — the one-line wedge/headline. <=160 soft / 260 hard chars
+#   detail                 — one sourced paragraph behind the headline. <=300 soft /
+#                            600 hard chars. Decompose into two entries rather than run over
+#   prism_feature_ref      — one of content/prism/capability-map.yaml's 6 core_ring pillar
+#                            names verbatim: "Clinical & Experiential Education",
+#                            "Compliance Management", "Curriculum Mapping", "Surveys &
+#                            Course Evaluations", "Exam Management", "Accreditation
+#                            Management". null — not an empty string — when no pillar owns
+#                            this axis (common and correct on distribution / incumbency /
+#                            price entries). Never guess a pillar to fill the field
+#   competitor_feature_ref — must resolve into that SAME competitor's feature_teardown
+#                            pillar names in content/competitors/<slug>.yaml, if that
+#                            competitor has a teardown. null otherwise
+#   counter_move           — the stated move, not its justification. <=200 soft / 350 hard
+#                            chars. The justification belongs in `detail`
+#   counter_move_status    — proposed | in-flight | shipped | rejected | no-answer-yet.
+#                            `no-answer-yet` is the honest value when the gap is understood
+#                            and the answer isn't — never leave it blank to avoid saying so
+#   evidence_strength      — directional | verified
+#   evidence_note          — <=150 soft / 300 hard chars. REQUIRED whenever
+#                            evidence_strength is "directional"; FORBIDDEN (absent or null)
+#                            when "verified". Same pairing rule as
+#                            lenses/standards-competitor-ratings.yaml, and for the same
+#                            reason: an unflagged note reads as verified, and a directional
+#                            claim with no note hides what it actually rests on. States
+#                            WHAT THE CLAIM RESTS ON ("first-pass read of the vendor's
+#                            public pricing page only"), not a second rationale
+#   persona_relevance      — array of content/personas/*.yaml filenames without extension
+#                            (role-* / discipline-* / lens-* slugs), or empty. Tag-only,
+#                            not an evidentiary citation
+#   sources                — array of {source_id, locator?}, at least one entry, REQUIRED
+#
+# The evidence_strength/evidence_note pairing is enforced later (Task 1.7 adds it to
+# scripts/check_content_density.py, alongside the equivalent check that already gates
+# lenses/standards-competitor-ratings.yaml); until then it is this comment.
+last_updated: "2026-09-11"
+differentiators: []
