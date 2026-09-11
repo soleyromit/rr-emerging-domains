@@ -30,10 +30,39 @@ const BARE_YAML_PATH = /(?:\.\.\/|content\/)[a-z][a-z-]*\/[\w.-]+\.ya?ml/gi;
 // capability") can't just be deleted like a parenthetical can — that leaves a
 // dangling "documented in — a shipped capability". Substitute it with
 // humanizeSourceRef's readable label instead, so the sentence still reads.
+// A bare source-code path, e.g. "apps/ecosystem/lib/zendesk/client.ts" or
+// "scripts/snapshot_zendesk.py". Provenance prose in content/sources/** legitimately
+// names the code that produced a value ("these 4 ids are hardcoded in <path>") — that
+// is correct at the content layer, where the reader is an engineer with the repo open,
+// and wrong at the render layer, where it's a raw partial path on screen. Same fix as
+// the YAML case: substitute a readable label at render time, don't rewrite the content.
+// Anchored to the two real top-level code folders so it can't swallow prose.
+const BARE_CODE_PATH = /\b(?:apps|scripts)\/[\w./-]*\w\.(?:tsx?|py|mjs|sh)\b/g;
+
+// Readable names for the code files that actually appear in provenance prose today.
+// Anything unmatched falls back to a title-cased basename, which is vague but never a
+// raw path.
+const CODE_PATH_LABEL: Record<string, string> = {
+  "apps/ecosystem/lib/zendesk/client.ts": "the app's Zendesk client",
+  "apps/ecosystem/app/zendesk/pharmacy-feature-gaps/page.tsx": "the retired live Zendesk page",
+  "apps/ecosystem/lib/content.ts": "the app's content loader",
+  "scripts/snapshot_zendesk.py": "the Zendesk snapshot script",
+  "scripts/check_content_density.py": "the content-density checker",
+};
+
+function humanizeCodeRef(ref: string): string {
+  const known = CODE_PATH_LABEL[ref];
+  if (known) return known;
+  const basename = ref.split("/").pop()?.replace(/\.(tsx?|py|mjs|sh)$/i, "") ?? ref;
+  return titleCase(basename.replace(/_/g, "-"));
+}
+
 export function stripFileCitations(text?: string): string | undefined {
   if (!text) return text;
   const withoutParens = text.replace(/\s*\([^()]*\.ya?ml[^()]*\)/gi, "");
-  const humanized = withoutParens.replace(BARE_YAML_PATH, (match) => humanizeSourceRef(match));
+  const humanized = withoutParens
+    .replace(BARE_YAML_PATH, (match) => humanizeSourceRef(match))
+    .replace(BARE_CODE_PATH, (match) => humanizeCodeRef(match));
   return humanized.replace(/\s{2,}/g, " ").trim();
 }
 

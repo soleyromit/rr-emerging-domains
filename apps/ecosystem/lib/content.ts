@@ -1264,6 +1264,74 @@ export function hasSalesBrief(routeSlug: string): boolean {
   return readMarkdownFile(`synthesis/${routeSlug}/SALES.md`) !== null;
 }
 
+// ---------- support-ticket snapshots (content/sources/support-tickets/) ----------
+
+// Shape of one committed snapshot. Mirrors what scripts/snapshot_zendesk.py writes,
+// which in turn mirrors what apps/ecosystem/lib/zendesk/client.ts's FeatureGapTicket
+// actually returns. Every per-ticket field except id/url/source_id is nullable on
+// purpose: a snapshot taken without live credentials records honest nulls rather than
+// invented values, and the page must render that state rather than hide it.
+export interface SupportTicketEntry {
+  source_id: string;
+  ticket_id: number;
+  url: string;
+  subject?: string | null;
+  status?: string | null;
+  organization?: string | null;
+  organization_id?: number | null;
+  category?: string | null;
+  finding?: string | null;
+  redacted?: boolean;
+}
+
+export interface SupportTicketSnapshot {
+  /** filename minus .yaml, e.g. "pharmacy-2026-09-11" */
+  slug: string;
+  snapshot: {
+    id: string;
+    type: string;
+    system?: string;
+    origin?: string;
+    access?: string;
+    taken: string;
+    domain: string;
+    selection_method?: string;
+    selection_query?: string | null;
+    ticket_ids?: number[];
+    organizations_observed?: string[];
+    coverage_caveat?: string;
+  };
+  tickets: SupportTicketEntry[];
+}
+
+type RawSupportTicketSnapshot = Omit<SupportTicketSnapshot, "slug">;
+
+function listSupportTicketSnapshots(): SupportTicketSnapshot[] {
+  return readYamlDir<RawSupportTicketSnapshot>("sources/support-tickets")
+    .filter((entry) => entry.data?.snapshot?.domain && entry.data?.snapshot?.taken)
+    .map((entry) => ({
+      slug: entry.slug,
+      snapshot: entry.data.snapshot,
+      tickets: entry.data.tickets ?? [],
+    }));
+}
+
+/** The domain slugs that have at least one snapshot — the filename prefix before the date. */
+export function listSupportSignalDomains(): string[] {
+  return [...new Set(listSupportTicketSnapshots().map((s) => s.slug.replace(/-\d{4}-\d{2}-\d{2}$/, "")))];
+}
+
+/**
+ * Newest snapshot for a domain. Filenames are `<domain-slug>-<YYYY-MM-DD>.yaml`, and an
+ * ISO date sorts lexicographically, so the last slug after a plain sort is the newest.
+ */
+export function getLatestSupportTicketSnapshot(domainSlug: string): SupportTicketSnapshot | null {
+  const matches = listSupportTicketSnapshots()
+    .filter((s) => s.slug.replace(/-\d{4}-\d{2}-\d{2}$/, "") === domainSlug)
+    .sort((a, b) => a.slug.localeCompare(b.slug));
+  return matches.length ? matches[matches.length - 1] : null;
+}
+
 export function getDomainHubData(domain: string, routeSlug: string): DomainHubData {
   return {
     tierEntry: getAccreditorTiers()?.domains.find((d) => d.domain === domain) ?? null,

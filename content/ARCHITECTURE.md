@@ -50,7 +50,7 @@ first fixing the stratum itself.
 ```mermaid
 flowchart BT
     L0["Level 0 — RAW SOURCES (not in git)\n7 transcript files · 322-file help-center mirror ·\n7 discipline playbooks — all in the\nObsidian vault 99-Assets — plus public accreditor\nPDFs & competitor pages, cited by URL"]
-    L05["Level 0.5 — SOURCE INDEXES (in git)\ncontent/sources/ — registry.yaml ·\nhelp-center.yaml · playbooks.yaml"]
+    L05["Level 0.5 — SOURCE INDEXES (in git)\ncontent/sources/ — registry.yaml ·\nhelp-center.yaml · playbooks.yaml ·\nsupport-tickets/"]
     L1["Level 1 — GROUND-TRUTH REGISTRIES\nprism/ · domains/ · accreditation/ · competitors/"]
     L2["Level 2 — REFRAMINGS\npersonas/ (discipline·role·lens) · feature-map/"]
     L3["Level 3 — ELEMENT-LEVEL VERIFICATION\nflows/ (33+ files, v2 schema, per-element analysis)"]
@@ -90,7 +90,8 @@ are raw testimony and nothing in them cites upward.
 
 ## Level 0.5 — Source indexes (`content/sources/`, in git, cite nothing)
 
-Three in-repo index files stand between the raw sources and Level 1. They are citable
+Three in-repo index files plus one snapshot folder stand between the raw sources and
+Level 1. They are citable
 by any file at any level and cite nothing themselves. `registry.yaml` is the general
 one — sparse, curated, one entry per individually found-and-checked source, referenced
 by `source_id`. `help-center.yaml` and `playbooks.yaml` are dedicated *corpus* indexes
@@ -106,6 +107,17 @@ from one nobody has opened, and both state that their `what_it_supports:` summar
 restate what an in-repo Level-1/Level-3 file asserts rather than a fresh reading of the
 Level-0 document. Citing an index id back at the file its summary was derived from
 would launder a claim, not corroborate it.
+
+`support-tickets/` is the third shape: not an index of documents that live elsewhere but a
+point-in-time *snapshot* of helpdesk data, one file per domain per capture date
+(`<domain-slug>-<YYYY-MM-DD>.yaml`, ids prefixed `support-ticket-`). It exists because
+support data was previously fetched live and rendered straight to the UI, which put an
+uncited claim on screen and kept the reasoning for which tickets were chosen in a
+source-code comment. Each snapshot therefore carries `selection_method`, `selection_query`
+and `coverage_caveat` as first-class fields, and every ticket carries `redacted:` — false
+until a human has read it for personal data. `scripts/snapshot_zendesk.py` writes these
+files and is not permitted to set `redacted: true`. A snapshot records only what the
+helpdesk actually returned; unknown fields stay null rather than being filled in.
 
 ## Level 1 — Ground-truth registries (cite only Level 0)
 
