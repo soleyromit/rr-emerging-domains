@@ -27,10 +27,11 @@
 # `domain: "MD"`, but the label every lens uses — and the only one that resolves
 # — is "Medicine". DO, Pharmacy and Dentistry happen to be spelled identically in
 # both places, which is why the difference is easy to miss.
-domain: "REPLACE — a canonical domain label from the list above"
+domain: "Example Domain"       # one canonical label from the list above, verbatim
 
 source_of_record:
-  source_id: "REPLACE — a crm-export type source_id, once one is registered"
+  source_id: null              # a crm-export source_id from content/sources/
+                               # registry.yaml, once one is registered
   sheet: null                  # the tab/sheet name inside the export, if any
   extracted: null              # YYYY-MM-DD the export was taken
   row_count: 0                 # must equal len(programs) — validated by a later

@@ -25,7 +25,7 @@ market:
 # being no better sourced. An all-null block with confidence: "low" is an honest
 # state, not an unfinished one.
 market_sizing:
-  as_of: "REPLACE — YYYY-MM-DD, the date the numbers below were last set"
+  as_of: "2026-01-01"          # YYYY-MM-DD — the date the numbers below were last set
   unit: "program"              # the thing being counted in every count below
   tam:
     programs: null             # every program in the domain, once sourced
@@ -71,7 +71,9 @@ market_sizing:
                                # number standing on an unsourced ACV is a guess
                                # wearing a dollar sign
   adjacency:
-    claim: null
+    claim: null                # <=150 soft / 300 hard chars — one line, sourced.
+                               # The cross-discipline overlap claim, not the case
+                               # for it: evidence goes to source_id
     cross_discipline_overlap_institutions: null
     source_id: null
   confidence: "low"            # low | medium | high — "low" is the correct,

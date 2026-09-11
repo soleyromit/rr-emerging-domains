@@ -71,7 +71,9 @@ market_sizing:
                                # number standing on an unsourced ACV is a guess
                                # wearing a dollar sign
   adjacency:
-    claim: null
+    claim: null                # <=150 soft / 300 hard chars — one line, sourced.
+                               # The cross-discipline overlap claim, not the case
+                               # for it: evidence goes to source_id
     cross_discipline_overlap_institutions: null
     source_id: null
   confidence: "low"            # low | medium | high — "low" is the correct,

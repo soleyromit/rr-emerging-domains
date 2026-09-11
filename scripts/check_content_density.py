@@ -142,6 +142,10 @@ DOMAIN_CEILINGS = {
     "market_sizing.som.basis": (150, 300),
     "market_sizing.acv.basis": (150, 300),
     "market_sizing.accredited_programs.variance_note": (200, 400),
+    # The one field in this block literally named "claim" — the shape this repo has
+    # twice measured running long when left unceilinged. Same numbers as the basis
+    # fields above: one sourced line, with the evidence in adjacency.source_id.
+    "market_sizing.adjacency.claim": (150, 300),
     "org_structure.typical_parent": (200, 400),
     "org_structure.buying_roles[].note": (200, 400),
 }
