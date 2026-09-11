@@ -1668,8 +1668,9 @@ PHONE_RE = re.compile(r"(?<!\d)(?:\+1[-. ]?)?\(?\d{3}\)?[-. ]\d{3}[-. ]\d{4}(?!\
 
 def check_market_programs_integrity():
     """content/market/programs/*.yaml — the per-program ground-truth registry under each
-    domain's market_sizing block. Holds only _TEMPLATE.yaml today, so this runs over zero
-    real files; the empty case is the normal one and is handled without complaint."""
+    domain's market_sizing block. Holds pharmacy.yaml today and _TEMPLATE.yaml (skipped);
+    the other domains are still unpopulated, so the zero-file and empty-programs[] cases
+    both stay normal and are handled without complaint."""
     problems = []
     programs_dir = CONTENT / "market" / "programs"
     if not programs_dir.is_dir():
@@ -1680,6 +1681,7 @@ def check_market_programs_integrity():
     source_ids = _load_source_ids()
 
     total_rows = 0
+    unmatched_rows = 0
     files = 0
     for f in sorted(programs_dir.glob("*.yaml")):
         if f.name.startswith("_TEMPLATE"):
@@ -1718,6 +1720,20 @@ def check_market_programs_integrity():
                 )
             if p.get("exxat_status") not in exxat_statuses:
                 problems.append(f"{where}: exxat_status {p.get('exxat_status')!r} not in {sorted(exxat_statuses)}")
+            # grid_matched is what makes an empty other_disciplines_on_campus readable:
+            # true + [] is a CHECKED NEGATIVE, false + [] is UNKNOWN. Before this field
+            # existed the only thing separating the two was the wording of `notes`, and an
+            # aggregate that matched that prose case-sensitively found 2 of the 3 unmatched
+            # rows and read the third as a confirmed no-cross-sell. Required, and a real
+            # boolean — a missing value or the string "false" re-opens exactly that hole.
+            if not isinstance(p.get("grid_matched"), bool):
+                problems.append(
+                    f"{where}: grid_matched {p.get('grid_matched')!r} is not a boolean — it is required on "
+                    "every row and is what separates an empty other_disciplines_on_campus that was checked "
+                    "(true) from one whose institution never matched the cross-sell grid at all (false)"
+                )
+            elif p.get("grid_matched") is False:
+                unmatched_rows += 1
             incumbent = p.get("incumbent_vendor")
             if incumbent != "unknown" and incumbent not in competitor_slugs:
                 problems.append(
@@ -1743,7 +1759,10 @@ def check_market_programs_integrity():
                     "source system and is never mirrored into content/"
                 )
 
-    _coverage(f"market program registry: {files} domain file(s), {total_rows} program row(s)")
+    _coverage(
+        f"market program registry: {files} domain file(s), {total_rows} program row(s), "
+        f"{unmatched_rows} with grid_matched: false (cross-sell unknown, not a confirmed none)"
+    )
     return problems
 
 

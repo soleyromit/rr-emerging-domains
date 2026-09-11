@@ -67,11 +67,20 @@ def expect(label, fn, needles, channel="problems"):
     problems = fn()
     found = problems if channel == "problems" else ccd.INTEGRITY_WARNINGS
     blob = " || ".join(found)
-    for needle in needles:
-        if needle not in blob:
-            failures.append(f"{label}: expected {needle!r} in {channel}\n      got: {blob[:900]}")
-            return
-    passes.append(label)
+    # EVERY missing needle is reported, never just the first. This loop used to `return`
+    # on the first miss, which meant one broken rule masked every other broken rule in the
+    # same case: Task 2.2's review saw 1 failure, fixed it, re-ran, saw the next — three
+    # round trips for damage a single run should have shown whole. A test harness that
+    # reports one failure at a time is itself a source of masked failures.
+    missing = [n for n in needles if n not in blob]
+    if missing:
+        detail = "\n      ".join(f"missing {n!r}" for n in missing)
+        failures.append(
+            f"{label}: {len(missing)} of {len(needles)} expected substring(s) not in {channel}\n"
+            f"      {detail}\n      got: {blob[:900]}"
+        )
+    else:
+        passes.append(label)
 
 
 def expect_clean(label, fn):
@@ -284,26 +293,50 @@ write("market/programs/pharmacy.yaml", {
     "source_of_record": {"source_id": BAD, "row_count": 9,
                          "pii_policy": "p", "extracted": "2026-01-01"},
     "programs": [
+        # row A omits grid_matched entirely; row B carries the STRING "false", which reads
+        # true-ish to anything that forgets to check the type — both must be caught, or an
+        # unmatched institution goes back to counting as a confirmed no-cross-sell.
         {"slug": "a-pharmacy", "institution": "A", "accreditation_status": "nope",
          "exxat_status": "nope", "incumbent_vendor": "made-up-vendor",
          "notes": "reach dean@example.edu or 555-123-4567", "sources": []},
         {"slug": "a-pharmacy", "institution": "B", "accreditation_status": "accredited",
-         "exxat_status": "client", "incumbent_vendor": "core-elms", "sources": [{"source_id": SRC}]},
+         "exxat_status": "client", "grid_matched": "false", "incumbent_vendor": "core-elms",
+         "sources": [{"source_id": SRC}]},
     ]})
-expect("8 market programs: row_count, dupe slug, enums, incumbent rules, PII gate, dangling source",
+expect("8 market programs: row_count, dupe slug, enums, incumbent rules, grid_matched, PII gate, dangling source",
        ccd.check_market_programs_integrity,
        ["domain 'MD' is not a recognized", "row_count is 9 but programs[] holds 2",
         f"source_of_record.source_id '{BAD}' not found", "duplicate slug 'a-pharmacy'",
         "accreditation_status 'nope'", "exxat_status 'nope'",
         "incumbent_vendor 'made-up-vendor' is neither", "looks like it contains an email address",
         "looks like it contains a phone number", "no sources[]",
-        "requires an incumbent_evidence source_id"])
+        "requires an incumbent_evidence source_id",
+        "grid_matched None is not a boolean", "grid_matched 'false' is not a boolean"])
 # a null source_of_record.source_id is an honest unpopulated state, not a dangling ref
 write("market/programs/pharmacy.yaml", {
     "domain": "Pharmacy",
     "source_of_record": {"source_id": None, "row_count": 0, "pii_policy": "p"},
     "programs": []})
 expect_clean("8 market programs: source_of_record.source_id null + programs: [] is clean",
+             ccd.check_market_programs_integrity)
+# The other direction for grid_matched: a row whose institution never matched the
+# cross-sell grid is VALID content, not an error. grid_matched: false beside an empty
+# other_disciplines_on_campus is exactly the honest unknown the field exists to record,
+# so the check must fire on the missing/mistyped cases above and stay silent here.
+write("market/programs/pharmacy.yaml", {
+    "domain": "Pharmacy",
+    "source_of_record": {"source_id": None, "row_count": 2, "pii_policy": "p"},
+    "programs": [
+        {"slug": "matched-pharmacy", "institution": "M", "accreditation_status": "accredited",
+         "exxat_status": "not-tracked", "grid_matched": True,
+         "other_disciplines_on_campus": ["Nursing"], "incumbent_vendor": "unknown",
+         "incumbent_evidence": None, "sources": [{"source_id": SRC}]},
+        {"slug": "unmatched-pharmacy", "institution": "U", "accreditation_status": "accredited",
+         "exxat_status": "not-tracked", "grid_matched": False,
+         "other_disciplines_on_campus": [], "incumbent_vendor": "unknown",
+         "incumbent_evidence": None, "sources": [{"source_id": SRC}]},
+    ]})
+expect_clean("8b market programs: grid_matched true and false both pass on otherwise-valid rows",
              ccd.check_market_programs_integrity)
 (C / "market" / "programs" / "pharmacy.yaml").unlink()
 

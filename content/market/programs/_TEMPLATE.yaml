@@ -55,7 +55,20 @@ programs: []
 #     class_size: number or null
 #     exxat_status: enum — client | churned | prospect | not-tracked
 #     exxat_since: string (year) or null
-#     other_disciplines_on_campus: array of strings, or empty
+#     grid_matched: boolean, REQUIRED on every row — true when this institution
+#                   resolved to a row in the cross-sell source (the master Logo
+#                   Grid sheet of the CRM export), false when no row matched.
+#                   It is what makes an empty other_disciplines_on_campus
+#                   readable: true + [] is a CHECKED NEGATIVE (the grid lists no
+#                   other Exxat discipline on that campus), false + [] is
+#                   UNKNOWN (nothing was ever checked). Without it the two
+#                   collapse into one empty list and an aggregate silently
+#                   counts unknowns as confirmed no-cross-sell. Every count over
+#                   other_disciplines_on_campus branches on THIS field; `notes`
+#                   may also mention the mismatch, but prose is human context
+#                   and must never be what a check or a count keys off.
+#     other_disciplines_on_campus: array of strings, or empty — see grid_matched
+#                                  for how to read an empty list
 #     incumbent_vendor: string (a content/competitors/ slug) or "unknown" —
 #                       never guessed. "unknown" is a real, countable answer
 #     incumbent_evidence: source_id string, REQUIRED when incumbent_vendor is

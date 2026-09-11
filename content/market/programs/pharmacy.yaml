@@ -35,11 +35,14 @@
 #     by exact name; 37 by a hand-reviewed variant/former-name/same-campus-unit
 #     match); Larkin University, Manchester University and South Carolina
 #     College of Pharmacy have no Logo Grid row at all and are honestly empty.
-#     An empty list therefore carries TWO meanings, which `notes` keeps apart:
-#     on 146 matched rows it is a checked negative (the grid marks no other
-#     discipline "Yes" for that campus), and on those 3 unmatched rows it is
-#     unknown — each of the 3 says so in its own `notes`, so no later count can
-#     read an unmatched row as a confirmed no-cross-sell.
+#     An empty list therefore carries TWO meanings, which the per-row
+#     `grid_matched:` boolean keeps apart: on the 146 rows with
+#     `grid_matched: true` an empty list is a checked negative (the grid marks
+#     no other discipline "Yes" for that campus), and on the 3 rows with
+#     `grid_matched: false` it is unknown. ANY aggregate over this field must
+#     branch on `grid_matched`, never on the wording of `notes` — prose is
+#     context for a human reader, not a machine-checkable flag. (49 of the 149
+#     rows have an empty list; 46 are confirmed negatives and 3 are unknown.)
 #     Two universities in one system (UNC-Chapel Hill vs UNC-Charlotte, Texas
 #     Tech vs TTU Health Sciences Center) were never merged.
 #     Discipline labels: the grid's column headers are rewritten to this repo's
@@ -88,6 +91,7 @@ programs:
     class_size: null
     exxat_status: "client"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["CCS", "Nursing", "Physician Assistant", "Social Work"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -104,6 +108,7 @@ programs:
     class_size: null
     exxat_status: "client"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Medicine", "Nursing", "Occupational Therapy", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -120,6 +125,7 @@ programs:
     class_size: null
     exxat_status: "client"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -136,6 +142,7 @@ programs:
     class_size: 70
     exxat_status: "client"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -152,6 +159,7 @@ programs:
     class_size: 121
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -168,6 +176,7 @@ programs:
     class_size: 122
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -184,6 +193,7 @@ programs:
     class_size: 139
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -200,6 +210,7 @@ programs:
     class_size: 111
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -216,6 +227,7 @@ programs:
     class_size: 94
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -232,6 +244,7 @@ programs:
     class_size: 73
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -248,6 +261,7 @@ programs:
     class_size: 63
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -264,6 +278,7 @@ programs:
     class_size: null
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -280,6 +295,7 @@ programs:
     class_size: null
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -296,6 +312,7 @@ programs:
     class_size: 122
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -312,6 +329,7 @@ programs:
     class_size: 89
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["CCS", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -328,6 +346,7 @@ programs:
     class_size: 65
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -344,6 +363,7 @@ programs:
     class_size: 101
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy", "PTA", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -360,6 +380,7 @@ programs:
     class_size: 120
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -376,6 +397,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -392,6 +414,7 @@ programs:
     class_size: 70
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -408,6 +431,7 @@ programs:
     class_size: 92
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -424,6 +448,7 @@ programs:
     class_size: 105
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["NUT", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -440,6 +465,7 @@ programs:
     class_size: 160
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["CCS", "Gerontology", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -456,6 +482,7 @@ programs:
     class_size: 110
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Audiology", "CCS", "NUT", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Social Work"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -472,6 +499,7 @@ programs:
     class_size: 75
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["CCS", "Counseling", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -488,6 +516,7 @@ programs:
     class_size: 135
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -504,6 +533,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -520,6 +550,7 @@ programs:
     class_size: 100
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -536,6 +567,7 @@ programs:
     class_size: 80
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -552,6 +584,7 @@ programs:
     class_size: 85
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -568,6 +601,7 @@ programs:
     class_size: 75
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -584,6 +618,7 @@ programs:
     class_size: 110
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -600,6 +635,7 @@ programs:
     class_size: 60
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: false
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -616,6 +652,7 @@ programs:
     class_size: 140
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -632,6 +669,7 @@ programs:
     class_size: 75
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -648,6 +686,7 @@ programs:
     class_size: 120
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -664,6 +703,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["AT", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -680,6 +720,7 @@ programs:
     class_size: 60
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -696,6 +737,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -712,6 +754,7 @@ programs:
     class_size: null
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -728,6 +771,7 @@ programs:
     class_size: 60
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -744,6 +788,7 @@ programs:
     class_size: 70
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -760,6 +805,7 @@ programs:
     class_size: 105
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "OTA", "Occupational Therapy", "PTA", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -776,6 +822,7 @@ programs:
     class_size: 70
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -792,6 +839,7 @@ programs:
     class_size: 106
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -808,6 +856,7 @@ programs:
     class_size: 160
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -824,6 +873,7 @@ programs:
     class_size: 60
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -840,6 +890,7 @@ programs:
     class_size: 85
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Pathology Assistant", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -856,6 +907,7 @@ programs:
     class_size: 95
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -872,6 +924,7 @@ programs:
     class_size: 150
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["CCS", "Occupational Therapy", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -888,6 +941,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Counseling", "Nursing", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -904,10 +958,11 @@ programs:
     class_size: 70
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: false
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "No Logo Grid row matched this institution, so the empty disciplines list means unknown, not a confirmed none."
+    notes: "No Logo Grid match, so the empty disciplines list is unknown, not none."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "Pharmacy!A55"
@@ -920,6 +975,7 @@ programs:
     class_size: 150
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -936,6 +992,7 @@ programs:
     class_size: 85
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -952,6 +1009,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -968,6 +1026,7 @@ programs:
     class_size: 75
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["AT", "Counseling", "Nursing", "Occupational Therapy", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -984,6 +1043,7 @@ programs:
     class_size: 72
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1000,6 +1060,7 @@ programs:
     class_size: 95
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1016,6 +1077,7 @@ programs:
     class_size: 80
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1032,6 +1094,7 @@ programs:
     class_size: 85
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1048,6 +1111,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["AT", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1064,6 +1128,7 @@ programs:
     class_size: 64
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1080,6 +1145,7 @@ programs:
     class_size: 80
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1096,6 +1162,7 @@ programs:
     class_size: 150
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1112,6 +1179,7 @@ programs:
     class_size: 141
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1128,6 +1196,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1144,6 +1213,7 @@ programs:
     class_size: 120
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1160,6 +1230,7 @@ programs:
     class_size: 113
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1176,6 +1247,7 @@ programs:
     class_size: 100
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Counseling", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Teacher Education"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1192,6 +1264,7 @@ programs:
     class_size: 130
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Medical Laboratory Science", "Occupational Therapy", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1208,6 +1281,7 @@ programs:
     class_size: 85
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1224,6 +1298,7 @@ programs:
     class_size: 65
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1240,6 +1315,7 @@ programs:
     class_size: 120
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1256,6 +1332,7 @@ programs:
     class_size: 120
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1272,6 +1349,7 @@ programs:
     class_size: 130
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1288,6 +1366,7 @@ programs:
     class_size: 140
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1304,6 +1383,7 @@ programs:
     class_size: 95
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1320,6 +1400,7 @@ programs:
     class_size: 110
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1336,6 +1417,7 @@ programs:
     class_size: 85
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1352,6 +1434,7 @@ programs:
     class_size: 215
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "OTA", "Occupational Therapy", "Physical Therapy", "Speech-Language Pathology"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1368,6 +1451,7 @@ programs:
     class_size: 70
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["CCS", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Social Work"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1384,6 +1468,7 @@ programs:
     class_size: 130
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1400,6 +1485,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Public Health"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1416,6 +1502,7 @@ programs:
     class_size: 70
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1432,6 +1519,7 @@ programs:
     class_size: 150
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["CLS", "NUT", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Psychology", "Respiratory Care", "Social Work", "Speech-Language Pathology"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1448,6 +1536,7 @@ programs:
     class_size: 80
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1464,6 +1553,7 @@ programs:
     class_size: 130
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1480,6 +1570,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1496,6 +1587,7 @@ programs:
     class_size: 110
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1512,6 +1604,7 @@ programs:
     class_size: 130
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1528,6 +1621,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1544,6 +1638,7 @@ programs:
     class_size: 215
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Medicine", "Nursing", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1560,6 +1655,7 @@ programs:
     class_size: 100
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1576,6 +1672,7 @@ programs:
     class_size: 80
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1592,6 +1689,7 @@ programs:
     class_size: 70
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1608,6 +1706,7 @@ programs:
     class_size: 95
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1624,6 +1723,7 @@ programs:
     class_size: 115
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1640,6 +1740,7 @@ programs:
     class_size: 125
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["AT", "CCS", "Occupational Therapy", "Physical Therapy", "Respiratory Care"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1656,6 +1757,7 @@ programs:
     class_size: 110
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["CCS", "Occupational Therapy", "PTA", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1672,6 +1774,7 @@ programs:
     class_size: 100
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1688,6 +1791,7 @@ programs:
     class_size: 120
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["CCS", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Respiratory Care", "Social Work", "Speech-Language Pathology"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1704,6 +1808,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1720,6 +1825,7 @@ programs:
     class_size: 80
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1736,6 +1842,7 @@ programs:
     class_size: 130
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["AT", "NUT", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1752,6 +1859,7 @@ programs:
     class_size: 120
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1768,6 +1876,7 @@ programs:
     class_size: 125
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["CCS", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1784,6 +1893,7 @@ programs:
     class_size: 120
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1800,6 +1910,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["CCS", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology", "Teacher Education"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1816,6 +1927,7 @@ programs:
     class_size: 115
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["CCS", "Nursing"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1832,6 +1944,7 @@ programs:
     class_size: 100
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["AT", "CCS", "Counseling", "MLSB", "Medical Laboratory Science", "NUT", "Nursing", "OTA", "Occupational Therapy", "Perfusion", "Physical Therapy", "Physician Assistant", "Public Health", "Respiratory Care", "Speech-Language Pathology"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1848,6 +1961,7 @@ programs:
     class_size: 140
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["AT", "Audiology", "CCS", "Chiro", "Counseling", "Health Information Technology", "NUT", "Nursing", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1864,6 +1978,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1880,6 +1995,7 @@ programs:
     class_size: 60
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1896,6 +2012,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1912,6 +2029,7 @@ programs:
     class_size: 95
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1928,6 +2046,7 @@ programs:
     class_size: 70
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1944,6 +2063,7 @@ programs:
     class_size: 110
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: false
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1960,6 +2080,7 @@ programs:
     class_size: 150
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["NUT", "Nursing", "Physical Therapy", "Social Work", "Teacher Education"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1976,6 +2097,7 @@ programs:
     class_size: 98
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -1992,6 +2114,7 @@ programs:
     class_size: 100
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Audiology", "Counseling", "NUT", "Occupational Therapy", "Physical Therapy", "Social Work", "Speech-Language Pathology"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2008,6 +2131,7 @@ programs:
     class_size: 96
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2024,6 +2148,7 @@ programs:
     class_size: 86
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2040,6 +2165,7 @@ programs:
     class_size: 68
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2056,6 +2182,7 @@ programs:
     class_size: 135
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["CLS", "Medical Laboratory Science", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2072,6 +2199,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2088,6 +2216,7 @@ programs:
     class_size: 85
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2104,6 +2233,7 @@ programs:
     class_size: 160
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2120,6 +2250,7 @@ programs:
     class_size: 120
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2136,6 +2267,7 @@ programs:
     class_size: 115
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2152,6 +2284,7 @@ programs:
     class_size: 110
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2168,6 +2301,7 @@ programs:
     class_size: 55
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Teacher Education"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2184,6 +2318,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2200,6 +2335,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["AT", "CCS", "Occupational Therapy", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2216,6 +2352,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["AT", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2232,6 +2369,7 @@ programs:
     class_size: 55
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2248,6 +2386,7 @@ programs:
     class_size: 70
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2264,6 +2403,7 @@ programs:
     class_size: 120
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Teacher Education"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2280,6 +2420,7 @@ programs:
     class_size: 100
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2296,6 +2437,7 @@ programs:
     class_size: 125
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Social Work"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2312,6 +2454,7 @@ programs:
     class_size: 120
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Social Work"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2328,6 +2471,7 @@ programs:
     class_size: 70
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["NUT", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2344,6 +2488,7 @@ programs:
     class_size: 60
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2360,6 +2505,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2376,6 +2522,7 @@ programs:
     class_size: 75
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Social Work", "Speech-Language Pathology"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2392,6 +2539,7 @@ programs:
     class_size: 90
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2408,6 +2556,7 @@ programs:
     class_size: 140
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Counseling", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2424,6 +2573,7 @@ programs:
     class_size: 48
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2440,6 +2590,7 @@ programs:
     class_size: 115
     exxat_status: "not-tracked"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Psychology", "Public Health"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
@@ -2456,6 +2607,7 @@ programs:
     class_size: null
     exxat_status: "churned"
     exxat_since: null
+    grid_matched: true
     other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
