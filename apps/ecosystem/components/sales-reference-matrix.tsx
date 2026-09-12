@@ -74,7 +74,7 @@ export function SalesReferenceMatrix({
     ),
   }));
 
-  // Every (row, column) pair exists: the artifact carries all four masked labels on
+  // Every (row, column) pair exists: the artifact carries all four column labels on
   // all 81 rows. So no cell is ever structurally absent here, and the dash a reader
   // sees is ClaimedBadge's "not marked", not the matrix's "no data".
   const cells = rows.flatMap((row) =>
@@ -86,6 +86,14 @@ export function SalesReferenceMatrix({
   );
 
   const contradictionLine = `The workbook's two sheets disagree outright on ${stats.contradictionCount} of ${stats.rowCount} rows — in both directions, so the masked sheet is sometimes the generous one.`;
+
+  // "4 vendor columns, 3 of them masked" — NOT "4 masked vendors". Exxat's column is
+  // named; only its three competitors are hidden behind labels, which is exactly the
+  // asymmetry the chart is built on, and the artifact's own provenance note two lines
+  // above says "3 masked vendors". Both halves are counted, never asserted.
+  const columnLine = stats.maskedColumns.length
+    ? `${stats.columns.length} vendor columns — Exxat's own, plus ${stats.maskedColumns.length} competitors the chart leaves masked behind labels`
+    : `${stats.columns.length} vendor columns`;
 
   return (
     <Banner
@@ -101,7 +109,7 @@ export function SalesReferenceMatrix({
       <Stack gap={3}>
         <FieldBlock label="The artifact's own provenance note" text={chart.artifact.provenance_note} maxLines={3} />
         <Text type="supporting" maxLines={4}>
-          {`${stats.rowCount} feature rows across ${stats.sectionCount} sections, against ${stats.columns.length} vendor columns the chart itself leaves masked. "Claimed" means the sales sheet marks that vendor on that row and nothing more — no rating, no source, no date, and nothing to open. A dash is the sheet's own blank, which is its silence rather than a researched finding that the vendor falls short.`}
+          {`${stats.rowCount} feature rows across ${stats.sectionCount} sections, against ${columnLine}. "Claimed" means the sales sheet marks that vendor on that row and nothing more — no rating, no source, no date, and nothing to open. A dash is the sheet's own blank, which is its silence rather than a researched finding that the vendor falls short.`}
         </Text>
         <ComparisonMatrix<string, string, boolean>
           variant="unverified"

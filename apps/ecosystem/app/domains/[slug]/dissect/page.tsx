@@ -226,7 +226,9 @@ export default async function DomainDissectPage({ params }: { params: Promise<{ 
             {salesChart && salesStats ? (
               <Collapsible
                 value="sales-reference"
-                trigger={`Sales reference chart — unverified (${salesStats.rowCount} claimed rows × ${salesStats.columns.length} masked vendors, not evidence)`}
+                // "3 of 4 vendors masked", not "4 masked vendors": Exxat's column is
+                // named — it is the chart's author. Both numbers are counted.
+                trigger={`Sales reference chart — unverified (${salesStats.rowCount} claimed rows × ${salesStats.columns.length} vendors, ${salesStats.maskedColumns.length} of them masked, not evidence)`}
               >
                 <Stack gap={3}>
                   <Text type="supporting" maxLines={4}>

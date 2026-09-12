@@ -47,6 +47,22 @@ export function vendorComparisonColumns(chart: VendorComparisonChart): string[] 
   return [...seen];
 }
 
+/**
+ * Which of those columns are actually MASKED — the ones whose column label is not the
+ * vendor's real name. Three of the four are ("Vendor 1" is CastleBranch); Exxat's own
+ * column is named, not masked, which is the whole point of a chart its author wrote.
+ *
+ * Derived by comparing each label against the name the unmasking key resolves it to,
+ * so "3 of 4" is counted rather than asserted. Empty when the artifact carries no
+ * unmasking key at all, in which case a caller should say nothing about masking
+ * instead of guessing at it.
+ */
+export function vendorComparisonMaskedColumns(chart: VendorComparisonChart): string[] {
+  return (chart.unmasking_key ?? [])
+    .filter((entry) => entry.sheet2_label && entry.sheet2_label !== entry.sheet1_name)
+    .map((entry) => entry.sheet2_label as string);
+}
+
 /** All 81 rows, flattened in the source's own section order, each keeping its section. */
 export function vendorComparisonRows(chart: VendorComparisonChart): VendorComparisonFlatRow[] {
   return chart.sections.flatMap((section) =>
@@ -68,14 +84,15 @@ export interface VendorComparisonStats {
   sectionCount: number;
   rowCount: number;
   columns: string[];
-  /** Masked label -> how many of the `rowCount` rows mark that vendor. */
+  /** The subset of `columns` whose label hides the vendor's real name — 3 of the 4.
+   * Copy must not call all four "masked": Exxat's column is named. */
+  maskedColumns: string[];
+  /** Column label -> how many of the `rowCount` rows mark that vendor. */
   claimedByColumn: Record<string, number>;
   /** Rows where the two sheets flatly disagree — the artifact's own exhaustive list. */
   contradictionCount: number;
   /** Rows where they agree and the named sheet merely credits an extra vendor. */
   unmaskedOnlyCount: number;
-  /** Masked labels a column stands for, e.g. "Vendor 1" -> "CastleBranch". */
-  unmaskedCount: number;
 }
 
 export function vendorComparisonStats(chart: VendorComparisonChart): VendorComparisonStats {
@@ -89,9 +106,9 @@ export function vendorComparisonStats(chart: VendorComparisonChart): VendorCompa
     sectionCount: chart.sections.length,
     rowCount: rows.length,
     columns,
+    maskedColumns: vendorComparisonMaskedColumns(chart),
     claimedByColumn,
     contradictionCount: chart.artifact.known_contradictions?.length ?? 0,
     unmaskedOnlyCount: chart.artifact.unmasked_only_vendor_rows?.length ?? 0,
-    unmaskedCount: chart.unmasking_key?.length ?? 0,
   };
 }

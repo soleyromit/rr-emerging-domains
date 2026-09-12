@@ -29,6 +29,23 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+/**
+ * A STATIC CITATION, not a derived figure — and deliberately one string carrying BOTH
+ * numbers rather than a 41 interpolated next to a counted 81, which would age at two
+ * different rates in one sentence.
+ *
+ * The artifact's YAML says, in a PROSE COMMENT rather than a field, that on 41 of its
+ * 81 rows the masked columns agree and the named sheet still credits a vendor the
+ * masked sheet has no column for. A comment cannot be read by the loader, and the
+ * per-row data needed to recount it only exists for the 2 rows listed below — so this
+ * cannot be computed here, at all.
+ *
+ * If content/sources/vendor-comparison-chart.yaml is ever re-transcribed, THIS STRING
+ * MUST BE RE-READ BY HAND from that file's comment above `unmasked_only_vendor_rows`.
+ * It is the one figure on this page that does not follow the data by itself.
+ */
+const SOURCE_NOTE_AGREEING_ROWS_WITH_EXTRA_VENDOR = "41 of the 81 rows";
+
 /** One row the two sheets read differently. The two readings sit side by side because
  * the disagreement IS the finding — a single "correct" answer would be this page
  * picking a winner between two unsourced sheets. */
@@ -143,7 +160,7 @@ export default function VendorComparisonChartPage() {
             >
               <Stack gap={3}>
                 <Text type="supporting" maxLines={4}>
-                  {`On these rows the two sheets agree, and the named sheet merely credits a vendor the masked sheet has no column for. The planning brief named them as contradictions; they are kept out of the count above and recorded here so that correction is not silently lost. The list is not exhaustive — the artifact's own note puts the same pattern on 41 of the ${stats.rowCount} rows, which is a property of the masked sheet's narrower scope rather than a defect.`}
+                  {`On these rows the two sheets agree, and the named sheet merely credits a vendor the masked sheet has no column for. The planning brief named them as contradictions; they are kept out of the count above and recorded here so that correction is not silently lost. The list is not exhaustive — the artifact's own note records the same pattern on ${SOURCE_NOTE_AGREEING_ROWS_WITH_EXTRA_VENDOR}, which is a property of the masked sheet's narrower scope rather than a defect.`}
                 </Text>
                 {artifact.unmasked_only_vendor_rows.map((diff) => (
                   <SheetDiff key={diff.row_id} diff={diff} />
