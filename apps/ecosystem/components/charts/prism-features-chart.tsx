@@ -2,12 +2,28 @@
 
 import * as Plot from "@observablehq/plot";
 import { PlotFigure } from "./plot-figure";
-import type { PrismPillar } from "@/lib/content";
+/**
+ * Exactly the three scalars the bars need — deliberately NOT PrismPillar.
+ *
+ * This is a client component, so its props are serialized into the flight payload and sent
+ * to every browser. Typed as PrismPillar it was handed the whole capability-map pillar
+ * objects, and the six raw content filenames left in /prism's served bytes after the render
+ * sites on that page were sanitized were all in THIS prop: the `notes`, `why_it_matters` and
+ * `features[].detail` prose, shipped in full so a bar chart could call `.length` on an array.
+ *
+ * Narrowing the type is the fix and also the guard: the projection now has to happen at the
+ * call site, and a future field added to PrismPillar cannot silently ride along.
+ */
+interface PillarBar {
+  name: string;
+  featureCount: number;
+  status: string;
+}
 
-export function PrismFeaturesChart({ pillars }: { pillars: PrismPillar[] }) {
+export function PrismFeaturesChart({ pillars }: { pillars: PillarBar[] }) {
   const rows = pillars.map((p) => ({
     pillar: p.name,
-    count: p.features?.length ?? 0,
+    count: p.featureCount,
     status: p.status,
   }));
 

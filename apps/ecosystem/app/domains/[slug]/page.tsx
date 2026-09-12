@@ -148,7 +148,13 @@ function computedEditorial(doc: AccreditationDoc | null): DomainEditorial {
       headline: doc ? `${doc.accreditor.split("(")[0].trim()} — not yet researched` : "Not yet researched",
       takeawayStatus: "info",
       takeawayTitle: "No standards mapped yet",
-      takeawayBody: doc?.research_status_note ?? "This domain has no researched accreditation standards in this repo yet.",
+      // An unresearched domain's research_status_note points the reader at the lens files
+      // that DO have a row for it, by filename — "See the matching Counseling entry in
+      // ../lenses/accreditor-tiers.yaml". Correct as a content citation, raw path on screen
+      // without this. Renders in the Takeaway, first paint, no collapsible.
+      takeawayBody:
+        stripFileCitations(doc?.research_status_note) ??
+        "This domain has no researched accreditation standards in this repo yet.",
     };
   }
   const c = fitCounts(doc);
@@ -317,9 +323,17 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
             </Stack>
           </Stack>
           {tierEntry.consortium_note ? (
-            <FieldBlock label="Consortium structure" text={tierEntry.consortium_note} type="body" size="sm" maxLines={2} />
+            <FieldBlock
+              label="Consortium structure"
+              text={stripFileCitations(tierEntry.consortium_note)}
+              type="body"
+              size="sm"
+              maxLines={2}
+            />
           ) : null}
-          {tierEntry.notes ? <FieldBlock label="Notes" text={tierEntry.notes} type="body" size="sm" maxLines={2} /> : null}
+          {tierEntry.notes ? (
+            <FieldBlock label="Notes" text={stripFileCitations(tierEntry.notes)} type="body" size="sm" maxLines={2} />
+          ) : null}
           {tierEntry.sources?.length ? (
             <Stack gap={1}>
               <Text type="label" color="secondary" size="xsm">

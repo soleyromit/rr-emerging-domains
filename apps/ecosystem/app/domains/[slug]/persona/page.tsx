@@ -138,7 +138,10 @@ export default async function DomainPersonaPage({ params }: { params: Promise<{ 
                   Accreditation pressure ({persona.accreditation_pressure.length})
                 </Text>
                 <PersonaSpecList
-                  items={persona.accreditation_pressure.map((p) => ({ label: p.point, text: p.detail }))}
+                  items={persona.accreditation_pressure.map((p) => ({
+                    label: stripFileCitations(p.point) ?? p.point,
+                    text: stripFileCitations(p.detail) ?? p.detail,
+                  }))}
                   fallbackIcon="clock"
                 />
               </Stack>
@@ -150,8 +153,17 @@ export default async function DomainPersonaPage({ params }: { params: Promise<{ 
                 <Text type="label" color="secondary">
                   Current tools ({persona.current_tools.length})
                 </Text>
+                {/* current_tools is the densest citation field in the persona corpus —
+                    discipline-crna.yaml's entries name nine competitor files by bare
+                    filename (medhub.yaml, e-value.yaml, elentra.yaml, one45.yaml,
+                    core-elms.yaml, emedley.yaml, leo-davinci.yaml, …) because the research
+                    is literally "we checked all nine teardowns". Correct in the YAML,
+                    a raw path list on screen without this. */}
                 <PersonaSpecList
-                  items={persona.current_tools.map((p) => ({ label: p.point, text: p.detail }))}
+                  items={persona.current_tools.map((p) => ({
+                    label: stripFileCitations(p.point) ?? p.point,
+                    text: stripFileCitations(p.detail) ?? p.detail,
+                  }))}
                   fallbackIcon="wrench"
                 />
               </Stack>
@@ -179,7 +191,15 @@ export default async function DomainPersonaPage({ params }: { params: Promise<{ 
                 <Text type="label" weight="semibold" size="sm">
                   Switching trigger
                 </Text>
-                <FieldBlock text={persona.switching_trigger} maxLines={4} triggerLabel="Read the full section" />
+                {/* Leaks live on /domains/crna/persona today: this persona's switching
+                    trigger cites ../accreditation/coa.yaml twice and coca.yaml once, in
+                    first-paint text. archetype_summary and sources on this same page were
+                    already wrapped — this field was simply missed. */}
+                <FieldBlock
+                  text={stripFileCitations(persona.switching_trigger)}
+                  maxLines={4}
+                  triggerLabel="Read the full section"
+                />
               </Stack>
             </Card>
           </div>

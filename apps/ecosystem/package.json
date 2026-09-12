@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "check:density": "bash scripts/check-render-density.sh",
-    "test": "node --experimental-strip-types --no-warnings lib/strip-file-citations.test.mts"
+    "test": "node --experimental-strip-types --no-warnings lib/strip-file-citations.test.mts",
+    "audit:sanitizer": "node --experimental-strip-types --no-warnings lib/sanitizer-audit.mts"
   },
   "dependencies": {
     "@astryxdesign/core": "^0.4.7",
