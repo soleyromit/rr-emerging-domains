@@ -132,10 +132,26 @@ interface ComparisonMatrixRigorousProps<RowId extends string, ColId extends stri
    *
    * Follow the two-zone shape inside it (see UI-DENSITY-PATTERNS.md) — the
    * component supplies the scan-layer header and the Divider; what you return
-   * is the deep-dive zone, so it should be closed-by-default Collapsibles or
-   * clamped FieldBlocks, not a wall of open prose.
+   * is the DEEP-DIVE zone, so it should be closed-by-default Collapsibles or
+   * clamped FieldBlocks, not a wall of open prose. Anything that belongs ABOVE
+   * the Divider goes in `rowPanelTakeaway`, not here.
    */
   rowPanel: (ctx: ComparisonMatrixPanelContext<RowId, ColId, TValue>) => ReactNode;
+  /**
+   * The panel's own scan layer: the ONE verdict a reader needs without opening
+   * anything — typically a `<Takeaway>`, the way `StandardDetail` leads with
+   * "Exxat is Compliant — Prism fit: Transfer" before its Divider.
+   *
+   * Rendered between the component-owned header row (row · column · value ·
+   * close) and the `DEEP DIVE` Divider, so a caller can complete the two-zone
+   * shape in its documented order instead of being forced to put its verdict
+   * below the Divider — which would inverse the very pattern
+   * UI-DENSITY-PATTERNS.md exists to enforce.
+   *
+   * Optional: a panel whose deep-dive sections speak for themselves can omit it
+   * and nothing about the layout changes.
+   */
+  rowPanelTakeaway?: (ctx: ComparisonMatrixPanelContext<RowId, ColId, TValue>) => ReactNode;
   /** @default "Show detail" */
   detailTriggerLabel?: string;
   /** @default "Hide detail" */
@@ -150,6 +166,8 @@ interface ComparisonMatrixUnverifiedProps<RowId extends string, ColId extends st
    * evidence to drill into; a panel here would imply otherwise.
    */
   rowPanel?: never;
+  /** Not available on this variant either — there is no panel to lead. */
+  rowPanelTakeaway?: never;
   /** The badge shown above the matrix. @default "Unverified" */
   unverifiedLabel?: string;
   /** One line on where this data came from and why it isn't sourced. */
@@ -170,6 +188,18 @@ interface MatrixTableRow<RowId extends string> extends Record<string, unknown> {
 // let one pair's key collide with another's.
 const cellKey = (rowId: string, colId: string) => `${rowId}\u0000${colId}`;
 
+// The axes and cells are Maps/keys, so a repeated id is last-write-wins: the
+// earlier row/column/cell silently disappears, and duplicate row ids also reach
+// Table as duplicate React keys. Typed id unions make that unlikely, but ids
+// built from content slugs at runtime can collide — and a silently dropped row
+// in a comparison matrix reads as "we didn't research that," which is exactly
+// the wrong conclusion. Dev-only: stripped from the production bundle.
+function warnOnDuplicate(isDuplicate: boolean, what: string) {
+  if (!isDuplicate) return;
+  if (process.env.NODE_ENV === "production") return;
+  console.warn(`ComparisonMatrix: ${what}. The later entry wins and the earlier one is dropped.`);
+}
+
 export function ComparisonMatrix<RowId extends string, ColId extends string, TValue>(
   props: ComparisonMatrixProps<RowId, ColId, TValue>,
 ) {
@@ -185,6 +215,7 @@ export function ComparisonMatrix<RowId extends string, ColId extends string, TVa
   } = props;
 
   const rowPanel = props.variant === "rigorous" ? props.rowPanel : undefined;
+  const rowPanelTakeaway = props.variant === "rigorous" ? props.rowPanelTakeaway : undefined;
   const triggerLabel = props.variant === "rigorous" ? (props.detailTriggerLabel ?? "Show detail") : "";
   const closeLabel = props.variant === "rigorous" ? (props.detailCloseLabel ?? "Hide detail") : "";
 
@@ -194,20 +225,31 @@ export function ComparisonMatrix<RowId extends string, ColId extends string, TVa
 
   const cellIndex = useMemo(() => {
     const index = new Map<string, ComparisonMatrixCell<RowId, ColId, TValue>>();
-    for (const cell of cells) index.set(cellKey(cell.rowId, cell.colId), cell);
+    for (const cell of cells) {
+      const key = cellKey(cell.rowId, cell.colId);
+      warnOnDuplicate(index.has(key), `two cells for ${cell.rowId} × ${cell.colId}`);
+      index.set(key, cell);
+    }
     return index;
   }, [cells]);
 
   const columnIndex = useMemo(() => {
     const index = new Map<string, ComparisonMatrixColumn<ColId>>();
-    for (const column of columnAxis) index.set(column.id, column);
+    for (const column of columnAxis) {
+      warnOnDuplicate(index.has(column.id), `duplicate column id "${column.id}" in columnAxis`);
+      index.set(column.id, column);
+    }
     return index;
   }, [columnAxis]);
 
-  const tableRows = useMemo<MatrixTableRow<RowId>[]>(
-    () => rowAxis.map((row) => ({ _id: row.id, row })),
-    [rowAxis],
-  );
+  const tableRows = useMemo<MatrixTableRow<RowId>[]>(() => {
+    const seen = new Set<string>();
+    for (const row of rowAxis) {
+      warnOnDuplicate(seen.has(row.id), `duplicate row id "${row.id}" in rowAxis`);
+      seen.add(row.id);
+    }
+    return rowAxis.map((row) => ({ _id: row.id, row }));
+  }, [rowAxis]);
 
   // The panel has to be able to close its own row, but the closer comes back
   // from the very hook the panel is handed to. A ref breaks that cycle without
@@ -230,6 +272,12 @@ export function ComparisonMatrix<RowId extends string, ColId extends string, TVa
     const focusedId = focusByRow[item._id] ?? null;
     const column = focusedId === null ? undefined : columnIndex.get(focusedId);
     const cell = column ? cellIndex.get(cellKey(item._id, column.id)) : undefined;
+    const panelCtx: ComparisonMatrixPanelContext<RowId, ColId, TValue> = {
+      row: item.row,
+      column,
+      value: cell?.value,
+      close: () => close(item._id),
+    };
     return (
       <Stack gap={3}>
         {/* SCAN LAYER — which intersection this panel is about, and its value,
@@ -256,14 +304,14 @@ export function ComparisonMatrix<RowId extends string, ColId extends string, TVa
           </Link>
         </Stack>
 
+        {/* The caller's own scan layer — the verdict — still ABOVE the Divider,
+            so the panel reads in UI-DENSITY-PATTERNS.md's documented order:
+            takeaway first, deep dive behind a divider. */}
+        {rowPanelTakeaway ? rowPanelTakeaway(panelCtx) : null}
+
         <Divider label="DEEP DIVE — OPTIONAL DETAIL BELOW" />
 
-        {rowPanel({
-          row: item.row,
-          column,
-          value: cell?.value,
-          close: () => close(item._id),
-        })}
+        {rowPanel(panelCtx)}
       </Stack>
     );
   };
@@ -305,9 +353,12 @@ export function ComparisonMatrix<RowId extends string, ColId extends string, TVa
             </Text>
           ) : null}
           {rowPanel ? (
-            <Link color="accent" hasUnderline onClick={() => focusCell(item._id, null)}>
-              {isCellOpen(item._id, null) ? closeLabel : triggerLabel}
-            </Link>
+            // Same horizontal wrapper as the cell triggers — see the note there.
+            <Stack direction="horizontal" gap={2} vAlign="center" wrap="wrap">
+              <Link color="accent" hasUnderline onClick={() => focusCell(item._id, null)}>
+                {isCellOpen(item._id, null) ? closeLabel : triggerLabel}
+              </Link>
+            </Stack>
           ) : null}
         </Stack>
       ),
@@ -351,9 +402,15 @@ export function ComparisonMatrix<RowId extends string, ColId extends string, TVa
             <Stack direction="horizontal" gap={2} vAlign="center" wrap="wrap">
               {content}
             </Stack>
-            <Link size="sm" color="accent" hasUnderline onClick={() => focusCell(item._id, column.id)}>
-              {cellIsOpen ? closeLabel : triggerLabel}
-            </Link>
+            {/* The trigger gets the same horizontal-row treatment as the content
+                above it, and for the same reason: left in the vertical Stack it
+                stretches to the full column, making the click target span dead
+                space to the right of its own text. */}
+            <Stack direction="horizontal" gap={2} vAlign="center" wrap="wrap">
+              <Link size="sm" color="accent" hasUnderline onClick={() => focusCell(item._id, column.id)}>
+                {cellIsOpen ? closeLabel : triggerLabel}
+              </Link>
+            </Stack>
           </Stack>
         );
       },
