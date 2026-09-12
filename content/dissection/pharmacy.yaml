@@ -142,8 +142,8 @@ questions:
     coverage: "partial"
     confidence: "medium"
     # "partial", not "researched", and the reason is granularity rather than effort.
-    # The matrix holds 15 of 30 possible Pharmacy cells (6 capability rows x the 5
-    # in-scope incumbents above), every row carrying an Exxat verdict. The 15 absent
+    # The matrix holds 14 of 30 possible Pharmacy cells (6 capability rows x the 5
+    # in-scope incumbents above), every row carrying an Exxat verdict. The 16 absent
     # cells are not a to-do list that can be cleared by transcription. 12 of the 16 sit on
     # a feature_teardown entry that is itself depth_vs_prism: "unknown" — a genuinely
     # unresearched competitor pillar, not an unrecorded finding — and 3 more (influx on
