@@ -113,7 +113,14 @@ export default async function DomainDissectPage({ params }: { params: Promise<{ 
   ];
 
   const featureComparisonQuestion = manifest.questions.find((question) => question.key === "feature-comparison");
+  // The denominator counts COMPETITOR intersections only: capabilities × in-scope
+  // incumbents. The rendered grid has one more column than that — Exxat's, pinned
+  // first — so "14 / 30" and a 6 × 6 table on screen are both right but don't
+  // match by eye. Every number below is derived, and the copy says out loud what
+  // the 30 is and where Exxat sits, so the figure is self-explanatory beside the
+  // table rather than only internally consistent.
   const possibleCells = matrix.rows.length * incumbents.length;
+  const exxatRated = matrix.rows.filter((r) => r.exxatCell).length;
 
   return (
     <Stack gap={0}>
@@ -145,7 +152,13 @@ export default async function DomainDissectPage({ params }: { params: Promise<{ 
             <MetadataListItem label="Incumbents in scope">
               {inScope.length} / {manifest.incumbent_set.length}
             </MetadataListItem>
-            <MetadataListItem label="Feature-matrix cells rated">
+            <MetadataListItem
+              label={
+                possibleCells
+                  ? `Competitor cells rated (${matrix.rows.length} capabilities × ${incumbents.length} incumbents)`
+                  : "Competitor cells rated"
+              }
+            >
               {possibleCells ? `${matrix.cellCount} / ${possibleCells}` : matrix.cellCount}
             </MetadataListItem>
             <MetadataListItem label="GTM target">{manifest.is_gtm_target ? "Yes" : "No"}</MetadataListItem>
@@ -166,16 +179,14 @@ export default async function DomainDissectPage({ params }: { params: Promise<{ 
               value="matrix"
               trigger={
                 matrix.rows.length
-                  ? `Feature comparison matrix (${matrix.cellCount} rated cells)`
+                  ? `Feature comparison matrix (${matrix.cellCount} of ${possibleCells} competitor cells rated)`
                   : "Feature comparison matrix (no data yet)"
               }
             >
               {matrix.rows.length ? (
                 <Stack gap={3}>
-                  <Text type="supporting">
-                    Rows are capabilities, columns are Exxat plus this domain&apos;s in-scope incumbents. Click any
-                    rating for its rationale, evidence strength and sources; a dash means that vendor has not been
-                    researched on that capability — not that it falls short.
+                  <Text type="supporting" maxLines={4}>
+                    {`${matrix.rows.length} capabilities × ${incumbents.length} in-scope incumbents = ${possibleCells} competitor intersections, of which ${matrix.cellCount} are rated. Exxat's own verdict is the pinned first column and is counted separately (${exxatRated} of ${matrix.rows.length} rated), so the grid shows one more column than that ${possibleCells} covers. Click any rating for its rationale, evidence strength and sources; a dash means that vendor has not been researched on that capability — not that it falls short.`}
                   </Text>
                   <DissectionMatrix rows={matrix.rows} incumbents={incumbents} />
                 </Stack>

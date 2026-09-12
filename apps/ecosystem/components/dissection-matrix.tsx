@@ -2,7 +2,6 @@
 
 import { Stack } from "@astryxdesign/core/Stack";
 import { Text } from "@astryxdesign/core/Text";
-import { pixel } from "@astryxdesign/core/Table";
 import { Collapsible, CollapsibleGroup } from "@astryxdesign/core/Collapsible";
 import { ComparisonMatrix } from "@/components/comparison-matrix";
 import { FieldBlock } from "@/components/field-block";
@@ -134,6 +133,15 @@ export function DissectionMatrix({
   // table, Exxat here shares the competitors' fully/partially/not-meeting
   // vocabulary (it is rated against the same capability, not against a standard),
   // so the distinction is header + the shipped/roadmap badge only.
+  //
+  // NO explicit column widths — every column takes ComparisonMatrix's default
+  // proportional(1), the same thing scorecard-matrix.tsx does. An earlier version
+  // set pixel(200) on all six, which pinned the table to a fixed ~1440px inside a
+  // narrower scroll viewport; the drill-down panel spans the full table width, so
+  // that silently clipped the right-hand ~260px of every panel's evidence prose
+  // off-screen. Proportional columns divide the space actually available, so the
+  // panel can never be wider than what a reader can see. Fixed widths here are a
+  // regression waiting to happen — the panels only get more prose from here.
   const columnAxis = [
     {
       id: EXXAT_COLUMN_ID,
@@ -148,7 +156,6 @@ export function DissectionMatrix({
           </Text>
         </Stack>
       ),
-      width: pixel(200),
     },
     ...incumbents.map((c) => ({
       id: c.slug,
@@ -165,7 +172,6 @@ export function DissectionMatrix({
           ) : null}
         </Stack>
       ),
-      width: pixel(200),
     })),
   ];
 
@@ -211,7 +217,10 @@ export function DissectionMatrix({
   return (
     <ComparisonMatrix<string, string, MatrixCellValue>
       variant="rigorous"
-      rowAxisHeader="Capability (pillar)"
+      // Names the column in the order it actually renders: the bold line is the
+      // pillar, the line under it is that pillar's capability detail. Mirrors
+      // scorecard-matrix.tsx's "Criterion (weight)" label-then-sublabel shape.
+      rowAxisHeader="Pillar (capability)"
       rowAxisWidth={240}
       rowAxis={rowAxis}
       columnAxis={columnAxis}
