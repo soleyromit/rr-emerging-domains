@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
 import { Table, pixel } from "@astryxdesign/core/Table";
-import type { TablePlugin } from "@astryxdesign/core/Table";
 import { Stack } from "@astryxdesign/core/Stack";
 import { Text } from "@astryxdesign/core/Text";
 import { Link } from "@astryxdesign/core/Link";
@@ -25,6 +23,7 @@ import { SourceList } from "@/components/source-list";
 import { RelatedFlowsPreview } from "@/components/related-flows-preview";
 import { Takeaway } from "@/components/takeaway";
 import { stripFileCitations } from "@/lib/strip-file-citations";
+import { useTableDetailPanel } from "@/lib/table-detail-panel";
 import type { StandardsCrosswalkForDomain, StandardsCrosswalkRow } from "@/lib/content";
 
 // content/personas/*.yaml filenames minus extension ("role-compliance-accreditation-liaison").
@@ -52,9 +51,11 @@ interface StandardRow extends Record<string, unknown> {
 // row stays a scannable badge strip and the prose gets a real column width to
 // breathe in once you open it.
 //
-// This uses a hand-rolled detail-panel plugin instead of Table's own
-// useTableRowExpansion: that hook's auto-inserted 40px chevron column has no
-// room for its own 24px icon once this table's cells pick up context-menu
+// That panel is opened by lib/table-detail-panel.tsx's useTableDetailPanel — the
+// shared row-drill-down mechanism this table originally hand-rolled and now
+// shares with ComparisonMatrix. It is used instead of Table's own
+// useTableRowExpansion because that hook's auto-inserted 40px chevron column has
+// no room for its own 24px icon once this table's cells pick up context-menu
 // padding relocation (TableCell moves density padding onto an inner "trigger"
 // wrapper for any cell with a context-menu action, which the hook attaches to
 // every cell) — the icon renders but overflows into the next column and
@@ -69,32 +70,14 @@ export function AccreditationStandardsTable({
   slug: string;
   hasWinBrief?: boolean;
 }) {
-  const [expandedKeys, setExpandedKeys] = useState<Set<string>>(new Set());
   const rows: StandardRow[] = standardsCrosswalk.rows.map((r) => ({ _id: r.element_id, row: r }));
-  // Element + Exxat + Prism fit + one per competitor.
-  const columnCount = 3 + standardsCrosswalk.competitors.length;
 
-  const toggle = (key: string) =>
-    setExpandedKeys((prev) => {
-      const next = new Set(prev);
-      if (next.has(key)) next.delete(key);
-      else next.add(key);
-      return next;
-    });
-
-  const detailPanel: TablePlugin<StandardRow> = {
-    transformBodyRow(props, item) {
-      if (!expandedKeys.has(item._id)) return props;
-      const panel = (
-        <tr key={`${item._id}-detail`}>
-          <td colSpan={columnCount} style={{ padding: "16px 20px", background: "var(--color-background-muted)" }}>
-            <StandardDetail row={item.row} slug={slug} hasWinBrief={hasWinBrief} />
-          </td>
-        </tr>
-      );
-      return { ...props, afterRow: props.afterRow ? <>{props.afterRow}{panel}</> : panel };
-    },
-  };
+  const { plugin: detailPanel, isOpen, toggle } = useTableDetailPanel<StandardRow>({
+    rowId: (item) => item._id,
+    // Element + Exxat + Prism fit + one per competitor.
+    columnCount: 3 + standardsCrosswalk.competitors.length,
+    renderPanel: (item) => <StandardDetail row={item.row} slug={slug} hasWinBrief={hasWinBrief} />,
+  });
 
   return (
     <Table<StandardRow>
@@ -116,7 +99,7 @@ export function AccreditationStandardsTable({
           // wrapping a title into 8+ lines instead of the badges beside it.
           width: pixel(280),
           renderCell: (r) => {
-            const isOpen = expandedKeys.has(r._id);
+            const isRowOpen = isOpen(r._id);
             return (
               <Stack gap={0.5}>
                 <Text type="body" weight="semibold">
@@ -132,7 +115,7 @@ export function AccreditationStandardsTable({
                   </Text>
                 ) : null}
                 <Link color="accent" hasUnderline onClick={() => toggle(r._id)}>
-                  {isOpen ? "Hide detail" : "Show detail"}
+                  {isRowOpen ? "Hide detail" : "Show detail"}
                 </Link>
               </Stack>
             );
