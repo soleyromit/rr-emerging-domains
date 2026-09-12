@@ -4,7 +4,7 @@
 to every other one. The README lists the folders flat; this explains the *dependency
 structure* between them. Reference document — scan it, don't read it cover to cover.
 
-**Last updated:** 2026-08-24
+**Last updated:** 2026-09-12
 
 ---
 
@@ -50,9 +50,9 @@ first fixing the stratum itself.
 ```mermaid
 flowchart BT
     L0["Level 0 — RAW SOURCES (not in git)\n7 transcript files · 322-file help-center mirror ·\n7 discipline playbooks — all in the\nObsidian vault 99-Assets — plus public accreditor\nPDFs & competitor pages, cited by URL"]
-    L05["Level 0.5 — SOURCE INDEXES (in git)\ncontent/sources/ — registry.yaml ·\nhelp-center.yaml · playbooks.yaml ·\nsupport-tickets/"]
-    L1["Level 1 — GROUND-TRUTH REGISTRIES\nprism/ · domains/ · accreditation/ · competitors/"]
-    L2["Level 2 — REFRAMINGS\npersonas/ (discipline·role·lens) · feature-map/"]
+    L05["Level 0.5 — SOURCE INDEXES (in git)\ncontent/sources/ — registry.yaml ·\nhelp-center.yaml · playbooks.yaml ·\nsupport-tickets/ — plus\ncontent/interviews/*.md front-matter"]
+    L1["Level 1 — GROUND-TRUTH REGISTRIES\nprism/ · domains/ · accreditation/ ·\ncompetitors/ · market/programs/"]
+    L2["Level 2 — REFRAMINGS\npersonas/ (discipline·role·lens) · feature-map/ ·\nlenses/ · trends/ · dissection/"]
     L3["Level 3 — ELEMENT-LEVEL VERIFICATION\nflows/ (33+ files, v2 schema, per-element analysis)"]
     L4["Level 4 — NARRATIVE\njourneys/ (5 cross-domain journey maps)"]
     L5["Level 5 — INTERPRETATION\n5a: scorecard/ → 5b: synthesis/"]
@@ -83,15 +83,25 @@ internal-doc hygiene) but every in-repo claim that rests on them names the exact
 or article path in a `source:` / `confirmed_by:` field, so the chain of custody
 survives the repo boundary.
 
-`interviews/` is the in-repo slot for real CS/AM/leadership interviews as Romit
-conducts them. First populated 2026-08-26 with two Granola meeting transcripts
-(lightly cleaned of tech-support tangents, substance kept verbatim) — interview files
-are raw testimony and nothing in them cites upward.
+`interviews/` is the in-repo slot for real CS/AM/leadership and domain-expert sessions
+as Romit conducts them. First populated 2026-08-26 with two Granola meeting transcripts
+(lightly cleaned of tech-support tangents, substance kept verbatim); 4 files as of
+2026-09-11. The interview *body* is raw testimony and nothing in it cites upward.
 
-## Level 0.5 — Source indexes (`content/sources/`, in git, cite nothing)
+**The one file that sits at two levels, and why that isn't a contradiction.** Since
+2026-09-11 every interview file also carries a YAML **front-matter block** (`id`, `type`,
+`date`, `participants`, `domains`, `access`, `evidence_status`, `claims_are_speaker_opinion`,
+`supersedes`, and `recording` where one exists). That block is not testimony — it is an *index entry* for the
+testimony below it, the same shape of record a `sources/registry.yaml` entry is, and it is
+what makes a session citable by `source_id` from anywhere in the repo. So: the transcript
+body is Level 0, its front-matter is Level 0.5, and the only unusual thing is that the index
+entry is co-located with the document it indexes instead of living in a separate registry
+file. Read Level 0.5 below for how that block is validated and resolved.
 
-Three in-repo index files plus one snapshot folder stand between the raw sources and
-Level 1. They are citable
+## Level 0.5 — Source indexes (`content/sources/` + interview front-matter, in git, cite nothing)
+
+**Five source homes**, not four folders: three in-repo index files, one snapshot folder,
+and the front-matter of every `content/interviews/*.md`. They are citable
 by any file at any level and cite nothing themselves. `registry.yaml` is the general
 one — sparse, curated, one entry per individually found-and-checked source, referenced
 by `source_id`. `help-center.yaml` and `playbooks.yaml` are dedicated *corpus* indexes
@@ -119,9 +129,28 @@ until a human has read it for personal data. `scripts/snapshot_zendesk.py` write
 files and is not permitted to set `redacted: true`. A snapshot records only what the
 helpdesk actually returned; unknown fields stay null rather than being filled in.
 
+`content/interviews/*.md` **front-matter** is the fifth home (added 2026-09-11, the
+*session* schema — see the Level 0 note above for why the same file sits at two levels).
+It exists because sessions were previously cited two different ways: some by a hand-written
+`sources/registry.yaml` entry, some by bare filename. The front-matter makes every session
+carry its own id, `type`, `access` and `evidence_status` (`verbatim-cleaned` vs.
+`summary-only` — a real distinction for a reader deciding how much weight a quote carries),
+and `claims_are_speaker_opinion`, which is the honest default: a colleague's read of the
+market is testimony about what they believe, not a market fact.
+
+Two mechanical notes that bite people. **An interview id is not derivable from its
+filename** — one of them deliberately differs from its filename slug so it matches an id
+already frozen in `sources/registry.yaml` that existing citations point at; ids are always
+read from front-matter. And all five homes resolve through **one** union loader,
+`_load_source_ids()` in `scripts/check_content_density.py`, so any `source_id` /
+`sources:` reference anywhere in `content/` may name an id from any of them; the
+front-matter blocks themselves are validated by `check_sessions_integrity()` in the same
+script. `sources/vendor-comparison-chart.yaml` is pointedly *not* a sixth home — it is
+quarantined `citable_as_fact: false` (see "Outside the strata").
+
 ## Level 1 — Ground-truth registries (cite only Level 0)
 
-Four folders, one question each. These are the exhibits: flat factual records where
+Five folders, one question each. These are the exhibits: flat factual records where
 every non-trivial claim carries a `source:` pointing at Level 0.
 
 | Folder | One file per | Question it answers |
@@ -130,6 +159,25 @@ every non-trivial claim carries a `source:` pointing at Level 0.
 | `domains/` | expansion domain (do, pharmacy, dentistry, medicine) | What is the market context — program counts, enrollment trends, budget dynamics? |
 | `accreditation/` | accreditor (coca, acpe, coda, lcme) | Standard → evidence programs must produce → required software behavior → Prism fit (**Transfer / Configure / Build / Gap**), at the numbered-element level. |
 | `competitors/` | incumbent (9 files: axium, core-elms, e-value, elentra, emedley, leo-davinci, medhub, new-innovations, one45) | Feature-level teardown of each incumbent, from their public docs. |
+| `market/programs/` (new 2026-09-11) | expansion domain (pharmacy, do, dentistry, medicine) | *Which* programs, one row each — institution, program name, accreditation status, Exxat relationship, other disciplines already on that campus. The row-level evidence under `domains/{slug}.yaml`'s aggregate `market_sizing:` block. |
+
+**`market/programs/` — why a fifth registry, and what it may not do.** `domains/{slug}.yaml`
+already carried a `market_sizing:` block, but its TAM/SAM numbers were asserted at the
+aggregate level with nothing underneath them to check. `market/programs/{slug}.yaml` is that
+missing layer: one row per tracked program, each row transcribed from the Level 0 CRM export
+(the "new logo grid" spreadsheet) verbatim and in sheet order, with a `locator:` naming the
+exact sheet cell the name came from, so the file can be re-derived rather than trusted. Every
+file opens with a "HOW THIS FILE WAS BUILT" header recording how the sheet's own status text
+was mapped onto this repo's enums and what was left `unknown` rather than guessed — a blank
+cell never becomes a pipeline number. Three standing cautions: the source of record stays the
+spreadsheet, so **no contact PII** is mirrored into git (counts, status and structure only);
+row semantics differ per file and must be read before aggregating (DO's rows are *teaching
+locations*, not institutions — 14 institutions repeat); and an empty list can mean "checked,
+nothing there" or "never matched", which is why aggregates branch on an explicit flag like
+`grid_matched:` and never on the wording of a `notes:` field. `domain:` here is the
+**app-level label** ("Medicine"), not always the raw `domain:` string the sibling registry
+uses ("MD"); `check_market_programs_integrity()` and `check_market_sizing_integrity()` in
+`scripts/check_content_density.py` enforce both that and the rows-vs-aggregate relationship.
 
 **The relay-race baton — how a Level-1 primitive propagates.** The capability map
 names Prism's *anchor-relative scheduling* primitive: publish/due dates set as
@@ -161,7 +209,39 @@ file that needs a new fact sends it down to Level 1 first.
 | `personas/lens-*.yaml` (6) | Mirrors `competitors/<slug>.yaml` "reframed around roles, not features" — how each incumbent implicitly serves or fails each role, and the gaps Prism can exploit. |
 | `feature-map/*.yaml` (4, one per expansion domain) | Pillar-by-pillar competitive verdict per domain (leading / behind / opportunity), citing `accreditation/` elements and `competitors/` files by name. |
 | `dissection/*.yaml` (one per expansion domain) | Not the facts themselves but *where they are* — a per-domain manifest naming, for each of six fixed dissection questions, which file already answers it and how far along the research is (`coverage` / `confidence` / `gap_note`), pointing at the lenses and registries that hold the actual claims and duplicating none of them. Same "no new primary claims" rule as `personas/` and `feature-map/`; because it asserts nothing it carries no `sources:`, and an unanswered question stays visible as `coverage: "none"` plus a `gap_note` rather than as a missing field. |
-| `lenses/*.yaml` (2 as of 2026-08-26: `accreditor-tiers.yaml`, `competitor-landscape.yaml`) | Cross-cutting rows×columns quick-scan views spanning all 12 domains at once, requested directly by the sales/product team (see `interviews/2026-08-26-wilson-nursing-crosswalk.md`). `accreditor-tiers` cites `accreditation/`, `domains/`, and `interviews/`; `competitor-landscape` cites `competitors/` by name (`threat` is this file's own synthesis judgment, not a field lifted from Level 1). A third lens, feature comparison, needs no content file at all — it's a pure re-visualization of `competitors/*.yaml`'s existing `feature_teardown`, scoped per domain by `domains_served` (`apps/ecosystem/lib/content.ts`'s `getFeatureComparisonForDomain`). |
+| `lenses/accreditor-tiers.yaml`, `lenses/competitor-landscape.yaml` (the original 2, 2026-08-26) | Cross-cutting rows×columns quick-scan views spanning all 12 domains at once, requested directly by the sales/product team (see `interviews/2026-08-26-wilson-nursing-crosswalk.md`). `accreditor-tiers` cites `accreditation/`, `domains/`, and `interviews/`; `competitor-landscape` cites `competitors/` by name (`threat` is this file's own synthesis judgment, not a field lifted from Level 1). |
+| `lenses/standards-competitor-ratings.yaml`, `lenses/standards-use-cases.yaml` | The same reframing done at *element* granularity, keyed by (domain, `element_id`). Ratings cites `accreditation/` by `element_id` and `competitors/` by slug; use-cases cites `accreditation/` and a `source_id`. They exist as lenses rather than as fields on `accreditation/*.yaml` because Level 3 flows already cite `accreditation/` — hanging the answer off Level 1 would close a citation cycle. |
+| `lenses/product-gaps.yaml`, `lenses/competitor-differentiation.yaml`, `lenses/feature-comparison-matrix.yaml` (new 2026-09-11) | The three lenses that own answers to specific *dissection questions* (below). `product-gaps` = "what should we build for this domain," as a countable list of gaps rather than a paragraph of strategy. `competitor-differentiation` = per-(domain, competitor) head-to-head reasoning, and the only home in the repo for the **non-product** axes (distribution, incumbency, price, services) that decide deals and fit nowhere in a feature teardown. `feature-comparison-matrix` = the feature/pillar-level sibling of `standards-competitor-ratings`. All three cite `domains/`, `competitors/`, `prism/capability-map.yaml` and Level 0.5 `source_id`s downward and assert nothing that isn't grounded there. |
+| `trends/*.yaml` (one per expansion domain) | What is *changing* in the domain — standards revisions, pedagogy and capacity shifts, AI pressure — each trend tagged with Exxat's status against it (`exxat_status` / `exxat_ref` from `prism/capability-map.yaml`) and which competitors, if any, already address it. Cites `prism/`, `competitors/` and Level 0.5 source ids. |
+
+**The six dissection questions, and which file owns each.** A `dissection/{slug}.yaml`
+manifest has exactly six `questions[]` entries, keyed `features-to-build`,
+`competitor-differentiation`, `market-size`, `feature-comparison`, `standards-to-product`
+and `persona-and-document-lens`. The manifest holds no answers — it names the file that
+does (`lenses/product-gaps.yaml`, `lenses/competitor-differentiation.yaml`,
+`market/programs/` + `domains/{slug}.yaml#market_sizing`,
+`lenses/feature-comparison-matrix.yaml`, `accreditation/` + `lenses/standards-use-cases.yaml`,
+`personas/`) together with an honest `coverage` / `confidence` / `gap_note`. That is the
+point of the family: an unresearched question stays *visible* as `coverage: "none"` plus a
+`gap_note`, instead of disappearing as a missing field.
+
+**Sparse by design — the convention that makes these lenses readable.** In
+`standards-competitor-ratings`, `standards-use-cases`, `product-gaps`,
+`competitor-differentiation`, `feature-comparison-matrix` and `trends`, **an absent row
+means UNRESEARCHED, never "we checked and there is nothing here."** Do not pre-populate
+rows to make a domain look covered: an invented row is indistinguishable from a researched
+one the moment it is committed, and a fully-populated grid of 1,000+ empty cells is noise
+for zero information. Several of these files were deliberately committed *empty* and filled
+in later by real research passes.
+
+**Two different things are both called "feature comparison" — don't merge them.**
+`apps/ecosystem/lib/content.ts`'s `getFeatureComparisonForDomain()` is a pure
+re-visualization of `competitors/*.yaml`'s existing `feature_teardown`, scoped per domain by
+`domains_served`, and needs no content file at all. `lenses/feature-comparison-matrix.yaml`
+is a separate, researched Level-2 file with its own reader, its own per-cell `sources:`, and
+a *required* two-value `evidence_strength` enum so that "verified" is written down rather
+than inferred from a missing flag. The lens file is not the derived view's backing store,
+and the two are free to disagree — if they do, that disagreement is information.
 
 **`related_flows` is navigation, not a citation — the one deliberate exception to "never
 up."** `personas/jtbd`/`top_pains`/lens entries carry an optional `related_flows:
@@ -225,7 +305,8 @@ domain, every rationale cell citing `domains/`, `accreditation/`, `competitors/`
 `personas/`, and `prism/capability-map.yaml` by name. Current answer: DO 4.40 >
 Pharmacy 4.05 > Medicine 3.85 > Dentistry 2.75.
 
-**5b — `synthesis/`.** The argument, in four documents:
+**5b — `synthesis/`.** The argument, in four cross-domain documents plus a per-domain
+folder each:
 
 | File | Role |
 |---|---|
@@ -233,6 +314,19 @@ Pharmacy 4.05 > Medicine 3.85 > Dentistry 2.75.
 | `vocabulary-glossary.md` | The "vocabulary-ahead" glossary: term → definition → Prism pillar → how to say it to a dean; every entry cites its on-disk Level-1 file *and* that file's primary source. |
 | `prism-positioning.md` | The GTM brief — explicitly "a positioning brief, not a research document," downstream of journeys (element-verified via flows), the capability map, and the scorecard. |
 | `positioning-and-element-flows-plan.md` | The plan document that specified the v2 flow methodology and positioning approach — process record, kept for traceability. |
+
+**`synthesis/{slug}/` — the same argument, cut by reader.** Each expansion domain
+(`pharmacy/`, `do/`, `dentistry/`, `medicine/`) has a folder of four files: `index.md`
+(a "who are you?" router), `PRODUCT.md` (for PMs and executives), `DESIGN.md` (for
+designers), and `SALES.md` (for sales/partnerships, read before a call). These are
+*collations*, not new evidence: each opens with a `Source:` line naming the Level 1/2 files
+it was built from, and the citation rule applies unchanged — a figure that appears here
+must already exist, with its own source, in the file named. `SALES.md` is what the app's
+"How we win" tab renders, via `apps/ecosystem/lib/sales-brief.ts`. Where the underlying
+files disagree with each other, these briefs say so rather than picking a winner, and a
+stakeholder decision that overrides the research (Pharmacy confirmed ahead of DO on
+2026-09-10, against the scorecard's own math) is recorded as a visible dated note — the
+same annotate-don't-rewrite discipline as the Pattern-G block.
 
 `positioning-and-element-flows-plan.md` has **no page in `apps/ecosystem/` by
 design** — it is a process record kept for traceability, not reader-facing content,
@@ -265,8 +359,10 @@ source, or it stays opinion and stays here.
 - **`enterprise-repo/tool-comparison.md`** — meta-document about the repo itself
   (why git/YAML over Dovetail/Notion/Airtable). Not part of the evidence chain;
   cites nothing in it and nothing cites it as evidence.
-- **`interviews/`** — Level 0 primary sources held in-repo (see Level 0 above); 2 files
-  as of 2026-08-26.
+- **`interviews/`** — Level 0 primary sources held in-repo (see Level 0 above); 4 files
+  as of 2026-09-11. Only the transcript *body* is outside the strata in this sense: each
+  file's YAML front-matter is a Level 0.5 source-index entry, validated by
+  `check_sessions_integrity()`, and is how the session is cited.
 - **`_TEMPLATE*.yaml`** — each YAML folder carries its schema as a template file;
   templates are the enforcement mechanism for this document's rules at
   point-of-writing.
@@ -283,8 +379,9 @@ source, or it stays opinion and stays here.
   path or id as evidence. Otherwise a plan would launder itself into a finding — the
   same failure `sources/vendor-comparison-chart.yaml` is quarantined to prevent from the
   other direction. This is mechanically enforced by `check_gtm_isolation()` in
-  `scripts/check_content_density.py`; until that check lands, the rule lives in each
-  file's header comment.
+  `scripts/check_content_density.py` — the check has landed and runs on every
+  `python3 scripts/check_content_density.py`, so the rule is no longer only a header
+  comment.
 
   The one legitimate bridge back into the citation DAG is `collateral.yaml`'s
   `becomes_source_id:`. Once an asset is actually published it exists in the world, and
@@ -300,12 +397,19 @@ source, or it stays opinion and stays here.
 | You have… | It goes in… |
 |---|---|
 | A fact from a transcript, help-center article, playbook, standards PDF, or competitor page | The relevant **Level 1** registry, with a `source:` naming the Level 0 file/URL |
+| A named individual program — its institution, accreditation status, or whether it's an Exxat client | **`market/programs/{slug}.yaml`** (Level 1), one row, `locator:` naming the sheet cell |
+| A transcript or notes from a call you just had | **`interviews/`** — body is Level 0, and give it front-matter (Level 0.5) so it can be cited by id |
 | The same facts re-cut for a program archetype, human role, or competitor-through-a-role lens | **`personas/`** (Level 2) |
 | A pillar-level competitive verdict for one domain | **`feature-map/`** (Level 2) |
+| A specific thing we should build for a domain, or why a named competitor wins/loses there | **`lenses/product-gaps.yaml`** / **`lenses/competitor-differentiation.yaml`** (Level 2) |
+| A per-capability rating of a competitor against Prism, with its evidence strength | **`lenses/feature-comparison-matrix.yaml`** (Level 2) |
+| Something that is *changing* in the domain, and where Exxat stands against it | **`trends/{slug}.yaml`** (Level 2) |
+| Not a claim at all, but *where* a domain's answer lives and how far the research got | **`dissection/{slug}.yaml`** (Level 2) — a pointer plus `coverage`/`gap_note`, never a fact |
 | What one screen/element actually does, and how a standard or competitor attaches to it | **`flows/`** (Level 3), `confirmed_by` a Level 0 source |
 | A cross-domain narrative of how a whole workflow feels today vs. its gaps | **`journeys/`** (Level 4), citing its flow files |
 | A weighted domain-priority score | **`scorecard/`** (Level 5a) |
 | An argument, pattern, glossary entry, or message | **`synthesis/`** (Level 5b) |
+| A ready-to-read brief on one domain for a PM, a designer, or sales | **`synthesis/{slug}/`** (Level 5b) — a collation whose every figure already exists, sourced, in a file it names |
 | A way to *show* any of the above | **`apps/ecosystem/`** (Level 6) |
 | A work assignment, a research intention, or a piece of planned/published collateral — a statement about *us*, not about the world | **`gtm/`** (outside the strata — it may point *at* `content/`, but nothing in `content/` may cite it) |
 
