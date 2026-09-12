@@ -45,9 +45,12 @@ template_of_record: null
 last_reviewed: "2026-09-12"
 
 # Scoping only — who is in the Dentistry clinical-education software market. Membership is
-# read straight off each competitor file's own `domains_served` field: these are every file
-# in content/competitors/ whose list includes "Dentistry", verified by reading the four
-# files. The claims about each vendor stay in content/competitors/<slug>.yaml.
+# read off each competitor file's own `domains_served` field, but NOT by string-matching
+# "Dentistry" against it: four files (axium, core-elms, leo-davinci, examsoft) carry that
+# literal string, and trajecsys names "Dental Hygiene / Dental Assisting" instead while
+# serving 40% of this domain's tracked rows. A grep for the domain label alone would have
+# dropped it, and did on this file's first pass. The claims about each vendor stay in
+# content/competitors/<slug>.yaml.
 #
 # Role is assigned per-vendor from each file's OWN stated `category`, not from a blanket
 # default. Where a category describes experiential/clinical education management it is
@@ -79,6 +82,29 @@ incumbent_set:
     # health-science schools" — clinical education management, so primary on the same
     # reading as core-elms, though its file claims no dentistry-specific depth.
 
+  - competitor_slug: "trajecsys"
+    role: "primary"
+    # Its `domains_served` does NOT contain the literal string "Dentistry" — it names
+    # "Dental Hygiene / Dental Assisting" — so a grep for "Dentistry" misses it. That is a
+    # matching artifact, not a scoping fact: 389 of the 968 rows in
+    # market/programs/dentistry.yaml (40%) are dental hygiene or dental assisting programs.
+    #
+    # "primary", and the narrower-scope wording in its own category is deliberately NOT read
+    # as a reason for "adjacent". Its category is "Clinical recordkeeping and tracking
+    # software (narrower scope than a full ELMS platform) for nursing and allied-health
+    # programs" — narrower than an ELMS at the SAME job, which is not what made examsoft
+    # adjacent below. ExamSoft is adjacent because it does a DIFFERENT job (didactic exam
+    # delivery); Trajecsys does multi-site placement, time/attendance and competency
+    # tracking, which is Exxat's job, just with less of it. A narrower competitor at the
+    # same job is still a competitor for the deals it can serve.
+    #
+    # And this is the slice that matters here: axium.yaml's own closing read says Prism's
+    # practical opening in Dentistry is "less about displacing axiUm's EHR/billing core" and
+    # more about "dental hygiene, dental assisting, and other dental-adjacent allied-health
+    # programs that route students through external clinical sites". That is precisely
+    # Trajecsys's stated population, so in the one part of this domain this repo already
+    # calls winnable, Trajecsys is the incumbent to beat.
+
   - competitor_slug: "examsoft"
     role: "adjacent"
     # domains_served lists Dentistry, but examsoft.yaml's own category is "Secure exam
@@ -103,7 +129,7 @@ questions:
     answered_in: ["lenses/competitor-differentiation.yaml", "competitors/*.yaml"]
     coverage: "none"
     confidence: "low"
-    gap_note: "No Dentistry differentiation rows. The 4 competitor files scoped above carry teardowns but no head-to-head read for Dentistry; axium has no comparison against Exxat anywhere in this repo."
+    gap_note: "No Dentistry differentiation rows. The 5 competitor files scoped above carry teardowns but no head-to-head read for Dentistry; axium has no comparison against Exxat anywhere in this repo."
 
   - key: "market-size"
     answered_in: ["domains/dentistry.yaml#market_sizing", "market/programs/dentistry.yaml"]

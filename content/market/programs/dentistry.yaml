@@ -39,9 +39,13 @@
 #     national. Its 956 rows are alphabetical by institution name and run the
 #     full A-to-Z ("A.T. Still" to "Zucker"), but its State column holds only 32
 #     values, every one alphabetically at or before NY. Seventeen states have no
-#     row at all: ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VA, VT, WA, WI, WV,
-#     WY. There is no Ohio State, no Temple, no Pittsburgh, no University of
-#     Texas or Washington row anywhere in the block. A state filter was evidently
+#     row ANYWHERE IN THIS BLOCK: ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VA,
+#     VT, WA, WI, WV, WY. Read that as scoped to the 956-row block and not to the
+#     file: two of the seventeen do appear elsewhere in the sheet, because the
+#     hand-kept client and churned blocks are not subject to the same filter — OR
+#     on row 4 and TX on rows 5, 9 and 972. Within the directory block itself the
+#     absence is total: there is no Ohio State, no Temple, no Pittsburgh, no
+#     University of Texas or Washington row. A state filter was evidently
 #     applied to the source before it was pasted; the sheet does not say so, and
 #     this file does not guess at what was dropped. Any national TAM built on
 #     this count is short by whatever those 17 states hold.
@@ -96,6 +100,21 @@
 #       - Row 11 "University of Florida - Dentistry" is a client while rows 758
 #         and 759 (University of Florida College of Dentistry/Seminole, and
 #         University of Florida, Hialeah) are "No".
+#       - A fifth oddity, of a different kind: FOUR of the client/churned
+#         institutions have no row in the 956-row directory block at all, even
+#         though their state IS covered by it, so the truncation above does not
+#         explain the absence. They are Hinds Community College (MS, a state with
+#         13 directory rows), University of Missouri at Kansas City (MO, 19),
+#         MGH Institute of Health Professions (MA, 53) and Louisiana State
+#         University Health Sciences Center - New Orleans (LA, 2). MGH IHP is the
+#         starkest: it is carried as a churned Dentistry client while no CODA
+#         dental program under that name appears anywhere in the sheet (the
+#         directory's three "Massachusetts General Hospital" rows, 380-382, are a
+#         different entity and are marked "No"). Whether these are CRM records
+#         for programs the directory paste simply missed, or client rows attached
+#         to the wrong institution, the sheet does not say and this file does not
+#         guess. Northern Arizona University is NOT in this group: its directory
+#         detail exists, it just sits on row 8 inside the client block.
 #     exxat_status follows each row's own cell in every case. A later pass with
 #     CRM access should settle whether the client count is 9 rows, 8
 #     institutions, or fewer still once the Houston pair is merged.
@@ -336,7 +355,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Client, but rows 758-759 (Univ. of Florida College of Dentistry/Seminole; Hialeah) are 'No'. Unreconciled."
+    notes: "Client, but rows 758-759 (UF College of Dentistry/Seminole; Hialeah) are 'No'. No Logo Grid match; empty disciplines list is unknown, not none."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "Dentistry!A11"
@@ -16605,7 +16624,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Churned, but row 5 'The University of Texas Health Science Center at Houston' is a client. Unreconciled."
+    notes: "Churned, but row 5 (UT Health Science Center at Houston) is a client. No Logo Grid match; empty disciplines list is unknown, not none."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "Dentistry!A972"

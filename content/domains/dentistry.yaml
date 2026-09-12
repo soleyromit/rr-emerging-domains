@@ -38,20 +38,31 @@ market_sizing:
     # length in that file's header:
     #   1. Rows are PROGRAMS, not institutions — one row per CODA-recognized
     #      program, so the 968 rows sit at 531 distinct institutions.
-    #   2. They are not all predoctoral dentistry. By the sheet's own Discipline
-    #      Code column only 45 rows are PREDOC (DDS/DMD); the rest are dental
-    #      hygiene (215), dental assisting (174), advanced/postdoctoral
-    #      residencies (512) and a handful of others. This is why 968 is NOT
-    #      comparable to the "77 CODA-accredited predoctoral programs" figure in
-    #      the `market:` prose above — different populations, not a discrepancy
-    #      to be reconciled by arithmetic.
+    #   2. They are not all predoctoral dentistry, and this is the caution most
+    #      likely to mislead someone reading only this block. By the sheet's own
+    #      Discipline Code column only 45 rows are PREDOC (DDS/DMD); the rest are
+    #      dental hygiene (215), dental assisting (174), advanced/postdoctoral
+    #      residencies (512) and a handful of others. So 968 is NOT comparable to
+    #      the "77 CODA-accredited predoctoral programs" figure in the `market:`
+    #      prose above — different populations, not a discrepancy to be reconciled
+    #      by arithmetic.
+    #      THE RATIO HAZARD, stated because the numbers invite the wrong read:
+    #      968 against 77 is 12.6x, where Pharmacy's equivalent (149 tracked vs
+    #      145 ACPE-accredited) is 1.03x. Set side by side, tam.programs alone
+    #      makes Dentistry look like roughly 6.5x Pharmacy's market. On the
+    #      like-for-like comparison — degree-granting professional schools — it is
+    #      77 against 145, about HALF Pharmacy's. Any cross-domain ranking,
+    #      scorecard weight or revenue model built on tam.programs across domains
+    #      is comparing a 968 that counts every allied and postdoctoral program
+    #      against a 149 that counts only schools, and will be wrong by an order
+    #      of magnitude in Dentistry's favour.
     #   3. It is not national. The sheet's 956-row directory block runs A-to-Z by
     #      institution name but holds no row at all for 17 states (ND, OH, OK,
     #      OR, PA, RI, SC, SD, TN, TX, UT, VA, VT, WA, WI, WV, WY). A state
     #      filter was evidently applied before the paste; the sheet does not say
     #      so, and nothing here guesses at what was dropped.
     programs: 968
-    basis: "Every row on the CRM export's Dentistry sheet: 968 programs, not institutions (531 distinct), all program types; its directory block omits 17 states."
+    basis: "All 968 rows of the CRM Dentistry sheet = every CODA program type, not 968 dental schools: only 45 are predoctoral (77 nationally); 531 institutions."
     source_id: "crm-export-new-logo-grid-2026"
   accredited_programs:
     # Still null, on purpose, and this is the field where that matters most for
