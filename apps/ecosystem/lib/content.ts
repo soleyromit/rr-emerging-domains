@@ -519,12 +519,15 @@ export function getScorecard(): Scorecard | null {
   return readYamlFile<Scorecard>("scorecard/where-to-play.yaml");
 }
 
-// The scorecard's domain list comes from the data, not a hardcoded array: every criterion
-// in scorecard/where-to-play.yaml carries the same `scores` key set, so the first
-// criterion's keys are the domain list, ordered by the canonical PRIORITY_DOMAINS order
-// (Pharmacy first). Call this instead of hardcoding a domain list anywhere scorecard-adjacent.
+// The scorecard's domain list comes from the data, not a hardcoded array. Union the score
+// keys across EVERY criterion rather than trusting the first one: all criteria in
+// scorecard/where-to-play.yaml carry an identical key set today, but a content-only YAML
+// edit that scored one new criterion on a different set would otherwise silently drop a
+// domain from the table, the totals and the chart. Ordered by the canonical
+// PRIORITY_DOMAINS order (Pharmacy first). Call this instead of hardcoding a domain list
+// anywhere scorecard-adjacent.
 export function scorecardDomains(sc: Scorecard): string[] {
-  const domains = Object.keys(sc.criteria?.[0]?.scores ?? {});
+  const domains = [...new Set((sc.criteria ?? []).flatMap((c) => Object.keys(c?.scores ?? {})))];
   return sortDomainsByPriority(domains, (d) => d);
 }
 
