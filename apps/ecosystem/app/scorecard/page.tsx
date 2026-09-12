@@ -7,9 +7,7 @@ import { Banner } from "@astryxdesign/core/Banner";
 import { PageHeader } from "@/components/page-header";
 import { ScorecardChart } from "@/components/charts/scorecard-chart";
 import { ScorecardTable } from "@/components/scorecard-table";
-import { getScorecard, computeWeightedTotals } from "@/lib/content";
-
-const DOMAINS = ["DO", "Pharmacy", "Dentistry", "Medicine"];
+import { getScorecard, computeWeightedTotals, scorecardDomains } from "@/lib/content";
 
 export default function ScorecardPage() {
   const scorecard = getScorecard();
@@ -22,8 +20,11 @@ export default function ScorecardPage() {
     );
   }
 
-  const totals = computeWeightedTotals(scorecard);
-  const isPlaceholder = scorecard.criteria.every((c) => DOMAINS.every((d) => (c.scores?.[d] ?? 0) === 0));
+  // Single source of truth for this page's domain list — the table and the placeholder
+  // check both read it, so neither can drift from the data or from each other.
+  const domains = scorecardDomains(scorecard);
+  const totals = computeWeightedTotals(scorecard, domains);
+  const isPlaceholder = scorecard.criteria.every((c) => domains.every((d) => (c.scores?.[d] ?? 0) === 0));
 
   return (
     <Stack gap={0}>
@@ -91,7 +92,7 @@ export default function ScorecardPage() {
             <Heading level={2}>Scoring detail</Heading>
             <Text type="supporting">1–5 per criterion per domain, with rationale.</Text>
           </Stack>
-          <ScorecardTable criteria={scorecard.criteria} />
+          <ScorecardTable criteria={scorecard.criteria} domains={domains} />
         </Stack>
       </Section>
     </Stack>

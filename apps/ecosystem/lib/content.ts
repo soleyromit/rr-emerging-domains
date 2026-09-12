@@ -519,8 +519,19 @@ export function getScorecard(): Scorecard | null {
   return readYamlFile<Scorecard>("scorecard/where-to-play.yaml");
 }
 
-export function computeWeightedTotals(sc: Scorecard): Record<string, number> {
-  const domains = ["DO", "Pharmacy", "Dentistry", "Medicine"];
+// The scorecard's domain list comes from the data, not a hardcoded array: every criterion
+// in scorecard/where-to-play.yaml carries the same `scores` key set, so the first
+// criterion's keys are the domain list, ordered by the canonical PRIORITY_DOMAINS order
+// (Pharmacy first). Call this instead of hardcoding a domain list anywhere scorecard-adjacent.
+export function scorecardDomains(sc: Scorecard): string[] {
+  const domains = Object.keys(sc.criteria?.[0]?.scores ?? {});
+  return sortDomainsByPriority(domains, (d) => d);
+}
+
+export function computeWeightedTotals(
+  sc: Scorecard,
+  domains: string[] = scorecardDomains(sc)
+): Record<string, number> {
   const totals: Record<string, number> = {};
   for (const d of domains) {
     totals[d] = sc.criteria.reduce((sum, c) => sum + (c.weight ?? 0) * (c.scores?.[d] ?? 0), 0);

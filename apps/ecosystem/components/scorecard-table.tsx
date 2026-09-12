@@ -5,8 +5,6 @@ import { Stack } from "@astryxdesign/core/Stack";
 import { Text } from "@astryxdesign/core/Text";
 import type { ScorecardCriterion } from "@/lib/content";
 
-const DOMAINS = ["DO", "Pharmacy", "Dentistry", "Medicine"];
-
 interface CriterionRow extends Record<string, unknown> {
   name: string;
   weight: number;
@@ -27,7 +25,13 @@ function scoreCell(domain: string) {
   );
 }
 
-export function ScorecardTable({ criteria }: { criteria: ScorecardCriterion[] }) {
+export function ScorecardTable({
+  criteria,
+  domains,
+}: {
+  criteria: ScorecardCriterion[];
+  domains: string[];
+}) {
   return (
     <Table<CriterionRow>
       data={criteria as CriterionRow[]}
@@ -51,7 +55,7 @@ export function ScorecardTable({ criteria }: { criteria: ScorecardCriterion[] })
             </Stack>
           ),
         },
-        ...DOMAINS.map((d) => ({
+        ...domains.map((d) => ({
           key: d,
           header: d,
           width: proportional(1),
