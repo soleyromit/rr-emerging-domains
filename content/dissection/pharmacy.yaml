@@ -33,10 +33,17 @@ incumbent_set:
     # programs", and CORE is named there as "our biggest competitor in pharmacy".
 
   - competitor_slug: "rxpreceptor"
-    role: "primary"
-    # APPE/rotation tracking; the legacy CORE brand, per rxpreceptor.yaml's
-    # ownership field — same owner as core-elms, still sold and encountered
-    # under its own name.
+    role: "not-a-target"
+    # Out of scope as a SEPARATE incumbent, not as a product: rxpreceptor.yaml's
+    # own header states "RxPreceptor is not a separate product" — rxpreceptor.com
+    # 302s to PeopleGrove's CORE ELMS login, the legacy academicsuiterx.com logins
+    # 301 to corehighered.com, and CORE's training listing calls the software
+    # "CORE ELMS / RXpreceptor". That file deliberately records only the
+    # RxPreceptor-branded surface and keeps platform depth in core-elms.yaml, so
+    # listing it alongside core-elms would count one platform twice. Kept visible
+    # rather than dropped because the name is still live on school pages and in
+    # CORE's own CE listing, so it is still encountered in the field.
+    exclusion_reason: "Not a separate product — rxpreceptor.com redirects to CORE ELMS's login; counted once, as core-elms, which owns the platform depth."
 
   - competitor_slug: "pharmacademic"
     role: "primary"
@@ -64,22 +71,23 @@ incumbent_set:
     # how the 2026-09-04 session recorded the name and the committed filename.
 
   - competitor_slug: "medhub"
-    role: "secondary"
-    # In scope only through the combined MedHub/E*Value product line: per
-    # e-value.yaml and medhub.yaml, the two merged in November 2015 under Ascend
-    # Learning (MedHub's parent) and now ship as one line, with the pharmacy
-    # customers sitting on the E*Value side. NOTE the scoping tension, left
-    # visible rather than resolved here: medhub.yaml's own `domains_served` is
-    # ["DO", "MD"] and does not list Pharmacy, though one of its claims does
-    # cover advanced-practice fields including pharmacy. Pharmacy engagement
-    # runs through the e-value entry above; this entry exists so the corporate
-    # owner is not invisible.
+    role: "not-a-target"
+    # Listed so the corporate owner is not invisible, excluded because the
+    # pharmacy book of business is not MedHub's. Per e-value.yaml and medhub.yaml,
+    # MedHub and E*Value were separate companies that merged in November 2015
+    # under Ascend Learning (MedHub's parent); MedHub had focused on UME/GME while
+    # E*Value served the advanced-practice fields including pharmacy, and
+    # medhub.yaml records that the two product lines "remain visibly separate
+    # systems under one brand". medhub.yaml's own `domains_served` is
+    # ["DO", "MD"]. Pharmacy engagement runs through the e-value entry above.
+    exclusion_reason: "Pharmacy customers sit on the E*Value side of the merged line; medhub.yaml's own domains_served is DO/MD only."
 
-  # No `not-a-target` entries. Denticon and a Banner/SIS-type vendor were named
-  # earlier as explicitly out of scope for pharmacy, but content/competitors/ has
-  # no file for either, so there is no real competitor_slug to exclude. An
-  # exclusion of a vendor this repo has never researched would be a new claim,
-  # which a manifest may not make.
+  # Denticon and a Banner/SIS-type vendor were named earlier as explicitly out of
+  # scope for pharmacy, but content/competitors/ has no file for either, so there
+  # is no real competitor_slug to exclude. An exclusion of a vendor this repo has
+  # never researched would be a new claim, which a manifest may not make. The two
+  # `not-a-target` entries above are the opposite case: both have real files, and
+  # both are excluded for a reason those files themselves state.
 
 questions:
   - key: "features-to-build"
