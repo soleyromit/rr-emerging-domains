@@ -1,0 +1,217 @@
+# Medicine (MD) — dissection manifest. Level 2, per content/ARCHITECTURE.md and the
+# schema in _TEMPLATE.yaml in this directory. This file asserts NOTHING of its own:
+# every line below is either a pointer into a file that owns the claim, or an honest
+# statement about how far along the research is. A fact that wants to live here goes
+# down to the file that owns it first.
+#
+# Read this one next to content/dissection/pharmacy.yaml, because the contrast IS the
+# content. Pharmacy's manifest points at five populated lenses because a domain-expert
+# session happened (2026-09-04). No such session has happened for Medicine. So four of
+# the six questions below are coverage: "none", one is "stub" (standards-to-product —
+# three real LCME rows exist in one of the two standards lenses; see that question's own
+# note, which is the one place this manifest departs from DO's and Dentistry's shape),
+# and one is "partial".
+#
+# Medicine is the sharpest case of that gap in this repo, and the reason is sitting in
+# the incumbent_set below: NINE competitor files name this domain, more than any other
+# domain here — Pharmacy has seven, DO seven, Dentistry five — and one of them, one45,
+# is scoped to Medicine and nothing else. content/domains/medicine.yaml also already
+# holds real, cited desk research: a clinical_education_shape describing a two-phase,
+# exam-gated, multi-tier-supervision structure that is explicitly unlike anything on
+# Prism today, and four sourced pain points. So this is not an unexamined domain. It is
+# a domain this repo has read about and never asked a practitioner about, with the
+# densest competitive field it tracks. A manifest that let those nine vendor files pass
+# for market understanding would be the failure this family exists to prevent.
+#
+# The exception is market-size: Task 3.3 extracted the CRM export's MD sheet
+# mechanically, which needs no domain expert. That question is "partial".
+
+domain: "MD"                  # the RAW `domain:` value from content/domains/medicine.yaml,
+                              # verified against line 1 of that file rather than assumed.
+                              # Medicine is the domain where this convention finally
+                              # bites: the raw value is "MD" while every lens, and
+                              # content/market/programs/medicine.yaml's own `domain:`
+                              # field, resolves the app label "Medicine". DO's and
+                              # Dentistry's manifests could not tell the two apart
+                              # because their raw value and label are the same string.
+                              # Here they are not, and the disagreement is correct —
+                              # check_content_density.py validates this field against
+                              # the domain files' raw values and that one against
+                              # DOMAIN_LABELS.
+slug: "medicine"
+
+# where-to-play.yaml's actual_gtm_target is "Pharmacy" (decided 2026-09-10). Medicine is
+# not that target and, unlike DO, was not the scorecard's recommended beachhead either.
+# This flag tracks the decision, not the merit.
+is_gtm_target: false
+
+# null, not "", and not a borrowed id: no Medicine domain-expert session exists in
+# content/interviews/. Pointing this at Pharmacy's 2026-09-04 session would claim those
+# findings transfer, which that session's own "we don't know what we don't know" finding
+# warns against — and medicine.yaml's clinical_education_shape spells out four specific
+# structural differences from a single-preceptor allied-health rotation, so the transfer
+# would be unsafe on this repo's own evidence, not just on principle.
+template_of_record: null
+
+last_reviewed: "2026-09-12"
+
+# Scoping only — who is in the Medicine clinical-education software market. Membership is
+# read off each competitor file's own `domains_served` field, but NOT by string-matching a
+# single label against it: content/competitors/*.yaml is INTERNALLY INCONSISTENT about
+# which string it uses for this domain. Seven files (e-value, elentra, emedley,
+# leo-davinci, medhub, new-innovations, one45) carry the raw code "MD", matching
+# _TEMPLATE.yaml's own example value. Two (examsoft, influx) carry the app label
+# "Medicine" instead. A grep for "MD" alone silently drops examsoft and influx; a grep for
+# "Medicine" alone drops the other seven. Both strings were checked. The inconsistency is
+# flagged here, not fixed — normalizing other files' data as a side effect of this task
+# would be an unreviewed edit to nine vendor records.
+#
+# One near-miss worth recording so nobody re-runs it: trajecsys matches a naive
+# case-insensitive search for "medicine" because its domains_served names "Nuclear
+# Medicine Technology". That is an imaging technology program, not MD, and trajecsys is
+# correctly absent below — the opposite error from Task 3.2, where a narrow grep dropped
+# trajecsys from a domain it really did serve.
+#
+# Role is assigned per-vendor from each file's OWN stated `category`, not from a blanket
+# default. Where a category describes med-ed / clinical education management it is
+# "primary"; where it describes a different job entirely it is "adjacent". No finer
+# gradation (switch-target, secondary) is used: Pharmacy's manifest can say
+# "switch-target" because a domain expert said so out loud, and inventing that here from
+# category strings would be fabricating the judgment a session is supposed to produce.
+incumbent_set:
+  - competitor_slug: "e-value"
+    role: "primary"
+    # domains_served: ["DO", "MD", "Pharmacy"] — found under "MD". Its own category is
+    # "Med-ed management (UME + GME + advanced-practice health sciences)", which is this
+    # domain's job on both halves of the pathway medicine.yaml describes.
+
+  - competitor_slug: "medhub"
+    role: "primary"
+    # domains_served: ["DO", "MD"] — found under "MD". Its own category is "Med-ed
+    # management (UME+GME), part of a combined MedHub/E*Value healthcare-education
+    # suite". Note the inversion of Pharmacy's manifest, which marks MedHub
+    # "not-a-target" precisely because pharmacy customers sit on the E*Value side of that
+    # merged line. MD is the side MedHub itself claims, so the same evidence that
+    # excludes it there includes it here.
+
+  - competitor_slug: "one45"
+    role: "primary"
+    # domains_served: ["MD"] — found under "MD", and this is the only vendor in
+    # content/competitors/ scoped to this domain and nothing else, the way axium is for
+    # Dentistry. Its own category is "Med-ed program management (scheduling, curriculum,
+    # assessment/evaluation) for medical schools & residencies". Primary on the file's
+    # own words, and more squarely so than any other vendor here.
+
+  - competitor_slug: "elentra"
+    role: "primary"
+    # domains_served: ["MD", "DO"] — found under "MD". Its own category is a "Health
+    # professions education platform" spanning 14 disciplines, and names "Medicine
+    # (MD/DO)" first among them — so its category string uses the label while its
+    # domains_served uses the code, inside one file. Exactly the inconsistency noted
+    # above.
+
+  - competitor_slug: "emedley"
+    role: "primary"
+    # domains_served: ["MD", "DO"] — found under "MD". Category: "Med-ed management
+    # (curriculum, clinical education, testing/evaluations) for health science programs".
+
+  - competitor_slug: "leo-davinci"
+    role: "primary"
+    # domains_served: ["MD", "DO", "Pharmacy", "Dentistry"] — found under "MD". Category:
+    # "Med-ed management (curriculum, clinical, assessment & accreditation) for medical/
+    # health-science schools" — clinical education management, so primary on the same
+    # reading DO's and Dentistry's manifests apply to it.
+
+  - competitor_slug: "new-innovations"
+    role: "primary"
+    # domains_served: ["DO", "MD"] — found under "MD". Its own category is
+    # "Residency/GME + UME management software", and for Medicine that GME half is not a
+    # stretch the way it was on DO's manifest: medicine.yaml's own
+    # clinical_education_shape states that the MD pathway does not end at the degree but
+    # feeds a separate, licensure-gating, NRMP-matched ACGME residency system. This
+    # vendor spans both halves of the thing the domain file describes.
+
+  - competitor_slug: "examsoft"
+    role: "adjacent"
+    # domains_served: ["DO", "Pharmacy", "Dentistry", "Medicine"] — found under
+    # "Medicine", NOT "MD". Its own category is "Secure exam delivery, proctoring, and
+    # assessment analytics" — didactic assessment, not experiential education. Same
+    # reading, from the same file, that Pharmacy's, DO's and Dentistry's manifests apply
+    # to it. Worth noting that Medicine is the domain where that adjacency is least
+    # comfortable, since USMLE Step 1 and Step 2 CK sit inside the clinical timeline
+    # itself per medicine.yaml — but nothing in examsoft.yaml says it touches those, and
+    # a manifest may not supply the claim.
+
+  - competitor_slug: "influx"
+    role: "adjacent"
+    # domains_served: ["Pharmacy", "Medicine"] — found under "Medicine", NOT "MD". Its
+    # own category is "Cross-system academic data aggregation, learning analytics and
+    # accreditation reporting — an analytics layer over other vendors' systems, not a
+    # system of record". A different job by its own definition, which is why this is
+    # "adjacent" and not a narrower-scope "primary": the Task 3.2 standard is that
+    # narrower-at-the-same-job stays primary (trajecsys) while a different job goes
+    # adjacent (examsoft, influx). Same role Pharmacy's manifest gives it.
+
+  # No "not-a-target" entries. Pharmacy's manifest has two, each excluded for a reason the
+  # excluded vendor's OWN file states. Nothing in content/competitors/ states such a reason
+  # for Medicine, and an exclusion this repo cannot evidence would be a new claim, which a
+  # manifest may not make.
+
+questions:
+  - key: "features-to-build"
+    answered_in: ["lenses/product-gaps.yaml"]
+    coverage: "none"
+    confidence: "low"
+    gap_note: "No Medicine rows in the product-gaps lens. No domain-expert session exists for Medicine; per the Pharmacy session's own 'we don't know what we don't know' finding, real rows here need one first."
+
+  - key: "competitor-differentiation"
+    answered_in: ["lenses/competitor-differentiation.yaml", "competitors/*.yaml"]
+    coverage: "none"
+    confidence: "low"
+    gap_note: "No Medicine differentiation rows. The 9 competitor files scoped above are the densest field in this repo and all carry teardowns, but not one head-to-head read for Medicine exists."
+
+  - key: "market-size"
+    answered_in: ["domains/medicine.yaml#market_sizing", "market/programs/medicine.yaml"]
+    coverage: "partial"
+    confidence: "low"
+    # The only question above "none", and only to "partial": Task 3.3's extraction was
+    # mechanical, which is precisely why it could run without a domain expert. It is also
+    # the soundest TAM of the three domains extracted in this phase — 162 rows against a
+    # ~160-school anchor, where Dentistry's was 968 against 77.
+    gap_note: "Mechanical only: 162 CRM rows at 156 institutions, 3 clients, 0 churned, SAM 159. TAM matches the ~160 LCME anchor, but one 'client' row is not an MD program and another is a duplicate."
+
+  - key: "feature-comparison"
+    answered_in: ["lenses/feature-comparison-matrix.yaml"]
+    coverage: "none"
+    confidence: "low"
+    gap_note: "No Medicine cells in the matrix. Cells are transcribed from researched competitor pillars scoped to a domain; for Medicine neither the scoping research nor the session that would direct it exists."
+
+  - key: "standards-to-product"
+    answered_in: ["lenses/standards-use-cases.yaml", "lenses/standards-competitor-ratings.yaml"]
+    coverage: "stub"
+    confidence: "low"
+    # "stub", NOT "none" — the only question on this manifest that is not at the floor,
+    # and the value was set by checking the lenses rather than by pattern-matching the
+    # sibling manifests. content/lenses/standards-competitor-ratings.yaml really does
+    # carry a "# --- Medicine / LCME ---" section: three rows with domain "Medicine",
+    # rated against Standard 1/Element 1.1 and Standard 8/Element 8.4, both of which
+    # content/accreditation/lcme.yaml defines, citing real product-page sources for
+    # elentra and one45. That is a stub, not nothing. It is also thin in three specific
+    # ways: 2 of the 9 vendors scoped above, 2 of lcme.yaml's elements, and zero rows in
+    # standards-use-cases.yaml — which is the lens that actually does the
+    # standard-to-product-requirement translation this question names. Medicine also
+    # answers to ACGME and the USMLE boards per its own domain file's standards_bodies,
+    # and neither lens touches those at all.
+    #
+    # FLAGGED, not fixed: content/dissection/do.yaml and dentistry.yaml both say
+    # coverage "none" here with a gap_note beginning "Neither standards lens carries a
+    # COCA/CODA row", while this same ratings lens carries 4 domain-"DO" rows and 3
+    # domain-"Dentistry" rows. Those two manifests look wrong on the same check this
+    # note just ran, but editing them is not this task's scope.
+    gap_note: "standards-competitor-ratings.yaml has 3 real LCME rows (elentra, one45; Elements 1.1 and 8.4). But standards-use-cases.yaml has none: no LCME standard has been turned into a product use case yet."
+
+  - key: "persona-and-document-lens"
+    answered_in: ["computed — audience/persona_relevance tags and sources[] across the lenses above"]
+    coverage: "none"
+    confidence: "low"
+    gap_note: "Computed from tags on rows in the lenses above, and Medicine has no rows in any of them, so nothing computes. This question cannot move until the other five do."

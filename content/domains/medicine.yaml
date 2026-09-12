@@ -18,50 +18,128 @@ market:
 # content/dissection/medicine.yaml's "market-size" question names as
 # `domains/medicine.yaml#market_sizing`, alongside `market/programs/medicine.yaml`.
 #
-# Every number below is null on purpose. The figures in `market:` above are real
-# but carry only bare URLs, no registered source_id, and no per-field as-of date
-# — copying them down here would turn uncited prose into uncited machine-readable
-# numbers, which is worse, not better. An all-null block with confidence: "low"
-# is the honest state. Phase 2/3 populates it from a registered source_id and the
-# per-program registry in content/market/programs/medicine.yaml.
+# The figures in `market:` above are real but carry only bare URLs, no registered
+# source_id, and no per-field as-of date — copying them down here would turn
+# uncited prose into uncited machine-readable numbers, which is worse, not
+# better. That reasoning still stands and still governs this block: the numbers
+# below do NOT come from the prose above. Task 3.3 (2026-09-12) populated only
+# the fields a registered source_id can back — the CRM export's MD sheet,
+# extracted row by row into content/market/programs/medicine.yaml. Every field
+# that would need research beyond that mechanical pass (accredited_programs,
+# enrollment, acv, revenue_potential_usd, adjacency) is still null on purpose,
+# and confidence stays "low".
 market_sizing:
-  as_of: "2026-09-11"          # YYYY-MM-DD — when the numbers below were last set
+  as_of: "2026-09-12"          # YYYY-MM-DD — when the numbers below were last set
   unit: "program"              # the thing being counted in every count below
   tam:
-    programs: null             # every program in the domain, once sourced
-    basis: null                # <=150 soft / 300 hard chars — what this count
-                               # actually represents, once known
-    source_id: null            # a registered source_id (see content/sources/)
+    # 162 = the real row count of content/market/programs/medicine.yaml, counted
+    # from the file. Unlike Dentistry's 968 — which stood against a real market
+    # of 77 predoctoral schools, a 12.6x ratio — this one lands almost exactly on
+    # its own anchor, and the small gap is fully accounted for rather than
+    # rounded away. The MD sheet is two blocks: 159 rows pasted from the LCME
+    # directory (its URL is in the sheet's own header at MD!N2), plus 3
+    # hand-added client rows. Of those 3:
+    #   + Belmont University's Frist College is a real LCME school (Preliminary,
+    #     2023) that the pasted block does not contain -> 159 + 1 = 160.
+    #   = University of North Carolina at Chapel Hill (MD!A5) is the same school
+    #     as MD!A110 in the directory block -> adds nothing, and the two rows
+    #     disagree on Client Y/N.
+    #   - "University of Western States - NMD" (MD!A4) is not an MD program at
+    #     all: NMD is naturopathic medicine, the school has no LCME
+    #     accreditation, and the Logo Grid's row for it marks only OT and Chiro.
+    # So 162 rows carry 160 real LCME MD-granting schools, against the "159-161
+    # ... ~160 as of the 2025-2026 cycle" the `market:` prose above already
+    # cites. The two agree; the 2 is the artifact, and it is named, not averaged.
+    # Rows are SCHOOLS, not campuses (the opposite of DO): the 162 sit at 156
+    # distinct institutions, and the 6 repeats are 5 pairs of separately
+    # LCME-accredited programs under one parent plus the UNC duplicate.
+    programs: 162
+    basis: "All 162 rows of the CRM MD sheet, at 156 institutions. 160 are real LCME schools — the ~160 the prose above cites; 1 duplicate, 1 non-MD row."
+    source_id: "crm-export-new-logo-grid-2026"
   accredited_programs:
+    # Still null, on purpose — and Medicine is the domain where that is hardest
+    # to justify, so the reason is worth stating. Unlike the DO sheet (a year
+    # column, no status) and the Dentistry sheet, the MD sheet DOES carry a real
+    # per-row LCME Accreditation Status column, and Task 3.3 mirrored it into
+    # every row of the registry: 150 accredited, 5 precandidate, 2 candidate, 3
+    # on probation, 2 unknown. The raw material for this field therefore already
+    # exists one file away. What does not exist is a registered source_id for
+    # LCME itself; filling `count: 150` here with source_id
+    # "crm-export-new-logo-grid-2026" would put a CRM export's id under a field
+    # name that implies accreditor authority, which is the same move Task 3.2
+    # rejected for Dentistry. Registering an LCME source is the work that fills
+    # this in, and it was out of scope for a mechanical extraction.
     count: null
     qualifier: null            # e.g. "accredited PharmD programs" — stays null
-                               # while tam.programs is null
+                               # while accredited_programs.count is null
     source_id: null
     variance_note: null        # <=200 soft / 400 hard chars — only when tam and
                                # accredited_programs genuinely disagree
   sam:
-    programs: null
-    basis: null                # <=150 soft / 300 hard chars
-    derived_from: []           # the filters applied to tam to get to this number
+    programs: 159
+    basis: "tam.programs minus current_clients.count minus churned_clients.count — every Medicine row not already won or previously lost. 162 - 3 - 0 = 159."
+    derived_from: ["tam", "current_clients", "churned_clients"]
   som:
     programs: null
     basis: "Not sized — no named target list or win-rate assumption exists yet"
   enrollment:
+    # Deliberately left null, and this is the call most worth stating for
+    # Medicine, because the `market:` prose above carries an unusually good
+    # figure: 100,723 MD students enrolled 2025-26, 23,440 first-year
+    # matriculants, +1.3% YoY, from AAMC. It is real and it is attributed — but
+    # only as a bare URL, with no registered source_id in content/sources/.
+    # Copying it here would produce exactly what the header above says this block
+    # exists to prevent: an uncited prose number wearing a machine-readable
+    # field's authority. Registering the two AAMC pages is a sourcing pass, not
+    # part of a mechanical CRM extraction, and it is the small, well-defined
+    # piece of work that turns this block's four nulls into three.
     students: null
     as_of_year: null
     trend: null                # growing | stable | declining | recovering | unknown
     yoy_pct: null
     source_id: null
   current_clients:
-    count: null
-    named: []
-    source_id: null
+    # The 3 rows the MD sheet's Client Y/N column marks "Yes". `named` holds
+    # content/market/programs/medicine.yaml slugs, not institution names.
+    #
+    # 3 ROWS, 2 LCME SCHOOLS. Read this count with the tam note above: one of
+    # the three, "University of Western States - NMD", is not an MD program at
+    # all. On the population this domain is actually about, Exxat has two MD
+    # clients, not three, and penetration is 2/160 = 1.3% rather than the 1.9%
+    # below. The count stays in rows because tam does.
+    #
+    # CONFLICTS, recorded rather than resolved — all three rows are contested,
+    # in two different ways.
+    # INTRA-SHEET: MD!A5 (this client row) and MD!A110 are the same school, and
+    # MD!A110 says "No".
+    # CROSS-SHEET: the master Logo Grid's own MD column marks exactly 3 of its
+    # 2751 rows "Yes" — Belmont University (agrees), University of North
+    # Carolina at Chapel Hill (agrees with MD!A5, so the grid takes the client
+    # side of the intra-sheet conflict), and Charles R. Drew University of
+    # Medicine and Science, whose own MD-sheet row (MD!A15) says "No". Meanwhile
+    # the grid's row for University of Western States has "-" in the MD column:
+    # never evaluated, so it neither confirms nor contradicts.
+    # This count follows the MD sheet, the domain's own tab. On the grid's
+    # reading it would still be 3, but a different 3 — Belmont, UNC and Charles
+    # R. Drew — and all three of those are real LCME schools where one of these
+    # is not. A pass with CRM access should settle it.
+    count: 3
+    named:
+      - "belmont-university-md"
+      - "university-of-western-states-md"
+      - "university-of-north-carolina-md"
+    source_id: "crm-export-new-logo-grid-2026"
   churned_clients:
-    count: null
+    # Zero is an observed value, not an unfilled field: the "Previous client"
+    # value the Pharmacy and Dentistry sheets use never appears on the MD sheet,
+    # whose Client Y/N column holds only "Yes" (3) and "No" (159).
+    count: 0
     named: []
-    source_id: null
-  penetration_pct: null        # computed only once tam.programs and
-                               # current_clients.count are both real numbers
+    source_id: "crm-export-new-logo-grid-2026"
+  penetration_pct: 1.9         # 3 / 162 * 100 = 1.85, rounded to one decimal.
+                               # On LCME schools only — dropping the non-MD row
+                               # and collapsing the UNC duplicate — it is
+                               # 2 / 160 = 1.3. See current_clients above
   acv:
     value_usd: null
     basis: "Not sourced — no pricing artifact exists in this repo"
@@ -71,13 +149,29 @@ market_sizing:
                                # number standing on an unsourced ACV is a guess
                                # wearing a dollar sign
   adjacency:
+    # Still null, deliberately, even though medicine.yaml's registry carries the
+    # raw material and carries it in better shape than either sibling domain:
+    # 111 of its 162 rows list at least one other Exxat discipline on the same
+    # campus, and 155 of the 162 sit on an evaluated Logo Grid row rather than an
+    # unevaluated one. But a count here would have to branch on `grid_matched`,
+    # and for Medicine that boolean is not sufficient on its own: 6 rows matched
+    # a Logo Grid row that is the Excel error "#N/A" across 33-35 of its 36
+    # discipline columns, so their empty lists are unknowns wearing the same
+    # shape as the 45 confirmed negatives. See that file's "#N/A CAVEAT" block,
+    # which names the 6 locators. Counting before that is separated would publish
+    # unknowns as confirmed no-cross-sell.
     claim: null                # <=150 soft / 300 hard chars — one line, sourced.
                                # The cross-discipline overlap claim, not the case
                                # for it: evidence goes to source_id
     cross_discipline_overlap_institutions: null
     source_id: null
-  confidence: "low"            # low | medium | high — "low" is the correct,
-                               # honest value for an all-null block
+  confidence: "low"            # low | medium | high — the client/churn counts are
+                               # first-party and exact, and tam agrees with the
+                               # prose anchor to within a school, but the client
+                               # count is contested on both sheets and one of its
+                               # three rows is not an MD program. No accredited
+                               # count, no enrollment, no ACV. Not "medium" until
+                               # the client set is settled
 
 # Shape only, no content yet: where this domain's programs sit inside an
 # institution and who actually signs. Populated alongside market_sizing in
