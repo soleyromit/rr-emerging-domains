@@ -160,7 +160,27 @@ questions:
     answered_in: ["lenses/standards-use-cases.yaml", "lenses/standards-competitor-ratings.yaml"]
     coverage: "partial"
     confidence: "medium"
-    gap_note: "15 Pharmacy use cases and 31 Pharmacy competitor ratings exist, but the ACPE 2025 / COEPA / IPPE-APPE dual-ledger material is not yet turned into use-case rows (plan Task 2.10)."
+    # UPDATED 2026-09-11 (Task 2.10). The blocker the previous gap_note named is
+    # closed: the ACPE 2025 / COEPA / IPPE-APPE material is now 8 real use-case rows
+    # (IPPE sub-minimums and the simulation bar, the four required APPE settings, the
+    # NTPD assessed-equivalent pathway, the 320-hour elective cap, 3.2.c prerequisite
+    # gating and capstone exclusion, COEPA's EOs/EPAs and its supervision-description
+    # entrustment scale, and PHARMS-vs-AAMS scoping), taking the file from 15 Pharmacy
+    # rows to 23.
+    #
+    # Both values deliberately HOLD rather than rise, which is the honest read:
+    #   - coverage stays "partial", not "researched", because 7 of ACPE's 20 elements
+    #     still have no use case at all — the entire 3.3.x preceptor block (a.-e.),
+    #     3.4.a practice-facility quality, and 3.5.c student remuneration. That is a
+    #     named, countable remainder, not a rounding error.
+    #   - confidence stays "medium", not "high", because 18 of the 23 rows are
+    #     `proposed`: exactly one row (OHSU) is `documented`. The 8 new rows do have a
+    #     stronger evidence chain than the original 15 — they cite the ACPE Standards
+    #     2025 text, the Dear Dean letter and the eBook rather than terminating at the
+    #     one 2026-09-04 session — but a well-sourced reading of a RULE is not evidence
+    #     that Prism does the thing, and no shipped capability is confirmed behind any
+    #     of them. Sourcing improved; validation did not.
+    gap_note: "23 use cases now cover 13 of ACPE's 20 elements, alongside 31 competitor ratings — but 18 of the 23 are unvalidated 'proposed', and 7 elements (the whole 3.3.x preceptor block, 3.4.a, 3.5.c) still have no row at all."
 
   - key: "persona-and-document-lens"
     # Not a file: the answer is computed from tags and sources[] the lenses above
