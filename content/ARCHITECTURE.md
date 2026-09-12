@@ -53,7 +53,7 @@ flowchart BT
     L05["Level 0.5 — SOURCE INDEXES (in git)\ncontent/sources/ — registry.yaml ·\nhelp-center.yaml · playbooks.yaml ·\nsupport-tickets/ — plus\ncontent/interviews/*.md front-matter"]
     L1["Level 1 — GROUND-TRUTH REGISTRIES\nprism/ · domains/ · accreditation/ ·\ncompetitors/ · market/programs/"]
     L2["Level 2 — REFRAMINGS\npersonas/ (discipline·role·lens) · feature-map/ ·\nlenses/ · trends/ · dissection/"]
-    L3["Level 3 — ELEMENT-LEVEL VERIFICATION\nflows/ (33+ files, v2 schema, per-element analysis)"]
+    L3["Level 3 — ELEMENT-LEVEL VERIFICATION\nflows/ (40 files, v2 schema, per-element analysis)"]
     L4["Level 4 — NARRATIVE\njourneys/ (5 cross-domain journey maps)"]
     L5["Level 5 — INTERPRETATION\n5a: scorecard/ → 5b: synthesis/"]
     L6["Level 6 — PRESENTATION\napps/ecosystem (Next.js) · Obsidian vault mirror ·\nExcel tracker (via scripts/sync_to_*.py)"]
@@ -157,8 +157,8 @@ every non-trivial claim carries a `source:` pointing at Level 0.
 |---|---|---|
 | `prism/` (`capability-map.yaml`) | — (single file) | What does Prism *actually* ship, per internal docs — not assumptions? Defines the pillar vocabulary (shipped vs. 2027 roadmap) and named primitives everything above reuses. |
 | `domains/` | expansion domain (do, pharmacy, dentistry, medicine) | What is the market context — program counts, enrollment trends, budget dynamics? |
-| `accreditation/` | accreditor (coca, acpe, coda, lcme) | Standard → evidence programs must produce → required software behavior → Prism fit (**Transfer / Configure / Build / Gap**), at the numbered-element level. |
-| `competitors/` | incumbent (9 files: axium, core-elms, e-value, elentra, emedley, leo-davinci, medhub, new-innovations, one45) | Feature-level teardown of each incumbent, from their public docs. |
+| `accreditation/` | accreditor (13 files as of 2026-09-12 — the 4 expansion-domain accreditors coca, acpe, coda, lcme, plus acote, arc-pa, caa-asha, caep, capte, coa, counseling, cswe, nursing for the existing disciplines) | Standard → evidence programs must produce → required software behavior → Prism fit (**Transfer / Configure / Build / Gap**), at the numbered-element level. |
+| `competitors/` | incumbent (17 files as of 2026-09-12: axium, castlebranch, core-elms, e-value, elentra, emedley, examsoft, experiential-learning-cloud, influx, leo-davinci, medhub, new-innovations, one45, pharmacademic, rxpreceptor, trajecsys, typhon) | Feature-level teardown of each incumbent, from their public docs. |
 | `market/programs/` (new 2026-09-11) | expansion domain (pharmacy, do, dentistry, medicine) | *Which* programs, one row each — institution, program name, accreditation status, Exxat relationship, other disciplines already on that campus. The row-level evidence under `domains/{slug}.yaml`'s aggregate `market_sizing:` block. |
 
 **`market/programs/` — why a fifth registry, and what it may not do.** `domains/{slug}.yaml`
@@ -204,7 +204,7 @@ file that needs a new fact sends it down to Level 1 first.
 
 | Folder / file pattern | What it reframes |
 |---|---|
-| `personas/discipline-*.yaml` (11: the 4 expansion domains **plus** the 7 existing disciplines — nursing, OT, PA, PT, SLP, social-work, TE) | The *program* as archetype: accreditation pressure from `accreditation/`, current tools from `competitors/`, JTBD, switching triggers. |
+| `personas/discipline-*.yaml` (12: the 4 expansion domains **plus** the 8 existing disciplines — nursing, OT, PA, PT, SLP, social-work, TE, CRNA) | The *program* as archetype: accreditation pressure from `accreditation/`, current tools from `competitors/`, JTBD, switching triggers. |
 | `personas/role-*.yaml` (5: program-admin, clinical-coordinator, compliance-accreditation-liaison, dean, preceptor) | The same evidence base sliced by human role instead of by discipline. |
 | `personas/lens-*.yaml` (6) | Mirrors `competitors/<slug>.yaml` "reframed around roles, not features" — how each incumbent implicitly serves or fails each role, and the gaps Prism can exploit. |
 | `feature-map/*.yaml` (4, one per expansion domain) | Pillar-by-pillar competitive verdict per domain (leading / behind / opportunity), citing `accreditation/` elements and `competitors/` files by name. |
@@ -217,13 +217,25 @@ file that needs a new fact sends it down to Level 1 first.
 **The six dissection questions, and which file owns each.** A `dissection/{slug}.yaml`
 manifest has exactly six `questions[]` entries, keyed `features-to-build`,
 `competitor-differentiation`, `market-size`, `feature-comparison`, `standards-to-product`
-and `persona-and-document-lens`. The manifest holds no answers — it names the file that
-does (`lenses/product-gaps.yaml`, `lenses/competitor-differentiation.yaml`,
-`market/programs/` + `domains/{slug}.yaml#market_sizing`,
-`lenses/feature-comparison-matrix.yaml`, `accreditation/` + `lenses/standards-use-cases.yaml`,
-`personas/`) together with an honest `coverage` / `confidence` / `gap_note`. That is the
-point of the family: an unresearched question stays *visible* as `coverage: "none"` plus a
-`gap_note`, instead of disappearing as a missing field.
+and `persona-and-document-lens`. The manifest holds no answers — each question's `answered_in`
+names the file that does, and all four real manifests agree on the mapping:
+
+| Question `key` | `answered_in` |
+|---|---|
+| `features-to-build` | `lenses/product-gaps.yaml` |
+| `competitor-differentiation` | `lenses/competitor-differentiation.yaml` · `competitors/*.yaml` |
+| `market-size` | `domains/{slug}.yaml#market_sizing` · `market/programs/{slug}.yaml` |
+| `feature-comparison` | `lenses/feature-comparison-matrix.yaml` |
+| `standards-to-product` | `lenses/standards-use-cases.yaml` · `lenses/standards-competitor-ratings.yaml` |
+| `persona-and-document-lens` | **Not a file of its own** — computed from the `audience` / `persona_relevance` tags and `sources[]` already carried by the lenses above |
+
+Two of these are easy to get wrong from memory, so note them: `standards-to-product` is
+answered by the two `standards-*` **lenses**, not by `accreditation/` directly (Level 3 flows
+already cite `accreditation/`; routing the answer back through it would close a citation
+cycle — the same reason those lenses exist at all), and `persona-and-document-lens` has no
+owning file at all, `personas/` included. Each row also carries an honest `coverage` /
+`confidence` / `gap_note`. That is the point of the family: an unresearched question stays
+*visible* as `coverage: "none"` plus a `gap_note`, instead of disappearing as a missing field.
 
 **Sparse by design — the convention that makes these lenses readable.** In
 `standards-competitor-ratings`, `standards-use-cases`, `product-gaps`,
@@ -257,7 +269,7 @@ identical reasons. Both fields are wayfinding, not evidence.
 
 ## Level 3 — `flows/` — element-level verification (cites Levels 0–2)
 
-33+ files, **schema v2** (2026-08-24), named
+40 files as of 2026-09-12, **schema v2** (2026-08-24), named
 `<journey-slug>--<NN>-<stage-slug>.yaml` — one file per journey *stage*, across five
 journey families (accreditation-self-study ×8, admin-onboarding ×8,
 competency-verification ×8, preceptor-site-onboarding ×8, rotation-lifecycle ×8).
@@ -281,11 +293,21 @@ the flows justified from above.
 
 ## Level 4 — `journeys/` — cross-domain narrative (cites Levels 0–3)
 
-5 files: `rotation-lifecycle`, `accreditation-self-study`,
-`preceptor-site-onboarding`, `competency-verification`, and (new 2026-08-24)
+6 files as of 2026-09-12: `rotation-lifecycle`, `accreditation-self-study`,
+`preceptor-site-onboarding`, `competency-verification`, (new 2026-08-24)
 `admin-onboarding-product-setup` — the first journey scoped to **all eleven
 disciplines** rather than the four expansion domains, which is why it carries
-`discipline_variance` per stage instead of `domain_variance`.
+`discipline_variance` per stage instead of `domain_variance` — and
+`pharmacy-core-to-exxat-migration`, the one journey scoped to a **single** domain.
+
+Two things about that last file are load-bearing and easy to miss. It is the only
+journey with **no `flows/` files under it** (all 40 flow files belong to the other five
+families, 8 each), so it is not verified from below the way the rule below describes.
+And its own header says why that is acceptable rather than sloppy: no pharmacy program
+has actually made this move on record, so the journey is *the shape of* a migration
+derived from what ACPE requires and what the two platforms are documented to hold —
+a use case the GTM team wants, explicitly not a recorded customer outcome. Every stage
+in it is written in that register.
 
 The brief: stage-level narrative per journey — current state in Prism, pain/gap,
 accreditation link, competitor comparison — with each stage's Prism assertions traced
