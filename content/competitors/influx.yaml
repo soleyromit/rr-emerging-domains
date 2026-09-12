@@ -183,9 +183,11 @@ exxat_opportunity: >
   business is selling the integration Prism could make unnecessary. It exists only because
   didactic data (ExamSoft) and clinical data (CORE ELMS) sit in different systems; a program
   running Prism for clinical management plus the September 12, 2026 ExamSoft bulk-import
-  gets both halves in one platform with no third vendor and no third bill — Vishaka's "one
-  platform, all data in one place, cost savings, and fewer systems for staff to be trained
-  on." Handle the internal history carefully and precisely: per the 2026-09-04 session Exxat
+  gets both halves in one platform with no third vendor and no third bill — the value prop
+  the 2026-09-04 session records as "one platform, all data in one place, cost savings, and
+  fewer systems for staff to be trained on." (That line is the session file's own summary of
+  the release's value proposition, not a sentence attributed to a named speaker in it.)
+  Handle the internal history carefully and precisely: per the 2026-09-04 session Exxat
   was once on a path to integrate with Influx and stopped, because Prism's own roadmap is to
   do the same thing. That is company-internal reasoning captured in one session, not a
   public or announced position, and it should not be repeated outside that framing or

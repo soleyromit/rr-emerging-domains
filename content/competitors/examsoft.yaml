@@ -44,9 +44,10 @@ feature_teardown:
       recording through the exam).
     depth_vs_prism: "ahead"
     evidence: >
-      "ExamSoft is a secure testing solution that is used for high stakes exams" and it
-      "does not require an active internet connection" during testing, per the University
-      of Florida College of Dentistry's own ExamSoft procedures page, which also documents
+      "ExamSoft is a secure testing solution that is used for high stakes exams" and it is
+      "not dependent on an internet connection while testing, which allows it to be used
+      almost anywhere a laptop can be used", per the University of Florida College of
+      Dentistry's own ExamSoft procedures page, which also documents
       the operational envelope programs build around it (48-hour download window,
       password-protected exams, no re-entry to the testing room) and "an electronic system
       to track anomalies of all types, including suspected cheating". Stony Brook's medical
