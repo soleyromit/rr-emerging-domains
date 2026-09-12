@@ -49,6 +49,25 @@ const KIND_META: Record<string, KindMeta> = {
 
 const UNKNOWN_KIND: KindMeta = { label: "Source", variant: "neutral", icon: Link2 };
 
+// How faithfully an interview record captures what was said (`evidence_status` in the
+// session front-matter). Only the *degraded* tiers are listed: a citation says nothing
+// extra when the record is verbatim or verbatim-cleaned, because that is the normal case
+// for this corpus and a badge on 100% of rows carries no information — the same
+// "don't badge the honest default" cut ClaimedBadge and the derived-edge dashed line make.
+//
+// Unmapped or missing values render no caveat, deliberately: `SESSION_EVIDENCE_STATUS` in
+// `scripts/check_content_density.py` already FAILs the build on a status outside the
+// schema, so it is the gate — and silently mislabelling a verbatim source as summarized
+// would be a worse honesty failure than staying quiet. If a new degraded tier is added to
+// the schema, add it here too or it will cite as if it were verbatim.
+const DEGRADED_EVIDENCE_NOTE: Record<string, string> = {
+  "summary-only": "Summarized, not verbatim",
+};
+
+export function evidenceStatusNote(evidenceStatus?: string): string | undefined {
+  return DEGRADED_EVIDENCE_NOTE[evidenceStatus?.toLowerCase().trim() ?? ""];
+}
+
 export function SourceBadge({ kind }: { kind?: string }) {
   const meta = KIND_META[kind?.toLowerCase().trim() ?? ""] ?? UNKNOWN_KIND;
   return <Badge variant={meta.variant} label={meta.label} icon={<Icon icon={meta.icon} size="xsm" />} />;
@@ -76,6 +95,10 @@ export function SourceList({
       <Stack gap={1}>
         {sources.map((s) => {
           const meta = [s.publisher, s.date].filter(Boolean).join(" · ");
+          // Kept off the meta line on purpose: publisher/date are checkable facts about
+          // the source, this is a caveat about the record itself. Same supporting weight
+          // so it reads as a footnote to the citation, not a second classification of it.
+          const evidenceNote = evidenceStatusNote(s.evidence_status);
           return (
             <Stack key={s.id} direction="horizontal" gap={1.5} vAlign="start" wrap="wrap">
               <SourceBadge kind={s.type} />
@@ -91,6 +114,11 @@ export function SourceList({
                 {meta ? (
                   <Text type="supporting" size="xsm" color="secondary">
                     {meta}
+                  </Text>
+                ) : null}
+                {evidenceNote ? (
+                  <Text type="supporting" size="xsm" color="secondary">
+                    {evidenceNote}
                   </Text>
                 ) : null}
               </Stack>

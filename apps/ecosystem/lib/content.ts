@@ -1248,6 +1248,15 @@ export interface SourceRegistryEntry {
   /** Vault- or repo-relative location of an internal source that has no public
    * `url:` (help-center article, playbook, interview record). Not rendered today. */
   path?: string;
+  /** How faithfully the source document records what was said. Only the interviews
+   * home sets it (the other four leave it undefined): the session front-matter schema
+   * added 2026-09-11 carries it, and `SESSION_EVIDENCE_STATUS` in
+   * `scripts/check_content_density.py` is the gate on which values can ship —
+   * `"verbatim-cleaned"` and `"summary-only"` today. Documented-then-widened, the same
+   * way `type` above is, because the value is read straight from YAML and is not
+   * re-validated here. SourceList renders a caveat for the degraded tiers only; see
+   * DEGRADED_EVIDENCE_NOTE in components/source-list.tsx. */
+  evidence_status?: "verbatim-cleaned" | "summary-only" | string;
   /** Which of the five Level 0.5 source homes this entry was resolved from. */
   home?: SourceHome;
 }
@@ -1523,17 +1532,38 @@ export function getSourceIndex(): Map<string, SourceRegistryEntry> {
 
   // 5. interviews/*.md — id in the YAML front-matter. Note: interview front-matter
   //    has an `access:` field but no `origin:`, so `origin` stays undefined here.
+  //    `evidence_status` is the one field here that genuinely varies between files
+  //    (`summary-only` on one of the four today), so it is threaded through to the
+  //    citation UI. `claims_are_speaker_opinion` deliberately is not: it is `true` on
+  //    every interview without exception — a standing property of the source type that
+  //    the "Interview" badge already stands for, not a per-file signal.
   for (const { file, data } of readInterviewFrontMatter()) {
+    const interviewId = optStr(data?.id) ?? "";
+    const evidenceStatus = optStr(data?.evidence_status);
     add({
-      id: optStr(data?.id) ?? "",
+      id: interviewId,
       title: optStr(data?.title),
       type: "interview",
       date: optStr(data?.date),
       access: optStr(data?.access),
       origin: optStr(data?.origin),
+      evidence_status: evidenceStatus,
       path: `content/interviews/${file}`,
       home: "interviews",
     }, `content/interviews/${file} front-matter`);
+
+    // One session deliberately reuses an id already frozen in registry.yaml so that the
+    // citations pointing at it keep resolving (ARCHITECTURE.md, Level 0.5: "there is one
+    // canonical id for the session"). Registry wins that collision by design and should
+    // keep winning — its curated title/publisher/what_it_supports are the better record.
+    // But registry.yaml has no `evidence_status:` field at all, so without this backfill
+    // the winning entry carries none, and the ONLY interview id actually cited anywhere in
+    // content/ today is exactly that one — the signal would render nowhere. Filling a field
+    // the winner does not define is not overriding it, so this fills only when absent.
+    const resolved = interviewId ? index.get(interviewId) : undefined;
+    if (resolved && evidenceStatus && !resolved.evidence_status) {
+      index.set(interviewId, { ...resolved, evidence_status: evidenceStatus });
+    }
   }
 
   sourceIndexCache = index;
