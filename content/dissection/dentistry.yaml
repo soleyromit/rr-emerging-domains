@@ -6,8 +6,25 @@
 #
 # Read this one next to content/dissection/pharmacy.yaml, because the contrast IS the
 # content. Pharmacy's manifest points at five populated lenses because a domain-expert
-# session happened (2026-09-04). No such session has happened for Dentistry. So five of
-# the six questions below are coverage: "none".
+# session happened (2026-09-04). No such session has happened for Dentistry. So THREE of
+# the six questions below are coverage: "none", TWO are "stub" and one is "partial".
+#
+# The two "stub"s were corrected in Task 3.4 from an earlier "none". This file
+# previously asserted that neither standards lens carries a CODA row and that Dentistry
+# has "no rows in any of them, so nothing computes". Both were false against this
+# repo's own lens data: content/lenses/standards-competitor-ratings.yaml carries 3
+# Dentistry rows, and they are tagged and sourced. They were boilerplate carried across
+# manifests without re-running the check — the exact failure this family exists to
+# prevent. The same bug was caught and fixed in content/dissection/medicine.yaml in
+# Task 3.3; read that file's two stubs as the reference for the shape of these.
+#
+# Note what did NOT change: features-to-build stays "none". Its note claims no
+# Dentistry rows in the product-gaps lens, and unlike DO's identical-looking claim,
+# that one is TRUE — product-gaps holds DO, MD and Pharmacy rows only. The check was
+# re-run per question rather than applied to the file as a pattern.
+#
+# Moving "none" to "stub" does NOT inflate this manifest's headline: the density script
+# counts questions at partial-or-better, so Dentistry still reports 1/6.
 #
 # Dentistry is a particular case of that gap, and worth naming. This repo already holds
 # real, cited Dentistry research — content/domains/dentistry.yaml's clinical_education_shape
@@ -148,12 +165,42 @@ questions:
 
   - key: "standards-to-product"
     answered_in: ["lenses/standards-use-cases.yaml", "lenses/standards-competitor-ratings.yaml"]
-    coverage: "none"
+    coverage: "stub"
     confidence: "low"
-    gap_note: "Neither standards lens carries a CODA row, though content/accreditation/coda.yaml exists and is substantial. Turning those standards into use cases needs a domain expert to say which ones bite."
+    # "stub", NOT "none". The previous note said "Neither standards lens carries a CODA
+    # row", which is false and was flagged from content/dissection/medicine.yaml in
+    # Task 3.3: content/lenses/standards-competitor-ratings.yaml carries 3 rows with
+    # domain "Dentistry", rated against Standard 1/Element 1-2, Standard 2/Element 2-24
+    # and Standard 5/Element 5-3 — all three really defined in
+    # content/accreditation/coda.yaml — across 5 distinct registered source_ids.
+    #
+    # Thinner than it looks, in three specific ways. Every one of the 3 rows rates
+    # axium and only axium: 1 of the 5 vendors scoped above, and the four others
+    # (core-elms, leo-davinci, trajecsys, examsoft) are unrated. 3 of coda.yaml's 11
+    # elements. And ZERO rows in standards-use-cases.yaml — the lens that actually does
+    # the standard-to-product-requirement translation this question names. So the repo
+    # knows something about how ONE incumbent meets CODA, and nothing about what CODA
+    # requires of a product.
+    gap_note: "standards-competitor-ratings.yaml has 3 real CODA rows (Elements 1-2, 2-24, 5-3) but every one rates axium alone. standards-use-cases.yaml has none: no CODA standard is a product use case yet."
 
   - key: "persona-and-document-lens"
     answered_in: ["computed — audience/persona_relevance tags and sources[] across the lenses above"]
-    coverage: "none"
+    coverage: "stub"
     confidence: "low"
-    gap_note: "Computed from tags on rows in the lenses above, and Dentistry has no rows in any of them, so nothing computes. This question cannot move until the other five do."
+    # "stub", NOT "none". The previous note — "Dentistry has no rows in any of them, so
+    # nothing computes" — was false on both halves, and is the same boilerplate
+    # sentence Task 3.3 corrected in content/dissection/medicine.yaml. The 3
+    # standards-competitor-ratings rows named in the question above all carry
+    # persona_relevance, between them naming 4 slugs —
+    # role-compliance-accreditation-liaison, role-dean, role-program-admin and
+    # discipline-dentistry — every one of which resolves to a real file in
+    # content/personas/, and they cite 5 distinct registered source_ids. So something
+    # does compute. Dentistry in fact tags MORE persona slugs than Medicine or DO here;
+    # it just does so from fewer rows in fewer lenses.
+    #
+    # Still a stub: one lens of five, 3 rows, and every tag author-assigned and
+    # unvalidated (the caveat Pharmacy's manifest records even at "partial" with 83
+    # rows). The other four lenses hold no Dentistry rows at all, so the document-lens
+    # half of this question — which documents a persona actually touches — has nothing
+    # behind it. This cannot reach "partial" until the other five questions move.
+    gap_note: "Computes, but from one lens only: 3 standards-competitor-ratings rows tag 4 persona slugs (3 role-*, 1 discipline) across 5 sources. The other four lenses hold no Dentistry rows."

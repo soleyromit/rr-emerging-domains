@@ -108,8 +108,10 @@ market_sizing:
     # material (33 of its 57 rows list at least one other Exxat discipline on the
     # same campus). A count here would have to branch on `grid_matched`, and for
     # DO that boolean is not sufficient on its own: 11 rows matched a Logo Grid
-    # row whose every discipline cell is the Excel error "#N/A", so their empty
-    # lists are unknowns wearing the same shape as the 13 confirmed negatives.
+    # row carrying the Excel error "#N/A" in 35 of its 36 discipline cells (the
+    # 36th is the DO column itself, a real "No", which is excluded by definition
+    # and so rescues nothing), so their empty lists are unknowns wearing the same
+    # shape as the 13 confirmed negatives.
     # See that file's "#N/A CAVEAT" block. Counting before that is separated
     # would publish unknowns as confirmed no-cross-sell.
     claim: null                # <=150 soft / 300 hard chars — one line, sourced.

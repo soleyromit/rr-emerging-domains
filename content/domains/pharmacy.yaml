@@ -118,9 +118,27 @@ market_sizing:
     #   * 149 rows - 3 unmatched = 146 matched rows = 144 distinct institutions.
     #
     # Of those 144: 99 already run Exxat for at least one other discipline
-    # (100 rows, MCPHS counted once) and 45 are checked negatives (46 rows, CHSU
-    # counted once). 99 + 45 = 144, which is the arithmetic check on this number.
-    claim: "99 of 144 grid-matched Pharmacy institutions already run Exxat for another discipline; 3 unmatched programs excluded as unknown."
+    # (100 rows, MCPHS counted once) and 45 have an empty cross-sell list
+    # (46 rows, CHSU counted once).
+    #
+    # CORRECTED 2026-09-12 (Task 3.4): those 45 are NOT all checked negatives.
+    # This block previously said "45 are checked negatives", which counted one
+    # unevaluated row as a confirmed one. Lake Erie College of Osteopathic
+    # Medicine (Pharmacy!A110) matched a Logo Grid row whose discipline cells
+    # are "#N/A" in 35 of 36 columns — the Pharmacy column included — so its
+    # empty list is unknown, not a checked "no". That row now says so in its own
+    # `notes`. The distinction was only discovered in Tasks 3.1/3.2, after this
+    # number was first written, which is why it slipped through rather than
+    # being decided wrongly.
+    #
+    # So the honest split of the 144 is: 99 with overlap + 44 confirmed
+    # negatives + 1 unevaluated (LECOM) = 144, which is the arithmetic check on
+    # this number. Only the negative side moves; 99 is unaffected, because the
+    # unevaluated row is on the empty-list side by construction.
+    #
+    # Cross-sell is therefore UNKNOWN for 4 institutions, not 3: the 3 unmatched
+    # plus LECOM.
+    claim: "99 of 144 matched Pharmacy institutions run Exxat for another discipline; 44 confirmed negatives, 1 unevaluated (LECOM), 3 unmatched, both unknown."
     cross_discipline_overlap_institutions: 99
     source_id: "crm-export-new-logo-grid-2026"
   confidence: "medium"         # low | medium | high — counts and client status are

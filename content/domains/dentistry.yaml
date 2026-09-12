@@ -64,6 +64,37 @@ market_sizing:
     programs: 968
     basis: "All 968 rows of the CRM Dentistry sheet = every CODA program type, not 968 dental schools: only 45 are predoctoral (77 nationally); 531 institutions."
     source_id: "crm-export-new-logo-grid-2026"
+    # Added by Task 3.4, on the Task 3.2 review's recommendation. Caution 2 above
+    # and `basis` both already state in PROSE that only 45 of the 968 rows are
+    # predoctoral. This makes that one number machine-readable, so a future
+    # scorecard metric_ref or app page can read the comparable figure instead of
+    # parsing a comment — the ratio hazard above is only defused if the honest
+    # denominator is reachable by a program, not just by a careful reader.
+    #
+    # 45 = rows whose Discipline Code is "PREDOC" on the same CRM sheet that
+    # `programs: 968` is counted from, under the same already-registered
+    # source_id. No new research and no new source: this is a subset of a number
+    # this block already publishes, which is what keeps it inside a mechanical
+    # task's scope.
+    #
+    # This is the field to compare across domains — 45 predoctoral DDS/DMD
+    # programs against Pharmacy's 145 accredited PharmD programs — NOT
+    # tam.programs. Note it is still not the national figure: the 77 in `basis`
+    # is the national CODA count, and 45 is what survives this export's 17-state
+    # truncation (caution 3), so 45 is a floor, not a census.
+    #
+    # DELIBERATELY Dentistry-only. DO's and Medicine's tam.programs are already
+    # single-program-type counts against real anchors, so neither needs a subset
+    # field; adding one there would imply a mix they do not have.
+    #
+    # LIMITATION: check_market_sizing_integrity() validates an explicit list of
+    # field paths and this is not on it, so the count is carried but unchecked —
+    # its source_id is NOT verified to resolve. Teaching the checker about it is
+    # a schema change the Task 3.2 review scoped to its own task.
+    predoctoral_programs:
+      count: 45
+      code: "PREDOC"
+      source_id: "crm-export-new-logo-grid-2026"
   accredited_programs:
     # Still null, on purpose, and this is the field where that matters most for
     # Dentistry. The `market:` prose above cites ADA HPI / ADEA for 77

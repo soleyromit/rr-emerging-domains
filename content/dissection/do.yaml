@@ -6,14 +6,30 @@
 #
 # Read this one next to content/dissection/pharmacy.yaml, because the contrast IS the
 # content. Pharmacy's manifest points at five populated lenses because a domain-expert
-# session happened (2026-09-04). No such session has happened for DO. So five of the
-# six questions below are coverage: "none" — not because DO is unimportant (this
-# repo's own scorecard ranked it first on weighted math before the GTM decision
-# overrode it), but because nobody has done the work yet, and a manifest that
-# implied otherwise would be the failure this family exists to prevent.
+# session happened (2026-09-04). No such session has happened for DO. So TWO of the
+# six questions below are coverage: "none", THREE are "stub" and one is "partial" —
+# and the "none"s are not there because DO is unimportant (this repo's own scorecard
+# ranked it first on weighted math before the GTM decision overrode it), but because
+# nobody has done the work yet, and a manifest that implied otherwise would be the
+# failure this family exists to prevent.
 #
-# The one exception is market-size: Task 3.1 extracted the CRM export's DO sheet
-# mechanically, which needs no domain expert. That question is "partial".
+# The three "stub"s were corrected in Task 3.4 from an earlier "none". This file
+# previously asserted, in three separate gap_notes, that DO has no rows in the
+# product-gaps lens, that neither standards lens carries a COCA row, and that DO has
+# "no rows in any of them, so nothing computes". All three were false against this
+# repo's own lens data: content/lenses/product-gaps.yaml holds 3 DO rows and
+# content/lenses/standards-competitor-ratings.yaml holds 4. They were boilerplate
+# carried across manifests without re-running the check — the exact failure this
+# family exists to prevent — and are fixed here to say what is actually true. The
+# same bug was caught and fixed in content/dissection/medicine.yaml in Task 3.3;
+# read that file's two stubs as the reference for the shape of these.
+#
+# Moving "none" to "stub" does NOT inflate this manifest's headline: the density
+# script counts questions at partial-or-better, so DO still reports 1/6, level with
+# Dentistry and MD.
+#
+# The one question above "stub" is market-size: Task 3.1 extracted the CRM export's DO
+# sheet mechanically, which needs no domain expert. That question is "partial".
 
 domain: "DO"                  # the RAW `domain:` value from content/domains/do.yaml.
                               # For DO the raw value and the app-resolvable label are
@@ -103,9 +119,24 @@ incumbent_set:
 questions:
   - key: "features-to-build"
     answered_in: ["lenses/product-gaps.yaml"]
-    coverage: "none"
+    coverage: "stub"
     confidence: "low"
-    gap_note: "No DO rows in the product-gaps lens. No domain-expert session exists for DO; per the Pharmacy session's own 'we don't know what we don't know' finding, real rows here need one first."
+    # "stub", NOT "none". The previous note here said "No DO rows in the product-gaps
+    # lens", which is false: content/lenses/product-gaps.yaml carries 3 rows with
+    # domain "DO" — do-placement-scheduling-logic-depth,
+    # do-exxat-one-prism-integration-depth and do-health-system-integration — all at
+    # severity "blocking", all tagged audience "discipline-do", and that lens's own
+    # header comment calls them out explicitly ("the last three rows are domain: 'DO',
+    # not 'Pharmacy'"). So something is there.
+    #
+    # Still only a stub, and the reason is worth stating rather than burying: all 3
+    # rows cite the SAME source, and it is the 2026-09-04 PHARMACY session — its
+    # "RFP losses (MD/DO, not pharmacy)" section, where a pharmacy expert reported
+    # what DO RFPs asked for. That is secondhand evidence from a session not scoped to
+    # this domain, which is why the manifest's "no DO domain-expert session exists"
+    # premise still holds and why this cannot reach "partial" the way Pharmacy's own
+    # features-to-build (5 rows, from the session that WAS about it) does.
+    gap_note: "3 blocking DO gap rows exist (placement-logic depth, Exxat One-to-Prism, health-system integration), but all 3 cite one source: the RFP-loss section of Pharmacy's session, not a DO session."
 
   - key: "competitor-differentiation"
     answered_in: ["lenses/competitor-differentiation.yaml", "competitors/*.yaml"]
@@ -129,12 +160,40 @@ questions:
 
   - key: "standards-to-product"
     answered_in: ["lenses/standards-use-cases.yaml", "lenses/standards-competitor-ratings.yaml"]
-    coverage: "none"
+    coverage: "stub"
     confidence: "low"
-    gap_note: "Neither standards lens carries a COCA row, though content/accreditation/coca.yaml exists. Turning an accreditor's standards into use cases needs a domain expert to say which ones bite."
+    # "stub", NOT "none". The previous note said "Neither standards lens carries a COCA
+    # row", which is false and was flagged from content/dissection/medicine.yaml in
+    # Task 3.3: content/lenses/standards-competitor-ratings.yaml carries 4 rows with
+    # domain "DO", rated against Standard 11/Element 11.1 and Standard 11/Element 11.9,
+    # BOTH of which content/accreditation/coca.yaml really defines, citing elentra,
+    # medhub and new-innovations against 4 distinct registered source_ids.
+    #
+    # Thin in three specific ways, which is what keeps it a stub: 3 of the 7 vendors
+    # scoped above, 2 of coca.yaml's 12 elements, and ZERO rows in
+    # standards-use-cases.yaml — the lens that actually does the
+    # standard-to-product-requirement translation this question names. Both rated
+    # elements also sit in COCA Standard 11 alone; the other ten standards are untouched.
+    gap_note: "standards-competitor-ratings.yaml has 4 real COCA rows (elentra, medhub, new-innovations; Elements 11.1 and 11.9). But standards-use-cases.yaml has none: no COCA standard is a product use case yet."
 
   - key: "persona-and-document-lens"
     answered_in: ["computed — audience/persona_relevance tags and sources[] across the lenses above"]
-    coverage: "none"
+    coverage: "stub"
     confidence: "low"
-    gap_note: "Computed from tags on rows in the lenses above, and DO has no rows in any of them, so nothing computes. This question cannot move until the other five do."
+    # "stub", NOT "none". The previous note — "DO has no rows in any of them, so
+    # nothing computes" — was false on both halves, and is the same boilerplate
+    # sentence Task 3.3 corrected in content/dissection/medicine.yaml. DO has 7 rows
+    # across 2 of the 5 lenses above, and they are not untagged: the 4
+    # standards-competitor-ratings rows carry persona_relevance naming
+    # role-compliance-accreditation-liaison and role-dean, the 3 product-gaps rows
+    # carry audience "discipline-do", and all three slugs resolve to real files in
+    # content/personas/. Between them they cite 5 distinct registered source_ids. So
+    # something does compute — more than computes for Medicine, which has one lens.
+    #
+    # Still a stub, and thin in the ways that matter: 2 lenses of 5, 3 persona slugs of
+    # the 23 non-template files in content/personas/, and every tag author-assigned and
+    # unvalidated (the caveat Pharmacy's manifest records even at "partial" with 83
+    # rows). The document-lens half of this question — which documents a persona
+    # actually touches — has nothing behind it at all. This cannot reach "partial"
+    # until the other five questions move.
+    gap_note: "Computes, but thinly: 7 rows across 2 lenses (4 standards-ratings, 3 product-gaps) tag 3 persona slugs across 5 sources. The other three lenses hold no DO rows, and no document lens exists."

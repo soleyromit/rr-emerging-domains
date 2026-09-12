@@ -269,7 +269,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Teaching location: Blacksburg, VA. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    notes: "Teaching location: Blacksburg, VA. Matched grid row's cells are '#N/A' in 35 of 36 columns — unevaluated, so the empty list is unknown."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "DO!A12"
@@ -286,7 +286,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Teaching location: Spartanburg, SC. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    notes: "Teaching location: Spartanburg, SC. Matched grid row's cells are '#N/A' in 35 of 36 columns — unevaluated, so the empty list is unknown."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "DO!A13"
@@ -303,7 +303,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Teaching location: Auburn, AL. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    notes: "Teaching location: Auburn, AL. Matched grid row's cells are '#N/A' in 35 of 36 columns — unevaluated, so the empty list is unknown."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "DO!A14"
@@ -320,7 +320,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Teaching location: Monroe, LA. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    notes: "Teaching location: Monroe, LA. Matched grid row's cells are '#N/A' in 35 of 36 columns — unevaluated, so the empty list is unknown."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "DO!A15"
@@ -337,7 +337,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    notes: "Matched grid row's cells are '#N/A' in 35 of 36 columns — unevaluated, so the empty list is unknown."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "DO!A16"
@@ -388,7 +388,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Teaching location: Erie, PA. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    notes: "Teaching location: Erie, PA. Matched grid row's cells are '#N/A' in 35 of 36 columns — unevaluated, so the empty list is unknown."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "DO!A19"
@@ -405,7 +405,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Teaching location: Greensburg, PA. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    notes: "Teaching location: Greensburg, PA. Matched grid row's cells are '#N/A' in 35 of 36 columns — unevaluated, so the empty list is unknown."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "DO!A20"
@@ -422,7 +422,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Teaching location: Bradenton, FL. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    notes: "Teaching location: Bradenton, FL. Matched grid row's cells are '#N/A' in 35 of 36 columns — unevaluated, so the empty list is unknown."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "DO!A21"
@@ -439,7 +439,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Teaching location: Elmira, NY. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    notes: "Teaching location: Elmira, NY. Matched grid row's cells are '#N/A' in 35 of 36 columns — unevaluated, so the empty list is unknown."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "DO!A22"
@@ -456,7 +456,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Matched the 'Liberty University' row; the grid's 'Liberty University College of Osteopathic Medicine' row is all '#N/A'."
+    notes: "Matched the 'Liberty University' row; the grid's 'Liberty University College of Osteopathic Medicine' row is '#N/A' in 35 of 36."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "DO!A23"
@@ -745,7 +745,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Teaching location: Tulsa, OK. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    notes: "Teaching location: Tulsa, OK. Matched grid row's cells are '#N/A' in 35 of 36 columns — unevaluated, so the empty list is unknown."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "DO!A40"
@@ -762,7 +762,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Teaching location: Tahlequah, OK. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    notes: "Teaching location: Tahlequah, OK. Matched grid row's cells are '#N/A' in 35 of 36 columns — unevaluated, so the empty list is unknown."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "DO!A41"
@@ -915,7 +915,7 @@ programs:
     other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Teaching location: New York, NY. Matched the grid's 'Touro College' row; its 'Touro College of Osteopathic Medicine' row is all '#N/A'."
+    notes: "Teaching location: New York, NY. Matched the grid's 'Touro College' row; its COM-named row is '#N/A' in 35 of 36."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "DO!A50"
@@ -949,7 +949,7 @@ programs:
     other_disciplines_on_campus: ["Nursing", "Physician Assistant"]
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: "Matched 'Touro University - California Campus'; the grid's COM-named row for this school is all '#N/A'."
+    notes: "Matched 'Touro University - California Campus'; the grid's COM-named row for this school is '#N/A' in 35 of 36."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "DO!A52"

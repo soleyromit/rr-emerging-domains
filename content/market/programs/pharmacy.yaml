@@ -35,14 +35,27 @@
 #     by exact name; 37 by a hand-reviewed variant/former-name/same-campus-unit
 #     match); Larkin University, Manchester University and South Carolina
 #     College of Pharmacy have no Logo Grid row at all and are honestly empty.
-#     An empty list therefore carries TWO meanings, which the per-row
-#     `grid_matched:` boolean keeps apart: on the 146 rows with
-#     `grid_matched: true` an empty list is a checked negative (the grid marks
-#     no other discipline "Yes" for that campus), and on the 3 rows with
-#     `grid_matched: false` it is unknown. ANY aggregate over this field must
-#     branch on `grid_matched`, never on the wording of `notes` — prose is
-#     context for a human reader, not a machine-checkable flag. (49 of the 149
-#     rows have an empty list; 46 are confirmed negatives and 3 are unknown.)
+#     An empty list therefore carries THREE meanings, and `grid_matched:` only
+#     separates two of them: on the rows with `grid_matched: true` an empty list
+#     is normally a checked negative (the grid marks no other discipline "Yes"
+#     for that campus), and on the 3 rows with `grid_matched: false` it is
+#     unknown. ANY aggregate over this field must branch on `grid_matched`,
+#     never on the wording of `notes` — prose is context for a human reader, not
+#     a machine-checkable flag.
+#   * THE #N/A CAVEAT — read before aggregating. The third meaning, added by
+#     Task 3.4 and NOT expressible in `grid_matched`, is the one this file
+#     originally missed: EXACTLY ONE row —
+#     `lake-erie-college-of-osteopathic-medicine-pharmacy` (Pharmacy!A110) —
+#     matched a Logo Grid row (LECOM, PA) whose discipline cells carry the
+#     literal Excel error "#N/A" in 35 of 36 columns, the Pharmacy column among
+#     them. That is an unevaluated lookup, not a checked "no"; the 36th cell is
+#     the DO column, which holds a real "No" and rescues nothing here. So its
+#     empty list is UNKNOWN, and `grid_matched: true` cannot say so because a
+#     row WAS found — the same trap content/market/programs/do.yaml documents
+#     for its own 11 such rows. An aggregate needing the distinction must
+#     exclude this locator explicitly.
+#     (49 of the 149 rows have an empty list: 45 are confirmed negatives, 1 is
+#     the #N/A unknown above, and 3 are unmatched unknowns.)
 #     Two universities in one system (UNC-Chapel Hill vs UNC-Charlotte, Texas
 #     Tech vs TTU Health Sciences Center) were never merged.
 #     Discipline labels: the grid's column headers are rewritten to this repo's
@@ -1897,7 +1910,7 @@ programs:
     other_disciplines_on_campus: []
     incumbent_vendor: "unknown"
     incumbent_evidence: null
-    notes: null
+    notes: "Matched grid row's cells are '#N/A' in 35 of 36 columns, Pharmacy's included — unevaluated, so the empty list is unknown, not a checked none."
     sources:
       - source_id: "crm-export-new-logo-grid-2026"
         locator: "Pharmacy!A110"
