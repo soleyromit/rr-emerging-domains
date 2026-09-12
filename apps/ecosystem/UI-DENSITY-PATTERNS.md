@@ -127,7 +127,7 @@ citations inline (e.g. `"...(competitors/emedley.yaml, e-value.yaml)..."`) — r
 correct research, but a literal raw-filename leak once rendered; strip it at render
 time rather than rewriting the underlying content field.
 
-## The two mechanical rules, enforced
+## The four mechanical rules, enforced
 
 1. **`<Markdown>` has no clamp prop.** The only way to control its exposure is nesting
    it inside a closed-by-default `<Collapsible>`, or explicitly marking it as an
@@ -141,6 +141,61 @@ time rather than rewriting the underlying content field.
    `{/* DENSITY-OK: reason */}` comment for a genuine false-positive (e.g. a `.body`
    property that's actually a short name, not prose — see
    `app/accreditation/[domain]/page.tsx` for a worked example of that comment).
+3. **A `<Collapsible>`'s `trigger` gets a bare string, not a `<Text>` wrapper.** The
+   trigger renders its plain string child inside a span carrying its own fixed
+   ~17px/semibold styling. A `<Text>` sets its own font-size, which silently overrides
+   what the label would otherwise inherit — so that one trigger renders smaller and
+   lighter than its siblings even though all of them are the same conceptual level. This
+   shipped once: `components/accreditation-standards-table.tsx` had three top-level
+   triggers passing bare strings and a fourth ("Why Exxat is rated this way") wrapping
+   its label in `<Text textWrap="wrap">`, and the difference was visible on screen before
+   anyone found it in the source. Note what is and isn't the rule: a multi-line trigger
+   is fine, and so are sibling `<Badge>`s next to the label — that same fixed trigger is
+   a `<Stack>` wrapping a bare string plus two badges. What breaks is `<Text>` around the
+   label. The check therefore fires only on a `<Text>` inside a `trigger={...}` that
+   declares no explicit `type=`; an explicit `type=` is how a deliberate second line
+   inside a trigger says so (a supporting subtitle beside a chip, as in
+   `components/discipline-variance-list.tsx`). Escape hatch: `{/* NESTING-OK: reason */}`.
+4. **Nothing renders inside a `<CollapsibleGroup>` except `<Collapsible>`s.**
+   `CollapsibleGroup` renders only `{children}` — no wrapper DOM element at all unless
+   `hasDividers` is set. So any content placed in the group but outside a `<Collapsible>`
+   renders plainly, fully expanded, visually inside what looks like a collapsible
+   section: hierarchy that reads real and behaves fake. Layout wrappers are fine and the
+   check ignores them — a `<Stack>` or `<Card>` whose own children are `<Collapsible>`s
+   is the design system's documented pattern, and `components/flow-detail.tsx` uses it
+   correctly. What the check catches is a content component (`Text`, `Markdown`,
+   `FieldBlock`, `Takeaway`, a chart) sitting in the group with no `<Collapsible>` above
+   it, at any nesting depth. Escape hatch: `{/* NESTING-OK: reason */}`. See
+   `components/dissect/node-detail-panel.tsx` for the group used correctly.
+
+### The Three-Level Rule: a `Card` is never a level
+
+Every content-heavy surface has exactly three disclosure levels, and each one is a
+specific component:
+
+- **L1 — the scan layer.** Visible with zero clicks: a `Takeaway`, a `MetadataList`, a
+  summary chart. A reader who opens nothing still leaves with the answer.
+- **L2 — a named, closed-by-default `<Collapsible>` inside a `<CollapsibleGroup>`.** The
+  first click reveals a whole section ("Feature teardown by pillar"). The trigger names
+  what's inside, so the click is a decision, not a gamble.
+- **L3 — the evidence inside that section.** Either a `<FieldBlock>` (clamped prose with
+  its own expand-to-full toggle) or, for genuinely deep content, a further-nested
+  `<Collapsible>`.
+
+The punchline: **a `<Card>` used for visual grouping is not a level.** It's decoration,
+not disclosure. Putting content inside a `Card` instead of a `Collapsible` doesn't add a
+level — it just looks like one while behaving exactly like L1, because everything inside
+it still renders unclamped on page load. The same goes for a background tint, a border,
+or a nested `Stack`: if the reader doesn't have to click to reveal it, it's L1 no matter
+how it's boxed. This is why rule 4 above exists as a mechanical check rather than as
+advice — a fake level type-checks and builds cleanly.
+
+`components/dissect/node-detail-panel.tsx` is the reference implementation of the shape:
+a `Takeaway` (L1), a `Divider`, then a `CollapsibleGroup` of named `Collapsible`s (L2),
+with the cross-link row after it. `components/dissect/standard-detail-panel.tsx` shows
+L3 filled in — every one of its L2 sections holds `FieldBlock`s with real `maxLines`,
+and its "Why Exxat is rated this way" trigger carries an inline comment explaining the
+bare string, so the next agent to touch it doesn't reintroduce rule 3's bug.
 
 ## `ListItem`'s `label`/`description` have NO tooltip — worse than a plain `<Text>` clamp
 
@@ -175,8 +230,8 @@ fixed pattern — all were plain-string `label`/`description` bound to fields th
 run past 1,000 characters in real content before the 2026-08-25 fix.
 
 Run `npm run check:density` (or `bash scripts/check-render-density.sh` from
-`apps/ecosystem/`) before declaring any page or component done. It's a blunt,
-fixed-window text search, not a real JSX parse — it will occasionally need a human to
+`apps/ecosystem/`) before declaring any page or component done. It's a blunt text
+search, not a real JSX parse — it will occasionally need a human to
 add an allowlist comment for a true-positive-but-fine case. That's the intended
 tradeoff: cheap enough to run every time, not a build dependency, not a false sense of
 completeness either.
@@ -189,6 +244,11 @@ completeness either.
 3. If you're building a `Collapsible`-based section, actually open it in a browser
    before calling the work done — a `CollapsibleGroup` wrapping non-collapsible
    children will look identical in the source and be a completely different experience
-   live.
-4. Run `npm run check:density` and `npx next build` before finishing. Neither is
+   live. Rule 4 now catches the common shape of that mistake, but it only knows about
+   content components it can name; a custom component that renders no `Collapsible` of
+   its own still slips through, and only a click finds it.
+4. Count your levels against the Three-Level Rule before you ship: L1 scan, L2 named
+   `Collapsible`, L3 `FieldBlock` or nested `Collapsible`. If a level is "a `Card`",
+   you have one fewer level than you think.
+5. Run `npm run check:density` and `npx next build` before finishing. Neither is
    optional — see `/CLAUDE.md`.
