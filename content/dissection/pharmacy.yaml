@@ -57,6 +57,22 @@ incumbent_set:
     # shipping, while pharmacy programs are still subscribing. A carried-over,
     # not-yet-acted-on action item from a prior AACP is to curate the list of
     # e-Value pharmacy programs (booth-lead notes plus a program-website sweep).
+    #
+    # CAVEAT ON THE PREMISE, added 2026-09-11 — read before acting on this role.
+    # The "archaic" premise this role rests on is CONTESTED, not settled.
+    # e-value.yaml rates four pillars ahead of Prism on public evidence, and
+    # Ascend folded myTIPreport into the line in May 2025, so the merged product
+    # is demonstrably still being developed. lenses/competitor-differentiation.yaml
+    # records the conflict as a row with direction: "unknown" rather than picking
+    # a side. The likely reconciliation, which nobody has tested yet: that `ahead`
+    # evidence is MedHub/GME-branded (ACGME NAS, CLER, ADS), while MedHub's own
+    # /pharmacy/ URL serves a generic health-science page with no ACPE or
+    # IPPE/APPE mention — an active GME line above a stagnant pharmacy SKU would
+    # make the session right about the product a pharmacy buyer actually sees.
+    # Real but adjacent corroboration: article-jom-tech-use-satisfaction-coms-2026
+    # puts eValue's use among osteopathic colleges down from 44.8% to 28.6%. That
+    # is DO, not pharmacy, so it does not settle this. Confirm the pharmacy SKU is
+    # stagnant before a displacement campaign is built on the assumption.
 
   - competitor_slug: "examsoft"
     role: "adjacent"
@@ -103,14 +119,16 @@ questions:
     answered_in: ["lenses/competitor-differentiation.yaml", "competitors/*.yaml"]
     coverage: "partial"
     # Not "researched": 10 head-to-head rows now exist across all 5 in-scope
-    # vendors, but 6 of the 10 are "directional" and rest on the one 2026-09-04
-    # session. Confidence is a notch above features-to-build's "low" because the
-    # vendor teardowns underneath are independent public research, and 4 rows
-    # (CORE's share band, CORE's shipped CompMS mapping, ExamSoft's shipped exam
-    # delivery, ASHP's PharmAcademic mandate) are carried by that research rather
-    # than by the session.
+    # vendors, but after the 2026-09-11 review 9 of the 10 are "directional" —
+    # only the CORE CompMS row has a sources[] chain that reaches public material
+    # instead of terminating at the one 2026-09-04 session. Confidence stays at
+    # "medium" rather than dropping back to "low" because 8 of the 10 rows now
+    # cite at least one registered third-party source (a fetched ACPE self-study,
+    # three CORE/PeopleGrove pages, Enflux's FAQ and case study, two MedHub pages,
+    # two PharmAcademic documents, a peer-reviewed JOM survey) — up from 3 rows
+    # before the fix round, and more than features-to-build has.
     confidence: "medium"
-    gap_note: "10 rows now cover all 5 in-scope vendors, but 6 are directional off the one session, no price or services axis is researched, and e-Value's direction stays 'unknown' on conflicting evidence."
+    gap_note: "10 rows cover all 5 in-scope vendors, but 9 are directional and only one has a source chain independent of the session; no price or services axis is researched, and e-Value stays 'unknown'."
 
   - key: "market-size"
     answered_in: ["domains/pharmacy.yaml#market_sizing", "market/programs/pharmacy.yaml"]

@@ -1060,3 +1060,53 @@ sources:
     publisher: "DaVinci Education (Elentra)"
     what_it_supports: "The gap-flag dashboard is built on AAMC Curriculum Inventory sequence blocks and LCME DCI tables (6.0-6.3, 6.6, 9.0-9.2), with COCA named as future alignment; lets a school 'spot and fix potential concerns for accreditation at any time'. ACPE is not named."
     accessed: "2026-09-10"
+
+  # ------------------------------------------------------------------
+  # Added 2026-09-11 in Task 2.8's fix round. All four were already cited
+  # by URL inside content/competitors/*.yaml but had no registry id, so no
+  # lens row could reach them through sources[] — the structural reason
+  # several competitor-differentiation rows were stuck citing only the
+  # 2026-09-04 session. Each was re-fetched and content-verified on
+  # 2026-09-11 before being registered; ASHP's PharmAcademic residency page,
+  # the fifth such document, is deliberately NOT here because it returned
+  # 403 to automated fetch that day and could not be confirmed.
+  - id: "doc-uhcop-acpe-self-study-2024"
+    title: "Self-Study Report to the Accreditation Council for Pharmacy Education (August 2024)"
+    url: "https://www.uh.edu/pharmacy/_documents/acpe/uhcop-self-study-final-2024-public.pdf"
+    type: "doc"
+    origin: "third-party"
+    access: "public"
+    publisher: "University of Houston College of Pharmacy"
+    date: "2024-08"
+    what_it_supports: "An accredited program's ACPE self-study running both vendors: exams tagged in ExamSoft, about 9,000 patient-care interventions a year in CORE ELMS."
+    accessed: "2026-09-11"
+
+  - id: "product-page-core-for-pharmacy-2026"
+    title: "Pharmacy Experiential Learning Management Software | CORE Higher Ed"
+    url: "https://corehighered.com/core-for-pharmacy"
+    type: "product-page"
+    origin: "third-party"
+    access: "public"
+    publisher: "CORE Higher Education Group (PeopleGrove)"
+    what_it_supports: "Vendor's own share claim, verbatim: 'Find out why 90% of pharmacy programs across America partner with CORE'. Also claims to exceed ACPE Standards."
+    accessed: "2026-09-11"
+
+  - id: "product-page-enflux-faq-2026"
+    title: "Enflux FAQ"
+    url: "https://enflux.com/faq/"
+    type: "product-page"
+    origin: "third-party"
+    access: "public"
+    publisher: "Enflux"
+    what_it_supports: "Names the integration set 'ExamSoft, Canvas, and CORE' (Blackboard newly added); describes consolidating others' data rather than collecting any."
+    accessed: "2026-09-11"
+
+  - id: "press-enflux-ucharleston-case-study-2026"
+    title: "Learning Analytics for Student Retention and Accreditation Readiness — University of Charleston School of Pharmacy"
+    url: "https://enflux.com/case-studies/learning-analytics-for-student-retention-and-accreditation-readiness/"
+    type: "press"
+    origin: "third-party"
+    access: "public"
+    publisher: "Enflux"
+    what_it_supports: "Vendor-published: a pharmacy school running the full ExamSoft + CORE ELMS + Enflux stack, with an 8-year ACPE reaccreditation."
+    accessed: "2026-09-11"
