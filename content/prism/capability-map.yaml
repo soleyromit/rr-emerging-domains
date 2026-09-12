@@ -14,7 +14,8 @@ sources:
   - "Discipline video transcript: PAVideosTranscripts.md"
   - "Discipline video transcript: OTOTAVideosTranscripts.md"
   - "Discipline video transcript: NursingTutorialsTranscripts.md"
-last_updated: "2026-08-24"
+  - "Domain-expert session, 2026-09-04 (Vishaka + Ruchi, Pharmacy), source_id `interview-vishaka-pharmacy-understanding-2026-09-04`, content/interviews/2026-09-04-vishaka-ruchi-pharmacy-understanding.md — speaker opinion/recollection, not verified product documentation"
+last_updated: "2026-09-11"
 
 # Optional `roadmap:` sub-object, attachable to any pillar or feature carrying
 # `status: roadmap`. Added 2026-09-11, because until now `status: roadmap` was a
@@ -334,7 +335,15 @@ core_ring:
             via Exxat help-center documentation: the linking step uses a
             named "Smart Bulk Link" drawer for High/Medium-confidence
             matches, and once a row is manually confirmed AI suggestions
-            stop appearing for that row.
+            stop appearing for that row. DEPTH CAVEAT via source_id
+            `interview-vishaka-pharmacy-understanding-2026-09-04`
+            (2026-09-04 domain-expert session): Vishaka recalls the
+            connection between Exxat One and Exxat Prism not being deep
+            enough among the top reasons Exxat lost MD/DO RFPs. Shipped
+            linking + schedule processing is therefore not the same as
+            deep integration, and this entry should not be stretched into
+            a general "one platform" claim at the Exxat One boundary.
+            Kunal and Wilson hold the full RFP detail.
         - name: "Custom Site Assessment form builder"
           detail: >
             CONFIRMED via Exxat help-center documentation: self-service form
@@ -1263,7 +1272,17 @@ exxat_advantage_layer:
       framing for the domain-expansion pitch: "integration" today means a
       managed file-feed relationship with Exxat's implementation team, not
       a self-service API a partner university's IT team can build against
-      directly.
+      directly. ROLLOUT STATUS, more current than the help-center material
+      above, via source_id
+      `interview-vishaka-pharmacy-understanding-2026-09-04` (2026-09-04
+      domain-expert session): Canvas is shipped, Brightspace is next, then
+      Blackboard. The session states no target date or quarter for either
+      of the latter two, so none is asserted here. The same session names
+      LMS integration the second biggest pharmacy buying driver — it
+      removes manual transfer of grades from the clinical management system
+      into the LMS, which is the program's official student communication
+      channel — and records a dean's line to Vishaka: "once you have LMS
+      integration, come back to me and talk to me."
     - "WCAG AA Compliant"
     - >
       24/7 Support — CORRECTION via Exxat help-center documentation: the
@@ -1380,6 +1399,6 @@ open_questions_for_phase_2:
   - "[RESOLVED — see 'LMS/SIS Integration' under exxat_advantage_layer above, via Exxat help-center documentation] Confirm LMS/SIS integration partner list: Banner, Canvas, and PeopleSoft are named as SIS/LMS feed examples. The mechanism is confirmed to NOT be a client-facing API — it's Exxat-managed, SSH-delivered CSV file feeds (Student, Course Registration, Compliance feeds plus a one-time Course Offering feed) with no self-service API on offer."
   - "[RESOLVED (substantially) — see 'served_today' note above, via the 399-article Exxat help-center corpus and 6 discipline video transcripts] Confirm current full domain scope against their own playbooks: SLP and Social Work are confirmed served with real accreditor-mapped source material (CAA/CFCC/KASA for SLP; CSWE EPAS for Social Work); Nursing is confirmed served broadly (ACEN/CCNE/COA) beyond just CRNA; a 7th discipline, Teacher Education, is confirmed served but with unusually thin documentation. Athletic training, public health, and nutrition remain UNCONFIRMED as served disciplines."
   - "[RESOLVED — per Exxat PM confirmation, 2026-08-26] 'Surveys & Course Evaluations' is shipped, not roadmap — see the pillar's status/notes above. Prism ships both the placement-evaluation Forms engine (CIET v2, PTSE1/2, SCIPAI, PTMACS/PTAMACS) and the general-purpose 'Exxat Surveys' builder. The remaining open item, not yet re-scoped: content/feature-map/*.yaml's per-domain competitive verdicts for this pillar were authored against the old 'roadmap' status and need re-verification now that it's confirmed shipped."
-  - "[RESOLVED — see 'Exxat One Linking + Schedule Processing' under the Clinical & Experiential Education pillar above, via exxat_transcripts.md] Exxat One (a connected, year-round clinical-partner slot-marketplace product, debuted March 2024, integrates into Prism via a 'Schedules' feature) is a distinct product adjacent to Prism, confirmed in the PT playbook — worth understanding for the GTM story. The admin-tutorial transcripts confirm the mechanics: a one-time site/location linking step (with AI match-confidence tiers) followed by schedule processing (Exxat One schedules -> Prism slots/placements, with update propagation), targeted to ship ~February 2026."
+  - "[RESOLVED — see 'Exxat One Linking + Schedule Processing' under the Clinical & Experiential Education pillar above, via exxat_transcripts.md] Exxat One (a connected, year-round clinical-partner slot-marketplace product, debuted March 2024, integrates into Prism via a 'Schedules' feature) is a distinct product adjacent to Prism, confirmed in the PT playbook — worth understanding for the GTM story. The admin-tutorial transcripts confirm the mechanics: a one-time site/location linking step (with AI match-confidence tiers) followed by schedule processing (Exxat One schedules -> Prism slots/placements, with update propagation), targeted to ship ~February 2026. Mechanics resolved; DEPTH open: the 2026-09-04 session (source_id interview-vishaka-pharmacy-understanding-2026-09-04) names the Exxat One/Prism connection as not deep enough in lost MD/DO RFPs — see that feature's depth caveat."
   - "The PT playbook names four vendors that do NOT integrate with Exxat and compete specifically at the placement/slot-marketplace layer: myClinicalExchange (mCE), Clinician Nexus, ACEMAPP, CastleBranch Bridges. These aren't in content/competitors/ (which covers MD/DO/Pharmacy/Dentistry-focused vendors) — flag to Ruchi/leadership as a second competitive front relevant to Prism's EXISTING allied-health business, separate from the four-domain expansion."
   - "[RESOLVED (partially) — see 'Contracts with expiry alerts' under the Compliance Management pillar above, re-verified 2026-09-10] content/accreditation/acpe.yaml Standard 3.5.b's affiliation-agreement rating was wrong: it previously said no pillar models site-level contracts. The shipped Contracts feature does — signed agreements linked to locations, an automated Contract Status check on the Placement Clearance Dashboard, cross-program contract sharing. Re-rated Configure (was Gap). Still open: does a 'Needs Attention' (expiring) contract actually block new placement scheduling, or only flag it? Needs a demo/PM confirmation."
