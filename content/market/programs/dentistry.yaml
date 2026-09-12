@@ -14,8 +14,8 @@
 #   * THE SHEET IS THREE BLOCKS WITH DIFFERENT PROVENANCE, and the boundaries are
 #     exact: rows 3-11 are a hand-kept client list (9 rows, every one "Yes");
 #     rows 16-971 are a pasted CODA program-directory dump (956 rows, every one
-#     "No", alphabetical by institution, each carrying program director, address
-#     and accreditation-visit columns the client block leaves empty); rows
+#     "No", alphabetical by institution, every one of them carrying the program
+#     director and accreditation-visit columns the client block leaves empty); rows
 #     972-974 are a hand-kept churned list (3 rows, every one "Previous client").
 #     Only row 8 sits in the client block WITH directory-style detail. Reading
 #     the file as one uniform export will mislead: 956 of the 968 rows were never
@@ -27,7 +27,7 @@
 #     reading this file as a count of schools must deduplicate on `institution`
 #     first.
 #   * AND THEY ARE NOT ALL PREDOCTORAL DENTISTRY. By the sheet's own Discipline
-#     Code column (29 distinct values): 45 rows are PREDOC (the DDS/DMD program),
+#     Code column (28 distinct codes): 45 rows are PREDOC (the DDS/DMD program),
 #     215 are Dental Hygiene, 174 Dental Assisting, 10 Dental Laboratory
 #     Technology, 1 Dental Therapy, 512 are advanced/postdoctoral education
 #     (GPR, AEGD, OMS, ORTHO, PERIO, ENDO, PROS, PEDDENT, DPH and the rest), and
@@ -77,8 +77,9 @@
 #     some rows. See pii_policy.
 #   * exxat_status maps the sheet's Client Y/N column: Yes -> client (9 rows),
 #     Previous client -> churned (3), No -> not-tracked (956). A plain "No" is
-#     NOT read as `prospect` — and here that matters more than usual, because 956
-#     of the 968 "No" values are simply the directory paste, not a CRM judgment.
+#     NOT read as `prospect` — and here that matters more than usual, because all
+#     956 "No" values sit in the directory block (rows 16-971) and not one of them
+#     sits anywhere else: they are a paste, not a CRM judgment about a prospect.
 #   * THE 9 CLIENT ROWS SIT AT 8 INSTITUTIONS, and four of the twelve
 #     client/churned rows contradict something else in this same sheet. All four
 #     are recorded in `notes` and none is resolved here:
@@ -127,10 +128,16 @@
 #     collapsed to single spaces, then a literal equality test against the Logo
 #     Grid's own Schools column. 234 institutions matched, covering 312 rows; the
 #     other 297 institutions (656 rows) are `grid_matched: false`. That is a much
-#     lower match rate than Pharmacy's 146-of-149, and a large share of the 656
-#     are near-certainly present in the grid under a longer name (the grid has
-#     "Boston University" where this sheet has "Boston University Henry M Goldman
-#     School of Dental Medicine"). The error direction is the safe one: a missed
+#     lower match rate than Pharmacy's 146-of-149, and many of the 656 are
+#     near-certainly in the grid under a shorter name: 73 of the 297 unmatched
+#     institutions have a name that BEGINS with a full Logo Grid school name
+#     (this sheet's "Creighton University School of Dentistry", NE, against the
+#     grid's "Creighton University", NE). Those 73 were still not merged, because
+#     the same rule also pairs this sheet's "Carrington College - Mesa" (AZ) with
+#     the grid's "Carrington College" (ID) and the client row "University of
+#     Missouri at Kansas City" with the grid's "University of Missouri" — a
+#     campus question a name prefix cannot settle. The error direction is the
+#     safe one: a missed
 #     match sets grid_matched false, which the schema already defines as UNKNOWN,
 #     so no unchecked campus is ever published as a confirmed no-cross-sell. It
 #     is still a real gap, and closing it is a hand pass this task did not do.
