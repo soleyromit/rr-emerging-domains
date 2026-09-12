@@ -1110,3 +1110,51 @@ sources:
     publisher: "Enflux"
     what_it_supports: "Vendor-published: a pharmacy school running the full ExamSoft + CORE ELMS + Enflux stack, with an 8-year ACPE reaccreditation."
     accessed: "2026-09-11"
+
+  # ------------------------------------------------------------------
+  # Added 2026-09-11 in Task 2.9, for the same structural reason as the four
+  # above: each was already cited by URL inside a content/competitors/*.yaml
+  # feature_teardown entry but had no registry id, so the feature-comparison
+  # matrix row transcribing that entry could not cite it through sources[].
+  # All four were re-fetched and content-verified on 2026-09-11 before being
+  # registered; the quoted material below is from that fetch, not from the
+  # competitor file's earlier transcription.
+  - id: "product-page-medhub-curriculum-assessment-boardvitals-2026"
+    title: "Curriculum & Assessment Technology, powered by BoardVitals — MedHub"
+    url: "https://www.medhub.com/software/curriculum-and-assessment-technology/"
+    type: "product-page"
+    origin: "third-party"
+    access: "public"
+    publisher: "MedHub (Ascend Learning)"
+    what_it_supports: "Assessment delivery over BoardVitals' partner bank, not native authoring: LTI 'automatic grade syncing' and 'AI-driven risk assessment metrics'."
+    accessed: "2026-09-11"
+
+  - id: "product-page-medhub-accreditation-automation-2026"
+    title: "Accreditation Automation — MedHub"
+    url: "https://www.medhub.com/accreditation-automation/"
+    type: "product-page"
+    origin: "third-party"
+    access: "public"
+    publisher: "MedHub (Ascend Learning)"
+    what_it_supports: "Shipped APE forms, CLER visit tracking, 'Generate ADS formatted reports', ACGME survey import, PubMed import. Never mentions ACPE or pharmacy."
+    accessed: "2026-09-11"
+
+  - id: "program-page-uf-dentistry-examsoft-procedures-2026"
+    title: "ExamSoft Procedures — DMD Program Testing Information"
+    url: "https://dental.ufl.edu/education/dmd-program/testing-information/examsoft-procedures/"
+    type: "program-page"
+    origin: "third-party"
+    access: "public"
+    publisher: "University of Florida College of Dentistry"
+    what_it_supports: "A customer institution's own procedure: ExamSoft blocks 'programs, files and Internet usage during the test', offline-capable, 48-hour download."
+    accessed: "2026-09-11"
+
+  - id: "review-examsoft-capterra-2026"
+    title: "ExamSoft Software Review 2026: Features, Integrations, Pros & Cons"
+    url: "https://www.capterra.com/p/145798/ExamSoft-E-I/"
+    type: "review"
+    origin: "third-party"
+    access: "public"
+    publisher: "Capterra (Gartner)"
+    what_it_supports: "A 34-feature inventory spanning assessment, data, reporting, security and LMS integration — and no compliance or credentialing feature of any kind."
+    accessed: "2026-09-11"

@@ -16,6 +16,47 @@
 # with the per-domain research passes, and an invented example cell would be
 # indistinguishable from a researched one the moment it is committed.
 #
+# FIRST REAL CONTENT, 2026-09-11 (plan Task 2.9) — Pharmacy, at PILLAR granularity.
+# Read the granularity before reading the rows. There is exactly ONE capability row per
+# capability-map.yaml core_ring pillar (six rows), not the ~15 finer per-feature rows the
+# plan originally imagined. That is not a shortcut: the competitor research these cells
+# transcribe (content/competitors/*.yaml feature_teardown[], Tasks 2.4/2.8) was itself
+# conducted one entry per pillar, so a finer row would be a rating nobody researched.
+# Sparse by design means seeding what is real and leaving the rest absent, so the finer
+# rows stay absent until somebody researches them.
+#
+# Every cell here is a transcription of an already-researched feature_teardown entry, with
+# three judgment calls applied consistently across all of them:
+#   1. depth_vs_prism -> rating. The teardown vocabulary describes the competitor RELATIVE
+#      TO PRISM; `rating` here is an absolute verdict on the competitor. "at-parity" and
+#      "ahead" both become fully-meeting where the evidence shows the capability genuinely
+#      ships, and partially-meeting where the evidence itself narrows the claim (e-value's
+#      Exam Management is partner content, not native authoring; its Accreditation
+#      Automation is ACGME/GME-shaped and never names ACPE). "unknown" entries are OMITTED
+#      entirely — an absent cell is unresearched, which is exactly what they are. That
+#      omission is why pharmacademic, a real in-scope Pharmacy incumbent, has zero cells:
+#      all five of its feature_teardown entries are depth_vs_prism: "unknown".
+#   2. "prism-only" -> not-meeting, INCLUDED rather than omitted. A vendor that does not
+#      compete on a pillar does not meet it, and writing that down is what keeps a sourced
+#      absence distinguishable from an unresearched one. Two of the three prism-only cells
+#      rest on a positively evidenced absence and are verified: an accredited program's
+#      ACPE self-study running ExamSoft and CORE on opposite sides of the didactic/clinical
+#      line, and Enflux's own FAQ describing itself as reading CORE's data rather than
+#      producing any. The third (ExamSoft on Compliance Management) rests only on an
+#      unbroken silence across every source consulted, so it is directional and its
+#      evidence_note says so in the competitor file's own words.
+#   3. evidence_strength. "verified" is reserved for ratings a NON-VENDOR source attests to
+#      (a customer institution's own documentation, an accreditation self-study, third-party
+#      reviews) or that rest on a vendor statement against its own interest. A rating read
+#      off the vendor's own marketing page is "directional" with a note naming that, per the
+#      contract above. That is why several cells transcribed from real, careful research are
+#      still directional: the research is sound, the SOURCE CLASS is vendor self-description.
+#
+# element_ids is deliberately EMPTY on every cell. ACPE elements are the granularity
+# content/lenses/standards-competitor-ratings.yaml already works at; tagging a pillar-wide
+# row with a hand-picked subset of Standard 3's key elements would assert a per-element
+# finding this row does not have. Left absent rather than guessed.
+#
 # ROWS ARE KEYED ON capability-map.yaml's PILLAR VOCABULARY, not on any external
 # spreadsheet's row taxonomy. See content/sources/vendor-comparison-chart.yaml for why:
 # that artifact is quarantined, non-citable sales collateral (`citable_as_fact: false`) —
@@ -121,5 +162,411 @@
 # ("Exxat: present on everything", 81 of 81 rows, zero evidence) cannot recur here, because
 # Exxat's own coverage requires the same sourced treatment as every competitor's.
 last_updated: "2026-09-11"
-cells: []
-exxat_cells: []
+
+cells:
+  # ---------------------------------------------------------------------------
+  # Pharmacy x Clinical & Experiential Education
+  # ---------------------------------------------------------------------------
+  - domain: "Pharmacy"
+    pillar: "Clinical & Experiential Education"
+    capability: "Clinical & experiential education: IPPE/APPE placement, scheduling, and hour and encounter logging"
+    capability_id: "pharmacy-clinical-experiential-education"
+    competitor_slug: "core-elms"
+    rating: "fully-meeting"
+    rationale: >
+      SmartMatch auto-matches students to sites and preceptors on customizable rules;
+      centralized site/student/preceptor management, scheduling, hour tracking with
+      optional GPS, absence tracking and case logging.
+      Capterra reviewers independently confirm matching time was "cut down significantly."
+    competitor_feature_ref: "Clinical & Experiential Education"
+    evidence_strength: "verified"
+    element_ids: []
+    persona_relevance: ["discipline-pharmacy", "role-clinical-coordinator", "lens-core-elms"]
+    sources:
+      - source_id: "product-page-core-elms-pharmacy-affiliation-agreements-2026"
+      - source_id: "review-core-elms-capterra-2026"
+
+  - domain: "Pharmacy"
+    pillar: "Clinical & Experiential Education"
+    capability: "Clinical & experiential education: IPPE/APPE placement, scheduling, and hour and encounter logging"
+    capability_id: "pharmacy-clinical-experiential-education"
+    competitor_slug: "e-value"
+    rating: "fully-meeting"
+    rationale: >
+      eValue ships case logs, mobile procedure logging, validated hour tracking with
+      automated reminders and summary reporting, and evaluation-driven rotation
+      scheduling, across 24+ named program types including pharmacy — wider discipline
+      breadth than Prism's confirmed scope.
+    competitor_feature_ref: "Clinical & Experiential Education"
+    evidence_strength: "directional"
+    evidence_note: "Read off MedHub's own eValue pages; per-discipline depth against Prism's anchor-relative rotation engine is not publicly verifiable."
+    element_ids: []
+    persona_relevance: ["discipline-pharmacy", "role-clinical-coordinator", "lens-medhub"]
+    sources:
+      - source_id: "product-page-medhub-evalue-2026"
+      - source_id: "product-page-evalue-health-science-programs-2026"
+
+  - domain: "Pharmacy"
+    pillar: "Clinical & Experiential Education"
+    capability: "Clinical & experiential education: IPPE/APPE placement, scheduling, and hour and encounter logging"
+    capability_id: "pharmacy-clinical-experiential-education"
+    competitor_slug: "examsoft"
+    rating: "not-meeting"
+    rationale: >
+      Not a capability ExamSoft has or claims. The University of Houston's own ACPE
+      self-study runs both products on opposite sides of the didactic/clinical line:
+      exams in ExamSoft, while IPPE/APPE hours, preceptor evaluations and roughly 9,000
+      patient-care interventions a year are logged in CORE ELMS.
+    competitor_feature_ref: "Clinical & Experiential Education"
+    evidence_strength: "verified"
+    element_ids: []
+    persona_relevance: ["discipline-pharmacy", "role-clinical-coordinator"]
+    sources:
+      - source_id: "doc-uhcop-acpe-self-study-2024"
+
+  - domain: "Pharmacy"
+    pillar: "Clinical & Experiential Education"
+    capability: "Clinical & experiential education: IPPE/APPE placement, scheduling, and hour and encounter logging"
+    capability_id: "pharmacy-clinical-experiential-education"
+    competitor_slug: "influx"
+    rating: "not-meeting"
+    rationale: >
+      Enflux's own FAQ names its integration set as "ExamSoft, Canvas, and CORE" and
+      describes consolidating other systems' data rather than collecting any. Experiential
+      data reaches Enflux only because CORE ELMS captured it first; no placement,
+      scheduling, matching or hour-logging surface exists.
+    competitor_feature_ref: "Clinical & Experiential Education"
+    evidence_strength: "verified"
+    element_ids: []
+    persona_relevance: ["discipline-pharmacy", "role-clinical-coordinator"]
+    sources:
+      - source_id: "product-page-enflux-faq-2026"
+
+  # ---------------------------------------------------------------------------
+  # Pharmacy x Compliance Management
+  # ---------------------------------------------------------------------------
+  - domain: "Pharmacy"
+    pillar: "Compliance Management"
+    capability: "Compliance management: immunization, background-check and affiliation-agreement tracking with expiry alerts"
+    capability_id: "pharmacy-compliance-management"
+    competitor_slug: "core-elms"
+    rating: "fully-meeting"
+    rationale: >
+      Monitors immunizations, background checks, drug screens, HIPAA
+      training and licensing with automated expiration reminders; tracks preceptor
+      licences and affiliation agreements with expiry alerts; HIPAA-compliant document
+      storage. Reviewers cite the module for accreditation and audit work.
+    competitor_feature_ref: "Compliance Management"
+    evidence_strength: "verified"
+    element_ids: []
+    persona_relevance: ["discipline-pharmacy", "role-compliance-accreditation-liaison", "lens-core-elms"]
+    sources:
+      - source_id: "product-page-core-elms-clinical-experiential-overview-2026"
+      - source_id: "review-core-elms-capterra-2026"
+
+  - domain: "Pharmacy"
+    pillar: "Compliance Management"
+    capability: "Compliance management: immunization, background-check and affiliation-agreement tracking with expiry alerts"
+    capability_id: "pharmacy-compliance-management"
+    competitor_slug: "examsoft"
+    rating: "not-meeting"
+    rationale: >
+      No immunization, background-check, drug-screen, affiliation-agreement or
+      expiration-alerting surface appears in any source consulted. Capterra's 34-feature
+      inventory covers assessment, data, reporting, security and LMS integration only.
+      ExamID is exam-seat identity, not credential compliance.
+    competitor_feature_ref: "Compliance Management"
+    evidence_strength: "directional"
+    evidence_note: "An unbroken silence across every source consulted, not a positively evidenced absence — genuinely unassessed rather than proven absent."
+    element_ids: []
+    persona_relevance: ["discipline-pharmacy", "role-compliance-accreditation-liaison"]
+    sources:
+      - source_id: "review-examsoft-capterra-2026"
+
+  # ---------------------------------------------------------------------------
+  # Pharmacy x Curriculum Mapping
+  # ---------------------------------------------------------------------------
+  - domain: "Pharmacy"
+    pillar: "Curriculum Mapping"
+    capability: "Curriculum mapping: course-to-standard mapping, gap analysis and coverage reporting"
+    capability_id: "pharmacy-curriculum-mapping"
+    competitor_slug: "core-elms"
+    rating: "fully-meeting"
+    rationale: >
+      Delivered by CompMS, a distinct module rather than core ELMS: curriculum gap
+      assessment, competency-to-accreditation-standard mapping across domains and
+      sub-domains, auto-built assessment e-portfolios, and curriculum-effectiveness
+      reports tying student outcomes back to the map.
+    competitor_feature_ref: "Curriculum Mapping"
+    evidence_strength: "directional"
+    evidence_note: "CORE's own marketing pages only; whether CompMS ships with ELMS or is priced separately is unconfirmed, so the depth rating is provisional."
+    element_ids: []
+    persona_relevance: ["discipline-pharmacy", "role-compliance-accreditation-liaison", "lens-core-elms"]
+    sources:
+      - source_id: "product-page-core-compms-curriculum-mapping-2026"
+
+  - domain: "Pharmacy"
+    pillar: "Curriculum Mapping"
+    capability: "Curriculum mapping: course-to-standard mapping, gap analysis and coverage reporting"
+    capability_id: "pharmacy-curriculum-mapping"
+    competitor_slug: "e-value"
+    rating: "fully-meeting"
+    rationale: >
+      Searchable curriculum maps linking courses, sessions and programs to learning
+      objectives and accreditation criteria, with gap and redundancy identification and
+      visual standards-coverage views, explicitly aligned to the AAMC Curriculum Survey
+      and the MedBiquitous Curriculum Standards.
+    competitor_feature_ref: "Curriculum Mapping"
+    evidence_strength: "directional"
+    evidence_note: "MedHub's own product page; the named-standard alignment is a vendor claim, and AAMC/MedBiquitous are medical-education frameworks, not ACPE."
+    element_ids: []
+    persona_relevance: ["discipline-pharmacy", "role-compliance-accreditation-liaison", "lens-medhub"]
+    sources:
+      - source_id: "product-page-medhub-curriculum-mapping-2026"
+
+  # ---------------------------------------------------------------------------
+  # Pharmacy x Surveys & Course Evaluations
+  # ---------------------------------------------------------------------------
+  - domain: "Pharmacy"
+    pillar: "Surveys & Course Evaluations"
+    capability: "Surveys & course evaluations: preceptor, site and student evaluation instruments and survey distribution"
+    capability_id: "pharmacy-surveys-course-evaluations"
+    competitor_slug: "core-elms"
+    rating: "fully-meeting"
+    rationale: >
+      A dedicated survey module plus student self-evaluations, preceptor assessments and
+      student evaluations of preceptors and sites, with grade conversion, low-score
+      alerts and due-date reminders. Capterra rates it 4.7/5 overall but flags a
+      reporting suite that "lacks depth and consistency."
+    competitor_feature_ref: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    evidence_strength: "directional"
+    evidence_note: "The module inventory is CORE's own description; Capterra corroborates reviewer sentiment and the reporting complaint, not the feature list."
+    element_ids: []
+    persona_relevance: ["discipline-pharmacy", "role-program-admin", "lens-core-elms"]
+    sources:
+      - source_id: "review-core-elms-capterra-2026"
+
+  - domain: "Pharmacy"
+    pillar: "Surveys & Course Evaluations"
+    capability: "Surveys & course evaluations: preceptor, site and student evaluation instruments and survey distribution"
+    capability_id: "pharmacy-surveys-course-evaluations"
+    competitor_slug: "e-value"
+    rating: "fully-meeting"
+    rationale: >
+      The evaluation-forms engine is the core of the product and ships today: configurable
+      forms collecting data on students, educators, activities and sites, pre-populated
+      results, automated low-score alerts, forced comments on low scores, and
+      midpoint-to-end-of-rotation summary evaluations.
+    competitor_feature_ref: "Surveys & Course Evaluations (Prism roadmap Q1 2027)"
+    evidence_strength: "directional"
+    evidence_note: "Read off MedHub's own eValue product page; no independent corroboration of depth inside a pharmacy program was found."
+    element_ids: []
+    persona_relevance: ["discipline-pharmacy", "role-program-admin", "lens-medhub"]
+    sources:
+      - source_id: "product-page-medhub-evalue-2026"
+
+  # ---------------------------------------------------------------------------
+  # Pharmacy x Exam Management
+  # ---------------------------------------------------------------------------
+  - domain: "Pharmacy"
+    pillar: "Exam Management"
+    capability: "Exam management: secure high-stakes exam authoring, delivery and proctoring"
+    capability_id: "pharmacy-exam-management"
+    competitor_slug: "examsoft"
+    rating: "fully-meeting"
+    rationale: >
+      Examplify delivers secure high-stakes exams offline on a student laptop or iPad,
+      blocking other programs, files and internet during the test. Seven item types
+      across exams, quizzes, TBL iRATs/gRATs and take-homes; ExamID and ExamMonitor are
+      separate identity and proctoring products.
+    competitor_feature_ref: "Exam Management"
+    evidence_strength: "verified"
+    element_ids: []
+    persona_relevance: ["discipline-pharmacy", "role-dean"]
+    sources:
+      - source_id: "program-page-uf-dentistry-examsoft-procedures-2026"
+      - source_id: "review-examsoft-capterra-2026"
+
+  - domain: "Pharmacy"
+    pillar: "Exam Management"
+    capability: "Exam management: secure high-stakes exam authoring, delivery and proctoring"
+    capability_id: "pharmacy-exam-management"
+    competitor_slug: "e-value"
+    rating: "partially-meeting"
+    rationale: >
+      MedHub's Curriculum & Assessment Technology ships today, but as delivery and
+      analytics over BoardVitals' partner question bank rather than native exam authoring:
+      LTI integration for automatic grade syncing into the institutional LMS, and
+      AI risk-assessment metrics against board-exam benchmarks.
+    competitor_feature_ref: "Exam Management (Prism roadmap Q2 2027)"
+    evidence_strength: "directional"
+    evidence_note: "MedHub's own page; the bank is BoardVitals content, and nothing on it describes native item authoring or a secure lockdown delivery client."
+    element_ids: []
+    persona_relevance: ["discipline-pharmacy", "role-dean", "lens-medhub"]
+    sources:
+      - source_id: "product-page-medhub-curriculum-assessment-boardvitals-2026"
+
+  # ---------------------------------------------------------------------------
+  # Pharmacy x Accreditation Management
+  # ---------------------------------------------------------------------------
+  - domain: "Pharmacy"
+    pillar: "Accreditation Management"
+    capability: "Accreditation management: standard-mapped evidence assembly and self-study reporting"
+    capability_id: "pharmacy-accreditation-management"
+    competitor_slug: "core-elms"
+    rating: "fully-meeting"
+    rationale: >
+      CompMS markets accreditation-standards mapping and continuous-improvement reporting,
+      and CORE's pharmacy page claims its solutions "meet and exceed ACPE Pharmacy
+      Standards and CAPE Outcomes" and that development tracks ACPE standards. No CODA
+      equivalent appears on CORE's dental page.
+    competitor_feature_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+    evidence_strength: "directional"
+    evidence_note: "Entirely CORE's own marketing claims about itself; no program-side or third-party confirmation of ACPE-specific depth was found."
+    element_ids: []
+    persona_relevance: ["discipline-pharmacy", "role-dean", "role-compliance-accreditation-liaison", "lens-core-elms"]
+    sources:
+      - source_id: "product-page-core-elms-pharmacy-affiliation-agreements-2026"
+      - source_id: "product-page-core-compms-accreditation-2026"
+
+  - domain: "Pharmacy"
+    pillar: "Accreditation Management"
+    capability: "Accreditation management: standard-mapped evidence assembly and self-study reporting"
+    capability_id: "pharmacy-accreditation-management"
+    competitor_slug: "e-value"
+    rating: "partially-meeting"
+    rationale: >
+      A real, shipped Accreditation Automation suite — customizable APE forms, CLER visit
+      tracking, ADS-formatted reports, direct ACGME survey import into program scorecards,
+      PubMed scholarly-activity import — but the page names ACGME and GME throughout and
+      never mentions ACPE or pharmacy.
+    competitor_feature_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+    evidence_strength: "directional"
+    evidence_note: "MedHub's own page, re-fetched 2026-09-11; the machinery is ACGME-shaped, so its transfer to an ACPE self-study is an inference, not a claim it makes."
+    element_ids: []
+    persona_relevance: ["discipline-pharmacy", "role-dean", "role-compliance-accreditation-liaison", "lens-medhub"]
+    sources:
+      - source_id: "product-page-medhub-accreditation-automation-2026"
+
+  - domain: "Pharmacy"
+    pillar: "Accreditation Management"
+    capability: "Accreditation management: standard-mapped evidence assembly and self-study reporting"
+    capability_id: "pharmacy-accreditation-management"
+    competitor_slug: "influx"
+    rating: "fully-meeting"
+    rationale: >
+      Alignment to ACPE Standards 2025 with documentation, audit trails and on-demand
+      reporting, plus ActionPlans for continuous-improvement initiatives. A University of
+      Charleston case study reports an 8-year ACPE reaccreditation in 2024 with three
+      Noteworthy Practices.
+    competitor_feature_ref: "Accreditation Management"
+    evidence_strength: "directional"
+    evidence_note: "The case study is vendor-published, and a reaccreditation outcome is not attributable to any one vendor in the school's stack."
+    element_ids: []
+    persona_relevance: ["discipline-pharmacy", "role-dean", "role-compliance-accreditation-liaison"]
+    sources:
+      - source_id: "press-enflux-ucharleston-case-study-2026"
+      - source_id: "product-page-enflux-faq-2026"
+
+# Exxat's own side of the six rows above. Read the RATINGS COLUMN FIRST: one
+# fully-meeting, three partially-meeting, two not-meeting. That distribution is the whole
+# point of this list existing separately — the quarantined sales chart marks EXXAT present
+# on 81 of 81 rows, and the first time Exxat's own column was held to the same sourced
+# standard as a competitor's it came back mixed, which is what an honest column looks like.
+#
+# On sources[]: capability-map.yaml is Level 1 and cannot be reached through a source_id,
+# so the capability-map connection is carried by prism_feature_ref (per the Task 2.7
+# precedent) and sources[] cites the Level 0.5 help-center articles indexed in
+# content/sources/help-center.yaml that the capability-map content itself rests on. Note
+# that index holds 9 of the corpus's 399 articles, one per pillar — so a cell cites the
+# article for its pillar, not an article for each specific claim in its rationale. Where a
+# rationale narrows a claim, it names exactly what capability-map.yaml does and does not
+# state rather than asserting a bare absence.
+exxat_cells:
+  - domain: "Pharmacy"
+    capability_id: "pharmacy-clinical-experiential-education"
+    prism_status: "shipped"
+    prism_feature_ref: "Clinical & Experiential Education"
+    rating: "partially-meeting"
+    rationale: >
+      The placement engine, patient logging and publish gate all ship. But Placement
+      Assist, the matching layer, is self-service only for PT/PTA and OT/OTA —
+      support-enabled with "limited functionality" elsewhere — and ACPE's IPPE
+      hour minimums are an unconfirmed configuration, not a shipped rule.
+    evidence_strength: "verified"
+    sources:
+      - source_id: "help-center-placement-publish-step"
+      - source_id: "help-center-patient-log-review-workflow"
+
+  - domain: "Pharmacy"
+    capability_id: "pharmacy-compliance-management"
+    prism_status: "shipped"
+    prism_feature_ref: "Compliance Management"
+    rating: "fully-meeting"
+    rationale: >
+      Placement Clearance gates on student compliance, site documents, an active contract
+      and preceptor licence — a real multi-entity gate. Exemptions are a native status
+      (declination, exception, medical, religious), and background checks, drug
+      screening and HIPAA training run through named integrations.
+    evidence_strength: "verified"
+    sources:
+      - source_id: "help-center-placement-clearance-dashboard"
+      - source_id: "help-center-student-compliance-review"
+
+  - domain: "Pharmacy"
+    capability_id: "pharmacy-curriculum-mapping"
+    prism_status: "shipped"
+    prism_feature_ref: "Curriculum Mapping"
+    rating: "partially-meeting"
+    rationale: >
+      The mechanism ships and is deep: AI-assisted mapping with human approval, heatmap
+      and unmapped reports, accreditor-formatted exports. What pharmacy lacks is
+      content, not capability — the pre-loaded standard sets capability-map.yaml names
+      are ARC-PA, ACOTE and AACN, and ACPE is not among them.
+    evidence_strength: "verified"
+    sources:
+      - source_id: "help-center-curriculum-accreditation-standards"
+
+  - domain: "Pharmacy"
+    capability_id: "pharmacy-surveys-course-evaluations"
+    prism_status: "shipped"
+    prism_feature_ref: "Surveys & Course Evaluations"
+    rating: "partially-meeting"
+    rationale: >
+      Two engines ship: the placement Forms/Evaluations taxonomy and Exxat Surveys, a
+      general-purpose builder with 14 question types. Every validated instrument and
+      template capability-map.yaml names, though, is PT, OT, SLP or PA — no pharmacy
+      preceptor or IPPE/APPE instrument is listed.
+    evidence_strength: "verified"
+    sources:
+      - source_id: "help-center-course-forms-evaluations-activation"
+
+  - domain: "Pharmacy"
+    capability_id: "pharmacy-exam-management"
+    prism_status: "roadmap"
+    prism_feature_ref: "Exam Management"
+    rating: "not-meeting"
+    rationale: >
+      Nothing ships. capability-map.yaml carries this pillar as a bare roadmap entry
+      targeted Q2 2027 — no features, no notes, unlike every shipped pillar. The
+      2026-09-04 domain-expert session puts an Exxat counterpart to ExamSoft at "a January
+      soft launch", a month with no year.
+    evidence_strength: "directional"
+    evidence_note: "The soft-launch timing is one domain expert's recollection, and capability-map.yaml's roadmap object for this pillar carries source_id: null."
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Sections 'The ExamSoft + CORE + Influx stack' and 'LMS integration'"
+
+  - domain: "Pharmacy"
+    capability_id: "pharmacy-accreditation-management"
+    prism_status: "roadmap"
+    prism_feature_ref: "Accreditation Management"
+    rating: "not-meeting"
+    rationale: >
+      Exxat's own roadmap names this pillar not-yet-shipped, target Q3 2027. It is not
+      starting from zero — ARC-PA B2 exports, CAPTE-mapped reports and SLP's KASA
+      templates are real precedents — but every standard-mapped report
+      capability-map.yaml names is PA or PT/PTA, and no ACPE report appears in it.
+    evidence_strength: "verified"
+    sources:
+      - source_id: "help-center-pa-arcpa-reports"

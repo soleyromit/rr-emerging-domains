@@ -132,9 +132,27 @@ unmasking_key:
   - { sheet2_label: null, sheet1_name: "Experiential Learning Cloud" }
   - { sheet2_label: null, sheet1_name: "Project Concert" }
 # Sheet2 verbatim: 10 sections, 81 feature rows, in the source's own order.
-# maps_to_capability_id is null on every row by design — the crosswalk against the
-# rigorous feature-comparison-matrix.yaml is a later phase, and a guessed mapping now
-# would be exactly the laundering this file exists to prevent.
+# maps_to_capability_id was null on every row until 2026-09-11 (plan Task 2.9), when
+# lenses/feature-comparison-matrix.yaml got its first real capability rows. 44 of the 81
+# rows now name one; 37 stay null.
+#
+# A MAPPING IS NOT A CITATION. Nothing here becomes citable by being crosswalked. All the
+# field does is make a research backlog visible: "this quarantined row now has a rigorous,
+# independently-sourced counterpart" versus "this row has nothing behind it but the sales
+# chart." The `X` in a mapped row's own cells is still worth exactly what it was worth
+# before — nothing — and no id from this file may appear in `sources:` anywhere.
+#
+# The rule used, applied consistently so the 37 nulls are a decision and not fatigue: map
+# a row only where its subject is substantively covered by that pillar (so Contract
+# Management maps to compliance, because capability-map.yaml puts contracts and the
+# Placement Clearance contract gate inside the Compliance Management pillar). Leave null
+# for (a) platform, security, support and commercial attributes, which no pillar is about —
+# the whole System, Security and Support & Onboarding sections, 26 rows; (b) rows whose
+# subject spans two pillars (Site Profiles & Contracts) or is a generic entity (Student
+# Profiles, Tags); and (c) rows whose Student Performance Tracking framing does not line up
+# with a pillar at all (Skills Checklist, Course Gradebook, advising/improvement plans).
+# Note that ZERO rows map to pharmacy-exam-management: this 81-row chart contains no exam
+# row of any kind, which is itself a finding about the chart's scope.
 sections:
   - name: "System"
     rows:
@@ -175,15 +193,15 @@ sections:
       - row: "Preceptor Profiles with CVs & Licenses"
         row_id: "data-management-preceptor-profiles-with-cvs-licenses"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Faculty Profiles with CVs & Licenses"
         row_id: "data-management-faculty-profiles-with-cvs-licenses"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Secure Student Profile sharing with clinical partners"
         row_id: "data-management-secure-student-profile-sharing-with-clinical-partners"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Tags for organizing sites, students, contracts, personnel, placements"
         row_id: "data-management-tags-for-organizing-sites-students-contracts-personnel-placements"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
@@ -197,125 +215,125 @@ sections:
       - row: "Syllabus Creation"
         row_id: "curriculum-management-syllabus-creation"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-curriculum-mapping"
       - row: "Curriculum Mapping"
         row_id: "curriculum-management-curriculum-mapping"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-curriculum-mapping"
       - row: "AI Mapping"
         row_id: "curriculum-management-ai-mapping"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-curriculum-mapping"
       - row: "Gaps & Redundancy Reports"
         row_id: "curriculum-management-gaps-redundancy-reports"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-curriculum-mapping"
       - row: "Accreditation reporting"
         row_id: "curriculum-management-accreditation-reporting"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-accreditation-management"
   - name: "Compliance Management"
     rows:
       - row: "Document Repository"
         row_id: "compliance-management-document-repository"
         sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": "X", "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Document Status Tracker"
         row_id: "compliance-management-document-status-tracker"
         sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Configurable by Cohort and Document"
         row_id: "compliance-management-configurable-by-cohort-and-document"
         sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Integration with Background/Drug Screening"
         row_id: "compliance-management-integration-with-background-drug-screening"
         sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Integration with HIPAA & OSHA Training"
         row_id: "compliance-management-integration-with-hipaa-osha-training"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Automated Alerts"
         row_id: "compliance-management-automated-alerts"
         sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Immunization Notification History"
         row_id: "compliance-management-immunization-notification-history"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Reporting by Status and Document"
         row_id: "compliance-management-reporting-by-status-and-document"
         sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Graphical Reports"
         row_id: "compliance-management-graphical-reports"
         sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Faculty Compliance"
         row_id: "compliance-management-faculty-compliance"
         sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Document Review Service"
         row_id: "compliance-management-document-review-service"
         sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": null }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
   - name: "Contract Management"
     rows:
       - row: "Site/Contract Repository"
         row_id: "contract-management-site-contract-repository"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Routing Checklist"
         row_id: "contract-management-routing-checklist"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Automated Expiration Notifications"
         row_id: "contract-management-automated-expiration-notifications"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Contract Sharing Between Programs"
         row_id: "contract-management-contract-sharing-between-programs"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
   - name: "Placement Management"
     rows:
       - row: "Site Availability"
         row_id: "placement-management-site-availability"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
       - row: "Preceptor Intake Forms"
         row_id: "placement-management-preceptor-intake-forms"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
       - row: "Rotation Scheduling"
         row_id: "placement-management-rotation-scheduling"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
       - row: "Slot Requests"
         row_id: "placement-management-slot-requests"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
       - row: "Student Preferences"
         row_id: "placement-management-student-preferences"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
       - row: "Student Self-Placement Requests"
         row_id: "placement-management-student-self-placement-requests"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
       - row: "Field Applications"
         row_id: "placement-management-field-applications"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
       - row: "AI Automated Placements"
         row_id: "placement-management-ai-automated-placements"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
       - row: "Custom Site Assessment Forms"
         row_id: "placement-management-custom-site-assessment-forms"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
       - row: "Post-Placement Thank you Emails"
         row_id: "placement-management-post-placement-thank-you-emails"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
@@ -323,45 +341,45 @@ sections:
       - row: "Placement Clearance Dashbaord"
         row_id: "placement-management-placement-clearance-dashbaord"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-compliance-management"
       - row: "Placement Notifications to Sites"
         row_id: "placement-management-placement-notifications-to-sites"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
   - name: "Learning Activity Management"
     rows:
       - row: "Time Tracking"
         row_id: "learning-activity-management-time-tracking"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
       - row: "Geo-Location Tracking"
         row_id: "learning-activity-management-geo-location-tracking"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
       - row: "Patient/Case Logging"
         row_id: "learning-activity-management-patient-case-logging"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
       - row: "ICD Coding"
         row_id: "learning-activity-management-icd-coding"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
       - row: "CPT Codes"
         row_id: "learning-activity-management-cpt-codes"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
       - row: "Evaluations"
         row_id: "learning-activity-management-evaluations"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-surveys-course-evaluations"
       - row: "Surveys"
         row_id: "learning-activity-management-surveys"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-surveys-course-evaluations"
       - row: "Competency Tracking"
         row_id: "learning-activity-management-competency-tracking"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-curriculum-mapping"
       - row: "Learning Contracts"
         row_id: "learning-activity-management-learning-contracts"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
@@ -369,7 +387,7 @@ sections:
       - row: "Review and Approval of forms via direct email links"
         row_id: "learning-activity-management-review-and-approval-of-forms-via-direct-email-links"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-surveys-course-evaluations"
       - row: "Outcomes/Assessment aggregate reports"
         row_id: "learning-activity-management-outcomes-assessment-aggregate-reports"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
@@ -395,7 +413,7 @@ sections:
       - row: "Longitudinal Competency Tracking"
         row_id: "student-performance-tracking-longitudinal-competency-tracking"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
-        maps_to_capability_id: null
+        maps_to_capability_id: "pharmacy-curriculum-mapping"
       - row: "Course Gradebook"
         row_id: "student-performance-tracking-course-gradebook"
         sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
