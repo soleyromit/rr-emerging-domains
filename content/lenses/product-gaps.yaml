@@ -145,30 +145,56 @@ gaps:
     # NOT "2027-01". The session's exact words are "a January soft launch" — a
     # month with no year — and capability-map.yaml puts the Exam Management
     # pillar at Q2 2027 with `roadmap.source_id: null`. Neither is a cited
-    # roadmap document stating a date, and the two are not reconciled, so this
-    # file asserts no target rather than picking one.
+    # roadmap document stating a date, so this file asserts no target rather
+    # than picking one. The likeliest reading is that these are two milestone
+    # types in one ordinary sequence, not a discrepancy; either way, nothing
+    # here states a year a target field could carry.
     target: null
     # Worth carrying into scoping, from the same session: Vishaka widens the
     # target herself — "we are thinking we are building a product to compete
     # with ExamSoft, but we are actually competing with both LMS and ExamSoft",
     # because Canvas and Brightspace have both added assessment building and AI.
     detail: >
-      The session names "CORE, ExamSoft, and Influx" as the stack seen "again and
-      again in pharmacy programs", and puts Exxat's own ExamSoft counterpart at "a
-      January soft launch" — a month, no year. capability-map.yaml separately puts
-      the Exam Management pillar at Q2 2027. The two are unreconciled.
+      The session names "CORE, ExamSoft, and Influx" as the recurring pharmacy
+      stack, and puts Exxat's own ExamSoft counterpart at "a January soft launch" —
+      a month, no year. capability-map.yaml puts the Exam Management pillar at Q2
+      2027: possibly a soft launch ahead of a fuller release, not a conflict.
     sources:
       - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
         locator: "Sections 'The ExamSoft + CORE + Influx stack' and 'LMS integration'"
 
   - id: "pharmacy-curriculum-assessment-link"
     domain: "Pharmacy"
-    gap: "Curriculum maps and assessment maps stay disconnected — programs build each separately and never link the two"
-    kind: "wrong-depth"
-    prism_feature_ref: "Curriculum Mapping"
-    prism_status: "shipped"
-    build_shape: "build"
-    blocks: ["deal", "expansion"]
+    gap: "Programs build curriculum maps and assessment maps separately and never link them — observed of the market, not of Prism"
+    # MARKET OBSERVATION, NOT A PRISM GAP — and every structured field below is
+    # set to say only that. The first draft of this row said `wrong-depth` +
+    # `Curriculum Mapping`/`shipped` + `build: build` + `blocks: [deal,
+    # expansion]`, which together assert "Prism ships this capability, built
+    # wrong, and it is costing deals". The session asserts none of that: it
+    # offers the quote as a "Related structural observation" about how faculty
+    # work, names no vendor, no pillar and no deal. A caveat in `detail` does
+    # not travel with the machine-readable fields, so the fields were re-derived
+    # rather than annotated.
+    kind: "non-product"
+    # null, not "Curriculum Mapping": naming a pillar is what attaches the
+    # complaint to that pillar. "absent" is forced by the schema as the only
+    # value that pairs with a null ref — read it as "no pillar is being
+    # implicated here", NOT as "Prism lacks this".
+    prism_feature_ref: null
+    prism_status: "absent"
+    # Not "build". This repo's own researched view contradicts a build: for the
+    # two elements below, content/accreditation/acpe.yaml rates 2.2.d `Transfer`
+    # ("exactly what the Curriculum Mapping pillar is built for") and 7.3.d
+    # `Configure`. Nothing here supports net-new engineering.
+    build_shape: "configure"
+    # Was [deal, expansion]. The session ties this to no deal, won or lost. What
+    # it does bear on is the program's own standard evidence — ACPE 2.2.d wants
+    # the curriculum mapped to outcomes and 7.3.d wants assessment rolled up
+    # against the same taxonomy, which a program that never links the two cannot
+    # produce. So: "standard", and nothing else.
+    blocks: ["standard"]
+    # Material because of those two ACPE elements, not because the session
+    # attaches any cost to it — it attaches none.
     severity: "material"
     demand_evidence: "expert-assertion"
     element_ids:
@@ -177,20 +203,17 @@ gaps:
     competitor_has_it: []
     audience: ["discipline-pharmacy", "role-dean"]
     target: null
-    # SCOPE CAUTION, stated because the session does not state it: Vishaka
-    # describes this as how PROGRAMS work ("the faculty would create a
-    # curriculum separately"), not as a thing Prism cannot do. No claim that
-    # Curriculum Mapping lacks the link is made here or should be read in.
     # The adjacent fact, same session: the didactic half of the data only just
     # arrived. The September 12, 2026 release adds free bulk import of ExamSoft
     # reports for programs already on Prism for clinical management — Vishaka
     # calls it the first time "we will have the entire student data from
-    # didactic and clinical on our platform."
+    # didactic and clinical on our platform." The product implication of closing
+    # this loop is carried by `pharmacy-ai-insights-not-reports`, not by this row.
     detail: >
-      Verbatim: "they curriculum map and assessment map are disconnected. So the
-      faculty would create a curriculum separately. They would create assessment
-      separately. They're not really linking their curriculum with their
-      assessments." Said of programs; no claim about Prism, and none to be read in.
+      Offered by the session as a "Related structural observation", about faculty
+      rather than any vendor: "they curriculum map and assessment map are
+      disconnected… They're not really linking their curriculum with their
+      assessments." Records that market condition; claims nothing about Prism.
     sources:
       - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
         locator: "Sections 'The product vision Vishaka would sell' and 'The ExamSoft + CORE + Influx stack'"
