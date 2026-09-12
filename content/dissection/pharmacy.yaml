@@ -20,7 +20,10 @@ is_gtm_target: true           # matches where-to-play.yaml's actual_gtm_target: 
 # front-matter, not derived from the filename.
 template_of_record: "interview-vishaka-pharmacy-understanding-2026-09-04"
 
-last_reviewed: "2026-09-11"
+# 2026-09-12 (Task 2.12, end of Phase 2): all six questions below were re-counted against
+# the files they point at. Five were still accurate to the row; the sixth
+# (persona-and-document-lens) had gone stale and was rewritten — see its note.
+last_reviewed: "2026-09-12"
 
 # Scoping only — who is actually in the Pharmacy clinical-education software market
 # this domain has to be won in. The claims about each vendor stay in
@@ -188,4 +191,22 @@ questions:
     answered_in: ["computed — audience/persona_relevance tags and sources[] across the lenses above"]
     coverage: "partial"
     confidence: "medium"
-    gap_note: "Computes today only from the two standards lenses' audience and persona_relevance tags; the product-gap, differentiation and feature-matrix lenses carry no rows, so nothing computes there."
+    # UPDATED 2026-09-12 (Task 2.12). The previous gap_note had gone stale: written when
+    # only the two standards lenses held Pharmacy rows, it said the product-gap,
+    # differentiation and feature-matrix lenses "carry no rows, so nothing computes
+    # there." Tasks 2.6, 2.8 and 2.9 have since populated all three, and every one of
+    # their Pharmacy rows is tagged. Re-counted 2026-09-12: product-gaps 5, differentiation
+    # 10, feature-matrix 14 cells, standards-use-cases 23, standards-competitor-ratings 31
+    # — 83 tagged rows drawing on 8 distinct persona slugs.
+    #
+    # Both values still HOLD rather than rise, for reasons the count does not touch:
+    #   - coverage stays "partial" because the lens-* half of the question barely
+    #     computes. Only lens-core-elms (8 rows) and lens-medhub (7) are ever tagged;
+    #     lens-axium, lens-elentra, lens-emedley and lens-new-innovations appear on no
+    #     Pharmacy row, and the matrix's 6 exxat_cells carry no tags at all.
+    #   - confidence stays "medium" because nothing validated a single tag. Each was
+    #     assigned by whoever wrote the row; no persona file was revised against pharmacy
+    #     evidence, and no real dean, DCE or preceptor has confirmed that what is tagged
+    #     to them is what they actually care about. More rows tagged is more coverage of
+    #     the same unvalidated act.
+    gap_note: "All five lenses now tag Pharmacy rows — 83 rows across 8 persona slugs — but every tag is author-assigned and unvalidated, only 2 of the 6 lens-* personas appear, and the 6 exxat_cells carry none."

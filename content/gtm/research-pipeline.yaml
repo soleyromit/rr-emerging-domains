@@ -18,7 +18,7 @@
 # WHAT THIS FILE IS FOR: who is doing what research work, on which domain, at which of
 # the seven fixed stages, at what status. It is a work tracker. The findings the work
 # produces land in the files named in `produces:` — never here.
-last_updated: "2026-09-11"
+last_updated: "2026-09-12"
 
 # The seven fixed research stages, always all seven, in the order stated in
 # content/interviews/2026-09-11-romit-ruchi-gtm-taxonomy.md, which names them verbatim as
@@ -42,8 +42,172 @@ stages:
 # empty at creation (2026-09-11); a workstream is added when real work actually begins,
 # and an invented example row would be indistinguishable from a real one the moment it is
 # committed.
-workstreams: []
-# Real row shape, once populated. Documented as a comment on purpose — an example row in
+# PHARMACY IS THE ONE EXCEPTION to the sparseness, added 2026-09-12: it carries all seven
+# stages explicitly, including the two that are "not-started", because it is the confirmed
+# first GTM target and a stage nobody has begun is worth being able to SEE rather than
+# infer from an absence. Every other domain stays sparse.
+workstreams:
+  # PHARMACY — the seven stages, one row each, recording the state of the real work as of
+  # 2026-09-12. Statuses are the honest read of what the produced files actually contain,
+  # not of how much effort went in: three stages are "in-progress" precisely because a real
+  # pass landed and left a named, countable remainder behind it.
+  - id: "pharmacy-competitive-analysis"
+    domain: "Pharmacy"
+    stage: "competitive-analysis"
+    status: "in-progress"
+    # NOT "done", and the reason is in the produced files rather than in effort: of the 10
+    # head-to-head rows in competitor-differentiation.yaml, 9 are evidence_strength
+    # "directional" and one (e-Value on product) is direction "unknown"; the feature matrix
+    # holds 14 of 30 possible Pharmacy cells, with all five PharmAcademic entries
+    # "unknown" — which is why a named primary incumbent contributes no cell at all. What
+    # exists is pillar-granularity: one teardown entry per pillar, not per-feature research.
+    owner: null
+    started: "2026-09-09"   # earliest `accessed:` date on the Pharmacy competitor sources
+                            # this stage registered (CORE's affiliation-agreements page)
+    target: null
+    blocked_by: null
+    objective: "Which vendors a pharmacy program actually buys, where each wins or loses against Prism, and how far Prism's six capability pillars sit from them cell by cell."
+    inputs:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+    produces:
+      - "competitors/examsoft.yaml"
+      - "competitors/influx.yaml"
+      - "lenses/competitor-differentiation.yaml"
+      - "lenses/feature-comparison-matrix.yaml"
+    feeds: ["product-development", "sales"]
+
+  - id: "pharmacy-market-sizing"
+    domain: "Pharmacy"
+    stage: "market-sizing"
+    status: "done"
+    # "done" means the sizing pass closed, not that every number is settled. Three
+    # ambiguities were recorded rather than resolved and are named in
+    # dissection/pharmacy.yaml's market-size gap_note: enrollment falls back to AACP's
+    # fall-2023 figure because the eBook's fall-2024 one sits in a report this pass could
+    # not open, the 149 CRM rows exceed the eBook's 145+ accredited count, and 3 rows stay
+    # unmatched. Closing those is a new pass, not an unfinished part of this one.
+    owner: null
+    started: "2026-09-11"   # market_sizing.as_of in domains/pharmacy.yaml
+    target: null
+    blocked_by: null
+    objective: "How many PharmD programs exist, how many are ACPE-accredited, how many are already Exxat's, and how many students sit behind them."
+    inputs:
+      - source_id: "crm-export-new-logo-grid-2026"
+      - source_id: "doc-pharmacy-education-us-ebook-2026"
+      - source_id: "dataset-aacp-vital-statistics-2023"
+    produces:
+      - "domains/pharmacy.yaml#market_sizing"
+      - "market/programs/pharmacy.yaml"
+    feeds: ["product-development", "sales"]
+
+  - id: "pharmacy-program-level-research"
+    domain: "Pharmacy"
+    stage: "program-level-research"
+    status: "in-progress"
+    # The 149 rows in market/programs/pharmacy.yaml are an extraction of one CRM export,
+    # not program-level research: `incumbent_vendor` reads "unknown" on all 149 of them,
+    # and no research call with any individual program has happened. What exists is a
+    # registry to research FROM. The e-Value program list the 2026-09-04 session names as a
+    # carried-over, not-yet-acted-on AACP action item (booth-lead notes plus Manoj's
+    # program-website sweep) is the obvious first pass and has not been done here.
+    owner: null
+    started: "2026-09-11"
+    target: null
+    blocked_by: null
+    objective: "The per-program facts a seller needs before a call: incumbent vendor, class size, accreditation status, and which sibling disciplines share the campus."
+    inputs:
+      - source_id: "crm-export-new-logo-grid-2026"
+    produces:
+      - "market/programs/pharmacy.yaml"
+    feeds: ["product-development", "sales"]
+
+  - id: "pharmacy-domain-expert-research"
+    domain: "Pharmacy"
+    stage: "domain-expert-research"
+    status: "in-progress"
+    # One real, substantial session with Exxat's pharmacy domain expert (Vishaka,
+    # is_domain_expert: true) on 2026-09-04, and five Pharmacy gap rows drawn from it. Not
+    # "done": that session's own load-bearing sentence is that the 80%/25% split is
+    # anecdotal and "that research remains to be done", the follow-up the 2026-09-11
+    # session names — account manager Ashish, who is working one university's pharmacy
+    # implementation — has not happened, and all 5 gap rows are still `demand_evidence:
+    # "expert-assertion"` resting on that single session.
+    owner: "Romit Soley"    # a participant in both committed sessions, carrying
+                            # `role: "Research"` in each file's front-matter participants
+    started: "2026-09-04"
+    target: null
+    blocked_by: null
+    objective: "What pharmacy actually needs that Prism does not yet do — the '25% gap' the internal 80%-there line assumes, tested rather than repeated."
+    inputs:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+    produces:
+      - "interviews/2026-09-04-vishaka-ruchi-pharmacy-understanding.md"
+      - "lenses/product-gaps.yaml"
+    feeds: ["product-development", "sales"]
+
+  - id: "pharmacy-conference-research"
+    domain: "Pharmacy"
+    stage: "conference-research"
+    status: "in-progress"
+    # Real but thin, and NOT not-started: two AACP events were researched from their public
+    # pages and registered (event-aacp-ai-institute-2025, accessed 2026-09-09, and
+    # event-aacp-experiential-education-institute-2026, accessed 2026-09-10), each carrying
+    # a row in trends/pharmacy.yaml. That is desk research on conference PROGRAMMING.
+    # Nobody has attended a pharmacy conference for this effort, and the booth-lead notes
+    # from a prior AACP that the 2026-09-04 session names remain uncurated. The AACP
+    # abstract tracked in collateral.yaml is a submission, not this research.
+    owner: null
+    started: "2026-09-09"
+    target: null
+    blocked_by: null
+    objective: "What AACP programming shows about where pharmacy experiential-education pain is heading, and which named sessions describe problems Prism already answers."
+    inputs:
+      - source_id: "event-aacp-ai-institute-2025"
+      - source_id: "event-aacp-experiential-education-institute-2026"
+    produces:
+      - "trends/pharmacy.yaml"
+    feeds: ["product-development", "sales"]
+
+  - id: "pharmacy-interviews"
+    domain: "Pharmacy"
+    stage: "interviews"
+    status: "not-started"
+    # Deliberately not counted as started by the three Pharmacy-touching files in
+    # content/interviews/: 2026-09-04 is type "domain-expert" (recorded on the
+    # domain-expert-research row above, where counting it once is correct), and
+    # 2026-08-22 and 2026-09-11 are both type "internal-planning". None is an interview
+    # with a program. The two the 2026-09-04 session actually asks for are UMD (interview
+    # them once they are live) and OHSU (named there as an interview, white-paper or
+    # testimonial candidate), and neither has happened.
+    owner: null
+    started: null
+    target: null
+    blocked_by: null
+    objective: "How UMD and OHSU actually run placements and competency tracking on Prism, in their own words — the material any proof-point asset would have to rest on."
+    inputs: []
+    produces: []
+    feeds: ["product-development", "sales"]
+
+  - id: "pharmacy-consultants"
+    domain: "Pharmacy"
+    stage: "consultants"
+    status: "not-started"
+    # Two things could look like evidence otherwise, and neither is. (1) Ruchi is an Exxat
+    # consultant and is in both sessions, but she is running this effort, not being
+    # consulted as a pharmacy input. (2) The 2026-09-04 session names "consultant
+    # engagements" as one way competitive knowledge reaches CX today — that describes
+    # Exxat's engagements with customers generally, and no such engagement has been read
+    # for pharmacy. Kanthi is named there as the contact for interviews and consultants;
+    # nobody has gone to her.
+    owner: null
+    started: null
+    target: null
+    blocked_by: null
+    objective: "Whether an outside pharmacy consultant, or an Exxat consulting engagement with a pharmacy customer, knows anything the domain expert does not."
+    inputs: []
+    produces: []
+    feeds: ["product-development", "sales"]
+# Real row shape, now populated above. Documented as a comment on purpose — an example row in
 # a tracker gets read as a real assignment, the same way a placeholder score ships as a
 # real one.
 #   - id: string, unique across this file, kebab-case,
