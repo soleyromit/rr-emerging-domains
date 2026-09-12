@@ -193,6 +193,33 @@ Related structural observation: "they curriculum map and assessment map are disc
 So the faculty would create a curriculum separately. They would create assessment
 separately. They're not really linking their curriculum with their assessments."
 
+## Point solutions vs. one designed platform (verbatim — read the note below first)
+
+> **Editorial note on this passage's evidentiary status.** This passage was part of the
+> original verbatim extraction of the 2026-09-04 meeting, but it was omitted when this file
+> was first committed to the repo, so the committed record has been a real but partial one.
+> It has been added back here from that original extraction record. It has **not** been
+> independently re-verified against the raw recording — this repo has no access to the
+> Granola recording or its transcript, so no one working in this repo can currently check
+> the wording against the primary source. Treat it as verbatim-as-extracted, one step
+> weaker than the passages above it, and re-verify before quoting it externally.
+
+> "the evolution of the entire epic has been point solutions… 2025 is a year where
+> everyone's pitches via one platform that can allow you to do everything. So but the way
+> it's done is, oh, we have this point solution… We are just going to provide all those
+> points solutions in one platform rather than focusing on is the design of that one
+> platform. Not just joining point solutions, but actually building a solution that can
+> [do] everything… That part is missing. That is what we will try to do with that
+> platform."
+
+("epic" in the first line reads as a transcription artifact rather than a term of art —
+flagged, not corrected, since the passage is reproduced exactly as extracted.)
+
+This is the architectural argument sitting under the AI-insights vision above: the
+complaint is not that competitors lack features, it is that bundling point solutions into
+one login is not the same as designing one platform — and that the design is what Exxat
+intends to compete on.
+
 ## RFP losses (MD/DO, not pharmacy)
 
 The RFPs Exxat lost were mainly MD and DO. Top reasons Vishaka remembers: very detailed
