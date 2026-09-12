@@ -11,7 +11,7 @@
 #     sheet has), and there are 57 data rows: sheet rows 3-61, with rows 5 and 6
 #     blank, then 104 entirely blank rows (62-165) that are not data. `locator`
 #     on each row is the sheet cell its name came from.
-#   * THE ROWS ARE TEACHING LOCATIONS, NOT INSTITUTIONS. 12 institutions repeat
+#   * THE ROWS ARE TEACHING LOCATIONS, NOT INSTITUTIONS. 14 institutions repeat
 #     across campuses (Edward Via 4, Lake Erie 4, Michigan State 3, Ohio 3,
 #     Philadelphia COM 3, and 9 more with 2 each), so the 57 rows sit at 36
 #     distinct institutions. Anything reading this file as a count of schools
@@ -25,11 +25,13 @@
 #     split into the institution and the osteopathic program designation it
 #     embeds ("Michigan State University" + "College of Osteopathic Medicine");
 #     where the whole name IS the school and carries no separable institution
-#     ("Lake Erie College of Osteopathic Medicine", 19 rows), program_name is
-#     null and the full name stays in `institution`. The split is hand-made per
-#     row, not regex-derived — "Arkansas College of Osteopathic Medicine" has no
-#     institution prefix to strip, while "Ohio University Heritage College of
-#     Osteopathic Medicine" does.
+#     (e.g. "Lake Erie College of Osteopathic Medicine"), program_name is null
+#     and the full name stays in `institution`. That is the case on 19 rows
+#     file-wide, spread across 10 such institutions — it is NOT a count of any
+#     one school's campuses (Lake Erie itself has 4 rows). The split is
+#     hand-made per row, not regex-derived — "Arkansas College of Osteopathic
+#     Medicine" has no institution prefix to strip, while "Ohio University
+#     Heritage College of Osteopathic Medicine" does.
 #   * slug is "{institution-slug}-do", with the sheet's City appended
 #     ("{institution-slug}-{city}-do") on every row whose institution appears
 #     more than once, since a bare institution slug would collide across
@@ -53,15 +55,24 @@
 #     `prospect`; the sheet carries no signal distinguishing an actively
 #     prospected school from a cold one.
 #   * CROSS-SHEET CONFLICT, recorded rather than resolved. The master Logo Grid
-#     sheet has its own "DO/Doctor of Osteopathic Medicine" column, and exactly
-#     3 grid rows mark it "Yes": Des Moines University (agrees with this sheet),
-#     Noorda College of Osteopathic Medicine (this sheet says "No"), and
-#     Arkansas College of Health Education (whose name is not on the DO sheet at
-#     all, while the DO sheet's Arkansas College of Osteopathic Medicine client
-#     row has its own grid row marking DO "No"). exxat_status follows the DO
-#     sheet, the domain's own tab, on every row; the two conflicting rows say so
-#     in `notes`. A later pass with CRM access should settle which sheet is
-#     stale — on the grid's reading there would be 3 DO clients, not 2.
+#     sheet has its own "DO/Doctor of Osteopathic Medicine" column — column 30
+#     (AD) — and across its 2751 data rows exactly 3 mark it "Yes":
+#       - Logo Grid row 1773, "Des Moines University - Osteopathic Medical
+#         Center" (IA) — agrees with this sheet's client row.
+#       - Logo Grid row 2274, "Noorda College of Osteopathic Medicine" (UT) —
+#         but THIS sheet's Client Y/N column says "No".
+#       - Logo Grid row 1312, "Arkansas College of Health Education" — a name
+#         the DO sheet does not carry at all. Note it is filed under state "AK",
+#         not "AR", so a reader searching the grid by institution name or state
+#         alone will miss it. Meanwhile the DO sheet's Arkansas College of
+#         Osteopathic Medicine client row matched its own exact-name grid row,
+#         Logo Grid row 1050 (filed under "CO"), which marks DO "No".
+#     ACHE is plausibly ARCOM's parent on the same Fort Smith campus, which would
+#     reconcile the Arkansas half — but neither sheet states that, so it was NOT
+#     applied here. exxat_status follows the DO sheet, the domain's own tab, on
+#     every row; the two conflicting rows say so in `notes`. A later pass with
+#     CRM access should settle which sheet is stale — on the grid's reading there
+#     would be 3 DO clients, not 2, and penetration 5.3% rather than 3.5%.
 #   * other_disciplines_on_campus lists the disciplines the master "Logo Grid"
 #     sheet marks "Yes" (i.e. already an Exxat client) for the SAME institution,
 #     DO itself excluded. A discipline the grid marks "No", "N/A" or "-" is not
@@ -78,12 +89,17 @@
 #     the program's State; (3) else the row with evaluated discipline cells and
 #     the most information. Rule (3) is what keeps the Liberty, Touro, Kansas
 #     City, Rocky Vista and Incarnate Word rows off the grid's appended
-#     COM-named duplicates, whose cells are all "#N/A".
+#     COM-named duplicates, whose discipline cells are "#N/A" in 35 of 36
+#     columns (see the caveat below).
 #   * THE #N/A CAVEAT — read before aggregating. All 57 rows are
 #     grid_matched: true; not one DO program is missing from the Logo Grid. But
 #     11 of them (Edward Via x4, Lake Erie x4, Oklahoma State CHS x2, Idaho)
-#     matched a grid row whose every discipline cell is the literal Excel error
-#     "#N/A" — an unevaluated lookup, not a checked "no". For those 11 the empty
+#     matched a grid row carrying the literal Excel error "#N/A" in 35 of its 36
+#     discipline columns — an unevaluated lookup, not a checked "no". The 36th is
+#     the DO column itself, which holds a real "No"; it is excluded from
+#     other_disciplines_on_campus by definition (a program is not its own
+#     cross-sell), not because it is unevaluated, so it rescues nothing. For
+#     those 11 the empty
 #     other_disciplines_on_campus list is UNKNOWN, exactly what grid_matched
 #     exists to keep apart, and the boolean cannot say so because a row WAS
 #     found. So: of the 24 rows with an empty list, 13 are confirmed negatives
