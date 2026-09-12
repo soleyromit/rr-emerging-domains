@@ -6,11 +6,15 @@
 #
 # Read this one next to content/dissection/pharmacy.yaml, because the contrast IS the
 # content. Pharmacy's manifest points at five populated lenses because a domain-expert
-# session happened (2026-09-04). No such session has happened for Medicine. So four of
-# the six questions below are coverage: "none", one is "stub" (standards-to-product —
-# three real LCME rows exist in one of the two standards lenses; see that question's own
-# note, which is the one place this manifest departs from DO's and Dentistry's shape),
-# and one is "partial".
+# session happened (2026-09-04). No such session has happened for Medicine. So three of
+# the six questions below are coverage: "none", one is "partial" (market-size), and TWO
+# are "stub" — standards-to-product and persona-and-document-lens. Both stubs rest on the
+# same three rows: content/lenses/standards-competitor-ratings.yaml really does carry a
+# "# --- Medicine / LCME ---" section, and those rows carry persona tags and sources as
+# well as ratings. Those two questions are where this manifest departs from DO's and
+# Dentistry's shape, and the departure is deliberate — see each question's own note. A
+# manifest that said "none" there would be asserting something this repo's own lens data
+# contradicts.
 #
 # Medicine is the sharpest case of that gap in this repo, and the reason is sitting in
 # the incumbent_set below: NINE competitor files name this domain, more than any other
@@ -104,11 +108,13 @@ incumbent_set:
 
   - competitor_slug: "elentra"
     role: "primary"
-    # domains_served: ["MD", "DO"] — found under "MD". Its own category is a "Health
-    # professions education platform" spanning 14 disciplines, and names "Medicine
-    # (MD/DO)" first among them — so its category string uses the label while its
-    # domains_served uses the code, inside one file. Exactly the inconsistency noted
-    # above.
+    # domains_served: ["MD", "DO"] — found under "MD". That field uses one convention
+    # consistently, so elentra is NOT itself an instance of the cross-file inconsistency
+    # noted above; it simply sits on the "MD" side of it. Its own category is a "Health
+    # professions education platform" covering curriculum, assessment, competency and
+    # clinical scheduling across 14 disciplines, naming "Medicine (MD/DO)" among them —
+    # free prose describing coverage, not a second scoping field. Primary because that
+    # category is this domain's job.
 
   - competitor_slug: "emedley"
     role: "primary"
@@ -212,6 +218,26 @@ questions:
 
   - key: "persona-and-document-lens"
     answered_in: ["computed — audience/persona_relevance tags and sources[] across the lenses above"]
-    coverage: "none"
+    coverage: "stub"
     confidence: "low"
-    gap_note: "Computed from tags on rows in the lenses above, and Medicine has no rows in any of them, so nothing computes. This question cannot move until the other five do."
+    # "stub", NOT "none", and for the same reason standards-to-product is: this question
+    # computes from persona_relevance/audience tags and sources[] on rows in the five
+    # lenses above, and Medicine HAS rows — the three in
+    # content/lenses/standards-competitor-ratings.yaml named in that question's note.
+    # They are not untagged: all three carry persona_relevance, between them naming two
+    # persona slugs, role-dean and role-compliance-accreditation-liaison, both of which
+    # resolve to real files in content/personas/. They cite three distinct registered
+    # source_ids. So something does compute, and the DO/Dentistry wording for this
+    # question — "no rows in any of them, so nothing computes" — is simply false here.
+    # It is boilerplate that would have carried over unchecked if this manifest had been
+    # filled in by copying its siblings, which is the failure this whole family exists to
+    # prevent, so it is worth saying plainly: it was caught by re-running the check
+    # against Medicine's real state rather than by trusting the template.
+    #
+    # Still only a stub, and thin in the ways that matter: one lens of five, two personas
+    # of the five role-* files, three rows, and every tag author-assigned and unvalidated
+    # (the same caveat Pharmacy's manifest records even at "partial" with 83 rows). The
+    # four other lenses hold no Medicine rows at all, so the document-lens half of this
+    # question — which documents a persona actually touches — has nothing behind it yet.
+    # This question still cannot reach "partial" until the other five move.
+    gap_note: "Computes, but from one lens only: 3 standards-competitor-ratings rows tag 2 personas (role-dean, role-compliance-accreditation-liaison) across 3 sources. The other four lenses hold no Medicine rows."
