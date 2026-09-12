@@ -222,7 +222,17 @@ function personaDetail(node: DissectionNode): PersonaNodeDetail {
       // pillarDetail and trendDetail above, so the panel cannot be the surface that forgets.
       archetypeSummary: stripFileCitations(p?.archetype_summary),
       switchingTrigger: stripFileCitations(p?.switching_trigger),
-      accreditationPressure: p?.accreditation_pressure ?? [],
+      // The fifth field, and the one the first pass through this function missed: the two
+      // scalars above are plain strings and were easy to spot, while this is an array of
+      // {point, detail} objects and reads like structure rather than prose. It is prose —
+      // six of the discipline personas cite their accreditor file inside `detail`, and the
+      // Dentistry node's "Accreditation pressure" panel rendered the literal
+      // "[../accreditation/coda.yaml licensure_or_gme_layer]" on screen.
+      accreditationPressure: (p?.accreditation_pressure ?? []).map((pt) => ({
+        ...pt,
+        point: stripFileCitations(pt.point) ?? pt.point,
+        detail: stripFileCitations(pt.detail) ?? pt.detail,
+      })),
       found: !!p,
     };
   }

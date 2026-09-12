@@ -391,6 +391,15 @@ function unsanitizedReads(fields: Set<string>): Unsanitized[] {
   // dataflow — including them produced ~40 findings of which every single one was a false
   // positive, which is a check nobody will keep running. The routes are where the bugs
   // were, five times running.
+  //
+  // KNOWN GAP, tracked as follow-on work: excluding components/ is justified by the
+  // false-positive rate above; excluding lib/ is NOT justified by the same reasoning, and
+  // lib/ is where this series' worst gaps have actually lived. The builders in
+  // lib/dissection-node-detail.ts read raw content directly — exactly like an app/ page —
+  // so the false-positive argument does not apply to them. A leak in personaDetail's
+  // accreditation_pressure shipped past this very check for that reason. Widening to the
+  // lib/ builders is the obvious next improvement; it was deliberately deferred rather than
+  // rushed, because getting the allowlist wrong here makes the check noisy and ignored.
   for (const file of walk(join(APP_DIR, "app"), [".tsx"])) {
     const lines = readFileSync(file, "utf8").split("\n");
     for (let i = 0; i < lines.length; i++) {

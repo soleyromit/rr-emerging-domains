@@ -16,8 +16,13 @@
  *     kill %1
  *
  * `npm run audit:sanitizer` defaults to http://localhost:3000. `--json` prints the raw
- * findings array instead of the report. Exit code is 1 when any finding is reported, so
- * it can gate a CI step as-is.
+ * findings array instead of the report (including waived findings, flagged as such — a
+ * consumer can filter).
+ *
+ * Exit code: 1 when there is an unwaived finding in a VISIBLE tier; 0 otherwise. Payload-only
+ * findings are printed but do not fail the run by default — that tier is a ~6,000-item
+ * tracked backlog, and gating on it would mean a permanently red check. Pass `--strict` to
+ * include it. See INTENTIONAL below for what is waived and why.
  *
  * THE TWO-SCAN RULE — the reason this tool exists in this shape rather than a simpler one.
  * Follow-up 5's review established that either scan ALONE systematically misreports this
@@ -64,6 +69,29 @@
  * The first-paint/interaction split among VISIBLE findings is likewise a heuristic (it looks
  * for the nearest enclosing element carrying a collapsed-state attribute). A finding tiered
  * "visible-on-interaction" is still a finding; the tier only orders the queue.
+ *
+ * WHAT THIS TOOL CANNOT SEE — read before quoting its numbers as a leak total.
+ *
+ * It counts what its PATTERN matches, which is not the same as what a reader can see. The
+ * pattern is deliberately kept in lockstep with the sanitizer's own BARE_CONTENT_PATH (see
+ * RAW_FILENAME below), and that pattern's path segments are `[\w.-]+` — so it cannot match a
+ * filename containing a SPACE. This is not a corner case in this repo: contributor vault
+ * paths like
+ *
+ *   /Users/<name>/Downloads/PRISM-Expansion-Vault/…/Clinical Internship Evaluation Tool
+ *   - Version 2.0.md
+ *
+ * render in first-paint visible text on dozens of routes, and an independent crawl counted
+ * ~1,008 such occurrences across ~48 routes that this tool reports as ZERO. They are a
+ * real, visible disclosure of a contributor's home directory; they are also unfixable by
+ * wiring a sanitizer call, because the sanitizer's pattern cannot match them either. They
+ * need a content-layer fix, and they are tracked separately.
+ *
+ * So: a clean run of this tool means "no raw filename THIS DETECTOR CAN SEE", never "no raw
+ * filenames". The report prints that caveat on every run for the same reason it is written
+ * here — the previous version's summary line read as a completeness claim and was quoted as
+ * one. If you widen the detector later, delete this paragraph and the report's caveat line
+ * together, so the two can never disagree.
  */
 
 import { humanizeSourceRef } from "./strip-file-citations.ts";
@@ -244,6 +272,35 @@ export async function auditRoute(base: string, route: string): Promise<Finding[]
 }
 
 // ---------------------------------------------------------------------------
+// Intentional, reviewed exceptions.
+// ---------------------------------------------------------------------------
+
+/**
+ * Filenames a route is SUPPOSED to name on screen.
+ *
+ * Two pages each render a provenance line naming the single document they are built from —
+ * "…the verbatim source text from `content/synthesis/gap-analysis.md`" — as literal JSX
+ * inside a <code> element. No sanitizer runs on them and none should: on a singleton page
+ * about one document, naming that document is useful provenance rather than a leaked
+ * implementation detail. (app/domains/[slug]/win/page.tsx makes the opposite call for the
+ * same sentence, correctly — it is templated over four per-domain briefs, so a filename
+ * there would be both wrong and meaningless.) Reviewed and confirmed intentional.
+ *
+ * Why they need a waiver rather than a shrug: without one this tool exits 1 on a clean app,
+ * so its exit code cannot gate anything, and "the audit is red but the red is fine" is how a
+ * check stops being read at all. Waived findings are still PRINTED — they are just not
+ * failures. Keep this list tiny, and only for cases a human has actually looked at.
+ */
+const INTENTIONAL: { route: string; filename: string }[] = [
+  { route: "/synthesis/gap-analysis", filename: "content/synthesis/gap-analysis.md" },
+  { route: "/repo-comparison", filename: "content/enterprise-repo/tool-comparison.md" },
+];
+
+function isIntentional(f: Finding): boolean {
+  return INTENTIONAL.some((w) => w.route === f.route && w.filename === f.filename);
+}
+
+// ---------------------------------------------------------------------------
 // Route discovery.
 // ---------------------------------------------------------------------------
 
@@ -319,15 +376,39 @@ const TIER_ORDER: Finding["tier"][] = [
   "payload-only",
 ];
 
+/**
+ * Printed on EVERY run, clean or not. The previous version's summary read as a completeness
+ * claim ("all 15 remaining occurrences") and was quoted as one downstream; it was not one.
+ * The caveat belongs in the output rather than only in this file's header, because the
+ * output is the part that gets pasted into a report.
+ */
+const SCOPE_CAVEAT =
+  "NOTE ON SCOPE: these counts are what this detector's pattern can match, NOT a complete\n" +
+  "leak total. The pattern is kept in lockstep with the sanitizer's own BARE_CONTENT_PATH,\n" +
+  "whose path segments are [\\w.-]+ — so filenames containing SPACES are invisible to it.\n" +
+  "Contributor vault paths (\"…/Clinical Internship Evaluation Tool - Version 2.0.md\") are\n" +
+  "the real instance: ~1,008 occurrences across ~48 routes render in visible text and are\n" +
+  "reported here as zero. They need a content-layer fix, not a sanitizer call, and are\n" +
+  "tracked separately. Read a clean run as \"nothing this detector can see\".";
+
 export function formatReport(findings: Finding[], routeCount: number): string {
   const lines: string[] = [];
+  const waived = findings.filter(isIntentional);
+  const failing = findings.filter((f) => !isIntentional(f));
+
   lines.push(`Crawled ${routeCount} routes.`);
-  if (!findings.length) {
-    lines.push("No raw content filenames found in markup or payload. Clean.");
-    return lines.join("\n");
+  lines.push("");
+  lines.push(SCOPE_CAVEAT);
+
+  if (!failing.length) {
+    lines.push("");
+    lines.push(
+      "No unwaived raw content filenames found in markup or payload " +
+        "(subject to the scope note above).",
+    );
   }
   for (const tier of TIER_ORDER) {
-    const inTier = findings.filter((f) => f.tier === tier);
+    const inTier = failing.filter((f) => f.tier === tier);
     const onScreen = inTier.reduce((n, f) => n + f.visibleCount, 0);
     const inSource = inTier.reduce((n, f) => n + f.sourceCount, 0);
     lines.push("");
@@ -347,6 +428,15 @@ export function formatReport(findings: Finding[], routeCount: number): string {
       lines.push(`      …${f.sample}…`);
     }
   }
+
+  // Printed, never a failure — a waiver nobody can see is indistinguishable from a blind spot.
+  if (waived.length) {
+    lines.push("");
+    lines.push(`## waived — ${waived.length} reviewed, intentional filename(s) on screen`);
+    for (const f of waived) {
+      lines.push(`  ${f.route}  ${f.filename}  ×${f.visibleCount} on screen — intentional provenance`);
+    }
+  }
   return lines.join("\n");
 }
 
@@ -355,6 +445,7 @@ async function main() {
   const baseIdx = argv.indexOf("--base");
   const base = baseIdx >= 0 ? argv[baseIdx + 1] : "http://localhost:3000";
   const asJson = argv.includes("--json");
+  const strict = argv.includes("--strict");
 
   const routes = await discoverRoutes(base);
   const findings: Finding[] = [];
@@ -363,7 +454,32 @@ async function main() {
   if (asJson) console.log(JSON.stringify(findings, null, 2));
   else console.log(formatReport(findings, routes.length));
 
-  process.exit(findings.length ? 1 : 0);
+  // What the exit code means, precisely, because a code that is always 1 gates nothing.
+  //
+  // Default: fail on unwaived findings a reader can actually SEE. That is the thing a gate
+  // should block, and it is currently achievable — the visible tiers are clean apart from
+  // the spaced-path content backlog the scope note describes, which this detector cannot
+  // see anyway.
+  //
+  // The payload-only tier is deliberately NOT part of the default exit code. It stands at
+  // ~6,000 distinct filenames across the app: server components handing whole YAML objects
+  // to client components, a real and tracked problem, but far too large to gate on today.
+  // Wiring the gate to it would mean a permanently red check, which is the same as no check.
+  // Findings are still printed in full, and `--strict` includes them for anyone working
+  // that backlog down — /feature-map's dead `sources` prop was a payload-only finding and a
+  // genuine bug, so this tier must stay visible even while it cannot fail the build.
+  const unwaived = findings.filter((f) => !isIntentional(f));
+  const blocking = strict ? unwaived : unwaived.filter((f) => f.tier !== "payload-only");
+  if (!asJson) {
+    console.log("");
+    console.log(
+      blocking.length
+        ? `FAIL: ${blocking.length} blocking finding(s) — ${strict ? "visible + payload (--strict)" : "visible tiers only; re-run with --strict to include payload-only"}.`
+        : `PASS: no blocking findings${strict ? " (--strict: payload included)" : ""}. ` +
+            `${unwaived.filter((f) => f.tier === "payload-only").length} payload-only finding(s) reported above do not affect this exit code.`,
+    );
+  }
+  process.exit(blocking.length ? 1 : 0);
 }
 
 // Run only when invoked as a script, so the exports above stay importable from a test.
