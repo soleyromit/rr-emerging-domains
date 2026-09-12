@@ -9,23 +9,27 @@ import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList"
 import { Collapsible, CollapsibleGroup } from "@astryxdesign/core/Collapsible";
 import { Takeaway } from "@/components/takeaway";
 import { DissectionMatrix, type DissectionMatrixIncumbent } from "@/components/dissection-matrix";
+import { SalesReferenceMatrix } from "@/components/sales-reference-matrix";
 import {
   dissectionAnsweredCount,
   dissectionInScopeIncumbents,
   getAccreditorTiers,
   getDissectionManifest,
   getFeatureComparisonMatrixForDomain,
+  getVendorComparisonChart,
   listCompetitors,
   listDissectionDomains,
   type DissectionManifest,
 } from "@/lib/content";
+import { vendorComparisonStats } from "@/lib/vendor-comparison";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
 
 // The Dissection tab: one domain answered against the standing six-question
 // framework in content/dissection/<slug>.yaml, plus the evidence behind each
-// answer. This task builds the shell and its FIRST section, `matrix`; later
-// sections (sales reference, the topology graph, node detail) are added as
-// further children of the same CollapsibleGroup below.
+// answer. Two sections live in the CollapsibleGroup below today — `matrix` (the
+// researched feature comparison) and `sales-reference` (the quarantined sales
+// chart); later sections (the topology graph, node detail) are added as further
+// children of the same group.
 //
 // The manifests are deliberately honest about how little is researched: 9 of the
 // 13 routed domains have no manifest at all, and 3 of the 4 that do report
@@ -40,7 +44,13 @@ import { matchDisciplineMeta } from "@/lib/discipline-meta";
 function dissectionData(slug: string, domainLabel: string) {
   const manifest = getDissectionManifest(slug);
   const matrix = getFeatureComparisonMatrixForDomain(domainLabel);
-  return { manifest, matrix };
+  // The sales chart is NOT domain-scoped and cannot be: no row in it carries a
+  // domain, and its own scope_note says it compares against a competitor set none of
+  // these four domains actually runs on. So every domain renders the same 81 rows —
+  // filtering it by domain would mean inventing a mapping the content does not have,
+  // which is the exact fabrication this section exists to display rather than commit.
+  const salesChart = getVendorComparisonChart();
+  return { manifest, matrix, salesChart };
 }
 
 /** "A, B, C and D" — a readable list, not a JSON-ish join. */
@@ -69,7 +79,7 @@ export default async function DomainDissectPage({ params }: { params: Promise<{ 
   const entry = tierDomains.find((d) => matchDisciplineMeta(d.domain)?.slug === slug);
   if (!entry) notFound();
 
-  const { manifest, matrix } = dissectionData(slug, entry.domain);
+  const { manifest, matrix, salesChart } = dissectionData(slug, entry.domain);
 
   if (!manifest) {
     // Each manifest's own `domain:` is the RAW value ("MD"); resolve it to the label
@@ -121,6 +131,9 @@ export default async function DomainDissectPage({ params }: { params: Promise<{ 
   // table rather than only internally consistent.
   const possibleCells = matrix.rows.length * incumbents.length;
   const exxatRated = matrix.rows.filter((r) => r.exxatCell).length;
+  // Counted here so the section's trigger and the table inside it read the same
+  // arithmetic — the trigger states the size of what opening it costs.
+  const salesStats = salesChart ? vendorComparisonStats(salesChart) : null;
 
   return (
     <Stack gap={0}>
@@ -171,9 +184,9 @@ export default async function DomainDissectPage({ params }: { params: Promise<{ 
         <Stack gap={4}>
           <Divider label="DEEP DIVE — OPTIONAL DETAIL BELOW" />
           {/* Later Phase 5 sections are added as further Collapsible children here,
-              each with its own `value`. `matrix` opens by default because it is the
-              only section with data today; that is a defaultValue, not an
-              assumption about how many children this group has. */}
+              each with its own `value`. `matrix` is the ONLY member of defaultValue:
+              it is this tab's researched evidence, and every other section — the
+              quarantined sales chart first among them — has to be opened on purpose. */}
           <CollapsibleGroup type="multiple" hasDividers defaultValue={["matrix"]}>
             <Collapsible
               value="matrix"
@@ -203,6 +216,26 @@ export default async function DomainDissectPage({ params }: { params: Promise<{ 
                 />
               )}
             </Collapsible>
+
+            {/* The quarantined sibling of the section above, and deliberately its
+                opposite in every respect: no evidence, no drill-down, no rating
+                vocabulary, and closed by default — `defaultValue` above stays
+                ["matrix"]. The researched matrix is what this tab is for; the sales
+                chart is here to be argued with, so it should cost a click and should
+                never be the thing a reader lands on already open. */}
+            {salesChart && salesStats ? (
+              <Collapsible
+                value="sales-reference"
+                trigger={`Sales reference chart — unverified (${salesStats.rowCount} claimed rows × ${salesStats.columns.length} masked vendors, not evidence)`}
+              >
+                <Stack gap={3}>
+                  <Text type="supporting" maxLines={4}>
+                    {`Exxat sales' own comparison chart, reproduced so it can be argued with. It is generic, not researched for ${entry.domain} — the same ${salesStats.rowCount} rows render on every domain, and it compares against a competitor set none of this domain's incumbents belong to. Nothing in it may be cited as fact, and no cell has anything to open.`}
+                  </Text>
+                  <SalesReferenceMatrix chart={salesChart} referenceHref="/reference/vendor-comparison-chart" />
+                </Stack>
+              </Collapsible>
+            ) : null}
           </CollapsibleGroup>
         </Stack>
       </Section>

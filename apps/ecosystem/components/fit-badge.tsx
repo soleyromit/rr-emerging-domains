@@ -1,4 +1,5 @@
 import { Badge } from "@astryxdesign/core/Badge";
+import { Text } from "@astryxdesign/core/Text";
 
 type BadgeVariant =
   | "neutral"
@@ -222,6 +223,31 @@ export function DivergenceBadge({ label }: { label: string }) {
 export function DirectionalBadge({ evidenceStrength }: { evidenceStrength?: string }) {
   if (evidenceStrength?.toLowerCase().trim() !== "directional") return null;
   return <Badge variant="neutral" label="Directional" />;
+}
+
+// The ONE cell vocabulary of the quarantined vendor comparison chart: a sales sheet
+// marked the box, or it didn't. Exactly two states, and NEITHER is a rating.
+//
+// Never green, never red, never any status variant. Every other badge in this file
+// encodes a researched verdict; this one encodes "someone in sales typed an X", and a
+// success/error color would launder that into a finding. "neutral" is the only honest
+// choice — the same reasoning DirectionalBadge's comment gives for staying neutral.
+//
+// The not-marked state renders the SAME em dash ComparisonMatrix's own `emptyCell`
+// default uses. That is deliberate rather than a second empty vocabulary: in this
+// artifact a blank cell IS the source's silence ("Absence is the source's silence,
+// not a researched finding of absence" — the file's own header), which is exactly
+// what a dash means everywhere else in this app. Returning null instead would leave a
+// visually empty cell that reads as a rendering bug rather than as a real blank.
+export function ClaimedBadge({ claimed }: { claimed?: boolean }) {
+  if (!claimed) {
+    return (
+      <Text type="supporting" size="sm" color="secondary">
+        —
+      </Text>
+    );
+  }
+  return <Badge variant="neutral" label="Claimed" />;
 }
 
 // Status of a proposed use case against one accreditation element. Same five-state

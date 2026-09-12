@@ -1876,6 +1876,99 @@ export function getLatestSupportTicketSnapshot(domainSlug: string): SupportTicke
   return matches.length ? matches[matches.length - 1] : null;
 }
 
+// ---------- the quarantined sales artifact (content/sources/vendor-comparison-chart.yaml) ----------
+//
+// Exxat's own internal vendor comparison chart, transcribed verbatim. It is the one
+// file under content/sources/ carrying `citable_as_fact: false`, and the five-home
+// comment above says why it is deliberately NOT one of the source homes: no
+// `source_id` anywhere may resolve into it.
+//
+// It is loaded here for exactly one purpose — rendering it, quarantined and labelled,
+// so a reader can see what sales has been claiming. Nothing here resolves its ids,
+// joins it to a lens, or lets a claim from it reach a surface that reads as evidence.
+// `maps_to_capability_id` is carried through as authored and is a research-backlog
+// marker, not a citation: a crosswalked row is worth exactly what it was worth before.
+
+export interface VendorComparisonWorkbookSheet {
+  sheet: string;
+  position: number;
+  vendor_columns: number;
+  masked: boolean;
+  /** Which field of the YAML file holds that sheet's transcription. */
+  transcribed_here: string;
+}
+
+/** One row read off BOTH sheets — the shape of `known_contradictions[]` and of
+ * `unmasked_only_vendor_rows[]`, which are like-for-like by design. */
+export interface VendorComparisonSheetDiff {
+  row_id: string;
+  row: string;
+  /** Who the masked sheet marks, as the file's own prose list ("EXXAT, Vendor 3"). */
+  sheet2: string;
+  /** Who the named sheet marks in the 4 columns those masks resolve to. */
+  sheet1: string;
+  /** Who else the named sheet marks in its 3 unmasked-only columns. */
+  sheet1_extra_vendors: string | null;
+}
+
+export interface VendorComparisonArtifact {
+  id: string;
+  type: string;
+  origin: string;
+  access: string;
+  title: string;
+  path: string;
+  path_status: string;
+  transcribed_from: string;
+  transcribed: string;
+  /** Always false in this file. Typed as a boolean, read as the quarantine flag it is. */
+  citable_as_fact: boolean;
+  provenance_note: string;
+  scope_note: string;
+  workbook: VendorComparisonWorkbookSheet[];
+  known_contradictions: VendorComparisonSheetDiff[];
+  unmasked_only_vendor_rows: VendorComparisonSheetDiff[];
+}
+
+/** `sheet2_label: null` marks a vendor the named sheet has and the masked sheet does not. */
+export interface VendorComparisonUnmaskingEntry {
+  sheet2_label: string | null;
+  sheet1_name: string;
+}
+
+export interface VendorComparisonRow {
+  row: string;
+  row_id: string;
+  /** Keyed on the MASKED labels ("EXXAT", "Vendor 1"…). Every label is present on
+   * every row; the value is the literal "X" (the cell is marked) or null (the cell
+   * is empty — the source's silence, never a researched finding of absence). */
+  sheet2: Record<string, string | null>;
+  /** A feature-comparison-matrix capability id, or null. A mapping is not a citation. */
+  maps_to_capability_id: string | null;
+}
+
+export interface VendorComparisonSection {
+  name: string;
+  rows: VendorComparisonRow[];
+}
+
+export interface VendorComparisonChart {
+  artifact: VendorComparisonArtifact;
+  unmasking_key: VendorComparisonUnmaskingEntry[];
+  sections: VendorComparisonSection[];
+}
+
+/**
+ * The whole artifact, unscoped. No row carries a domain, and the file's own
+ * `scope_note` says it compares against a different competitor set entirely — so
+ * there is nothing to scope it BY, and every domain that renders it renders the same
+ * 81 rows. Returns null when the file is missing; a caller must render that absence
+ * rather than an empty chart.
+ */
+export function getVendorComparisonChart(): VendorComparisonChart | null {
+  return readYamlFile<VendorComparisonChart>("sources/vendor-comparison-chart.yaml");
+}
+
 export function getDomainHubData(domain: string, routeSlug: string): DomainHubData {
   return {
     tierEntry: getAccreditorTiers()?.domains.find((d) => d.domain === domain) ?? null,
