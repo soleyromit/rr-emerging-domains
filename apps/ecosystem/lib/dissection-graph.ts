@@ -101,7 +101,14 @@ interface Builder {
   unmapped: Map<string, UnmappedCapabilityRef>;
 }
 
-function addNode(b: Builder, type: DissectionNodeType, key: string, label: string, sublabel?: string): string {
+function addNode(
+  b: Builder,
+  type: DissectionNodeType,
+  key: string,
+  label: string,
+  sublabel?: string,
+  outOfScope?: boolean,
+): string {
   const id = `${type}:${key}`;
   const existing = b.nodes.get(id);
   if (existing) {
@@ -110,7 +117,7 @@ function addNode(b: Builder, type: DissectionNodeType, key: string, label: strin
     if (!existing.sublabel && sublabel) existing.sublabel = sublabel;
     return id;
   }
-  b.nodes.set(id, { id, type, key, label, sublabel, degree: 0 });
+  b.nodes.set(id, { id, type, key, label, sublabel, degree: 0, outOfScope: outOfScope || undefined });
   return id;
 }
 
@@ -126,12 +133,44 @@ function addEdge(
   const existing = b.edges.get(id);
   if (existing) {
     existing.weight += 1;
+    // `derived` is a claim about the WHOLE edge, not about this one row, so a pair that
+    // any source states outright stops being merely implied the moment that source is
+    // seen — even if a composition happened to register it first. Only ever clears,
+    // never sets: one direct statement is enough to make the edge direct.
+    if (!derived) existing.derived = undefined;
     // Keep the first label rather than concatenating: two rating rows citing the same
     // pillar for the same vendor are two pieces of evidence for one edge, and joining
     // their strings would produce a sentence neither file wrote.
+    if (!existing.label && label) existing.label = label;
     return;
   }
   b.edges.set(id, { id, kind, source, target, label, weight: 1, derived });
+}
+
+/** What a pillar edge should SAY, given a ref that has already matched a pillar.
+ *
+ * Shared by all five pillar-edge call sites because they used to disagree: two passed
+ * the raw ref, two passed only `match.feature`, and the raw ref is by construction the
+ * pillar's own name plus an optional suffix — so the caption rendered
+ * "Curriculum Mapping (Curriculum Mapping)", the node label repeated back to itself in
+ * brackets. The edge label exists to add what the pillar node does not already say, so:
+ * a genuinely more specific feature name if the ref matched one, else only the part of
+ * the ref the pillar name does not already cover ("Prism roadmap Q3 2027"), else
+ * nothing at all.
+ */
+function pillarEdgeLabel(match: PillarRefMatch, raw?: string | null): string | undefined {
+  if (match.feature) return match.feature;
+  if (!raw || !match.pillar || raw === match.pillar) return undefined;
+  // Drop the separator the source used to hang the remainder off the pillar name
+  // ("Curriculum Mapping — customer proof point" -> "customer proof point").
+  let rest = raw.slice(match.pillar.length).trim().replace(/^[—–\-:·,]+\s*/, "").trim();
+  // Unwrap ONLY a bracket pair that encloses the whole remainder and contains no
+  // nesting ("(Prism roadmap Q3 2027)" -> "Prism roadmap Q3 2027"). Stripping a lone
+  // trailing ")" instead leaves the text unbalanced when the remainder merely ENDS in a
+  // parenthetical, which is a real case here ("...proof point (University of Miami LCME
+  // mock visit)") and rendered as a dangling open bracket before this guard existed.
+  if (/^\([^()]*\)$/.test(rest) || /^\[[^[\]]*\]$/.test(rest)) rest = rest.slice(1, -1).trim();
+  return rest || undefined;
 }
 
 function noteUnmapped(b: Builder, ref: string | null | undefined, from: string) {
@@ -160,10 +199,27 @@ export function buildDissectionGraph(domain: string, manifest: DissectionManifes
     listDisciplinePersonas().map((p) => [`discipline-${p.slug}`, p.persona_name ?? p.domain]),
   );
   const inScope = new Set(dissectionInScopeIncumbents(manifest).map((i) => i.competitor_slug));
+  const incumbentBySlug = new Map(manifest.incumbent_set.map((i) => [i.competitor_slug, i]));
 
   const competitorNode = (slug: string) => {
     const c = competitorNames.get(slug);
-    return addNode(b, "competitor", slug, c?.competitor ?? slug, c?.category);
+    const incumbent = incumbentBySlug.get(slug);
+    // A competitor with a real, sourced rating or trend entry for this domain gets a
+    // node even when the manifest rules it out — dropping it would delete researched
+    // evidence, which is the rule dissect/page.tsx already states for its matrix
+    // columns. But that rule has two halves, and the column version renders BOTH: it
+    // keeps the vendor AND labels why it is not one of the domain's targets. So does
+    // this. An unlabelled RxPreceptor card sitting beside CORE ELMS would read as a
+    // fifth Pharmacy incumbent, which the manifest explicitly says it is not.
+    const outOfScope = !inScope.has(slug);
+    const scopeNote = !outOfScope
+      ? undefined
+      : incumbent
+        ? `Not a target for ${domain}${incumbent.exclusion_reason ? ` — ${incumbent.exclusion_reason}` : ""}`
+        : "Not in this domain's incumbent set — rated here, but never named as a vendor to win against";
+    // The vendor's category still matters; it just comes second to the disclosure.
+    const sublabel = [scopeNote, c?.category].filter(Boolean).join(" · ") || undefined;
+    return addNode(b, "competitor", slug, c?.competitor ?? slug, sublabel, outOfScope);
   };
   const personaNode = (slug: string) => {
     // persona_relevance and audience both hold a personas/*.yaml filename with no
@@ -194,18 +250,24 @@ export function buildDissectionGraph(domain: string, manifest: DissectionManifes
     const match = normalizePillarRef(r.competitor_feature_ref);
     if (match.pillar) {
       const pid = pillarNode(match.pillar);
-      addEdge(b, "standard-pillar", sid, pid, match.feature ?? r.competitor_feature_ref);
-      // The one DERIVED edge kind in this graph, and labelled as such in the legend.
-      // competitor_feature_ref names the competitor's own capability that meets this
-      // standard, so (pillar, competitor) is real — but it is exactly the two edges
-      // above composed through the standard node, deduped. It earns its place because
-      // it collapses ~31 Pharmacy rating rows into a handful of "who plays in which
-      // pillar" pairs, which is the coarse question a topology map answers and the
-      // per-cell matrix above it does not. It is NOT the same data as Task 5.1's
-      // feature-comparison matrix: that reads a different lens file
-      // (feature-comparison-matrix.yaml) at capability granularity with its own
-      // ratings, and is empty for 3 of the 4 domains.
-      addEdge(b, "pillar-competitor", pid, cid, match.feature, true);
+      addEdge(b, "standard-pillar", sid, pid, pillarEdgeLabel(match, r.competitor_feature_ref));
+      // THE one place a derived edge is created, and the only place `derived: true` is
+      // honest. competitor_feature_ref names the competitor's own capability that meets
+      // this standard, so (pillar, competitor) is real — but here it is exactly the two
+      // edges above composed through the standard node, both of which this same
+      // iteration has just added, so "implied by the two edges it composes" describes
+      // something a reader can actually follow on screen. The trends loop below reaches
+      // the SAME edge kind from a source that states the pair outright, with no
+      // standard node in between; marking that derived would assert a composition that
+      // does not exist in the graph.
+      //
+      // The kind earns its place because deduped it collapses ~31 Pharmacy rating rows
+      // into a handful of "who plays in which pillar" pairs, which is the coarse
+      // question a topology map answers and the per-cell matrix above it does not. It
+      // is NOT the same data as Task 5.1's feature-comparison matrix: that reads a
+      // different lens file (feature-comparison-matrix.yaml) at capability granularity
+      // with its own ratings, and is empty for 3 of the 4 domains.
+      addEdge(b, "pillar-competitor", pid, cid, pillarEdgeLabel(match), true);
     } else {
       noteUnmapped(b, r.competitor_feature_ref, "a competitor rating's feature reference");
     }
@@ -223,7 +285,7 @@ export function buildDissectionGraph(domain: string, manifest: DissectionManifes
     }
     const match = normalizePillarRef(u.prism_feature_ref);
     if (match.pillar) {
-      addEdge(b, "standard-pillar", sid, pillarNode(match.pillar), match.feature ?? u.prism_feature_ref);
+      addEdge(b, "standard-pillar", sid, pillarNode(match.pillar), pillarEdgeLabel(match, u.prism_feature_ref));
     } else {
       noteUnmapped(b, u.prism_feature_ref, "a curated use case's Prism feature reference");
     }
@@ -241,9 +303,14 @@ export function buildDissectionGraph(domain: string, manifest: DissectionManifes
       // claim ("this vendor has a capability in this pillar"), different file. Where it
       // doesn't ("MSPE letter generation"), it stays on the trend edge's label and is
       // reported below rather than forced into a pillar.
+      //
+      // NOT derived. This row states the (pillar, competitor) pair outright; there is no
+      // standard node and no pair of edges it composes. On Medicine and Dentistry some
+      // of these pairs exist ONLY via this loop, so marking them derived would have the
+      // UI claim a composition the graph does not contain.
       const capMatch = normalizePillarRef(ref.capabilityRef);
       if (capMatch.pillar) {
-        addEdge(b, "pillar-competitor", pillarNode(capMatch.pillar), cid, capMatch.feature ?? ref.capabilityRef, true);
+        addEdge(b, "pillar-competitor", pillarNode(capMatch.pillar), cid, pillarEdgeLabel(capMatch, ref.capabilityRef));
       } else {
         noteUnmapped(b, ref.capabilityRef, "a trend's competitor capability reference");
       }
@@ -260,7 +327,7 @@ export function buildDissectionGraph(domain: string, manifest: DissectionManifes
           "trend-pillar",
           addNode(b, "trend", t.id, t.trend, t.detail),
           pillarNode(match.pillar),
-          match.feature ?? t.exxat_ref ?? undefined,
+          pillarEdgeLabel(match, t.exxat_ref),
         );
         used = true;
       } else {

@@ -37,6 +37,13 @@ export interface DissectionNode {
   /** Edges incident on this node, counted after dedup. Drives nothing in the layout;
    * it is what the panel shows when a node is selected. */
   degree: number;
+  /** Competitor nodes only. True when this vendor has real, sourced evidence for the
+   * domain but the domain's manifest does not count it as an incumbent to win against
+   * — either a `not-a-target` entry or absent from `incumbent_set` entirely. The node
+   * stays (dropping it would delete researched evidence) but must never be drawn as if
+   * it were one of the domain's targets; `sublabel` carries the manifest's own reason.
+   * Same two-halves disclosure the Dissection tab's matrix columns already use. */
+  outOfScope?: boolean;
 }
 
 export interface DissectionEdge {

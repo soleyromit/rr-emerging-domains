@@ -3,6 +3,7 @@
 import { Card } from "@astryxdesign/core/Card";
 import { Text } from "@astryxdesign/core/Text";
 import { Badge } from "@astryxdesign/core/Badge";
+import { Stack } from "@astryxdesign/core/Stack";
 import {
   NODE_TYPE_LABEL,
   type DissectionEdge,
@@ -153,8 +154,9 @@ export function TopologyGraph({
               type="button"
               onClick={() => onSelect(selected ? null : n.id)}
               // The full label, for the ones the card has to clamp (trend sentences run
-              // well past two lines at this width).
-              title={`${NODE_TYPE_LABEL[n.type]}: ${n.label}`}
+              // well past two lines at this width), plus the manifest's own reason a
+              // vendor is out of scope — the card itself only has room for the flag.
+              title={`${NODE_TYPE_LABEL[n.type]}: ${n.label}${n.outOfScope && n.sublabel ? `\n${n.sublabel}` : ""}`}
               aria-pressed={selected}
               style={{
                 position: "absolute",
@@ -173,7 +175,11 @@ export function TopologyGraph({
               }}
             >
               <Card
-                variant={NODE_TYPE_TONE[n.type]}
+                // Out-of-scope vendors drop out of the competitor tone into neutral
+                // grey. The tint is what says "this is one of the domain's five
+                // competitors" at a glance, so a vendor the manifest rules out must not
+                // wear it — the card keeps its place and its edges, and says why.
+                variant={n.outOfScope ? "gray" : NODE_TYPE_TONE[n.type]}
                 padding={2}
                 style={{
                   width: "100%",
@@ -184,9 +190,16 @@ export function TopologyGraph({
                   outlineOffset: 1,
                 }}
               >
-                <Text type="body" size="xsm" weight="semibold" maxLines={2}>
-                  {n.label}
-                </Text>
+                <Stack gap={0.5}>
+                  <Text type="body" size="xsm" weight="semibold" maxLines={n.outOfScope ? 1 : 2}>
+                    {n.label}
+                  </Text>
+                  {n.outOfScope ? (
+                    <Text type="label" size="xsm" color="secondary" maxLines={1}>
+                      Not a target
+                    </Text>
+                  ) : null}
+                </Stack>
               </Card>
             </button>
           );
@@ -227,7 +240,9 @@ export function TopologyGraph({
         <ul>
           {graph.nodes.map((n) => (
             <li key={n.id}>
-              {NODE_TYPE_LABEL[n.type]}: {n.label} — {n.degree} connection{n.degree === 1 ? "" : "s"}
+              {NODE_TYPE_LABEL[n.type]}: {n.label}
+              {n.outOfScope ? " (not a target for this domain)" : ""} — {n.degree} connection
+              {n.degree === 1 ? "" : "s"}
               <ul>
                 {graph.edges
                   .filter((e) => e.source === n.id || e.target === n.id)
