@@ -203,21 +203,67 @@ export function stripFileCitations(text?: string): string | undefined {
  *    working link, not prose, and humanizing its href would break it — the same class of
  *    mistake BARE_CODE_PATH's URL guard already exists to prevent. Both the parenthetical
  *    strip and the path substitution therefore skip anything sitting in a "](...)" target.
+ * 3. Markdown has fenced code blocks, which are verbatim: indentation is structure,
+ *    interior runs of spaces may be aligning columns, and a ".yaml" inside a fence is
+ *    sample code, not a citation. Fences are passed through untouched.
+ *
+ * None of the four documents this runs on today contains an indented bullet or a fence,
+ * which is exactly why 1 and 3 had to be reasoned about rather than observed — they are
+ * traps for the next document added, not current bugs.
  */
 // Accepts null because readMarkdownFile returns `string | null` for a missing document;
 // callers already branch on falsy, so collapsing null to undefined here costs them nothing.
 export function stripFileCitationsInMarkdown(text?: string | null): string | undefined {
   if (!text) return undefined;
+  // A fenced code block is verbatim by definition: its indentation is meaningful, its
+  // interior spacing may be aligning columns, and a filename inside it is literal sample
+  // code rather than prose to humanize. Transform only the stretches BETWEEN fences.
+  const lines = text.split("\n");
+  const out: string[] = [];
+  let prose: string[] = [];
+  let fence: string | undefined;
+  const flush = () => {
+    if (prose.length) out.push(humanizeMarkdownProse(prose.join("\n")));
+    prose = [];
+  };
+  for (const line of lines) {
+    const marker = line.match(/^\s{0,3}(```+|~~~+)/)?.[1];
+    if (marker && !fence) {
+      flush();
+      fence = marker[0];
+      out.push(line);
+      continue;
+    }
+    if (marker && fence === marker[0]) {
+      fence = undefined;
+      out.push(line);
+      continue;
+    }
+    if (fence) out.push(line);
+    else prose.push(line);
+  }
+  flush();
+  // An unterminated fence leaves its remaining lines untransformed, which is the safe
+  // way to be wrong about a malformed document.
+  return out.join("\n");
+}
+
+function humanizeMarkdownProse(text: string): string {
   const isLinkTarget = (full: string, offset: number) => full.slice(0, offset).endsWith("](");
   const withoutParens = text
     // Leading whitespace is [^\S\r\n]* (spaces/tabs only), never \s*, so stripping a
-    // citation at the start of a line cannot swallow the newline above it.
-    .replace(/[^\S\r\n]*\([^()]*\.ya?ml[^()]*\)/gi, (match, offset: number, full: string) =>
+    // citation at the start of a line cannot swallow the newline above it. The interior
+    // excludes \n for the matching reason: a parenthetical that spans two lines would
+    // otherwise take the line break (and the next line's "> " or list marker) with it,
+    // silently welding two document lines into one. A multi-line citation therefore keeps
+    // its parentheses and just gets its path humanized — prose that still reads, with the
+    // document's line structure intact. Invariant: this function never changes line count.
+    .replace(/[^\S\r\n]*\([^()\n]*\.ya?ml[^()\n]*\)/gi, (match, offset: number, full: string) =>
       // "](" + "(" can't overlap, but a citation directly after a link's closing paren
       // would; checking the character before the "(" keeps a real link intact.
       full.slice(0, offset + match.length - match.trimStart().length).endsWith("]") ? match : "",
     )
-    .replace(/[^\S\r\n]*\[[^[\]]*\.ya?ml[^[\]]*\]/gi, (match, offset: number, full: string) =>
+    .replace(/[^\S\r\n]*\[[^[\]\n]*\.ya?ml[^[\]\n]*\]/gi, (match, offset: number, full: string) =>
       // A "[...]" immediately followed by "(" is a link label, not a citation bracket.
       full.slice(offset + match.length).startsWith("(") ? match : "",
     );
@@ -228,7 +274,13 @@ export function stripFileCitationsInMarkdown(text?: string | null): string | und
     .replace(BARE_CODE_PATH, (match, offset: number, full: string) =>
       isLinkTarget(full, offset) ? match : humanizeCodeRef(match),
     );
-  return humanized.replace(/[^\S\r\n]{2,}/g, " ");
+  // (?<=\S) is what keeps this safe on a document: only a run of spaces that FOLLOWS a
+  // non-whitespace character is squeezed, so a run at the start of a line — which in
+  // Markdown is not spacing but structure — survives untouched. Without it, a 4-space
+  // nested bullet would be de-nested and a fenced code block's own indentation would be
+  // re-spaced. The four documents this runs on today happen to contain neither, so the
+  // bug would have stayed invisible until someone added one.
+  return humanized.replace(/(?<=\S)[^\S\r\n]{2,}/g, " ");
 }
 
 // content/lenses/*.yaml's `sources:` field is a relative-file citation (e.g.

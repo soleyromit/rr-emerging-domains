@@ -13,6 +13,7 @@ import { PageHeader } from "@/components/page-header";
 import { Takeaway } from "@/components/takeaway";
 import { IconTile } from "@/components/status-pill";
 import { readMarkdownFile } from "@/lib/content";
+import { stripFileCitationsInMarkdown } from "@/lib/strip-file-citations";
 import { splitSectionsAtLevel, getPreamble } from "@/lib/markdown-sections";
 
 type BadgeVariant = "neutral" | "info" | "success" | "warning" | "error";
@@ -104,7 +105,12 @@ function parseToolRow(headers: string[], row: string[], idx: Record<string, numb
 }
 
 export default function RepoComparisonPage() {
-  const content = readMarkdownFile("enterprise-repo/tool-comparison.md");
+  // The Markdown variant, not the plain one, and not by preference: this page parses a
+  // pipe table out of the document (parsePipeTable, below splitSectionsAtLevel). The plain
+  // stripFileCitations collapses every newline, which would flatten the table into one line
+  // and leave the page with zero tool rows. The Markdown variant's line-count invariant is
+  // what keeps the parse intact.
+  const content = stripFileCitationsInMarkdown(readMarkdownFile("enterprise-repo/tool-comparison.md"));
 
   if (!content) {
     return (

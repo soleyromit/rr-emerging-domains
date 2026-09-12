@@ -171,8 +171,13 @@ function pillarDetail(node: DissectionNode): PillarNodeDetail {
     type: "pillar",
     name: node.key,
     status: pillar?.status,
-    notes: pillar?.notes,
-    whyItMatters: pillar?.why_it_matters,
+    // Both are capability-map prose rendered in the pillar panel. They are clean today by
+    // content accident, not by design — nothing stopped a file citation being written into
+    // either. Sanitized at the builder, like the trend and competitor notes above, so the
+    // panel cannot be the one surface that forgets. Plain variant, not the Markdown one:
+    // these are YAML scalars, not documents.
+    notes: stripFileCitations(pillar?.notes),
+    whyItMatters: stripFileCitations(pillar?.why_it_matters),
     features: (pillar?.features ?? []).filter((f) => f.name),
     roadmapTarget: roadmap?.target ?? pillar?.target,
     roadmapSourceId: roadmap?.source_id ?? null,
