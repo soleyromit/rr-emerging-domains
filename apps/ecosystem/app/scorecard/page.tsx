@@ -6,7 +6,7 @@ import { Heading } from "@astryxdesign/core/Heading";
 import { Banner } from "@astryxdesign/core/Banner";
 import { PageHeader } from "@/components/page-header";
 import { ScorecardChart } from "@/components/charts/scorecard-chart";
-import { ScorecardTable } from "@/components/scorecard-table";
+import { ScorecardMatrix } from "@/components/scorecard-matrix";
 import { getScorecard, computeWeightedTotals, scorecardDomains } from "@/lib/content";
 
 export default function ScorecardPage() {
@@ -90,9 +90,12 @@ export default function ScorecardPage() {
         <Stack gap={3}>
           <Stack gap={1}>
             <Heading level={2}>Scoring detail</Heading>
-            <Text type="supporting">1–5 per criterion per domain, with rationale.</Text>
+            <Text type="supporting">
+              1–5 per criterion per domain, with rationale. Click any score for the weight math and
+              every domain&apos;s rationale on that criterion.
+            </Text>
           </Stack>
-          <ScorecardTable criteria={scorecard.criteria} domains={domains} />
+          <ScorecardMatrix criteria={scorecard.criteria} domains={domains} />
         </Stack>
       </Section>
     </Stack>
