@@ -1248,9 +1248,13 @@ export interface SourceRegistryEntry {
   /** Vault- or repo-relative location of an internal source that has no public
    * `url:` (help-center article, playbook, interview record). Not rendered today. */
   path?: string;
-  /** How faithfully the source document records what was said. Only the interviews
-   * home sets it (the other four leave it undefined): the session front-matter schema
-   * added 2026-09-11 carries it, and `SESSION_EVIDENCE_STATUS` in
+  /** How faithfully the source document records what was said. The session front-matter
+   * schema added 2026-09-11 is the only thing that *defines* it — no other home has the
+   * field — but the entry that carries it is not always the interviews one: where a
+   * session's id collides with a frozen `registry.yaml` id, registry still wins the entry
+   * as it always has, and the interviews pass then backfills this one genuinely-absent
+   * field onto the winner (see the backfill in getSourceIndex, step 5). So a registry-home
+   * entry can carry it; a non-interview source never does. `SESSION_EVIDENCE_STATUS` in
    * `scripts/check_content_density.py` is the gate on which values can ship —
    * `"verbatim-cleaned"` and `"summary-only"` today. Documented-then-widened, the same
    * way `type` above is, because the value is read straight from YAML and is not

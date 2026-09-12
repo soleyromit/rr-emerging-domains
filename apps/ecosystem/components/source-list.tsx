@@ -64,7 +64,7 @@ const DEGRADED_EVIDENCE_NOTE: Record<string, string> = {
   "summary-only": "Summarized, not verbatim",
 };
 
-export function evidenceStatusNote(evidenceStatus?: string): string | undefined {
+function evidenceStatusNote(evidenceStatus?: string): string | undefined {
   return DEGRADED_EVIDENCE_NOTE[evidenceStatus?.toLowerCase().trim() ?? ""];
 }
 
