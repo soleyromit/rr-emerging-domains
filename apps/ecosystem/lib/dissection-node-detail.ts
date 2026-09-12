@@ -212,8 +212,16 @@ function personaDetail(node: DissectionNode): PersonaNodeDetail {
       appliesAcrossDomains: [],
       topTasks: [],
       competitorReads: [],
-      archetypeSummary: p?.archetype_summary,
-      switchingTrigger: p?.switching_trigger,
+      // Discipline-persona prose, and the last two unsanitized fields feeding a Dissection
+      // panel. Both leak today: discipline-crna.yaml's archetype_summary cites
+      // "CRNAVideosTranscripts.md" bare, and its switching_trigger cites
+      // "../accreditation/coa.yaml" and "../accreditation/coca.yaml" — the prefixed form
+      // that has always matched the regex, so this is a missing call site, not a regex gap.
+      // discipline-dentistry.yaml and discipline-pa.yaml leak in archetype_summary too, and
+      // discipline-pt.yaml in switching_trigger. Sanitized at the builder, matching
+      // pillarDetail and trendDetail above, so the panel cannot be the surface that forgets.
+      archetypeSummary: stripFileCitations(p?.archetype_summary),
+      switchingTrigger: stripFileCitations(p?.switching_trigger),
       accreditationPressure: p?.accreditation_pressure ?? [],
       found: !!p,
     };
@@ -232,7 +240,16 @@ function personaDetail(node: DissectionNode): PersonaNodeDetail {
     ? listCompetitorLensPersonas().flatMap((lens) =>
         (lens.how_they_implicitly_serve_roles ?? [])
           .filter((r) => roleNameMatches(r.role, role.role_name))
-          .map((r) => ({ competitorSlug: lens.slug, competitor: lens.competitor, read: r.read })),
+          // `read` is the lens file's own sentence about this role, rendered verbatim in
+          // the panel. No lens file cites a filename in a `read` today (checked across all
+          // of content/personas/lens-*.yaml), but it is free-text research prose of exactly
+          // the shape that acquires one, and it renders through the same panel as the
+          // fields above.
+          .map((r) => ({
+            competitorSlug: lens.slug,
+            competitor: lens.competitor,
+            read: stripFileCitations(r.read) ?? r.read,
+          })),
       )
     : [];
 
@@ -242,7 +259,10 @@ function personaDetail(node: DissectionNode): PersonaNodeDetail {
     kind: "role",
     name: role?.role_name ?? node.label,
     appliesAcrossDomains: role?.applies_across_domains ?? [],
-    dayInTheLifeSummary: role?.day_in_the_life_summary,
+    // No role persona cites a filename here today; same field shape and same panel as the
+    // discipline fields above, so it gets the same guard rather than waiting to become the
+    // seventh site somebody trips over.
+    dayInTheLifeSummary: stripFileCitations(role?.day_in_the_life_summary),
     topTasks: role?.top_tasks ?? [],
     competitorReads,
     accreditationPressure: [],

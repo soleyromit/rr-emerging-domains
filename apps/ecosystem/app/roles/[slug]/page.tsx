@@ -26,7 +26,9 @@ export default async function RolePersonaPage({ params }: { params: Promise<{ sl
 
   const painItems = (role.top_pains ?? []).map((p) => ({
     primary: p.pain,
-    reference: p.accreditation_link,
+    // accreditation_link is a prose citation ("COCA Element 11.5 requires…"), not a URL —
+    // 21 values across the corpus name a sibling accreditation file inside that sentence.
+    reference: stripFileCitations(p.accreditation_link),
     relatedFlows: resolveRelatedFlows(p.related_flows),
   }));
   const painsWithCitation = (role.top_pains ?? []).filter((p) => p.accreditation_link).length;

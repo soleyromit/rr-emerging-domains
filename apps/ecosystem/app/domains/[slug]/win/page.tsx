@@ -84,8 +84,12 @@ export default async function DomainWinPage({ params }: { params: Promise<{ slug
   // real one — 1 sentence only ever surfaces the throat-clear. Pull enough
   // sentences that real content is in range, and let the card's maxLines
   // clamp handle the display truncation.
+  // Sanitized before extractLead, not after — the same ordering trends/page.tsx needs.
+  // A citation deleted from the middle of sentence two must not shift which four sentences
+  // "the lead" means, and a parenthetical citation containing a "." would otherwise let the
+  // sentence splitter cut inside the citation and strand half a path in the card.
   const triggerText = hub.disciplinePersona?.switching_trigger
-    ? extractLead(hub.disciplinePersona.switching_trigger, 4)
+    ? extractLead(stripFileCitations(hub.disciplinePersona.switching_trigger) ?? "", 4)
     : undefined;
   const topOpening = brief.openings[0];
   // The honest-gap sentence: verified against all 4 real briefs, each has
@@ -159,7 +163,13 @@ export default async function DomainWinPage({ params }: { params: Promise<{ slug
           <EntryChain
             nodes={[
               triggerText ? { label: "Why now", text: triggerText, variant: "blue" } : undefined,
-              topOpening ? { label: "What we lead with", text: topOpening.detail || topOpening.headline, variant: "green" } : undefined,
+              topOpening
+                ? {
+                    label: "What we lead with",
+                    text: stripFileCitations(topOpening.detail || topOpening.headline) ?? "",
+                    variant: "green",
+                  }
+                : undefined,
               concedeObjection ? { label: "What we concede", text: concedeObjection.answer, variant: "orange" } : undefined,
             ]}
           />
@@ -187,7 +197,7 @@ export default async function DomainWinPage({ params }: { params: Promise<{ slug
                     label={o.headline}
                     description={
                       <Text type="supporting" size="sm" maxLines={2}>
-                        {o.detail}
+                        {stripFileCitations(o.detail)}
                       </Text>
                     }
                   />
@@ -298,7 +308,7 @@ export default async function DomainWinPage({ params }: { params: Promise<{ slug
                   }
                   description={
                     <Text type="supporting" size="sm" maxLines={2}>
-                      {c.rationale}
+                      {stripFileCitations(c.rationale)}
                     </Text>
                   }
                   endContent={<ThreatBadge threat={c.threat} />}

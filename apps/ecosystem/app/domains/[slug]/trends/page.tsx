@@ -79,7 +79,10 @@ export default async function DomainTrendsPage({ params }: { params: Promise<{ s
     subject: entry.domain,
     headline: t.trend,
     severity: trendSeverity(t),
-    detail: leadSentence(t.detail),
+    // Sanitize before leadSentence, not after: a citation deleted from the middle of the
+    // first sentence must not change which sentence "first" means, and a parenthetical
+    // containing a "." would otherwise let leadSentence cut inside the citation.
+    detail: leadSentence(stripFileCitations(t.detail)),
   }));
 
   // A trend is only ON the map when it has at least one edge there — a competitor that

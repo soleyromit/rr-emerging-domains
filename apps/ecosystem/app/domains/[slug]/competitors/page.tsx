@@ -9,7 +9,7 @@ import { List, ListItem } from "@astryxdesign/core/List";
 import { ThreatBadge } from "@/components/fit-badge";
 import { FeatureDepthChart } from "@/components/charts/feature-depth-chart";
 import { CompetitorLogo } from "@/components/competitor-logo";
-import { humanizeSourceRef } from "@/lib/strip-file-citations";
+import { humanizeSourceRef, stripFileCitations } from "@/lib/strip-file-citations";
 import { SentenceList } from "@/components/sentence-list";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
 import {
@@ -54,7 +54,10 @@ export default async function DomainCompetitorsPage({ params }: { params: Promis
           </Text>
           {landscapeEntry?.note ? (
             <Text type="body" size="sm" color="secondary" maxLines={2}>
-              {landscapeEntry.note}
+              {/* competitor-landscape.yaml's per-domain `note` cross-references the sibling
+                  lens file by name for an unresearched discipline ("See the 'Counseling'
+                  entry in lenses/accreditor-tiers.yaml"). First-paint visible. */}
+              {stripFileCitations(landscapeEntry.note)}
             </Text>
           ) : null}
           {!landscapeEntry?.competitors.length ? (
@@ -71,7 +74,7 @@ export default async function DomainCompetitorsPage({ params }: { params: Promis
                     href={`/competitors/${c.slug}`}
                     startContent={<CompetitorLogo slug={c.slug} competitor={c.competitor} size={28} />}
                     label={c.competitor}
-                    description={<Text type="supporting" size="sm" maxLines={2}>{c.rationale}</Text>}
+                    description={<Text type="supporting" size="sm" maxLines={2}>{stripFileCitations(c.rationale)}</Text>}
                     endContent={<ThreatBadge threat={c.threat} />}
                   />
                 ))}
@@ -85,7 +88,7 @@ export default async function DomainCompetitorsPage({ params }: { params: Promis
                         href={`/competitors/${c.slug}`}
                         startContent={<CompetitorLogo slug={c.slug} competitor={c.competitor} size={28} />}
                         label={c.competitor}
-                        description={<Text type="supporting" size="sm" maxLines={2}>{c.rationale}</Text>}
+                        description={<Text type="supporting" size="sm" maxLines={2}>{stripFileCitations(c.rationale)}</Text>}
                         endContent={<ThreatBadge threat={c.threat} />}
                       />
                     ))}

@@ -55,7 +55,18 @@ export default function PrismPage() {
             {totalFeatures} concrete features confirmed from real internal product playbooks (PA, OT, PT) — not the
             marketing infographic.
           </Text>
-          <PrismFeaturesChart pillars={capMap.core_ring.pillars} />
+          {/* Projected, not passed whole: the chart is a client component and needs three
+              scalars per pillar. Handing it the pillar objects shipped every pillar's notes,
+              why_it_matters and feature details into the flight payload — the entire
+              remaining raw-filename surface on this route once the visible renders above
+              were sanitized. Same bug as /feature-map's `sources` prop, same fix. */}
+          <PrismFeaturesChart
+            pillars={capMap.core_ring.pillars.map((p) => ({
+              name: p.name,
+              featureCount: p.features?.length ?? 0,
+              status: p.status,
+            }))}
+          />
         </Stack>
       </Section>
 
@@ -78,7 +89,7 @@ export default function PrismPage() {
                   {p.target ? <Text type="supporting">Target: {p.target}</Text> : null}
                   {p.notes ? (
                     <Text type="supporting" maxLines={3}>
-                      {p.notes}
+                      {stripFileCitations(p.notes)}
                     </Text>
                   ) : null}
                   {p.features?.length ? (
@@ -116,7 +127,7 @@ export default function PrismPage() {
                         description={
                           f.detail ? (
                             <Text type="supporting" maxLines={2}>
-                              {f.detail}
+                              {stripFileCitations(f.detail)}
                             </Text>
                           ) : undefined
                         }
@@ -143,7 +154,7 @@ export default function PrismPage() {
                   trigger={p.target ? `${p.name} — ${p.target}` : p.name}
                 >
                   <Text type="body" textWrap="wrap">
-                    {p.why_it_matters ?? p.notes}
+                    {stripFileCitations(p.why_it_matters ?? p.notes)}
                   </Text>
                 </Collapsible>
               ))}
@@ -210,28 +221,45 @@ export default function PrismPage() {
                   Served today
                 </Text>
                 <Text type="supporting" size="sm" maxLines={3}>
-                  {capMap.served_today.note}
+                  {stripFileCitations(capMap.served_today.note)}
                 </Text>
               </Stack>
             ) : null}
             {capMap.open_questions_for_phase_2?.length ? (
               <Collapsible defaultIsOpen={false} trigger={`Open questions (${capMap.open_questions_for_phase_2.length})`}>
                 <List hasDividers density="compact">
-                  {capMap.open_questions_for_phase_2.map((q) => (
-                    <ListItem
-                      key={q}
-                      label={
-                        <Text type="body" maxLines={2}>
-                          {stripFileCitations(q)}
-                        </Text>
-                      }
-                    />
-                  ))}
+                  {/* Sanitize ONCE and use the result for both the key and the label. React
+                      serializes an element's key into the flight payload verbatim, so
+                      `key={q}` shipped the raw question text — filenames included — even
+                      though the label beside it was correctly humanized. Two of the three
+                      raw paths left in this route's payload were keys, not rendered text. */}
+                  {capMap.open_questions_for_phase_2.map((q) => {
+                    const question = stripFileCitations(q) ?? q;
+                    return (
+                      <ListItem
+                        key={question}
+                        label={
+                          <Text type="body" maxLines={2}>
+                            {question}
+                          </Text>
+                        }
+                      />
+                    );
+                  })}
                 </List>
               </Collapsible>
             ) : null}
+            {/* Sanitized per element, then joined — not the other way round. Joining first
+                would hand the sanitizer one string in which "…transcripts.md · TEVideos…"
+                puts a citation-looking token immediately after a "·", and BARE_CONTENT_PATH's
+                slash-list lookbehind is the only place it tolerates a match starting
+                mid-token. Per-element also means one unparseable source can never affect
+                its neighbours. This is the highest-traffic raw-filename site in the app:
+                eight of these entries are transcript/interview filenames, rendered
+                unclamped and outside any collapsible. */}
             <Text type="supporting" size="xsm">
-              Sources: {capMap.sources.join(" · ")} — last updated {capMap.last_updated}
+              Sources: {capMap.sources.map((s) => stripFileCitations(s) ?? s).join(" · ")} — last updated{" "}
+              {capMap.last_updated}
             </Text>
           </Stack>
         </Section>

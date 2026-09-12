@@ -14,6 +14,7 @@ import { FitDistributionChart } from "@/components/charts/fit-distribution-chart
 import { getAccreditorTiers, getDomainHubData, getTrendsForDomain, hasSalesBrief } from "@/lib/content";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
 import { dissectNodeHref, dissectionNodeId, dissectionNodeIds } from "@/lib/dissection-links";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 
 export default async function DomainStandardsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -51,7 +52,10 @@ export default async function DomainStandardsPage({ params }: { params: Promise<
         {!standardsCrosswalk || standardsCrosswalk.researchStatus === "unresearched" || !accreditationDoc?.standards?.length ? (
           <EmptyState
             title="No standards mapped yet"
-            description={accreditationDoc?.research_status_note ?? "This section populates once accreditation research lands for this domain."}
+            description={
+              stripFileCitations(accreditationDoc?.research_status_note) ??
+              "This section populates once accreditation research lands for this domain."
+            }
           />
         ) : (
           <>
@@ -139,11 +143,16 @@ export default async function DomainStandardsPage({ params }: { params: Promise<
                     <Text type="body" weight="semibold">
                       {b.body}
                     </Text>
+                    {/* Both are accreditation-file prose that cross-references sibling
+                        accreditor records by filename. relevance_to_product leaks live
+                        today on four routes (te/pt/slp/crna standards); what_it_governs is
+                        clean by content accident, has the identical field shape, and shares
+                        the one root cause — this page imported no sanitizer at all. */}
                     <Text type="supporting" maxLines={3}>
-                      {b.what_it_governs}
+                      {stripFileCitations(b.what_it_governs)}
                     </Text>
                     <Text type="supporting" maxLines={3}>
-                      {b.relevance_to_product}
+                      {stripFileCitations(b.relevance_to_product)}
                     </Text>
                   </Stack>
                 </Card>
