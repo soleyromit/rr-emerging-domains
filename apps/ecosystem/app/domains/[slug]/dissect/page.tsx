@@ -10,6 +10,9 @@ import { Collapsible, CollapsibleGroup } from "@astryxdesign/core/Collapsible";
 import { Takeaway } from "@/components/takeaway";
 import { DissectionMatrix, type DissectionMatrixIncumbent } from "@/components/dissection-matrix";
 import { SalesReferenceMatrix } from "@/components/sales-reference-matrix";
+import { TopologyGraphPanel } from "@/components/dissect/topology-graph-panel";
+import { buildDissectionGraph } from "@/lib/dissection-graph";
+import { layoutDissectionGraph } from "@/lib/graph-layout";
 import {
   dissectionAnsweredCount,
   dissectionInScopeIncumbents,
@@ -135,6 +138,14 @@ export default async function DomainDissectPage({ params }: { params: Promise<{ 
   // arithmetic — the trigger states the size of what opening it costs.
   const salesStats = salesChart ? vendorComparisonStats(salesChart) : null;
 
+  // Both the graph and its coordinates are computed HERE, on the server. The layout is
+  // a pure function of the graph (lib/graph-layout.ts steps d3-force a fixed number of
+  // times and stops), so the markup the server sends is already final — the client
+  // component receives numbers, never a simulation, and d3-force stays out of the
+  // browser bundle entirely.
+  const graph = buildDissectionGraph(entry.domain, manifest);
+  const graphLayout = layoutDissectionGraph(graph);
+
   return (
     <Stack gap={0}>
       {/* ---------- Scan layer: the coverage verdict and four real numbers ---------- */}
@@ -238,6 +249,25 @@ export default async function DomainDissectPage({ params }: { params: Promise<{ 
                 </Stack>
               </Collapsible>
             ) : null}
+
+            {/* The third sibling: the same domain's evidence seen as a shape rather than
+                a grid. Nothing in it is new research — every line is a field of a lens
+                one of the sections above or a sibling tab already reads. Closed by
+                default like `sales-reference`, for a different reason: this one is a
+                second view of evidence the reader can already get, so it should not
+                compete with the matrix for the landing position. */}
+            <Collapsible
+              value="standards-map"
+              trigger={
+                graph.nodes.length
+                  ? `Standards topology map (${graph.nodes.length} entities, ${graph.edges.length} relationships across ${
+                      Object.values(graph.edgesByKind).filter((n) => n > 0).length
+                    } kinds)`
+                  : "Standards topology map (no relationships yet)"
+              }
+            >
+              <TopologyGraphPanel graph={graph} layout={graphLayout} domainLabel={entry.domain} />
+            </Collapsible>
           </CollapsibleGroup>
         </Stack>
       </Section>

@@ -58,6 +58,37 @@ sequence of 2-6 known stops. No mermaid/react-flow/dagre/cytoscape exists in thi
 chain — every new component in the table above extends the same three-primitive
 (`Stack`+`Card`+`Icon`) pattern rather than introducing a new one.
 
+### The one sanctioned exception: `d3-force` for layout, on a computed graph
+
+`components/dissect/topology-graph.tsx` (added 2026-09-12) is allowed to use
+`d3-force`, and it is the only thing in this repo that is. The line is not "graphs are
+special" — it is **who knows the shape**. `JourneyStepper` and `FlowDiagram` draw a
+fixed, small, hand-authored chain whose every stop the author typed, so the author can
+place them; reaching for a layout engine there replaces a decision someone already made
+with a simulation of it. The topology map draws whatever the content files happen to
+contain — today 16 to 40 entities and 34 to 123 relationships depending on the domain,
+and a different number the day a lens gains a row. Nobody has placed those, and nobody
+can. **Rough threshold: roughly 40 or more entities whose count is data-dependent.**
+Below that, or at any size if the set is fixed and hand-authored, stay hand-composed.
+
+Three limits come with the exception:
+
+1. **Layout only.** `d3-force` produces `{x, y}` numbers in a pure server-side function
+   (`lib/graph-layout.ts`), stepped a fixed number of ticks and stopped — never an
+   animation loop, never in the browser bundle. Node bodies stay real design-system
+   primitives (`Card`, `Badge`, `Text`) positioned at those numbers; they are never
+   SVG shapes and never Plot marks.
+2. **Edges as a plain SVG `<line>` layer are the exception to "no diagramming
+   library".** Two points and a stroke is computed geometry, not a rendering engine —
+   it is what makes mermaid/react-flow/dagre/cytoscape unnecessary here, not a step
+   towards them. Still none of those should be added.
+3. **The container assigns the final coordinates, not the simulation.** The simulation
+   decides the *order* of nodes within their lane; a deterministic pass afterwards
+   snaps them onto the lane's slots. An unconstrained force layout can park a node
+   outside its box, and "the simulation converged" is a different claim from "every
+   node is inside the container" — the same overflow failure as an unchecked fixed
+   pixel width, arrived at by a longer route.
+
 ## Hand-authored content is scoped, honestly, like `DOMAIN_EDITORIAL`
 
 `DOMAIN_CLINICAL_TIMELINE` and `DOMAIN_SCENARIO_JOURNEY` in
