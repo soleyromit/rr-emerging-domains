@@ -36,15 +36,22 @@
 #      entirely — an absent cell is unresearched, which is exactly what they are. That
 #      omission is why pharmacademic, a real in-scope Pharmacy incumbent, has zero cells:
 #      all five of its feature_teardown entries are depth_vs_prism: "unknown".
-#   2. "prism-only" -> not-meeting, INCLUDED rather than omitted. A vendor that does not
-#      compete on a pillar does not meet it, and writing that down is what keeps a sourced
-#      absence distinguishable from an unresearched one. Two of the three prism-only cells
-#      rest on a positively evidenced absence and are verified: an accredited program's
+#   2. "prism-only" -> not-meeting, but ONLY where the absence is positively evidenced.
+#      A vendor that demonstrably does not compete on a pillar does not meet it, and
+#      writing that down is what keeps a sourced absence distinguishable from an
+#      unresearched one. Two such cells qualify and are verified: an accredited program's
 #      ACPE self-study running ExamSoft and CORE on opposite sides of the didactic/clinical
 #      line, and Enflux's own FAQ describing itself as reading CORE's data rather than
-#      producing any. The third (ExamSoft on Compliance Management) rests only on an
-#      unbroken silence across every source consulted, so it is directional and its
-#      evidence_note says so in the competitor file's own words.
+#      producing any. Each shows a source affirmatively placing the capability elsewhere.
+#      A THIRD prism-only entry — ExamSoft on Compliance Management — is deliberately
+#      OMITTED rather than rated. Its own evidence text in examsoft.yaml says the finding
+#      is "genuinely unassessed rather than proven absent": nothing was found either way.
+#      Absence of evidence is not evidence of absence, `not-meeting` would have asserted a
+#      gap nobody established, and this file has no "unknown" rating to put there — so the
+#      honest record is no cell at all, which is this file's own definition of
+#      unresearched. scripts/list_missing_feature_matrix_cells.py now reports it as a
+#      MISSING CELL, i.e. as real research still owed. (Removed 2026-09-11 in Task 2.9's
+#      review round, which caught the original rating overstating its evidence.)
 #   3. evidence_strength. "verified" is reserved for ratings a NON-VENDOR source attests to
 #      (a customer institution's own documentation, an accreditation self-study, third-party
 #      reviews) or that rest on a vendor statement against its own interest. A rating read
@@ -264,25 +271,6 @@ cells:
       - source_id: "product-page-core-elms-clinical-experiential-overview-2026"
       - source_id: "review-core-elms-capterra-2026"
 
-  - domain: "Pharmacy"
-    pillar: "Compliance Management"
-    capability: "Compliance management: immunization, background-check and affiliation-agreement tracking with expiry alerts"
-    capability_id: "pharmacy-compliance-management"
-    competitor_slug: "examsoft"
-    rating: "not-meeting"
-    rationale: >
-      No immunization, background-check, drug-screen, affiliation-agreement or
-      expiration-alerting surface appears in any source consulted. Capterra's 34-feature
-      inventory covers assessment, data, reporting, security and LMS integration only.
-      ExamID is exam-seat identity, not credential compliance.
-    competitor_feature_ref: "Compliance Management"
-    evidence_strength: "directional"
-    evidence_note: "An unbroken silence across every source consulted, not a positively evidenced absence — genuinely unassessed rather than proven absent."
-    element_ids: []
-    persona_relevance: ["discipline-pharmacy", "role-compliance-accreditation-liaison"]
-    sources:
-      - source_id: "review-examsoft-capterra-2026"
-
   # ---------------------------------------------------------------------------
   # Pharmacy x Curriculum Mapping
   # ---------------------------------------------------------------------------
@@ -442,7 +430,7 @@ cells:
       never mentions ACPE or pharmacy.
     competitor_feature_ref: "Accreditation Management (Prism roadmap Q3 2027)"
     evidence_strength: "directional"
-    evidence_note: "MedHub's own page, re-fetched 2026-09-11; the machinery is ACGME-shaped, so its transfer to an ACPE self-study is an inference, not a claim it makes."
+    evidence_note: "A May 2016 MedHub news post, not current product material; the machinery is ACGME-shaped, so transfer to an ACPE self-study is an inference."
     element_ids: []
     persona_relevance: ["discipline-pharmacy", "role-dean", "role-compliance-accreditation-liaison", "lens-medhub"]
     sources:
@@ -563,10 +551,10 @@ exxat_cells:
     prism_feature_ref: "Accreditation Management"
     rating: "not-meeting"
     rationale: >
-      Exxat's own roadmap names this pillar not-yet-shipped, target Q3 2027. It is not
-      starting from zero — ARC-PA B2 exports, CAPTE-mapped reports and SLP's KASA
-      templates are real precedents — but every standard-mapped report
-      capability-map.yaml names is PA or PT/PTA, and no ACPE report appears in it.
+      Not shipped; Exxat's roadmap targets Q3 2027. Far from zero, though:
+      capability-map.yaml documents standard-mapped guides for seven accreditors across
+      five disciplines — ACEN, CCNE, COA, ACOTE, ARC-PA, CAPTE, CSWE — plus SLP's
+      KASA/ASHA and nursing's NBCRNA reports. ACPE is only a build target.
     evidence_strength: "verified"
     sources:
       - source_id: "help-center-pa-arcpa-reports"

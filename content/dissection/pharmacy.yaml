@@ -144,14 +144,17 @@ questions:
     # "partial", not "researched", and the reason is granularity rather than effort.
     # The matrix holds 15 of 30 possible Pharmacy cells (6 capability rows x the 5
     # in-scope incumbents above), every row carrying an Exxat verdict. The 15 absent
-    # cells are not a to-do list that can be cleared by transcription. 12 of the 15 sit on
+    # cells are not a to-do list that can be cleared by transcription. 12 of the 16 sit on
     # a feature_teardown entry that is itself depth_vs_prism: "unknown" — a genuinely
-    # unresearched competitor pillar, not an unrecorded finding — and the other 3 (influx
-    # on Compliance and Exam, pharmacademic on Exam) have no teardown entry at all. All
-    # five of pharmacademic's entries are "unknown", which is why a named primary
-    # incumbent contributes zero cells. Closing any of them is new research in
-    # content/competitors/*.yaml first, and only then a transcription pass here.
-    gap_note: "15 of 30 cells across 6 capability rows, each carrying an Exxat verdict — but at PILLAR granularity, since Tasks 2.4/2.8 researched one entry per pillar. pharmacademic contributes none, all 'unknown'."
+    # unresearched competitor pillar, not an unrecorded finding — and 3 more (influx on
+    # Compliance and Exam, pharmacademic on Exam) have no teardown entry at all. All five
+    # of pharmacademic's entries are "unknown", which is why a named primary incumbent
+    # contributes zero cells. The 16th is ExamSoft on Compliance Management: it HAS a
+    # teardown entry, rated prism-only, but that entry's own evidence says the finding is
+    # "genuinely unassessed rather than proven absent", so no cell was written rather than
+    # asserting a gap nobody established (Task 2.9 review round). Closing any of the 16 is
+    # new research in content/competitors/*.yaml first, then a transcription pass here.
+    gap_note: "14 of 30 cells across 6 capability rows, each carrying an Exxat verdict — but at PILLAR granularity, since Tasks 2.4/2.8 researched one entry per pillar. pharmacademic contributes none, all 'unknown'."
 
   - key: "standards-to-product"
     answered_in: ["lenses/standards-use-cases.yaml", "lenses/standards-competitor-ratings.yaml"]

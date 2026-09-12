@@ -1129,14 +1129,23 @@ sources:
     what_it_supports: "Assessment delivery over BoardVitals' partner bank, not native authoring: LTI 'automatic grade syncing' and 'AI-driven risk assessment metrics'."
     accessed: "2026-09-11"
 
+  # STALE ID PREFIX AND YEAR, deliberately not renamed — the registry's own rule is that
+  # an id is frozen once written even when its type is corrected later ("follow the id,
+  # not the prefix"). Registered on 2026-09-11 as a current product-page; a re-fetch the
+  # same day for Task 2.9's review round found it is actually a MedHub NEWS POST dated
+  # May 17 2016, with unrendered WPBakery shortcodes ([vc_row], [vc_column_text]) visible
+  # in the body. type and date below now say so. The 2016 date does not weaken what this
+  # source is cited for — it sharpens it: a decade-old accreditation-automation page that
+  # still names only ACGME/GME is stronger evidence of scope than a current one would be.
   - id: "product-page-medhub-accreditation-automation-2026"
-    title: "Accreditation Automation — MedHub"
+    title: "Accreditation Automation — MedHub (news post, 17 May 2016)"
     url: "https://www.medhub.com/accreditation-automation/"
-    type: "product-page"
+    type: "press"
     origin: "third-party"
     access: "public"
     publisher: "MedHub (Ascend Learning)"
-    what_it_supports: "Shipped APE forms, CLER visit tracking, 'Generate ADS formatted reports', ACGME survey import, PubMed import. Never mentions ACPE or pharmacy."
+    date: "2016-05-17"
+    what_it_supports: "APE forms, CLER visit tracking, 'Generate ADS formatted reports', ACGME survey import, PubMed import. Names ACGME/GME only — no ACPE or pharmacy."
     accessed: "2026-09-11"
 
   - id: "program-page-uf-dentistry-examsoft-procedures-2026"
