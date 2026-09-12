@@ -228,9 +228,13 @@ export function stripFileCitations(text?: string): string | undefined {
  *    interior runs of spaces may be aligning columns, and a ".yaml" inside a fence is
  *    sample code, not a citation. Fences are passed through untouched.
  *
- * None of the four documents this runs on today contains an indented bullet or a fence,
+ * None of the eight documents this runs on today contains an indented bullet or a fence,
  * which is exactly why 1 and 3 had to be reasoned about rather than observed — they are
  * traps for the next document added, not current bugs.
+ *
+ * "Eight" is five call sites resolving to eight concrete documents: the synthesis
+ * positioning, gap-analysis and vocabulary pages, the repo-comparison page, and
+ * lib/sales-brief.ts — which is one call site over four per-domain SALES.md briefs.
  */
 // Accepts null because readMarkdownFile returns `string | null` for a missing document;
 // callers already branch on falsy, so collapsing null to undefined here costs them nothing.
@@ -306,7 +310,7 @@ function humanizeMarkdownProse(text: string): string {
   // non-whitespace character is squeezed, so a run at the start of a line — which in
   // Markdown is not spacing but structure — survives untouched. Without it, a 4-space
   // nested bullet would be de-nested and a fenced code block's own indentation would be
-  // re-spaced. The four documents this runs on today happen to contain neither, so the
+  // re-spaced. The eight documents this runs on today happen to contain neither, so the
   // bug would have stayed invisible until someone added one.
   return humanized.replace(/(?<=\S)[^\S\r\n]{2,}/g, " ");
 }
@@ -318,6 +322,14 @@ function humanizeMarkdownProse(text: string): string {
 export function humanizeSourceRef(ref: string): string {
   if (/^https?:\/\//i.test(ref)) return ref;
   const clean = ref
+    // "./coca.yaml" and "../accreditation/coca.yaml" are the same citation written from
+    // two different vantage points, and content/accreditation/coa.yaml uses the "./" form
+    // twice. Without this the leading "." survives into `parts` as a folder named ".",
+    // FOLDER_NOUN misses it, and the label degrades to a bare titleCase "Coca" instead of
+    // "COCA accreditation record" — a wrong label rather than a raw path, so it renders
+    // plausibly and hides itself. Stripped before the "../" rule for the same reason that
+    // rule exists.
+    .replace(/^(?:\.\/)+/, "")
     .replace(/^(\.\.\/)+/, "")
     // An absolute path someone pasted from their own checkout
     // ("/Users/me/src/rr-emerging-domains/content/prism/capability-map.yaml") is the same

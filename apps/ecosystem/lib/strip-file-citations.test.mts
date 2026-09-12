@@ -97,6 +97,26 @@ check(
   humanizeSourceRef("../accreditation/coca.yaml"),
   "COCA accreditation record",
 );
+// The "./" form: same citation, third spelling. content/accreditation/coa.yaml writes it
+// twice, and before this was handled the leading "." survived into the folder position, so
+// FOLDER_NOUN missed and the label degraded to a plain titleCase "Coca". A WRONG LABEL
+// rather than a raw path — it renders plausibly and hides itself, which is why it outlived
+// five follow-up tasks aimed at this exact file.
+check(
+  "./ prefixed citation resolves identically to the ../ and bare forms",
+  stripFileCitations("cross-checked against ./coca.yaml before publishing"),
+  "cross-checked against COCA accreditation record before publishing",
+);
+check(
+  "humanizeSourceRef strips a ./ prefix",
+  humanizeSourceRef("./coca.yaml"),
+  humanizeSourceRef("coca.yaml"),
+);
+check(
+  "./ inside a folder-qualified path still resolves",
+  humanizeSourceRef("./accreditation/coca.yaml"),
+  "COCA accreditation record",
+);
 check(
   "humanizeSourceRef passes a real https source through untouched",
   humanizeSourceRef("https://exxat.com/x.yaml"),
@@ -221,6 +241,224 @@ check(
   out[2],
   "> field and `Prism Positioning`. This is a business call.",
 );
+
+// ---------------------------------------------------------------------------
+// 4. CALL-SITE REGRESSION CHECK — the part that guards the bug this file keeps missing.
+//
+// Sections 1-3 test the sanitizer's LOGIC. Every defect actually shipped in this plan's
+// last four follow-ups was instead a missing CALL — a render site that never invoked a
+// sanitizer that worked perfectly. Logic tests cannot see that class of bug, which is why
+// it recurred four times.
+//
+// WHAT THIS DOES. Two halves, and the first is what keeps it from rotting:
+//
+//   a) Read the real content/ tree and derive, from the data itself, the set of field names
+//      that ACTUALLY contain a file citation today. Nothing is hardcoded — add a citation to
+//      a new field in a YAML file tomorrow and that field name appears here automatically.
+//   b) For every such field name, find every place the app's own source reads it, and
+//      require each read either to be sanitized or to be listed in ALLOWED below with a
+//      stated reason.
+//
+// WHY THIS SHAPE, and what it does NOT do. The brief offered a dynamic alternative: crawl a
+// running build and assert zero raw filenames. That is strictly better evidence and it is
+// implemented — in lib/sanitizer-audit.mts, which is how this task's fixes were verified.
+// It is not wired in HERE because it needs `next build` plus a live server, which would turn
+// a sub-second dependency-free `npm test` into a multi-minute one needing a free port. The
+// two are complements: run `npm run audit:sanitizer` against a build for ground truth; this
+// static check is the one that runs on every commit.
+//
+// Being static, it is a heuristic on both halves. It can be fooled by a read spelled in a
+// way the scan does not recognise, and "sanitized" is judged by proximity, not by dataflow.
+// It is a smoke alarm, not a proof — it exists to make the NEXT missing call site fail loudly
+// at commit time instead of being discovered by a seventh person reading pages by hand.
+//
+// WHEN IT FAILS, the fix is one of exactly three things:
+//   1. A genuinely new unsanitized render site -> wrap it. This is the case it is built for.
+//   2. A read that is safe for a reason the scan cannot see -> add it to ALLOWED with that
+//      reason written out. Do not delete the entry; the reason is the point.
+//   3. A field renamed or a site moved -> update ALLOWED.
+// ---------------------------------------------------------------------------
+
+import { readdirSync, readFileSync, statSync } from "node:fs";
+import { join, relative } from "node:path";
+import { load as loadYaml } from "js-yaml";
+
+const APP_DIR = new URL("..", import.meta.url).pathname;
+const CONTENT_DIR = join(APP_DIR, "..", "..", "content");
+
+function walk(dir: string, ext: string[]): string[] {
+  const out: string[] = [];
+  for (const name of readdirSync(dir)) {
+    if (name === "node_modules" || name === ".next" || name.startsWith(".")) continue;
+    const full = join(dir, name);
+    if (statSync(full).isDirectory()) out.push(...walk(full, ext));
+    else if (ext.some((e) => name.endsWith(e))) out.push(full);
+  }
+  return out;
+}
+
+// Same detector as the sanitizer's own BARE_CONTENT_PATH, minus the start guard — see the
+// matching note in sanitizer-audit.mts. An auditor should over-notice, never under-notice.
+const CITATION = /(?:\/|(?:\.\.?\/)+)?(?:(?![\w.-]*\.(?:ya?ml|md)\/)[\w.-]+\/)*[\w-]+\.(?:ya?ml|md)\b/i;
+
+/**
+ * Field names whose real values contain a citation today, walked out of content/ itself.
+ * Structural keys are excluded: they hold a citation because a citation is their JOB, and
+ * they are rendered (where they are rendered at all) through humanizeSourceRef rather than
+ * as prose.
+ */
+const CITATION_BY_DESIGN = new Set([
+  "sources",
+  "source",
+  "source_id",
+  "confirmed_by",
+  "path",
+  "file",
+  "files",
+  "related_flows",
+  "cites",
+  "citation",
+]);
+
+/**
+ * A citation inside a SHORT value is a structural reference, not prose — `type: "yaml"`,
+ * a one-token path, an id. Requiring real sentence length is what keeps generic key names
+ * like `type` and `flow` from dragging in every unrelated `.type` in the codebase.
+ */
+const MIN_PROSE_LENGTH = 60;
+
+function fieldsCarryingCitations(): Set<string> {
+  const found = new Set<string>();
+  const visit = (node: unknown, key: string | undefined) => {
+    if (typeof node === "string") {
+      if (
+        key &&
+        !CITATION_BY_DESIGN.has(key) &&
+        node.length > MIN_PROSE_LENGTH &&
+        CITATION.test(node)
+      ) {
+        found.add(key);
+      }
+      return;
+    }
+    if (Array.isArray(node)) {
+      for (const v of node) visit(v, key);
+      return;
+    }
+    if (node && typeof node === "object") {
+      for (const [k, v] of Object.entries(node)) visit(v, k);
+    }
+  };
+  for (const file of walk(CONTENT_DIR, [".yaml", ".yml"])) {
+    try {
+      visit(loadYaml(readFileSync(file, "utf8")), undefined);
+    } catch {
+      // A content file that does not parse is the density checker's problem, not this test's.
+    }
+  }
+  return found;
+}
+
+/**
+ * Reads of a content field in app source: `.field_name` or `field_name:` in an object
+ * literal built from content. A read counts as sanitized when a sanitizer call appears in
+ * the same statement — approximated as the matched line plus the two lines around it, which
+ * covers both the `{stripFileCitations(x.field)}` one-liner and the multi-line
+ * `field: stripFileCitations(\n  obj?.field,\n)` builder form.
+ */
+const SANITIZERS = /strip(?:FileCitations|FileCitationsInMarkdown)|humanizeSourceRef/;
+
+interface Unsanitized {
+  file: string;
+  line: number;
+  field: string;
+  text: string;
+}
+
+/**
+ * Lines that mention a field without rendering its text: existence tests, counts,
+ * predicates, sort keys. They are the bulk of the raw matches and none of them can put a
+ * filename on screen.
+ */
+const NOT_A_RENDER = /\.length\b|\.filter\(|\.some\(|\.every\(|\.find\(|\.sort\(|\bkey=/;
+
+function unsanitizedReads(fields: Set<string>): Unsanitized[] {
+  const out: Unsanitized[] = [];
+  // Scoped to app/ deliberately. A page under app/ reads lib/content.ts getters directly,
+  // so what it holds is raw YAML and an unwrapped render there is a real bug. Components
+  // under components/ mostly receive props already sanitized by a lib/ builder
+  // (dissection-node-detail.ts is the big one), and a static scan cannot follow that
+  // dataflow — including them produced ~40 findings of which every single one was a false
+  // positive, which is a check nobody will keep running. The routes are where the bugs
+  // were, five times running.
+  for (const file of walk(join(APP_DIR, "app"), [".tsx"])) {
+    const lines = readFileSync(file, "utf8").split("\n");
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      if (/^\s*(\/\/|\*|\/\*|\{\/\*)/.test(line)) continue;
+      if (NOT_A_RENDER.test(line)) continue;
+      for (const field of fields) {
+        // A ternary TEST ("{x.notes ? (") is an existence check; the render is on a later
+        // line and gets judged on its own.
+        if (new RegExp(String.raw`\.${field}\b\s*\?(?!\.)`).test(line)) continue;
+        if (!new RegExp(String.raw`\.${field}\b`).test(line)) continue;
+        const window_ = lines.slice(Math.max(0, i - 2), i + 3).join("\n");
+        if (SANITIZERS.test(window_)) continue;
+        out.push({
+          file: relative(APP_DIR, file),
+          line: i + 1,
+          field,
+          text: line.trim().slice(0, 110),
+        });
+      }
+    }
+  }
+  return out;
+}
+
+/**
+ * Reads that are safe for a reason the static scan cannot see. Every entry states WHY —
+ * an entry without a reason is indistinguishable from a bug someone silenced.
+ */
+const ALLOWED = new Set([
+  // `dissectionNodeId.persona(...)` is a function on a helper object. It collides with the
+  // content field name `persona` and renders nothing.
+  "app/domains/[slug]/persona/page.tsx:persona",
+  // app/page.tsx's roadmap timeline is a TIMELINE const literal declared at the top of that
+  // file. Its `detail` strings are written in the .tsx, never loaded from content/, so they
+  // cannot carry a content filename. Same for the HORIZONS const beside it.
+  "app/page.tsx:detail",
+  // Renders `artifact.type`, a short enum ("screenshot" / "memo"). It shares a name with a
+  // content field somewhere in the corpus whose value happens to be long prose containing a
+  // citation; this is not that field.
+  "app/reference/vendor-comparison-chart/page.tsx:type",
+  // The `.map((q) => (` iteration header. The render is per-element inside the callback and
+  // IS wrapped — `{stripFileCitations(q)}` — just beyond this scan's proximity window.
+  "app/prism/page.tsx:open_questions_for_phase_2",
+]);
+
+const citationFields = fieldsCarryingCitations();
+check(
+  "content/ still carries prose file citations (if 0, this whole check is silently vacuous)",
+  citationFields.size > 0,
+  true,
+);
+
+const offenders = unsanitizedReads(citationFields).filter(
+  (o) => !ALLOWED.has(`${o.file}:${o.field}`),
+);
+
+if (offenders.length) {
+  failures.push(
+    "unsanitized reads of content fields that really contain file citations:\n" +
+      offenders
+        .map((o) => `      ${o.file}:${o.line}  [${o.field}]  ${o.text}`)
+        .join("\n") +
+      "\n    Wrap each in stripFileCitations, or add it to ALLOWED with a stated reason.",
+  );
+} else {
+  passed++;
+}
 
 // ---------------------------------------------------------------------------
 
