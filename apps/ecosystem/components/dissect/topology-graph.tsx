@@ -26,6 +26,17 @@ import type { GraphLayout } from "@/lib/graph-layout";
 // nothing to do with. The highlight layer sits ABOVE them and holds only the selected
 // node's edges, so "what is this actually connected to" is answerable by looking,
 // which is the whole reason to draw a topology rather than list it.
+//
+// THE TEXT EQUIVALENT LIVES NEXT DOOR NOW. This file used to end with a visually hidden
+// <ul> of every node and its neighbours, because an aria-hidden line layer says nothing
+// and the node buttons alone do not say what they connect to. Task 5.4 replaced it with
+// topology-graph-tree.tsx, which says strictly more (the name of each relationship, the
+// source row's own words, how many rows said it, and whether it was stated or derived —
+// the hidden list had only neighbour labels), is a real role="tree" with expand/collapse
+// and aria-level/posinset rather than a flat list, and is reachable by everyone rather
+// than only by a screen reader. TopologyGraphPanel renders it one always-visible
+// disclosure away on desktop and in this component's place on a narrow screen. Keeping
+// both would mean reading the entire graph twice.
 
 /** One colour per node type, reused for the lane header badge, the node card tint and
  * the legend — so the reader learns the five categories once. */
@@ -81,7 +92,6 @@ export function TopologyGraph({
   onSelect: (id: string | null) => void;
 }) {
   const pos = new Map(layout.nodes.map((n) => [n.id, { x: n.x, y: n.y }]));
-  const nodeById = new Map(graph.nodes.map((n) => [n.id, n]));
   const shown = graph.edges.filter((e) => visibleKinds.has(e.kind));
   const incident = selectedId ? shown.filter((e) => e.source === selectedId || e.target === selectedId) : [];
   const connected = new Set<string>(selectedId ? [selectedId] : []);
@@ -231,29 +241,6 @@ export function TopologyGraph({
             );
           })}
         </svg>
-      </div>
-
-      {/* The accessible equivalent of the drawing above — an SVG line layer says
-          nothing to a screen reader, and the node buttons alone do not say what they
-          connect to. Visually hidden, not absent. */}
-      <div style={{ width: 1, height: 1, overflow: "hidden", clipPath: "inset(50%)" }}>
-        <ul>
-          {graph.nodes.map((n) => (
-            <li key={n.id}>
-              {NODE_TYPE_LABEL[n.type]}: {n.label}
-              {n.outOfScope ? " (not a target for this domain)" : ""} — {n.degree} connection
-              {n.degree === 1 ? "" : "s"}
-              <ul>
-                {graph.edges
-                  .filter((e) => e.source === n.id || e.target === n.id)
-                  .map((e) => {
-                    const other = nodeById.get(e.source === n.id ? e.target : e.source);
-                    return other ? <li key={e.id}>{other.label}</li> : null;
-                  })}
-              </ul>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );

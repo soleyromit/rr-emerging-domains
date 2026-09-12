@@ -116,6 +116,31 @@ export const EDGE_KIND_LABEL: Record<DissectionEdgeKind, string> = {
   "persona-competitor": "Competitor implicitly serves a persona",
 };
 
+/** One edge, described from the point of view of ONE of its two endpoints: what the
+ * relationship is called, which other entity is on the far end, the source row's own
+ * words for it, how many rows said it, and whether it was stated or implied.
+ *
+ * It lives here, next to EDGE_KIND_LABEL, because it is vocabulary rather than
+ * rendering — the wording is the thing two different components must agree on. Both the
+ * graph's click-to-select detail card (topology-graph-panel.tsx) and the tree's
+ * connection leaves (topology-graph-tree.tsx) call it, so a reader who reaches the same
+ * relationship two different ways reads the same sentence, and the `derived` disclosure
+ * cannot go missing from one of them.
+ *
+ * `labelOf` is the caller's id→label map; an id that is not in it renders as "unknown"
+ * rather than as a blank, because a silently empty far end would read as a relationship
+ * to nothing. */
+export function describeIncidentEdge(
+  edge: DissectionEdge,
+  fromNodeId: string,
+  labelOf: ReadonlyMap<string, string>,
+): string {
+  const neighbor = labelOf.get(edge.source === fromNodeId ? edge.target : edge.source) ?? "unknown";
+  return `${EDGE_KIND_LABEL[edge.kind]} — ${neighbor}${edge.label ? ` (${edge.label})` : ""}${
+    edge.weight > 1 ? ` · ${edge.weight} source rows` : ""
+  }${edge.derived ? " · implied by the two edges it composes" : ""}`;
+}
+
 export const NODE_TYPE_LABEL: Record<DissectionNodeType, string> = {
   standard: "Standard",
   competitor: "Competitor",

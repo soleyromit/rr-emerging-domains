@@ -4,13 +4,17 @@ import { useState } from "react";
 import { Stack } from "@astryxdesign/core/Stack";
 import { Text } from "@astryxdesign/core/Text";
 import { Card } from "@astryxdesign/core/Card";
+import { Collapsible } from "@astryxdesign/core/Collapsible";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
+import { useMediaQuery } from "@astryxdesign/core/hooks";
 import { Takeaway } from "@/components/takeaway";
 import { TopologyGraph, EDGE_KIND_COLOR } from "@/components/dissect/topology-graph";
+import { TopologyGraphTree } from "@/components/dissect/topology-graph-tree";
 import {
   DISSECTION_EDGE_KINDS,
   EDGE_KIND_LABEL,
   NODE_TYPE_LABEL,
+  describeIncidentEdge,
   type DissectionEdgeKind,
   type DissectionGraph,
   // See topology-graph.tsx: the vocabulary module, not the content-reading one.
@@ -44,6 +48,21 @@ import type { GraphLayout } from "@/lib/graph-layout";
 const MIN_NODES_FOR_A_READABLE_MAP = 6;
 const MIN_KINDS_FOR_A_READABLE_MAP = 2;
 
+// WIDTH, and where the drawing stops being a drawing. The map has an intrinsic pixel
+// width, not a fluid one: five lanes of NODE_WIDTH = 156 plus four 44px gaps plus
+// padding is 988px for a domain that uses all five types (lib/graph-layout.ts:42-47).
+// Inside this page's content column a 720px viewport leaves roughly 620px of it
+// visible, so a reader at that width is looking at under two-thirds of the picture
+// through a horizontal scrollbar — at which point the spatial arrangement, the only
+// thing a drawing offers over a list, is exactly what they cannot see. Below this, the
+// tree IS the map rather than a fallback beneath it.
+//
+// 720 is a chosen number, not an inherited one: there is no breakpoint token in this
+// design system and no other responsive switch anywhere in this app to align with, so
+// there is nothing to be consistent with yet. It is the first, and it is stated here
+// once rather than inlined in a query string.
+const TREE_ONLY_MAX_WIDTH = 720;
+
 export function TopologyGraphPanel({
   graph,
   layout,
@@ -58,6 +77,13 @@ export function TopologyGraphPanel({
     () => new Set(presentKinds),
   );
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  // serverDefault `false` = render the drawing on the server. There is no server-side
+  // width hint available here (no UA parsing in this app), so this is a stated
+  // assumption rather than knowledge: the desktop variant is the majority case for this
+  // internal research app, and the pre-hydration render of it is not broken on a phone
+  // either — the drawing's own container already scrolls horizontally rather than
+  // widening the page. A narrow viewport swaps to the tree on hydration.
+  const treeIsPrimary = useMediaQuery(`(max-width: ${TREE_ONLY_MAX_WIDTH}px)`, false);
 
   if (!graph.nodes.length) {
     return (
@@ -90,11 +116,19 @@ export function TopologyGraphPanel({
 
   return (
     <Stack gap={3}>
+      {/* Two captions, because one of them would be false in the other variant: there
+          are no columns and no clickable cards when the drawing is not on screen, and
+          "click" is the wrong verb on a phone. Both state the same real counts. */}
       <Text type="supporting" maxLines={5}>
-        {`${graph.nodes.length} entities and ${graph.edges.length} relationships, every one of them a field that already exists in this repo's content — no relationship here was researched for this map. Each of the five columns is one kind of entity; each line is one of ${presentKinds.length} relationship${presentKinds.length === 1 ? "" : "s"} really present for ${domainLabel}. Click a relationship below to isolate it, or a card to trace what it connects to.`}
+        {treeIsPrimary
+          ? `${graph.nodes.length} entities and ${graph.edges.length} relationships, every one of them a field that already exists in this repo's content — no relationship here was researched for this map. The drawing needs more width than this screen has, so the same graph is listed below instead: entities grouped by what they are, each one expandable to the ${presentKinds.length} relationship${presentKinds.length === 1 ? "" : "s"} really present for ${domainLabel}. Tap a relationship above to isolate it.`
+          : `${graph.nodes.length} entities and ${graph.edges.length} relationships, every one of them a field that already exists in this repo's content — no relationship here was researched for this map. Each of the five columns is one kind of entity; each line is one of ${presentKinds.length} relationship${presentKinds.length === 1 ? "" : "s"} really present for ${domainLabel}. Click a relationship below to isolate it, or a card to trace what it connects to.`}
       </Text>
 
-      {thin ? (
+      {/* The sparsity gate is a gate on the DRAWING, not on the evidence: five mostly
+          empty lanes read as broken, which is why the warning exists. A short list is
+          just a short list, so the tree-primary variant does not carry it. */}
+      {thin && !treeIsPrimary ? (
         <Takeaway
           status="warning"
           title={`Too thin to read as a map — ${graph.nodes.length} entities across ${presentKinds.length} relationship${presentKinds.length === 1 ? "" : "s"}`}
@@ -141,18 +175,45 @@ export function TopologyGraphPanel({
         })}
       </Stack>
 
-      <TopologyGraph
-        graph={graph}
-        layout={layout}
-        visibleKinds={visibleKinds}
-        selectedId={selectedId}
-        onSelect={setSelectedId}
-      />
+      {treeIsPrimary ? (
+        // Below TREE_ONLY_MAX_WIDTH the tree is the map, not a secondary view of it —
+        // there is no toggle to find and nothing collapsed, because a reader on a phone
+        // should not have to opt in to the only rendering that fits their screen.
+        <TopologyGraphTree graph={graph} visibleKinds={visibleKinds} />
+      ) : (
+        <>
+          <TopologyGraph
+            graph={graph}
+            layout={layout}
+            visibleKinds={visibleKinds}
+            selectedId={selectedId}
+            onSelect={setSelectedId}
+          />
+
+          {/* The same graph in words, one click away and closed by default. It is the
+              drawing's text equivalent in the literal sense — this is what a screen
+              reader, or anyone who finds a 60-node picture hard to parse, reads instead
+              of the SVG (which is aria-hidden, because a line layer says nothing). No
+              `value` prop: this is a standalone uncontrolled Collapsible, deliberately
+              NOT joined to the page's CollapsibleGroup accordion, so opening it cannot
+              close the section it lives inside. */}
+          <Collapsible
+            defaultIsOpen={false}
+            trigger={`Read the map as a list — all ${graph.nodes.length} entities and what each one connects to, in words`}
+          >
+            <TopologyGraphTree graph={graph} visibleKinds={visibleKinds} />
+          </Collapsible>
+        </>
+      )}
 
       {/* The node-click affordance for now: what this entity is really connected to, in
           words. Task 5.5 replaces this block with the five per-type detail panels; the
-          selection state and the graph's node shape are what it will build on. */}
-      {selected ? (
+          selection state and the graph's node shape are what it will build on.
+          Suppressed in the tree-primary variant: selection is set by clicking a card in
+          the drawing, so a card left over from a wider viewport would sit there with
+          nothing on screen able to change or dismiss it — and the tree already says
+          everything it says. */}
+      {selected && !treeIsPrimary ? (
         <Card variant="muted" padding={3}>
           <Stack gap={2}>
             <Text type="body" weight="semibold">
@@ -167,9 +228,9 @@ export function TopologyGraphPanel({
               <Stack gap={1}>
                 {selectedEdges.map((e) => (
                   <Text key={e.id} type="supporting" size="sm" maxLines={2}>
-                    {`${EDGE_KIND_LABEL[e.kind]} — ${labelOf.get(e.source === selected.id ? e.target : e.source) ?? "unknown"}${
-                      e.label ? ` (${e.label})` : ""
-                    }${e.weight > 1 ? ` · ${e.weight} source rows` : ""}${e.derived ? " · implied by the two edges it composes" : ""}`}
+                    {/* Shared with the tree's connection leaves, so the same
+                        relationship reads identically whichever way it was reached. */}
+                    {describeIncidentEdge(e, selected.id, labelOf)}
                   </Text>
                 ))}
               </Stack>
