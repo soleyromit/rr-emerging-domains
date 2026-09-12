@@ -1,0 +1,133 @@
+# Dentistry — dissection manifest. Level 2, per content/ARCHITECTURE.md and the schema
+# in _TEMPLATE.yaml in this directory. This file asserts NOTHING of its own: every line
+# below is either a pointer into a file that owns the claim, or an honest statement
+# about how far along the research is. A fact that wants to live here goes down to the
+# file that owns it first.
+#
+# Read this one next to content/dissection/pharmacy.yaml, because the contrast IS the
+# content. Pharmacy's manifest points at five populated lenses because a domain-expert
+# session happened (2026-09-04). No such session has happened for Dentistry. So five of
+# the six questions below are coverage: "none".
+#
+# Dentistry is a particular case of that gap, and worth naming. This repo already holds
+# real, cited Dentistry research — content/domains/dentistry.yaml's clinical_education_shape
+# and distinctive_pain_points, and content/accreditation/coda.yaml — all of it predating
+# this plan and all of it desk research, not a practitioner session. That research is
+# exactly why the gap matters rather than why it doesn't: the scorecard's own Dentistry
+# note calls the longitudinal patient-panel model a "structural mismatch at the core"
+# with Exxat's rotation-shaped primitives. A judgment that sharp is the kind a session
+# confirms or overturns, and no session has been held.
+#
+# The one exception is market-size: Task 3.2 extracted the CRM export's Dentistry sheet
+# mechanically, which needs no domain expert. That question is "partial".
+
+domain: "Dentistry"           # the RAW `domain:` value from content/domains/dentistry.yaml,
+                              # verified against that file rather than assumed. For
+                              # Dentistry the raw value and the app-resolvable label are
+                              # the same string — but that is a coincidence of this
+                              # domain, not a rule. content/domains/medicine.yaml's raw
+                              # value is "MD" while every lens resolves "Medicine".
+slug: "dentistry"
+
+# where-to-play.yaml's actual_gtm_target is "Pharmacy" (decided 2026-09-10). Dentistry is
+# not that target and, unlike DO, was not the scorecard's recommended beachhead either —
+# its own scorecard note argues a structural mismatch with Exxat's core primitives. This
+# flag tracks the decision, not the merit.
+is_gtm_target: false
+
+# null, not "", and not a borrowed id: no Dentistry domain-expert session exists in
+# content/interviews/. Pointing this at Pharmacy's 2026-09-04 session would claim those
+# findings transfer, which that session's own "we don't know what we don't know" finding
+# warns against — and dental clinical education is the domain in this repo whose shape
+# differs most from Pharmacy's.
+template_of_record: null
+
+last_reviewed: "2026-09-12"
+
+# Scoping only — who is in the Dentistry clinical-education software market. Membership is
+# read straight off each competitor file's own `domains_served` field: these are every file
+# in content/competitors/ whose list includes "Dentistry", verified by reading the four
+# files. The claims about each vendor stay in content/competitors/<slug>.yaml.
+#
+# Role is assigned per-vendor from each file's OWN stated `category`, not from a blanket
+# default. Where a category describes experiential/clinical education management it is
+# "primary"; where it describes a different job entirely it is "adjacent". No finer
+# gradation (switch-target, secondary) is used: Pharmacy's manifest can say "switch-target"
+# because a domain expert said so out loud, and inventing that here from category strings
+# would be fabricating the judgment a session is supposed to produce.
+incumbent_set:
+  - competitor_slug: "axium"
+    role: "primary"
+    # domains_served: ["Dentistry"] — the only vendor in content/competitors/ scoped to
+    # this domain and nothing else. Its own category is "Academic dental EHR + practice
+    # management (dental school clinical/education suite)", which is the system of record
+    # for the chairside, per-procedure sign-off that dentistry.yaml's
+    # clinical_education_shape describes as the domain's core loop. Primary on the
+    # file's own words, and more clearly so than any vendor here would be for another
+    # domain.
+
+  - competitor_slug: "core-elms"
+    role: "primary"
+    # domains_served: ["Pharmacy", "Dentistry"]. Its own category is "Experiential/clinical
+    # education management (ELMS) across health sciences" — the same job Exxat does, which
+    # is what makes it primary rather than adjacent.
+
+  - competitor_slug: "leo-davinci"
+    role: "primary"
+    # domains_served: ["MD", "DO", "Pharmacy", "Dentistry"]. Its own category is "Med-ed
+    # management (curriculum, clinical, assessment & accreditation) for medical/
+    # health-science schools" — clinical education management, so primary on the same
+    # reading as core-elms, though its file claims no dentistry-specific depth.
+
+  - competitor_slug: "examsoft"
+    role: "adjacent"
+    # domains_served lists Dentistry, but examsoft.yaml's own category is "Secure exam
+    # delivery, proctoring, and assessment analytics" — didactic assessment, not
+    # experiential education. Same reading, from the same file, that Pharmacy's and DO's
+    # manifests apply to it. This is the one role above not set to "primary", and it rests
+    # on the file's own words rather than on a judgment about Dentistry.
+
+  # No "not-a-target" entries. Pharmacy's manifest has two, each excluded for a reason the
+  # excluded vendor's OWN file states. Nothing in content/competitors/ states such a reason
+  # for Dentistry, and an exclusion this repo cannot evidence would be a new claim, which a
+  # manifest may not make.
+
+questions:
+  - key: "features-to-build"
+    answered_in: ["lenses/product-gaps.yaml"]
+    coverage: "none"
+    confidence: "low"
+    gap_note: "No Dentistry rows in the product-gaps lens. No domain-expert session exists for Dentistry; per the Pharmacy session's own 'we don't know what we don't know' finding, real rows here need one first."
+
+  - key: "competitor-differentiation"
+    answered_in: ["lenses/competitor-differentiation.yaml", "competitors/*.yaml"]
+    coverage: "none"
+    confidence: "low"
+    gap_note: "No Dentistry differentiation rows. The 4 competitor files scoped above carry teardowns but no head-to-head read for Dentistry; axium has no comparison against Exxat anywhere in this repo."
+
+  - key: "market-size"
+    answered_in: ["domains/dentistry.yaml#market_sizing", "market/programs/dentistry.yaml"]
+    coverage: "partial"
+    confidence: "low"
+    # The only question above "none", and only to "partial": Task 3.2's extraction was
+    # mechanical, which is precisely why it could run without a domain expert. It is also
+    # the shakiest TAM of the three domains extracted so far — see the gap note.
+    gap_note: "Mechanical only: 968 CRM rows at 531 institutions, 9 clients, 3 churned, SAM 956. Rows are all program types, not the 77 predoctoral schools, and the directory block omits 17 states. No ACV."
+
+  - key: "feature-comparison"
+    answered_in: ["lenses/feature-comparison-matrix.yaml"]
+    coverage: "none"
+    confidence: "low"
+    gap_note: "No Dentistry cells in the matrix. Cells are transcribed from researched competitor pillars scoped to a domain; for Dentistry neither the scoping research nor the session that would direct it exists."
+
+  - key: "standards-to-product"
+    answered_in: ["lenses/standards-use-cases.yaml", "lenses/standards-competitor-ratings.yaml"]
+    coverage: "none"
+    confidence: "low"
+    gap_note: "Neither standards lens carries a CODA row, though content/accreditation/coda.yaml exists and is substantial. Turning those standards into use cases needs a domain expert to say which ones bite."
+
+  - key: "persona-and-document-lens"
+    answered_in: ["computed — audience/persona_relevance tags and sources[] across the lenses above"]
+    coverage: "none"
+    confidence: "low"
+    gap_note: "Computed from tags on rows in the lenses above, and Dentistry has no rows in any of them, so nothing computes. This question cannot move until the other five do."

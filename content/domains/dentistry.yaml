@@ -19,31 +19,60 @@ market:
 # content/dissection/dentistry.yaml's "market-size" question names as
 # `domains/dentistry.yaml#market_sizing`, alongside `market/programs/dentistry.yaml`.
 #
-# Every number below is null on purpose. The figures in `market:` above are real
-# but carry only bare URLs, no registered source_id, and no per-field as-of date
-# — copying them down here would turn uncited prose into uncited machine-readable
-# numbers, which is worse, not better. An all-null block with confidence: "low"
-# is the honest state. Phase 2/3 populates it from a registered source_id and the
-# per-program registry in content/market/programs/dentistry.yaml.
+# The figures in `market:` above are real but carry only bare URLs, no registered
+# source_id, and no per-field as-of date — copying them down here would turn
+# uncited prose into uncited machine-readable numbers, which is worse, not
+# better. That reasoning still stands and still governs this block: the numbers
+# below do NOT come from the prose above. Task 3.2 (2026-09-12) populated only
+# the fields a registered source_id can back — the CRM export's Dentistry sheet,
+# extracted row by row into content/market/programs/dentistry.yaml. Every field
+# that would need research beyond that mechanical pass (accredited_programs,
+# enrollment, acv, revenue_potential_usd, adjacency) is still null on purpose,
+# and confidence stays "low".
 market_sizing:
-  as_of: "2026-09-11"          # YYYY-MM-DD — when the numbers below were last set
+  as_of: "2026-09-12"          # YYYY-MM-DD — when the numbers below were last set
   unit: "program"              # the thing being counted in every count below
   tam:
-    programs: null             # every program in the domain, once sourced
-    basis: null                # <=150 soft / 300 hard chars — what this count
-                               # actually represents, once known
-    source_id: null            # a registered source_id (see content/sources/)
+    # 968 = the real row count of content/market/programs/dentistry.yaml,
+    # counted from the file. THREE cautions travel with it, all documented at
+    # length in that file's header:
+    #   1. Rows are PROGRAMS, not institutions — one row per CODA-recognized
+    #      program, so the 968 rows sit at 531 distinct institutions.
+    #   2. They are not all predoctoral dentistry. By the sheet's own Discipline
+    #      Code column only 45 rows are PREDOC (DDS/DMD); the rest are dental
+    #      hygiene (215), dental assisting (174), advanced/postdoctoral
+    #      residencies (512) and a handful of others. This is why 968 is NOT
+    #      comparable to the "77 CODA-accredited predoctoral programs" figure in
+    #      the `market:` prose above — different populations, not a discrepancy
+    #      to be reconciled by arithmetic.
+    #   3. It is not national. The sheet's 956-row directory block runs A-to-Z by
+    #      institution name but holds no row at all for 17 states (ND, OH, OK,
+    #      OR, PA, RI, SC, SD, TN, TX, UT, VA, VT, WA, WI, WV, WY). A state
+    #      filter was evidently applied before the paste; the sheet does not say
+    #      so, and nothing here guesses at what was dropped.
+    programs: 968
+    basis: "Every row on the CRM export's Dentistry sheet: 968 programs, not institutions (531 distinct), all program types; its directory block omits 17 states."
+    source_id: "crm-export-new-logo-grid-2026"
   accredited_programs:
+    # Still null, on purpose, and this is the field where that matters most for
+    # Dentistry. The `market:` prose above cites ADA HPI / ADEA for 77
+    # CODA-accredited predoctoral programs, but with bare URLs and no registered
+    # source_id, and Task 3.2 was a mechanical extraction that did not do the
+    # sourcing pass registering that would need. Filling this from the CRM
+    # sheet's own 917 "approved" rows was the other option and was rejected: it
+    # would restate tam from the same truncated export under a field name that
+    # implies accreditor authority. Registering the ADA HPI source is the work
+    # that fills this in, and it will need a variance_note.
     count: null
     qualifier: null            # e.g. "accredited PharmD programs" — stays null
-                               # while tam.programs is null
+                               # while accredited_programs.count is null
     source_id: null
     variance_note: null        # <=200 soft / 400 hard chars — only when tam and
                                # accredited_programs genuinely disagree
   sam:
-    programs: null
-    basis: null                # <=150 soft / 300 hard chars
-    derived_from: []           # the filters applied to tam to get to this number
+    programs: 956
+    basis: "tam.programs minus current_clients.count minus churned_clients.count — every Dentistry row not already won or previously lost. 968 - 9 - 3 = 956."
+    derived_from: ["tam", "current_clients", "churned_clients"]
   som:
     programs: null
     basis: "Not sized — no named target list or win-rate assumption exists yet"
@@ -54,15 +83,48 @@ market_sizing:
     yoy_pct: null
     source_id: null
   current_clients:
-    count: null
-    named: []
-    source_id: null
+    # The 9 rows the Dentistry sheet's Client Y/N column marks "Yes". `named`
+    # holds content/market/programs/dentistry.yaml slugs, not institution names.
+    #
+    # 9 ROWS, 8 INSTITUTIONS: rows 3 and 8 are both Northern Arizona University
+    # (row 8 adds its Dental Hygiene detail), so the list below has nine entries
+    # at eight schools. The count stays in rows because tam does.
+    #
+    # CONFLICTS, recorded rather than resolved — three of these nine rows are
+    # contradicted elsewhere in the same sheet. Row 5 "The University of Texas
+    # Health Science Center at Houston" is a client while row 972 "UTHealth
+    # Houston School of Dentistry" is churned, and by name those are one
+    # university. Row 6 "University of the Pacific" is a client while the five
+    # "University of the Pacific Arthur A. Dugoni School of Dentistry" rows are
+    # "No". Row 11 "University of Florida - Dentistry" is a client while the two
+    # University of Florida dental rows are "No". Each row follows its own cell;
+    # a pass with CRM access should settle whether the real figure is 9, 8, or
+    # fewer.
+    count: 9
+    named:
+      - "northern-arizona-university-dentistry"
+      - "northern-arizona-university-dh"
+      - "oregon-health-sciences-university-dentistry"
+      - "the-university-of-texas-health-science-center-at-houston-dentistry"
+      - "university-of-the-pacific-dentistry"
+      - "hinds-community-college-dentistry"
+      - "texas-a-and-m-university-dentistry"
+      - "university-of-missouri-at-kansas-city-dentistry"
+      - "university-of-florida-dentistry-dentistry"
+    source_id: "crm-export-new-logo-grid-2026"
   churned_clients:
-    count: null
-    named: []
-    source_id: null
-  penetration_pct: null        # computed only once tam.programs and
-                               # current_clients.count are both real numbers
+    # The 3 rows marked "Previous client" (sheet rows 972-974), at 3 distinct
+    # institutions. See the Houston conflict noted above: one of these three is
+    # also carried as a current client under a different name.
+    count: 3
+    named:
+      - "uthealth-houston-school-of-dentistry-dentistry"
+      - "mgh-institute-of-health-professions-dentistry"
+      - "louisiana-state-university-health-sciences-center-new-orleans-dentistry"
+    source_id: "crm-export-new-logo-grid-2026"
+  penetration_pct: 0.9         # 9 / 968 * 100 = 0.93, rounded to one decimal.
+                               # Both halves are rows, not institutions; on
+                               # institutions it would be 8 / 531 = 1.5
   acv:
     value_usd: null
     basis: "Not sourced — no pricing artifact exists in this repo"
@@ -72,6 +134,15 @@ market_sizing:
                                # number standing on an unsourced ACV is a guess
                                # wearing a dollar sign
   adjacency:
+    # Still null, deliberately, and for Dentistry the reason is stronger than it
+    # was for DO. Only 40 of the registry's 968 rows carry a non-empty
+    # other_disciplines_on_campus list, and the 928 empty ones are three
+    # different things: 259 confirmed negatives, 13 grid-matched rows whose Logo
+    # Grid row is the Excel error "#N/A" across its discipline columns, and 656
+    # rows whose institution never matched a grid row at all under the
+    # exact-name matching this task used. A cross-sell count built on that would
+    # publish two kinds of unknown as confirmed no-overlap. The hand pass that
+    # resolves institution-name variants is what unblocks this field.
     claim: null                # <=150 soft / 300 hard chars — one line, sourced.
                                # The cross-discipline overlap claim, not the case
                                # for it: evidence goes to source_id
