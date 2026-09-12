@@ -92,9 +92,12 @@ incumbent_set:
 questions:
   - key: "features-to-build"
     answered_in: ["lenses/product-gaps.yaml"]
-    coverage: "none"
+    coverage: "partial"
+    # Not "researched": five Pharmacy rows exist, but all five rest on one
+    # domain-expert session, and that session says of itself that the gap
+    # research "remains to be done".
     confidence: "low"
-    gap_note: "lenses/product-gaps.yaml has its schema but zero gap rows for any domain; the Pharmacy rows are to be written from the 2026-09-04 session and do not exist yet (plan Task 2.7)."
+    gap_note: "5 Pharmacy gap rows now exist, all from the one 2026-09-04 session and all 'expert-assertion' — no RFP, ticket or lost-deal record backs any, and that session says the gap research remains to be done."
 
   - key: "competitor-differentiation"
     answered_in: ["lenses/competitor-differentiation.yaml", "competitors/*.yaml"]

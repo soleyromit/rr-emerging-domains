@@ -89,5 +89,286 @@
 # until then it is this comment): severity: "blocking" combined with demand_evidence:
 # "inferred" is a hard FAIL — a blocking claim needs stronger evidence than an inference.
 # If a gap really is blocking, go find the RFP, ticket or lost deal that says so.
+# ---------------------------------------------------------------------------
+# FIRST REAL ROWS, 2026-09-11. Every row below comes from ONE source: the
+# 2026-09-04 Pharmacy domain-expert session (source_id
+# `interview-vishaka-pharmacy-understanding-2026-09-04`). That is why every row
+# carries demand_evidence: "expert-assertion" — not one of these gaps is backed
+# by an RFP document, a support ticket or a lost-deal record this repo holds.
+# Where the session itself reports an RFP loss, it is Vishaka RECALLING the
+# reasons ("top reasons Vishaka remembers"; "Kunal and Wilson hold the full
+# detail"), so the evidence class stays expert-assertion there too.
+#
+# ON CITING content/prism/capability-map.yaml: two rows below (the Exxat
+# One/Prism depth row and the LMS-breadth row) rest on facts that file owns.
+# They cite it the way this file's header says to — BY PILLAR NAME through
+# `prism_feature_ref`, plus a named reference inside `detail` — not through
+# `sources[]`. `sources[].source_id` resolves only against the Level 0.5 source
+# homes listed above; capability-map.yaml is a Level 1 file with no source_id,
+# so putting it there would be a hard FAIL, not a citation.
+#
+# ON DOMAIN: the last three rows are `domain: "DO"`, not "Pharmacy". The
+# session's RFP-loss section is explicitly headed "MD/DO, not pharmacy" and
+# says "The RFPs Exxat lost were mainly MD and DO." Filing them under Pharmacy
+# would be a straight misattribution. Matching "Medicine" rows are deliberately
+# NOT written: this pass researched neither MD nor DO, and per this file's
+# sparse-by-design contract an unlisted row means UNRESEARCHED, which is the
+# true state for Medicine here.
+#
+# NOT WRITTEN AS A ROW, on purpose: the session's "point solutions vs. one
+# designed platform" passage. Read closely, it is a critique of how the market
+# bundles ("we are just going to provide all those point solutions in one
+# platform rather than focusing on is the design of that one platform") plus a
+# statement of Exxat's INTENT ("That is what we will try to do with that
+# platform") — it never states a deficiency in Exxat's own product. Turning it
+# into an Exxat gap row would be an over-read. It is also the one passage in
+# that file carrying a weakened evidentiary status (recovered from an
+# uncommitted working pass, never re-verified against the recording).
 last_updated: "2026-09-11"
-gaps: []
+gaps:
+  - id: "pharmacy-exam-management-module"
+    domain: "Pharmacy"
+    gap: "No exam module of Exxat's own — pharmacy programs buy ExamSoft next to CORE, and Prism's counterpart is still pre-launch"
+    kind: "missing-module"
+    prism_feature_ref: "Exam Management"
+    prism_status: "roadmap"
+    build_shape: "build"
+    blocks: ["deal", "expansion"]
+    severity: "material"
+    demand_evidence: "expert-assertion"
+    element_ids:
+      - "Standard 7, Key Element 7.3.d"
+    competitor_has_it:
+      - competitor_slug: "examsoft"
+        source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+    audience: ["discipline-pharmacy", "role-dean"]
+    # NOT "2027-01". The session's exact words are "a January soft launch" — a
+    # month with no year — and capability-map.yaml puts the Exam Management
+    # pillar at Q2 2027 with `roadmap.source_id: null`. Neither is a cited
+    # roadmap document stating a date, and the two are not reconciled, so this
+    # file asserts no target rather than picking one.
+    target: null
+    # Worth carrying into scoping, from the same session: Vishaka widens the
+    # target herself — "we are thinking we are building a product to compete
+    # with ExamSoft, but we are actually competing with both LMS and ExamSoft",
+    # because Canvas and Brightspace have both added assessment building and AI.
+    detail: >
+      The session names "CORE, ExamSoft, and Influx" as the stack seen "again and
+      again in pharmacy programs", and puts Exxat's own ExamSoft counterpart at "a
+      January soft launch" — a month, no year. capability-map.yaml separately puts
+      the Exam Management pillar at Q2 2027. The two are unreconciled.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Sections 'The ExamSoft + CORE + Influx stack' and 'LMS integration'"
+
+  - id: "pharmacy-curriculum-assessment-link"
+    domain: "Pharmacy"
+    gap: "Curriculum maps and assessment maps stay disconnected — programs build each separately and never link the two"
+    kind: "wrong-depth"
+    prism_feature_ref: "Curriculum Mapping"
+    prism_status: "shipped"
+    build_shape: "build"
+    blocks: ["deal", "expansion"]
+    severity: "material"
+    demand_evidence: "expert-assertion"
+    element_ids:
+      - "Standard 2, Key Element 2.2.d"
+      - "Standard 7, Key Element 7.3.d"
+    competitor_has_it: []
+    audience: ["discipline-pharmacy", "role-dean"]
+    target: null
+    # SCOPE CAUTION, stated because the session does not state it: Vishaka
+    # describes this as how PROGRAMS work ("the faculty would create a
+    # curriculum separately"), not as a thing Prism cannot do. No claim that
+    # Curriculum Mapping lacks the link is made here or should be read in.
+    # The adjacent fact, same session: the didactic half of the data only just
+    # arrived. The September 12, 2026 release adds free bulk import of ExamSoft
+    # reports for programs already on Prism for clinical management — Vishaka
+    # calls it the first time "we will have the entire student data from
+    # didactic and clinical on our platform."
+    detail: >
+      Verbatim: "they curriculum map and assessment map are disconnected. So the
+      faculty would create a curriculum separately. They would create assessment
+      separately. They're not really linking their curriculum with their
+      assessments." Said of programs; no claim about Prism, and none to be read in.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Sections 'The product vision Vishaka would sell' and 'The ExamSoft + CORE + Influx stack'"
+
+  - id: "pharmacy-ai-insights-not-reports"
+    domain: "Pharmacy"
+    gap: "Reports and dashboards where the ask is AI-aided recommendations that name the gap and the fix"
+    kind: "missing-module"
+    # No core_ring pillar owns this. The capability it describes sits in
+    # capability-map.yaml's intelligence_layer, which is not in the six-pillar
+    # set prism_feature_ref may name — hence null / "absent", which is the
+    # honest pair, not a missing lookup.
+    prism_feature_ref: null
+    prism_status: "absent"
+    build_shape: "build"
+    blocks: ["deal", "expansion"]
+    severity: "material"
+    demand_evidence: "expert-assertion"
+    element_ids:
+      - "Standard 7, Key Element 7.5.a"
+    competitor_has_it:
+      - competitor_slug: "influx"
+        source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+    audience: ["discipline-pharmacy", "role-dean"]
+    target: null
+    # Her worked example: "we noticed you're spending fourteen hours on geriatric
+    # drugs, and that's an over coverage… you potentially can remove five hours
+    # from there so that you can make room for [inserting] an IPEC competency
+    # that is a gap." The session says this lives in a presentation being
+    # prepared for Cohere and was shown at a June town hall — roadmap, not shipped.
+    detail: >
+      Verbatim: "we don't want to give them reports and dashboards. Everyone is doing
+      that. We wanna give them some AI aided insights telling them exactly where the
+      gap is, giving a recommendation that this is how you can fix the gap." Influx
+      sells this shape of insight over CORE and ExamSoft data today.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Sections 'The product vision Vishaka would sell (AI insights, not reports)' and 'The ExamSoft + CORE + Influx stack'"
+
+  - id: "pharmacy-lms-breadth-beyond-canvas"
+    domain: "Pharmacy"
+    gap: "LMS integration reaches Canvas only — Brightspace and Blackboard programs have no date to be given"
+    kind: "shallow-integration"
+    # LMS/SIS Integration lives in capability-map.yaml's exxat_advantage_layer,
+    # not in the six core_ring pillars, so there is no pillar to name.
+    prism_feature_ref: null
+    prism_status: "absent"
+    build_shape: "build"
+    blocks: ["deal"]
+    # Material, not blocking: the session gates a deal on LMS integration in
+    # general, but Canvas is already shipped, so the gap as scoped here (the
+    # other two LMSs) blocks only a non-Canvas program.
+    severity: "material"
+    demand_evidence: "expert-assertion"
+    element_ids: []
+    competitor_has_it: []
+    audience: ["discipline-pharmacy", "role-dean"]
+    # The session states no date or quarter for Brightspace or Blackboard, and
+    # capability-map.yaml explicitly asserts none either. Nothing to put here.
+    target: null
+    # Why it is the driver, per the session: it removes manual transfer of grades
+    # out of the clinical management system into the LMS, which is the program's
+    # official student communication channel. The session's recommendation is to
+    # reopen the channel with every lead who asked for LMS integration.
+    detail: >
+      The session calls LMS integration the second biggest pharmacy buying driver
+      and records a dean telling Vishaka "once you have LMS integration, come back
+      to me and talk to me." Rollout status, carried in capability-map.yaml's
+      LMS/SIS item: Canvas shipped, Brightspace next, then Blackboard, no dates.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'LMS integration'"
+
+  - id: "pharmacy-gtm-targeting-dce-only"
+    domain: "Pharmacy"
+    gap: "Prospecting reaches directors of clinical education only, so the curriculum story lands on the wrong buyer"
+    kind: "non-product"
+    prism_feature_ref: null
+    prism_status: "absent"
+    # Not engineering: curated per-school contact lists plus role-specific
+    # assets on top of capability that already ships.
+    build_shape: "configure"
+    blocks: ["deal", "expansion"]
+    severity: "material"
+    demand_evidence: "expert-assertion"
+    element_ids: []
+    competitor_has_it: []
+    audience: ["role-dean", "discipline-pharmacy"]
+    target: null
+    # The fix the session names is role-split assets off the same product: a
+    # clinical leader gets the placement story, while a program director or dean
+    # of assessment gets competency tracking and the ExamSoft import. The missing
+    # input is a per-school list of dean, director, curriculum chair and
+    # assessment chair — Manoj is named as doing the org-structure sweep.
+    detail: >
+      Verbatim: "most of our target prospects is the DCEs, which is director of
+      clinical education… Because the [DCE] doesn't care about curriculum mapping
+      because it's not part of their responsibility… we are barking against the
+      wrong tree." The competency-tracking pitch has no one to go to.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'GTM targeting — the wrong tree'"
+
+  - id: "do-placement-scheduling-logic-depth"
+    domain: "DO"
+    gap: "Placement-logic and scheduling requirements in DO RFPs run deeper than Exxat brings — a named top loss reason"
+    kind: "wrong-depth"
+    prism_feature_ref: "Clinical & Experiential Education"
+    prism_status: "shipped"
+    build_shape: "build"
+    blocks: ["deal"]
+    # Blocking: the session attaches this to RFPs Exxat actually lost, not to a
+    # wish list. The recollection-not-record weakness is carried by
+    # demand_evidence, which stays at expert-assertion.
+    severity: "blocking"
+    demand_evidence: "expert-assertion"
+    element_ids: []
+    competitor_has_it: []
+    audience: ["discipline-do"]
+    target: null
+    detail: >
+      "The RFPs Exxat lost were mainly MD and DO. Top reasons Vishaka remembers:
+      very detailed placement-logic and scheduling requirements." No RFP or win/loss
+      record sits behind that in the repo — the session says Kunal and Wilson hold
+      the detail and nobody has retrieved it. Which logic is unresearched.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'RFP losses (MD/DO, not pharmacy)'"
+
+  - id: "do-exxat-one-prism-integration-depth"
+    domain: "DO"
+    gap: "The Exxat One to Prism connection is not deep enough to carry a one-platform claim in a DO RFP"
+    kind: "shallow-integration"
+    prism_feature_ref: "Clinical & Experiential Education"
+    prism_status: "shipped"
+    build_shape: "build"
+    blocks: ["deal"]
+    severity: "blocking"
+    demand_evidence: "expert-assertion"
+    element_ids: []
+    competitor_has_it: []
+    audience: ["discipline-do"]
+    target: null
+    detail: >
+      Same lost-RFP list: Vishaka names "the connection between Exxat One and Exxat
+      Prism not being deep enough" among the top reasons. capability-map.yaml's
+      "Exxat One Linking + Schedule Processing" feature carries it as a depth caveat
+      on a shipped integration — mechanics there, deal impact here.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'RFP losses (MD/DO, not pharmacy)'"
+
+  - id: "do-health-system-integration"
+    domain: "DO"
+    gap: "University-health-system integration expectations in DO RFPs, UPMC named, with no Prism pillar that owns them"
+    kind: "shallow-integration"
+    # capability-map.yaml's only integration story is the LMS/SIS file feeds in
+    # exxat_advantage_layer, and that is SIS/LMS, not a health system. No core
+    # pillar owns this, so null / "absent".
+    prism_feature_ref: null
+    prism_status: "absent"
+    build_shape: "build"
+    blocks: ["deal"]
+    severity: "blocking"
+    demand_evidence: "expert-assertion"
+    element_ids: []
+    competitor_has_it: []
+    audience: ["discipline-do"]
+    target: null
+    # Context from capability-map.yaml, not from the session: Exxat's confirmed
+    # integration mechanism today is Exxat-managed, SSH-delivered CSV file feeds
+    # with no client-facing API on offer — relevant to what a health system's IT
+    # organisation is likely to expect, but not a claim the session makes.
+    detail: >
+      The third of the three top reasons the session gives for the lost MD/DO RFPs:
+      "university-health-system integration expectations (UPMC named)". What the
+      expectation actually covers — onboarding, credentialing, scheduling feeds or
+      something else — is not in the session and is unresearched here.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'RFP losses (MD/DO, not pharmacy)'"
