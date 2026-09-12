@@ -509,8 +509,8 @@ exxat_cells:
     rationale: >
       The mechanism ships and is deep: AI-assisted mapping with human approval, heatmap
       and unmapped reports, accreditor-formatted exports. What pharmacy lacks is
-      content, not capability — the pre-loaded standard sets capability-map.yaml names
-      are ARC-PA, ACOTE and AACN, and ACPE is not among them.
+      content, not capability — the pre-loaded standard sets Prism's capability map
+      names are ARC-PA, ACOTE and AACN, and ACPE is not among them.
     evidence_strength: "verified"
     sources:
       - source_id: "help-center-curriculum-accreditation-standards"
@@ -523,7 +523,7 @@ exxat_cells:
     rationale: >
       Two engines ship: the placement Forms/Evaluations taxonomy and Exxat Surveys, a
       general-purpose builder with 14 question types. Every validated instrument and
-      template capability-map.yaml names, though, is PT, OT, SLP or PA — no pharmacy
+      template Prism's capability map names, though, is PT, OT, SLP or PA — no pharmacy
       preceptor or IPPE/APPE instrument is listed.
     evidence_strength: "verified"
     sources:
@@ -535,12 +535,12 @@ exxat_cells:
     prism_feature_ref: "Exam Management"
     rating: "not-meeting"
     rationale: >
-      Nothing ships. capability-map.yaml carries this pillar as a bare roadmap entry
+      Nothing ships. Prism's capability map carries this pillar as a bare roadmap entry
       targeted Q2 2027 — no features, no notes, unlike every shipped pillar. The
       2026-09-04 domain-expert session puts an Exxat counterpart to ExamSoft at "a January
       soft launch", a month with no year.
     evidence_strength: "directional"
-    evidence_note: "The soft-launch timing is one domain expert's recollection, and capability-map.yaml's roadmap object for this pillar carries source_id: null."
+    evidence_note: "The soft-launch timing is one domain expert's recollection, and Prism's own roadmap entry for this pillar cites no source for its Q2 2027 target."
     sources:
       - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
         locator: "Sections 'The ExamSoft + CORE + Influx stack' and 'LMS integration'"
@@ -551,8 +551,8 @@ exxat_cells:
     prism_feature_ref: "Accreditation Management"
     rating: "not-meeting"
     rationale: >
-      Not shipped; Exxat's roadmap targets Q3 2027. Far from zero, though:
-      capability-map.yaml documents standard-mapped guides for seven accreditors across
+      Not shipped; Exxat's roadmap targets Q3 2027. Far from zero, though: Prism's
+      capability map documents standard-mapped guides for seven accreditors across
       five disciplines — ACEN, CCNE, COA, ACOTE, ARC-PA, CAPTE, CSWE — plus SLP's
       KASA/ASHA and nursing's NBCRNA reports. ACPE is only a build target.
     evidence_strength: "verified"
