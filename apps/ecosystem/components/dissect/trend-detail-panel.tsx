@@ -10,6 +10,7 @@ import { FieldBlock } from "@/components/field-block";
 import { CompetitorLogo } from "@/components/competitor-logo";
 import { SourceList } from "@/components/source-list";
 import type { TrendNodeDetail } from "@/lib/dissection-node-detail";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 
 // One market trend, as content/trends/{domain}.yaml records it.
 //
@@ -95,7 +96,7 @@ export function TrendDetailPanel({
       <Collapsible value="whats-happening" trigger="What's happening">
         <Stack gap={3}>
           {detail.detail ? (
-            <FieldBlock text={detail.detail} maxLines={6} />
+            <FieldBlock text={stripFileCitations(detail.detail)} maxLines={6} />
           ) : (
             <Text type="supporting" size="sm" color="secondary" maxLines={3} style={{ fontStyle: "italic" }}>
               This trend is recorded as a headline with no detail paragraph behind it yet.

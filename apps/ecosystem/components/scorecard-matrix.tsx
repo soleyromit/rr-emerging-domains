@@ -8,6 +8,7 @@ import { ComparisonMatrix } from "@/components/comparison-matrix";
 import { FieldBlock } from "@/components/field-block";
 import { Takeaway } from "@/components/takeaway";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import type { ScorecardCriterion } from "@/lib/content";
 
 // The scorecard's "Scoring detail" grid, expressed as the app's generic
@@ -108,7 +109,9 @@ export function ScorecardMatrix({
         return {
           rowId: c.name,
           colId: d,
-          value: { score, rationale: c.rationale?.[d], weight, contribution: weight * score },
+          // Sanitized once here, where the cell is built, so every surface that reads
+          // value.rationale below (the cell, the drill-down, the compare column) is clean.
+          value: { score, rationale: stripFileCitations(c.rationale?.[d]), weight, contribution: weight * score },
         };
       })
   );
@@ -211,7 +214,11 @@ export function ScorecardMatrix({
                             : `${score}/5 · contributes ${(weight * score).toFixed(2)}`}
                         </Text>
                       </Stack>
-                      <FieldBlock text={criterion?.rationale?.[d]} type="supporting" maxLines={2} />
+                      <FieldBlock
+                        text={stripFileCitations(criterion?.rationale?.[d])}
+                        type="supporting"
+                        maxLines={2}
+                      />
                     </Stack>
                   );
                 })}

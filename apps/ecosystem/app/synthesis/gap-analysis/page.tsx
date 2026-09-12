@@ -15,6 +15,7 @@ import { DisciplineChip } from "@/components/discipline-chip";
 import { IconTile } from "@/components/status-pill";
 import { FitDistributionChart } from "@/components/charts/fit-distribution-chart";
 import { readMarkdownFile, listAccreditation } from "@/lib/content";
+import { stripFileCitationsInMarkdown } from "@/lib/strip-file-citations";
 import {
   splitSectionsAtLevel,
   getPreamble,
@@ -83,7 +84,9 @@ function parsePattern(section: MarkdownSection): CrossDomainPattern {
 }
 
 export default function GapAnalysisPage() {
-  const content = readMarkdownFile("synthesis/gap-analysis.md");
+  // Humanized once, here, before the document is split into sections — every Markdown
+  // block on this page reads from `content`, so one call upstream covers all of them.
+  const content = stripFileCitationsInMarkdown(readMarkdownFile("synthesis/gap-analysis.md"));
 
   if (!content) {
     return (
@@ -172,7 +175,11 @@ export default function GapAnalysisPage() {
             <Heading level={2}>Prism fit distribution, by accreditor</Heading>
             <Text type="supporting">
               Counts derived from the <code>prism_fit</code> field on every entry in{" "}
-              {EXPANSION_ACCREDITORS.map((s) => `${s}.yaml`).join(", ")} — the same source as §0&rsquo;s table.
+              {/* The accreditors by name, not by filename: this sentence was building
+                  "coca.yaml, lcme.yaml, ..." in the app itself — the one place a raw
+                  filename reached the screen without any content field being involved. */}
+              {EXPANSION_ACCREDITORS.map((s) => s.toUpperCase()).join(", ")} — the same source as §0&rsquo;s
+              table.
             </Text>
             <FitDistributionChart docs={docs} />
           </Stack>

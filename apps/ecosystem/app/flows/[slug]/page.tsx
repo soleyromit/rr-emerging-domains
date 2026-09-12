@@ -10,6 +10,7 @@ import { PageHeader } from "@/components/page-header";
 import { FlowDetail } from "@/components/flow-detail";
 import { FlowDiagram, buildFlowDiagramSteps } from "@/components/charts/flow-diagram";
 import { SentenceList } from "@/components/sentence-list";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import { DisciplineChip } from "@/components/discipline-chip";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
 import { listFlows, getFlowBySlug, getJourneyContextForFlow } from "@/lib/content";
@@ -48,7 +49,7 @@ export default async function FlowDetailPage({ params }: { params: Promise<{ slu
                 : "Element-level flow"
             }
             title={flow.flow_name}
-            description={flow.persona ? `Persona: ${flow.persona}` : undefined}
+            description={flow.persona ? `Persona: ${stripFileCitations(flow.persona)}` : undefined}
           />
           {journeyContext?.journey.domain_scope?.length ? (
             <Stack direction="horizontal" gap={1.5} wrap="wrap">
@@ -91,7 +92,11 @@ export default async function FlowDetailPage({ params }: { params: Promise<{ slu
       {flow.sources?.length ? (
         <Section padding={6}>
           <Collapsible defaultIsOpen={false} trigger={`Sources (${flow.sources.length})`}>
-            <SentenceList items={flow.sources} maxLines={2} fallbackIcon="copy" />
+            <SentenceList
+              items={flow.sources.map((s) => stripFileCitations(s) ?? s)}
+              maxLines={2}
+              fallbackIcon="copy"
+            />
           </Collapsible>
         </Section>
       ) : null}

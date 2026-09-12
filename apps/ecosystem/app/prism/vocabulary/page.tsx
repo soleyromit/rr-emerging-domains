@@ -99,7 +99,7 @@ export default function PrismVocabularyPage() {
       <Section padding={6}>
         <Text type="supporting" size="xsm" color="secondary">
           Sourced from Prism&rsquo;s own capability map and the placement-allocation stage of the rotation-lifecycle
-          research (content/prism/capability-map.yaml, content/journeys/rotation-lifecycle.yaml). Cells marked
+          research. Cells marked
           &ldquo;Not confirmed&rdquo; are honest gaps, not a claim to make on a call.
         </Text>
       </Section>

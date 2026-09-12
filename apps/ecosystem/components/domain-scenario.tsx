@@ -4,6 +4,7 @@ import { Icon } from "@astryxdesign/core/Icon";
 import { Text } from "@astryxdesign/core/Text";
 import { Link } from "@astryxdesign/core/Link";
 import type { DisciplineJourneyStage } from "@/lib/content";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 
 // Closes a gap exploration found: content/journeys/*.yaml has genuinely deep,
 // sourced narrative for every one of the 4 expansion domains (discipline_notes
@@ -54,11 +55,11 @@ export function DomainScenario({
                 </Text>
                 {stage.headline ? (
                   <Text type="body" size="xsm" weight="semibold" maxLines={3}>
-                    {stage.headline}
+                    {stripFileCitations(stage.headline)}
                   </Text>
                 ) : null}
                 <Text type="supporting" size="xsm" maxLines={5}>
-                  {stage.disciplineDetail}
+                  {stripFileCitations(stage.disciplineDetail)}
                 </Text>
                 {stage.flowSlug && stage.flowName ? (
                   <Link href={`/flows/${stage.flowSlug}`} color="accent" hasUnderline>

@@ -14,6 +14,7 @@ import { Takeaway } from "@/components/takeaway";
 import { IconTile } from "@/components/status-pill";
 import { VerdictDistributionChart } from "@/components/charts/verdict-distribution-chart";
 import { readMarkdownFile, getScorecard, computeWeightedTotals } from "@/lib/content";
+import { stripFileCitationsInMarkdown } from "@/lib/strip-file-citations";
 import {
   splitSectionsAtLevel,
   getPreamble,
@@ -101,7 +102,7 @@ function countOrderedItems(section?: MarkdownSection): number {
 }
 
 export default function PositioningPage() {
-  const content = readMarkdownFile("synthesis/prism-positioning.md");
+  const content = stripFileCitationsInMarkdown(readMarkdownFile("synthesis/prism-positioning.md"));
 
   if (!content) {
     return (

@@ -4,6 +4,7 @@ import { Blockquote } from "@astryxdesign/core/Blockquote";
 import { Divider } from "@astryxdesign/core/Divider";
 import { DepthBadge } from "@/components/fit-badge";
 import { SourceLine } from "@/components/source-line";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import type { CompetitorFeature } from "@/lib/content";
 
 // evidence (245-570 chars) and source are 100% populated across every
@@ -30,13 +31,13 @@ export function CompetitorFeatureDossier({ features }: { features: CompetitorFea
             // DENSITY-OK: dedicated competitor detail page — capability text is the
             // page's own content, not a compact table preview
             <Text type="body" size="sm">
-              {f.competitor_capability}
+              {stripFileCitations(f.competitor_capability)}
             </Text>
           ) : null}
           {f.evidence ? (
             <Blockquote cite={<SourceLine source={f.source} />}>
               <Text type="supporting" size="sm">
-                {f.evidence}
+                {stripFileCitations(f.evidence)}
               </Text>
             </Blockquote>
           ) : null}

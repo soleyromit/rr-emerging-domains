@@ -3,6 +3,7 @@ import {
   type DissectionGraph,
   type DissectionNode,
 } from "@/lib/dissection-graph";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import {
   getCapabilityMap,
   getCompetitor,
@@ -238,7 +239,7 @@ function trendDetail(node: DissectionNode, domain: string): TrendNodeDetail {
     type: "trend",
     id: node.key,
     trend: t?.trend ?? node.label,
-    detail: t?.detail,
+    detail: stripFileCitations(t?.detail),
     exxatStatus: t?.exxat_status ?? "unknown",
     exxatRef: t?.exxat_ref,
     addressedBy: (t?.addressedByCompetitors ?? []).map((r) => ({

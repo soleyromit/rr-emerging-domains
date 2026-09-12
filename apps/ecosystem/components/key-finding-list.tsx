@@ -43,7 +43,9 @@ export function KeyFindingList({
         <ListItem
           key={i}
           startContent={<DisciplineChip subject={f.subject} />}
-          label={f.headline}
+          // headline needs the same treatment as detail: it is the same author's prose,
+          // and it cites files just as freely — it was simply the half nobody wrapped.
+          label={stripFileCitations(f.headline)}
           description={stripFileCitations(f.detail)}
           endContent={
             f.severity ? (

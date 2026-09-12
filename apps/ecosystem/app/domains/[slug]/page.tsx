@@ -15,7 +15,7 @@ import { ClinicalEducationTimeline, type ClinicalEducationTimelineStage } from "
 import { DomainScenario } from "@/components/domain-scenario";
 import { FieldBlock } from "@/components/field-block";
 import { SentenceList } from "@/components/sentence-list";
-import { humanizeSourceRef } from "@/lib/strip-file-citations";
+import { humanizeSourceRef, stripFileCitations } from "@/lib/strip-file-citations";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
 import {
   getAccreditorTiers,
@@ -263,12 +263,14 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
                 </Text>
               }
             >
-              <Text type="body">{domainProfile.clinical_education_shape}</Text>
+              <Text type="body">{stripFileCitations(domainProfile.clinical_education_shape)}</Text>
             </Collapsible>
             {domainProfile.market ? (
               <MetadataList columns={2}>
                 <MetadataListItem label="Programs">{domainProfile.market.program_count}</MetadataListItem>
-                <MetadataListItem label="Trend">{domainProfile.market.program_count_trend}</MetadataListItem>
+                <MetadataListItem label="Trend">
+                  {stripFileCitations(domainProfile.market.program_count_trend)}
+                </MetadataListItem>
               </MetadataList>
             ) : null}
           </Stack>

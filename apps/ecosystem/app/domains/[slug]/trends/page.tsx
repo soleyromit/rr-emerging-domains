@@ -16,6 +16,7 @@ import { CompetitorLogo } from "@/components/competitor-logo";
 import { Link } from "@astryxdesign/core/Link";
 import { getAccreditorTiers, getTrendsForDomain, type ResolvedTrendEntry, type KeyFinding } from "@/lib/content";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import { humanizeCompetitorSlug } from "@/lib/competitor-meta";
 import { dissectNodeHref, dissectionNodeId, dissectionNodeIds } from "@/lib/dissection-links";
 
@@ -138,7 +139,7 @@ export default async function DomainTrendsPage({ params }: { params: Promise<{ s
                     </Stack>
                   </Stack>
 
-                  <FieldBlock text={t.detail} maxLines={4} />
+                  <FieldBlock text={stripFileCitations(t.detail)} maxLines={4} />
 
                   {t.addressedByCompetitors.length ? (
                     <Stack gap={1.5}>

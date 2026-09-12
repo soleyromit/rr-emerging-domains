@@ -5,6 +5,7 @@ import { Text } from "@astryxdesign/core/Text";
 import { Collapsible, CollapsibleGroup } from "@astryxdesign/core/Collapsible";
 import { ComparisonMatrix } from "@/components/comparison-matrix";
 import { FieldBlock } from "@/components/field-block";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import { SourceList } from "@/components/source-list";
 import { Takeaway } from "@/components/takeaway";
 import {
@@ -98,7 +99,11 @@ function ratingStatus(rating: string): "success" | "warning" | "error" | "info" 
 function CellDetail({ value, sourcesLabel }: { value: MatrixCellValue; sourcesLabel: string }) {
   return (
     <Stack gap={3}>
-      <FieldBlock label="Rationale" text={value.rationale ?? "No rationale recorded for this cell."} maxLines={4} />
+      <FieldBlock
+        label="Rationale"
+        text={stripFileCitations(value.rationale) ?? "No rationale recorded for this cell."}
+        maxLines={4}
+      />
       {value.featureRef ? (
         <Stack gap={1}>
           <Text type="label" color="secondary" size="xsm">
@@ -238,7 +243,7 @@ export function DissectionMatrix({
             <DirectionalBadge evidenceStrength={value.evidenceStrength} />
           </Stack>
           <Text type="supporting" maxLines={3}>
-            {value.rationale}
+            {stripFileCitations(value.rationale)}
           </Text>
         </Stack>
       )}
@@ -319,7 +324,13 @@ export function DissectionMatrix({
                       </Text>
                     )}
                   </Stack>
-                  {entry.value ? <FieldBlock text={entry.value.rationale} type="supporting" maxLines={2} /> : null}
+                  {entry.value ? (
+                    <FieldBlock
+                      text={stripFileCitations(entry.value.rationale)}
+                      type="supporting"
+                      maxLines={2}
+                    />
+                  ) : null}
                 </Stack>
               ))}
             </Stack>

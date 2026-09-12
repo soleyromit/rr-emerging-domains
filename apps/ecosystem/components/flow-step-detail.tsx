@@ -38,9 +38,9 @@ function FlowElementsTable({ elements }: { elements: FlowElement[] }) {
           renderCell: (row) => (
             <Stack gap={0.5}>
               <Text type="body" weight="semibold">
-                {row.element}
+                {stripFileCitations(row.element)}
               </Text>
-              {row.type ? <Text type="supporting">{row.type}</Text> : null}
+              {row.type ? <Text type="supporting">{stripFileCitations(row.type)}</Text> : null}
             </Stack>
           ),
         },
@@ -73,7 +73,7 @@ function FlowElementsTable({ elements }: { elements: FlowElement[] }) {
               <GapSeverityBadge severity={row.gap_severity} />
               <FieldBlock
                 id={`${row._id}-gap-note`}
-                text={row.gap_note}
+                text={stripFileCitations(row.gap_note)}
                 type="supporting"
                 triggerLabel="Read full note"
               />
@@ -125,7 +125,7 @@ export function FlowStepDetail({ step, index }: { step: FlowStep; index: number 
         <Stack gap={3} paddingBlockStart={2}>
           {step.action ? (
             <Text type="supporting" maxLines={3}>
-              {step.action}
+              {stripFileCitations(step.action)}
             </Text>
           ) : null}
           {step.confirmed_by ? (
@@ -139,7 +139,7 @@ export function FlowStepDetail({ step, index }: { step: FlowStep; index: number 
               }
             >
               <Text type="supporting" size="xsm">
-                {step.confirmed_by}
+                {stripFileCitations(step.confirmed_by)}
               </Text>
             </Collapsible>
           ) : null}

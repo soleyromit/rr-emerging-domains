@@ -11,6 +11,7 @@ import { DisciplineChip } from "@/components/discipline-chip";
 import { CompetitorDepthChart } from "@/components/charts/competitor-depth-chart";
 import { CompetitorScanTable } from "@/components/competitor-scan-table";
 import { leadSentence } from "@/lib/text";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import { listCompetitors } from "@/lib/content";
 
 export default function CompetitorsPage() {
@@ -71,9 +72,9 @@ export default function CompetitorsPage() {
             <Grid columns={{ minWidth: 320 }} gap={4}>
               {competitors.map((c) => {
                 const signal = c.exxat_opportunity
-                  ? leadSentence(c.exxat_opportunity)
+                  ? stripFileCitations(leadSentence(c.exxat_opportunity))
                   : c.strengths?.[0]
-                    ? leadSentence(c.strengths[0].claim)
+                    ? stripFileCitations(leadSentence(c.strengths[0].claim))
                     : undefined;
                 return (
                   <ClickableCard key={c.slug} href={`/competitors/${c.slug}`} label={c.competitor}>

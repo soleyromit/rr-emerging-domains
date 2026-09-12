@@ -18,6 +18,7 @@
 //   objections — returned separately as `objectionAddendum`, never dropped.
 
 import { readMarkdownFile } from "./content";
+import { stripFileCitationsInMarkdown } from "./strip-file-citations";
 import { splitSectionsAtLevel, getPreamble, type MarkdownSection } from "./markdown-sections";
 
 export interface SalesBriefOpening {
@@ -184,7 +185,10 @@ const SECTION_C_PREFIX = "C.";
 const SECTION_D_PREFIX = "D.";
 
 export function getSalesBrief(slug: string): SalesBrief | null {
-  const content = readMarkdownFile(`synthesis/${slug}/SALES.md`);
+  // The win tab is the most reader-facing surface in the app — a salesperson reads it
+  // on a call. Humanize the brief once here, before it is split into sections, so no
+  // section of it can render a research filename at a customer.
+  const content = stripFileCitationsInMarkdown(readMarkdownFile(`synthesis/${slug}/SALES.md`));
   if (!content) return null;
 
   const preamble = getPreamble(content);

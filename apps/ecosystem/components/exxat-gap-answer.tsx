@@ -8,6 +8,7 @@ import { Divider } from "@astryxdesign/core/Divider";
 import { ExxatComplianceBadge, StandardsRatingBadge, ThreatBadge } from "@/components/fit-badge";
 import { CompetitorLogo } from "@/components/competitor-logo";
 import { SourceList } from "@/components/source-list";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import type {
   StandardsCrosswalkForDomain,
   StandardsCrosswalkCompetitorCell,
@@ -127,7 +128,7 @@ export function ExxatGapAnswer({
                   </Text>
                   {row.exxat_compliance_rationale || row.gap_notes ? (
                     <Text type="supporting" size="sm" color="secondary">
-                      {row.exxat_compliance_rationale || row.gap_notes}
+                      {stripFileCitations(row.exxat_compliance_rationale || row.gap_notes)}
                     </Text>
                   ) : null}
 
@@ -167,7 +168,7 @@ export function ExxatGapAnswer({
                               maxLines={3}
                               style={{ paddingLeft: 28 }}
                             >
-                              {c.rationale}
+                              {stripFileCitations(c.rationale)}
                             </Text>
                           ) : null}
                           {c.sources.length ? (
@@ -231,7 +232,11 @@ export function ExxatGapAnswer({
                       </Text>
                     </Stack>
                   }
-                  description={<Text type="supporting" size="sm" maxLines={2}>{c.rationale}</Text>}
+                  description={
+                    <Text type="supporting" size="sm" maxLines={2}>
+                      {stripFileCitations(c.rationale)}
+                    </Text>
+                  }
                   endContent={<ThreatBadge threat={c.threat} />}
                 />
               ))}

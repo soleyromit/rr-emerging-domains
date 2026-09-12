@@ -9,6 +9,7 @@ import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList"
 import { PageHeader } from "@/components/page-header";
 import { ProseItemList } from "@/components/prose-item-list";
 import { SentenceList } from "@/components/sentence-list";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import { ComparisonCardGrid } from "@/components/comparison-card-grid";
 import { DisciplineChip } from "@/components/discipline-chip";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
@@ -135,7 +136,11 @@ export default async function RolePersonaPage({ params }: { params: Promise<{ sl
       {role.sources?.length ? (
         <Section padding={6}>
           <Collapsible defaultIsOpen={false} trigger={`Sources (${role.sources.length})`}>
-            <SentenceList items={role.sources} maxLines={2} fallbackIcon="copy" />
+            <SentenceList
+              items={role.sources.map((s) => stripFileCitations(s) ?? s)}
+              maxLines={2}
+              fallbackIcon="copy"
+            />
           </Collapsible>
         </Section>
       ) : null}

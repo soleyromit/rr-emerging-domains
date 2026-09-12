@@ -16,10 +16,11 @@ import { GlossaryTabs } from "@/components/glossary-tabs";
 import { RosettaCards } from "@/components/rosetta-cards";
 import { VocabularyNavProvider } from "@/components/vocabulary-nav-context";
 import { readMarkdownFile, listAccreditation } from "@/lib/content";
+import { stripFileCitationsInMarkdown } from "@/lib/strip-file-citations";
 import { parseGlossary, buildRosettaTermIndex } from "@/lib/glossary";
 
 export default function VocabularyPage() {
-  const content = readMarkdownFile("synthesis/vocabulary-glossary.md");
+  const content = stripFileCitationsInMarkdown(readMarkdownFile("synthesis/vocabulary-glossary.md"));
 
   if (!content) {
     return (

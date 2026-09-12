@@ -28,6 +28,7 @@ import {
 } from "@/lib/content";
 import { vendorComparisonStats } from "@/lib/vendor-comparison";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 
 // The Dissection tab: one domain answered against the standing six-question
 // framework in content/dissection/<slug>.yaml, plus the evidence behind each
@@ -266,7 +267,7 @@ export default async function DomainDissectPage({
                   // claim says why the cells are missing, and a paraphrase here
                   // would be this page asserting something no content file states.
                   description={
-                    featureComparisonQuestion?.gap_note ??
+                    stripFileCitations(featureComparisonQuestion?.gap_note) ??
                     `No capability has been rated for ${entry.domain} in the feature-comparison lens yet.`
                   }
                 />

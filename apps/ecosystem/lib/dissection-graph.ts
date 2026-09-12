@@ -11,6 +11,7 @@ import {
   roleNameMatches,
   type DissectionManifest,
 } from "@/lib/content";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import {
   DISSECTION_EDGE_KINDS,
   DISSECTION_NODE_TYPES,
@@ -190,8 +191,14 @@ export function competitorScopeNote(
   const inScope = new Set(dissectionInScopeIncumbents(manifest).map((i) => i.competitor_slug));
   if (inScope.has(slug)) return undefined;
   const incumbent = manifest.incumbent_set.find((i) => i.competitor_slug === slug);
+  // Sanitize here, once, rather than at each render site: this string is consumed by the
+  // graph node's sublabel and by the Competitor detail panel's Takeaway, and a raw
+  // exclusion_reason ("...medhub.yaml's own domains_served is DO/MD only") would reach
+  // the screen through whichever of the two forgot to wrap it. One call upstream of the
+  // fork keeps them honest by construction.
+  const reason = stripFileCitations(incumbent?.exclusion_reason);
   return incumbent
-    ? `Not a target for ${domain}${incumbent.exclusion_reason ? ` — ${incumbent.exclusion_reason}` : ""}`
+    ? `Not a target for ${domain}${reason ? ` — ${reason}` : ""}`
     : "Not in this domain's incumbent set — rated here, but never named as a vendor to win against";
 }
 
@@ -312,7 +319,16 @@ export function buildDissectionGraph(domain: string, manifest: DissectionManifes
     let used = false;
     for (const ref of t.addressedByCompetitors) {
       const cid = competitorNode(ref.slug);
-      addEdge(b, "trend-competitor", addNode(b, "trend", t.id, t.trend, t.detail), cid, ref.capabilityRef);
+      // t.detail becomes the node's sublabel, which the drawing and the tree both render
+      // — the same "one builder, two render surfaces" shape as competitorScopeNote above,
+      // so it is sanitized here rather than at either of them.
+      addEdge(
+        b,
+        "trend-competitor",
+        addNode(b, "trend", t.id, t.trend, stripFileCitations(t.detail)),
+        cid,
+        ref.capabilityRef,
+      );
       used = true;
       // The competitor's OWN name for what addresses the trend. Where it resolves to a
       // core pillar this is a second, independent source for pillar-competitor — same
@@ -341,7 +357,7 @@ export function buildDissectionGraph(domain: string, manifest: DissectionManifes
         addEdge(
           b,
           "trend-pillar",
-          addNode(b, "trend", t.id, t.trend, t.detail),
+          addNode(b, "trend", t.id, t.trend, stripFileCitations(t.detail)),
           pillarNode(match.pillar),
           pillarEdgeLabel(match, t.exxat_ref),
         );

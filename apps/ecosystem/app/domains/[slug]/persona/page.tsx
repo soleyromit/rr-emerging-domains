@@ -12,6 +12,7 @@ import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { PersonaSpecList } from "@/components/persona-spec-list";
 import { ProseItemList } from "@/components/prose-item-list";
 import { SentenceList } from "@/components/sentence-list";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import { FieldBlock } from "@/components/field-block";
 import { getAccreditorTiers, getDomainHubData, resolveRelatedFlows } from "@/lib/content";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
@@ -34,7 +35,7 @@ export default async function DomainPersonaPage({ params }: { params: Promise<{ 
 
   const jtbdItems = (persona.jtbd ?? []).map((j) => ({
     primary: j.job,
-    secondary: j.evidence_or_rationale,
+    secondary: stripFileCitations(j.evidence_or_rationale),
     secondaryLabel: "Evidence / rationale",
     relatedFlows: resolveRelatedFlows(j.related_flows),
   }));
@@ -42,7 +43,7 @@ export default async function DomainPersonaPage({ params }: { params: Promise<{ 
   // Opening vignette: this persona's own first sentence, not new prose — a
   // scenario needs a hook line before the metric strip, and archetype_summary
   // already opens with one; pulling it out just gives it visual weight.
-  const vignette = persona.archetype_summary?.split(/(?<=[.!?])\s+/)[0];
+  const vignette = stripFileCitations(persona.archetype_summary)?.split(/(?<=[.!?])\s+/)[0];
 
   // The three sections below (pressure -> tools -> switching trigger) are a
   // causal sequence today rendered as unlinked cards; this connects them as
@@ -122,7 +123,7 @@ export default async function DomainPersonaPage({ params }: { params: Promise<{ 
             // full-bleed across the content area — full-length prose set that
             // wide is a wall of text no matter how good the writing is.
             <Text type="body" style={{ maxWidth: 720, lineHeight: 1.6 }}>
-              {persona.archetype_summary}
+              {stripFileCitations(persona.archetype_summary)}
             </Text>
           ) : null}
         </Stack>
@@ -188,7 +189,11 @@ export default async function DomainPersonaPage({ params }: { params: Promise<{ 
       {persona.sources?.length ? (
         <Section padding={6}>
           <Collapsible defaultIsOpen={false} trigger={`Sources (${persona.sources.length})`}>
-            <SentenceList items={persona.sources} maxLines={2} fallbackIcon="copy" />
+            <SentenceList
+              items={persona.sources.map((s) => stripFileCitations(s) ?? s)}
+              maxLines={2}
+              fallbackIcon="copy"
+            />
           </Collapsible>
         </Section>
       ) : null}

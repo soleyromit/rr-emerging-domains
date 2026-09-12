@@ -26,6 +26,7 @@ import { getSalesBrief } from "@/lib/sales-brief";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
 import { dissectNodeHref, dissectionNodeId, dissectionNodeIds } from "@/lib/dissection-links";
 import { extractLead } from "@/lib/markdown-sections";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 
 function bestRated(cells: StandardsCrosswalkCompetitorCell[]): StandardsCrosswalkCompetitorCell | undefined {
   const rank: Record<string, number> = { "fully-meeting": 3, "partially-meeting": 2, "not-meeting": 1 };
@@ -245,7 +246,7 @@ export default async function DomainWinPage({ params }: { params: Promise<{ slug
                       </Text>
                       {row.gap_notes ? (
                         <Text type="supporting" size="sm" maxLines={3}>
-                          {row.gap_notes}
+                          {stripFileCitations(row.gap_notes)}
                         </Text>
                       ) : null}
                       {best ? (

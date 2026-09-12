@@ -8,6 +8,7 @@ import { PageHeader } from "@/components/page-header";
 import { ScorecardChart } from "@/components/charts/scorecard-chart";
 import { ScorecardMatrix } from "@/components/scorecard-matrix";
 import { getScorecard, computeWeightedTotals, scorecardDomains, listDissectionDomains } from "@/lib/content";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 
 export default function ScorecardPage() {
   const scorecard = getScorecard();
@@ -61,7 +62,7 @@ export default function ScorecardPage() {
                       Confirmed GTM target{scorecard.actual_gtm_target_decided ? ` — ${scorecard.actual_gtm_target_decided}` : ""}
                     </Text>
                     <Text type="body" maxLines={6}>
-                      {scorecard.actual_gtm_target_rationale}
+                      {stripFileCitations(scorecard.actual_gtm_target_rationale)}
                     </Text>
                   </Stack>
                 </Card>
@@ -73,7 +74,7 @@ export default function ScorecardPage() {
                       {scorecard.actual_gtm_target ? "What the scorecard's own math says wins" : "Why it wins"}
                     </Text>
                     <Text type="body" maxLines={3}>
-                      {scorecard.rationale}
+                      {stripFileCitations(scorecard.rationale)}
                     </Text>
                   </Stack>
                 </Card>
