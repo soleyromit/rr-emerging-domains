@@ -63,6 +63,18 @@ export function vendorComparisonMaskedColumns(chart: VendorComparisonChart): str
     .map((entry) => entry.sheet2_label as string);
 }
 
+/**
+ * Resolves a masked column label (e.g. "Vendor 1") to the real vendor name the
+ * unmasking key gives it (e.g. "CastleBranch"). Exxat's own column already has
+ * `sheet2_label === sheet1_name`, so it round-trips unchanged. Falls back to the
+ * masked label itself for a column the unmasking key doesn't cover, so a caller
+ * never renders `undefined`.
+ */
+export function vendorComparisonRealName(chart: VendorComparisonChart, maskedLabel: string): string {
+  const entry = (chart.unmasking_key ?? []).find((e) => e.sheet2_label === maskedLabel);
+  return entry?.sheet1_name ?? maskedLabel;
+}
+
 /** All 81 rows, flattened in the source's own section order, each keeping its section. */
 export function vendorComparisonRows(chart: VendorComparisonChart): VendorComparisonFlatRow[] {
   return chart.sections.flatMap((section) =>

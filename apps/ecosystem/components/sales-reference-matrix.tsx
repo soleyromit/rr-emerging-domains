@@ -7,7 +7,7 @@ import { Link } from "@astryxdesign/core/Link";
 import { ComparisonMatrix } from "@/components/comparison-matrix";
 import { FieldBlock } from "@/components/field-block";
 import { ClaimedBadge } from "@/components/fit-badge";
-import { vendorComparisonRows, vendorComparisonStats } from "@/lib/vendor-comparison";
+import { vendorComparisonRealName, vendorComparisonRows, vendorComparisonStats } from "@/lib/vendor-comparison";
 import type { VendorComparisonChart } from "@/lib/content";
 
 // The quarantined half of the Dissection tab: content/sources/vendor-comparison-chart
@@ -59,13 +59,19 @@ export function SalesReferenceMatrix({
   // proportional(1), the same as dissection-matrix.tsx and scorecard-matrix.tsx.
   // Pixel widths pin the table wider than its scroll viewport; see the note in
   // dissection-matrix.tsx for the overflow that caused.
+  //
+  // Column `id`/`name` stay the RAW (possibly masked) label from the source data,
+  // since `cells` below keys each claim by that same label — only the HEADER text
+  // is resolved to the real vendor name, via the workbook's own unmasking key.
+  // Exxat's own column round-trips unchanged (its `sheet2_label` already equals
+  // its `sheet1_name`).
   const columnAxis = stats.columns.map((column) => ({
     id: column,
     name: column,
     header: (
       <Stack gap={0}>
         <Text type="body" weight="semibold" textWrap="wrap">
-          {column}
+          {vendorComparisonRealName(chart, column)}
         </Text>
         <Text type="supporting" size="xsm" color="secondary">
           {`marked on ${stats.claimedByColumn[column] ?? 0} of ${stats.rowCount}`}
@@ -87,12 +93,13 @@ export function SalesReferenceMatrix({
 
   const contradictionLine = `The workbook's two sheets disagree outright on ${stats.contradictionCount} of ${stats.rowCount} rows — in both directions, so the masked sheet is sometimes the generous one.`;
 
-  // "4 vendor columns, 3 of them masked" — NOT "4 masked vendors". Exxat's column is
-  // named; only its three competitors are hidden behind labels, which is exactly the
-  // asymmetry the chart is built on, and the artifact's own provenance note two lines
-  // above says "3 masked vendors". Both halves are counted, never asserted.
+  // "4 vendor columns, 3 of them named via the workbook's unmasking key" — NOT
+  // "4 masked vendors". Exxat's column was never masked; its three competitors were,
+  // in the raw workbook — this matrix resolves them to real names using the same
+  // workbook's own key rather than leaving a reader to guess at "Vendor 1". Both
+  // halves are counted, never asserted.
   const columnLine = stats.maskedColumns.length
-    ? `${stats.columns.length} vendor columns — Exxat's own, plus ${stats.maskedColumns.length} competitors the chart leaves masked behind labels`
+    ? `${stats.columns.length} vendor columns — Exxat's own, plus ${stats.maskedColumns.length} competitors the workbook itself masks, named here via its own unmasking key`
     : `${stats.columns.length} vendor columns`;
 
   return (
