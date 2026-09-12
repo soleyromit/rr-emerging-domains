@@ -1,0 +1,25 @@
+# TEMPLATE — one file per target domain (dentistry.yaml, do.yaml, medicine.yaml,
+# pharmacy.yaml). Level 2, siblings to content/feature-map/*.yaml: cites
+# content/domains/*.yaml (market context), content/prism/capability-map.yaml
+# (Exxat's own shipped/roadmap features), content/competitors/*.yaml, and
+# content/sources/registry.yaml — never asserts a new fact those don't support.
+#
+# "Trend" here means an active shift in how clinical education is run/assessed
+# in this domain (pedagogy, accreditation posture, or ops practice) — not a
+# market-sizing fact (that's content/domains/*.yaml's job) and not a
+# standard-by-standard compliance question (that's
+# content/lenses/standards-competitor-ratings.yaml's job). Sparse by design —
+# add a trend only once it's genuinely sourced, not to pad out a round number.
+domain: "Example Domain"   # Dentistry | DO | Medicine | Pharmacy
+trends:
+  - id: "trend-short-slug"
+    trend: "short headline"
+    detail: "what's changing and why it matters to clinical-education software, decomposed not essay, ~300/600 char ceiling"
+    exxat_status: "shipped | roadmap | unaddressed"   # cross-check content/prism/capability-map.yaml
+    exxat_ref: null   # capability-map.yaml pillar/feature name, if shipped or roadmap
+    addressed_by_competitors:   # optional
+      - competitor_slug: "..."
+        capability_ref: "which competitors/<slug>.yaml feature_teardown pillar/capability"
+        source_id: "..."   # resolves into content/sources/registry.yaml
+    sources: []   # flat list of content/sources/registry.yaml ids, e.g. ["doc-acpe-standards-2025-2024"]
+last_updated: "2026-09-09"

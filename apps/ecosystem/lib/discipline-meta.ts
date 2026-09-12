@@ -84,3 +84,20 @@ export function matchDisciplineMeta(subject: string): DisciplineMeta | null {
   const bySlugPrefix = ALL_DISCIPLINE_META.find((d) => norm.includes(d.slug));
   return bySlugPrefix ?? null;
 }
+
+// Same per-domain/discipline color as badgeVariant, but as a literal CSS
+// value — for the handful of spots (Plot chart fills, an inline accent
+// style) that can't take a Badge/Card `variant` prop. `--color-icon-*` is the
+// theme's most saturated token for a given hue (vs. the paler
+// `--color-background-*`), so a domain reads as clearly on a chart as it
+// does in its own DisciplineChip. Falls back to the neutral text color for
+// variants with no color token (neutral/info/success/warning/error aren't
+// used by DOMAINS/DISCIPLINES today, but stay safe if that ever changes).
+const COLOR_TOKEN_VARIANTS = new Set(["blue", "cyan", "green", "orange", "pink", "purple", "red", "teal", "yellow"]);
+export function disciplineColorVar(subject: string): string {
+  const meta = matchDisciplineMeta(subject);
+  const variant = meta?.badgeVariant;
+  return variant && COLOR_TOKEN_VARIANTS.has(variant)
+    ? `var(--color-icon-${variant})`
+    : "var(--color-text-secondary)";
+}

@@ -5,6 +5,7 @@ import { Grid } from "@astryxdesign/core/Grid";
 import { Stack } from "@astryxdesign/core/Stack";
 import { Text } from "@astryxdesign/core/Text";
 import { PlotFigure } from "./plot-figure";
+import { disciplineColorVar } from "@/lib/discipline-meta";
 import type { Scorecard } from "@/lib/content";
 
 export function ScorecardChart({ scorecard, totals }: { scorecard: Scorecard; totals: Record<string, number> }) {
@@ -32,10 +33,15 @@ export function ScorecardChart({ scorecard, totals }: { scorecard: Scorecard; to
             x: { label: "Weighted score", domain: [0, 5] },
             y: { label: null },
             marks: [
+              // Each bar in this domain's own accent (same DO purple/Pharmacy
+              // teal/Dentistry orange/Medicine cyan as DisciplineChip and the
+              // domain hub header) instead of one flat accent color — a
+              // reader who's learned that color language on any other page
+              // recognizes it here too, rather than re-reading every label.
               Plot.barX(totalRows, {
                 y: "domain",
                 x: "total",
-                fill: "var(--color-accent)",
+                fill: (d: { domain: string }) => disciplineColorVar(d.domain),
                 sort: { y: "-x" },
                 tip: true,
               }),

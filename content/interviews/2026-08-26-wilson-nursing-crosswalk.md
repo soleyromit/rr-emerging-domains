@@ -1,3 +1,23 @@
+---
+id: "interview-wilson-nursing-crosswalk-2026-08-26"
+type: "internal-planning"
+date: "2026-08-26"
+title: "Nursing market penetration — accreditation crosswalk & feature grid, with Wilson"
+participants:
+  - { name: "Romit Soley", org: "Exxat", role: "Research" }
+  - { name: "Wilson Knapp", org: "Exxat", role: "Sales — competitive research" }
+domains: ["Nursing"]
+programs: []
+recording:
+  platform: "granola"
+  external_id: "d34a3497-385d-4b9b-bf74-af8b4241294e"
+access: "internal"
+evidence_status: "verbatim-cleaned"
+claims_are_speaker_opinion: true
+topics: ["accreditation-crosswalk", "competitors", "feature-relevance", "research-method"]
+supersedes: []
+---
+
 # Nursing market penetration — accreditation crosswalk & feature grid, with Wilson
 
 **Date:** 2026-08-26

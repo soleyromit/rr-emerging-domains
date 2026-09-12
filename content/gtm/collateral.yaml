@@ -1,0 +1,222 @@
+# NOT part of the citation DAG — same isolation rule as research-pipeline.yaml beside it,
+# and see content/ARCHITECTURE.md's "Outside the strata" section. A row here MAY point AT
+# content/ (via `grounded_in:`); nothing under content/ outside content/gtm/ may ever cite
+# a content/gtm/ path or id as evidence. check_gtm_isolation() in
+# scripts/check_content_density.py (added by Task 1.7 of this plan) enforces that
+# mechanically; until it lands, this comment is the rule.
+#
+# WHAT THIS FILE IS FOR: what collateral is planned, in flight, or published — and what
+# research it is supposed to stay inside. Per
+# content/interviews/2026-09-11-romit-ruchi-gtm-taxonomy.md, collateral is owned by
+# MARKETING (Isha, Virangi) and SALES (Sam), not by this research effort: "This repo
+# tracks that collateral and points at it; it does not produce it." A row here is a
+# tracking record about someone else's artifact, never a claim about the market.
+#
+# THE ONE BRIDGE BACK INTO THE DAG is `becomes_source_id` (see below): once an asset is
+# actually published it exists in the world, and the published artifact — not this
+# tracking row — can be registered as a real Level 0.5 source and cited. The tracking row
+# stays uncitable either way.
+last_updated: "2026-09-12"
+
+# SPARSE BY DESIGN: an absent asset means NOBODY HAS PLANNED ONE YET, never "we looked
+# and there is no collateral here." Deliberately empty at creation (2026-09-11) — marketing
+# and sales own the real pipeline, and a made-up row here would read as a real commitment
+# to someone scanning the file.
+assets:
+  # PHARMACY — every row below traces to a specific sentence of
+  # content/interviews/2026-09-04-vishaka-ruchi-pharmacy-understanding.md, quoted or
+  # paraphrased in the comment above it. Nothing here is drafted: all six are `idea`,
+  # because the session records asks and intentions, not work in flight. None of it is
+  # owned by this research effort. The AACP abstract is the one row not owned by marketing
+  # or sales — it is Vishaka's own study write-up, which is why its owner_team reads
+  # "research" rather than a pitch team's.
+  - id: "pharmacy-aacp-abstract-naplex-correlation"
+    kind: "conference-abstract"
+    title: "AACP abstract: curriculum mapping in Prism correlated with NAPLEX outcomes at a non-Exxat pharmacy school"
+    domain: "Pharmacy"
+    status: "idea"
+    owner_team: "research"
+    owner: "Vishaka"
+    target_date: null
+    # DELIBERATELY null. The session says only "the abstract deadline is November" — no
+    # day, and no year — with the intent to "publish and present at next year's AACP".
+    # An ISO date here would be invented precision, so the month lives in `notes`.
+    published_url: null
+    audience: ["discipline-pharmacy", "role-dean"]
+    grounded_in: []
+    # EMPTY ON PURPOSE, and it is the honest value: this abstract's claims would come from
+    # the pilot's own primary data (curriculum mapping done in Prism, imported ExamSoft
+    # results for key pharmacotherapy courses, NAPLEX outcomes), none of which exists in
+    # content/ or anywhere else in this repo. There is nothing here for it to stay inside
+    # of yet.
+    claims_review_status: "not-reviewed"
+    becomes_source_id: null
+    notes: "Data collection is at a 'very preliminary stage'; deadline given only as 'November'. The school is unnamed, not an Exxat customer, and runs CORE."
+
+  - id: "pharmacy-umd-competency-tracking-webinar"
+    kind: "webinar"
+    title: "Webinar: how University of Maryland runs competency tracking on Prism"
+    domain: "Pharmacy"
+    status: "idea"
+    owner_team: "marketing"
+    # Per the 2026-09-11 session, collateral is marketing (Isha, Virangi) and sales (Sam),
+    # not research. Recorded as "marketing" with that caveat: the 2026-09-04 session has
+    # webinars running through Vishaka's Customer Experience function and names David as
+    # the webinars contact, and this enum has no CX value.
+    owner: null
+    target_date: null
+    published_url: null
+    audience: ["discipline-pharmacy", "role-dean", "role-program-admin"]
+    grounded_in:
+      - "market/programs/pharmacy.yaml"
+      - "lenses/product-gaps.yaml"
+    claims_review_status: "not-reviewed"
+    becomes_source_id: null
+    notes: "Gated on go-live: implementation is in progress, 'once they are live, interview them', and the workflow they land on is not documented yet."
+
+  - id: "pharmacy-ohsu-placements-webinar"
+    kind: "webinar"
+    title: "Webinar: how OHSU manages pharmacy clinical placements on Prism"
+    domain: "Pharmacy"
+    status: "idea"
+    owner_team: "marketing"
+    owner: null
+    target_date: null
+    published_url: null
+    audience: ["discipline-pharmacy", "role-clinical-coordinator"]
+    grounded_in:
+      - "market/programs/pharmacy.yaml"
+      - "lenses/standards-use-cases.yaml"
+    # standards-use-cases.yaml is named because OHSU is the one Pharmacy row in that file
+    # with status "documented" — the only shipped-and-observed use case the domain has.
+    claims_review_status: "not-reviewed"
+    becomes_source_id: null
+    notes: "Session offers interview / white paper / testimonial / webinar as alternatives and picks none; one row, not four competing commitments."
+
+  - id: "pharmacy-umd-use-case-one-pager"
+    kind: "use-case-one-pager"
+    title: "Use case: University of Maryland pharmacy"
+    domain: "Pharmacy"
+    status: "idea"
+    owner_team: "marketing"
+    owner: null
+    target_date: null
+    published_url: null
+    audience: ["discipline-pharmacy", "role-dean"]
+    grounded_in:
+      - "market/programs/pharmacy.yaml"
+    claims_review_status: "not-reviewed"
+    becomes_source_id: null
+    notes: "From Ruchi's ask for use cases with the two active pharmacy schools. Nothing is written; the UMD implementation is still in progress."
+
+  - id: "pharmacy-ohsu-use-case-one-pager"
+    kind: "use-case-one-pager"
+    title: "Use case: OHSU pharmacy"
+    domain: "Pharmacy"
+    status: "idea"
+    owner_team: "marketing"
+    owner: null
+    target_date: null
+    published_url: null
+    audience: ["discipline-pharmacy", "role-clinical-coordinator"]
+    grounded_in:
+      - "market/programs/pharmacy.yaml"
+    # CAUTION for whoever writes this: the session says OHSU has used Prism for the
+    # clinical management piece for nearly a year, but the CRM export behind
+    # market/programs/pharmacy.yaml carries OHSU as exxat_status "not-tracked". The two
+    # records disagree, and the registry row is the weaker one to quote from.
+    claims_review_status: "not-reviewed"
+    becomes_source_id: null
+    notes: "Ruchi's ask for use cases with the two active pharmacy schools. Scope is the clinical-placement piece only; OHSU has adopted nothing else."
+
+  - id: "pharmacy-core-to-exxat-switch-whitepaper"
+    kind: "whitepaper"
+    title: "White paper: a pharmacy program that moved from CORE to Exxat, and why"
+    domain: "Pharmacy"
+    status: "idea"
+    owner_team: "marketing"
+    owner: null
+    target_date: null
+    published_url: null
+    audience: ["discipline-pharmacy", "role-dean", "lens-core-elms"]
+    grounded_in:
+      - "lenses/competitor-differentiation.yaml"
+      - "market/programs/pharmacy.yaml"
+    claims_review_status: "not-reviewed"
+    becomes_source_id: null
+    notes: "Ruchi's ask. NO SUBJECT YET: no program in market/programs/pharmacy.yaml is recorded as having switched from CORE, so the school must be found first."
+# Real row shape, now populated above. Documented as a comment on purpose — an example row in a
+# tracker gets read as a real plan.
+#   - id: string, unique across this file, kebab-case
+#     kind: enum — whitepaper | podcast | webinar | video | sandbox | use-case-one-pager
+#           | conference-abstract
+#     title: string, <=150 soft / 300 hard chars
+#     domain: string — the canonical APP-LEVEL domain label, same convention and same trap
+#       as research-pipeline.yaml's `workstreams[].domain`: the authoritative list is the
+#       key set of DOMAIN_TO_ACCREDITATION_SLUG (apps/ecosystem/lib/content.ts and
+#       scripts/check_content_density.py), and Medicine's label is "Medicine" even though
+#       content/domains/medicine.yaml's own field says "MD"
+#     status: enum — idea | drafting | in-review | published | retired
+#     owner_team: enum — marketing | sales | product | research. Per the interview above,
+#       most collateral is marketing or sales; "research" is the exception, not the default
+#     owner: string or null. null when no named person owns it yet
+#     target_date: string (YYYY-MM-DD) or null
+#     published_url: string or null — non-null ONLY when status is "published"
+#     audience: array of content/personas/*.yaml filenames without extension (role-* /
+#       discipline-* / lens-* slugs), or empty. Tag-only, not an evidentiary citation
+#     grounded_in: array of content/ relative paths whose claims this asset must not
+#       outrun, or empty. Same existence/forward-reference rule as research-pipeline.yaml's
+#       `produces:`: each path exists today, or is a documented Phase 2/3 forward reference
+#       already named in an earlier committed schema (content/lenses/product-gaps.yaml
+#       exists; content/dissection/<slug>.yaml and content/market/programs/<slug>.yaml have
+#       committed _TEMPLATEs with per-domain files still to come). This is the field that
+#       makes "the webinar said X, where did X come from?" answerable
+#     claims_review_status: enum — not-reviewed | reviewed-against-content |
+#       contains-unverified-claims. Use the WEAKEST honest value: "not-reviewed" is the
+#       default and is not a criticism, while "contains-unverified-claims" is a real,
+#       useful state to be able to count, not a failure to hide
+#     becomes_source_id: string or null — the Level 0.5 source id this asset becomes once
+#       published. REQUIRED to be non-null when status is "published"; MUST be null for
+#       every other status, including "retired" (a retired draft was never published, so
+#       it never became a source). It points at a source HOME, never back at this file,
+#       and WHICH home decides whether the published artifact can be cited as fact:
+#         content/sources/registry.yaml — citable like any other source, always written
+#           with origin: "first-party"
+#         a `citable_as_fact: false` home (today content/sources/vendor-comparison-
+#           chart.yaml) — registered and referenceable, but quarantined: an id from such
+#           a home may never appear as a `source_id` anywhere in content/
+#       Destination and registry `type:` per `kind` — every kind has one, so a published
+#       row is never left with a required field and no rule:
+#         webinar             -> registry.yaml, type "webinar"
+#         podcast             -> registry.yaml, type "podcast"
+#         video               -> registry.yaml, type "video"
+#         conference-abstract -> registry.yaml, type "conference". NOTE the names differ
+#              on purpose: "conference-abstract" is this file's `kind`, while the
+#              registry's `type:` value is "conference" ("agenda/session/abstract/
+#              proceedings"). There is no "conference-abstract" type
+#         use-case-one-pager  -> quarantined home, type "sales-collateral". The registry
+#              names one-pagers by name as "NOT citable as fact"
+#         sandbox             -> quarantined home, type "sales-collateral". A sandbox is a
+#              configured demo of our own product, not a document — it can be set up to
+#              show anything, so citing it for what Prism ships would bypass
+#              prism/capability-map.yaml, whose claims carry real Level 0 sources. The
+#              interview that named this kind calls them "sandbox pitch decks". This is
+#              the one kind with no content-dependent branch: always quarantined
+#         whitepaper          -> ROUTES BY CONTENT, not by kind — the one genuinely
+#              ambiguous kind, because the word covers both a research write-up and a
+#              pitch:
+#                - carries primary material not already in content/ (an original survey,
+#                  original program data we collected) -> registry.yaml, type "doc" (or
+#                  "research-paper" / "dataset" if that is what it actually is), citable
+#                  like any other first-party source
+#                - only restates what content/ already holds, i.e. every claim traces to
+#                  its own `grounded_in:` files -> still gets a registry.yaml entry so the
+#                  artifact can be referenced, but it may NEVER be cited back at any file
+#                  listed in its own `grounded_in:`. Same rule content/ARCHITECTURE.md
+#                  already states for corpus indexes: citing an id back at the file its
+#                  summary was derived from launders a claim, it does not corroborate it
+#                - a pitch piece rather than a document of research -> quarantined home,
+#                  type "sales-collateral", same treatment as a one-pager
+#       Registering an asset does not make its claims true; it makes the artifact
+#       referenceable
+#     notes: string, <=150 soft / 300 hard chars, or null

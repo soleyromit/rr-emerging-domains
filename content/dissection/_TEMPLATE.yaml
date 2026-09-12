@@ -1,0 +1,101 @@
+# TEMPLATE — copy this file to content/dissection/<slug>.yaml for a new domain
+# (pharmacy.yaml, do.yaml, dentistry.yaml, medicine.yaml). Files beginning with
+# _TEMPLATE are skipped by this repo's YAML directory readers and by
+# scripts/check_content_density.py, so this file is documentation — never rendered,
+# never checked as content.
+#
+# WHAT THIS FAMILY IS FOR
+# Level 2 — a reframing. See content/ARCHITECTURE.md for the citation-level model
+# this file sits inside. A dissection manifest holds NO primary claims of its own.
+# It answers one question per domain: for each of six fixed dissection questions,
+# WHERE is it answered, and how far along is the research? Everything it names is a
+# pointer into a file at Level 1 or Level 2. A manifest that wants to assert a new
+# fact sends that fact down to the file that owns it first — the same rule
+# content/personas/ and content/feature-map/ already live under.
+#
+# Because it holds no claims, a manifest carries no `sources:` list. Its honesty
+# mechanism is the opposite one: `coverage` and `gap_note`, which make "nobody has
+# researched this yet" a first-class, countable state rather than an absent field.
+
+domain: "Example Domain"      # must match content/domains/<slug>.yaml's own `domain:`
+                              # field exactly — DO | Pharmacy | Dentistry | Medicine
+slug: "example-domain"        # the route slug used elsewhere in this repo (do,
+                              # pharmacy, dentistry, medicine) — also this file's name
+
+# true only for the domain named in content/scorecard/where-to-play.yaml's
+# `actual_gtm_target:` field. Note that is deliberately NOT the same thing as its
+# `recommended_beachhead:` — the scorecard records both, and the GTM decision has
+# overridden its own weighted math before.
+is_gtm_target: false
+
+# A session id from a content/interviews/*.md front-matter `id:` that this domain's
+# dissection work is modeled on, if one exists. null — not an empty string — when no
+# domain-expert session has happened yet for this domain. Interview ids are read from
+# front-matter and are NOT derivable from the filename.
+template_of_record: null
+
+last_reviewed: "2026-09-11"   # YYYY-MM-DD
+
+# The competitors actually relevant to THIS domain's clinical-education software
+# market — NOT every file in content/competitors/. This is scoping, not a claim about
+# any one vendor; the claims themselves stay in competitors/<slug>.yaml.
+incumbent_set:
+  - competitor_slug: "example-competitor"   # must match a real content/competitors/<slug>.yaml
+                                            # file (e.g. rxpreceptor, medhub, e-value)
+    role: "primary"          # primary | switch-target | adjacent | secondary | not-a-target
+    # exclusion_reason is forbidden on any role other than "not-a-target" — a reason
+    # written next to an in-scope vendor reads as an exclusion that never happened.
+  - competitor_slug: "another-example-competitor"
+    role: "not-a-target"
+    # REQUIRED whenever role is "not-a-target", and only then. One sentence
+    # (<=150 chars soft / 300 hard) saying why this vendor is out of scope here.
+    exclusion_reason: "Serves GME residency programs only; no pre-licensure experiential-education product to displace."
+
+# Exactly these six keys, always all six, in this order — no more, no fewer. A domain
+# with zero research yet still lists all six, each with coverage: "none". The point of
+# the manifest is that an unanswered question is visible and countable, not missing.
+questions:
+  - key: "features-to-build"
+    # Relative paths under content/. A "#" fragment may name a key within the file
+    # (e.g. "domains/pharmacy.yaml#market_sizing"). A value beginning "computed — " is a
+    # prose marker, not a path, and resolves to no file (see the last question below).
+    answered_in: ["lenses/product-gaps.yaml"]
+    coverage: "none"          # none | stub | partial | researched
+    confidence: "low"         # low | medium | high
+    # REQUIRED while coverage is "none" or "stub"; may be null once coverage reaches
+    # "partial" or "researched". <=200 chars soft / 400 hard. Say specifically what is
+    # missing and why — "TBD" is not a gap note.
+    gap_note: "lenses/product-gaps.yaml has no entries for this domain yet; no domain-expert session has been held."
+  - key: "competitor-differentiation"
+    answered_in: ["lenses/competitor-differentiation.yaml", "competitors/*.yaml"]
+    coverage: "none"
+    confidence: "low"
+    gap_note: "No per-domain differentiation lens entries yet; competitors/*.yaml carries feature teardowns but no head-to-head read for this domain."
+  - key: "market-size"
+    # Both targets are forward references, same as the lens files above: Task 1.4 adds
+    # the `market_sizing:` block to content/domains/<slug>.yaml and creates the
+    # content/market/programs/ family. Until it lands, market facts live in the domain
+    # registry's existing `market:` block (program_count, program_count_trend,
+    # total_enrollment, sources) — point a real manifest at `#market_sizing` once 1.4
+    # has created it rather than at the older `market:` block.
+    answered_in: ["domains/<slug>.yaml#market_sizing", "market/programs/<slug>.yaml"]
+    coverage: "none"
+    confidence: "low"
+    gap_note: "domains/<slug>.yaml's market block is present but its program_count and enrollment figures are uncited."
+  - key: "feature-comparison"
+    answered_in: ["lenses/feature-comparison-matrix.yaml"]
+    coverage: "none"
+    confidence: "low"
+    gap_note: "No feature-comparison matrix rows scoped to this domain yet."
+  - key: "standards-to-product"
+    answered_in: ["lenses/standards-use-cases.yaml", "lenses/standards-competitor-ratings.yaml"]
+    coverage: "none"
+    confidence: "low"
+    gap_note: "Both standards lenses exist but carry no entries for this domain's accreditor."
+  - key: "persona-and-document-lens"
+    # Not a file of its own: this question is answered by the `audience` /
+    # `persona_relevance` tags and `sources[]` already carried by the lenses above.
+    answered_in: ["computed — audience/persona_relevance tags and sources[] across the lenses above"]
+    coverage: "none"
+    confidence: "low"
+    gap_note: "The lenses above carry no persona tags for this domain yet, so nothing computes."

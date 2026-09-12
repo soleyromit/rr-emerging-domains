@@ -16,6 +16,7 @@ import { Takeaway } from "@/components/takeaway";
 import { StatusBadge } from "@/components/fit-badge";
 import { PrismFeaturesChart } from "@/components/charts/prism-features-chart";
 import { getCapabilityMap } from "@/lib/content";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 
 export default function PrismPage() {
   const capMap = getCapabilityMap();
@@ -221,7 +222,7 @@ export default function PrismPage() {
                       key={q}
                       label={
                         <Text type="body" maxLines={2}>
-                          {q}
+                          {stripFileCitations(q)}
                         </Text>
                       }
                     />

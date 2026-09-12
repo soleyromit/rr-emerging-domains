@@ -11,6 +11,7 @@ import {
   getAccreditorTiers,
   getCompetitorLandscape,
   getStandardsCrosswalkForDomain,
+  hasSalesBrief,
   listCompetitors,
   sortDomainsByPriority,
 } from "@/lib/content";
@@ -44,6 +45,7 @@ export default function DomainsIndexPage() {
       startContent: <DisciplineChip subject={d.domain} />,
       endContent: (
         <Stack direction="horizontal" gap={1.5}>
+          {hasSalesBrief(slug) ? <Badge variant="success" label="How we win" /> : null}
           <Badge variant="neutral" label={`${competitorCount} ${competitorCount === 1 ? "competitor" : "competitors"}`} />
           <Badge variant="neutral" label={`${standardsCount} ${standardsCount === 1 ? "standard" : "standards"}`} />
         </Stack>

@@ -2,9 +2,21 @@ accreditor: "ACPE (Accreditation Council for Pharmacy Education)"
 slug: "acpe"
 domain: "Pharmacy"
 governs: "Professional degree programs leading to the Doctor of Pharmacy (PharmD) degree at U.S. colleges and schools of pharmacy (plus international/technician-education evaluation programs outside the scope of this file)"
+# ADDED 2026-09-11: Standards 2025's structural shape, per the Exxat internal eBook
+# "Understanding Pharmacy Education in the United States" Ch.2
+# (doc-pharmacy-education-us-ebook-2026). The ACPE Board approved Standards 2025 at its
+# June 12-14, 2024 meeting with an effective date of July 1, 2025, and the revision
+# consolidated Standards 2016's 25 standards into 7: 1 Organization and Governance,
+# 2 Curriculum, 3 Experiential Learning, 4 Students and Student Services, 5 Faculty and
+# Staff, 6 Resources, 7 Assessment. The separate guidance document that accompanied
+# Standards 2016 was folded into the Standards 2025 document itself.
+#
+# This consolidation renumbered the STANDARDS, not the key elements. Every element_id
+# below already uses the 2025 scheme and is referenced by id from other content files
+# (lenses/standards-competitor-ratings.yaml among them), so nothing here is renumbered.
 standards_document:
   title: "Accreditation Standards and Key Elements for the Professional Program in Pharmacy Leading to the Doctor of Pharmacy Degree (\"Standards 2025\")"
-  version_or_year: "Standards 2025 — approved June 14, 2024; updated June 12, 2025; effective for evaluations beginning fall 2025 (supersedes Standards 2016)"
+  version_or_year: "Standards 2025 — approved June 14, 2024; updated June 12, 2025; effective July 1, 2025, for evaluations beginning fall 2025; consolidates Standards 2016's 25 standards into 7"
   url: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf"
 
 standards:
@@ -14,26 +26,81 @@ standards:
     required_software_behavior: "Model each IPPE as a scheduled placement tied to a student, site, and practice-model type; sequence placements across terms; flag/record exemption decisions and auto-generate the substitute placement record."
     prism_fit: "Transfer"
     prism_fit_rationale: "This is squarely the Clinical & Experiential Education pillar's rotation/placement engine — the same Courses -> Learning Activities -> Setup -> Assignment workflow confirmed for existing disciplines applies directly to IPPE sequencing."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat already meets \"IPPE expectations — structure and sequencing of Introductory Pharmacy Practice Experiences\" natively today (Prism fit: Transfer) — no configuration or engineering work required."
     gap_notes: ""
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.10, Standard 3.1.a"
 
   - element_id: "Standard 3, Key Element 3.1.b"
     element_title: "IPPE duration — minimum clock hours by practice setting"
-    evidence_programs_must_produce: "Auditable, student-level hour logs proving at least 300 total IPPE clock hours, including a minimum of 75 hours in community settings and 75 hours in hospital/health-system settings (simulation hours excluded from the 300)."
-    required_software_behavior: "Aggregate logged/verified hours per student by placement-setting category (community, hospital/health-system, other), enforce the two 75-hour minimums plus the 300-hour total, exclude simulation-tagged activities from the count, and alert advisors when a student is off-pace before the IPPE window closes."
+    evidence_programs_must_produce: "Auditable, student-level hour logs proving at least 300 total IPPE clock hours, composed of a minimum 75 hours in community settings, 75 hours in hospital/health-system settings, and 150 hours in patient care settings, accumulated across the P1-P3 years. Simulation cannot satisfy any part of the 300 under Standards 2025."
+    required_software_behavior: "Aggregate logged/verified hours per student by placement-setting category (community, hospital/health-system, patient care), enforce the two 75-hour minimums, the 150-hour patient-care minimum and the 300-hour total, exclude simulation-tagged activities from every category, and alert advisors when a student is off-pace before the IPPE window closes."
     prism_fit: "Configure"
     prism_fit_rationale: "Clinical & Experiential Education already tracks placements and (per the confirmed anchor-date scheduling primitive) time relative to a rotation; ACPE's specific setting-category taxonomy and hour-threshold rules would need to be configured on top of that engine, not built new."
-    gap_notes: "Unconfirmed whether Prism's placement engine currently aggregates hours by a custom setting-category taxonomy and enforces sub-thresholds (vs. only tracking a single total per placement) — open question for Phase 2."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"IPPE duration — minimum clock hours by practice setting\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
+    gap_notes: "Unconfirmed whether Prism's placement engine currently aggregates hours by a custom setting-category taxonomy and enforces sub-thresholds (vs. only tracking a single total per placement) — open question for Phase 2. Note the simulation prohibition is new in Standards 2025 (Standards 2016 permitted simulation toward IPPE), so a program migrating historical IPPE data needs to re-classify and exclude simulation-tagged hours retroactively, not just going forward."
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, pp.10-11, Standard 3.1.b"
+    # ADDED 2026-09-11: the 150-hour patient-care component and the P1-P3 window come
+    # from the eBook's Standard 3 summary; the file previously carried only the two
+    # 75-hour minimums and the 300 total.
+    research_sources: ["doc-pharmacy-education-us-ebook-2026"]
+
+  - element_id: "Standard 3, Key Element 3.2.a"
+    element_title: "APPE expectations — continuity of care and diverse patient-population exposure"
+    evidence_programs_must_produce: "Evidence that, collectively, APPE rotations expose each student to continuity of care across outpatient (community/ambulatory) and inpatient (hospital/health-system) settings, and in the aggregate to a diverse patient population spanning age, gender, neurodivergent status, race/ethnicity, socioeconomic factors, and disease states."
+    required_software_behavior: "Tag each APPE rotation by setting type (outpatient/inpatient) and, where available, patient-population characteristics, then roll those tags up into a per-student coverage report showing continuity-of-care and population-diversity exposure across the full APPE set."
+    prism_fit: "Gap"
+    prism_fit_rationale: "No confirmed Prism capability tags rotation setting-type (outpatient/inpatient) or rolls up patient-population demographics (age, gender, race/ethnicity, socioeconomic factors) at the rotation level. Exxat does have patient-encounter logging, but the confirmed rotation-level variant tracks diagnosis/procedure minimums — disease and procedure counts, not care setting or patient demographics. The one Exxat module that does capture per-encounter patient demographics is a separate, Speech-Language-Pathology-specific clinical log with no equivalent for pharmacy-style rotations — this element has no home in the pillar set today."
+    exxat_compliance: "gap"
+    exxat_compliance_rationale: "Exxat does not currently meet \"APPE expectations — continuity of care and diverse patient-population exposure.\" Its confirmed patient-logging capability tracks diagnosis/procedure minimums per rotation, not care setting or patient demographics, and the one Exxat feature that does capture patient demographics is scoped to a different discipline's module (Speech-Language Pathology). No confirmed capability addresses this requirement (Prism fit: Gap), making it an open compliance gap today."
+    gap_notes: "Patient logging exists but doesn't fit this element: the confirmed rotation-level variant counts diagnoses/procedures against minimums, not patient demographics or care setting. Building this needs new fields on the rotation/placement record (setting type, patient-population attributes) plus a new per-student roll-up report — not a configuration change to an existing capability."
+    source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.11, Standard 3.2.a"
 
   - element_id: "Standard 3, Key Elements 3.2.b & 3.2.d"
     element_title: "APPE duration and the four required practice settings"
-    evidence_programs_must_produce: "Transcript-level records showing at least 1,440 APPE hours (each APPE ≥160 hours) and completion of all four required settings — community pharmacy, ambulatory care, hospital/health-system pharmacy, and inpatient adult patient care — per student, including how Nontraditional PharmD (NTPD) pathway students met the same four requirements via formalized faculty assessment."
-    required_software_behavior: "Tag every APPE placement with a required-setting category and hours; roll up per-student progress against all four categories plus the 1,440-hour/160-hour-minimum rules; block/flag graduation clearance for any student missing a required category; support an alternate 'assessed equivalent' record type for NTPD students."
+    evidence_programs_must_produce: "Transcript-level records showing at least 1,440 APPE hours — equivalently 36 weeks, taken full-time across the P4 year — with each APPE ≥160 hours, and completion of all four required settings (community pharmacy, ambulatory care, hospital/health-system pharmacy, and inpatient adult patient care) per student. Programs typically deliver this as 4 core plus 2-3 elective rotations of roughly 5 weeks each. Must also show how Nontraditional PharmD (NTPD) pathway students met the same four requirements via formalized faculty assessment."
+    required_software_behavior: "Tag every APPE placement with a required-setting category and hours; roll up per-student progress against all four categories plus the 1,440-hour/36-week/160-hour-minimum rules; block/flag graduation clearance for any student missing a required category; support an alternate 'assessed equivalent' record type for NTPD students."
     prism_fit: "Configure"
     prism_fit_rationale: "Same rotation/placement data model as Clinical & Experiential Education, but ACPE's four-required-setting taxonomy and the graduation-gating rule against it is program-specific configuration, not an out-of-the-box report."
-    gap_notes: "The NTPD 'formalized faculty assessment' equivalent-completion pathway is a non-standard record type that likely needs custom configuration or a small build."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"APPE duration and the four required practice settings\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
+    gap_notes: "The NTPD 'formalized faculty assessment' equivalent-completion pathway is a non-standard record type needing custom configuration or a small build. Separately, ACPE's 1,440 hours are one of two ledgers a P4 student is counted against: state boards require roughly 1,500-1,800 logged intern hours for NAPLEX eligibility. Most states let APPE hours count but differ on what percentage, so the same data must roll up twice under two rule sets — and no confirmed Prism capability maintains that second ledger. Treat the hour range as unverified; see licensure_or_gme_layer's State Boards entry."
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.11, Standard 3.2.b, 3.2.d"
+    # ADDED 2026-09-11: the 36-week equivalence and the 4-core-plus-2-3-elective,
+    # ~5-week rotation shape come from the eBook (Ch.2 Standard 3 summary, Ch.5).
+    # The eBook names the four core rotations Ambulatory Care, Community/Retail,
+    # Acute Care/Inpatient and Health-System/Institutional — common program usage, but
+    # looser than ACPE's own wording, which is what this element keeps.
+    research_sources: ["doc-pharmacy-education-us-ebook-2026"]
+
+  - element_id: "Standard 3, Key Element 3.2.c"
+    element_title: "Timing — APPE sequencing and capstone activities"
+    evidence_programs_must_produce: "Proof that APPE rotations only begin after a student has completed all IPPE and required didactic content, and that any capstone activities run during/after APPEs without displacing APPE time or counting toward the required 1,440-hour total."
+    required_software_behavior: "Gate APPE placement scheduling on confirmed completion of IPPE and required didactic milestones for that student; track capstone activities as a separate record type explicitly excluded from the APPE hour total."
+    prism_fit: "Configure"
+    prism_fit_rationale: "This is a prerequisite-gating check on top of the existing placement/rotation data model — the same 'block assignment until X is complete' pattern already used for compliance-item gating, applied to didactic-completion status instead."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Timing — APPE sequencing and capstone activities\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
+    gap_notes: "Requires confirming the placement engine can gate on didactic-course completion status, not only compliance-item completion."
+    source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.11, Standard 3.2.c"
+    # ADDED 2026-09-11: the eBook independently confirms capstone activities cannot
+    # count toward the 1,440 APPE hours, as a named Standards 2025 change.
+    research_sources: ["doc-pharmacy-education-us-ebook-2026"]
+
+  - element_id: "Standard 3, Key Element 3.2.e"
+    element_title: "Elective APPE — non-patient-care hour cap"
+    evidence_programs_must_produce: "Documentation that no more than 320 of the required 1,440 APPE hours are non-patient-care elective rotations, with the remainder achieving the breadth/depth outcomes tied to Standard 2.1.a-m."
+    required_software_behavior: "Classify each APPE rotation as patient-care or non-patient-care at setup, sum non-patient-care elective hours per student, and flag or block when that total would exceed 320 hours."
+    prism_fit: "Configure"
+    prism_fit_rationale: "Same family as the shipped 2:1 preceptor-ratio check (3.3.e) — a running-total threshold query against existing rotation/hours data, not new architecture."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Elective APPE — non-patient-care hour cap\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
+    gap_notes: "The 320-hour cap is new in Standards 2025, so the patient-care vs. non-patient-care classification is a field programs did not previously have to carry on an elective rotation — existing rotation catalogs will need a backfill pass before the cap can be enforced."
+    source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.11, Standard 3.2.e"
+    # ADDED 2026-09-11: the eBook independently confirms the 320-of-1,440 cap on
+    # non-patient-care APPE electives as a named Standards 2016 -> 2025 change.
+    research_sources: ["doc-pharmacy-education-us-ebook-2026"]
 
   - element_id: "Standard 3, Key Element 3.3.a"
     element_title: "Preceptor criteria — recruitment, orientation, performance, and evaluation"
@@ -41,8 +108,24 @@ standards:
     required_software_behavior: "A preceptor profile/credentialing record (license number, status, expiration) linked to every placement a preceptor supervises; roster-level reporting on the licensed-pharmacist share per student's assigned preceptors; evaluation forms tied to each precepting assignment."
     prism_fit: "Configure"
     prism_fit_rationale: "Compliance Management today is described as gating student placement start/continuation on student-side compliance items; extending an equivalent credential-gating model to the preceptor entity (license status gating a precepting assignment) is a configuration/extension of the same pillar, not a new capability."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Preceptor criteria — recruitment, orientation, performance, and evaluation\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Exact compliance item taxonomy is unconfirmed (open question in capability-map.yaml); unclear whether Compliance Management natively models preceptors as a trackable entity today versus only students."
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.12, Standard 3.3.a"
+    # ADDED 2026-09-10: peer-reviewed evidence that preceptor gating needs
+    # calibration, not just enforcement — see content/sources/registry.yaml.
+    research_sources: ["article-pmc-entrustment-scale-calibration-2025"]
+
+  - element_id: "Standard 3, Key Element 3.3.b"
+    element_title: "Preceptor credentials/expertise"
+    evidence_programs_must_produce: "A documented link between each preceptor's credentials/expertise and the specific experiential course(s) they precept, for every experiential course in the curriculum."
+    required_software_behavior: "Store preceptor credential/expertise data as structured profile fields, and require an explicit credential-to-course assignment link before a preceptor can be attached to an experiential course record."
+    prism_fit: "Configure"
+    prism_fit_rationale: "Compliance Management's Personnel compliance feature already tracks preceptor license/credential data; requiring an explicit credential-to-course link at assignment time is a configuration of that same model, not new capability."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Preceptor credentials/expertise\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
+    gap_notes: "Unconfirmed whether Personnel compliance today models a course-specific credential requirement, versus a flat license/cert record with no course linkage."
+    source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.12, Standard 3.3.b"
 
   - element_id: "Standard 3, Key Element 3.3.c"
     element_title: "Preceptor education and development"
@@ -50,8 +133,23 @@ standards:
     required_software_behavior: "An orientation/training-completion checklist per preceptor per course, gating the ability to be assigned a student until complete; a development-activity log queryable by preceptor for accreditation reporting."
     prism_fit: "Configure"
     prism_fit_rationale: "Same gating pattern as student compliance items in Compliance Management, applied to a preceptor-onboarding checklist instead of a student immunization/background-check item."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Preceptor education and development\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Requires confirming Compliance Management can gate a preceptor-to-placement assignment the same way it gates a student-to-placement assignment."
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.12, Standard 3.3.c"
+    # ADDED 2026-09-10: same rationale as 3.3.a — see content/sources/registry.yaml.
+    research_sources: ["article-pmc-entrustment-scale-calibration-2025"]
+
+  - element_id: "Standard 3, Key Element 3.3.d"
+    element_title: "Preceptor engagement in continuous quality improvement"
+    evidence_programs_must_produce: "Evidence that preceptors are actively solicited for input into curriculum continuous quality improvement, particularly the experiential component — e.g., preceptor survey participation, advisory committee membership, or documented feedback loops."
+    required_software_behavior: "Support preceptor-targeted surveys/feedback forms tied to CQI cycles, and a way to track/report preceptor participation rates in those feedback mechanisms over time."
+    prism_fit: "Configure"
+    prism_fit_rationale: "The shipped Exxat Surveys builder already supports preceptor-targeted surveys with response tracking; configuring a recurring CQI-feedback survey and a participation-rate report is configuration on top of that shipped capability."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Preceptor engagement in continuous quality improvement\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
+    gap_notes: ""
+    source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.12, Standard 3.3.d"
 
   - element_id: "Standard 3, Key Element 3.3.e"
     element_title: "Student-to-preceptor ratio (2:1 maximum)"
@@ -59,26 +157,75 @@ standards:
     required_software_behavior: "Real-time capacity calculation across a preceptor's concurrently active placements, blocking or flagging a new assignment that would push the ratio above 2:1."
     prism_fit: "Transfer"
     prism_fit_rationale: "The Clinical & Experiential Education placement engine already models the student-preceptor-placement relationship; a live ratio check is a query against existing assignment data, not new architecture."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat already meets \"Student-to-preceptor ratio (2:1 maximum)\" natively today (Prism fit: Transfer) — no configuration or engineering work required."
     gap_notes: ""
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.13, Standard 3.3.e"
+
+  - element_id: "Standard 3, Key Element 3.4.a"
+    element_title: "Practice facility quality criteria"
+    evidence_programs_must_produce: "Documented quality criteria used to recruit and select practice facilities (including licensure verification), plus facility-level evaluation data tied to whether students at that site can achieve the required educational outcomes."
+    required_software_behavior: "A structured site-profile record capturing licensure status and quality-criteria attributes, plus a site-evaluation workflow (e.g., outcome-achievement ratings) queryable per facility."
+    prism_fit: "Configure"
+    prism_fit_rationale: "The Clinical & Experiential Education pillar's Site Assessment and Custom Site Assessment form builder already model structured, per-site evaluation data; configuring ACPE's specific licensure/quality criteria into that form is configuration, not new build."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Practice facility quality criteria\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
+    gap_notes: ""
+    source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.12, Standard 3.4.a"
+    # ADDED 2026-09-10: PubMed-indexed evidence naming site capacity as a
+    # structural barrier — see content/sources/registry.yaml.
+    research_sources: ["article-pubmed-site-capacity-barriers"]
+
+  - element_id: "Standard 3, Key Element 3.5.a"
+    element_title: "Experiential education personnel"
+    evidence_programs_must_produce: "Documentation identifying the experiential education leader(s) and their qualifications, plus staffing-adequacy evidence (faculty/staff count vs. program size) supporting the experiential curriculum."
+    required_software_behavior: "Model experiential-education staff/faculty as structured personnel records with role and qualification fields, and support a staffing-ratio report comparing staff count to enrolled/active student count."
+    prism_fit: "Gap"
+    prism_fit_rationale: "No shipped pillar models institutional staffing adequacy or staff-to-student ratios — this is an HR/staffing-analytics question outside any current pillar's scope, unlike the student-preceptor ratio (3.3.e), which is a placement-record query, not a staffing count."
+    exxat_compliance: "gap"
+    exxat_compliance_rationale: "Exxat does not currently meet \"Experiential education personnel\" — no shipped or roadmapped Prism pillar addresses this requirement (Prism fit: Gap), making it an open compliance gap today."
+    gap_notes: "Would need a new staffing/personnel-adequacy reporting capability; no existing pillar models institution-level staff counts against enrollment."
+    source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.12, Standard 3.5.a"
+    # ADDED 2026-09-10: same site/staffing capacity evidence as 3.4.a — see
+    # content/sources/registry.yaml.
+    research_sources: ["article-pubmed-site-capacity-barriers"]
 
   - element_id: "Standard 3, Key Element 3.5.b"
     element_title: "Affiliation agreements with practice facilities"
     evidence_programs_must_produce: "A fully executed, current affiliation agreement on file for every practice facility used in the experiential curriculum, confirming experiences comply with state and federal law."
     required_software_behavior: "A site/contract repository linked one-to-one with each placement site, tracking agreement status and expiration, and blocking new placement scheduling at a site whose agreement has lapsed."
-    prism_fit: "Gap"
-    prism_fit_rationale: "The capability map's Compliance Management pillar is described as a student-item tracker (immunizations, background checks, certs), not a site-level contract/document repository; site affiliation-agreement management isn't named in any current or roadmap pillar."
-    gap_notes: "No pillar today models site-level compliance/contract documents; would need to extend Compliance Management to a facility entity type or treat it as a small standalone module."
+    prism_fit: "Configure"
+    prism_fit_rationale: "CORRECTED 2026-09-10, re-verified against content/prism/capability-map.yaml's Compliance Management pillar: a shipped 'Contracts with expiry alerts' feature tracks signed affiliation agreements linked to locations, with an automated Contract Status check on the Placement Clearance Dashboard (Valid Contract vs. Needs Attention when a contract expires before placement end) and cross-program contract sharing — a real site-level contract repository, not a student-item tracker as previously described. Unconfirmed: whether 'Needs Attention' blocks new scheduling at that site (ACPE's actual requirement) or only flags it."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat's shipped Contracts feature (Compliance Management pillar) tracks affiliation agreements per location with expiration alerts, directly addressing \"Affiliation agreements with practice facilities.\" Rated Configure rather than Transfer because it's unconfirmed whether an expiring contract actually blocks new placement scheduling — ACPE's specific ask — or only flags it for review."
+    gap_notes: "CORRECTED 2026-09-10: previously said no pillar models site-level contracts — wrong; see content/prism/capability-map.yaml's Contracts with expiry alerts feature. The one open question: does a 'Needs Attention' (expiring) contract actually block new placement scheduling at that site, satisfying ACPE's explicit blocking requirement, or does it only flag the condition for staff to act on manually? Needs a demo/PM confirmation; rated Configure pending that answer."
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.13, Standard 3.5.b"
+
+  - element_id: "Standard 3, Key Element 3.5.c"
+    element_title: "Student remuneration/employment"
+    evidence_programs_must_produce: "Per-student attestation/verification that they are not being paid for APPE/IPPE participation and are not placed at a site/practice-area where they are currently employed, or a documented cooperative-education waiver on file with ACPE."
+    required_software_behavior: "An attestation item type completed at placement assignment confirming no-payment and no-self-employment-conflict, blocking placement activation until attested, with a waiver-flag override for cooperative-education-designated programs."
+    prism_fit: "Configure"
+    prism_fit_rationale: "Compliance Management's two-tier attestations with signed audit trail fit this directly as a placement-gating attestation item, the same pattern already used for other student compliance items."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Student remuneration/employment\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
+    gap_notes: ""
+    source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.13, Standard 3.5.c"
 
   - element_id: "Standard 2, Key Element 2.2.d"
     element_title: "Content breadth and depth — curriculum mapping to educational outcomes"
-    evidence_programs_must_produce: "Documentation, through mapping or a comparable method, of the didactic curriculum's coverage of required content areas (Appendix 1), plus mapping of every APPE experience's learning outcomes to the 2.1.a-m educational-outcome elements and any college-specific competencies."
-    required_software_behavior: "A curriculum-mapping tool that links every course, activity, and APPE rotation to a taxonomy of outcome/content elements, with coverage-gap reporting across the full four-year curriculum."
+    evidence_programs_must_produce: "Documentation, through mapping or a comparable method, of the didactic curriculum's coverage of required content areas (Appendix 1), plus mapping of every APPE experience's learning outcomes to ACPE's own 2.1.a-m educational-outcome elements and any college-specific competencies. Standards 2025 adapts its Standard 2.1 outcomes from a separate AACP framework, COEPA 2022, whose 3 domains and 12 Educational Outcomes replaced CAPE 2013. These are two different schemes: ACPE's lettered 2.1 elements are not COEPA's 12 numbered EOs and do not map one-to-one. Programs must also show COEPA's 13 EPAs integrated into experiential education."
+    required_software_behavior: "A curriculum-mapping tool that links every course, activity, and APPE rotation to a taxonomy of outcome/content elements, with coverage-gap reporting across the full four-year curriculum. The taxonomy has to carry both COEPA's 12 Educational Outcomes and its 13 EPAs, and record EPA assessments on a supervision-description entrustment scale rather than numeric levels."
     prism_fit: "Transfer"
     prism_fit_rationale: "This is exactly what the Curriculum Mapping pillar is built for — mapping courses/activities to a curriculum structure — applied to ACPE's 2.1.a-m outcome taxonomy instead of a different discipline's."
-    gap_notes: ""
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat already meets \"Content breadth and depth — curriculum mapping to educational outcomes\" natively today (Prism fit: Transfer) — no configuration or engineering work required."
+    gap_notes: "COEPA 2022 revised the entrustment scale to supervision descriptions rather than numeric levels, with reactive (indirect) supervision as the expectation at graduation. Unconfirmed whether Curriculum Mapping's competency model can hold a non-numeric, ordinal supervision scale, or whether EPA entrustment assessment needs a separate instrument alongside the outcome map."
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.7, Standard 2.2.d"
+    # ADDED 2026-09-11: COEPA 2022's structure (3 domains / 12 EOs / 13 EPAs, the fifth
+    # iteration of pharmacy educational outcomes after 1994, 1998, 2004 and 2013) and the
+    # revised entrustment scale come from the eBook Ch.4.
+    research_sources: ["doc-pharmacy-education-us-ebook-2026"]
 
   - element_id: "Standard 7, Key Element 7.3.c"
     element_title: "Experiential quality assurance across sites"
@@ -86,6 +233,8 @@ standards:
     required_software_behavior: "Standardized, versioned evaluation/assessment forms tied to each experience type and deployed identically to every site offering it; cross-site/cross-preceptor analytics that flag grading or content drift."
     prism_fit: "Transfer"
     prism_fit_rationale: "Directly matches the confirmed Clinical & Experiential Education workflow (Setup -> Forms/Evaluations -> Add Assignment) — the same form/evaluation object is reused per site by design; only the cross-site consistency analytics layer would need building on top."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat already meets \"Experiential quality assurance across sites\" natively today (Prism fit: Transfer) — no configuration or engineering work required."
     gap_notes: "Cross-site consistency/drift analytics is not confirmed as an existing report; may need a small build on top of the existing forms/evaluations data."
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.24, Standard 7.3.c"
 
@@ -95,8 +244,13 @@ standards:
     required_software_behavior: "A competency-attainment dashboard rolling up assessment scores against the outcome taxonomy at both student and cohort level; a readiness gate that blocks APPE enrollment until Pre-APPE competency thresholds are verified; longitudinal trend views feeding program-improvement decisions."
     prism_fit: "Configure"
     prism_fit_rationale: "The intelligence layer's Competency Tracking capability plus the Curriculum Mapping pillar together cover the data model, but formal, psychometrically valid exam scoring and standardized-assessment analytics live in Exam Management, which is still roadmap (Q2 2027) — so today this is a partial fit."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Student achievement and readiness (APPE-ready, Practice-ready, Team-ready)\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Exam Management (roadmap Q2 2027) is not yet shipped; until then, standardized knowledge-based assessment scoring at the rigor ACPE expects is likely outside current Prism capability."
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.24, Standard 7.3.d"
+    # ADDED 2026-09-10: peer-reviewed evidence the "readiness" concept itself is
+    # still contested in the literature — see content/sources/registry.yaml.
+    research_sources: ["article-sciencedirect-appe-readiness", "article-pmc-epa-scoping-review-2025"]
 
   - element_id: "Standard 7, Key Element 7.5.a"
     element_title: "Continuous quality improvement using stakeholder feedback and assessment data"
@@ -104,6 +258,8 @@ standards:
     required_software_behavior: "Survey/feedback instruments issued to students, faculty, and preceptors tied to courses and rotations; longitudinal analytics comparing cycles; an exportable annual findings-and-actions report."
     prism_fit: "Configure"
     prism_fit_rationale: "This depends on systematic survey collection and analysis, which is the Surveys & Course Evaluations pillar. CORRECTED 2026-08-26, per Exxat PM confirmation (see content/prism/capability-map.yaml, Surveys & Course Evaluations pillar): this pillar is shipped, not roadmap as previously stated. Exxat Surveys (14 question types, multi-channel distribution including external email/CSV and anonymous public link, full analytics) plus the Forms/Evaluations engine can produce the student/faculty/preceptor feedback instruments this element needs; what remains is configuring the specific instrument set and cadence 7.5.a requires."
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Continuous quality improvement using stakeholder feedback and assessment data\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "CORRECTED 2026-08-26: previously described as 'Blocked on Surveys & Course Evaluations (Q1 2027)' — that framing was wrong. The pillar is confirmed shipped per Exxat PM (content/prism/capability-map.yaml), so programs can build this survey/feedback workflow inside Prism rather than relying solely on an external tool (e.g., AACP AAMS/PHARMS). Rated Configure rather than Transfer because the multi-audience (students, faculty, preceptors), multi-cycle instrument set for 7.5.a still needs to be built out, not because the underlying capability is missing."
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.25, Standard 7.5.a"
 
@@ -113,6 +269,8 @@ standards:
     required_software_behavior: "A standards-to-evidence repository mapping every ACPE standard/key element to the artifacts, data, and dates that demonstrate compliance; gap tracking; reporting-deadline reminders; self-study assembly/export."
     prism_fit: "Gap"
     prism_fit_rationale: "This is precisely the not-yet-built Accreditation Management pillar (roadmap Q3 2027) — no current pillar aggregates evidence against named standard numbers."
+    exxat_compliance: "gap"
+    exxat_compliance_rationale: "Exxat does not currently meet \"Continuous compliance with the accreditation standards\" — no shipped or roadmapped Prism pillar addresses this requirement (Prism fit: Gap), making it an open compliance gap today."
     gap_notes: "Important scoping fact: ACPE retired its use of AACP's AAMS system and now operates its own submission platform, PHARMS (Pharmacy Accreditation Report Management System), effective with Standards 2025 (July 2025). Prism's future Accreditation Management pillar should be scoped as an evidence-aggregation/export layer that feeds PHARMS, not as a competing self-study portal — ACPE, not the vendor, owns the system of record for submission."
     source: "https://www.acpe-accredit.org/wp-content/uploads/ACPEStandards2025.pdf, p.25, Standard 7.5.b"
 
@@ -123,9 +281,10 @@ licensure_or_gme_layer:
     source: "https://nabp.pharmacy/programs/examinations/naplex/"
 
   - body: "State Boards of Pharmacy"
-    what_it_governs: "Each U.S. state/territory board of pharmacy is the actual licensing authority — it requires an ACPE-accredited PharmD degree plus passing NAPLEX and MPJE (or a state-specific jurisprudence exam) before issuing a pharmacist license, and it also licenses the practice facilities where IPPEs/APPEs occur."
-    relevance_to_product: "Because affiliation agreements and site licensure (Standard 3.4.a, 3.5.b) must satisfy the specific state the rotation occurs in, and rotations routinely cross state lines for multi-campus/distance programs, site records need a per-state licensure/compliance dimension, not just a single national standard."
+    what_it_governs: "Each U.S. state/territory board of pharmacy is the actual licensing authority — it requires an ACPE-accredited PharmD degree plus passing NAPLEX and MPJE (or a state-specific jurisprudence exam) before issuing a pharmacist license, and it also licenses the practice facilities where IPPEs/APPEs occur. Boards additionally set their own practice-experience (intern) hour minimum for NAPLEX eligibility, and most require students to hold a pharmacy intern license while enrolled."
+    relevance_to_product: "Site licensure and affiliation agreements (Standards 3.4.a, 3.5.b) must satisfy the state a rotation occurs in, and rotations routinely cross state lines, so site records need a per-state licensure dimension, not one national standard. The bigger consequence is a dual hour ledger: boards require roughly 1,500-1,800 intern hours for NAPLEX eligibility, so ACPE's 1,440 APPE hours alone may not qualify a graduate everywhere. Most states let APPE hours count but differ on what percentage, and the student submits the verified logs — so a product must roll the same data up twice under two rule sets. CAVEAT: treat that range as unverified; the only source here states it three irreconcilable ways (1,500-1,800; 1,500-1,740; >=1,740). Confirm against NABP's state-by-state survey before customer-facing use."
     source: "https://nabp.pharmacy/"
+    research_sources: ["doc-pharmacy-education-us-ebook-2026"]
 
   - body: "ASHP (American Society of Health-System Pharmacists)"
     what_it_governs: "Accredits PGY1 and PGY2 post-PharmD pharmacy residency programs, and — per ACPE's own history — has collaborated with ACPE since 2014 to accredit pharmacy technician education and training programs."
@@ -138,8 +297,8 @@ licensure_or_gme_layer:
     source: "https://www.bpsweb.org/"
 
   - body: "AACP (American Association of Colleges of Pharmacy)"
-    what_it_governs: "The academic association (not a regulator) whose Curriculum Outcomes and Entrustable Professional Activities (COEPA, 2022) framework Standards 2025's own Standard 2.1 outcomes are explicitly adapted from, and whose standardized graduating-student/faculty/preceptor surveys are named as required assessment-plan evidence in Standard 7.2.d."
+    what_it_governs: "The academic association (not a regulator) whose Curricular Outcomes and Entrustable Professional Activities (COEPA, 2022) framework Standards 2025's own Standard 2.1 outcomes are explicitly adapted from, and whose standardized graduating-student/faculty/preceptor surveys are named as required assessment-plan evidence in Standard 7.2.d. The AACP Board approved COEPA in November 2022; it carries 3 domains, 12 Educational Outcomes and 13 EPAs, replaces both CAPE 2013 and the separate 2016 EPAs, and is the fifth iteration of pharmacy educational outcomes (after 1994, 1998, 2004 and 2013)."
     relevance_to_product: "AACP's own Assessment and Accreditation Management System (AAMS) was the prior self-study platform and has been discontinued in favor of ACPE's own PHARMS system as of Standards 2025 — meaning both the outcomes taxonomy (COEPA) a Curriculum Mapping pillar should target and the survey instruments a Surveys pillar should replicate originate with AACP, even though ACPE now owns submission."
     source: "https://www.aacp.org/"
 
-last_researched: "2026-08-24"
+last_researched: "2026-09-11"

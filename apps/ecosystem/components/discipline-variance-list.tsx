@@ -5,6 +5,7 @@ import { Text } from "@astryxdesign/core/Text";
 import { Collapsible, CollapsibleGroup } from "@astryxdesign/core/Collapsible";
 import { DisciplineChip } from "@/components/discipline-chip";
 import { firstSentence } from "@/lib/text";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import type { DisciplineVarianceNote } from "@/lib/content";
 
 // A stage's discipline_variance used to be one ~19,000-character essay behind a single
@@ -20,25 +21,28 @@ export function DisciplineVarianceList({ notes }: { notes?: DisciplineVarianceNo
         Discipline variance (PT/PTA · OT/OTA · PA · SLP · Nursing · Social Work · Teacher Ed · CRNA)
       </Text>
       <CollapsibleGroup type="multiple" hasDividers density="compact">
-        {notes.map((note, i) => (
-          <Collapsible
-            key={`${note.subject}-${i}`}
-            value={`discipline-note-${i}`}
-            defaultIsOpen={false}
-            trigger={
-              <Stack direction="horizontal" gap={2} vAlign="center" wrap="wrap" maxWidth={760}>
-                <DisciplineChip subject={note.subject} />
-                <Text type="supporting" maxLines={2}>
-                  {firstSentence(note.detail)}
-                </Text>
-              </Stack>
-            }
-          >
-            <Text type="body" textWrap="wrap">
-              {note.detail}
-            </Text>
-          </Collapsible>
-        ))}
+        {notes.map((note, i) => {
+          const detail = stripFileCitations(note.detail) ?? note.detail;
+          return (
+            <Collapsible
+              key={`${note.subject}-${i}`}
+              value={`discipline-note-${i}`}
+              defaultIsOpen={false}
+              trigger={
+                <Stack direction="horizontal" gap={2} vAlign="center" wrap="wrap" maxWidth={760}>
+                  <DisciplineChip subject={note.subject} />
+                  <Text type="supporting" maxLines={2}>
+                    {firstSentence(detail)}
+                  </Text>
+                </Stack>
+              }
+            >
+              <Text type="body" textWrap="wrap">
+                {detail}
+              </Text>
+            </Collapsible>
+          );
+        })}
       </CollapsibleGroup>
     </Stack>
   );

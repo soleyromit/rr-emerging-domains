@@ -26,6 +26,8 @@ standards:
     required_software_behavior: "what a system must DO to help generate this evidence"
     prism_fit: "Transfer | Configure | Build | Gap"
     prism_fit_rationale: "why — reference ../prism/capability-map.yaml pillars by name"
+    exxat_compliance: "compliant | partial | gap | not-applicable"   # derived from prism_fit: Transfer/Configure -> compliant, Build -> partial, Gap -> gap
+    exxat_compliance_rationale: "one sentence, cites prism_fit above — not independent research"
     gap_notes: "if Gap or partial — what's missing"
     source: "https://... (deep link or page/section in the standards PDF)"
 

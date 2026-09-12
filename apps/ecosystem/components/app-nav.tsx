@@ -46,6 +46,14 @@ const SECTIONS = [
       { href: "/crosswalk", label: "Crosswalk" },
     ],
   },
+  // Its own section, LAST, and never folded into "Market": everything above this
+  // line is researched and cited, and this is not. A quarantined sales artifact
+  // sitting as a peer of the competitor matrix would borrow that section's standing,
+  // which is precisely what the label and the position exist to deny it.
+  {
+    title: "Reference — unverified",
+    items: [{ href: "/reference/vendor-comparison-chart", label: "Vendor comparison chart (unverified)" }],
+  },
 ];
 
 const ALL_HREFS = SECTIONS.flatMap((s) => s.items.map((i) => i.href));
@@ -71,7 +79,7 @@ export function AppNav({ children }: { children: React.ReactNode }) {
             <SideNavHeading
               heading="Domain Expansion"
               superheading="Exxat PRISM"
-              subheading="DO · Pharmacy · Dentistry · Medicine"
+              subheading="Pharmacy · DO · Dentistry · Medicine"
               headingHref="/"
             />
           }

@@ -1,0 +1,95 @@
+# Level 0.5 — support-ticket snapshot TEMPLATE. Copy this file to
+# content/sources/support-tickets/<domain-slug>-<YYYY-MM-DD>.yaml for a new domain.
+# Files beginning with _TEMPLATE are skipped by the app's YAML directory reader
+# (apps/ecosystem/lib/content.ts) and by the support-signals page, so this file is
+# documentation, never rendered.
+#
+# WHAT THIS FAMILY IS FOR
+# A support-ticket snapshot is a point-in-time, human-reviewed copy of a curated set of
+# helpdesk tickets. It exists so a claim sourced from support data can be cited like any
+# other evidence (content/ARCHITECTURE.md) instead of being fetched live and rendered
+# with no source. It cites nothing itself; other files cite its `source_id`s.
+#
+# HOW TO PRODUCE ONE
+#   ZENDESK_SUBDOMAIN=... ZENDESK_EMAIL=... ZENDESK_API_TOKEN=... \
+#       python3 scripts/snapshot_zendesk.py --domain <Domain>
+# then read every ticket, strip any PII, and flip `redacted:` to true by hand.
+#
+# PII RULE — the one rule this family lives or dies by.
+# The script always writes `redacted: false`. It is not allowed to write `true`, because
+# "a human has read this and there is no personal data in it" is not a thing a script can
+# know. Never commit a file with `redacted: false` still in it, and never bulk-edit the
+# field without actually reading the ticket text above it.
+
+snapshot:
+  # "support-tickets-<domain-slug>-<YYYY-MM-DD>". Frozen once written — other files cite it.
+  id: "support-tickets-<domain-slug>-<YYYY-MM-DD>"
+  # One of the `type:` values in content/sources/registry.yaml's enum. Always
+  # "support-ticket" for this folder.
+  type: "support-ticket"
+  # The helpdesk the snapshot came from, e.g. "zendesk".
+  system: "<helpdesk>"
+  # "first-party" (Exxat's own material) | "third-party". A support desk is first-party.
+  origin: "first-party"
+  # "public" | "internal" | "confidential". Ticket data is at least "internal".
+  access: "internal"
+  # The date the snapshot was taken, NOT the date a ticket was filed.
+  taken: "<YYYY-MM-DD>"
+  # The discipline/domain this snapshot is about, in display form ("Pharmacy").
+  # The filename's domain slug is the lowercased, hyphenated form of this.
+  domain: "<Domain>"
+  # How these tickets were chosen, in enough detail that a reader can judge the bias.
+  # If the selection was a curated id list rather than a query, say so and say why —
+  # that reasoning is the single most important field in the file.
+  #
+  # Make it AUDITABLE, not merely true. "Search results were mostly irrelevant" is
+  # unfalsifiable and worthless to a future reader; NAME what was excluded and what filter
+  # was applied afterwards, so someone can go check it and correct you if you were wrong.
+  # Organization and institution names are not personal data — do not redact them here.
+  # Aim for 300-600 characters.
+  selection_method: >-
+    <How were these tickets chosen? A saved search? A tag? A hand-picked id list? If
+    hand-picked: which specific sources of false positives were excluded, by name, and
+    what filter was applied to what survived?>
+  # The literal query string if one was used; null for a curated id list.
+  selection_query: null
+  # Every ticket id in this snapshot, in the same order as `tickets:` below. Kept
+  # deliberately consistent with the single placeholder entry under `tickets:` — a
+  # template is copied verbatim, so it must not ship a contradiction to inherit.
+  ticket_ids: [0]
+  # Distinct customer organizations the snapshot spans, deduplicated. This is the number
+  # that tells a reader whether they are looking at a pattern or at one unhappy account.
+  organizations_observed: []
+  # The honest limit of what this snapshot can support. A handful of tickets from one
+  # account is one account's experience, not a market signal — say that here rather than
+  # letting a reader infer breadth the data doesn't have.
+  coverage_caveat: "<N tickets, M organizations — what this can and cannot be used to claim.>"
+
+tickets:
+  # One entry per id in `ticket_ids`, same order.
+  - # "support-ticket-<ticket_id>". This is what other content files cite.
+    source_id: "support-ticket-<ticket_id>"
+    ticket_id: 0
+    # Deep link to the ticket in the agent UI. Internal-only by nature.
+    url: "https://<subdomain>.zendesk.com/agent/tickets/<ticket_id>"
+    # The ticket's own subject line, verbatim. HIGHEST PII RISK FIELD in this file —
+    # customers routinely put names and email addresses in subject lines. Rewrite or
+    # null it rather than committing personal data.
+    subject: null
+    # The helpdesk's own status value at snapshot time ("open", "solved", "closed", ...).
+    status: null
+    # The customer organization's name. An institution name is not PII; a person's name is.
+    organization: null
+    organization_id: null
+    # The categorization the app's own logic assigns, NOT a free-text label. For Zendesk
+    # this comes from categorizeFeatureGap() in apps/ecosystem/lib/zendesk/client.ts and
+    # must be one of its four values:
+    #   "Rejected" | "Parked for later" | "Open — module gap" | "Closed — module gap"
+    category: null
+    # A human's one-line read of what this ticket demonstrates. There is no API field for
+    # this — leave it null unless someone actually wrote one. An empty finding is honest;
+    # an invented one poisons everything that cites it.
+    finding: null
+    # false until a human has read this ticket and confirmed no name, email, or phone
+    # number survives anywhere above. Only a human may set this to true.
+    redacted: false

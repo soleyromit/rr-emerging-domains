@@ -19,6 +19,163 @@ market:
     - "AACP, 'Academic Pharmacy's Vital Statistics' (enrollment figures): https://www.aacp.org/article/academic-pharmacys-vital-statistics"
     - "AACP, 'Pharmacy School Interest Rises as Applications Jump 6%': https://www.aacp.org/article/pharmacy-school-interest-rises-applications-jump-6"
     - "WVU Today, University of Charleston pharmacy program closure (Dec 2024): https://wvutoday.wvu.edu/stories/2024/12/19/wvu-school-of-pharmacy-offers-support-to-university-of-charleston-students-affected-by-program-closure"
+
+# Numeric, machine-readable sibling to the prose `market:` block above. The two
+# coexist deliberately and neither replaces the other: `market:` holds the cited
+# narrative a reader reads, `market_sizing:` holds the numbers a scorecard
+# criterion or an integrity check can point at. This is the block
+# content/dissection/pharmacy.yaml's "market-size" question names as
+# `domains/pharmacy.yaml#market_sizing`, alongside `market/programs/pharmacy.yaml`.
+#
+# Populated 2026-09-11 from two registered sources: the per-program registry in
+# content/market/programs/pharmacy.yaml (149 rows off the CRM export, source
+# `crm-export-new-logo-grid-2026`) and the internal eBook
+# `doc-pharmacy-education-us-ebook-2026`. The prose `market:` block above is
+# deliberately NOT overwritten and NOT reconciled away: where a number here
+# differs from one there, both stand and the difference is explained in a comment
+# on the field. `som`, `acv` and `revenue_potential_usd` stay null because no
+# pricing or target-list evidence exists in this repo yet.
+market_sizing:
+  as_of: "2026-09-11"          # YYYY-MM-DD — when the numbers below were last set
+  unit: "program"              # the thing being counted in every count below
+  tam:
+    # 149 = the real row count of content/market/programs/pharmacy.yaml, counted
+    # from the file, not carried over from a summary. Rows are program AND
+    # application records: two institutions (California Health Sciences
+    # University, MCPHS University) appear twice, so 149 rows sit at 147
+    # distinct institutions.
+    programs: 149
+    basis: "Every row on the CRM export's Pharmacy sheet: program and application records at 147 institutions, all accreditation statuses, not accredited-only."
+    source_id: "crm-export-new-logo-grid-2026"
+  accredited_programs:
+    # The eBook states "145+" in two places (its Chapter 1 stat strip and its
+    # closing At-a-Glance page) and never an exact figure, so 145 is recorded as
+    # the floor the source actually asserts. The eBook attaches no as-of year to
+    # this count; the file's own docProps date (2026-03-17) is all there is.
+    count: 145
+    qualifier: "Accredited US PharmD programs; the eBook states 145+, a floor rather than an exact count, with no as-of year"
+    source_id: "doc-pharmacy-education-us-ebook-2026"
+    variance_note: "149 CRM rows are program/application records at 147 institutions, not accredited programs: 135 accredited, 7 unknown, 4 closing, 2 candidate, 1 probation. The eBook's 145+ counts ACPE-accredited only."
+  sam:
+    programs: 144
+    basis: "tam.programs minus current_clients.count minus churned_clients.count — every Pharmacy row not already won or previously lost."
+    derived_from: ["tam", "current_clients", "churned_clients"]
+  som:
+    programs: null
+    basis: "Not sized — no named target list or win-rate assumption exists yet"
+  enrollment:
+    # DISCREPANCY, stated rather than resolved. The `market:` prose above says
+    # "42,312 students enrolled across PharmD programs, Fall 2024 (AACP)". That
+    # figure is real and corroborated, but AACP's Vital Statistics page — the
+    # source the prose names — states fall 2023, not fall 2024, as fetched on
+    # 2026-09-11: "Total first professional degree enrollment was 44,403 in fall
+    # 2023." The fall-2024 figure lives in a downloadable AACP report this pass
+    # could not open and quote. So the machine-readable number here is the older
+    # figure that a registered source actually states, and the prose keeps its
+    # newer one. Note the direction: 44,403 (2023) -> 42,312 (2024) is a further
+    # decline, so `trend: declining` holds on either figure.
+    students: 44403
+    as_of_year: 2023
+    trend: "declining"         # growing | stable | declining | recovering | unknown
+    yoy_pct: -3.0              # the source's own "down 3 percent compared to fall 2022"
+    source_id: "dataset-aacp-vital-statistics-2023"
+  current_clients:
+    count: 4
+    named:
+      - "university-of-maryland-baltimore-pharmacy"
+      - "belmont-university-pharmacy"
+      - "college-of-southern-maryland-pharmacy"
+      - "philadelphia-college-of-osteopathic-medicine-pharmacy"
+    source_id: "crm-export-new-logo-grid-2026"
+  churned_clients:
+    count: 1
+    named:
+      - "husson-university-pharmacy"
+    source_id: "crm-export-new-logo-grid-2026"
+  penetration_pct: 2.7         # 4 / 149 * 100 = 2.68, rounded to one decimal
+  acv:
+    value_usd: null
+    basis: "Not sourced — no pricing artifact exists in this repo"
+    confidence: "unknown"      # unknown | low | medium | high
+  revenue_potential_usd: null  # HARD RULE: may only be non-null when
+                               # acv.value_usd is non-null and sourced. A revenue
+                               # number standing on an unsourced ACV is a guess
+                               # wearing a dollar sign
+  adjacency:
+    # The "sell one Exxat for the university" count. This field counts
+    # INSTITUTIONS, not rows, and the two differ: the registry holds program and
+    # application records, so one institution can occupy two rows. Deduplicated
+    # by institution name across the whole file — only two institutions repeat,
+    # MCPHS University (Worcester + Boston) and California Health Sciences
+    # University (2013 + 2021 application records).
+    #
+    # Two exclusions, then a dedup:
+    #   * Larkin University, Manchester University and South Carolina College of
+    #     Pharmacy matched no Logo Grid row at all, so their empty
+    #     other_disciplines_on_campus means UNKNOWN, not a confirmed
+    #     no-cross-sell (each says so in its own `notes`). Folding them into the
+    #     negatives would overstate "confirmed no overlap" by exactly 3.
+    #   * 149 rows - 3 unmatched = 146 matched rows = 144 distinct institutions.
+    #
+    # Of those 144: 99 already run Exxat for at least one other discipline
+    # (100 rows, MCPHS counted once) and 45 have an empty cross-sell list
+    # (46 rows, CHSU counted once).
+    #
+    # CORRECTED 2026-09-12 (Task 3.4): those 45 are NOT all checked negatives.
+    # This block previously said "45 are checked negatives", which counted one
+    # unevaluated row as a confirmed one. Lake Erie College of Osteopathic
+    # Medicine (Pharmacy!A110) matched a Logo Grid row whose discipline cells
+    # are "#N/A" in 35 of 36 columns — the Pharmacy column included — so its
+    # empty list is unknown, not a checked "no". That row now says so in its own
+    # `notes`. The distinction was only discovered in Tasks 3.1/3.2, after this
+    # number was first written, which is why it slipped through rather than
+    # being decided wrongly.
+    #
+    # So the honest split of the 144 is: 99 with overlap + 44 confirmed
+    # negatives + 1 unevaluated (LECOM) = 144, which is the arithmetic check on
+    # this number. Only the negative side moves; 99 is unaffected, because the
+    # unevaluated row is on the empty-list side by construction.
+    #
+    # Cross-sell is therefore UNKNOWN for 4 institutions, not 3: the 3 unmatched
+    # plus LECOM.
+    claim: "99 of 144 matched Pharmacy institutions run Exxat for another discipline; 44 confirmed negatives, 1 unevaluated (LECOM), 3 unmatched, both unknown."
+    cross_discipline_overlap_institutions: 99
+    source_id: "crm-export-new-logo-grid-2026"
+  confidence: "medium"         # low | medium | high — counts and client status are
+                               # first-party and exact; the accredited count is a
+                               # floor and enrollment lags a year, so not "high"
+
+# Where this domain's programs sit inside an institution and who actually signs.
+# Sourced from the eBook's Chapter 11 (institutional placement, Dean's-office
+# portfolios) and the 2026-09-04 Vishaka session (who Exxat actually sells to
+# today, and why that is the wrong person).
+org_structure:
+  typical_parent: "Independent college of pharmacy reporting to the Provost or Academic VP — the eBook's \"most common model (~70% of programs)\". The rest sit in a health-sciences school under a senior dean."
+  buying_roles:                # [{persona_ref, title_in_domain, decision_role, note?}]
+                               # persona_ref  — a content/personas/ file slug
+                               # decision_role — economic-buyer | champion | user
+                               #                 | blocker | influencer
+                               # note          — optional, <=200 soft / 400 hard
+    - persona_ref: "role-dean"
+      title_in_domain: "Dean, College/School of Pharmacy"
+      decision_role: "economic-buyer"
+      note: "Chief executive of the college; owns budget, ACPE compliance, faculty and strategy, and reports to the Provost or a senior dean of health sciences. Every ACPE-accredited program has one."
+    # The next two both point at role-clinical-coordinator because that persona is
+    # this repo's only experiential-education role and its own header names
+    # "Director of Experiential Education (Pharmacy)" explicitly. They are two
+    # different seats in the domain, one dean-level and one operational, not a
+    # duplicate entry.
+    - persona_ref: "role-clinical-coordinator"
+      title_in_domain: "Associate Dean for Experiential Education"
+      decision_role: "champion"
+      note: "Owns all IPPE and APPE programs, site agreements, preceptor credentialing, and student hour/rotation compliance tracking; interfaces with the Office of Experiential Programs (OEP)."
+    - persona_ref: "role-clinical-coordinator"
+      title_in_domain: "Director of Clinical / Experiential Education (DCE)"
+      decision_role: "user"
+      note: "The role Exxat has historically sold to and, per the 2026-09-04 Vishaka session, the WRONG buyer: the DCE \"doesn't care about curriculum mapping... we are barking against the wrong tree.\""
+  sources:
+    - source_id: "doc-pharmacy-education-us-ebook-2026"
+    - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
 standards_bodies:
   - name: "ACPE"
     type: "institutional accreditor"

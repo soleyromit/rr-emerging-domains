@@ -1,0 +1,126 @@
+# Level 0.5 — a corpus index, not a registry entry per se. See content/ARCHITECTURE.md.
+# Citations from content/*.yaml use {source_id, locator} where source_id is one of this file's
+# article ids and locator is optional extra detail (an anchor/subsection within the article).
+#
+# PROVENANCE — read before citing any id here.
+#
+# Every `path:` below is quoted VERBATIM from a help-center path that already appears in
+# content/flows/*.yaml or content/journeys/*.yaml. None is reconstructed or inferred. Re-verify any
+# one of them with:  grep -rF "<the path>" content/ --exclude-dir=sources
+#
+# KNOWN LIMITATION — these entries are derived from in-repo assertions, NOT from the articles.
+# `title:` is the article's own filename, but `what_it_supports:` restates what an in-repo Level-1
+# (content/prism/capability-map.yaml) or Level-3 (content/flows/*.yaml) file asserts the article
+# says. Nobody has re-opened the Level-0 article in the vault to confirm it. Consequences:
+#   - Do NOT use an id here to corroborate the very file its `what_it_supports` was derived from.
+#     Citing `help-center-*` back at capability-map.yaml would launder a Level-1 claim into a
+#     Level-0.5 badge without adding evidence.
+#   - Treat `what_it_supports` as "what the repo believes this article says," not as a reading of
+#     the article. Upgrade an entry by opening the vault file and rewriting the field from it.
+#
+# path: is written the way existing inline citations write it — relative to the vault's
+# `99-Assets/documents/`, i.e. starting with `Exxat-Help-Guides/`. Prepend `PRISM-Expansion-Vault/
+# 99-Assets/documents/` (see mirror_root, minus its trailing `Exxat-Help-Guides/`) to resolve.
+#
+# path_status: "confirmed" — the path is quoted verbatim from an existing in-repo citation. All 9
+# entries are currently `confirmed`. The value exists so a future entry added from a topic with no
+# verbatim path in the repo must mark itself "inferred" rather than passing as attested.
+corpus:
+  id_prefix: "help-center-"
+  mirror_root: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/"
+  origin: "first-party"
+  access: "internal"
+  # content/ARCHITECTURE.md states 322 files for this mirror; content/prism/capability-map.yaml's
+  # source list states 399 articles. Using ARCHITECTURE.md's number per the task brief; the
+  # discrepancy is real and unresolved (322 may be post-dedup files vs. 399 published articles).
+  article_count: 322
+  # No explicit mirror date is stated anywhere; this is ARCHITECTURE.md's document-level
+  # "Last updated" date, which is also capability-map.yaml's `last_updated`.
+  mirrored: "2026-08-24"
+  coverage_note: >
+    A deliberate 9-of-322 seed, not a complete index. content/ contains 114 distinct verbatim
+    help-center paths across 437 references; these 9 are the ones that both back a specific
+    capability claim and are cited often enough to be worth an id today. Converting the remaining
+    inline citations is a later mechanical pass. Nothing cites these ids yet.
+
+articles:
+  - id: "help-center-patient-log-review-workflow"
+    title: "Setting Up and Managing Patient Log - PA"
+    path: "Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Setting Up and Managing Patient Log - PA.md"
+    path_status: "confirmed"
+    module: "Clinical & Experiential Education"
+    what_it_supports: "Patient-log status flow and who may edit, delete, approve or reopen a log at each status."
+    accessed: "2026-08-24"
+
+  - id: "help-center-placement-publish-step"
+    title: "Placing and Publishing Placements to Students"
+    path: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placing and Publishing Placements to Students.md"
+    path_status: "confirmed"
+    module: "Clinical & Experiential Education"
+    what_it_supports: "Publish is a separate step from matching; a placement is invisible to the student until an admin publishes it."
+    accessed: "2026-08-24"
+
+  - id: "help-center-placement-clearance-dashboard"
+    title: "Placement Clearance Dashboard"
+    path: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
+    path_status: "confirmed"
+    module: "Clinical & Experiential Education"
+    what_it_supports: "The pre-rotation readiness gate: per-student compliance and contract status rolled up before a placement proceeds."
+    accessed: "2026-08-24"
+
+  - id: "help-center-site-contract-management"
+    title: "Managing Contracts"
+    path: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md"
+    path_status: "confirmed"
+    module: "Clinical & Experiential Education"
+    what_it_supports: "Site contract records, expiry tracking, and linking one contract across multiple sites or locations."
+    accessed: "2026-08-24"
+
+  - id: "help-center-communications-vs-interventions"
+    title: "Adding Interventions and Communications"
+    path: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md"
+    path_status: "confirmed"
+    module: "Compliance Management"
+    what_it_supports: "Two separate record types: neutral Communications vs. Interventions for documented incidents needing follow-up."
+    accessed: "2026-08-24"
+
+  - id: "help-center-student-compliance-review"
+    title: "Review Student Compliance Document"
+    path: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Review Student Compliance Document.md"
+    path_status: "confirmed"
+    module: "Compliance Management"
+    what_it_supports: "Admin review of uploaded compliance documents, incl. the Declination/Exception/Medical/Religious exemption sub-statuses."
+    accessed: "2026-08-24"
+
+  - id: "help-center-curriculum-accreditation-standards"
+    title: "Managing Accreditation Standards for Curriculum Mapping"
+    path: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
+    path_status: "confirmed"
+    module: "Curriculum Mapping"
+    what_it_supports: "Pre-loaded accreditor standards (deactivate-only) vs. admin-authored Program Specific Standards."
+    accessed: "2026-08-24"
+
+  - id: "help-center-course-forms-evaluations-activation"
+    title: "Managing Course Activities - Activating Forms and Evaluations"
+    path: "Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+    path_status: "confirmed"
+    module: "Surveys & Course Evaluations"
+    what_it_supports: "Activating and distributing forms/evaluations per course offering — the step that makes an instrument live."
+    accessed: "2026-08-24"
+
+  - id: "help-center-pa-arcpa-reports"
+    title: "Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition)"
+    path: "Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md"
+    path_status: "confirmed"
+    module: "Accreditation Management"
+    what_it_supports: "Maps stock Prism reports onto named ARC-PA elements (B3.02, B3.03 a-c, B3.04, B3.05 a-f)."
+    accessed: "2026-08-24"
+    # The article's own filename says ARC-PA *6th* Edition; capability-map.yaml's inline claim about
+    # accreditor-named reports says "ARC-PA 5th Ed. examples". Unresolved — do not cite this id for
+    # an edition-specific claim without opening the article.
+
+# Two topics seeded in the first draft of this file were dropped because no verbatim help-center
+# path in content/ backs them, and inventing one is worse than omitting the entry:
+#   - a curriculum copy-to-cohort wizard (capability-map.yaml asserts it; the repo cites no article)
+#   - the PA-vs-PT/OT/Nursing Course/Rotation modeling divergence (same situation)
+# Add them when a real path surfaces.

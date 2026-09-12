@@ -4,17 +4,24 @@ import { Grid } from "@astryxdesign/core/Grid";
 import { ClickableCard } from "@astryxdesign/core/ClickableCard";
 import { Text } from "@astryxdesign/core/Text";
 import { Heading } from "@astryxdesign/core/Heading";
-import { Badge } from "@astryxdesign/core/Badge";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { PageHeader } from "@/components/page-header";
 import { Takeaway } from "@/components/takeaway";
+import { DisciplineChip } from "@/components/discipline-chip";
 import { CompetitorDepthChart } from "@/components/charts/competitor-depth-chart";
 import { CompetitorScanTable } from "@/components/competitor-scan-table";
 import { leadSentence } from "@/lib/text";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import { listCompetitors } from "@/lib/content";
 
 export default function CompetitorsPage() {
-  const competitors = listCompetitors().sort((a, b) => a.competitor.localeCompare(b.competitor));
+  // Copy before sorting. Safe either way today — listCompetitors() ends in a .map(), so
+  // the array it hands back is already a throwaway — but lib/content.ts now memoizes its
+  // YAML readers in production, and this was the one call site in the app sorting an
+  // accessor's return value in place. Push the memo up one level (cache listCompetitors
+  // itself) and the bare .sort() would start reordering shared state for every later
+  // reader; the spread makes that a non-event.
+  const competitors = [...listCompetitors()].sort((a, b) => a.competitor.localeCompare(b.competitor));
 
   return (
     <Stack gap={0}>
@@ -65,9 +72,9 @@ export default function CompetitorsPage() {
             <Grid columns={{ minWidth: 320 }} gap={4}>
               {competitors.map((c) => {
                 const signal = c.exxat_opportunity
-                  ? leadSentence(c.exxat_opportunity)
+                  ? stripFileCitations(leadSentence(c.exxat_opportunity))
                   : c.strengths?.[0]
-                    ? leadSentence(c.strengths[0].claim)
+                    ? stripFileCitations(leadSentence(c.strengths[0].claim))
                     : undefined;
                 return (
                   <ClickableCard key={c.slug} href={`/competitors/${c.slug}`} label={c.competitor}>
@@ -80,7 +87,7 @@ export default function CompetitorsPage() {
                       ) : null}
                       <Stack direction="horizontal" gap={1.5} wrap="wrap">
                         {(c.domains_served ?? []).map((d) => (
-                          <Badge key={d} variant="neutral" label={d} />
+                          <DisciplineChip key={d} subject={d} />
                         ))}
                       </Stack>
                       {signal ? (

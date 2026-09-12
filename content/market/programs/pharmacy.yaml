@@ -1,0 +1,2630 @@
+# Pharmacy — the per-program ground-truth registry under
+# content/domains/pharmacy.yaml's market_sizing block. Level 1: every row cites
+# Level 0 (the CRM export below) and nothing above it. See
+# content/market/programs/_TEMPLATE.yaml for the field-by-field schema.
+#
+# HOW THIS FILE WAS BUILT (2026-09-11), so a reader can re-derive it rather than
+# trust it:
+#   * Rows are the "Pharmacy" sheet of the new-logo-grid export, verbatim and in
+#     sheet order — 149 data rows (sheet rows 3-152; row 7 is blank). `locator`
+#     on each row is the sheet cell its institution name came from.
+#   * institution / program_name: the sheet gives ONE name string per row
+#     ("University of Charleston School of Pharmacy"). It is split into the
+#     institution and the program designation it embeds; where the name carries
+#     no program designation (4 rows), program_name is null.
+#   * accreditation_status maps the sheet's own Accreditation Status text:
+#     Accredited -> accredited (135 rows), Candidate Status -> candidate (2),
+#     Accredited with Probation -> probation (1), Discontinued -> closing (3),
+#     Withdrawn+Program Closure -> closing (1). The sheet's one "Withdrawn"
+#     accreditation APPLICATION and its one "No Status Awarded" map to unknown
+#     rather than being read as precandidate, and the 5 rows whose accreditation
+#     columns are blank are unknown. Every non-"Accredited" row carries the
+#     sheet's verbatim text in `notes`, so the mapping is auditable.
+#   * exxat_status maps the sheet's Client Y/N column: Yes -> client (4),
+#     Previous client -> churned (1), No -> not-tracked (144). A plain "No" is
+#     NOT read as `prospect`; the sheet carries no signal distinguishing an
+#     actively-prospected school from a cold one, and inventing one here would
+#     make a pipeline number out of a blank cell.
+#   * other_disciplines_on_campus lists the disciplines that the master "Logo
+#     Grid" sheet marks "Yes" (i.e. already an Exxat client) for the SAME
+#     institution, Pharmacy itself excluded. This is the cross-sell field: a
+#     pharmacy program on a campus that already runs Exxat for PT/OT/Nursing is
+#     a different sale from a cold campus. A discipline the grid marks "No" is
+#     not listed — the grid's "No" means tracked-but-not-a-client, which is not
+#     what this field is for. 146 of 149 rows resolved to a Logo Grid row (109
+#     by exact name; 37 by a hand-reviewed variant/former-name/same-campus-unit
+#     match); Larkin University, Manchester University and South Carolina
+#     College of Pharmacy have no Logo Grid row at all and are honestly empty.
+#     An empty list therefore carries THREE meanings, and `grid_matched:` only
+#     separates two of them: on the rows with `grid_matched: true` an empty list
+#     is normally a checked negative (the grid marks no other discipline "Yes"
+#     for that campus), and on the 3 rows with `grid_matched: false` it is
+#     unknown. ANY aggregate over this field must branch on `grid_matched`,
+#     never on the wording of `notes` — prose is context for a human reader, not
+#     a machine-checkable flag.
+#   * THE #N/A CAVEAT — read before aggregating. The third meaning, added by
+#     Task 3.4 and NOT expressible in `grid_matched`, is the one this file
+#     originally missed: EXACTLY ONE row —
+#     `lake-erie-college-of-osteopathic-medicine-pharmacy` (Pharmacy!A110) —
+#     matched a Logo Grid row (LECOM, PA) whose discipline cells carry the
+#     literal Excel error "#N/A" in 35 of 36 columns, the Pharmacy column among
+#     them. That is an unevaluated lookup, not a checked "no"; the 36th cell is
+#     the DO column, which holds a real "No" and rescues nothing here. So its
+#     empty list is UNKNOWN, and `grid_matched: true` cannot say so because a
+#     row WAS found — the same trap content/market/programs/do.yaml documents
+#     for its own 11 such rows. An aggregate needing the distinction must
+#     exclude this locator explicitly.
+#     (49 of the 149 rows have an empty list: 45 are confirmed negatives, 1 is
+#     the #N/A unknown above, and 3 are unmatched unknowns.)
+#     Two universities in one system (UNC-Chapel Hill vs UNC-Charlotte, Texas
+#     Tech vs TTU Health Sciences Center) were never merged.
+#     Discipline labels: the grid's column headers are rewritten to this repo's
+#     canonical domain labels where one exists (PT -> Physical Therapy, OT ->
+#     Occupational Therapy, PA -> Physician Assistant, NURS -> Nursing, SLP ->
+#     Speech-Language Pathology, MD -> Medicine, DO/Doctor of Osteopathic
+#     Medicine -> DO, SW -> Social Work). Columns with no canonical label keep
+#     the grid's own header verbatim (PTA, OTA, AT, NUT, CCS, CLS, MLSB, Chiro,
+#     ...) rather than being expanded into a guess at what the abbreviation
+#     means.
+#   * region comes only from a matched Logo Grid row's Region column, and only
+#     when that grid row's own State agrees with the program's State. 13 rows
+#     have a null region: the grid leaves Region blank, or the grid files the
+#     institution under a state this program is not in (it has Lebanese American
+#     University under NY, USC under SC, Western University of Health Sciences
+#     under OR, Thomas Jefferson under NJ, and PCOM under PA though the pharmacy
+#     school is its GA campus). Those rows keep the institution's disciplines
+#     and drop the contradicted region rather than mirror a wrong one.
+#   * incumbent_vendor is "unknown" on all 149 rows and incumbent_evidence is
+#     null to match. Nothing in this export says which competitor any individual
+#     program runs; per-program incumbency is separate research, and "unknown"
+#     is a real, countable answer.
+#   * exxat_since is null on all 149 rows — the export states no start year.
+#   * Contact columns in the sheet (dean name, title, email, address, phone,
+#     fax) are deliberately not mirrored here. See pii_policy.
+
+domain: "Pharmacy"
+
+source_of_record:
+  source_id: "crm-export-new-logo-grid-2026"
+  sheet: "Pharmacy"
+  extracted: "2026-09-11"
+  row_count: 149
+  pii_policy: >
+    Contact names/emails/phone numbers are deliberately NOT mirrored here. The
+    source spreadsheet remains the system of record for contact data; this file
+    holds counts, status, and structure only so content/ stays shareable.
+
+programs:
+  - slug: "university-of-maryland-baltimore-pharmacy"
+    institution: "University of Maryland, Baltimore"
+    program_name: null
+    state: "MD"
+    region: "East"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "client"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Nursing", "Physician Assistant", "Social Work"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Sheet leaves the accreditation columns blank for this row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A3"
+  - slug: "belmont-university-pharmacy"
+    institution: "Belmont University"
+    program_name: null
+    state: "TN"
+    region: "South"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "client"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Medicine", "Nursing", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Sheet leaves the accreditation columns blank for this row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A4"
+  - slug: "college-of-southern-maryland-pharmacy"
+    institution: "College of Southern Maryland"
+    program_name: null
+    state: "MD"
+    region: "East"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "client"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Sheet leaves the accreditation columns blank for this row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A5"
+  - slug: "philadelphia-college-of-osteopathic-medicine-pharmacy"
+    institution: "Philadelphia College of Osteopathic Medicine"
+    program_name: null
+    state: "GA"
+    region: null
+    accreditation_status: "accredited"
+    class_size: 70
+    exxat_status: "client"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A6"
+  - slug: "auburn-university-pharmacy"
+    institution: "Auburn University"
+    program_name: "Harrison College of Pharmacy"
+    state: "AL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 121
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A8"
+  - slug: "samford-university-pharmacy"
+    institution: "Samford University"
+    program_name: "McWhorter School of Pharmacy"
+    state: "AL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 122
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A9"
+  - slug: "midwestern-university-glendale-pharmacy"
+    institution: "Midwestern University - Glendale"
+    program_name: "College of Pharmacy-Glendale"
+    state: "AZ"
+    region: "West"
+    accreditation_status: "closing"
+    class_size: 139
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Sheet status 'Discontinued' (type: Program Merger)."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A10"
+  - slug: "university-of-arizona-pharmacy"
+    institution: "University of Arizona"
+    program_name: "R. Ken Coit College of Pharmacy"
+    state: "AZ"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 111
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A11"
+  - slug: "harding-university-pharmacy"
+    institution: "Harding University"
+    program_name: "College of Pharmacy"
+    state: "AR"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 94
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A12"
+  - slug: "university-of-arkansas-for-medical-sciences-pharmacy"
+    institution: "University of Arkansas for Medical Sciences"
+    program_name: "College of Pharmacy"
+    state: "AR"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 73
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A13"
+  - slug: "american-university-of-health-sciences-pharmacy"
+    institution: "American University of Health Sciences"
+    program_name: "School of Pharmacy"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 63
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A14"
+  - slug: "california-health-sciences-university-2013-application-pharmacy"
+    institution: "California Health Sciences University"
+    program_name: "College of Pharmacy"
+    state: "CA"
+    region: "West"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Withdrawn — sheet type 'Focused – Advancement to Accredited'. CHSU's 2013 application record; the 2021 one is a separate row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A15"
+  - slug: "california-health-sciences-university-2021-application-pharmacy"
+    institution: "California Health Sciences University"
+    program_name: "College of Pharmacy"
+    state: "CA"
+    region: "West"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Sheet status 'No Status Awarded' (type: Comprehensive – Precandidate status). CHSU's 2021 application record."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A16"
+  - slug: "california-northstate-university-pharmacy"
+    institution: "California Northstate University"
+    program_name: "College of Pharmacy"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 122
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A17"
+  - slug: "chapman-university-pharmacy"
+    institution: "Chapman University"
+    program_name: "School of Pharmacy"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 89
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A18"
+  - slug: "keck-graduate-institute-kgi-pharmacy"
+    institution: "Keck Graduate Institute (KGI)"
+    program_name: "School of Pharmacy and Health Sciences"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 65
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A19"
+  - slug: "loma-linda-university-pharmacy"
+    institution: "Loma Linda University"
+    program_name: "School of Pharmacy"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 101
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "PTA", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A20"
+  - slug: "marshall-b-ketchum-university-pharmacy"
+    institution: "Marshall B. Ketchum University"
+    program_name: "College of Pharmacy"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 120
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A21"
+  - slug: "touro-university-california-pharmacy"
+    institution: "Touro University - California"
+    program_name: "College of Pharmacy"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A22"
+  - slug: "university-of-california-irvine-pharmacy"
+    institution: "University of California, Irvine"
+    program_name: "School of Pharmacy & Pharmaceutical Sciences"
+    state: "CA"
+    region: "West"
+    accreditation_status: "candidate"
+    class_size: 70
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Sheet status 'Candidate Status' (type: Focused – Continuation of Candidate Status)."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A23"
+  - slug: "university-of-california-san-diego-pharmacy"
+    institution: "University of California, San Diego"
+    program_name: "Skaggs School of Pharmacy & Pharmaceutical Sciences"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 92
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A24"
+  - slug: "university-of-california-san-francisco-pharmacy"
+    institution: "University of California, San Francisco"
+    program_name: "School of Pharmacy"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 105
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["NUT", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A25"
+  - slug: "university-of-southern-california-pharmacy"
+    institution: "University of Southern California"
+    program_name: "Alfred E. Mann School of Pharmacy and Pharmaceutical Sciences"
+    state: "CA"
+    region: null
+    accreditation_status: "accredited"
+    class_size: 160
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Gerontology", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A26"
+  - slug: "university-of-the-pacific-pharmacy"
+    institution: "University of the Pacific"
+    program_name: "Thomas J. Long School of Pharmacy"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 110
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Audiology", "CCS", "NUT", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Social Work"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A27"
+  - slug: "west-coast-university-pharmacy"
+    institution: "West Coast University"
+    program_name: "School of Pharmacy"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 75
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Counseling", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A28"
+  - slug: "western-university-of-health-sciences-pharmacy"
+    institution: "Western University of Health Sciences"
+    program_name: "College of Pharmacy"
+    state: "CA"
+    region: null
+    accreditation_status: "accredited"
+    class_size: 135
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A29"
+  - slug: "regis-university-pharmacy"
+    institution: "Regis University"
+    program_name: "Rueckert-Hartman College for Health Professions School of Pharmacy"
+    state: "CO"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A30"
+  - slug: "university-of-colorado-anschutz-medical-campus-pharmacy"
+    institution: "University of Colorado Anschutz Medical Campus"
+    program_name: "Skaggs School of Pharmacy and Pharmaceutical Sciences"
+    state: "CO"
+    region: null
+    accreditation_status: "accredited"
+    class_size: 100
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A31"
+  - slug: "university-of-connecticut-pharmacy"
+    institution: "University of Connecticut"
+    program_name: "School of Pharmacy"
+    state: "CT"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 80
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A32"
+  - slug: "university-of-saint-joseph-pharmacy"
+    institution: "University of Saint Joseph"
+    program_name: "School of Pharmacy and Physician Assistant Studies"
+    state: "CT"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 85
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A33"
+  - slug: "howard-university-pharmacy"
+    institution: "Howard University"
+    program_name: "College of Pharmacy"
+    state: "DC"
+    region: null
+    accreditation_status: "accredited"
+    class_size: 75
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A34"
+  - slug: "florida-a-and-m-university-pharmacy"
+    institution: "Florida A&M University"
+    program_name: "College of Pharmacy and Pharmaceutical Sciences, Institute of Public Health"
+    state: "FL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 110
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A35"
+  - slug: "larkin-university-pharmacy"
+    institution: "Larkin University"
+    program_name: "College of Pharmacy"
+    state: "FL"
+    region: null
+    accreditation_status: "candidate"
+    class_size: 60
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: false
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Sheet status 'Candidate Status' (type: Focused – Advancement to Accredited). No Logo Grid match, so the empty disciplines list is unknown, not none."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A36"
+  - slug: "nova-southeastern-university-pharmacy"
+    institution: "Nova Southeastern University"
+    program_name: "College of Pharmacy"
+    state: "FL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 140
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A37"
+  - slug: "palm-beach-atlantic-university-pharmacy"
+    institution: "Palm Beach Atlantic University"
+    program_name: "Lloyd L. Gregory School of Pharmacy"
+    state: "FL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 75
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A38"
+  - slug: "university-of-florida-pharmacy"
+    institution: "University of Florida"
+    program_name: "College of Pharmacy"
+    state: "FL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 120
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A39"
+  - slug: "university-of-south-florida-health-pharmacy"
+    institution: "University of South Florida Health"
+    program_name: "Taneja College of Pharmacy"
+    state: "FL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A40"
+  - slug: "lebanese-american-university-pharmacy"
+    institution: "Lebanese American University"
+    program_name: "School of Pharmacy"
+    state: null
+    region: null
+    accreditation_status: "accredited"
+    class_size: 60
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Located in Lebanon, not a US state — the sheet's State column reads 'Lebanon', so state is null here."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A41"
+  - slug: "mercer-university-pharmacy"
+    institution: "Mercer University"
+    program_name: "College of Pharmacy"
+    state: "GA"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A42"
+  - slug: "south-university-pharmacy"
+    institution: "South University"
+    program_name: "School of Pharmacy"
+    state: "GA"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A43"
+  - slug: "university-of-georgia-pharmacy"
+    institution: "University of Georgia"
+    program_name: "College of Pharmacy"
+    state: "GA"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 60
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A44"
+  - slug: "university-of-hawaii-at-hilo-pharmacy"
+    institution: "University of Hawaii at Hilo"
+    program_name: "Daniel K. Inouye College of Pharmacy"
+    state: "HI"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 70
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A45"
+  - slug: "idaho-state-university-pharmacy"
+    institution: "Idaho State University"
+    program_name: "College of Pharmacy"
+    state: "ID"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 105
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "OTA", "Occupational Therapy", "PTA", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A46"
+  - slug: "chicago-state-university-pharmacy"
+    institution: "Chicago State University"
+    program_name: "College of Pharmacy"
+    state: "IL"
+    region: "Central"
+    accreditation_status: "probation"
+    class_size: 70
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Sheet status 'Accredited with Probation' (type: Focused)."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A47"
+  - slug: "midwestern-university-pharmacy"
+    institution: "Midwestern University"
+    program_name: "College of Pharmacy"
+    state: "IL"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 106
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A48"
+  - slug: "midwestern-university-chicago-pharmacy"
+    institution: "Midwestern University - Chicago"
+    program_name: "College of Pharmacy"
+    state: "IL"
+    region: "Central"
+    accreditation_status: "closing"
+    class_size: 160
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Sheet status 'Discontinued' (type: Program Merger)."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A49"
+  - slug: "roosevelt-university-pharmacy"
+    institution: "Roosevelt University"
+    program_name: "College of Science, Health and Pharmacy"
+    state: "IL"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 60
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A50"
+  - slug: "rosalind-franklin-university-of-medicine-and-science-pharmacy"
+    institution: "Rosalind Franklin University of Medicine and Science"
+    program_name: "College of Pharmacy"
+    state: "IL"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 85
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Pathology Assistant", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A51"
+  - slug: "southern-illinois-university-edwardsville-pharmacy"
+    institution: "Southern Illinois University Edwardsville"
+    program_name: "School of Pharmacy"
+    state: "IL"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 95
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A52"
+  - slug: "university-of-illinois-at-chicago-pharmacy"
+    institution: "University of Illinois at Chicago"
+    program_name: "College of Pharmacy"
+    state: "IL"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 150
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A53"
+  - slug: "butler-university-pharmacy"
+    institution: "Butler University"
+    program_name: "College of Pharmacy and Health Sciences"
+    state: "IN"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Counseling", "Nursing", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A54"
+  - slug: "manchester-university-pharmacy"
+    institution: "Manchester University"
+    program_name: "College of Pharmacy, Natural and Health Sciences"
+    state: "IN"
+    region: null
+    accreditation_status: "accredited"
+    class_size: 70
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: false
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "No Logo Grid match, so the empty disciplines list is unknown, not none."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A55"
+  - slug: "purdue-university-pharmacy"
+    institution: "Purdue University"
+    program_name: "College of Pharmacy"
+    state: "IN"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 150
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A56"
+  - slug: "drake-university-pharmacy"
+    institution: "Drake University"
+    program_name: "College of Pharmacy and Health Sciences"
+    state: "IA"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 85
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A57"
+  - slug: "university-of-iowa-pharmacy"
+    institution: "University of Iowa"
+    program_name: "College of Pharmacy"
+    state: "IA"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A58"
+  - slug: "university-of-kansas-pharmacy"
+    institution: "University of Kansas"
+    program_name: "School of Pharmacy"
+    state: "KS"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 75
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "Counseling", "Nursing", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A59"
+  - slug: "sullivan-university-pharmacy"
+    institution: "Sullivan University"
+    program_name: "College of Pharmacy and Health Sciences"
+    state: "KY"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 72
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A60"
+  - slug: "university-of-kentucky-pharmacy"
+    institution: "University of Kentucky"
+    program_name: "College of Pharmacy"
+    state: "KY"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 95
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A61"
+  - slug: "university-of-louisiana-at-monroe-pharmacy"
+    institution: "University of Louisiana at Monroe"
+    program_name: "College of Pharmacy"
+    state: "LA"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 80
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A62"
+  - slug: "xavier-university-of-louisiana-pharmacy"
+    institution: "Xavier University of Louisiana"
+    program_name: "College of Pharmacy"
+    state: "LA"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 85
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A63"
+  - slug: "university-of-new-england-pharmacy"
+    institution: "University of New England"
+    program_name: "Westbrook College of Health Professions School of Pharmacy"
+    state: "ME"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A64"
+  - slug: "notre-dame-of-maryland-university-pharmacy"
+    institution: "Notre Dame of Maryland University"
+    program_name: "School of Pharmacy"
+    state: "MD"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 64
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A65"
+  - slug: "mcphs-university-worcester-pharmacy"
+    institution: "MCPHS University"
+    program_name: "School of Pharmacy - Worcester"
+    state: "MA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 80
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A66"
+  - slug: "mcphs-university-boston-pharmacy"
+    institution: "MCPHS University"
+    program_name: "School of Pharmacy - Boston"
+    state: "MA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 150
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A67"
+  - slug: "northeastern-university-pharmacy"
+    institution: "Northeastern University"
+    program_name: "Bouvé College of Health Sciences School of Pharmacy and Pharmaceutical Sciences"
+    state: "MA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 141
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A68"
+  - slug: "western-new-england-university-pharmacy"
+    institution: "Western New England University"
+    program_name: "College of Pharmacy and Health Sciences"
+    state: "MA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A69"
+  - slug: "ferris-state-university-pharmacy"
+    institution: "Ferris State University"
+    program_name: "College of Pharmacy"
+    state: "MI"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 120
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A70"
+  - slug: "university-of-michigan-pharmacy"
+    institution: "University of Michigan"
+    program_name: "College of Pharmacy"
+    state: "MI"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 113
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A71"
+  - slug: "wayne-state-university-pharmacy"
+    institution: "Wayne State University"
+    program_name: "Eugene Applebaum College of Pharmacy and Health Sciences"
+    state: "MI"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 100
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Counseling", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Teacher Education"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A72"
+  - slug: "university-of-minnesota-pharmacy"
+    institution: "University of Minnesota"
+    program_name: "College of Pharmacy"
+    state: "MN"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 130
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Medical Laboratory Science", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A73"
+  - slug: "university-of-mississippi-pharmacy"
+    institution: "University of Mississippi"
+    program_name: "School of Pharmacy"
+    state: "MS"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 85
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A74"
+  - slug: "william-carey-university-pharmacy"
+    institution: "William Carey University"
+    program_name: "School of Pharmacy"
+    state: "MS"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 65
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A75"
+  - slug: "university-of-health-sciences-and-pharmacy-in-st-louis-pharmacy"
+    institution: "University of Health Sciences and Pharmacy in St. Louis"
+    program_name: "St. Louis College of Pharmacy"
+    state: "MO"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 120
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A76"
+  - slug: "university-of-missouri-kansas-city-pharmacy"
+    institution: "University of Missouri-Kansas City"
+    program_name: "School of Pharmacy"
+    state: "MO"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 120
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A77"
+  - slug: "university-of-montana-pharmacy"
+    institution: "University of Montana"
+    program_name: "College of Health Skaggs School of Pharmacy"
+    state: "MT"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 130
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A78"
+  - slug: "creighton-university-pharmacy"
+    institution: "Creighton University"
+    program_name: "School of Pharmacy and Health Professions"
+    state: "NE"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 140
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A79"
+  - slug: "university-of-nebraska-medical-center-pharmacy"
+    institution: "University of Nebraska Medical Center"
+    program_name: "College of Pharmacy"
+    state: "NE"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 95
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A80"
+  - slug: "roseman-university-of-health-sciences-pharmacy"
+    institution: "Roseman University of Health Sciences"
+    program_name: "College of Pharmacy"
+    state: "NV"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 110
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A81"
+  - slug: "fairleigh-dickinson-university-pharmacy"
+    institution: "Fairleigh Dickinson University"
+    program_name: "School of Pharmacy & Health Sciences"
+    state: "NJ"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 85
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A82"
+  - slug: "rutgers-the-state-university-of-new-jersey-pharmacy"
+    institution: "Rutgers, the State University of New Jersey"
+    program_name: "Ernest Mario School of Pharmacy"
+    state: "NJ"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 215
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "OTA", "Occupational Therapy", "Physical Therapy", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A83"
+  - slug: "university-of-new-mexico-pharmacy"
+    institution: "University of New Mexico"
+    program_name: "College of Pharmacy"
+    state: "NM"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 70
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Social Work"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A84"
+  - slug: "albany-college-of-pharmacy-and-health-sciences-pharmacy"
+    institution: "Albany College of Pharmacy and Health Sciences"
+    program_name: null
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 130
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A85"
+  - slug: "binghamton-university-state-university-of-new-york-pharmacy"
+    institution: "Binghamton University State University of New York"
+    program_name: "School of Pharmacy and Pharmaceutical Sciences"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Public Health"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A86"
+  - slug: "dyouville-university-pharmacy"
+    institution: "D'Youville University"
+    program_name: "School of Pharmacy"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 70
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A87"
+  - slug: "long-island-university-pharmacy"
+    institution: "Long Island University"
+    program_name: "Arnold and Marie Schwartz College of Pharmacy and Health Sciences"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 150
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CLS", "NUT", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Psychology", "Respiratory Care", "Social Work", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A88"
+  - slug: "st-john-fisher-university-pharmacy"
+    institution: "St. John Fisher University"
+    program_name: "Wegmans School of Pharmacy"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 80
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A89"
+  - slug: "st-johns-university-pharmacy"
+    institution: "St. John's University"
+    program_name: "College of Pharmacy and Health Sciences"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 130
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A90"
+  - slug: "touro-university-pharmacy"
+    institution: "Touro University"
+    program_name: "Touro College of Pharmacy"
+    state: "NY"
+    region: null
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A91"
+  - slug: "university-at-buffalo-the-state-university-of-new-york-pharmacy"
+    institution: "University at Buffalo The State University of New York"
+    program_name: "School of Pharmacy & Pharmaceutical Sciences"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 110
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A92"
+  - slug: "campbell-university-pharmacy"
+    institution: "Campbell University"
+    program_name: "College of Pharmacy and Health Sciences"
+    state: "NC"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 130
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A93"
+  - slug: "high-point-university-pharmacy"
+    institution: "High Point University"
+    program_name: "Fred Wilson School of Pharmacy"
+    state: "NC"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A94"
+  - slug: "university-of-north-carolina-pharmacy"
+    institution: "University of North Carolina"
+    program_name: "Eshelman School of Pharmacy"
+    state: "NC"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 215
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Medicine", "Nursing", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A95"
+  - slug: "wingate-university-pharmacy"
+    institution: "Wingate University"
+    program_name: "School of Pharmacy"
+    state: "NC"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 100
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A96"
+  - slug: "north-dakota-state-university-pharmacy"
+    institution: "North Dakota State University"
+    program_name: "College of Health Professions School of Pharmacy"
+    state: "ND"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 80
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A97"
+  - slug: "cedarville-university-pharmacy"
+    institution: "Cedarville University"
+    program_name: "School of Pharmacy"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 70
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A98"
+  - slug: "northeast-ohio-medical-university-pharmacy"
+    institution: "Northeast Ohio Medical University"
+    program_name: "College of Pharmacy"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 95
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A99"
+  - slug: "ohio-northern-university-pharmacy"
+    institution: "Ohio Northern University"
+    program_name: "Raabe College of Pharmacy"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 115
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A100"
+  - slug: "ohio-state-university-pharmacy"
+    institution: "Ohio State University"
+    program_name: "College of Pharmacy"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 125
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "CCS", "Occupational Therapy", "Physical Therapy", "Respiratory Care"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A101"
+  - slug: "university-of-cincinnati-pharmacy"
+    institution: "University of Cincinnati"
+    program_name: "James L. Winkle College of Pharmacy"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 110
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Occupational Therapy", "PTA", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A102"
+  - slug: "university-of-findlay-pharmacy"
+    institution: "University of Findlay"
+    program_name: "College of Pharmacy"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 100
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A103"
+  - slug: "university-of-toledo-pharmacy"
+    institution: "University of Toledo"
+    program_name: "College of Pharmacy and Pharmaceutical Sciences"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 120
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Respiratory Care", "Social Work", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A104"
+  - slug: "southwestern-oklahoma-state-university-pharmacy"
+    institution: "Southwestern Oklahoma State University"
+    program_name: "College of Pharmacy"
+    state: "OK"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A105"
+  - slug: "university-of-oklahoma-health-sciences-center-pharmacy"
+    institution: "University of Oklahoma Health Sciences Center"
+    program_name: "College of Pharmacy"
+    state: "OK"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 80
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A106"
+  - slug: "oregon-state-university-pharmacy"
+    institution: "Oregon State University"
+    program_name: "College of Pharmacy"
+    state: "OR"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 130
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "NUT", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A107"
+  - slug: "pacific-university-pharmacy"
+    institution: "Pacific University"
+    program_name: "School of Pharmacy"
+    state: "OR"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 120
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A108"
+  - slug: "duquesne-university-pharmacy"
+    institution: "Duquesne University"
+    program_name: "School of Pharmacy"
+    state: "PA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 125
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A109"
+  - slug: "lake-erie-college-of-osteopathic-medicine-pharmacy"
+    institution: "Lake Erie College of Osteopathic Medicine"
+    program_name: "School of Pharmacy"
+    state: "PA"
+    region: null
+    accreditation_status: "accredited"
+    class_size: 120
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched grid row's cells are '#N/A' in 35 of 36 columns, Pharmacy's included — unevaluated, so the empty list is unknown, not a checked none."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A110"
+  - slug: "saint-josephs-university-pharmacy"
+    institution: "Saint Joseph's University"
+    program_name: "Philadelphia College of Pharmacy"
+    state: "PA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology", "Teacher Education"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A111"
+  - slug: "temple-university-pharmacy"
+    institution: "Temple University"
+    program_name: "School of Pharmacy"
+    state: "PA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 115
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Nursing"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A112"
+  - slug: "thomas-jefferson-university-pharmacy"
+    institution: "Thomas Jefferson University"
+    program_name: "Jefferson College of Pharmacy"
+    state: "PA"
+    region: null
+    accreditation_status: "accredited"
+    class_size: 100
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "CCS", "Counseling", "MLSB", "Medical Laboratory Science", "NUT", "Nursing", "OTA", "Occupational Therapy", "Perfusion", "Physical Therapy", "Physician Assistant", "Public Health", "Respiratory Care", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A113"
+  - slug: "university-of-pittsburgh-pharmacy"
+    institution: "University of Pittsburgh"
+    program_name: "School of Pharmacy"
+    state: "PA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 140
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "Audiology", "CCS", "Chiro", "Counseling", "Health Information Technology", "NUT", "Nursing", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A114"
+  - slug: "wilkes-university-pharmacy"
+    institution: "Wilkes University"
+    program_name: "Nesbitt School of Pharmacy"
+    state: "PA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A115"
+  - slug: "university-of-puerto-rico-medical-sciences-campus-pharmacy"
+    institution: "University of Puerto Rico Medical Sciences Campus"
+    program_name: "School of Pharmacy"
+    state: "PR"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 60
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A116"
+  - slug: "university-of-rhode-island-pharmacy"
+    institution: "University of Rhode Island"
+    program_name: "College of Pharmacy"
+    state: "RI"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A117"
+  - slug: "medical-university-of-south-carolina-pharmacy"
+    institution: "Medical University of South Carolina"
+    program_name: "College of Pharmacy"
+    state: "SC"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 95
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A118"
+  - slug: "presbyterian-college-pharmacy"
+    institution: "Presbyterian College"
+    program_name: "School of Pharmacy"
+    state: "SC"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 70
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A119"
+  - slug: "south-carolina-college-of-pharmacy-pharmacy"
+    institution: "South Carolina College of Pharmacy"
+    program_name: null
+    state: "SC"
+    region: null
+    accreditation_status: "closing"
+    class_size: 110
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: false
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Sheet status 'Discontinued' (type: Program Closure). No Logo Grid match, so the empty disciplines list is unknown, not none."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A120"
+  - slug: "university-of-south-carolina-pharmacy"
+    institution: "University of South Carolina"
+    program_name: "College of Pharmacy"
+    state: "SC"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 150
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["NUT", "Nursing", "Physical Therapy", "Social Work", "Teacher Education"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A121"
+  - slug: "south-dakota-state-university-pharmacy"
+    institution: "South Dakota State University"
+    program_name: "College of Pharmacy and Allied Health Professions"
+    state: "SD"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 98
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A122"
+  - slug: "east-tennessee-state-university-pharmacy"
+    institution: "East Tennessee State University"
+    program_name: "Bill Gatton College of Pharmacy"
+    state: "TN"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 100
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Audiology", "Counseling", "NUT", "Occupational Therapy", "Physical Therapy", "Social Work", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A123"
+  - slug: "lipscomb-university-pharmacy"
+    institution: "Lipscomb University"
+    program_name: "College of Pharmacy and Health Sciences"
+    state: "TN"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 96
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A124"
+  - slug: "south-college-pharmacy"
+    institution: "South College"
+    program_name: "School of Pharmacy"
+    state: "TN"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 86
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A125"
+  - slug: "union-university-pharmacy"
+    institution: "Union University"
+    program_name: "College of Pharmacy"
+    state: "TN"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 68
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A126"
+  - slug: "university-of-tennessee-health-science-center-pharmacy"
+    institution: "University of Tennessee Health Science Center"
+    program_name: "College of Pharmacy"
+    state: "TN"
+    region: null
+    accreditation_status: "accredited"
+    class_size: 135
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CLS", "Medical Laboratory Science", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A127"
+  - slug: "texas-a-and-m-university-health-science-center-pharmacy"
+    institution: "Texas A & M University Health Science Center"
+    program_name: "Irma Lerma Rangel School of Pharmacy"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A128"
+  - slug: "texas-southern-university-pharmacy"
+    institution: "Texas Southern University"
+    program_name: "Joan M. Lafleur College of Pharmacy and Health Sciences"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 85
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A129"
+  - slug: "texas-tech-university-health-sciences-center-pharmacy"
+    institution: "Texas Tech University Health Sciences Center"
+    program_name: "Jerry H. Hodge School of Pharmacy"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 160
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A130"
+  - slug: "university-of-houston-pharmacy"
+    institution: "University of Houston"
+    program_name: "College of Pharmacy"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 120
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A131"
+  - slug: "university-of-north-texas-health-science-center-pharmacy"
+    institution: "University of North Texas Health Science Center"
+    program_name: "UNT System College of Pharmacy"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 115
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A132"
+  - slug: "university-of-texas-at-austin-pharmacy"
+    institution: "University of Texas at Austin"
+    program_name: "College of Pharmacy"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 110
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A133"
+  - slug: "university-of-texas-at-el-paso-pharmacy"
+    institution: "University of Texas at El Paso"
+    program_name: "School of Pharmacy"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 55
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Teacher Education"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A134"
+  - slug: "university-of-texas-at-tyler-pharmacy"
+    institution: "University of Texas at Tyler"
+    program_name: "Fisch College of Pharmacy"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A135"
+  - slug: "university-of-the-incarnate-word-pharmacy"
+    institution: "University of the Incarnate Word"
+    program_name: "Feik School of Pharmacy"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "CCS", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A136"
+  - slug: "university-of-utah-pharmacy"
+    institution: "University of Utah"
+    program_name: "College of Pharmacy"
+    state: "UT"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A137"
+  - slug: "appalachian-college-of-pharmacy-pharmacy"
+    institution: "Appalachian College of Pharmacy"
+    program_name: null
+    state: "VA"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 55
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A138"
+  - slug: "hampton-university-pharmacy"
+    institution: "Hampton University"
+    program_name: "School of Pharmacy"
+    state: "VA"
+    region: "Central"
+    accreditation_status: "closing"
+    class_size: 70
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Sheet status 'Withdrawn' (type: Program Closure)."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A139"
+  - slug: "shenandoah-university-pharmacy"
+    institution: "Shenandoah University"
+    program_name: "Bernard J. Dunn School of Pharmacy"
+    state: "VA"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 120
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Teacher Education"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A140"
+  - slug: "virginia-commonwealth-university-at-the-medical-college-of-virginia-campus-pharmacy"
+    institution: "Virginia Commonwealth University at the Medical College of Virginia Campus"
+    program_name: "School of Pharmacy"
+    state: "VA"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 100
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A141"
+  - slug: "university-of-washington-pharmacy"
+    institution: "University of Washington"
+    program_name: "School of Pharmacy"
+    state: "WA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 125
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Social Work"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A142"
+  - slug: "washington-state-university-pharmacy"
+    institution: "Washington State University"
+    program_name: "College of Pharmacy and Pharmaceutical Sciences"
+    state: "WA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: 120
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Social Work"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A143"
+  - slug: "marshall-university-pharmacy"
+    institution: "Marshall University"
+    program_name: "School of Pharmacy"
+    state: "WV"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 70
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["NUT", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A144"
+  - slug: "university-of-charleston-pharmacy"
+    institution: "University of Charleston"
+    program_name: "School of Pharmacy"
+    state: "WV"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 60
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A145"
+  - slug: "west-virginia-university-pharmacy"
+    institution: "West Virginia University"
+    program_name: "School of Pharmacy"
+    state: "WV"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A146"
+  - slug: "concordia-university-wisconsin-pharmacy"
+    institution: "Concordia University Wisconsin"
+    program_name: "School of Pharmacy"
+    state: "WI"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 75
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Social Work", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A147"
+  - slug: "medical-college-of-wisconsin-pharmacy"
+    institution: "Medical College of Wisconsin"
+    program_name: "School of Pharmacy"
+    state: "WI"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 90
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A148"
+  - slug: "university-of-wisconsin-madison-pharmacy"
+    institution: "University of Wisconsin-Madison"
+    program_name: "School of Pharmacy"
+    state: "WI"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 140
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Counseling", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A149"
+  - slug: "university-of-wyoming-pharmacy"
+    institution: "University of Wyoming"
+    program_name: "School of Pharmacy"
+    state: "WY"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: 48
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A150"
+  - slug: "oregon-health-and-science-university-pharmacy"
+    institution: "Oregon Health and Science University"
+    program_name: null
+    state: "OR"
+    region: "West"
+    accreditation_status: "unknown"
+    class_size: 115
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Psychology", "Public Health"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Sheet leaves the accreditation columns blank for this row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A151"
+  - slug: "husson-university-pharmacy"
+    institution: "Husson University"
+    program_name: null
+    state: "ME"
+    region: "East"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "churned"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Previous client per the sheet's Client Y/N column. Its class-size cell holds 'ME', a repeat of the state value."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "Pharmacy!A152"

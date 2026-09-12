@@ -1,0 +1,115 @@
+# Level 0.5 — the schema written by scripts/snapshot_zendesk.py, reviewed by a human
+# before commit (PII). See _TEMPLATE.yaml in this folder for what each field means.
+#
+# PROVENANCE — read this before citing anything here.
+#
+# This file was NOT produced by running scripts/snapshot_zendesk.py. No Zendesk
+# credentials (ZENDESK_SUBDOMAIN / ZENDESK_EMAIL / ZENDESK_API_TOKEN) exist in this
+# environment, so the live fetch could not be performed. Every value below was instead
+# transcribed by hand from facts that are already committed in this repository, and every
+# field that could only come from the live API is left `null` on purpose.
+#
+# REAL — transcribed from committed code/content, re-checkable today:
+#   - ticket_ids, and their order: apps/ecosystem/lib/zendesk/client.ts,
+#     `PHARMACY_FEATURE_GAP_TICKET_IDS = [295130, 223572, 395324, 319389]`.
+#   - selection_method: paraphrases that constant's own docstring in client.ts (which names
+#     the two false-positive sources by name), plus the filter step stated in the Takeaway
+#     on the page this snapshot replaces. Both named exclusions — the internal "Exxat"
+#     sales-demo org and MCPHS tickets tagged Nursing — are transcribed, not inferred.
+#     Institution names are not personal data.
+#   - organizations_observed: the human-authored headline of the page this snapshot
+#     replaces (apps/ecosystem/app/zendesk/pharmacy-feature-gaps/page.tsx, deleted in the
+#     same commit) — "Only one pharmacy program shows this pattern: Oregon Health &
+#     Science University". See the note on that field about what it does and does not
+#     establish per ticket.
+#   - coverage_caveat: restates that same page's Takeaway.
+#
+# NULL — could only come from a live API call, so it is not filled in:
+#   - every per-ticket subject, status, organization, organization_id, category, finding.
+#     The category VOCABULARY is real (client.ts's categorizeFeatureGap returns exactly
+#     "Rejected" | "Parked for later" | "Open — module gap" | "Closed — module gap"), but
+#     which ticket maps to which value depends on that ticket's live tags and status and
+#     is not recorded anywhere in this repo. Nothing was guessed.
+#
+# ASSUMED — flagged rather than presented as fact:
+#   - the `exxat` subdomain in each url. client.ts builds ticket urls from the
+#     ZENDESK_SUBDOMAIN env var; that var's value appears in no committed file. "exxat" is
+#     the expected value given the product, but it is unverified here. Re-running the
+#     script with real credentials overwrites these urls with the true ones.
+#
+# Running scripts/snapshot_zendesk.py with real credentials replaces this file wholesale
+# (pass --force) and fills in every null above. That is the intended upgrade path.
+
+snapshot:
+  id: "support-tickets-pharmacy-2026-09-11"
+  type: "support-ticket"
+  system: "zendesk"
+  origin: "first-party"
+  access: "internal"
+  taken: "2026-09-11"
+  domain: "Pharmacy"
+  selection_method: >-
+    Curated ticket-id list, not a query. Zendesk's own Domain taxonomy has no Pharmacy value, so
+    candidates came from a full-text "pharmacy" search, which is dominated by false positives:
+    internal sales-demo tickets under the "Exxat" org, and MCPHS tickets that are actually tagged
+    as its Nursing department. Both were excluded, then only tickets Zendesk itself tagged
+    rejected, parked, or not-served-by-module were kept. The surviving ids are hardcoded in
+    apps/ecosystem/lib/zendesk/client.ts.
+  selection_query: null
+  ticket_ids: [295130, 223572, 395324, 319389]
+  # Real, but note its scope. The replaced page asserted, as a human-authored headline over
+  # exactly these 4 tickets, that only one pharmacy program shows this pattern and named it.
+  # That establishes the SET spans one organization; it is not a per-ticket record, which is
+  # why each ticket's own `organization:` below stays null rather than repeating this name.
+  organizations_observed: ["Oregon Health & Science University"]
+  coverage_caveat: "4 tickets, 1 organization — one account's repeated experience, not a market signal."
+
+tickets:
+  - source_id: "support-ticket-295130"
+    ticket_id: 295130
+    url: "https://exxat.zendesk.com/agent/tickets/295130"
+    subject: null
+    status: null
+    organization: null
+    organization_id: null
+    category: null
+    finding: null
+    # true because every field above that could carry a name, email, or phone number is
+    # null — there is no personal data anywhere in this file to review. This is the one
+    # case where `true` is honest without a ticket-by-ticket read. A snapshot produced by
+    # the script arrives with real subjects and `redacted: false`, and stays false until a
+    # human has actually read each one.
+    redacted: true
+
+  - source_id: "support-ticket-223572"
+    ticket_id: 223572
+    url: "https://exxat.zendesk.com/agent/tickets/223572"
+    subject: null
+    status: null
+    organization: null
+    organization_id: null
+    category: null
+    finding: null
+    redacted: true
+
+  - source_id: "support-ticket-395324"
+    ticket_id: 395324
+    url: "https://exxat.zendesk.com/agent/tickets/395324"
+    subject: null
+    status: null
+    organization: null
+    organization_id: null
+    category: null
+    finding: null
+    redacted: true
+
+  - source_id: "support-ticket-319389"
+    ticket_id: 319389
+    url: "https://exxat.zendesk.com/agent/tickets/319389"
+    subject: null
+    status: null
+    organization: null
+    organization_id: null
+    category: null
+    finding: null
+    redacted: true

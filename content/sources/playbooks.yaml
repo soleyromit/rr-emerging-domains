@@ -1,0 +1,97 @@
+# Level 0.5 — a corpus index of internal discipline playbooks, see content/ARCHITECTURE.md.
+# Citations from content/*.yaml use {source_id, locator} where source_id is one of these ids and
+# locator is the section or line range within the playbook (existing inline citations already do
+# this, e.g. content/personas/discipline-crna.yaml cites Nursing Playbook.md lines 16, 19, 25, …).
+#
+# PROVENANCE — every path below is quoted verbatim from citations that already exist in
+# content/personas/*.yaml, content/accreditation/*.yaml, content/flows/*.yaml and
+# content/journeys/*.yaml. Re-verify with:
+#   grep -rF "99-Assets/documents/Playbooks/" content/ --exclude-dir=sources
+#
+# These are the markdown playbooks the repo actually cites (~250 references across content/). They
+# are NOT the three "FireShot Capture 002/003/004" Zendesk screen captures named in
+# content/prism/capability-map.yaml's source list — nothing in content/ cites those by name, and
+# whether they are the same material in another form is UNVERIFIED. See zendesk_capture: below.
+#
+# `accessed:` is the 2026-08-25 full read recorded in content/journeys/rotation-lifecycle.yaml
+# L4970. No *capture* date is stated anywhere in the repo for any playbook, so no `captured:` field
+# is recorded — an absent field beats an invented date.
+playbooks:
+  - id: "playbook-pa"
+    discipline: "Physician Assistant"
+    title: "Physician Assistant (PA) Playbook"
+    path: "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+    origin: "first-party"
+    access: "internal"
+    accessed: "2026-08-25"
+    zendesk_capture: "FireShot Capture 003"
+
+  - id: "playbook-ot"
+    discipline: "Occupational Therapy"
+    title: "Occupational Therapy (OT) Playbook"
+    path: "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+    origin: "first-party"
+    access: "internal"
+    accessed: "2026-08-25"
+    zendesk_capture: "FireShot Capture 004"
+
+  - id: "playbook-pt"
+    discipline: "Physical Therapy"
+    title: "Physical Therapy (PT) Playbook"
+    path: "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md"
+    origin: "first-party"
+    access: "internal"
+    accessed: "2026-08-25"
+    zendesk_capture: "FireShot Capture 002"
+
+  - id: "playbook-nursing"
+    discipline: "Nursing"
+    title: "Nursing Playbook"
+    path: "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+    origin: "first-party"
+    access: "internal"
+    accessed: "2026-08-25"
+    caveat: >
+      Also the only playbook source for CRNA work (content/personas/discipline-crna.yaml cites it
+      directly). Carries an explicit in-repo data-quality note: cohort/lock-step conventions and
+      Groups/Categories usage patterns are NOT documented for Nursing.
+
+  - id: "playbook-slp"
+    discipline: "Speech-Language Pathology"
+    title: "Speech-Language Pathology (SLP) Playbook"
+    path: "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md"
+    origin: "first-party"
+    access: "internal"
+    accessed: "2026-08-25"
+    caveat: >
+      Not a CSS playbook like PA/OT/PT — synthesized from eight thin feature-specific artifacts.
+      Silence in it is documentation absence, not product absence.
+
+  - id: "playbook-sw"
+    discipline: "Social Work"
+    title: "Social Work (SW) Playbook"
+    path: "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md"
+    origin: "first-party"
+    access: "internal"
+    accessed: "2026-08-25"
+
+  - id: "playbook-te"
+    discipline: "Teacher Education"
+    title: "Teacher Education (TE) Playbook"
+    path: "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md"
+    origin: "first-party"
+    access: "internal"
+    accessed: "2026-08-25"
+    caveat: >
+      Built from ONE video tutorial covering the GoReact/Echo360 LTI integration. It explicitly
+      warns against treating TE terminology or CAEP standard numbers as Exxat-specific until
+      confirmed against a TE-specific source.
+
+coverage_note: >
+  Seven discipline playbooks exist and all seven are indexed here: PT, OT, PA, SLP, Nursing, Social
+  Work, and Teacher Education. No playbook exists for DO, Pharmacy, Dentistry, or Medicine — that
+  absence is verified, not assumed: content/flows/admin-onboarding--01-account-activation-login-
+  navigation.yaml L920 cites a directory listing of 99-Assets/documents/Playbooks/ naming exactly
+  those seven and stating none exists for the other four. Treat dissection content for DO,
+  Pharmacy, Dentistry and Medicine as unable to cite a playbook until one is captured. Note that
+  SLP and TE, while real, are materially thinner than the PA/OT/PT/Nursing four — see their caveats.

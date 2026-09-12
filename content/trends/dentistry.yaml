@@ -1,0 +1,86 @@
+# Level 2 reframing — see _TEMPLATE.yaml for schema/rules. Cites
+# content/prism/capability-map.yaml (for exxat_status/exxat_ref),
+# content/competitors/*.yaml, and content/sources/registry.yaml. Sparse by
+# design: 7 trends researched 2026-09-09/10, not padded to a round number.
+domain: "Dentistry"
+trends:
+  - id: "coda-2028-standards-adopted"
+    trend: "CODA adopted revised predoctoral standards at Summer 2026, effective 1 July 2028"
+    detail: "The 2028 Dental Education Standards are published alongside a redlined version showing what changed, with a two-year runway to implementation. Schools mid-cycle now evidence one standard set while re-mapping curriculum and competency rubrics to another — two live standard versions at once."
+    exxat_status: "shipped"
+    exxat_ref: "Pre-loaded + custom standards"
+    addressed_by_competitors:
+      - competitor_slug: "axium"
+        capability_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+        source_id: "product-page-axium-academic-coda-reporting-2026"
+    sources:
+      - "doc-coda-standards-2028-adopted-2026"
+      - "press-ada-news-coda-five-things-2025"
+
+  - id: "coda-diversity-standards-rescinded"
+    trend: "CODA suspended, then rescinded, its diversity-related standards"
+    detail: "Following a July 2025 Department of Justice memo, CODA suspended enforcement of certain diversity standards and later voted to rescind them. Evidence a program had been collecting against a now-withdrawn standard has to be retired cleanly, which is a versioning problem before it is a policy one."
+    exxat_status: "shipped"
+    exxat_ref: "Program-Specific Standards vs. Accreditation Standards"
+    addressed_by_competitors: []
+    sources:
+      - "doc-coda-standards-2028-adopted-2026"
+
+  - id: "dental-ai-adoption-ahead-of-governance"
+    trend: "LLM use is already majority behaviour in dental schools, ahead of policy"
+    detail: "A 2026 Frontiers in Digital Health survey at a U.S. dental school found 66% of faculty and 73% of students using LLM tools, mostly for writing and educational support, while 47.6% of faculty (vs 23.4% of students) want structured training. Adoption is ahead of institutional guidance."
+    exxat_status: "shipped"
+    exxat_ref: "AI Insights (Leo AI)"
+    addressed_by_competitors: []
+    sources:
+      - "other-frontiers-ai-dental-school-survey-2026"
+
+  - id: "dental-patient-care-cqi-in-the-ehr"
+    trend: "Patient-care CQI moves into the dental EHR as structured adverse-outcome data"
+    detail: "A 2025 Journal of Dental Education paper describes UIC attaching adverse-outcome forms to the original procedure code in axiUm, with a QA committee running consolidated deficiency reports and feeding findings back into teaching and faculty calibration — CODA 5-3 evidenced as data."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors:
+      - competitor_slug: "axium"
+        capability_ref: "Clinical & Experiential Education"
+        source_id: "other-jde-axium-adverse-outcome-qa-2025"
+    sources:
+      - "other-jde-axium-adverse-outcome-qa-2025"
+
+  - id: "adea-competency-framework-revised-2026"
+    trend: "ADEA's first competency-framework revision since 2008 makes CBE infrastructural, not aspirational"
+    detail: "ADEA's Domains of Competence for the New General Dentist, revised for the first time since 2008 and discussed at ADEA 2026, repositions the general dentist around three roles (collaborative practitioner, leader, advocate) and pushes schools toward mapping competencies, learning activities, assessments, and clinical experiences as one connected chain rather than separate records."
+    exxat_status: "shipped"
+    exxat_ref: "Curriculum Mapping"
+    addressed_by_competitors:
+      - competitor_slug: "elentra"
+        capability_ref: "Curriculum Mapping"
+        source_id: "press-elentra-adea-2026-recap"
+    sources:
+      - "doc-adea-domains-competence-new-general-dentist-2026"
+      - "newsletter-adea-bulletin-dental-education-2026-03"
+      - "press-elentra-adea-2026-recap"
+
+  - id: "dental-ai-assessment-reliability-gap"
+    trend: "AI-based grading shows weak agreement with expert evaluators"
+    detail: "A Dec 2025 BMC Medical Education pilot had ChatGPT-4o and a 10-year endodontist independently score 32 students' root-canal radiographs on 5 criteria; agreement was poor-to-moderate (ICC 0.36-0.45, Pearson r<0.3, not significant). A 2025 scoping review separately flags most dental-AI tools as built by computer scientists, not dental educators. Automated grading is not yet a faculty sign-off substitute."
+    exxat_status: "roadmap"
+    exxat_ref: "Exam Management (Prism roadmap Q2 2027)"
+    addressed_by_competitors: []
+    sources:
+      - "analyst-bmc-chatgpt4o-endodontic-assessment-2025"
+      - "analyst-pmc-ai-dental-education-scoping-review-2025"
+
+  - id: "axium-third-party-reviews-usability-friction"
+    trend: "Third-party reviews describe axiUm as dated and training-heavy"
+    detail: "G2 (8 reviews) and Capterra (12 reviews, 3.1/5) both describe axiUm's interface as outdated and hard to learn. One Capterra reviewer: '10 minutes of paperwork is an hour of axiUm inputs.' Support and reporting are rated well; the recurring complaint is the per-step approval workflow itself — the same faculty sign-off loop CODA 2-2/2-5/3-4 require evidence of."
+    exxat_status: "unaddressed"
+    exxat_ref: null
+    addressed_by_competitors:
+      - competitor_slug: "axium"
+        capability_ref: "Clinical & Experiential Education (chairside approval workflow)"
+        source_id: "review-capterra-axium-dental-2026"
+    sources:
+      - "review-g2-axium-dental-2026"
+      - "review-capterra-axium-dental-2026"
+last_updated: "2026-09-10"

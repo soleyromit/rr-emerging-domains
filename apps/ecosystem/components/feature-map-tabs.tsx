@@ -8,6 +8,7 @@ import { Card } from "@astryxdesign/core/Card";
 import { Text } from "@astryxdesign/core/Text";
 import { Divider } from "@astryxdesign/core/Divider";
 import { StatusIcon, StatusBadge } from "@/components/feature-status";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import type { FeatureMap } from "@/lib/content";
 
 export function FeatureMapTabs({ featureMaps }: { featureMaps: FeatureMap[] }) {
@@ -45,7 +46,7 @@ export function FeatureMapTabs({ featureMaps }: { featureMaps: FeatureMap[] }) {
                 ) : null}
 
                 <Text type="body" maxLines={4}>
-                  {p.summary}
+                  {stripFileCitations(p.summary)}
                 </Text>
 
                 <Divider />

@@ -1,0 +1,255 @@
+# Researched 2026-09-11. RESEARCH-METHOD NOTE, read before trusting any row below:
+# ExamSoft's own marketing site is no longer fetchable. examsoft.com/program-type/pharmacy/
+# and examsoft.com/about-examsoft/ both 301-redirect to turnitin.com (product and about
+# pages respectively), turnitin.com/products/examsoft/ returns 403 to automated fetch, and
+# every examsoft.com/resources/* and examsoft.com/benefits/* URL still indexed by search
+# returned a hard 404 on 2026-09-11. support.examsoft.com is live but Cloudflare-blocked to
+# automated fetch (403 via fetch tool, 403 + JS challenge via direct request).
+# Consequence, stated plainly rather than papered over: the depth evidence below rests on
+# (a) college-hosted and institutional documents fetched in full on 2026-09-11 — above all
+# the University of Houston College of Pharmacy's 2024 ACPE self-study, an independent
+# primary source showing how a real pharmacy program actually uses the product — and
+# (b) an independent review corpus. Two capability rows (Map, item analysis) rest partly on
+# search-result excerpts of support.examsoft.com articles that could not themselves be
+# fetched; those rows say so in their own evidence text and are rated "unknown", not
+# "ahead". Nothing here is inferred from what an exam platform "must" have.
+competitor: "ExamSoft (Turnitin)"
+slug: "examsoft"
+# All four tracked domains, but the evidence is not evenly strong across them. Pharmacy is
+# documented in depth by a fetched ACPE self-study; Dentistry by a fetched dental-school
+# procedures page; Medicine and DO rest on vendor case-study titles surfaced in search
+# (Touro College of Osteopathic Medicine) whose pages now 404 — real, but thinner.
+domains_served: ["DO", "Pharmacy", "Dentistry", "Medicine"]
+category: "Secure exam delivery, proctoring, and assessment analytics (item-level data tagged to outcomes and accreditation standards)"
+company:
+  founded: "1998 (ExamSoft Worldwide, Inc.)"
+  hq: "Dallas, TX (ExamSoft Worldwide); parent Turnitin is headquartered in Oakland, CA"
+  ownership: >
+    Acquired by Turnitin, announced October 2020 and reported by outside deal counsel as
+    closing 2020-10-23. As of 2026-09-11 the absorption is complete at the web-property
+    level: examsoft.com redirects into turnitin.com rather than resolving to its own site.
+
+feature_teardown:
+  - pillar: "Exam Management"
+    competitor_capability: >
+      This is the one pillar ExamSoft genuinely owns, and it ships today against a Prism
+      pillar that does not (capability-map.yaml has Exam Management at status roadmap,
+      target Q2 2027). Secure high-stakes delivery via the Examplify client on a student
+      laptop or iPad, running offline with no live internet connection required, locking
+      out other programs, files and internet during the exam. Seven item types (multiple
+      choice, true/false, essay, fill in the blank, hot spot, drag & drop, matching) across
+      high-stakes exams, quizzes, TBL iRATs/gRATs, case-based, take-home and homework.
+      Identity and proctoring are separately named products: ExamID (camera-based
+      authentication at exam start) and ExamMonitor (screen, camera and microphone
+      recording through the exam).
+    depth_vs_prism: "ahead"
+    evidence: >
+      "ExamSoft is a secure testing solution that is used for high stakes exams" and it is
+      "not dependent on an internet connection while testing, which allows it to be used
+      almost anywhere a laptop can be used", per the University of Florida College of
+      Dentistry's own ExamSoft procedures page, which also documents
+      the operational envelope programs build around it (48-hour download window,
+      password-protected exams, no re-entry to the testing room) and "an electronic system
+      to track anomalies of all types, including suspected cheating". Stony Brook's medical
+      faculty guide independently supplies the assessment types and the seven question
+      formats: "Examplify is the student version of the tools that enables them to take
+      exams on a computer or iPad." Rated "ahead" on shipped-vs-roadmap, which is a
+      statement about timing, not about a feature-by-feature comparison — Prism's exam
+      module has no shipped surface to compare against yet.
+    source: "https://dental.ufl.edu/education/dmd-program/testing-information/examsoft-procedures/"
+  - pillar: "Curriculum Mapping"
+    competitor_capability: >
+      Real but assessment-anchored, and that distinction is the whole story. Exam items are
+      tagged to "categories" (outcomes, competencies, accreditation standards), which makes
+      every exam a mapping event; a separate web-based tool named Map ties curriculum and
+      course learning objectives to accreditation standards, institutional outcomes and
+      professional competencies, and to faculty, instructional methods and assessments.
+      What this is NOT, on the evidence: a course-catalog/curriculum-management system of
+      record. The map is built out of assessment data rather than out of the curriculum
+      structure itself.
+    depth_vs_prism: "unknown"
+    evidence: >
+      Independently confirmed in practice by the University of Houston College of Pharmacy's
+      2024 ACPE self-study, fetched and text-extracted in full 2026-09-11: PPSLOs "are
+      mapped to all didactic and experiential course proficiencies", assessment data comes
+      from "course exams, skills labs, MRSL OSCEs, rubrics, assignments and reflections
+      which are tagged in ExamSoft", and curricular change was driven by "evaluation data,
+      student feedback and curricular mapping from assessments using ExamSoft". The Map
+      product's own description is sourced only to a search-result excerpt of
+      support.examsoft.com/hc/en-us/articles/11822208281357-Map-Getting-Started, which
+      returned 403 to two direct fetch attempts — so Map is confirmed to exist and to be
+      named, without a fetched vendor page behind it. No evidence was found either way on
+      course-offering vs. catalog modelling, cloning, syllabus generation, or gap analysis
+      against an unmapped standard. Rated "unknown", not compared.
+    source: "https://www.uh.edu/pharmacy/_documents/acpe/uhcop-self-study-final-2024-public.pdf"
+  - pillar: "Accreditation Management"
+    competitor_capability: >
+      Accreditation-facing through the tagging layer rather than through a self-study
+      workflow: because items carry category tags, category-driven reports can be produced
+      as standard-by-standard evidence at accreditation time. Reported for ACPE on the
+      pharmacy side and for CODA on the dental side. The pharmacy benchmark assessment
+      content ExamSoft distributes (authored by McGraw Hill) is described as arriving
+      pre-tagged to ACPE Appendix 1 topics and Bloom's levels.
+    depth_vs_prism: "unknown"
+    evidence: >
+      The UH self-study shows the mechanism in real use — final APPE exams "are conducted
+      on ExamSoft. The exams are mapped to the UHCOP PPSLOs", with PPSLO data feeding an
+      annual assessment plan reviewed by the assessment committee. That is item-level
+      evidence flowing into an accreditation process, which is genuinely adjacent to Prism's
+      Accreditation Management pillar (roadmap, Q3 2027). Two caveats keep this at
+      "unknown". First, the CODA tagging claim and the McGraw Hill/ACPE Appendix 1
+      pre-tagging claim come from search-result excerpts of examsoft.com pages that now
+      return 404 — not from any page fetched on 2026-09-11. Second, nothing found describes
+      self-study assembly, narrative/evidence management, or an accreditor submission
+      artifact; the product supplies evidence into a self-study a program writes elsewhere.
+    source: "https://www.uh.edu/pharmacy/_documents/acpe/uhcop-self-study-final-2024-public.pdf"
+  - pillar: "Surveys & Course Evaluations"
+    competitor_capability: >
+      A survey capability exists and is used, but only one fetched source establishes it and
+      no page describes what the builder can do. The UH self-study records ExamSoft surveys
+      collected as part of the student ePortfolio, and directed student reflections
+      completed in ExamSoft.
+    depth_vs_prism: "unknown"
+    evidence: >
+      "As part of the ePortfolio, ExamSoft surveys" appear among instruments used to capture
+      professional growth, and "students complete directed reflections in ExamSoft". That is
+      the entire public evidence base found. No item bank, response-rate reporting,
+      evaluation-cycle scheduling, or course-evaluation workflow was found on any fetched
+      page. Explicitly not rated against Prism's shipped Surveys & Course Evaluations pillar
+      — one clause in a self-study is not a feature comparison.
+    source: "https://www.uh.edu/pharmacy/_documents/acpe/uhcop-self-study-final-2024-public.pdf"
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: "Not a capability ExamSoft has or claims."
+    depth_vs_prism: "prism-only"
+    evidence: >
+      This is the rare case where the absence is positively evidenced rather than merely
+      unfound. The same UH self-study that shows ExamSoft carrying didactic assessment shows
+      a different vendor carrying experiential: IPPE/APPE hours, preceptor evaluations and
+      patient-care interventions all live in CORE ELMS ("Pharmacy students log about 9,000
+      patient care interventions in CORE ELMS"; the program "requires students to document
+      on-site rotation hours in CORE ELMS"). A single accredited pharmacy program's own
+      accreditation document running both products side by side, each on its own side of the
+      didactic/clinical line, is direct evidence that ExamSoft does not cover this pillar —
+      and independently corroborates the stack split the 2026-09-04 Vishaka session
+      described.
+    source: "https://www.uh.edu/pharmacy/_documents/acpe/uhcop-self-study-final-2024-public.pdf"
+  - pillar: "Compliance Management"
+    competitor_capability: "Not a capability ExamSoft has or claims."
+    depth_vs_prism: "prism-only"
+    evidence: >
+      No immunisation, background-check, drug-screen, affiliation-agreement, placement-
+      clearance or expiration-alerting capability was found in any source consulted on
+      2026-09-11 — not in the UH self-study's technology discussion, the fetched
+      college-hosted procedure pages, or the Capterra review corpus. The product's identity
+      verification (ExamID) is exam-seat identity, not credential compliance, and should not
+      be mistaken for this pillar. Genuinely unassessed rather than proven absent, but the
+      silence is consistent across every source.
+    source: "https://www.capterra.com/p/145798/ExamSoft-E-I/"
+
+strengths:
+  - claim: >
+      Owns the one pillar Prism has not shipped. Exam Management is a Q2 2027 roadmap item
+      in Prism's own capability map; ExamSoft delivers secure offline high-stakes exams
+      today, with identity verification and proctoring as separate named products.
+    source: "https://dental.ufl.edu/education/dmd-program/testing-information/examsoft-procedures/"
+  - claim: >
+      Category tagging converts routine exam administration into accreditation evidence as a
+      by-product. A program that tags items once gets outcome-level and standard-level
+      reporting without running a separate mapping exercise.
+    source: "https://www.uh.edu/pharmacy/_documents/acpe/uhcop-self-study-final-2024-public.pdf"
+  - claim: >
+      Embedded in the academic spine, not a peripheral tool: at UH, ExamSoft data feeds the
+      annual PPSLO assessment plan, the course-review process and documented curricular
+      changes. Removing it would break a documented accreditation workflow.
+    source: "https://www.uh.edu/pharmacy/_documents/acpe/uhcop-self-study-final-2024-public.pdf"
+  - claim: >
+      Turnitin ownership since 2020 puts it inside a vendor relationship most institutions
+      already hold centrally for academic integrity — an enterprise footprint no
+      single-discipline competitor can match on the buying side.
+    source: "https://www.hugheshubbard.com/news/firm-reps-turnitin-in-deal-to-buy-examsoft"
+  - claim: >
+      Cross-domain, not pharmacy-only: documented use spans pharmacy, dentistry, medicine,
+      osteopathic medicine, nursing and law, so the reference base a prospect hears about
+      is far wider than any clinical-education vendor's.
+    source: "https://www.capterra.com/p/145798/ExamSoft-E-I/"
+
+weaknesses:
+  - claim: >
+      Reliability under high stakes is the dominant independent complaint — 3.8/5 across 51
+      Capterra reviews (18% negative), with crashes during exams called out directly:
+      "Very stressful in not knowing if the program will crash."
+    source: "https://www.capterra.com/p/145798/ExamSoft-E-I/"
+  - claim: >
+      Covers one side of a pharmacy program's data only. The UH self-study runs ExamSoft for
+      didactic assessment and CORE ELMS for all IPPE/APPE hours, evaluations and
+      interventions — the didactic/clinical split is structural, not a configuration choice.
+    source: "https://www.uh.edu/pharmacy/_documents/acpe/uhcop-self-study-final-2024-public.pdf"
+  - claim: >
+      The public product surface has been absorbed into Turnitin. As of 2026-09-11
+      examsoft.com redirects to turnitin.com, indexed examsoft.com resource pages return
+      404, and support.examsoft.com blocks automated fetch — a de-branding that also makes
+      independent diligence harder.
+    source: "https://www.turnitin.com/products/examsoft/"
+  - claim: >
+      Threatened from above by the LMS, not just by assessment rivals. Per the 2026-09-04
+      session: "LMS is slowly encroaching in our space… Canvas, Brightspace, all of them
+      have introduced AI, have introduced building assessments." Speaker opinion, but it is
+      the incumbent-risk framing Exxat plans against.
+    source: "content/interviews/2026-09-04-vishaka-ruchi-pharmacy-understanding.md (registry id interview-vishaka-pharmacy-understanding-2026-09-04)"
+  - claim: >
+      Nothing public describes how the Map curriculum tool actually works. Two direct fetches
+      of the vendor's own Map documentation returned 403; the tool is confirmed to exist and
+      be named, with no fetched page behind its capabilities.
+    source: "unable to verify — support.examsoft.com/hc/en-us/articles/11822208281357-Map-Getting-Started returned 403 to fetch tool and to direct request (Cloudflare JS challenge) on 2026-09-11"
+
+retention_anchor: >
+  Longitudinal tagged item data is the lock-in, and it compounds annually. A program that
+  has tagged several years of exams to its own outcomes and to ACPE standards holds a
+  historical trend line it cannot recreate elsewhere — UH's assessment plan reasons across
+  cohorts ("in the pre-APPE curriculum all students showed greater than 70% competency in
+  PPSLO 2 except for Pharmacokinetics for P2 students"), which is only possible because the
+  tagged history sits in one system. Leaving does not just mean re-tooling next year's
+  exams; it means abandoning the comparison baseline mid-accreditation-cycle. A second,
+  structurally different anchor sits above the program: where the institution buys ExamSoft
+  centrally — the 2026-09-04 session describes exactly this pattern, a central office for
+  faculty development and technology adoption making enterprise LMS/SIS/ExamSoft decisions
+  — the pharmacy program is not the buyer and cannot unilaterally displace it.
+
+exxat_opportunity: >
+  Do not pitch against ExamSoft — pitch against the seam between ExamSoft and everything
+  else. The evidence says these products do not overlap: the UH self-study runs ExamSoft for
+  didactic assessment and CORE ELMS for every IPPE/APPE record, and a program buying exam
+  software is usually not the buyer Prism is talking to. The wedge named in the 2026-09-04
+  Vishaka session is the right one: the September 12, 2026 Exxat release lets programs
+  already on Prism for clinical management bulk-import their ExamSoft reports and data, free,
+  which Vishaka framed as "for the first time now, we will have the entire student data from
+  didactic and clinical on our platform." That move is deliberately not displacement — it
+  consumes the incumbent's output and makes Prism the only place both halves of a student's
+  record meet, which is precisely the position Enflux currently sells into (see influx.yaml).
+  Two cautions before building a pitch on this. First, ExamSoft's category tagging is
+  genuinely good at the accreditation-evidence job, so the claim to make is "one place, both
+  halves", not "better tagging" — Prism has no shipped exam pillar until Q2 2027, with a
+  January soft launch per the same session. Second, the buying-committee point from that
+  session matters more than any feature: a DCE cannot switch a centrally-procured enterprise
+  exam platform, so the import story is aimed at the dean of assessment or curriculum chair,
+  not the clinical-education director Exxat currently targets.
+
+pricing_signal: >
+  Not publicly disclosed. No pricing page, per-student rate or tier list was found on
+  turnitin.com or on any reachable ExamSoft property. Capterra's listing displays a
+  "Starting price $0.01 Per Year" value, which is a placeholder artifact of that directory's
+  required-field handling rather than a real price, and is not treated as pricing evidence
+  here; the same listing records no free trial and no free version, consistent with a
+  quote-only institutional sale.
+
+last_researched: "2026-09-11"
+
+sources:
+  - "https://www.uh.edu/pharmacy/_documents/acpe/uhcop-self-study-final-2024-public.pdf"
+  - "https://dental.ufl.edu/education/dmd-program/testing-information/examsoft-procedures/"
+  - "https://guides.library.stonybrook.edu/c.php?g=1403903&p=10407559"
+  - "https://blogs.pharmacy.umaryland.edu/insidesop/2017/03/24/examsoft-certification-enhancing-the-assessment-process/"
+  - "https://www.capterra.com/p/145798/ExamSoft-E-I/"
+  - "https://www.hugheshubbard.com/news/firm-reps-turnitin-in-deal-to-buy-examsoft"
+  - "https://www.turnitin.com/products/examsoft/"
+  - "content/interviews/2026-09-04-vishaka-ruchi-pharmacy-understanding.md"

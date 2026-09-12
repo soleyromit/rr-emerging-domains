@@ -7,19 +7,44 @@ import { Icon } from "@astryxdesign/core/Icon";
 import { Badge } from "@astryxdesign/core/Badge";
 import { Tooltip } from "@astryxdesign/core/Tooltip";
 import { Collapsible } from "@astryxdesign/core/Collapsible";
+import { ClickableCard } from "@astryxdesign/core/ClickableCard";
 import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList";
 import { Takeaway } from "@/components/takeaway";
+import { ExxatGapAnswer } from "@/components/exxat-gap-answer";
+import { ClinicalEducationTimeline, type ClinicalEducationTimelineStage } from "@/components/clinical-education-timeline";
+import { DomainScenario } from "@/components/domain-scenario";
 import { FieldBlock } from "@/components/field-block";
 import { SentenceList } from "@/components/sentence-list";
-import { humanizeSourceRef } from "@/lib/strip-file-citations";
+import { humanizeSourceRef, stripFileCitations } from "@/lib/strip-file-citations";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
 import {
   getAccreditorTiers,
   getDomainHubData,
   fitCounts,
   listDomains,
+  getJourney,
+  getJourneyStagesForDiscipline,
+  getDissectionManifest,
+  dissectionAnsweredCount,
   type AccreditationDoc,
 } from "@/lib/content";
+import { dissectHref } from "@/lib/dissection-links";
+
+// Keyed by route slug -> {journey slug, the exact key_findings/discipline_notes
+// `subject` string it was tagged with}. Every one of the 5 content/journeys/*.yaml
+// files cites all 4 expansion domains at multiple stages; this picks each
+// domain's single richest journey by citation count (via
+// getJourneyStagesForDiscipline) rather than surfacing all 5 journeys on one
+// Overview page. Recompute by re-running the count if a journey gets
+// substantially rewritten — this isn't derived at request time because it's a
+// one-time editorial pick, not something that should silently change on a
+// content edit elsewhere.
+const DOMAIN_SCENARIO_JOURNEY: Partial<Record<string, { journeySlug: string; subject: string }>> = {
+  do: { journeySlug: "accreditation-self-study", subject: "DO" },
+  pharmacy: { journeySlug: "competency-verification", subject: "Pharmacy" },
+  dentistry: { journeySlug: "accreditation-self-study", subject: "Dentistry" },
+  medicine: { journeySlug: "preceptor-site-onboarding", subject: "Medicine" },
+};
 
 const STATE_VARIATION_VARIANT: Record<string, "success" | "warning" | "neutral"> = {
   confirmed: "warning",
@@ -84,6 +109,35 @@ const DOMAIN_EDITORIAL: Partial<Record<string, DomainEditorial>> = {
   },
 };
 
+// Hand-authored, same rationale as DOMAIN_EDITORIAL: a timeline is a claim about
+// real structure (which years, how many hours, which rotation types), so it's
+// only written for domains this repo has actually researched to that level —
+// Pharmacy first, per the storytelling-redesign proof of concept. Sourced from
+// content/domains/pharmacy.yaml's own clinical_education_shape field, just
+// decomposed into stops instead of one paragraph.
+const DOMAIN_CLINICAL_TIMELINE: Partial<Record<string, ClinicalEducationTimelineStage[]>> = {
+  pharmacy: [
+    {
+      when: "Years 1-2 (didactic)",
+      label: "IPPE",
+      headlineStat: "300 hrs min",
+      detail: "Short, recurring placements woven concurrently through coursework — 75 hrs community + 75 hrs hospital/health-system + 150 hrs patient-care.",
+    },
+    {
+      when: "Year 4 (capstone)",
+      label: "APPE",
+      headlineStat: "1,440 hrs / 36 wks",
+      detail: "6-7 full-time block rotations, 4-6 weeks each, no concurrent coursework. 4 mandatory settings: community, institutional/health-system, general medicine, ambulatory care.",
+    },
+    {
+      when: "After graduation",
+      label: "Licensure",
+      headlineStat: "2 exams + state hours",
+      detail: "NAPLEX (clinical competence) and MPJE (jurisprudence), both NABP-administered, plus state-tracked intern hours beyond the 1,440 APPE hours.",
+    },
+  ],
+};
+
 // Deterministic fallback for domains without hand-authored DOMAIN_EDITORIAL —
 // headline and takeaway are built entirely from this domain's own real, already-
 // cited standards data, never synthesized prose standing in for research that
@@ -123,6 +177,28 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
   );
   const editorial = DOMAIN_EDITORIAL[slug] ?? computedEditorial(accreditationDoc);
   const domainProfile = listDomains().find((d) => d.domain?.toLowerCase() === slug);
+  const timelineStages = DOMAIN_CLINICAL_TIMELINE[slug] ?? [];
+  const scenarioConfig = DOMAIN_SCENARIO_JOURNEY[slug];
+  const scenarioJourney = scenarioConfig ? getJourney(scenarioConfig.journeySlug) : null;
+  const scenarioStages = scenarioConfig
+    ? getJourneyStagesForDiscipline(scenarioConfig.journeySlug, scenarioConfig.subject)
+    : [];
+
+  // Overview -> Dissection. Rendered ONLY where a manifest exists (4 of 13 routed
+  // domains today): the Dissection tab is a real page either way, but for the other 9
+  // it is a named "not dissected yet" empty state, and a card here advertising a
+  // six-question answer that does not exist would be exactly the overpromise this
+  // repo's content rules forbid. The tab itself stays in the nav for all of them.
+  //
+  // The card's own copy is DERIVED from the manifest — how many questions are really
+  // answered — so it never claims more coverage than the page it links to shows.
+  const dissectionManifest = getDissectionManifest(slug);
+  const dissectionSummary = dissectionManifest
+    ? {
+        answered: dissectionAnsweredCount(dissectionManifest),
+        total: dissectionManifest.questions.length,
+      }
+    : null;
 
   if (!tierEntry) return null;
 
@@ -139,14 +215,45 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
             <MetadataListItem label="Standards tracked">{standardsCrosswalk?.rows.length ?? 0}</MetadataListItem>
             <MetadataListItem label="Feature pillars rated">{featureComparison.rows.length}</MetadataListItem>
           </MetadataList>
+          {dissectionSummary ? (
+            <ClickableCard href={dissectHref(slug)} label="Dissection">
+              <Stack gap={1.5}>
+                <Text type="body" weight="semibold">
+                  Dissection — the six-question analysis of {entry.domain}
+                </Text>
+                <Text type="supporting">
+                  {`${dissectionSummary.answered} of ${dissectionSummary.total} questions answered, with the incumbent set, the researched feature matrix and a topology map of how this domain's standards, competitors, pillars, personas and trends connect.`}
+                </Text>
+              </Stack>
+            </ClickableCard>
+          ) : null}
         </Stack>
       </Section>
+
+      <Section padding={6} dividers={["bottom"]}>
+        <ExxatGapAnswer standardsCrosswalk={standardsCrosswalk} landscapeEntry={landscapeEntry} slug={slug} />
+      </Section>
+
+      {scenarioJourney && scenarioStages.length ? (
+        <Section padding={6} dividers={["bottom"]}>
+          <DomainScenario
+            domainLabel={entry.domain}
+            journeyName={scenarioJourney.journey_name}
+            journeySlug={scenarioJourney.slug}
+            stages={scenarioStages}
+          />
+        </Section>
+      ) : null}
 
       {domainProfile ? (
         <Section padding={6} dividers={["bottom"]} variant="muted">
           <Stack gap={2}>
             <Text type="label" color="secondary">Domain context</Text>
-            <Text type="body" maxLines={2}>{domainProfile.clinical_education_shape}</Text>
+            {timelineStages.length ? (
+              <ClinicalEducationTimeline stages={timelineStages} />
+            ) : (
+              <Text type="body" maxLines={2}>{domainProfile.clinical_education_shape}</Text>
+            )}
             <Collapsible
               value="context"
               defaultIsOpen={false}
@@ -156,12 +263,14 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
                 </Text>
               }
             >
-              <Text type="body">{domainProfile.clinical_education_shape}</Text>
+              <Text type="body">{stripFileCitations(domainProfile.clinical_education_shape)}</Text>
             </Collapsible>
             {domainProfile.market ? (
               <MetadataList columns={2}>
                 <MetadataListItem label="Programs">{domainProfile.market.program_count}</MetadataListItem>
-                <MetadataListItem label="Trend">{domainProfile.market.program_count_trend}</MetadataListItem>
+                <MetadataListItem label="Trend">
+                  {stripFileCitations(domainProfile.market.program_count_trend)}
+                </MetadataListItem>
               </MetadataList>
             ) : null}
           </Stack>

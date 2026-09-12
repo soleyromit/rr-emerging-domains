@@ -44,7 +44,7 @@ export function CompetitorDepthChart({ competitors }: { competitors: Competitor[
       options={(width) => ({
         width,
         height: Math.max(220, competitors.length * 34),
-        marginLeft: 170,
+        marginLeft: 220,
         marginRight: 20,
         x: { label: "Pillars assessed" },
         y: { label: null },

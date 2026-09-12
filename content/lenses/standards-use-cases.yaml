@@ -1,0 +1,436 @@
+# Level 2 reframing — cites content/accreditation/*.yaml (by element_id) and
+# content/sources/registry.yaml (by source_id) downward; never asserts a claim that
+# isn't grounded in a cited Level-0/Level-1 source. Structural sibling of
+# standards-competitor-ratings.yaml: same sparse, keyed-by-(domain, element_id)
+# shape, same "absence is the unresearched state" convention.
+#
+# WHY THIS FILE EXISTS AND NOT A FIELD ON accreditation/*.yaml: flows already cite
+# acpe.yaml as ground truth. Having acpe.yaml point back at flows would create a
+# citation cycle — exactly what content/ARCHITECTURE.md's citation rule forbids, and
+# Level 1 is not where the repo's one tolerated sideways-pointer exception
+# (`related_flows`, documented for Level 2 -> Level 3) applies. See
+# docs/superpowers/specs/2026-09-10-pharmacy-standards-use-cases-design.md.
+#
+# Schema, per entry:
+#   domain           — canonical domain label ("Pharmacy"), matching the key
+#                      getStandardsCrosswalkForDomain() looks up by
+#   element_id       — the FULL element_id string from that domain's accreditation file
+#   use_case         — one scannable line: what a program would actually do. <= 220 chars
+#   status           — proposed | in-flight | documented | no-fit-yet
+#                      `no-fit-yet` is a first-class value, not an absence: never leave a
+#                      real gap blank, say it and say why in `detail`
+#   audience         — optional content/personas/*.yaml filenames (no extension). Encodes
+#                      who actually buys this, not just who operates it
+#   detail           — the sourced paragraph behind the headline. <= 600 chars; decompose
+#                      into two entries rather than write past it
+#   related_flows    — optional [{flow, step?, element?}] navigational pointer into
+#                      content/flows/ (Level 3). Wayfinding, not evidence
+#   prism_feature_ref — optional, one of content/prism/capability-map.yaml's 6 top-level
+#                      pillar names verbatim ("Clinical & Experiential Education",
+#                      "Compliance Management", "Curriculum Mapping", "Surveys & Course
+#                      Evaluations", "Exam Management", "Accreditation Management").
+#                      Names WHICH Exxat capability actually does the work this use case
+#                      describes — added 2026-09-11 because a use case that only tells a
+#                      market/customer story without naming the Prism feature behind it
+#                      reads as a generic idea, not a product answer. Omit only when the
+#                      use case genuinely has no home in any shipped or roadmap pillar
+#                      (status: no-fit-yet) — never guess a pillar to fill the field.
+#   sources          — [{source_id}] into content/sources/registry.yaml. Required
+#
+# Gated by scripts/check_content_density.py's check_standards_use_cases_integrity().
+last_updated: "2026-09-11"
+use_cases:
+  # --- Pharmacy / ACPE — the pilot and the two live schools ---
+  - domain: "Pharmacy"
+    element_id: "Standard 2, Key Element 2.2.d"
+    use_case: "Map an ACPE curriculum in Prism, import ExamSoft didactic scores, and correlate them to NAPLEX outcomes"
+    status: "in-flight"
+    prism_feature_ref: "Curriculum Mapping"
+    audience: ["role-dean", "role-compliance-accreditation-liaison"]
+    detail: >
+      A non-customer PharmD school running CORE today is piloting ACPE curriculum
+      mapping in Prism, with ExamSoft scores imported for key pharmacotherapy courses
+      and correlated against NAPLEX outcomes. Data collection is at a preliminary
+      stage; the target is an AACP abstract, deadline November 2026.
+    related_flows:
+      - flow: "accreditation-self-study--04-curriculum-competency-coverage-mapping-to-the.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 2, Key Element 2.2.d"
+    use_case: "AI-flagged curriculum coverage gap with an hours-reallocation recommendation, not just a report"
+    status: "proposed"
+    prism_feature_ref: "Curriculum Mapping"
+    audience: ["role-dean", "role-compliance-accreditation-liaison"]
+    detail: >
+      Roadmap concept, not shipped. The stated vision is insight plus remedy: name the
+      uncovered competency, propose the lecture that fills it, and name the
+      over-covered hours to cut to make room. The worked example given was trimming
+      geriatric-drug coverage to insert an IPEC competency that is nowhere in the map.
+    related_flows:
+      - flow: "admin-onboarding--06-courses-rotations-curriculum-mapping.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.3.d"
+    use_case: "Bulk-import ExamSoft reports so didactic and clinical performance sit in one longitudinal view"
+    status: "proposed"
+    prism_feature_ref: "Exam Management"
+    audience: ["role-dean", "role-program-admin"]
+    detail: >
+      The September 12 2026 release lets programs already using Prism for clinical
+      management bulk-import ExamSoft data at no extra charge. It is the first time
+      didactic and clinical records sit on one platform, and it is the direct answer
+      to the CORE plus ExamSoft plus Influx stack this market defaults to.
+    related_flows:
+      - flow: "accreditation-self-study--05-external-outcome-data-ingestion-board-exams.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.3.d"
+    use_case: "Stand up competency tracking for a PharmD program during onboarding"
+    status: "in-flight"
+    prism_feature_ref: "Curriculum Mapping"
+    audience: ["role-compliance-accreditation-liaison", "role-program-admin"]
+    detail: >
+      University of Maryland is implementing Prism now, with competency tracking named
+      as the capability they want help with, and strategic setup calls in progress. The
+      specific workflow they land on is not documented anywhere yet — do not describe
+      one until the implementation has actually been interviewed.
+    related_flows:
+      - flow: "competency-verification--06-roll-up-to-a-per-student.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Elements 3.2.b & 3.2.d"
+    use_case: "Run a PharmD program's full APPE placement cycle in Prism"
+    status: "documented"
+    prism_feature_ref: "Clinical & Experiential Education"
+    audience: ["role-clinical-coordinator", "discipline-pharmacy"]
+    detail: >
+      OHSU School of Pharmacy has used Prism for clinical placement management for
+      roughly a year — the one pharmacy reference where the experiential workflow is
+      live rather than proposed. They have not adopted the other parts of the product,
+      so the evidence here is placement-side only and should not be stretched further.
+    related_flows:
+      - flow: "rotation-lifecycle--04-placement-allocation-scheduling-capacity-balancing.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.1.a"
+    use_case: "Publish a pharmacy placement-management reference story as a webinar and white paper"
+    status: "proposed"
+    prism_feature_ref: "Clinical & Experiential Education"
+    audience: ["role-clinical-coordinator", "role-dean"]
+    detail: >
+      Proposed marketing motion, not a shipped asset: interview OHSU on how they manage
+      IPPE and APPE placements in Prism, then turn it into a testimonial, a white paper
+      and a webinar. Named as the strongest pharmacy clinical reference available today.
+    related_flows:
+      - flow: "preceptor-site-onboarding--06-student-assignment-ratio-capacity-and-eligibility.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  # --- Migration, GTM motions, roadmap, and one honest gap ---
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.5.b"
+    use_case: "Inventory sites and affiliation agreements in the incumbent before cutting over to Prism"
+    status: "proposed"
+    prism_feature_ref: "Compliance Management"
+    audience: ["role-clinical-coordinator", "role-compliance-accreditation-liaison"]
+    detail: >
+      Proposed. A program leaving CORE mid-accreditation-cycle has to move every active
+      site record and affiliation agreement without losing its expiry dates. Prism's
+      contracts-with-expiry-alerts feature is the destination; the migration path itself
+      is unexercised — no pharmacy program has done this move on record.
+    related_flows:
+      - flow: "preceptor-site-onboarding--02-affiliation-agreement-execution-contract-lifecycle-management.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.5.b"
+    use_case: "Survive the first ACPE self-study cycle after switching platforms mid-cycle"
+    status: "proposed"
+    prism_feature_ref: "Accreditation Management"
+    audience: ["role-compliance-accreditation-liaison", "role-dean"]
+    detail: >
+      Proposed. The migration story the GTM team asked for is a program that moved from
+      CORE to Exxat and can say why. Its hardest stage is the first self-study after the
+      switch, where evidence has to span both platforms. No such customer exists yet —
+      this entry names the target, it does not record an outcome.
+    related_flows:
+      - flow: "accreditation-self-study--08-self-study-assembly-submission-site-visit.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.1.b"
+    use_case: "Carry historical IPPE hour records across a mid-cycle platform switch"
+    status: "proposed"
+    prism_feature_ref: "Clinical & Experiential Education"
+    audience: ["role-clinical-coordinator", "role-program-admin"]
+    detail: >
+      Proposed. ACPE's 300-hour IPPE total, with its 75-hour community and 75-hour
+      hospital minimums, is a per-student cumulative record — so a program switching
+      mid-cohort must import prior-year hours rather than start counting from zero. No
+      documented import path for an incumbent's hour logs exists in this repo.
+    related_flows:
+      - flow: "rotation-lifecycle--05-in-rotation-capture-hours-encounters-procedures.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.5.a"
+    use_case: "Run the AACP graduating-student, faculty and preceptor surveys inside Prism"
+    status: "proposed"
+    prism_feature_ref: "Surveys & Course Evaluations"
+    audience: ["role-compliance-accreditation-liaison", "role-dean"]
+    detail: >
+      Proposed. Programs are actively trying to shrink their technology stack, and Exxat
+      Surveys plus the Forms and Evaluations engine already cover the instrument types
+      7.5.a names. What has not been built is the specific AACP instrument set and its
+      annual cadence — that is configuration work nobody has done yet.
+    related_flows:
+      - flow: "accreditation-self-study--07-closing-the-cqi-loop-finding-to.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.3.c"
+    use_case: "Push finalized rotation grades to Canvas so the LMS stays the official student record"
+    status: "in-flight"
+    prism_feature_ref: "Clinical & Experiential Education"
+    audience: ["role-program-admin", "role-clinical-coordinator"]
+    detail: >
+      Canvas integration has shipped; Brightspace is next, then Blackboard. LMS
+      integration was named the second biggest pharmacy buying driver — one dean said to
+      come back once it existed. What it removes is re-keying grades from the clinical
+      system into the channel the program actually communicates through.
+    related_flows:
+      - flow: "rotation-lifecycle--07-summative-evaluation-grading-turnaround-completion-verification.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.5.a"
+    use_case: "Serve one university's pharmacy, PT, OT and PA placements from a single office and platform"
+    status: "proposed"
+    prism_feature_ref: "Clinical & Experiential Education"
+    audience: ["role-dean", "role-clinical-coordinator"]
+    detail: >
+      Proposed. Pharmacy usually runs its own office of clinical education, but some
+      universities centralize a clinical-coordinator role across programs, and larger
+      institutions have a central technology-adoption office that makes the enterprise
+      software decision. Where that office exists, pharmacy can carry the smaller programs.
+    related_flows:
+      - flow: "admin-onboarding--05-sites-locations-personnel-management.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.2.a"
+    use_case: "Report each student's APPE exposure across the patient-population diversity categories"
+    status: "no-fit-yet"
+    audience: ["role-compliance-accreditation-liaison"]
+    detail: >
+      Stated as an honest gap, not a proposal. ACPE asks for aggregate exposure across
+      age, gender, neurodivergent status, race and ethnicity, socioeconomic factors and
+      disease states. No shipped or roadmap Prism pillar carries patient-population
+      demographics at the rotation level, so there is nothing to propose here yet.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.3.d"
+    use_case: "Replace ExamSoft with Exxat's own exam module once it soft-launches"
+    status: "proposed"
+    prism_feature_ref: "Exam Management"
+    audience: ["role-dean", "role-program-admin"]
+    detail: >
+      Proposed, and the module is unshipped — a January soft launch was the date given.
+      The competitive read matters as much as the date: Canvas and Brightspace have both
+      added assessment building in the last two years, so this module lands against the
+      LMS as well as against ExamSoft.
+    related_flows:
+      - flow: "competency-verification--02-build-and-deploy-the-assessment-instruments.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+  # --- Standards 2025 / COEPA mechanics — what the rules actually make software do ---
+  # ADDED 2026-09-11. Unlike the entries above (which come from the 2026-09-04
+  # domain-expert session and tell a market/customer story), every entry below is
+  # derived from the RULE TEXT in content/accreditation/acpe.yaml and cites the
+  # accreditation documents that element is itself sourced from. All are `proposed`:
+  # none of this behavior is confirmed shipped, and lenses/product-gaps.yaml says the
+  # pharmacy gap research is not finished.
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.1.b"
+    use_case: "Track IPPE hours as four running totals, not one, and keep simulation out of all four"
+    status: "proposed"
+    prism_feature_ref: "Clinical & Experiential Education"
+    audience: ["role-clinical-coordinator", "role-program-admin"]
+    detail: >
+      Proposed. 3.1.b's 300 IPPE hours are four thresholds, not one — 75 community, 75
+      hospital/health-system, 150 patient care, plus the total — across P1-P3, so a
+      single counter cannot say whether a student is compliant. Standards 2025 also bars
+      simulation from any part of the 300, which 2016 permitted, so activities need a tag
+      that excludes them from every category. Sub-threshold aggregation in Prism is
+      unconfirmed.
+    related_flows:
+      - flow: "rotation-lifecycle--05-in-rotation-capture-hours-encounters-procedures.yaml"
+    sources:
+      - source_id: "doc-acpe-standards-2025-full-text"
+      - source_id: "doc-pharmacy-education-us-ebook-2026"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Elements 3.2.b & 3.2.d"
+    use_case: "Gate graduation clearance on all four ACPE-required APPE settings, not just the 1,440-hour total"
+    status: "proposed"
+    prism_feature_ref: "Clinical & Experiential Education"
+    audience: ["role-clinical-coordinator", "role-compliance-accreditation-liaison"]
+    detail: >
+      Proposed. 3.2.b/3.2.d require all four settings per student — community pharmacy,
+      ambulatory care, hospital/health-system pharmacy, inpatient adult patient care —
+      plus 1,440 hours, 36 weeks, each APPE at least 160 hours. A student can reach 1,440
+      and still be non-compliant, so the check is categorical as well as numeric. Those
+      four names are ACPE's own; the looser Acute Care / Retail / Institutional labels
+      programs use are not interchangeable with them.
+    related_flows:
+      - flow: "competency-verification--06-roll-up-to-a-per-student.yaml"
+    sources:
+      - source_id: "doc-acpe-standards-2025-full-text"
+      - source_id: "doc-pharmacy-education-us-ebook-2026"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Elements 3.2.b & 3.2.d"
+    use_case: "Run ACPE APPE hours and state intern hours as two linked ledgers per student, not one number"
+    status: "proposed"
+    prism_feature_ref: "Clinical & Experiential Education"
+    audience: ["role-clinical-coordinator", "role-program-admin", "discipline-pharmacy"]
+    detail: >
+      Proposed. ACPE's 1,440 APPE hours and a state board's intern-hour minimum for
+      NAPLEX eligibility overlap rather than run separately: most states let APPE hours
+      count but differ on what percentage, so the same logged hours roll up twice, per
+      student and per state. No confirmed Prism capability keeps that second ledger.
+      Treat the cited 1,500-1,800 range as unverified — acpe.yaml's source states it
+      three irreconcilable ways.
+    related_flows:
+      - flow: "rotation-lifecycle--05-in-rotation-capture-hours-encounters-procedures.yaml"
+    sources:
+      - source_id: "doc-acpe-standards-2025-full-text"
+      - source_id: "doc-pharmacy-education-us-ebook-2026"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Elements 3.2.b & 3.2.d"
+    use_case: "Record a Nontraditional PharmD student's four required settings as assessed equivalents"
+    status: "proposed"
+    prism_feature_ref: "Clinical & Experiential Education"
+    audience: ["role-program-admin", "role-compliance-accreditation-liaison"]
+    detail: >
+      Proposed. NTPD-pathway students meet the same four required APPE settings through
+      formalized faculty assessment rather than placement, so a program must still
+      evidence all four per student with no placement record behind them. That needs an
+      alternate "assessed equivalent" record type feeding the same four-category
+      completion report — which acpe.yaml flags as custom configuration or a small
+      build.
+    related_flows:
+      - flow: "competency-verification--05-summative-sign-off-supervision-attestation-preceptor.yaml"
+    sources:
+      - source_id: "doc-acpe-standards-2025-full-text"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.2.e"
+    use_case: "Classify every elective APPE as patient-care or not, and stop the 321st non-patient-care hour"
+    status: "proposed"
+    prism_feature_ref: "Clinical & Experiential Education"
+    audience: ["role-clinical-coordinator", "role-program-admin"]
+    detail: >
+      Proposed. 3.2.e caps non-patient-care elective APPEs at 320 of the 1,440 hours: a
+      patient-care/non-patient-care flag set at rotation setup, plus a running per-student
+      total that flags or blocks before the cap is breached. The cap is new in Standards
+      2025, so existing rotation catalogs carry no such field — a backfill comes before
+      enforcement. acpe.yaml rates it Configure, like the shipped 2:1 ratio check.
+    related_flows:
+      - flow: "admin-onboarding--06-courses-rotations-curriculum-mapping.yaml"
+    sources:
+      - source_id: "doc-acpe-standards-2025-full-text"
+      - source_id: "doc-pharmacy-education-us-ebook-2026"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.2.c"
+    use_case: "Gate APPE scheduling on IPPE and didactic completion, and keep capstone hours out of the 1,440"
+    status: "proposed"
+    prism_feature_ref: "Clinical & Experiential Education"
+    audience: ["role-clinical-coordinator", "role-program-admin"]
+    detail: >
+      Proposed. 3.2.c lets APPEs begin only after a student finishes all IPPE and
+      required didactic content, so scheduling needs a prerequisite gate on
+      course-completion status — not only on compliance items, which is the gating Prism
+      is confirmed to do. Capstones are the mirror case: they run during or after APPEs
+      but cannot count toward the 1,440 under Standards 2025, so they need a record type
+      excluded from the hour total.
+    related_flows:
+      - flow: "rotation-lifecycle--03-student-readiness-compliance-clearance-pre-rotation.yaml"
+    sources:
+      - source_id: "doc-acpe-standards-2025-full-text"
+      - source_id: "doc-pharmacy-education-us-ebook-2026"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 2, Key Element 2.2.d"
+    use_case: "Carry COEPA's 12 outcomes and 13 EPAs as one taxonomy, with entrustment recorded as supervision"
+    status: "proposed"
+    prism_feature_ref: "Curriculum Mapping"
+    audience: ["role-compliance-accreditation-liaison", "role-dean"]
+    detail: >
+      Proposed. Standards 2025 adapts its 2.1 outcomes from AACP's COEPA 2022, and
+      programs must show COEPA's 13 EPAs integrated into experiential education. Two
+      traps: ACPE's lettered 2.1 elements are not COEPA's 12 numbered EOs and do not map
+      one-to-one, so the taxonomy carries both; and COEPA replaced numeric entrustment
+      levels with supervision descriptions. Whether Curriculum Mapping holds a
+      non-numeric ordinal scale is unconfirmed.
+    related_flows:
+      - flow: "competency-verification--01-define-the-competency-framework-and-map.yaml"
+    sources:
+      - source_id: "doc-acpe-standards-2025-full-text"
+      - source_id: "doc-pharmacy-education-us-ebook-2026"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 7, Key Element 7.5.b"
+    use_case: "Scope Accreditation Management as an evidence layer feeding ACPE's PHARMS, not a rival portal"
+    status: "proposed"
+    prism_feature_ref: "Accreditation Management"
+    audience: ["role-compliance-accreditation-liaison", "role-dean"]
+    detail: >
+      Proposed, and the pillar is roadmap (Q3 2027) — a scoping decision, not a build.
+      ACPE retired AACP's AAMS and now runs its own submission platform, PHARMS,
+      effective with Standards 2025 in July 2025. ACPE, not the vendor, owns the system
+      of record, so the product's job is to aggregate evidence against named standard
+      numbers, track deadlines, and export into PHARMS rather than duplicate the
+      accreditor's portal.
+    related_flows:
+      - flow: "accreditation-self-study--08-self-study-assembly-submission-site-visit.yaml"
+    sources:
+      - source_id: "doc-acpe-standards-2025-full-text"
+      - source_id: "doc-acpe-dear-dean-standards-2025-2024"
+
+  - domain: "Pharmacy"
+    element_id: "Standard 3, Key Element 3.1.a"
+    use_case: "Replace an aging e-Value experiential setup at a pharmacy program"
+    status: "proposed"
+    prism_feature_ref: "Clinical & Experiential Education"
+    audience: ["role-clinical-coordinator", "role-program-admin"]
+    detail: >
+      Proposed. CORE holds the large majority of pharmacy programs; e-Value still holds
+      some but was described as archaic and not receiving significant enhancements. Booth
+      leads at a prior AACP named e-Value and were shopping alternatives, with four
+      programs flagged for immediate demos — whether those demos happened is unknown.
+    related_flows:
+      - flow: "admin-onboarding--02-program-details-settings-setup.yaml"
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"

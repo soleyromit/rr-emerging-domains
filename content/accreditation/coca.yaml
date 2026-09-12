@@ -54,6 +54,8 @@ standards:
       sites; the rolling-average capacity math and affiliation-agreement
       expiry tracking are configuration/light-build work on that existing
       data model, not new architecture.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Clinical Education (CORE)\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Confirm whether Compliance Management's item-expiry tracking (used for student immunizations/certs) can be repointed at site-level contracts, or whether contract lifecycle needs a new object type."
     source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 43-44, Element 6.9 and Submission 6.9)"
 
@@ -74,6 +76,8 @@ standards:
       Same rotation-record data model inside Clinical & Experiential
       Education; this is adding a small, fixed set of metadata fields and a
       completion-checklist view, not new capability.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Clinical Experience\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: ""
     source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 45, Element 6.10 and Submission 6.10)"
 
@@ -96,8 +100,13 @@ standards:
       does outcome analytics; Exam Management (roadmap Q2 2027) and
       Accreditation Management (roadmap Q3 2027) are the natural homes and
       neither has shipped yet.
+    exxat_compliance: "gap"
+    exxat_compliance_rationale: "Exxat does not currently meet \"Comparability Across Clinical Education Sites\" — no shipped or roadmapped Prism pillar addresses this requirement (Prism fit: Gap), making it an open compliance gap today."
     gap_notes: "Statistical cross-site comparability reporting should be scoped explicitly into the Accreditation Management build rather than assumed to fall out of the rotation engine."
     source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 46, Element 6.11 and Submission 6.11)"
+    # ADDED 2026-09-10: peer-reviewed evidence that cross-site statistical
+    # comparability is achievable in practice — see content/sources/registry.yaml.
+    research_sources: ["article-jom-c3do-distributed-site-comparability-2025"]
 
   - element_id: "Standard 6, Element 6.4"
     element_title: "Osteopathic Core Competencies (CORE)"
@@ -118,6 +127,8 @@ standards:
       activities to a curriculum structure — and just needs the COCA
       7-competency taxonomy (including OPP/OMM, which is DO-specific)
       configured as the mapping dimension.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Osteopathic Core Competencies (CORE)\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: ""
     source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 38, Element 6.4 and Submission 6.4)"
 
@@ -137,6 +148,8 @@ standards:
       Compliance Management already gates placement start/continuation on
       completed student items; a "policy attestation" item type fits that
       same gating model for both students and faculty.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Patient Care Supervision (CORE)\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Confirm Compliance Management supports document-acknowledgment item types, not just checklist/expiry items — already an open question in the Prism capability map."
     source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 34, Element 5.4 and Submission 5.4)"
 
@@ -159,8 +172,13 @@ standards:
       the job description of the not-yet-shipped Accreditation Management
       pillar (roadmap Q3 2027). No shipped pillar currently closes the
       finding-to-action evidence loop.
+    exxat_compliance: "gap"
+    exxat_compliance_rationale: "Exxat does not currently meet \"Program Assessment (CORE)\" — no shipped or roadmapped Prism pillar addresses this requirement (Prism fit: Gap), making it an open compliance gap today."
     gap_notes: "This closed-loop pattern recurs across most 'continuous improvement' standards from every accreditor in this workstream — it should be a first-class object type in Accreditation Management, not bolted onto Curriculum Mapping."
     source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 74, Standard 11 and Element 11.1/Submission 11.1)"
+    # ADDED 2026-09-10: peer-reviewed example of the exact finding-to-
+    # intervention loop this element requires — see content/sources/registry.yaml.
+    research_sources: ["article-cureus-acom-board-pass-rate-correlation-2024"]
 
   - element_id: "Standard 11, Element 11.2"
     element_title: "Student Evaluation of Instruction"
@@ -182,6 +200,8 @@ standards:
       course/clerkship/faculty evaluation collection can be built today via
       the Exxat Surveys builder (14 question types, multi-channel
       distribution, full analytics) alongside the Forms/Evaluations engine.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Student Evaluation of Instruction\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "CORRECTED 2026-08-26: previously read 'Once Surveys & Course Evaluations ships, this becomes a clean Configure; until then it is a hard Gap.' That pillar is now confirmed shipped per Exxat PM (content/prism/capability-map.yaml), so the element moves to Configure now rather than waiting on a future release. Remaining work is configuring the specific course/clerkship/faculty evaluation instruments and wiring the evaluation-to-curricular-change link, not building net-new capability."
     source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 75, Element 11.2 and Submission 11.2)"
 
@@ -204,8 +224,13 @@ standards:
       Depends on exam outcome data from an external body (NBOME) — the
       intended job of the roadmap Exam Management pillar (Q2 2027). Nothing
       shipped today ingests or reports licensure-exam results.
-    gap_notes: "Scope this as an NBOME data-import/reporting integration, not as exam delivery — Prism does not and cannot administer COMLEX-USA itself; NBOME proctors it."
+    exxat_compliance: "gap"
+    exxat_compliance_rationale: "Exxat does not currently meet \"COMLEX-USA\" — no shipped or roadmapped Prism pillar addresses this requirement (Prism fit: Gap), making it an open compliance gap today."
+    gap_notes: "Scope this as an NBOME data-import/reporting integration, not as exam delivery — Prism does not and cannot administer COMLEX-USA itself; NBOME proctors it. ADDED 2026-09-10: Level 1 has reported pass/fail only (no numeric score) since May 2022 — a Jan-2026 NBOME study confirms this, plus a formative topic-level performance profile as the only sub-score detail. Any ingestion design must treat Level 1 as categorical while Levels 2-CE/3 still carry 3-digit scores."
     source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 77, Element 11.4 and Submission 11.4)"
+    # ADDED 2026-09-10: NBOME's own peer-reviewed study on Level 1's pass/fail-
+    # only transition — see content/sources/registry.yaml.
+    research_sources: ["article-jom-comlex-level1-passfail-effects-2026"]
 
   - element_id: "Standard 11, Element 11.5"
     element_title: "GME Placement Rates"
@@ -224,6 +249,8 @@ standards:
       It's adjacent to Clinical & Experiential Education's rotation
       records but sits past graduation, which that pillar doesn't currently
       cover; natural home is Accreditation Management (Q3 2027).
+    exxat_compliance: "gap"
+    exxat_compliance_rationale: "Exxat does not currently meet \"GME Placement Rates\" — no shipped or roadmapped Prism pillar addresses this requirement (Prism fit: Gap), making it an open compliance gap today."
     gap_notes: "Could reuse the student/rotation record model if extended to track post-graduation outcomes, but that extension doesn't exist today."
     source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 78, Element 11.5 and Submission 11.5)"
 
@@ -248,6 +275,8 @@ standards:
       anonymous public link/QR code, response-rate analytics) can drive
       COCA's mandatory student survey and the findings-to-planned-action
       review workflow today.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Student Survey\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "CORRECTED 2026-08-26: previously rated Gap on the assumption that Surveys & Course Evaluations was roadmap Q1 2027 and unavailable. That pillar is confirmed shipped per Exxat PM (content/prism/capability-map.yaml), so the rating moves to Configure. Remaining work is configuring the survey distribution/reminder flow and the results-review-to-planned-action logging, not waiting on a future release."
     source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 81, Element 11.8 and Submission 11.8)"
 
@@ -267,6 +296,8 @@ standards:
       Management" pillar (Q3 2027) — standard-level evidence aggregation and
       report generation — and is the single highest-leverage element in
       this document for that pillar's business case.
+    exxat_compliance: "gap"
+    exxat_compliance_rationale: "Exxat does not currently meet \"COCA Annual and Mid-Cycle Reports (CORE)\" — no shipped or roadmapped Prism pillar addresses this requirement (Prism fit: Gap), making it an open compliance gap today."
     gap_notes: "This element alone argues for scoping Accreditation Management around COCA's exact report structure and field taxonomy, not a generic evidence binder."
     source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 82, Element 11.9 and Submission 11.9)"
 
@@ -286,6 +317,8 @@ standards:
       Compliance Management's status-tracking model could be repurposed to
       monitor affiliated-program accreditation status as an
       institution-level tracked item rather than a student-level one.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Accredited GME\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Compliance Management's confirmed taxonomy is student-level items only; tracking an affiliated GME program as the tracked entity is a new object type, not just a new item."
     source: "https://osteopathic.org/wp-content/uploads/COCA-2026-COM-Continuing-Accreditation-Standards.pdf (p. 72, Element 10.2 and Submission 10.2)"
 

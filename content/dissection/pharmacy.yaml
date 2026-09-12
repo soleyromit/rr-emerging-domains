@@ -1,0 +1,212 @@
+# Pharmacy — dissection manifest. Level 2, per content/ARCHITECTURE.md and the
+# schema in _TEMPLATE.yaml in this directory. This file asserts NOTHING of its own:
+# every line below is either a pointer into a file that owns the claim, or an
+# honest statement about how far along the research is. A fact that wants to live
+# here goes down to the file that owns it first.
+#
+# This is the first real manifest in the family. Pharmacy is the confirmed first
+# GTM target (content/scorecard/where-to-play.yaml `actual_gtm_target`, decided
+# 2026-09-10, overriding that scorecard's own DO recommendation).
+
+domain: "Pharmacy"            # the RAW `domain:` value from content/domains/pharmacy.yaml
+slug: "pharmacy"
+
+is_gtm_target: true           # matches where-to-play.yaml's actual_gtm_target: "Pharmacy"
+
+# content/interviews/2026-09-04-vishaka-ruchi-pharmacy-understanding.md's
+# front-matter id. The id deliberately omits "ruchi" and so does not follow the
+# filename-slug convention: it was frozen in content/sources/registry.yaml before
+# the file was renamed, and 19 existing citations point at it. Read from the
+# front-matter, not derived from the filename.
+template_of_record: "interview-vishaka-pharmacy-understanding-2026-09-04"
+
+# 2026-09-12 (Task 2.12, end of Phase 2): all six questions below were re-counted against
+# the files they point at. Five were still accurate to the row; the sixth
+# (persona-and-document-lens) had gone stale and was rewritten — see its note.
+last_reviewed: "2026-09-12"
+
+# Scoping only — who is actually in the Pharmacy clinical-education software market
+# this domain has to be won in. The claims about each vendor stay in
+# content/competitors/<slug>.yaml.
+incumbent_set:
+  - competitor_slug: "core-elms"
+    role: "primary"
+    # The share leader. core-elms.yaml records the reconciled share variance; the
+    # 2026-09-04 session puts CORE at "about 80 or more than 80% of pharmacy
+    # programs", and CORE is named there as "our biggest competitor in pharmacy".
+
+  - competitor_slug: "rxpreceptor"
+    role: "not-a-target"
+    # Out of scope as a SEPARATE incumbent, not as a product: rxpreceptor.yaml's
+    # own header states "RxPreceptor is not a separate product" — rxpreceptor.com
+    # 302s to PeopleGrove's CORE ELMS login, the legacy academicsuiterx.com logins
+    # 301 to corehighered.com, and CORE's training listing calls the software
+    # "CORE ELMS / RXpreceptor". That file deliberately records only the
+    # RxPreceptor-branded surface and keeps platform depth in core-elms.yaml, so
+    # listing it alongside core-elms would count one platform twice. Kept visible
+    # rather than dropped because the name is still live on school pages and in
+    # CORE's own CE listing, so it is still encountered in the field.
+    exclusion_reason: "Not a separate product — rxpreceptor.com redirects to CORE ELMS's login; counted once, as core-elms, which owns the platform depth."
+
+  - competitor_slug: "pharmacademic"
+    role: "primary"
+    # McCreadie Group. Pharmacy experiential education plus the ASHP-residency
+    # documentation adjacency that makes it sticky beyond the PharmD program.
+
+  - competitor_slug: "e-value"
+    role: "switch-target"
+    # The one incumbent the session treats as displaceable rather than defended:
+    # e-Value is described there as archaic with no significant enhancements
+    # shipping, while pharmacy programs are still subscribing. A carried-over,
+    # not-yet-acted-on action item from a prior AACP is to curate the list of
+    # e-Value pharmacy programs (booth-lead notes plus a program-website sweep).
+    #
+    # CAVEAT ON THE PREMISE, added 2026-09-11 — read before acting on this role.
+    # The "archaic" premise this role rests on is CONTESTED, not settled.
+    # e-value.yaml rates four pillars ahead of Prism on public evidence, and
+    # Ascend folded myTIPreport into the line in May 2025, so the merged product
+    # is demonstrably still being developed. lenses/competitor-differentiation.yaml
+    # records the conflict as a row with direction: "unknown" rather than picking
+    # a side. The likely reconciliation, which nobody has tested yet: that `ahead`
+    # evidence is MedHub/GME-branded (ACGME NAS, CLER, ADS), while MedHub's own
+    # /pharmacy/ URL serves a generic health-science page with no ACPE or
+    # IPPE/APPE mention — an active GME line above a stagnant pharmacy SKU would
+    # make the session right about the product a pharmacy buyer actually sees.
+    # Real but adjacent corroboration: article-jom-tech-use-satisfaction-coms-2026
+    # puts eValue's use among osteopathic colleges down from 44.8% to 28.6%. That
+    # is DO, not pharmacy, so it does not settle this. Confirm the pharmacy SKU is
+    # stagnant before a displacement campaign is built on the assumption.
+
+  - competitor_slug: "examsoft"
+    role: "adjacent"
+    # Didactic assessment, not experiential — adjacent by product, but part of
+    # the CORE + ExamSoft + Influx stack the session names as the recurring
+    # pharmacy configuration.
+
+  - competitor_slug: "influx"
+    role: "adjacent"
+    # An analytics layer over other vendors' data rather than a system of record.
+    # The file is about the real company Enflux; the slug stays "influx" to match
+    # how the 2026-09-04 session recorded the name and the committed filename.
+
+  - competitor_slug: "medhub"
+    role: "not-a-target"
+    # Listed so the corporate owner is not invisible, excluded because the
+    # pharmacy book of business is not MedHub's. Per e-value.yaml and medhub.yaml,
+    # MedHub and E*Value were separate companies that merged in November 2015
+    # under Ascend Learning (MedHub's parent); MedHub had focused on UME/GME while
+    # E*Value served the advanced-practice fields including pharmacy, and
+    # medhub.yaml records that the two product lines "remain visibly separate
+    # systems under one brand". medhub.yaml's own `domains_served` is
+    # ["DO", "MD"]. Pharmacy engagement runs through the e-value entry above.
+    exclusion_reason: "Pharmacy customers sit on the E*Value side of the merged line; medhub.yaml's own domains_served is DO/MD only."
+
+  # Denticon and a Banner/SIS-type vendor were named earlier as explicitly out of
+  # scope for pharmacy, but content/competitors/ has no file for either, so there
+  # is no real competitor_slug to exclude. An exclusion of a vendor this repo has
+  # never researched would be a new claim, which a manifest may not make. The two
+  # `not-a-target` entries above are the opposite case: both have real files, and
+  # both are excluded for a reason those files themselves state.
+
+questions:
+  - key: "features-to-build"
+    answered_in: ["lenses/product-gaps.yaml"]
+    coverage: "partial"
+    # Not "researched": five Pharmacy rows exist, but all five rest on one
+    # domain-expert session, and that session says of itself that the gap
+    # research "remains to be done".
+    confidence: "low"
+    gap_note: "5 Pharmacy gap rows now exist, all from the one 2026-09-04 session and all 'expert-assertion' — no RFP, ticket or lost-deal record backs any, and that session says the gap research remains to be done."
+
+  - key: "competitor-differentiation"
+    answered_in: ["lenses/competitor-differentiation.yaml", "competitors/*.yaml"]
+    coverage: "partial"
+    # Not "researched": 10 head-to-head rows now exist across all 5 in-scope
+    # vendors, but after the 2026-09-11 review 9 of the 10 are "directional" —
+    # only the CORE CompMS row has a sources[] chain that reaches public material
+    # instead of terminating at the one 2026-09-04 session. Confidence stays at
+    # "medium" rather than dropping back to "low" because 8 of the 10 rows now
+    # cite at least one registered third-party source (a fetched ACPE self-study,
+    # three CORE/PeopleGrove pages, Enflux's FAQ and case study, two MedHub pages,
+    # two PharmAcademic documents, a peer-reviewed JOM survey) — up from 3 rows
+    # before the fix round, and more than features-to-build has.
+    confidence: "medium"
+    gap_note: "10 rows cover all 5 in-scope vendors, but 9 are directional and only one has a source chain independent of the session; no price or services axis is researched, and e-Value stays 'unknown'."
+
+  - key: "market-size"
+    answered_in: ["domains/pharmacy.yaml#market_sizing", "market/programs/pharmacy.yaml"]
+    coverage: "researched"
+    confidence: "medium"
+    # Not "high": the sizing work closed with real ambiguities still open.
+    gap_note: "Sized, with three open ambiguities: enrollment falls back to an AACP figure a year off the eBook's, TAM rows exceed the accredited count, and 3 registry rows stay unmatched."
+
+  - key: "feature-comparison"
+    answered_in: ["lenses/feature-comparison-matrix.yaml"]
+    coverage: "partial"
+    confidence: "medium"
+    # "partial", not "researched", and the reason is granularity rather than effort.
+    # The matrix holds 14 of 30 possible Pharmacy cells (6 capability rows x the 5
+    # in-scope incumbents above), every row carrying an Exxat verdict. The 16 absent
+    # cells are not a to-do list that can be cleared by transcription. 12 of the 16 sit on
+    # a feature_teardown entry that is itself depth_vs_prism: "unknown" — a genuinely
+    # unresearched competitor pillar, not an unrecorded finding — and 3 more (influx on
+    # Compliance and Exam, pharmacademic on Exam) have no teardown entry at all. All five
+    # of pharmacademic's entries are "unknown", which is why a named primary incumbent
+    # contributes zero cells. The 16th is ExamSoft on Compliance Management: it HAS a
+    # teardown entry, rated prism-only, but that entry's own evidence says the finding is
+    # "genuinely unassessed rather than proven absent", so no cell was written rather than
+    # asserting a gap nobody established (Task 2.9 review round). Closing any of the 16 is
+    # new research in content/competitors/*.yaml first, then a transcription pass here.
+    gap_note: "14 of 30 cells across 6 capability rows, each carrying an Exxat verdict — but at PILLAR granularity, since Tasks 2.4/2.8 researched one entry per pillar. pharmacademic contributes none, all 'unknown'."
+
+  - key: "standards-to-product"
+    answered_in: ["lenses/standards-use-cases.yaml", "lenses/standards-competitor-ratings.yaml"]
+    coverage: "partial"
+    confidence: "medium"
+    # UPDATED 2026-09-11 (Task 2.10). The blocker the previous gap_note named is
+    # closed: the ACPE 2025 / COEPA / IPPE-APPE material is now 8 real use-case rows
+    # (IPPE sub-minimums and the simulation bar, the four required APPE settings, the
+    # NTPD assessed-equivalent pathway, the 320-hour elective cap, 3.2.c prerequisite
+    # gating and capstone exclusion, COEPA's EOs/EPAs and its supervision-description
+    # entrustment scale, and PHARMS-vs-AAMS scoping), taking the file from 15 Pharmacy
+    # rows to 23.
+    #
+    # Both values deliberately HOLD rather than rise, which is the honest read:
+    #   - coverage stays "partial", not "researched", because 7 of ACPE's 20 elements
+    #     still have no use case at all — the entire 3.3.x preceptor block (a.-e.),
+    #     3.4.a practice-facility quality, and 3.5.c student remuneration. That is a
+    #     named, countable remainder, not a rounding error.
+    #   - confidence stays "medium", not "high", because 18 of the 23 rows are
+    #     `proposed`: exactly one row (OHSU) is `documented`. The 8 new rows do have a
+    #     stronger evidence chain than the original 15 — they cite the ACPE Standards
+    #     2025 text, the Dear Dean letter and the eBook rather than terminating at the
+    #     one 2026-09-04 session — but a well-sourced reading of a RULE is not evidence
+    #     that Prism does the thing, and no shipped capability is confirmed behind any
+    #     of them. Sourcing improved; validation did not.
+    gap_note: "23 use cases now cover 13 of ACPE's 20 elements, alongside 31 competitor ratings — but 18 of the 23 are unvalidated 'proposed', and 7 elements (the whole 3.3.x preceptor block, 3.4.a, 3.5.c) still have no row at all."
+
+  - key: "persona-and-document-lens"
+    # Not a file: the answer is computed from tags and sources[] the lenses above
+    # already carry. A prose marker, never resolved as a path.
+    answered_in: ["computed — audience/persona_relevance tags and sources[] across the lenses above"]
+    coverage: "partial"
+    confidence: "medium"
+    # UPDATED 2026-09-12 (Task 2.12). The previous gap_note had gone stale: written when
+    # only the two standards lenses held Pharmacy rows, it said the product-gap,
+    # differentiation and feature-matrix lenses "carry no rows, so nothing computes
+    # there." Tasks 2.6, 2.8 and 2.9 have since populated all three, and every one of
+    # their Pharmacy rows is tagged. Re-counted 2026-09-12: product-gaps 5, differentiation
+    # 10, feature-matrix 14 cells, standards-use-cases 23, standards-competitor-ratings 31
+    # — 83 tagged rows drawing on 8 distinct persona slugs.
+    #
+    # Both values still HOLD rather than rise, for reasons the count does not touch:
+    #   - coverage stays "partial" because the lens-* half of the question barely
+    #     computes. Only lens-core-elms (8 rows) and lens-medhub (7) are ever tagged;
+    #     lens-axium, lens-elentra, lens-emedley and lens-new-innovations appear on no
+    #     Pharmacy row, and the matrix's 6 exxat_cells carry no tags at all.
+    #   - confidence stays "medium" because nothing validated a single tag. Each was
+    #     assigned by whoever wrote the row; no persona file was revised against pharmacy
+    #     evidence, and no real dean, DCE or preceptor has confirmed that what is tagged
+    #     to them is what they actually care about. More rows tagged is more coverage of
+    #     the same unvalidated act.
+    gap_note: "All five lenses now tag Pharmacy rows — 83 rows across 8 persona slugs — but every tag is author-assigned and unvalidated, only 2 of the 6 lens-* personas appear, and the 6 exxat_cells carry none."

@@ -42,11 +42,16 @@ standards:
       (target Q3 2027) — standard-level evidence mapping and ongoing compliance monitoring is
       not covered by any shipped pillar today (Curriculum Mapping maps content to curriculum,
       not to accreditor standards).
+    exxat_compliance: "gap"
+    exxat_compliance_rationale: "Exxat does not currently meet \"Strategic Planning and Continuous Quality Improvement\" — no shipped or roadmapped Prism pillar addresses this requirement (Prism fit: Gap), making it an open compliance gap today."
     gap_notes: >
       No shipped pillar currently maps program evidence to named accreditor standards/elements
       or tracks CQI action-item status against them; this is the single feature that would let
       Prism be the "system of record" for an LCME self-study rather than just a data source for one.
     source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.1)"
+    # ADDED 2026-09-10: peer-reviewed evidence that CQI compliance is still
+    # largely manual/ad hoc across real schools — see content/sources/registry.yaml.
+    research_sources: ["article-medsciedu-cqi-review-ten-schools-2019", "article-medsciedu-lcme-usmle-norms-cqi-2025"]
 
   - element_id: "Standard 1, Element 1.4"
     element_title: "Affiliation Agreements"
@@ -65,6 +70,8 @@ standards:
       start/continuation; a clinical-site's affiliation-agreement status is the same pattern
       (a compliance item gating a placement) applied at the site level instead of the student
       level, and would sit alongside the Clinical & Experiential Education site/placement records.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Affiliation Agreements\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Site-level (vs. student-level) compliance-item taxonomy is unconfirmed — see capability-map.yaml open question."
     source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.1)"
 
@@ -82,6 +89,8 @@ standards:
       The Clinical & Experiential Education placement engine already models
       preceptor/supervisor assignment per rotation; adding a resident/GME-trainee role to that
       same assignment record is a direct transfer of the existing data model.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat already meets \"Resident Participation in Medical Student Education\" natively today (Prism fit: Transfer) — no configuration or engineering work required."
     gap_notes: ""
     source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.4)"
 
@@ -100,6 +109,8 @@ standards:
       Clinical & Experiential Education already models sites and placements; case-mix/volume
       analytics would need to be configured on top of encounter-logging data currently captured
       via the Forms/Evaluations workflow rather than delivered as an out-of-the-box report.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Resources for Clinical Instruction\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Aggregate case-mix/patient-acuity reporting across sites is not confirmed as an existing built-in report."
     source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.6)"
 
@@ -120,6 +131,8 @@ standards:
       to define the required list; the per-student encounter-logging and gap-detection layer on
       top of it would need to be configured using the placement/forms workflow in Clinical &
       Experiential Education.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Required Clinical Experiences\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "No confirmed out-of-the-box 'required patient encounter' tracking distinct from general placement/rotation completion."
     source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.8)"
 
@@ -143,8 +156,13 @@ standards:
       Course Evaluations is shipped, not roadmap Q1 2027 as this entry previously stated —
       but Exam Management and Accreditation Management are still roadmap, so this element
       is still blocked on two of the three original dependencies.
+    exxat_compliance: "gap"
+    exxat_compliance_rationale: "Exxat does not currently meet \"Evaluation of Educational Program Outcomes\" — no shipped or roadmapped Prism pillar addresses this requirement (Prism fit: Gap), making it an open compliance gap today."
     gap_notes: "CORRECTED 2026-08-26: previously described as 'fully dependent on three roadmap pillars.' One of those three (Surveys & Course Evaluations) is confirmed shipped per Exxat PM (content/prism/capability-map.yaml); Exam Management and Accreditation Management remain roadmap. Left as Gap because the element still needs the two unshipped pillars and their cross-pillar integration, but this is worth a fresh look — the corrected input fact may narrow what's genuinely missing to Exam Management + Accreditation Management rather than all three."
     source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.12)"
+    # ADDED 2026-09-10: peer-reviewed self-reflection framework built directly
+    # around LCME's new USMLE pass-rate norms — see content/sources/registry.yaml.
+    research_sources: ["article-medsciedu-lcme-usmle-norms-cqi-2025"]
 
   - element_id: "Standard 8, Element 8.5"
     element_title: "Medical Student Feedback"
@@ -161,6 +179,8 @@ standards:
       & Course Evaluations pillar): this pillar is shipped, not roadmap Q1 2027 as previously
       stated here — the Exxat Surveys builder plus the Forms/Evaluations engine give Prism a
       dedicated course/clerkship/teacher-evaluation instrument today.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Medical Student Feedback\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "CORRECTED 2026-08-26: previously read 'Roadmap item — reassess fit once Q1 2027 ships.' That pillar is confirmed shipped per Exxat PM (content/prism/capability-map.yaml), so the reassessment happens now: rated Configure, since course/clerkship/teacher-level survey distribution and rollup reporting still need to be configured for LCME's specific requirements, not built from scratch."
     source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.12)"
 
@@ -181,6 +201,8 @@ standards:
       placement/rotation engine (Courses -> Learning Activities -> Setup -> Assignments) with
       anchor-relative scheduling is built precisely to give central oversight of rotation
       completion across sites; this is the strongest fit of any standard in this document.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat already meets \"Monitoring of Completion of Required Clinical Experiences\" natively today (Prism fit: Transfer) — no configuration or engineering work required."
     gap_notes: ""
     source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.12)"
 
@@ -199,6 +221,8 @@ standards:
       Curriculum Mapping (shipped) can be configured to tag learning objectives and assessment
       instruments per delivery site within one course; a purpose-built cross-site
       "comparability" report is not confirmed to exist out of the box.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Comparability of Education/Assessment\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Cross-site statistical/qualitative comparability reporting would likely need custom configuration or a Phase-2 feature request."
     source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.13)"
 
@@ -217,6 +241,8 @@ standards:
       Clinical & Experiential Education already assigns a preceptor per placement; adding a
       structured supervision-level attestation field to that existing assignment record is a
       configuration on top of the shipped placement model, not a new pillar.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Clinical Supervision of Medical Students\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Supervision-level/scope-of-practice attestation as a distinct structured field is unconfirmed."
     source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.14)"
 
@@ -237,8 +263,14 @@ standards:
       formal program-level competency objectives is a heavier lift that leans on the roadmap
       Accreditation Management pillar (Q3 2027) for the objective-mapping layer and Exam
       Management (Q2 2027) for standardized knowledge assessments.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Assessment System\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Program-objective-level competency rollup across all assessment types is not a confirmed shipped capability."
     source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.14)"
+    # ADDED 2026-09-10: peer-reviewed evidence that post-Step 1-pass/fail
+    # clerkship grading alone doesn't reliably distinguish achievement, which
+    # is the case for a competency-based rollup — see content/sources/registry.yaml.
+    research_sources: ["article-familymed-cera-step1-clerkship-grading-2026"]
 
   - element_id: "Standard 9, Element 9.7"
     element_title: "Formative Assessment and Feedback"
@@ -256,6 +288,8 @@ standards:
       (publish/due dates set as N days before/after a placement's start, MID, or end date) in
       Clinical & Experiential Education — a midpoint-formative-feedback trigger is exactly what
       that primitive was built for.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat already meets \"Formative Assessment and Feedback\" natively today (Prism fit: Transfer) — no configuration or engineering work required."
     gap_notes: ""
     source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.15)"
 
@@ -273,6 +307,8 @@ standards:
       The anchor-relative due-date primitive in Clinical & Experiential Education can be
       configured to fire a "grade due" deadline off each placement's end date; a purpose-built
       SLA-compliance report on top of that is not confirmed as a shipped feature.
+    exxat_compliance: "compliant"
+    exxat_compliance_rationale: "Exxat meets \"Fair and Timely Summative Assessment\" through client configuration of an existing shipped Prism pillar (Prism fit: Configure), not new engineering — see prism_fit_rationale for the specific pillar."
     gap_notes: "Turnaround-time compliance reporting against the six-week SLA is not confirmed out of the box."
     source: "https://education.med.wustl.edu/app/uploads/2023/07/2024-25-Functions-and-Structure-of-a-Medical-School.pdf (p.15)"
 

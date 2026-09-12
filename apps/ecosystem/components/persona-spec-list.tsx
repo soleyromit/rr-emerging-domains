@@ -4,6 +4,7 @@ import { Banner } from "@astryxdesign/core/Banner";
 import type { IconName } from "@astryxdesign/core/Icon";
 import { IconFactCard } from "@/components/icon-fact-card";
 import { pickThemeIcon } from "@/lib/theme-icon";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 
 export interface SpecListItem {
   label: string;
@@ -40,7 +41,13 @@ export function PersonaSpecList({
   return (
     <Stack gap={3}>
       {notes.map((note, i) => (
-        <Banner key={`note-${i}`} status="info" title="Methodology note" description={note.text} container="card" />
+        <Banner
+          key={`note-${i}`}
+          status="info"
+          title="Methodology note"
+          description={stripFileCitations(note.text)}
+          container="card"
+        />
       ))}
       {facts.length ? (
         <Grid columns={{ minWidth: 260 }} gap={3}>
@@ -48,8 +55,8 @@ export function PersonaSpecList({
             <IconFactCard
               key={`${item.label}-${i}`}
               icon={pickThemeIcon(`${item.label} ${item.text}`, fallbackIcon)}
-              headline={item.label}
-              text={item.text}
+              headline={stripFileCitations(item.label) ?? item.label}
+              text={stripFileCitations(item.text) ?? item.text}
             />
           ))}
         </Grid>

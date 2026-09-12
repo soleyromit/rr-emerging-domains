@@ -9,7 +9,10 @@ import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList"
 import { PageHeader } from "@/components/page-header";
 import { ProseItemList } from "@/components/prose-item-list";
 import { SentenceList } from "@/components/sentence-list";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import { ComparisonCardGrid } from "@/components/comparison-card-grid";
+import { DisciplineChip } from "@/components/discipline-chip";
+import { matchDisciplineMeta } from "@/lib/discipline-meta";
 import { listRolePersonas, getRolePersona, getCompetitorReadsForRole, resolveRelatedFlows } from "@/lib/content";
 
 export function generateStaticParams() {
@@ -52,10 +55,25 @@ export default async function RolePersonaPage({ params }: { params: Promise<{ sl
             <MetadataListItem label="Tools touched">{role.tools_touched?.length ?? 0}</MetadataListItem>
           </MetadataList>
           {role.applies_across_domains?.length ? (
-            <Text type="supporting" size="xsm" color="secondary">
-              Applies across domains (as authored — identical across all 5 role files, likely
-              stale since the 12-discipline expansion): {role.applies_across_domains.join(", ")}
-            </Text>
+            <Stack gap={1}>
+              <Text type="label" color="secondary" size="xsm">
+                Applies across domains (as authored — identical across all 5 role files, likely
+                stale since the 12-discipline expansion — not a per-role signal yet)
+              </Text>
+              <Stack direction="horizontal" gap={1.5} wrap="wrap">
+                {role.applies_across_domains.map((d) => {
+                  const routeSlug = matchDisciplineMeta(d)?.slug;
+                  const chip = <DisciplineChip subject={d} />;
+                  return routeSlug ? (
+                    <Link key={d} href={`/domains/${routeSlug}/persona`}>
+                      {chip}
+                    </Link>
+                  ) : (
+                    <span key={d}>{chip}</span>
+                  );
+                })}
+              </Stack>
+            </Stack>
           ) : null}
         </Stack>
       </Section>
@@ -118,7 +136,11 @@ export default async function RolePersonaPage({ params }: { params: Promise<{ sl
       {role.sources?.length ? (
         <Section padding={6}>
           <Collapsible defaultIsOpen={false} trigger={`Sources (${role.sources.length})`}>
-            <SentenceList items={role.sources} maxLines={2} fallbackIcon="copy" />
+            <SentenceList
+              items={role.sources.map((s) => stripFileCitations(s) ?? s)}
+              maxLines={2}
+              fallbackIcon="copy"
+            />
           </Collapsible>
         </Section>
       ) : null}

@@ -4,16 +4,27 @@ A positioning brief, not a research document — every claim here is downstream 
 
 ## The one-sentence version
 
-**PRISM is the system of record for clinical/experiential education, and COCA's 2026 standards ask for exactly the evidence our placement engine already produces — at the moment four of the plausible DO incumbents are in M&A churn.**
+**PRISM is the system of record for clinical/experiential education, and ACPE's Standards 2025 + PHARMS transition asks every pharmacy program to re-prove itself in the same cycle our placement engine already covers most of that evidence for — Pharmacy is the confirmed first domain in market, with DO's COCA-driven case (below) as the close analytical second.**
 
-## Lead domain: DO, and why
+> **ADDED 2026-09-10, per stakeholder direction:** Pharmacy is the confirmed first
+> GTM target, ahead of DO. This overrides the scorecard's own analytical
+> recommendation, not the research behind it — the weighted math below (DO 4.40 vs.
+> Pharmacy 4.05) is real and unedited; the actual go-to-market sequencing is a
+> business call made for reasons outside that weighted model. Per
+> `ARCHITECTURE.md`, this is an annotation on top of the existing analysis, not a
+> rewrite of it — DO's case is left intact below for anyone building the DO
+> fast-follow pitch once Pharmacy is in market.
 
-The scorecard is unambiguous and not close: DO scores 4.40 weighted vs. Pharmacy 4.05, Medicine 3.85, Dentistry 2.75 (`scorecard/where-to-play.yaml`) — and it wins for a specific reason, not by averaging well. It's the only domain scoring 5/5 on both accreditation pressure *and* incumbent weakness simultaneously:
+## Lead domain: Pharmacy (confirmed) — DO is the scorecard's analytical pick
+
+**Pharmacy is the domain actually being taken to market first.** Its own case, independent of the override: highest Prism pillar-fit ratio of any domain researched (4 Transfer / 12 Configure / 4 Gap across 20 researched ACPE elements — the smallest real build of the four, updated 2026-09-10 from an earlier 12-element pass), a live switching-cost window as ACPE retired AAMS for its own PHARMS submission platform in the same cycle Standards 2025 took effect, and the second-highest weighted score (4.05, 0.35 behind DO) on the scorecard itself.
+
+**DO's case is real and still the scorecard's own top pick (4.40 weighted vs. Pharmacy 4.05, Medicine 3.85, Dentistry 2.75, `scorecard/where-to-play.yaml`)** — worth knowing for the DO fast-follow pitch once Pharmacy is in market. It's the only domain scoring 5/5 on both accreditation pressure *and* incumbent weakness simultaneously:
 
 - **Accreditation pressure:** COCA's 2026 standards (effective July 1, 2026) demand computed evidence, not documents — a 3-year rolling capacity average per site (6.9), explicitly "system-generated" per-student DO-supervision/GME-resident/inpatient proof (6.10), cross-site statistical comparability (6.11) — layered on bright-line public thresholds that auto-escalate to out-of-compliance after three years.
 - **Incumbent weakness:** four of the plausible DO incumbents have changed hands since 2023 (New Innovations → QGenda, July 2025; Leo/DaVinci → Elentra under Achieve Partners, with Elentra now publicly courting Leo customers to migrate; MedHub/E*Value → Ascend Learning) — a platform conversation many COMs did not initiate. And the two strongest curriculum/accreditation players in the segment, Elentra and Leo, ship **no compliance module at all**.
 
-Pharmacy is the explicit fast-follow (highest pillar-fit ratio of any domain — 4 Transfer/5 Configure/3 Gap against ACPE — and an equally acute Standards 2025 + PHARMS transition moment), Medicine is the long game (biggest prize, but racing to parity, not opening a gap), Dentistry is deferred (axiUm's combined EHR/billing/gradebook lock-in makes displacement impractical; CODA's procedure-level logging requirement is the single largest domain-specific build in the set).
+Medicine is the long game (biggest prize, but racing to parity, not opening a gap), Dentistry is deferred (axiUm's combined EHR/billing/gradebook lock-in makes displacement impractical; CODA's procedure-level logging requirement is the single largest domain-specific build in the set).
 
 ## Who's in the room, and what they each actually want
 

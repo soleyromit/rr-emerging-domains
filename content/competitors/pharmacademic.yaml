@@ -1,0 +1,224 @@
+# Researched 2026-09-09 (two verifiable public facts). Re-researched 2026-09-10: the
+# vendor's own product page still has no feature sub-pages, but two McCreadie-authored /
+# college-published preceptor guides were found and read in full, which document the
+# product's named tabs and workflows. Everything added on 2026-09-10 is quoted from a
+# page fetched that day. Nothing here is inferred from CORE ELMS's shape or from what a
+# pharmacy platform "must" have; every entry stays "unknown" on depth because no fetched
+# page describes how the underlying engines (matching, alerting, reporting) work.
+# Sourcing correction made 2026-09-10 (fix round 1): mccreadiegroup.com/pharmacademic/
+# has been rewritten to residency-only content and no longer carries the
+# curricular-mapping / experiential-education language the 2026-09-09 pass cited it for.
+# Claims that rested on it were re-pointed at the two sources that still carry them; the
+# narrowing is itself recorded as a weakness rather than quietly patched over.
+competitor: "PharmAcademic (McCreadie Group)"
+slug: "pharmacademic"
+domains_served: ["Pharmacy"]
+category: "Pharmacy residency + experiential education management (ASHP residency documentation, experiential education, curricular mapping, assessment)"
+company:
+  founded: "not publicly stated"
+  hq: "not publicly stated"
+  ownership: "McCreadie Group (PharmAcademic is a McCreadie Group product line)"
+
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: >
+      Preceptor-side experiential workflow is documented by name: an "Experiential
+      Education" tab where preceptors submit/review change requests and enter
+      availability (per rotation date, with limits); "My Schedule" and "My Courses"
+      showing assigned rotations with site and rotation details, student feedback,
+      confidential documentation and artifacts of learning; and preceptor-authored
+      rotation Overview, Educational Objectives, Learning Activities and Rotation Files.
+      Separately, it is the ASHP-mandated documentation platform for accredited residency
+      programs (resident evaluations, competency tracking, hour logging).
+    depth_vs_prism: "unknown"
+    evidence: >
+      McCreadie Group's own preceptor guide ("PharmAcademic McCreadie Group Confidential",
+      August 2018, published by UF's Office of Experiential Programs) names every tab
+      above in its table of contents. The University of Cincinnati preceptor instructions
+      add a "Sites and Rotations" tab, a "Preceptor Availability" tab, a "Schedule" tab
+      carrying a "Match" column "displayed after the experiential education office has
+      released the match to preceptors", and a "rotation ranking process". A scheduling
+      component IS named: the McCreadie guide's availability examples say "the match
+      engine will not schedule the preceptor for more than 2 students for each block, but
+      can schedule all 5 blocks with a possible of 10 students total", and preceptors set
+      a "Maximum Number of Students Accepted for this Match" and a "Maximum Number of
+      Blocks to Schedule for this Match". So the match engine's constraint inputs are
+      documented. What no fetched page establishes is how it produces a match: no
+      algorithm, ranking rule or optimisation objective is described, and whether it runs
+      automatically or only assists a manual pass by the experiential office is unstated.
+      Site capacity, affiliation agreements and timesheet approval are likewise absent.
+      Rated "unknown", not "at-parity". ASHP mandate per
+      https://www.ashp.org/professional-development/residency-information/residency-program-resources/pharmacademic
+    source: "https://oep.pharmacy.ufl.edu/files/2019/01/Guide-to-PharmAcademic.pdf"
+  - pillar: "Curriculum Mapping"
+    competitor_capability: >
+      Curricular mapping for schools of pharmacy, named alongside experiential education
+      and assessment as one of the things the product manages. Two named objects are
+      evidenced: "Curricular Sets" and "Courses", both visible to preceptors under Program
+      Information, plus "PharmPortfolio", the student e-portfolio a preceptor can view.
+    depth_vs_prism: "unknown"
+    evidence: >
+      The vendor line is quoted by McCreadie's development partner: "PharmAcademic
+      integrates the management of experiential education, assessment, courses, curricular
+      outcomes and mapping, and a portfolio designed to support pharmacists' education
+      throughout their careers." The McCreadie-authored preceptor guide independently
+      confirms "Curricular Sets" and "Courses" exist as first-class objects and that "My
+      Portfolio allows you to access your electronic portfolio"
+      (https://oep.pharmacy.ufl.edu/files/2019/01/Guide-to-PharmAcademic.pdf).
+      IMPORTANT sourcing correction, 2026-09-10: the 2026-09-09 pass cited
+      https://mccreadiegroup.com/pharmacademic/ for the phrase "curricular mapping". That
+      page has since been rewritten — re-fetched twice on 2026-09-10, it is now titled
+      "PharmAcademic™ — The Residency Program Management Solution" and contains zero
+      occurrences of "curricular", "mapping", "experiential", "assessment" or "schools of
+      pharmacy". The claim is not withdrawn (two other fetched sources carry it), but its
+      citation has moved off the vendor page. Still no public material describing what is
+      mapped to (ACPE standards, CAPE outcomes, EPAs), gap-analysis reporting, or
+      accreditation-report output — the capability is confirmed to exist by name and to
+      have named containers, with no depth evidence to compare against Prism's Curriculum
+      Mapping pillar.
+    source: "https://closeloop.com/case-study/mccreadie-pharmacademic/"
+  - pillar: "Compliance Management"
+    competitor_capability: >
+      Preceptor-credential storage, not a compliance engine on the evidence available: a
+      "License Management" tab for licenses and certifications with renewal dates and file
+      attachments, plus My Profile pages for Licenses, Immunizations, Biographies and
+      CV/Resume. Records are visible to the college of pharmacy but not to students.
+    depth_vs_prism: "unknown"
+    evidence: >
+      "The License Management tab allows you to enter information about licenses and
+      certifications, including renewal dates and file attachments. This information is
+      available to the college of pharmacy, not to students." The McCreadie-authored guide
+      independently lists "Licenses, Immunizations, Biographies, CV/Resume" as My Profile
+      pages. What this does NOT establish: student-side compliance (immunisation,
+      background check, drug screen), automated expiration alerting, blocking a placement
+      on an unmet requirement, or affiliation-agreement tracking — none appear on any page
+      fetched 2026-09-10. Rated "unknown", not "at-parity"; storing a renewal date is not
+      evidence of alerting on it.
+    source: "https://sitefinityuc.blob.core.windows.net/pharm-dev/docs/default-source/default-document-library/how-to-use-pharmacademic-preceptor-instructions.pdf?sfvrsn=ceee7840_0"
+  - pillar: "Surveys & Course Evaluations"
+    competitor_capability: >
+      An assessment/evaluation engine is the product's spine. Assessments are pushed to a
+      "Global Task List" with delivery, due and expiration dates and email reminders;
+      forms are multi-section with required questions, per-answer autosave, a cosignature
+      step, and PDF output. Evaluation runs both ways — preceptors are subjects of
+      assessments too — and colleges can release "Blinded Preceptor Evaluation Summaries".
+      The vendor page states the product "Schedules all required evaluations for residents
+      and preceptors."
+    depth_vs_prism: "unknown"
+    evidence: >
+      "The Summaries tab contains Blinded Preceptor Evaluation Summaries if they have been
+      created and released by the college of pharmacy"; the McCreadie-authored guide adds
+      that My Profile > Assessments "includes any individual assessments where you are the
+      subject of the assessment" plus "all blinded summaries of student assessments
+      created by the college of pharmacy". What is NOT established: any general-purpose
+      survey builder, item bank, response-rate reporting, or didactic course-evaluation
+      workflow. The evidence covers rotation-linked evaluation forms only, so this is
+      rated "unknown" against a Prism pillar that also spans course evaluations.
+    source: "https://sitefinityuc.blob.core.windows.net/pharm-dev/docs/default-source/default-document-library/how-to-use-pharmacademic-preceptor-instructions.pdf?sfvrsn=ceee7840_0"
+  - pillar: "Accreditation Management"
+    competitor_capability: >
+      Accreditation-facing by design on the residency side: the vendor page says the
+      product lets programs "adhere to accreditation standards", "Guides creation of
+      learning experiences", "Schedules all required evaluations for residents and
+      preceptors", and "Provides ASHP with the data they need to conduct online surveys
+      and monitor visits" — i.e. it feeds the accreditor directly rather than producing a
+      report the program then submits.
+    depth_vs_prism: "unknown"
+    evidence: >
+      All four claims are verbatim from the vendor product page fetched 2026-09-10. The
+      accreditor in question is ASHP (residency), not ACPE (PharmD). No fetched page
+      describes ACPE standards mapping, self-study or evidence assembly for an ACPE
+      on-site visit. An accreditor data feed is a different capability class from the
+      self-study reporting Prism's Accreditation Management pillar targets, so this is
+      rated "unknown" rather than compared — it is not the same job.
+    source: "https://mccreadiegroup.com/pharmacademic/"
+
+strengths:
+  - claim: >
+      Mandatory for all ASHP-accredited residency programs — an accreditor-imposed
+      install base no competitor can displace by selling against features.
+    source: "https://www.ashp.org/professional-development/residency-information/residency-program-resources/pharmacademic"
+  - claim: >
+      Sits inside ASHP's accreditation process, not alongside it: the vendor page says it
+      "Provides ASHP with the data they need to conduct online surveys and monitor
+      visits."
+    source: "https://mccreadiegroup.com/pharmacademic/"
+  - claim: >
+      One preceptor login spans every college and residency program that preceptor serves
+      — the Global Task List and My Schedule aggregate across all associated sites. A
+      cross-institution network effect a single-school system cannot match.
+    source: "https://oep.pharmacy.ufl.edu/files/2019/01/Guide-to-PharmAcademic.pdf"
+  - claim: >
+      Spans both sides of pharmacy training in one product line: PharmD-school
+      experiential education, curricular mapping and assessment, plus residency
+      documentation. (Sourced to the development-partner case study and the
+      McCreadie-authored preceptor guide — the vendor's own page no longer says this.)
+    source: "https://closeloop.com/case-study/mccreadie-pharmacademic/"
+
+weaknesses:
+  - claim: >
+      A "match engine" is named but never described. The guide documents only what
+      constrains it — preceptor-declared caps per match and per block ("no more than 2
+      students for each block ... 10 students total") — not how it generates a match, nor
+      whether it runs automatically.
+    source: "https://oep.pharmacy.ufl.edu/files/2019/01/Guide-to-PharmAcademic.pdf"
+  - claim: >
+      Public product surface is one page. The vendor page carries no feature sub-pages, no
+      pricing, no customer case studies; the most detailed public documentation found is
+      the August 2018 revision of a preceptor guide a college hosts.
+    source: "https://mccreadiegroup.com/pharmacademic/"
+  - claim: >
+      The PharmD side has vanished from public positioning. As of 2026-09-10 the vendor
+      page is titled "The Residency Program Management Solution" and contains no mention
+      of experiential education, curricular mapping, assessment, or schools of pharmacy —
+      the PharmD story now survives only in third-party and college-hosted material.
+    source: "https://mccreadiegroup.com/pharmacademic/"
+  - claim: >
+      Compliance evidence is preceptor-side only — licenses, immunisations, CV. No
+      student-side requirement tracking, expiration alerting, or affiliation-agreement
+      management was found on any page fetched 2026-09-10.
+    source: "https://sitefinityuc.blob.core.windows.net/pharm-dev/docs/default-source/default-document-library/how-to-use-pharmacademic-preceptor-instructions.pdf?sfvrsn=ceee7840_0"
+  - claim: >
+      No public evidence of exam management at all. Two research passes found no exam,
+      OSCE, or secure-testing capability named anywhere — unassessed rather than proven
+      absent, but the silence is now two passes deep.
+    source: "https://mccreadiegroup.com/pharmacademic/"
+
+retention_anchor: >
+  The ASHP mandate is itself the retention anchor: for a residency program,
+  PharmAcademic is not a vendor choice at all — it is the platform the accreditor
+  requires evaluations, competency records, and hours to live in. Displacement is not
+  a product decision for that buyer. A second, softer anchor sits on the PharmD side:
+  preceptors hold one PharmAcademic identity across every college they precept for, so a
+  single school leaving does not remove the preceptor's login — it just adds a second
+  system to a preceptor who already has one.
+
+exxat_opportunity: >
+  Read the ASHP mandate carefully before treating this as head-to-head competition:
+  it binds residency (post-graduate/GME-equivalent) programs, which is a different
+  program type — and often a different buyer inside the same institution — from the
+  PharmD didactic + IPPE/APPE programs that Exxat/Prism's ACPE work targets (see
+  content/accreditation/acpe.yaml). PharmAcademic's presence in a college of pharmacy
+  therefore does not mean the PharmD experiential system of record is taken. The honest
+  posture is coexistence on the residency side and competition only on the PharmD
+  experiential/curricular-mapping side. The 2026-09-10 pass sharpened where that
+  competition is winnable: the product's evaluation and task-list machinery is genuinely
+  deep and well documented, but its "match engine" is named without ever being described
+  — the guide documents the capacity caps preceptors feed it, not how it builds a
+  schedule — and nothing public describes student-side compliance or ACPE standards
+  mapping. Prism's placement engine
+  and compliance tracking are therefore the two places to probe in a PharmD deal, and
+  "how does your office actually build the schedule today?" is the qualifying question.
+  Do not build a pitch on the compliance or exam gaps as if they were proven absences:
+  two passes found no public evidence, which is a research result, not a product fact.
+
+pricing_signal: "not publicly disclosed"
+
+last_researched: "2026-09-10"
+
+sources:
+  - "https://mccreadiegroup.com/pharmacademic/"
+  - "https://www.ashp.org/professional-development/residency-information/residency-program-resources/pharmacademic"
+  - "https://oep.pharmacy.ufl.edu/files/2019/01/Guide-to-PharmAcademic.pdf"
+  - "https://sitefinityuc.blob.core.windows.net/pharm-dev/docs/default-source/default-document-library/how-to-use-pharmacademic-preceptor-instructions.pdf?sfvrsn=ceee7840_0"
+  - "https://closeloop.com/case-study/mccreadie-pharmacademic/"

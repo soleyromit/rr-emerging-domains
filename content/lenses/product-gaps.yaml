@@ -1,0 +1,397 @@
+# Level 2 reframing — cites content/domains/*.yaml (by domain label, see `domain` below),
+# content/accreditation/*.yaml (by element_id), content/prism/capability-map.yaml (by
+# pillar name), content/competitors/*.yaml (by slug), and the Level 0.5 source namespace
+# by source_id. Never asserts a product fact that isn't grounded in one of those.
+#
+# WHAT THIS FILE IS FOR: the "what should we build for this domain" question, answered as
+# a countable list of specific gaps rather than a paragraph of strategy. It is the file
+# content/dissection/<slug>.yaml's `features-to-build` question points at.
+#
+# SPARSE BY DESIGN, the same contract as lenses/standards-competitor-ratings.yaml: an
+# unlisted gap is UNRESEARCHED, never "we checked and there is no gap here." Do not
+# pre-populate rows to make a domain look covered. This file is deliberately empty at
+# creation (2026-09-11) — real entries arrive with the per-domain research passes, and an
+# invented example entry would be indistinguishable from a researched one the moment it
+# is committed.
+#
+# Citable source_ids resolve against the UNION of the Level 0.5 source homes, exactly as
+# scripts/check_content_density.py's _load_source_ids() does it:
+#   content/sources/registry.yaml           sources[].id
+#   content/sources/help-center.yaml        articles[].id
+#   content/sources/playbooks.yaml          playbooks[].id
+#   content/sources/support-tickets/*.yaml  snapshot.id AND tickets[].source_id
+#   content/interviews/*.md                 `id:` in the YAML front-matter block
+# content/sources/vendor-comparison-chart.yaml is NOT one of them: it is quarantined
+# (`citable_as_fact: false`) and no id from it may ever appear in `sources:` here.
+#
+# Schema, per entry:
+#   id                — string, unique across this file, kebab-case,
+#                       "{domain-slug}-{short-description}"
+#   domain            — the canonical APP-LEVEL domain label, which is NOT always the
+#                       same string as the domain registry's own `domain:` field. The
+#                       authoritative list is the key set of DOMAIN_TO_ACCREDITATION_SLUG,
+#                       kept in sync by hand in two places: apps/ecosystem/lib/content.ts
+#                       and scripts/check_content_density.py. Today: DO | Pharmacy |
+#                       Dentistry | Medicine | Nursing | Teacher Education | Social Work |
+#                       Physical Therapy | Occupational Therapy | Physician Assistant |
+#                       Speech-Language Pathology | CRNA | Counseling.
+#                       MEDICINE IS THE TRAP: content/domains/medicine.yaml's own field is
+#                       `domain: "MD"`, but the label every lens uses — and the only one
+#                       that resolves — is "Medicine". The 3 Medicine rows in
+#                       lenses/standards-competitor-ratings.yaml all say "Medicine", and a
+#                       row saying "MD" fails check_standards_ratings_integrity() with
+#                       "domain 'MD' is not a recognized accreditation domain". DO,
+#                       Pharmacy and Dentistry happen to be spelled identically in both
+#                       places, which is why the difference is easy to miss
+#   gap               — the scannable one-line headline, NOT the argument. <=120 soft /
+#                       220 hard chars. The argument goes in `detail`
+#   kind              — missing-module | shallow-integration | wrong-depth | wrong-entity
+#                       | data-not-ingested | ux | non-product
+#   prism_feature_ref — one of content/prism/capability-map.yaml's 6 core_ring pillar
+#                       names verbatim: "Clinical & Experiential Education",
+#                       "Compliance Management", "Curriculum Mapping", "Surveys & Course
+#                       Evaluations", "Exam Management", "Accreditation Management".
+#                       null — not an empty string — when nothing in the current pillar
+#                       set owns this gap at all. Never guess a pillar to fill the field
+#   prism_status      — shipped | roadmap | absent. MUST agree with what
+#                       capability-map.yaml actually states for prism_feature_ref's
+#                       pillar/feature (today the file marks four pillars `shipped` and
+#                       two — Exam Management, Accreditation Management — `roadmap`).
+#                       `absent` is the value that pairs with prism_feature_ref: null.
+#                       A later integrity check cross-checks this pair; get it right when
+#                       the row is written rather than leaving it for the check to catch
+#   build_shape       — transfer | configure | build | partner | buy. "transfer" means the
+#                       capability already exists in another discipline's configuration
+#                       and moves across; "build" means net-new engineering
+#   blocks            — array, at least one of: deal | standard | renewal | expansion.
+#                       What is actually blocked by the gap, not who complained about it
+#   severity          — blocking | material | nice-to-have
+#   demand_evidence   — rfp | support-ticket | lost-deal | customer-request |
+#                       expert-assertion | inferred. Use the WEAKEST, most honest value
+#                       the evidence supports; do not round up to a stronger one
+#   element_ids       — array of accreditation element_id strings this gap relates to, or
+#                       empty. Full element_id strings from that domain's accreditation
+#                       file, not abbreviations
+#   competitor_has_it — array of {competitor_slug, source_id}, or empty. competitor_slug
+#                       must match a real content/competitors/<slug>.yaml file. Empty
+#                       means unresearched, not "no competitor has it"
+#   audience          — array of content/personas/*.yaml filenames without extension
+#                       (role-* / discipline-* / lens-* slugs), or empty. Tag-only, not
+#                       an evidentiary citation
+#   target            — "YYYY-MM" or "YYYY-Qn", or null. Only ever set when a cited
+#                       roadmap document actually states a date — never a guess or an
+#                       aspiration
+#   detail            — one sourced paragraph behind the headline. <=300 soft / 600 hard
+#                       chars. An entry that can't fit decomposes into two entries
+#   sources           — array of {source_id, locator?}, at least one entry, REQUIRED
+#
+# INTEGRITY RULE, enforced later (Task 1.7 adds it to scripts/check_content_density.py;
+# until then it is this comment): severity: "blocking" combined with demand_evidence:
+# "inferred" is a hard FAIL — a blocking claim needs stronger evidence than an inference.
+# If a gap really is blocking, go find the RFP, ticket or lost deal that says so.
+# ---------------------------------------------------------------------------
+# FIRST REAL ROWS, 2026-09-11. Every row below comes from ONE source: the
+# 2026-09-04 Pharmacy domain-expert session (source_id
+# `interview-vishaka-pharmacy-understanding-2026-09-04`). That is why every row
+# carries demand_evidence: "expert-assertion" — not one of these gaps is backed
+# by an RFP document, a support ticket or a lost-deal record this repo holds.
+# Where the session itself reports an RFP loss, it is Vishaka RECALLING the
+# reasons ("top reasons Vishaka remembers"; "Kunal and Wilson hold the full
+# detail"), so the evidence class stays expert-assertion there too.
+#
+# ON CITING content/prism/capability-map.yaml: two rows below (the Exxat
+# One/Prism depth row and the LMS-breadth row) rest on facts that file owns.
+# They cite it the way this file's header says to — BY PILLAR NAME through
+# `prism_feature_ref`, plus a named reference inside `detail` — not through
+# `sources[]`. `sources[].source_id` resolves only against the Level 0.5 source
+# homes listed above; capability-map.yaml is a Level 1 file with no source_id,
+# so putting it there would be a hard FAIL, not a citation.
+#
+# ON DOMAIN: the last three rows are `domain: "DO"`, not "Pharmacy". The
+# session's RFP-loss section is explicitly headed "MD/DO, not pharmacy" and
+# says "The RFPs Exxat lost were mainly MD and DO." Filing them under Pharmacy
+# would be a straight misattribution. Matching "Medicine" rows are deliberately
+# NOT written: this pass researched neither MD nor DO, and per this file's
+# sparse-by-design contract an unlisted row means UNRESEARCHED, which is the
+# true state for Medicine here.
+#
+# NOT WRITTEN AS A ROW, on purpose: the session's "point solutions vs. one
+# designed platform" passage. Read closely, it is a critique of how the market
+# bundles ("we are just going to provide all those point solutions in one
+# platform rather than focusing on is the design of that one platform") plus a
+# statement of Exxat's INTENT ("That is what we will try to do with that
+# platform") — it never states a deficiency in Exxat's own product. Turning it
+# into an Exxat gap row would be an over-read. It is also the one passage in
+# that file carrying a weakened evidentiary status (recovered from an
+# uncommitted working pass, never re-verified against the recording).
+last_updated: "2026-09-11"
+gaps:
+  - id: "pharmacy-exam-management-module"
+    domain: "Pharmacy"
+    gap: "No exam module of Exxat's own — pharmacy programs buy ExamSoft next to CORE, and Prism's counterpart is still pre-launch"
+    kind: "missing-module"
+    prism_feature_ref: "Exam Management"
+    prism_status: "roadmap"
+    build_shape: "build"
+    blocks: ["deal", "expansion"]
+    severity: "material"
+    demand_evidence: "expert-assertion"
+    element_ids:
+      - "Standard 7, Key Element 7.3.d"
+    competitor_has_it:
+      - competitor_slug: "examsoft"
+        source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+    audience: ["discipline-pharmacy", "role-dean"]
+    # NOT "2027-01". The session's exact words are "a January soft launch" — a
+    # month with no year — and capability-map.yaml puts the Exam Management
+    # pillar at Q2 2027 with `roadmap.source_id: null`. Neither is a cited
+    # roadmap document stating a date, so this file asserts no target rather
+    # than picking one. The likeliest reading is that these are two milestone
+    # types in one ordinary sequence, not a discrepancy; either way, nothing
+    # here states a year a target field could carry.
+    target: null
+    # Worth carrying into scoping, from the same session: Vishaka widens the
+    # target herself — "we are thinking we are building a product to compete
+    # with ExamSoft, but we are actually competing with both LMS and ExamSoft",
+    # because Canvas and Brightspace have both added assessment building and AI.
+    detail: >
+      The session names "CORE, ExamSoft, and Influx" as the recurring pharmacy
+      stack, and puts Exxat's own ExamSoft counterpart at "a January soft launch" —
+      a month, no year. capability-map.yaml puts the Exam Management pillar at Q2
+      2027: possibly a soft launch ahead of a fuller release, not a conflict.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Sections 'The ExamSoft + CORE + Influx stack' and 'LMS integration'"
+
+  - id: "pharmacy-curriculum-assessment-link"
+    domain: "Pharmacy"
+    gap: "Programs build curriculum maps and assessment maps separately and never link them — observed of the market, not of Prism"
+    # MARKET OBSERVATION, NOT A PRISM GAP — and every structured field below is
+    # set to say only that. The first draft of this row said `wrong-depth` +
+    # `Curriculum Mapping`/`shipped` + `build: build` + `blocks: [deal,
+    # expansion]`, which together assert "Prism ships this capability, built
+    # wrong, and it is costing deals". The session asserts none of that: it
+    # offers the quote as a "Related structural observation" about how faculty
+    # work, names no vendor, no pillar and no deal. A caveat in `detail` does
+    # not travel with the machine-readable fields, so the fields were re-derived
+    # rather than annotated.
+    kind: "non-product"
+    # null, not "Curriculum Mapping": naming a pillar is what attaches the
+    # complaint to that pillar. "absent" is forced by the schema as the only
+    # value that pairs with a null ref — read it as "no pillar is being
+    # implicated here", NOT as "Prism lacks this".
+    prism_feature_ref: null
+    prism_status: "absent"
+    # Not "build". This repo's own researched view contradicts a build: for the
+    # two elements below, content/accreditation/acpe.yaml rates 2.2.d `Transfer`
+    # ("exactly what the Curriculum Mapping pillar is built for") and 7.3.d
+    # `Configure`. Nothing here supports net-new engineering.
+    build_shape: "configure"
+    # Was [deal, expansion]. The session ties this to no deal, won or lost. What
+    # it does bear on is the program's own standard evidence — ACPE 2.2.d wants
+    # the curriculum mapped to outcomes and 7.3.d wants assessment rolled up
+    # against the same taxonomy, which a program that never links the two cannot
+    # produce. So: "standard", and nothing else.
+    blocks: ["standard"]
+    # Material because of those two ACPE elements, not because the session
+    # attaches any cost to it — it attaches none.
+    severity: "material"
+    demand_evidence: "expert-assertion"
+    element_ids:
+      - "Standard 2, Key Element 2.2.d"
+      - "Standard 7, Key Element 7.3.d"
+    competitor_has_it: []
+    audience: ["discipline-pharmacy", "role-dean"]
+    target: null
+    # The adjacent fact, same session: the didactic half of the data only just
+    # arrived. The September 12, 2026 release adds free bulk import of ExamSoft
+    # reports for programs already on Prism for clinical management — Vishaka
+    # calls it the first time "we will have the entire student data from
+    # didactic and clinical on our platform." The product implication of closing
+    # this loop is carried by `pharmacy-ai-insights-not-reports`, not by this row.
+    detail: >
+      Offered by the session as a "Related structural observation", about faculty
+      rather than any vendor: "they curriculum map and assessment map are
+      disconnected… They're not really linking their curriculum with their
+      assessments." Records that market condition; claims nothing about Prism.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Sections 'The product vision Vishaka would sell' and 'The ExamSoft + CORE + Influx stack'"
+
+  - id: "pharmacy-ai-insights-not-reports"
+    domain: "Pharmacy"
+    gap: "Reports and dashboards where the ask is AI-aided recommendations that name the gap and the fix"
+    kind: "missing-module"
+    # No core_ring pillar owns this. The capability it describes sits in
+    # capability-map.yaml's intelligence_layer, which is not in the six-pillar
+    # set prism_feature_ref may name — hence null / "absent", which is the
+    # honest pair, not a missing lookup.
+    prism_feature_ref: null
+    prism_status: "absent"
+    build_shape: "build"
+    blocks: ["deal", "expansion"]
+    severity: "material"
+    demand_evidence: "expert-assertion"
+    element_ids:
+      - "Standard 7, Key Element 7.5.a"
+    competitor_has_it:
+      - competitor_slug: "influx"
+        source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+    audience: ["discipline-pharmacy", "role-dean"]
+    target: null
+    # Her worked example: "we noticed you're spending fourteen hours on geriatric
+    # drugs, and that's an over coverage… you potentially can remove five hours
+    # from there so that you can make room for [inserting] an IPEC competency
+    # that is a gap." The session says this lives in a presentation being
+    # prepared for Cohere and was shown at a June town hall — roadmap, not shipped.
+    detail: >
+      Verbatim: "we don't want to give them reports and dashboards. Everyone is doing
+      that. We wanna give them some AI aided insights telling them exactly where the
+      gap is, giving a recommendation that this is how you can fix the gap." Influx
+      sells this shape of insight over CORE and ExamSoft data today.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Sections 'The product vision Vishaka would sell (AI insights, not reports)' and 'The ExamSoft + CORE + Influx stack'"
+
+  - id: "pharmacy-lms-breadth-beyond-canvas"
+    domain: "Pharmacy"
+    gap: "LMS integration reaches Canvas only — Brightspace and Blackboard programs have no date to be given"
+    kind: "shallow-integration"
+    # LMS/SIS Integration lives in capability-map.yaml's exxat_advantage_layer,
+    # not in the six core_ring pillars, so there is no pillar to name.
+    prism_feature_ref: null
+    prism_status: "absent"
+    build_shape: "build"
+    blocks: ["deal"]
+    # Material, not blocking: the session gates a deal on LMS integration in
+    # general, but Canvas is already shipped, so the gap as scoped here (the
+    # other two LMSs) blocks only a non-Canvas program.
+    severity: "material"
+    demand_evidence: "expert-assertion"
+    element_ids: []
+    competitor_has_it: []
+    audience: ["discipline-pharmacy", "role-dean"]
+    # The session states no date or quarter for Brightspace or Blackboard, and
+    # capability-map.yaml explicitly asserts none either. Nothing to put here.
+    target: null
+    # Why it is the driver, per the session: it removes manual transfer of grades
+    # out of the clinical management system into the LMS, which is the program's
+    # official student communication channel. The session's recommendation is to
+    # reopen the channel with every lead who asked for LMS integration.
+    detail: >
+      The session calls LMS integration the second biggest pharmacy buying driver
+      and records a dean telling Vishaka "once you have LMS integration, come back
+      to me and talk to me." Rollout status, carried in capability-map.yaml's
+      LMS/SIS item: Canvas shipped, Brightspace next, then Blackboard, no dates.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'LMS integration'"
+
+  - id: "pharmacy-gtm-targeting-dce-only"
+    domain: "Pharmacy"
+    gap: "Prospecting reaches directors of clinical education only, so the curriculum story lands on the wrong buyer"
+    kind: "non-product"
+    prism_feature_ref: null
+    prism_status: "absent"
+    # Not engineering: curated per-school contact lists plus role-specific
+    # assets on top of capability that already ships.
+    build_shape: "configure"
+    blocks: ["deal", "expansion"]
+    severity: "material"
+    demand_evidence: "expert-assertion"
+    element_ids: []
+    competitor_has_it: []
+    audience: ["role-dean", "discipline-pharmacy"]
+    target: null
+    # The fix the session names is role-split assets off the same product: a
+    # clinical leader gets the placement story, while a program director or dean
+    # of assessment gets competency tracking and the ExamSoft import. The missing
+    # input is a per-school list of dean, director, curriculum chair and
+    # assessment chair — Manoj is named as doing the org-structure sweep.
+    detail: >
+      Verbatim: "most of our target prospects is the DCEs, which is director of
+      clinical education… Because the [DCE] doesn't care about curriculum mapping
+      because it's not part of their responsibility… we are barking against the
+      wrong tree." The competency-tracking pitch has no one to go to.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'GTM targeting — the wrong tree'"
+
+  - id: "do-placement-scheduling-logic-depth"
+    domain: "DO"
+    gap: "Placement-logic and scheduling requirements in DO RFPs run deeper than Exxat brings — a named top loss reason"
+    kind: "wrong-depth"
+    prism_feature_ref: "Clinical & Experiential Education"
+    prism_status: "shipped"
+    build_shape: "build"
+    blocks: ["deal"]
+    # Blocking: the session attaches this to RFPs Exxat actually lost, not to a
+    # wish list. The recollection-not-record weakness is carried by
+    # demand_evidence, which stays at expert-assertion.
+    severity: "blocking"
+    demand_evidence: "expert-assertion"
+    element_ids: []
+    competitor_has_it: []
+    audience: ["discipline-do"]
+    target: null
+    detail: >
+      "The RFPs Exxat lost were mainly MD and DO. Top reasons Vishaka remembers:
+      very detailed placement-logic and scheduling requirements." No RFP or win/loss
+      record sits behind that in the repo — the session says Kunal and Wilson hold
+      the detail and nobody has retrieved it. Which logic is unresearched.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'RFP losses (MD/DO, not pharmacy)'"
+
+  - id: "do-exxat-one-prism-integration-depth"
+    domain: "DO"
+    gap: "The Exxat One to Prism connection is not deep enough to carry a one-platform claim in a DO RFP"
+    kind: "shallow-integration"
+    prism_feature_ref: "Clinical & Experiential Education"
+    prism_status: "shipped"
+    build_shape: "build"
+    blocks: ["deal"]
+    severity: "blocking"
+    demand_evidence: "expert-assertion"
+    element_ids: []
+    competitor_has_it: []
+    audience: ["discipline-do"]
+    target: null
+    detail: >
+      Same lost-RFP list: Vishaka names "the connection between Exxat One and Exxat
+      Prism not being deep enough" among the top reasons. capability-map.yaml's
+      "Exxat One Linking + Schedule Processing" feature carries it as a depth caveat
+      on a shipped integration — mechanics there, deal impact here.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'RFP losses (MD/DO, not pharmacy)'"
+
+  - id: "do-health-system-integration"
+    domain: "DO"
+    gap: "University-health-system integration expectations in DO RFPs, UPMC named, with no Prism pillar that owns them"
+    kind: "shallow-integration"
+    # capability-map.yaml's only integration story is the LMS/SIS file feeds in
+    # exxat_advantage_layer, and that is SIS/LMS, not a health system. No core
+    # pillar owns this, so null / "absent".
+    prism_feature_ref: null
+    prism_status: "absent"
+    build_shape: "build"
+    blocks: ["deal"]
+    severity: "blocking"
+    demand_evidence: "expert-assertion"
+    element_ids: []
+    competitor_has_it: []
+    audience: ["discipline-do"]
+    target: null
+    # Context from capability-map.yaml, not from the session: Exxat's confirmed
+    # integration mechanism today is Exxat-managed, SSH-delivered CSV file feeds
+    # with no client-facing API on offer — relevant to what a health system's IT
+    # organisation is likely to expect, but not a claim the session makes.
+    detail: >
+      The third of the three top reasons the session gives for the lost MD/DO RFPs:
+      "university-health-system integration expectations (UPMC named)". What the
+      expectation actually covers — onboarding, credentialing, scheduling feeds or
+      something else — is not in the session and is unresearched here.
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'RFP losses (MD/DO, not pharmacy)'"

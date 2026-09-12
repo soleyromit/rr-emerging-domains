@@ -1,4 +1,5 @@
 import { Badge } from "@astryxdesign/core/Badge";
+import { Text } from "@astryxdesign/core/Text";
 
 type BadgeVariant =
   | "neutral"
@@ -113,10 +114,88 @@ const STANDARDS_RATING_LABEL: Record<string, string> = {
   unresearched: "Not yet researched",
 };
 
+// The same words the badge shows, as a string — for a Takeaway/heading that has to
+// SAY the rating in a sentence rather than render a pill ("CORE ELMS is Fully
+// meeting on this capability"). Exported so a caller can't drift into its own
+// second spelling of this three-value vocabulary.
+export function standardsRatingLabel(rating?: string): string {
+  if (!rating) return STANDARDS_RATING_LABEL.unresearched;
+  const key = rating.toLowerCase().trim();
+  return STANDARDS_RATING_LABEL[key] ?? rating;
+}
+
 export function StandardsRatingBadge({ rating }: { rating?: string }) {
   if (!rating) return <Badge variant="neutral" label="Not yet researched" />;
   const key = rating.toLowerCase().trim();
   return <Badge variant={STANDARDS_RATING_VARIANT[key] ?? "neutral"} label={STANDARDS_RATING_LABEL[key] ?? rating} />;
+}
+
+// Exxat's *own* compliance against a standard element — a different question
+// from StandardsRatingBadge above (which rates a competitor) and from FitBadge
+// (which rates how Prism would have to be built to satisfy it). Same five-state
+// palette and the same "absence is a real, named state" rule, so the Exxat
+// column and the competitor columns stay comparable at a glance while their
+// vocabularies stay distinct.
+const EXXAT_COMPLIANCE_VARIANT: Record<string, BadgeVariant> = {
+  compliant: "success",
+  partial: "warning",
+  gap: "error",
+  "not-applicable": "neutral",
+};
+
+const EXXAT_COMPLIANCE_LABEL: Record<string, string> = {
+  compliant: "Compliant",
+  partial: "Partial",
+  gap: "Gap",
+  "not-applicable": "Not yet rated",
+};
+
+// Same compliance value, mapped to a Banner-compatible status instead of a Badge
+// variant — reused by StandardDetail's scan-layer Takeaway so the one-line verdict
+// at the top of the panel and the badge inside the deep-dive agree on what
+// "compliant"/"gap"/"partial" actually mean, rather than two components each
+// guessing their own color for the same word.
+export function exxatComplianceStatus(compliance?: string): "success" | "warning" | "error" | "info" {
+  const key = (compliance ?? "").toLowerCase().trim();
+  if (key === "compliant") return "success";
+  if (key === "gap") return "error";
+  if (key === "partial") return "warning";
+  return "info";
+}
+
+export function ExxatComplianceBadge({ compliance }: { compliance?: string }) {
+  if (!compliance) return <Badge variant="neutral" label="Not yet rated" />;
+  const key = compliance.toLowerCase().trim();
+  return (
+    <Badge
+      variant={EXXAT_COMPLIANCE_VARIANT[key] ?? "neutral"}
+      label={EXXAT_COMPLIANCE_LABEL[key] ?? compliance}
+    />
+  );
+}
+
+// Trend coverage, keyed by the *same* gap_severity vocabulary GapSeverityBadge
+// uses (none | configure-needed | gap) so KeyFindingList's severity contract is
+// unchanged — only the labels differ, because "Configure needed" is meaningless
+// for a market trend. Selected via KeyFindingList's `severityVocabulary="trend"`.
+const TREND_SEVERITY_LABEL: Record<string, string> = {
+  none: "Exxat ships it",
+  "configure-needed": "Competitors ahead",
+  gap: "Nobody addresses it",
+};
+
+const TREND_SEVERITY_VARIANT: Record<string, BadgeVariant> = {
+  none: "success",
+  "configure-needed": "warning",
+  gap: "error",
+};
+
+export function TrendCoverageBadge({ severity }: { severity?: string }) {
+  if (!severity) return <Badge variant="neutral" label="Unrated" />;
+  const key = severity.toLowerCase().trim();
+  return (
+    <Badge variant={TREND_SEVERITY_VARIANT[key] ?? "neutral"} label={TREND_SEVERITY_LABEL[key] ?? severity} />
+  );
 }
 
 const DIVERGENCE_VARIANT: Record<string, BadgeVariant> = {
@@ -134,4 +213,77 @@ const DIVERGENCE_VARIANT: Record<string, BadgeVariant> = {
 export function DivergenceBadge({ label }: { label: string }) {
   const key = label.toLowerCase().trim();
   return <Badge variant={DIVERGENCE_VARIANT[key] ?? "neutral"} label={label} />;
+}
+
+// A directional rating is a first-pass read of a vendor's public material, not the
+// element-by-element verification the unflagged entries carry. Neutral on purpose:
+// the spec explicitly rules out a new color in the shared palette and a numeric
+// "confidence score" — both would invent vocabulary this repo doesn't have. Renders
+// nothing when the rating isn't directional, so callers need no emptiness guard.
+export function DirectionalBadge({ evidenceStrength }: { evidenceStrength?: string }) {
+  if (evidenceStrength?.toLowerCase().trim() !== "directional") return null;
+  return <Badge variant="neutral" label="Directional" />;
+}
+
+// The ONE cell vocabulary of the quarantined vendor comparison chart: a sales sheet
+// marked the box, or it didn't. Exactly two states, and NEITHER is a rating.
+//
+// Never green, never red, never any status variant. Every other badge in this file
+// encodes a researched verdict; this one encodes "someone in sales typed an X", and a
+// success/error color would launder that into a finding. "neutral" is the only honest
+// choice — the same reasoning DirectionalBadge's comment gives for staying neutral.
+//
+// The not-marked state renders the SAME em dash ComparisonMatrix's own `emptyCell`
+// default uses. That is deliberate rather than a second empty vocabulary: in this
+// artifact a blank cell IS the source's silence ("Absence is the source's silence,
+// not a researched finding of absence" — the file's own header), which is exactly
+// what a dash means everywhere else in this app. Returning null instead would leave a
+// visually empty cell that reads as a rendering bug rather than as a real blank.
+export function ClaimedBadge({ claimed }: { claimed?: boolean }) {
+  if (!claimed) {
+    return (
+      <Text type="supporting" size="sm" color="secondary">
+        —
+      </Text>
+    );
+  }
+  return <Badge variant="neutral" label="Claimed" />;
+}
+
+// Status of a proposed use case against one accreditation element. Same five-state
+// palette as FitBadge/GapSeverityBadge so the color language stays consistent
+// app-wide, and the same "absence is a real, named state" rule: `no-fit-yet` is an
+// explicit answer, not a blank.
+const USE_CASE_STATUS_VARIANT: Record<string, BadgeVariant> = {
+  documented: "success",
+  "in-flight": "warning",
+  proposed: "info",
+  "no-fit-yet": "error",
+};
+
+const USE_CASE_STATUS_LABEL: Record<string, string> = {
+  documented: "Documented",
+  "in-flight": "In flight",
+  proposed: "Proposed",
+  "no-fit-yet": "No fit yet",
+};
+
+export function UseCaseStatusBadge({ status }: { status?: string }) {
+  if (!status) return <Badge variant="neutral" label="Unrated" />;
+  const key = status.toLowerCase().trim();
+  return (
+    <Badge variant={USE_CASE_STATUS_VARIANT[key] ?? "neutral"} label={USE_CASE_STATUS_LABEL[key] ?? status} />
+  );
+}
+
+// Which Exxat/Prism capability actually does the work a proposed use case describes —
+// added 2026-09-11 because a use case that only tells a market/customer story without
+// naming the product feature behind it reads as a generic idea, not a product answer
+// (mirrors competitor cards' competitor_feature_ref, one level up). "teal" is unclaimed
+// elsewhere in this badge vocabulary — not one of the red/yellow/green/blue severity
+// colors, so it can't be misread as a fit/gap signal. Renders nothing when absent
+// (the honest "no-fit-yet" case), so callers need no emptiness guard.
+export function PrismFeatureBadge({ feature }: { feature?: string }) {
+  if (!feature) return null;
+  return <Badge variant="teal" label={feature} />;
 }

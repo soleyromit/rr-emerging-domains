@@ -1,0 +1,267 @@
+# Journey: Pharmacy Platform Migration — CORE ELMS to Exxat Prism
+# Level 4 narrative. Cites ../flows/*.yaml (Level 3), ../accreditation/acpe.yaml and
+# ../competitors/{core-elms,e-value}.yaml (Level 1), and
+# ../interviews/2026-09-04-vishaka-ruchi-pharmacy-understanding.md (Level 0).
+#
+# SCOPE HONESTY, read this before extending the file: no pharmacy program has actually
+# made this move on record. This journey is the shape of a migration derived from what
+# ACPE requires and what the two platforms are documented to hold — it is NOT a recorded
+# customer outcome. Vishaka named the CORE-to-Exxat migration story as a use case the GTM
+# team WANTS, not one that exists. Every stage below is written in that register.
+journey_name: "Pharmacy Platform Migration — CORE ELMS to Exxat Prism"
+domain_scope: ["Pharmacy"]
+persona: >
+  NOT A RECORDED CUSTOMER OUTCOME: this journey describes a hypothetical migration shape
+  derived from what ACPE requires and what both platforms are documented to hold — no
+  pharmacy program has made this move on record. Centers on the Director of Experiential
+  (or Clinical) Education, who owns the site, preceptor and hour records that have to
+  survive the move, working alongside the
+  Assistant/Associate Dean for Assessment & Accreditation, who owns the ACPE evidence
+  chain that must stay unbroken across the cutover. In a pharmacy program these are
+  usually two people in one independent school with its own budget — not a shared
+  services function — which is why a platform switch here is a program-level decision
+  and not an institutional one.
+
+stages:
+  - stage: "1. Decision trigger — why a pharmacy program leaves its incumbent"
+    current_state_in_prism: >
+      Nothing in Prism participates in this stage: the program is still fully on its
+      incumbent and Prism is one of several options being evaluated. What Prism brings
+      to the evaluation is documented in ../prism/capability-map.yaml — a shipped
+      Clinical & Experiential Education placement engine, shipped Compliance Management
+      including contracts with expiry alerts, shipped Curriculum Mapping with pre-loaded
+      and custom accreditor standards, and shipped Surveys & Course Evaluations. Two
+      pillars that a pharmacy evaluator will ask about are not shipped: Exam Management
+      (roadmap Q2 2027) and Accreditation Management (roadmap Q3 2027). The
+      2026-09-04 interview adds a shipped capability the capability map does not yet
+      carry: an ExamSoft bulk import, released 12 September 2026, free to programs
+      already using Prism for clinical management.
+    pain_or_gap: >
+      The trigger named in the interview is not feature dissatisfaction — it is stack
+      cost and stack sprawl. Pharmacy programs commonly run CORE for clinical data,
+      ExamSoft for didactic data, and Influx to join the two into one longitudinal view,
+      paying three vendors and training staff on three systems to answer one question
+      about student performance. A second, weaker trigger is platform decay: e-Value was
+      described as archaic and not receiving significant enhancements, with programs on
+      it actively shopping alternatives. Neither trigger is quantified anywhere. Nobody
+      has measured how many pharmacy programs would move, what the switching cost is, or
+      how long an evaluation takes — which is the same unmeasured-market problem the
+      interview flags for the whole pharmacy gap analysis.
+    accreditation_link: >
+      The decision is bounded by where the program sits in its ACPE cycle. ACPE Standard
+      7, Key Element 7.5.b requires documented processes for reviewing and ensuring the
+      program meets all accreditation standards on an ongoing basis, including interim
+      reporting ACPE requests during the term — so a switch does not pause the
+      obligation. ACPE Standard 3, Key Element 3.5.b requires a fully executed, current
+      affiliation agreement on file for every practice facility in use, meaning a
+      migration that loses agreement expiry dates creates a live compliance exposure,
+      not just a data-quality problem.
+    competitor_comparison: >
+      CORE ELMS holds the large majority of US pharmacy programs — the incumbent in
+      nearly every deal. Its documented retention anchor is the accumulated record:
+      contracts, affiliation agreements and preceptor licenses stored centrally with
+      automated expiry alerts (see ../competitors/core-elms.yaml). That is precisely
+      what makes the switch hard, and precisely what Stage 2 has to move. PharmAcademic
+      is not the incumbent to displace here: its ASHP mandate binds residency programs,
+      a different program type and often a different buyer inside the same institution
+      (see ../competitors/pharmacademic.yaml).
+    key_findings:
+      - subject: "Pharmacy"
+        headline: "The trigger is stack cost, not a missing feature"
+        severity: "gap"
+        detail: >
+          Programs pay CORE, ExamSoft and Influx to answer one question about student
+          performance. The wedge is collapsing three vendors into one, and the
+          September 2026 ExamSoft bulk import is what makes that pitch possible at all.
+
+  - stage: "2. Data inventory — what exists in the incumbent and what has to survive"
+    current_state_in_prism: >
+      Prism's destination objects are documented and shipped. Site, location and
+      personnel records have a defined setup path
+      (../flows/admin-onboarding--05-sites-locations-personnel-management.yaml).
+      Affiliation agreements land in Compliance Management's Contracts feature with
+      expiry alerts, traced element by element in
+      ../flows/preceptor-site-onboarding--02-affiliation-agreement-execution-contract-lifecycle-management.yaml.
+      Preceptor credential records and their licensure gating are traced in
+      ../flows/preceptor-site-onboarding--03-preceptor-recruitment-credential-verification-licensure-gating.yaml.
+      Student hour capture is traced in
+      ../flows/rotation-lifecycle--05-in-rotation-capture-hours-encounters-procedures.yaml.
+    pain_or_gap: >
+      What is documented is where the data goes, not how it gets there. No flow, help
+      article or transcript in this repo describes a bulk import of an incumbent's site
+      records, executed affiliation agreements with their original expiry dates,
+      preceptor credential history, or per-student cumulative hour logs. That is an
+      absence of documentation, not a confirmed absence of capability — but it means a
+      migration plan cannot currently be quoted with any confidence. The hour logs are
+      the sharpest instance: a program switching mid-cohort cannot restart the count.
+    accreditation_link: >
+      Three ACPE elements set the floor for what must survive. ACPE Standard 3, Key
+      Element 3.1.b requires auditable, student-level hour logs proving at least 300
+      total IPPE clock hours with 75-hour community and 75-hour hospital minimums, so
+      partial-cohort history has to move. ACPE Standard 3, Key Elements 3.2.b & 3.2.d
+      require transcript-level records of 1,440 APPE hours across four required
+      settings, per student. ACPE Standard 3, Key Element 3.5.b requires a current
+      executed affiliation agreement per facility — its expiry date is the field whose
+      loss is most expensive.
+    competitor_comparison: >
+      The incumbent's own strength defines the inventory. CORE's pharmacy page documents
+      centralized contract and affiliation-agreement storage with automated expiration
+      alerting, plus preceptor license collection and expiry alerts (see
+      ../competitors/core-elms.yaml). Anything CORE alerts on is a field that must
+      arrive in Prism with its date intact. Nothing public describes CORE's export
+      formats, so the shape of the extract is unknown from this side.
+    key_findings:
+      - subject: "Pharmacy"
+        headline: "Expiry dates are the field a migration is most likely to lose"
+        severity: "gap"
+        detail: >
+          ACPE 3.5.b is satisfied by a current agreement, not by an agreement. An import
+          that lands the document but drops its expiration turns a tracked renewal into
+          an untracked one, which is the most avoidable citation in the file.
+
+  - stage: "3. Program re-setup — courses, sites, preceptors and standards rebuilt in Prism"
+    current_state_in_prism: >
+      This is the best-documented stage in the whole journey, because it is ordinary
+      onboarding. Program details and settings
+      (../flows/admin-onboarding--02-program-details-settings-setup.yaml), the site and
+      personnel directory (--05), the course catalog and curriculum grid (--06), and
+      learning activities and competency setup (--08) are each traced screen by screen.
+      Curriculum Mapping ships pre-loaded and custom accreditor standards with a Mapped
+      Standards Report distinguishing Directly from Indirectly Mapped, plus an Unmapped
+      Standards filter — so an ACPE standard set can be activated and mapped against
+      without new construction.
+    pain_or_gap: >
+      Re-setup is where the migration's real cost sits, and it is staff time, not
+      software. Rebuilding a four-year curriculum map, a site directory and a preceptor
+      roster is weeks of work by the same two people who still have a running program to
+      operate. Nothing in this repo estimates that duration for a pharmacy program. The
+      2026-09-04 interview describes the current research pattern honestly: gaps get
+      discovered organically during onboarding, when the account manager or CSS team
+      hits a snag — meaning a migration's real friction points are found on the first
+      customer, not before them.
+    accreditation_link: >
+      Re-setup is the moment the ACPE standard taxonomy itself gets stood up. ACPE
+      Standard 2, Key Element 2.2.d requires documented mapping of didactic content
+      coverage plus mapping of every APPE experience's learning outcomes to the 2.1.a-m
+      elements — the curriculum grid rebuilt in this stage IS that evidence. ACPE
+      Standard 3, Key Element 3.3.a (preceptor quality criteria and credential records)
+      and ACPE Standard 3, Key Element 3.3.c (orientation and development completion)
+      set what the rebuilt preceptor roster must carry.
+    competitor_comparison: >
+      Curriculum mapping is the one place a pharmacy evaluator will directly compare
+      CORE's CompMS against Prism's Curriculum Mapping pillar, since CompMS markets
+      alignment to named accreditors including ACPE with dashboards, gap analysis and
+      one-click reports (see ../competitors/core-elms.yaml). PharmAcademic also names
+      curricular mapping for schools of pharmacy, but its public evidence establishes
+      the capability by name only, with no depth to compare (see
+      ../competitors/pharmacademic.yaml).
+    key_findings:
+      - subject: "Pharmacy"
+        headline: "The migration cost is staff weeks, and nobody has measured it"
+        severity: "configure-needed"
+        detail: >
+          Every re-setup screen is documented; the elapsed time to rebuild a four-year
+          PharmD curriculum map, site directory and preceptor roster is not. That number
+          is what a migration pitch actually needs and does not have.
+
+  - stage: "4. Bulk ExamSoft import — didactic data joins clinical data on one platform"
+    current_state_in_prism: >
+      The 12 September 2026 release lets a program already using Prism for clinical
+      management bulk-import its ExamSoft reports and data, at no additional charge. Per
+      the 2026-09-04 interview this is the first time a program's didactic and clinical
+      records sit on one platform in Prism. External outcome-data ingestion more broadly
+      — board exams, match, mandated surveys — is traced in
+      ../flows/accreditation-self-study--05-external-outcome-data-ingestion-board-exams.yaml.
+      This capability is not yet reflected in ../prism/capability-map.yaml; the interview
+      is currently its only in-repo source.
+    pain_or_gap: >
+      Two limits, both stated rather than inferred. First, the import is scoped to
+      ExamSoft — a program whose didactic assessment lives in its LMS instead has no
+      described path, and the interview notes Canvas and Brightspace have both added
+      assessment building in the last two years, so that population is growing. Second,
+      the import moves data; it does not by itself produce the insight the stack was
+      bought for. What Influx sold was analysis on top of the join, and the AI-aided
+      gap-and-recommendation layer that would match it is explicitly a roadmap concept,
+      not shipped.
+    accreditation_link: >
+      This is the stage that serves ACPE Standard 7, Key Element 7.3.d, which requires
+      an assessment plan measuring achievement against the 2.1.a-n outcome elements at
+      both individual-student and aggregate level, with evidence students are APPE-ready
+      before entering APPEs and graduates are Practice-ready and Team-ready. A
+      longitudinal didactic-plus-clinical record is the substrate that claim rests on.
+      It also feeds ACPE Standard 7, Key Element 7.5.a, whose CQI cycle requires
+      collected assessment data to be analysed and acted on, not merely stored.
+    competitor_comparison: >
+      This is a direct strike at the incumbent stack rather than at a single competitor:
+      CORE holds the clinical half, ExamSoft holds the didactic half, and Influx charges
+      to join them while owning no original data of its own. A free import that lands
+      both halves in one platform removes the third vendor from the diagram. Note the
+      honest asymmetry — Exxat also owns the clinical half natively and so does not
+      depend on an integration to get it, which Influx does.
+    key_findings:
+      - subject: "Pharmacy"
+        headline: "The free ExamSoft import removes the third vendor from the stack"
+        severity: "none"
+        detail: >
+          CORE plus ExamSoft plus Influx exists to produce one longitudinal view. Landing
+          didactic data next to clinical data at no charge makes the analytics vendor
+          redundant, which is the clearest pharmacy wedge in this file.
+
+  - stage: "5. First ACPE self-study cycle on the new platform"
+    current_state_in_prism: >
+      Self-study evidence assembly, submission export and site-visit support are traced
+      element by element in
+      ../flows/accreditation-self-study--08-self-study-assembly-submission-site-visit.yaml,
+      including the Heatmap, Mapped Standards and Cumulative reports and read-only
+      site-visitor accounts. Closing the CQI loop from finding to action to evidence is
+      traced in ../flows/accreditation-self-study--07-closing-the-cqi-loop-finding-to.yaml.
+      The Accreditation Management pillar that would aggregate evidence against named
+      ACPE standard numbers is roadmap Q3 2027, not shipped.
+    pain_or_gap: >
+      A program that switched mid-cycle has to produce one continuous evidence chain
+      from two systems, and nothing on either side is built for that. Pre-cutover
+      evidence sits in an incumbent the program no longer licenses; post-cutover
+      evidence sits in Prism; the self-study narrative has to reconcile them. This is
+      the single hardest thing in the journey and the least supported. It is also
+      exactly the story the GTM team asked for and cannot yet tell, because no pharmacy
+      program has been through it.
+    accreditation_link: >
+      ACPE Standard 7, Key Element 7.5.b is the governing element: documented processes
+      for reviewing and ensuring the program meets all standards on an ongoing basis,
+      including interim reporting during the accreditation term. A scoping fact this
+      stage must respect — ACPE retired AACP's AAMS and now operates its own submission
+      platform, PHARMS, effective with Standards 2025. The accreditor owns the system of
+      record, so the target is evidence aggregation and export into PHARMS, never a
+      rival submission portal. ACPE Standard 7, Key Element 7.3.c (standardized key
+      components and consistent assessment across all sites offering the same course) is
+      the other element a two-system history threatens directly.
+    competitor_comparison: >
+      This is CORE's strongest defensive position, not Exxat's strongest offensive one.
+      CORE's CompMS markets ACPE-named standards alignment with real-time dashboards,
+      gap analysis and one-click reports, and CORE has actively pitched it for the
+      2016-to-2025 standards transition (see ../competitors/core-elms.yaml). Prism's
+      equivalent pillar is roadmap. The honest posture during a migration is that the
+      self-study is harder in the switch year, and that the payoff is the unified
+      didactic-plus-clinical evidence base underneath it — not that the self-study
+      itself gets easier immediately.
+    key_findings:
+      - subject: "Pharmacy"
+        headline: "The switch-year self-study spans two systems and neither supports it"
+        severity: "gap"
+        detail: >
+          Pre-cutover evidence lives in a platform the program no longer licenses.
+          Reconciling that with post-cutover evidence into one ACPE 7.5.b narrative is
+          unsupported on both sides and is the migration's real risk.
+
+sources:
+  - "../interviews/2026-09-04-vishaka-ruchi-pharmacy-understanding.md — the CORE/ExamSoft/Influx stack, the 12 Sep 2026 free ExamSoft bulk import, the January exam-module soft launch, CORE's pharmacy share, e-Value described as archaic, and the explicit statement that the pharmacy standards-gap research remains to be done"
+  - "../accreditation/acpe.yaml — ACPE Key Elements 2.2.d, 3.1.b, 3.2.b, 3.2.d, 3.3.a, 3.3.c, 3.5.b, 7.3.c, 7.3.d, 7.5.a, 7.5.b; PHARMS replacing AACP's AAMS as the submission system of record"
+  - "../competitors/core-elms.yaml — centralized contract and affiliation-agreement storage with expiry alerts, preceptor license collection, CompMS ACPE standards alignment with dashboards and one-click reports"
+  - "../competitors/e-value.yaml — the second pharmacy incumbent, and the weaker of the two migration triggers"
+  - "../competitors/pharmacademic.yaml — ASHP residency mandate binds a different program type; PharmD-side curricular mapping evidenced by name only"
+  - "../prism/capability-map.yaml — shipped vs. roadmap split: Clinical & Experiential Education, Compliance Management (Contracts with expiry alerts), Curriculum Mapping (Pre-loaded + custom standards, Mapped Standards Report, Unmapped Report) and Surveys & Course Evaluations shipped; Exam Management Q2 2027 and Accreditation Management Q3 2027 not shipped"
+  - "../flows/admin-onboarding--02-program-details-settings-setup.yaml, --05-sites-locations-personnel-management.yaml, --06-courses-rotations-curriculum-mapping.yaml, --08-learning-activities-competency-management-reporting.yaml — the re-setup stage, traced screen by screen"
+  - "../flows/preceptor-site-onboarding--02-affiliation-agreement-execution-contract-lifecycle-management.yaml, --03-preceptor-recruitment-credential-verification-licensure-gating.yaml — the contract and credential objects a migration has to land"
+  - "../flows/rotation-lifecycle--05-in-rotation-capture-hours-encounters-procedures.yaml — per-student cumulative hour capture, the record that cannot restart mid-cohort"
+  - "../flows/accreditation-self-study--05-external-outcome-data-ingestion-board-exams.yaml, --07-closing-the-cqi-loop-finding-to.yaml, --08-self-study-assembly-submission-site-visit.yaml — outcome ingestion, CQI closure, and self-study assembly"
+last_updated: "2026-09-10"

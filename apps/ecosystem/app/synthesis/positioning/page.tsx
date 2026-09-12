@@ -3,6 +3,7 @@ import { Stack } from "@astryxdesign/core/Stack";
 import { Heading } from "@astryxdesign/core/Heading";
 import { Text } from "@astryxdesign/core/Text";
 import { Badge } from "@astryxdesign/core/Badge";
+import { Icon } from "@astryxdesign/core/Icon";
 import { Divider } from "@astryxdesign/core/Divider";
 import { Markdown } from "@astryxdesign/core/Markdown";
 import { Collapsible, CollapsibleGroup } from "@astryxdesign/core/Collapsible";
@@ -10,8 +11,10 @@ import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList"
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { PageHeader } from "@/components/page-header";
 import { Takeaway } from "@/components/takeaway";
+import { IconTile } from "@/components/status-pill";
 import { VerdictDistributionChart } from "@/components/charts/verdict-distribution-chart";
 import { readMarkdownFile, getScorecard, computeWeightedTotals } from "@/lib/content";
+import { stripFileCitationsInMarkdown } from "@/lib/strip-file-citations";
 import {
   splitSectionsAtLevel,
   getPreamble,
@@ -99,14 +102,14 @@ function countOrderedItems(section?: MarkdownSection): number {
 }
 
 export default function PositioningPage() {
-  const content = readMarkdownFile("synthesis/prism-positioning.md");
+  const content = stripFileCitationsInMarkdown(readMarkdownFile("synthesis/prism-positioning.md"));
 
   if (!content) {
     return (
       <Section padding={6}>
         <EmptyState
           title="Not yet synthesized"
-          description="content/synthesis/prism-positioning.md has not been written."
+          description="The positioning brief for this section has not been written yet."
         />
       </Section>
     );
@@ -137,6 +140,7 @@ export default function PositioningPage() {
     ? Object.entries(computeWeightedTotals(scorecard)).sort((a, b) => b[1] - a[1])
     : [];
   const [leadDomain, runnerUp] = ranked;
+  const gtmTarget = scorecard?.actual_gtm_target;
 
   return (
     <Stack gap={0}>
@@ -146,15 +150,22 @@ export default function PositioningPage() {
           <PageHeader
             eyebrow="Strategy"
             title={
-              leadDomain
-                ? `${leadDomain[0]} leads at ${leadDomain[1].toFixed(2)}, and ${leadCount} of ${verdicts.length} rotation stages are safe to claim in the room`
-                : `${leadCount} of ${verdicts.length} rotation stages are safe to claim in the room`
+              gtmTarget
+                ? `${gtmTarget} is confirmed first in market, and ${leadCount} of ${verdicts.length} rotation stages are safe to claim in the room`
+                : leadDomain
+                  ? `${leadDomain[0]} leads at ${leadDomain[1].toFixed(2)}, and ${leadCount} of ${verdicts.length} rotation stages are safe to claim in the room`
+                  : `${leadCount} of ${verdicts.length} rotation stages are safe to claim in the room`
             }
             description="A positioning brief, not a research document: what to lead with, what to concede, and the guardrails underneath every claim. Each verdict is verified against an element-level flow file, not a pillar description."
+            endContent={
+              <IconTile variant="success">
+                <Icon icon="arrowUp" size="lg" />
+              </IconTile>
+            }
           />
-          <Takeaway title="Sell the evidence COCA is about to demand — while the DO incumbent field is still in M&A churn">
+          <Takeaway title="Sell the evidence ACPE Standards 2025 + PHARMS is about to demand — Pharmacy confirmed first, DO the analytical runner-up">
             {headline ||
-              "PRISM is the system of record for clinical/experiential education, and COCA's 2026 standards ask for exactly the evidence our placement engine already produces."}
+              "PRISM is the system of record for clinical/experiential education, and ACPE's Standards 2025 + PHARMS transition ask for exactly the evidence our placement engine already produces."}
           </Takeaway>
         </Stack>
       </Section>
@@ -162,7 +173,10 @@ export default function PositioningPage() {
       {/* ---------- Stat row: the brief in 10 seconds ---------- */}
       <Section padding={6} dividers={["bottom"]}>
         <MetadataList columns={4}>
-          <MetadataListItem label="Lead domain (weighted)">
+          {gtmTarget ? (
+            <MetadataListItem label="Confirmed GTM target">{gtmTarget}</MetadataListItem>
+          ) : null}
+          <MetadataListItem label={gtmTarget ? "Scorecard's analytical leader" : "Lead domain (weighted)"}>
             {leadDomain && runnerUp
               ? `${leadDomain[0]} ${leadDomain[1].toFixed(2)} vs ${runnerUp[0]} ${runnerUp[1].toFixed(2)}`
               : "DO"}
@@ -240,9 +254,9 @@ export default function PositioningPage() {
         <Stack gap={3}>
           <Heading level={3}>The full brief, section by section</Heading>
           <Text type="supporting">
-            Nothing is summarized away — each section below is the verbatim source text from{" "}
-            <code>content/synthesis/prism-positioning.md</code>. Re-check any claim against its
-            source file before it goes external; this brief is a snapshot, not a script.
+            Nothing is summarized away — each section below is the verbatim source text from the
+            positioning brief behind this page. Re-check any claim against its source file before
+            it goes external; this brief is a snapshot, not a script.
           </Text>
           <CollapsibleGroup type="multiple" hasDividers density="compact">
             {otherSections.map((s) => (

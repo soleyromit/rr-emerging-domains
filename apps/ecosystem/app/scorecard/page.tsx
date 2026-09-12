@@ -6,10 +6,9 @@ import { Heading } from "@astryxdesign/core/Heading";
 import { Banner } from "@astryxdesign/core/Banner";
 import { PageHeader } from "@/components/page-header";
 import { ScorecardChart } from "@/components/charts/scorecard-chart";
-import { ScorecardTable } from "@/components/scorecard-table";
-import { getScorecard, computeWeightedTotals } from "@/lib/content";
-
-const DOMAINS = ["DO", "Pharmacy", "Dentistry", "Medicine"];
+import { ScorecardMatrix } from "@/components/scorecard-matrix";
+import { getScorecard, computeWeightedTotals, scorecardDomains, listDissectionDomains } from "@/lib/content";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 
 export default function ScorecardPage() {
   const scorecard = getScorecard();
@@ -22,8 +21,15 @@ export default function ScorecardPage() {
     );
   }
 
-  const totals = computeWeightedTotals(scorecard);
-  const isPlaceholder = scorecard.criteria.every((c) => DOMAINS.every((d) => (c.scores?.[d] ?? 0) === 0));
+  // Single source of truth for this page's domain list — the table and the placeholder
+  // check both read it, so neither can drift from the data or from each other.
+  const domains = scorecardDomains(scorecard);
+  const totals = computeWeightedTotals(scorecard, domains);
+  const isPlaceholder = scorecard.criteria.every((c) => domains.every((d) => (c.scores?.[d] ?? 0) === 0));
+  // Derived, not assumed: all four scored domains happen to have a dissection manifest
+  // today, but a fifth column could be added to where-to-play.yaml tomorrow and its
+  // header must not link to a map that does not exist.
+  const dissectedSlugs = listDissectionDomains().map((d) => d.slug);
 
   return (
     <Stack gap={0}>
@@ -32,9 +38,11 @@ export default function ScorecardPage() {
           <PageHeader
             eyebrow="Strategy"
             title={
-              scorecard.recommended_beachhead
-                ? `${scorecard.recommended_beachhead} is the recommended beachhead`
-                : "Where-to-play scorecard"
+              scorecard.actual_gtm_target
+                ? `${scorecard.actual_gtm_target} is the confirmed first domain to enter`
+                : scorecard.recommended_beachhead
+                  ? `${scorecard.recommended_beachhead} is the recommended beachhead`
+                  : "Where-to-play scorecard"
             }
             description={
               <>
@@ -45,18 +53,34 @@ export default function ScorecardPage() {
           />
           {isPlaceholder ? (
             <Banner status="warning" title="Scores are still placeholders" description="This view will fill in once the synthesis pass completes." />
-          ) : scorecard.recommended_beachhead ? (
-            <Card variant="pink">
-              <Stack gap={2}>
-                <Text type="label" color="secondary">
-                  Why it wins
-                </Text>
-                <Text type="body" maxLines={3}>
-                  {scorecard.rationale}
-                </Text>
-              </Stack>
-            </Card>
-          ) : null}
+          ) : (
+            <Stack gap={3}>
+              {scorecard.actual_gtm_target ? (
+                <Card variant="blue">
+                  <Stack gap={2}>
+                    <Text type="label" color="secondary">
+                      Confirmed GTM target{scorecard.actual_gtm_target_decided ? ` — ${scorecard.actual_gtm_target_decided}` : ""}
+                    </Text>
+                    <Text type="body" maxLines={6}>
+                      {stripFileCitations(scorecard.actual_gtm_target_rationale)}
+                    </Text>
+                  </Stack>
+                </Card>
+              ) : null}
+              {scorecard.recommended_beachhead ? (
+                <Card variant="pink">
+                  <Stack gap={2}>
+                    <Text type="label" color="secondary">
+                      {scorecard.actual_gtm_target ? "What the scorecard's own math says wins" : "Why it wins"}
+                    </Text>
+                    <Text type="body" maxLines={3}>
+                      {stripFileCitations(scorecard.rationale)}
+                    </Text>
+                  </Stack>
+                </Card>
+              ) : null}
+            </Stack>
+          )}
         </Stack>
       </Section>
 
@@ -71,9 +95,12 @@ export default function ScorecardPage() {
         <Stack gap={3}>
           <Stack gap={1}>
             <Heading level={2}>Scoring detail</Heading>
-            <Text type="supporting">1–5 per criterion per domain, with rationale.</Text>
+            <Text type="supporting">
+              1–5 per criterion per domain, with rationale. Click any score for the weight math and
+              every domain&apos;s rationale on that criterion.
+            </Text>
           </Stack>
-          <ScorecardTable criteria={scorecard.criteria} />
+          <ScorecardMatrix criteria={scorecard.criteria} domains={domains} dissectedSlugs={dissectedSlugs} />
         </Stack>
       </Section>
     </Stack>

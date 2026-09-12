@@ -16,6 +16,128 @@ market:
     - "https://www.aacom.org/become-a-doctor/about-osteopathic-medicine/quick-facts"
     - "https://www.aacom.org/searches/reports/report/applicants-enrollment-and-graduates-1977-78---2023-24"
     - "https://osteopathicfounders.org/osteopathic-medical-school-applications-jump/"
+
+# Numeric, machine-readable sibling to the prose `market:` block above. The two
+# coexist deliberately and neither replaces the other: `market:` holds the cited
+# narrative a reader reads, `market_sizing:` holds the numbers a scorecard
+# criterion or an integrity check can point at. This is the block
+# content/dissection/do.yaml's "market-size" question names as
+# `domains/do.yaml#market_sizing`, alongside `market/programs/do.yaml`.
+#
+# PARTIALLY populated, 2026-09-12 (Phase 3, Task 3.1). Only the counts that fall
+# straight out of the CRM export are filled in: TAM rows, client and churn
+# status, and the SAM arithmetic over them. Everything else — the accredited
+# count, enrollment, ACV, adjacency — is deliberately still null. Those came to
+# Pharmacy from a domain-specific eBook and a domain-expert session, and neither
+# exists for DO; the figures in `market:` above are real but carry only bare
+# URLs, no registered source_id and no per-field as-of date, so copying them down
+# here would turn uncited prose into uncited machine-readable numbers, which is
+# worse, not better.
+market_sizing:
+  as_of: "2026-09-12"          # YYYY-MM-DD — when the numbers below were last set
+  unit: "program"              # the thing being counted in every count below
+  tam:
+    # 57 = the real row count of content/market/programs/do.yaml, counted from
+    # the file. Rows are TEACHING LOCATIONS, not institutions: 14 institutions
+    # repeat across campuses, so 57 rows sit at 36 distinct institutions. Note
+    # this matches neither figure in the `market:` prose above (48 accredited
+    # COMs at 75 teaching locations, per AACOM) — a CRM sheet with its own
+    # coverage is not an accreditor directory. Stated, not reconciled.
+    programs: 57
+    basis: "Every row on the CRM export's DO sheet: 57 teaching locations at 36 institutions, unfiltered — that sheet carries no accreditation-status column."
+    source_id: "crm-export-new-logo-grid-2026"
+  accredited_programs:
+    # Still null, on purpose. The `market:` prose above cites AACOM for "48
+    # accredited colleges ... at 75 teaching locations", but with a bare URL and
+    # no registered source_id, and Task 3.1 did not do the eBook-style sourcing
+    # pass that gave Pharmacy its count. Registering that source is the work that
+    # fills this in — and it will need a variance_note, since 57 CRM rows sit
+    # between AACOM's 48 and 75.
+    count: null
+    qualifier: null            # e.g. "accredited PharmD programs" — stays null
+                               # while accredited_programs.count is null
+    source_id: null
+    variance_note: null        # <=200 soft / 400 hard chars — only when tam and
+                               # accredited_programs genuinely disagree
+  sam:
+    programs: 55
+    basis: "tam.programs minus current_clients.count minus churned_clients.count — every DO row not already won or previously lost. 57 - 2 - 0 = 55."
+    derived_from: ["tam", "current_clients", "churned_clients"]
+  som:
+    programs: null
+    basis: "Not sized — no named target list or win-rate assumption exists yet"
+  enrollment:
+    students: null
+    as_of_year: null
+    trend: null                # growing | stable | declining | recovering | unknown
+    yoy_pct: null
+    source_id: null
+  current_clients:
+    # The 2 rows the DO sheet's Client Y/N column marks "Yes". `named` holds
+    # content/market/programs/do.yaml slugs, not institution names.
+    #
+    # CONFLICT, recorded rather than resolved: the master Logo Grid sheet's own
+    # DO column marks THREE rows "Yes" — Des Moines University (agrees), Noorda
+    # College of Osteopathic Medicine (the DO sheet says "No"), and Arkansas
+    # College of Health Education (a name the DO sheet does not carry, while its
+    # Arkansas COM client row's own grid row marks DO "No"). This count follows
+    # the DO sheet, the domain's own tab. On the grid's reading it would be 3.
+    count: 2
+    named:
+      - "arkansas-college-of-osteopathic-medicine-do"
+      - "des-moines-university-do"
+    source_id: "crm-export-new-logo-grid-2026"
+  churned_clients:
+    # Zero is an observed value, not an unfilled field: the "Previous client"
+    # value the Pharmacy sheet uses never appears on the DO sheet, whose Client
+    # Y/N column holds only "Yes" (2) and "No" (55).
+    count: 0
+    named: []
+    source_id: "crm-export-new-logo-grid-2026"
+  penetration_pct: 3.5         # 2 / 57 * 100 = 3.51, rounded to one decimal
+  acv:
+    value_usd: null
+    basis: "Not sourced — no pricing artifact exists in this repo"
+    confidence: "unknown"      # unknown | low | medium | high
+  revenue_potential_usd: null  # HARD RULE: may only be non-null when
+                               # acv.value_usd is non-null and sourced. A revenue
+                               # number standing on an unsourced ACV is a guess
+                               # wearing a dollar sign
+  adjacency:
+    # Still null, deliberately, even though do.yaml's registry carries the raw
+    # material (33 of its 57 rows list at least one other Exxat discipline on the
+    # same campus). A count here would have to branch on `grid_matched`, and for
+    # DO that boolean is not sufficient on its own: 11 rows matched a Logo Grid
+    # row carrying the Excel error "#N/A" in 35 of its 36 discipline cells (the
+    # 36th is the DO column itself, a real "No", which is excluded by definition
+    # and so rescues nothing), so their empty lists are unknowns wearing the same
+    # shape as the 13 confirmed negatives.
+    # See that file's "#N/A CAVEAT" block. Counting before that is separated
+    # would publish unknowns as confirmed no-cross-sell.
+    claim: null                # <=150 soft / 300 hard chars — one line, sourced.
+                               # The cross-discipline overlap claim, not the case
+                               # for it: evidence goes to source_id
+    cross_discipline_overlap_institutions: null
+    source_id: null
+  confidence: "low"            # low | medium | high — the client/churn counts are
+                               # first-party and exact, but they are ALL that is
+                               # sourced here: no accredited count, no enrollment,
+                               # and the client count itself conflicts between the
+                               # export's two sheets. Not "medium" until one of
+                               # those closes
+
+# Shape only, no content yet: where this domain's programs sit inside an
+# institution and who actually signs. Populated alongside market_sizing in
+# Phase 2/3 — an empty buying_roles list means nobody has researched it, which
+# is a countable state, not a missing field.
+org_structure:
+  typical_parent: null         # <=200 soft / 400 hard chars, once known
+  buying_roles: []             # [{persona_ref, title_in_domain, decision_role, note?}]
+                               # persona_ref  — a content/personas/ file slug
+                               # decision_role — economic-buyer | champion | user
+                               #                 | blocker | influencer
+                               # note          — optional, <=200 soft / 400 hard
+  sources: []
 standards_bodies:
   - name: "COCA"
     type: "institutional accreditor"

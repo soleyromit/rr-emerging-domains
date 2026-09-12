@@ -9,10 +9,14 @@ import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList"
 import { Breadcrumbs, BreadcrumbItem } from "@astryxdesign/core/Breadcrumbs";
 import { Collapsible, CollapsibleGroup } from "@astryxdesign/core/Collapsible";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
+import { Link } from "@astryxdesign/core/Link";
 import { PageHeader } from "@/components/page-header";
 import { JourneyStageSection } from "@/components/journey-stage-section";
 import { SeverityDistributionChart } from "@/components/charts/severity-distribution-chart";
 import { JourneyStepper } from "@/components/charts/journey-stepper";
+import { DisciplineChip } from "@/components/discipline-chip";
+import { matchDisciplineMeta } from "@/lib/discipline-meta";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import { listJourneys, getJourney, getFlowsByStageForJourney } from "@/lib/content";
 
 export function generateStaticParams() {
@@ -80,13 +84,21 @@ export default async function JourneyDetailPage({ params }: { params: Promise<{ 
               <Text type="label" color="secondary">
                 Persona
               </Text>
-              <Text type="body">{journey.persona}</Text>
+              <Text type="body">{stripFileCitations(journey.persona)}</Text>
             </Stack>
           ) : null}
           <Stack direction="horizontal" gap={1.5} wrap="wrap">
-            {(journey.domain_scope ?? []).map((d) => (
-              <Badge key={d} variant="neutral" label={d} />
-            ))}
+            {(journey.domain_scope ?? []).map((d) => {
+              const routeSlug = matchDisciplineMeta(d)?.slug;
+              const chip = <DisciplineChip subject={d} />;
+              return routeSlug ? (
+                <Link key={d} href={`/domains/${routeSlug}`}>
+                  {chip}
+                </Link>
+              ) : (
+                <span key={d}>{chip}</span>
+              );
+            })}
             {hasDisciplineVariance ? (
               <Badge variant="info" label="8 existing disciplines mapped" />
             ) : null}

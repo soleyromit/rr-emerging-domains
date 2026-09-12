@@ -16,6 +16,9 @@ import { CompetitorFeatureDossier } from "@/components/competitor-feature-dossie
 import { CompetitorDepthChart } from "@/components/charts/competitor-depth-chart";
 import { ComparisonCardGrid } from "@/components/comparison-card-grid";
 import { SentenceList, type SentenceListItem } from "@/components/sentence-list";
+import { stripFileCitations } from "@/lib/strip-file-citations";
+import { DisciplineChip } from "@/components/discipline-chip";
+import { matchDisciplineMeta } from "@/lib/discipline-meta";
 import {
   listCompetitors,
   getCompetitor,
@@ -58,6 +61,26 @@ export default async function CompetitorDetailPage({ params }: { params: Promise
             title={competitor.competitor}
             description={competitor.category}
           />
+          {competitor.domains_served?.length ? (
+            <Stack gap={1}>
+              <Text type="label" color="secondary" size="xsm">
+                Compared in
+              </Text>
+              <Stack direction="horizontal" gap={1.5} wrap="wrap">
+                {competitor.domains_served.map((d) => {
+                  const routeSlug = matchDisciplineMeta(d)?.slug;
+                  const chip = <DisciplineChip subject={d} />;
+                  return routeSlug ? (
+                    <Link key={d} href={`/domains/${routeSlug}/competitors`}>
+                      {chip}
+                    </Link>
+                  ) : (
+                    <span key={d}>{chip}</span>
+                  );
+                })}
+              </Stack>
+            </Stack>
+          ) : null}
           <CompetitorCompanyFacts company={competitor.company} />
           <MetadataList columns={2}>
             <MetadataListItem label="Strengths">{competitor.strengths?.length ?? 0}</MetadataListItem>
@@ -131,7 +154,7 @@ export default async function CompetitorDetailPage({ params }: { params: Promise
               </Text>
               {/* DENSITY-OK: one continuous per-competitor argument — CONTENT-DENSITY.md's
                   "genuinely one continuous argument" exception, shown in full */}
-              <Text type="body">{competitor.exxat_opportunity}</Text>
+              <Text type="body">{stripFileCitations(competitor.exxat_opportunity)}</Text>
             </Stack>
           </Card>
         </Section>
@@ -146,7 +169,7 @@ export default async function CompetitorDetailPage({ params }: { params: Promise
                   Retention anchor
                 </Text>
                 <Text type="body" size="sm">
-                  {competitor.retention_anchor}
+                  {stripFileCitations(competitor.retention_anchor)}
                 </Text>
               </Stack>
             ) : null}
@@ -181,7 +204,7 @@ export default async function CompetitorDetailPage({ params }: { params: Promise
                           </Link>
                         ) : (
                           <Text type="supporting" size="sm">
-                            {s}
+                            {stripFileCitations(s)}
                           </Text>
                         )
                       }

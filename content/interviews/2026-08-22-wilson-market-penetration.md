@@ -1,3 +1,22 @@
+---
+id: "interview-wilson-market-penetration-2026-08-22"
+type: "internal-planning"
+date: "2026-08-22"
+title: "Exxat market penetration strategy — university targeting, competitors, product gaps"
+participants:
+  - { name: "Romit Soley", org: "Exxat", role: "Research" }
+domains: ["Dentistry", "Pharmacy"]
+programs: []
+recording:
+  platform: "granola"
+  external_id: "297baae2-644d-4bd1-89cc-9d802e7a6d6c"
+access: "internal"
+evidence_status: "verbatim-cleaned"
+claims_are_speaker_opinion: true
+topics: ["market-penetration", "competitors", "discipline-prioritization", "research-method"]
+supersedes: []
+---
+
 # Exxat market penetration strategy — university targeting, competitor analysis, product gaps
 
 **Date:** 2026-08-22

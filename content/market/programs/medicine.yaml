@@ -1,0 +1,2988 @@
+# Medicine (MD) — the per-program ground-truth registry under
+# content/domains/medicine.yaml's market_sizing block. Level 1: every row cites
+# Level 0 (the CRM export below) and nothing above it. See
+# content/market/programs/_TEMPLATE.yaml for the field-by-field schema and
+# content/market/programs/do.yaml and dentistry.yaml for the two sibling files
+# this one follows.
+#
+# NOTE ON THE `domain:` VALUE BELOW. It is "Medicine", the app label — NOT "MD",
+# the raw value content/domains/medicine.yaml's own `domain:` field carries. This
+# family is the one that uses the label (check_content_density.py's
+# check_market_programs_integrity validates it against DOMAIN_LABELS); the
+# dissection manifest next door, content/dissection/medicine.yaml, is the family
+# that uses the raw "MD". DO and Dentistry never had to notice the difference
+# because their raw value and their label are the same string. Medicine's are
+# not, and the two files disagreeing on purpose is correct here.
+#
+# HOW THIS FILE WAS BUILT (2026-09-12), so a reader can re-derive it rather than
+# trust it:
+#   * Rows are the "MD" sheet of the new-logo-grid export, verbatim and in sheet
+#     order. Its header sits on row 2, not row 1 (the same quirk the Pharmacy, DO
+#     and Dentistry sheets have), and there are 162 data rows: sheet rows 3-165,
+#     with row 6 blank. `locator` on each row is the sheet cell its name came
+#     from.
+#   * THE SHEET IS TWO BLOCKS, not one list. Rows 3-5 are three hand-added rows,
+#     all three marked Client "Yes" and all three missing the accreditation and
+#     city cells the rest of the sheet carries. Row 6 is blank. Rows 7-165 are a
+#     pasted LCME directory — 159 rows, sorted A-to-Z by state then school, with
+#     the directory's own URL sitting in the header at MD!N2
+#     (lcme.org/directory/accredited-u-s-programs/).
+#   * SO THE ROW COUNT IS 162 BUT THE SCHOOL COUNT IS 160, and the two-row gap is
+#     not rounding. Of the three hand-added rows:
+#       - MD!A3 Thomas F. Frist, Jr. College of Medicine at Belmont University is
+#         a real LCME school (Preliminary, 2023) that the pasted directory block
+#         does NOT contain. It adds one: 159 + 1 = 160.
+#       - MD!A5 University of North Carolina at Chapel Hill is the SAME school as
+#         MD!A110 (University of North Carolina School of Medicine, city Chapel
+#         Hill) in the directory block. It adds none — and the two rows
+#         contradict each other on Client Y/N. See the conflicts section below.
+#       - MD!A4 "University of Western States - NMD" is NOT AN MD PROGRAM. The
+#         sheet's own suffix says NMD (naturopathic medicine); University of
+#         Western States is a Portland, OR chiropractic and naturopathic
+#         institution with no LCME accreditation, and the master Logo Grid's row
+#         for it (LG!1291) marks only OT and Chiro. It is carried here because
+#         the sheet carries it, flagged in its own `notes`, and it is one of the
+#         three rows the client count rests on.
+#     160 is what content/domains/medicine.yaml's own `market:` prose already
+#     says ("159-161 LCME-accredited MD-granting medical schools ... ~160 as of
+#     the 2025-2026 cycle"). Unlike Dentistry's 968-vs-77, the CRM sheet and the
+#     prose anchor here agree to within a school; the 162 is the artifact, and
+#     the two extra rows are named above rather than averaged away.
+#   * IT IS ALSO NOT TRUNCATED. The directory block holds rows for 46 distinct
+#     jurisdictions. The six with no row — AK, DE, ID, ME, MT, WY — are the six
+#     that have no LCME-accredited MD school at all, so 46 is the whole country
+#     plus DC and Puerto Rico, not a filtered slice. (Dentistry's equivalent
+#     block was missing 17 states; this one is missing none.) One caution for
+#     anyone parsing the State column: it holds full state names on 161 rows and
+#     the bare abbreviation "NC" on MD!A5, so its 47 raw values are 46 places.
+#   * ROWS ARE SCHOOLS, NOT CAMPUSES — the opposite of DO, whose 57 rows were 57
+#     teaching locations at 36 institutions. Here the 162 rows sit at 156
+#     distinct `institution` values, and the six repeats are six pairs of
+#     SEPARATELY LCME-ACCREDITED programs at one parent, not one program's
+#     campuses: University of Arizona (Phoenix, Tucson), Rutgers (New Jersey
+#     Medical School, Robert Wood Johnson), NYU (Grossman, Grossman Long
+#     Island), University of South Carolina (Columbia, Greenville), Texas Tech
+#     University Health Sciences Center (Paul L. Foster, Lubbock), and University
+#     of North Carolina — that last one being the duplicate described above, not
+#     a second program. Deduplicating on `institution` gives 156; the real
+#     distinct-school count is 156 as well, because the UNC pair is one school.
+#   * The sheet has NO Discipline-Code-equivalent column. Dentistry's did, which
+#     is how that file could say only 45 of its 968 rows were predoctoral. Here
+#     there is nothing to separate program types by, because with the single
+#     exception of MD!A4 there is only one program type on the sheet: the
+#     directory block is LCME MD-granting schools and nothing else. No GME or
+#     residency programs are listed as rows. (71 of the 162 rows DO carry a
+#     contact title naming a residency role, mostly internal-medicine residency
+#     coordinators, so the sheet's contacts lean GME even though its rows do not
+#     — but that is a contact column, not a row, and no contact data is mirrored
+#     here.)
+#   * institution / program_name: the sheet gives ONE name string per row. It is
+#     split by hand, per row, into the institution and the medical-school
+#     designation it embeds — prefixed ("University of Alabama at Birmingham" +
+#     "Marnix E. Heersink School of Medicine"), suffixed ("University of South
+#     Alabama" + "Frederick P. Whiddon College of Medicine"), or "X at Y"
+#     ("Quinnipiac University" + "Frank H. Netter MD School of Medicine"). Where
+#     the whole name IS the school and carries no separable institution
+#     ("Harvard Medical School", "Albany Medical College", "Medical College of
+#     Wisconsin"), program_name is null and the full name stays in `institution`;
+#     that is the case on 16 rows. The split is never regex-derived and never
+#     renames: where the sheet writes "UCLA", "NYU", "TCU" or "UNLV", those are
+#     what `institution` holds, because expanding them would be this file
+#     inventing a name the source does not use.
+#   * slug is "{institution-slug}-md" — "md", the domain file's own raw `domain:`
+#     value and this sheet's own name, not the "medicine" file slug. On the six
+#     institutions that appear twice the city is appended
+#     ("{institution-slug}-{city}-md") since a bare institution slug would
+#     collide; those rows also carry the campus in `notes`. The two UNC rows are
+#     the exception: MD!A5 has no City cell at all, so it keeps the bare
+#     "university-of-north-carolina-md" and MD!A110 takes
+#     "university-of-north-carolina-chapel-hill-md".
+#   * accreditation_status IS populated here, on all 162 rows — the first of the
+#     three domains extracted in this phase where that was possible. The MD sheet
+#     carries a real Accreditation Status column (column J), unlike the DO sheet,
+#     which had only a year. LCME's own ladder is Applicant -> Candidate ->
+#     Preliminary -> Provisional -> Full, and this schema has two pre-accredited
+#     values, so the mapping compresses that ladder order-preservingly:
+#       Full (150 rows)                    -> accredited
+#       Full, on probation (2)             -> probation
+#       Provisional, on probation (1)      -> probation
+#       Provisional (2)                    -> candidate
+#       Preliminary (5)                    -> precandidate
+#       blank (2: MD!A4, MD!A5)            -> unknown
+#     The verbatim sheet value always stays one cell from each row's cited
+#     locator, at MD!J{row}. The adjacent "Initial Year of Accreditation" column
+#     (K, populated on 160 rows — every row but MD!A4 and MD!A5 — ranging
+#     "On or prior to 1942" to 2025) is a
+#     year, not a status, and this schema has no field for it, so it is
+#     deliberately NOT mirrored — same call do.yaml made about its own year
+#     column.
+#   * class_size is null on all 162 rows and exxat_since is null on all 162 — the
+#     MD sheet carries neither column. Contact columns it DOES carry (Contact
+#     Name, Title, Contact Email, Source Link, Next Survey Date) are deliberately
+#     not mirrored. See pii_policy.
+#   * exxat_status maps the sheet's Client Y/N column: Yes -> client (3 rows),
+#     No -> not-tracked (159). The value "Previous client" that the Pharmacy and
+#     Dentistry sheets use never appears on this sheet, so Medicine has ZERO
+#     churned rows — an observed absence, not an unchecked field. A plain "No" is
+#     NOT read as `prospect`; the sheet carries no signal distinguishing an
+#     actively prospected school from a cold one.
+#   * CONFLICTS, recorded rather than resolved. There are three, and they are of
+#     two different kinds.
+#     INTRA-SHEET (1). MD!A5 marks the University of North Carolina at Chapel
+#     Hill a client; MD!A110, the same school in the directory block, marks it
+#     "No". Both rows are carried, each follows its own cell, and both say so in
+#     `notes`.
+#     CROSS-SHEET (2), against the master Logo Grid's own "MD" column (column 32,
+#     AF), which across its 2751 data rows marks exactly 3 rows "Yes":
+#       - LG!456, "Belmont University" (TN) — agrees with this sheet's MD!A3
+#         client row. (The grid ALSO holds an appended row LG!2737 for the same
+#         school under its medical-school name, marking MD "No" across 35 "#N/A"
+#         cells; the evaluated row was used.)
+#       - LG!494, "University of North Carolina at Chapel Hill" (NC) — agrees
+#         with MD!A5 and contradicts MD!A110. The grid therefore takes a side in
+#         the intra-sheet conflict above, and it is the client side.
+#       - LG!1952, "Charles R. Drew University of Medicine and Science" (CA) —
+#         but THIS sheet's MD!A15 row for that school says "No". A genuine
+#         cross-sheet disagreement, the same shape DO's Noorda row had.
+#     And in the other direction: MD!A4's University of Western States, a client
+#     on this sheet, has a Logo Grid row (LG!1291) whose MD cell is "-", i.e.
+#     never evaluated — so the grid does not contradict it, it simply does not
+#     know about it.
+#     exxat_status follows the MD sheet, the domain's own tab, on every row; all
+#     four affected rows say so in `notes`. On the grid's reading the client set
+#     would be Belmont, UNC and Charles R. Drew — still 3, but a different 3, and
+#     all three of those are real LCME schools where one of this sheet's three is
+#     not. A later pass with CRM access should settle it.
+#   * other_disciplines_on_campus lists the disciplines the master "Logo Grid"
+#     sheet marks "Yes" (i.e. already an Exxat client) for the SAME institution,
+#     MD itself excluded. A discipline the grid marks "No", "N/A" or "-" is not
+#     listed. Discipline labels follow Task 2.1's mapping: the grid's headers are
+#     rewritten to this repo's canonical domain labels where one exists (PT ->
+#     Physical Therapy, OT -> Occupational Therapy, PA -> Physician Assistant,
+#     NURS -> Nursing, SLP -> Speech-Language Pathology, SW -> Social Work);
+#     columns with no canonical label keep the grid's own header verbatim (CCS,
+#     AT, PTA, NUT, ...) rather than being expanded into a guess. No row's
+#     matched grid row marks the DO column "Yes", so no Medicine row carries an
+#     osteopathic cross-sell.
+#   * THE GRID'S APPENDED MEDICAL-SCHOOL BLOCK — the single most important thing
+#     to know before reading any empty list below. The Logo Grid has a tail block
+#     at LG!2483-LG!2746 holding 66 rows that each carry a medical-school name,
+#     "No" in the MD column, and the literal Excel error "#N/A" in 30 to 35 of
+#     their 36 discipline columns — an unevaluated second paste of the same
+#     directory, giving most MD schools a SECOND grid row under their
+#     medical-school name. This is exactly the trap do.yaml documented for its
+#     appended COM rows. Matching therefore used do.yaml's ladder, by hand,
+#     recorded in `notes` wherever the answer is not the obvious one: (1) a grid
+#     row naming this program's own campus/city wins; (2) else a row whose State
+#     agrees with the program's State; (3) else the row with evaluated discipline
+#     cells and the most information. Rule (3) is what does the work here: only
+#     7 of the 162 rows ended on one of those 66 unevaluated twins, and the
+#     other 155 sit on a real, evaluated grid row.
+#   * THE #N/A CAVEAT — read before aggregating. All 162 rows are
+#     grid_matched: true; not one MD program is missing from the Logo Grid. But
+#     for six of them no evaluated row exists at all, so they matched an appended
+#     row that is "#N/A" in 33-35 of 36 columns: Alice L. Walton, California
+#     University of Science and Medicine, Kaiser Permanente Bernard J. Tyson,
+#     Mayo Clinic, Universidad Central del Caribe, and Baylor College of
+#     Medicine (which is independent of Baylor University, so that university's
+#     evaluated row is not its). For those six the empty
+#     other_disciplines_on_campus list is UNKNOWN, exactly what grid_matched
+#     exists to keep apart, and the boolean cannot say so because a row WAS
+#     found. So: of the 51 rows with an empty list, 45 are confirmed negatives
+#     and 6 are unknowns, and `grid_matched` alone will not separate them. Every
+#     one of the 6 says so in `notes`, but prose is human context, not a
+#     machine-checkable flag — an aggregate that needs the distinction must
+#     exclude these 6 locators explicitly: MD!A11, A14, A17, A75, A130, A142.
+#     A seventh row, MD!A139 (University of Tennessee Health Science Center),
+#     matched a row that is "#N/A" in 30 of 36 columns but holds 5 real "Yes"
+#     cells; its list is non-empty and real, but may be short. It is called out
+#     separately because it is not the same failure mode.
+#   * region comes only from the matched grid row's Region column, and only when
+#     that grid row's own State agrees with the program's State. 11 rows have a
+#     null region: the six #N/A rows above plus MD!A139 have no Region value at
+#     all on their appended grid rows; the grid's three DC rows (MD!A30, A31,
+#     A32) carry the literal "#N/A" in the Region column itself; and MD!A15's
+#     matched row has the string "Chatham University" sitting in its Region cell,
+#     a corrupted row the grid never fixed. None of those is mirrored as a
+#     region.
+#   * incumbent_vendor is "unknown" on all 162 rows and incumbent_evidence is
+#     null to match. Nothing in this export says which competitor any individual
+#     program runs; per-program incumbency is separate research, and "unknown" is
+#     a real, countable answer. Note that Medicine has more named incumbents in
+#     content/competitors/ than any other domain in this repo (nine — see
+#     content/dissection/medicine.yaml), which makes the absence of per-program
+#     incumbency data here a bigger gap for Medicine than it was for DO or
+#     Dentistry, not a smaller one.
+#   * This file does NOT carry product gaps, competitor differentiation or a
+#     feature matrix for Medicine. Those exist for Pharmacy because a
+#     domain-expert session was held (2026-09-04); no such session exists for
+#     Medicine, and content/dissection/medicine.yaml records that absence as the
+#     gap it is.
+
+domain: "Medicine"
+
+source_of_record:
+  source_id: "crm-export-new-logo-grid-2026"
+  sheet: "MD"
+  extracted: "2026-09-12"
+  row_count: 162
+  pii_policy: >
+    Contact names/emails/phone numbers are deliberately NOT mirrored here. The
+    source spreadsheet remains the system of record for contact data; this file
+    holds counts, status, and structure only so content/ stays shareable.
+
+programs:
+  - slug: "belmont-university-md"
+    institution: "Belmont University"
+    program_name: "Thomas F. Frist, Jr. College of Medicine"
+    state: "TN"
+    region: "South"
+    accreditation_status: "precandidate"
+    class_size: null
+    exxat_status: "client"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Pharmacy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the grid's evaluated 'Belmont University' row, whose MD cell is 'Yes'; its appended 'Frist College' row says 'No' across 35 '#N/A' cells."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A3"
+  - slug: "university-of-western-states-md"
+    institution: "University of Western States"
+    program_name: null
+    state: "OR"
+    region: "West"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "client"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Chiro", "Occupational Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "NOT AN LCME MD SCHOOL: sheet's own suffix is '- NMD' (naturopathic); the grid row marks only OT and Chiro, and its MD cell is '-'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A4"
+  - slug: "university-of-north-carolina-md"
+    institution: "University of North Carolina"
+    program_name: null
+    state: "NC"
+    region: "South"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "client"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Hand-added client row; sheet names it 'University of North Carolina at Chapel Hill'. SAME INSTITUTION as MD!A110, which the sheet marks 'No'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A5"
+  - slug: "university-of-alabama-at-birmingham-md"
+    institution: "University of Alabama at Birmingham"
+    program_name: "Marnix E. Heersink School of Medicine"
+    state: "AL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A7"
+  - slug: "university-of-south-alabama-md"
+    institution: "University of South Alabama"
+    program_name: "Frederick P. Whiddon College of Medicine"
+    state: "AL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A8"
+  - slug: "university-of-arizona-phoenix-md"
+    institution: "University of Arizona"
+    program_name: "College of Medicine - Phoenix"
+    state: "AZ"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Phoenix, AZ. Matched the evaluated 'University of Arizona' row; the grid's own Phoenix row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A9"
+  - slug: "university-of-arizona-tucson-md"
+    institution: "University of Arizona"
+    program_name: "College of Medicine - Tucson"
+    state: "AZ"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Tucson, AZ. Matched the evaluated 'University of Arizona' row; the grid's own Tucson row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A10"
+  - slug: "alice-l-walton-school-of-medicine-md"
+    institution: "Alice L. Walton School of Medicine"
+    program_name: null
+    state: "AR"
+    region: null
+    accreditation_status: "precandidate"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched grid row's discipline cells are '#N/A' in 35 of 36 columns — unevaluated, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A11"
+  - slug: "university-of-arkansas-for-medical-sciences-md"
+    institution: "University of Arkansas for Medical Sciences"
+    program_name: "College of Medicine"
+    state: "AR"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the grid's evaluated 'University of Arkansas for Medical Science' row rather than its appended all-'#N/A' duplicate."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A12"
+  - slug: "california-northstate-university-md"
+    institution: "California Northstate University"
+    program_name: "College of Medicine"
+    state: "CA"
+    region: "West"
+    accreditation_status: "probation"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A13"
+  - slug: "california-university-of-science-and-medicine-md"
+    institution: "California University of Science and Medicine"
+    program_name: "School of Medicine"
+    state: "CA"
+    region: null
+    accreditation_status: "candidate"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched grid row's discipline cells are '#N/A' in 35 of 36 columns — unevaluated, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A14"
+  - slug: "charles-r-drew-university-of-medicine-and-science-md"
+    institution: "Charles R. Drew University of Medicine and Science"
+    program_name: "College of Medicine"
+    state: "CA"
+    region: null
+    accreditation_status: "precandidate"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Genetic Counseling", "Nursing", "Physician Assistant", "Public Health", "Radiation Tech"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "CROSS-SHEET CONFLICT: the grid marks this school MD 'Yes'; this sheet's Client Y/N says 'No'. exxat_status follows this sheet. Region cell is corrupt."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A15"
+  - slug: "ucla-md"
+    institution: "UCLA"
+    program_name: "David Geffen School of Medicine"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the grid's evaluated 'University of California - Los Angeles' row; its two UCLA-named rows are '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A16"
+  - slug: "kaiser-permanente-bernard-j-tyson-school-of-medicine-md"
+    institution: "Kaiser Permanente Bernard J. Tyson School of Medicine"
+    program_name: null
+    state: "CA"
+    region: null
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched grid row's discipline cells are '#N/A' in 35 of 36 columns — unevaluated, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A17"
+  - slug: "university-of-southern-california-md"
+    institution: "University of Southern California"
+    program_name: "Keck School of Medicine"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid files a second 'University of Southern California' row under SC, not CA; the state disagreement kept it out."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A18"
+  - slug: "loma-linda-university-md"
+    institution: "Loma Linda University"
+    program_name: "School of Medicine"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "PTA", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'Loma Linda University' row; the grid's separate '- School of Medicine' row has no Yes columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A19"
+  - slug: "stanford-university-md"
+    institution: "Stanford University"
+    program_name: "School of Medicine"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A20"
+  - slug: "university-of-california-davis-md"
+    institution: "University of California, Davis"
+    program_name: "School of Medicine"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A21"
+  - slug: "university-of-california-irvine-md"
+    institution: "University of California, Irvine"
+    program_name: "School of Medicine"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A22"
+  - slug: "university-of-california-riverside-md"
+    institution: "University of California, Riverside"
+    program_name: "School of Medicine"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A23"
+  - slug: "university-of-california-san-diego-md"
+    institution: "University of California, San Diego"
+    program_name: "School of Medicine"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A24"
+  - slug: "university-of-california-san-francisco-md"
+    institution: "University of California, San Francisco"
+    program_name: "School of Medicine"
+    state: "CA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["NUT", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A25"
+  - slug: "university-of-colorado-md"
+    institution: "University of Colorado"
+    program_name: "School of Medicine"
+    state: "CO"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'University of Colorado, Denver' row; the grid's Anschutz and 'School of Medicine' rows are 34-of-36 and 35-of-36 '#N/A'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A26"
+  - slug: "quinnipiac-university-md"
+    institution: "Quinnipiac University"
+    program_name: "Frank H. Netter MD School of Medicine"
+    state: "CT"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Nursing", "Occupational Therapy", "Pathology Assistant", "Perfusion", "Physical Therapy", "Physician Assistant", "Social Work"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A27"
+  - slug: "university-of-connecticut-md"
+    institution: "University of Connecticut"
+    program_name: "School of Medicine"
+    state: "CT"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A28"
+  - slug: "yale-school-of-medicine-md"
+    institution: "Yale School of Medicine"
+    program_name: null
+    state: "CT"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'Yale University' row; the grid's 'Yale School of Medicine' row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A29"
+  - slug: "george-washington-university-md"
+    institution: "George Washington University"
+    program_name: "School of Medicine and Health Sciences"
+    state: "DC"
+    region: null
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Counseling", "Occupational Therapy", "Physical Therapy", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid row's Region cell is the literal '#N/A', so region is dropped rather than mirrored."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A30"
+  - slug: "georgetown-university-md"
+    institution: "Georgetown University"
+    program_name: "School of Medicine"
+    state: "DC"
+    region: null
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid row's Region cell is the literal '#N/A', so region is dropped rather than mirrored."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A31"
+  - slug: "howard-university-md"
+    institution: "Howard University"
+    program_name: "College of Medicine"
+    state: "DC"
+    region: null
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid row's Region cell is the literal '#N/A', so region is dropped rather than mirrored."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A32"
+  - slug: "florida-atlantic-university-md"
+    institution: "Florida Atlantic University"
+    program_name: "Charles E. Schmidt College of Medicine"
+    state: "FL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Social Work"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A33"
+  - slug: "florida-international-university-md"
+    institution: "Florida International University"
+    program_name: "Herbert Wertheim College of Medicine"
+    state: "FL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Social Work"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A34"
+  - slug: "florida-state-university-md"
+    institution: "Florida State University"
+    program_name: "College of Medicine"
+    state: "FL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physician Assistant", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A35"
+  - slug: "nova-southeastern-university-md"
+    institution: "Nova Southeastern University"
+    program_name: "Dr. Kiran C. Patel College of Allopathic Medicine"
+    state: "FL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Fort Lauderdale, FL. Matched the grid's own Fort Lauderdale row; NSU has five campus rows in the grid."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A36"
+  - slug: "university-of-central-florida-md"
+    institution: "University of Central Florida"
+    program_name: "College of Medicine"
+    state: "FL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "Physical Therapy", "Social Work", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A37"
+  - slug: "university-of-florida-md"
+    institution: "University of Florida"
+    program_name: "College of Medicine"
+    state: "FL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A38"
+  - slug: "university-of-miami-md"
+    institution: "University of Miami"
+    program_name: "Leonard M. Miller School of Medicine"
+    state: "FL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A39"
+  - slug: "usf-health-md"
+    institution: "USF Health"
+    program_name: "Morsani College of Medicine"
+    state: "FL"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A40"
+  - slug: "emory-university-md"
+    institution: "Emory University"
+    program_name: "School of Medicine"
+    state: "GA"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A41"
+  - slug: "augusta-university-md"
+    institution: "Augusta University"
+    program_name: "Medical College of Georgia"
+    state: "GA"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid also carries this school under its former name 'Georgia Regents University', with no Yes columns; counted once."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A42"
+  - slug: "mercer-university-md"
+    institution: "Mercer University"
+    program_name: "School of Medicine"
+    state: "GA"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A43"
+  - slug: "morehouse-school-of-medicine-md"
+    institution: "Morehouse School of Medicine"
+    program_name: null
+    state: "GA"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A44"
+  - slug: "university-of-hawaii-at-manoa-md"
+    institution: "University of Hawaii at Manoa"
+    program_name: "John A. Burns School of Medicine"
+    state: "HI"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Public Health", "Social Work"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A45"
+  - slug: "carle-illinois-college-of-medicine-md"
+    institution: "Carle Illinois College of Medicine"
+    program_name: null
+    state: "IL"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'University of Illinois at Urbana-Champaign' row — this college's own campus; the grid's Carle row is 35-of-36 '#N/A'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A46"
+  - slug: "rosalind-franklin-university-of-medicine-and-science-md"
+    institution: "Rosalind Franklin University of Medicine and Science"
+    program_name: "Chicago Medical School"
+    state: "IL"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Pathology Assistant", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A47"
+  - slug: "loyola-university-chicago-md"
+    institution: "Loyola University Chicago"
+    program_name: "Stritch School of Medicine"
+    state: "IL"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'Loyola University of Chicago' row; the grid's Stritch-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A48"
+  - slug: "northwestern-university-md"
+    institution: "Northwestern University"
+    program_name: "Feinberg School of Medicine"
+    state: "IL"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the grid's evaluated row under this school's former name, 'Northwestern University Medical School'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A49"
+  - slug: "rush-university-medical-center-md"
+    institution: "Rush University Medical Center"
+    program_name: "Rush Medical College"
+    state: "IL"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Nursing", "Physician Assistant", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A50"
+  - slug: "southern-illinois-university-md"
+    institution: "Southern Illinois University"
+    program_name: "School of Medicine"
+    state: "IL"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid has no Springfield or 'School of Medicine' row for SIU; disciplines come from its Carbondale campus row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A51"
+  - slug: "university-of-chicago-md"
+    institution: "University of Chicago"
+    program_name: "Division of the Biological Sciences, The Pritzker School of Medicine"
+    state: "IL"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'University of Chicago' row; the grid's Pritzker-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A52"
+  - slug: "university-of-illinois-md"
+    institution: "University of Illinois"
+    program_name: "College of Medicine"
+    state: "IL"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Chicago, IL. Matched the evaluated 'University of Illinois at Chicago' row, this program's own campus."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A53"
+  - slug: "indiana-university-md"
+    institution: "Indiana University"
+    program_name: "School of Medicine"
+    state: "IN"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Indianapolis, IN. Matched the evaluated IUPUI row; the grid's two IU School of Medicine rows are 33- and 35-of-36 '#N/A'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A54"
+  - slug: "university-of-iowa-md"
+    institution: "University of Iowa"
+    program_name: "Roy J. and Lucille A. Carver College of Medicine"
+    state: "IA"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A55"
+  - slug: "university-of-kansas-md"
+    institution: "University of Kansas"
+    program_name: "School of Medicine"
+    state: "KS"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "Counseling", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A56"
+  - slug: "university-of-kentucky-md"
+    institution: "University of Kentucky"
+    program_name: "College of Medicine"
+    state: "KY"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A57"
+  - slug: "university-of-louisville-md"
+    institution: "University of Louisville"
+    program_name: "School of Medicine"
+    state: "KY"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A58"
+  - slug: "louisiana-state-university-md"
+    institution: "Louisiana State University"
+    program_name: "School of Medicine in Shreveport"
+    state: "LA"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Shreveport, LA. Matched the grid's own Shreveport row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A59"
+  - slug: "lsu-health-sciences-center-md"
+    institution: "LSU Health Sciences Center"
+    program_name: "School of Medicine in New Orleans"
+    state: "LA"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Audiology", "Counseling", "MLSB", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: New Orleans, LA. Matched the evaluated 'Louisiana State University Health Sciences Center' row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A60"
+  - slug: "tulane-university-md"
+    institution: "Tulane University"
+    program_name: "School of Medicine"
+    state: "LA"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A61"
+  - slug: "johns-hopkins-university-md"
+    institution: "Johns Hopkins University"
+    program_name: "School of Medicine"
+    state: "MD"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A62"
+  - slug: "uniformed-services-university-of-the-health-sciences-md"
+    institution: "Uniformed Services University of the Health Sciences"
+    program_name: "F. Edward Hébert School of Medicine"
+    state: "MD"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "The only name on this sheet carrying a non-ASCII character; the accent is reproduced verbatim rather than folded."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A63"
+  - slug: "university-of-maryland-md"
+    institution: "University of Maryland"
+    program_name: "School of Medicine"
+    state: "MD"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Nursing", "Pharmacy", "Physician Assistant", "Social Work"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Baltimore, MD. Matched the campus row 'University of Maryland, Baltimore'; the grid's 'school of medicine' row has no Yes columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A64"
+  - slug: "boston-university-md"
+    institution: "Boston University"
+    program_name: "Aram V. Chobanian & Edward Avedisian School of Medicine"
+    state: "MA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["NUT", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the grid's evaluated row under this school's former name, 'Boston University School of Medicine'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A65"
+  - slug: "harvard-medical-school-md"
+    institution: "Harvard Medical School"
+    program_name: null
+    state: "MA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'Harvard University' row; the grid's 'Harvard Medical School' row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A66"
+  - slug: "tufts-university-md"
+    institution: "Tufts University"
+    program_name: "School of Medicine"
+    state: "MA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A67"
+  - slug: "university-of-massachusetts-md"
+    institution: "University of Massachusetts"
+    program_name: "T.H. Chan School of Medicine"
+    state: "MA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Worcester, MA. Matched the grid's own Worcester row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A68"
+  - slug: "central-michigan-university-md"
+    institution: "Central Michigan University"
+    program_name: "College of Medicine"
+    state: "MI"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A69"
+  - slug: "michigan-state-university-md"
+    institution: "Michigan State University"
+    program_name: "College of Human Medicine"
+    state: "MI"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A70"
+  - slug: "oakland-university-md"
+    institution: "Oakland University"
+    program_name: "William Beaumont School of Medicine"
+    state: "MI"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A71"
+  - slug: "university-of-michigan-md"
+    institution: "University of Michigan"
+    program_name: "Medical School"
+    state: "MI"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Ann Arbor, MI. Matched the grid's own Ann Arbor row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A72"
+  - slug: "wayne-state-university-md"
+    institution: "Wayne State University"
+    program_name: "School of Medicine"
+    state: "MI"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Counseling", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Teacher Education"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A73"
+  - slug: "western-michigan-university-md"
+    institution: "Western Michigan University"
+    program_name: "Homer Stryker M.D. School of Medicine"
+    state: "MI"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant", "Public Health", "Social Work", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A74"
+  - slug: "mayo-clinic-md"
+    institution: "Mayo Clinic"
+    program_name: "Alix School of Medicine"
+    state: "MN"
+    region: null
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched 'Mayo Clinic School of Health Sciences', the grid's only Minnesota Mayo row; it is '#N/A' in 33 of 36 columns, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A75"
+  - slug: "university-of-minnesota-md"
+    institution: "University of Minnesota"
+    program_name: "Medical School"
+    state: "MN"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Medical Laboratory Science", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A76"
+  - slug: "university-of-mississippi-md"
+    institution: "University of Mississippi"
+    program_name: "School of Medicine"
+    state: "MS"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Jackson, MS. Matched 'University of Mississippi Medical Center', the Jackson campus this school sits on."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A77"
+  - slug: "saint-louis-university-md"
+    institution: "Saint Louis University"
+    program_name: "School of Medicine"
+    state: "MO"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "MLSB", "NUT", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Radiation Therapy", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A78"
+  - slug: "university-of-missouri-columbia-md"
+    institution: "University of Missouri-Columbia"
+    program_name: "School of Medicine"
+    state: "MO"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'University of Missouri' row; the grid's Columbia School of Medicine row is '#N/A' in 34 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A79"
+  - slug: "university-of-missouri-kansas-city-md"
+    institution: "University of Missouri-Kansas City"
+    program_name: "School of Medicine"
+    state: "MO"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A80"
+  - slug: "washington-university-in-st-louis-md"
+    institution: "Washington University in St. Louis"
+    program_name: "School of Medicine"
+    state: "MO"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A81"
+  - slug: "creighton-university-md"
+    institution: "Creighton University"
+    program_name: "School of Medicine"
+    state: "NE"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A82"
+  - slug: "university-of-nebraska-md"
+    institution: "University of Nebraska"
+    program_name: "College of Medicine"
+    state: "NE"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Omaha, NE. Matched 'University of Nebraska Medical Center', the Omaha campus this college sits on."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A83"
+  - slug: "unlv-md"
+    institution: "UNLV"
+    program_name: "Kirk Kerkorian School of Medicine"
+    state: "NV"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'University of Nevada, Las Vegas' row; the grid's Kerkorian-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A84"
+  - slug: "roseman-university-md"
+    institution: "Roseman University"
+    program_name: "College of Medicine"
+    state: "NV"
+    region: "West"
+    accreditation_status: "precandidate"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A85"
+  - slug: "university-of-nevada-reno-md"
+    institution: "University of Nevada, Reno"
+    program_name: "School of Medicine"
+    state: "NV"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A86"
+  - slug: "dartmouth-md"
+    institution: "Dartmouth"
+    program_name: "Geisel School of Medicine"
+    state: "NH"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'Dartmouth College' row; the grid's Geisel-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A87"
+  - slug: "rowan-university-md"
+    institution: "Rowan University"
+    program_name: "Cooper Medical School"
+    state: "NJ"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid's only Rowan University row is its School of Osteopathic Medicine, a different program; disciplines are borrowed from it."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A88"
+  - slug: "hackensack-meridian-school-of-medicine-md"
+    institution: "Hackensack Meridian School of Medicine"
+    program_name: null
+    state: "NJ"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A89"
+  - slug: "rutgers-newark-md"
+    institution: "Rutgers"
+    program_name: "New Jersey Medical School"
+    state: "NJ"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "OTA", "Occupational Therapy", "Physical Therapy", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Newark, NJ. Matched the evaluated 'Rutgers, The State University of New Jersey' row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A90"
+  - slug: "rutgers-piscataway-md"
+    institution: "Rutgers"
+    program_name: "Robert Wood Johnson Medical School"
+    state: "NJ"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "OTA", "Occupational Therapy", "Physical Therapy", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Piscataway, NJ. Matched the evaluated Rutgers university row; the grid's RWJ-named row is 35-of-36 '#N/A'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A91"
+  - slug: "university-of-new-mexico-md"
+    institution: "University of New Mexico"
+    program_name: "School of Medicine"
+    state: "NM"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Social Work"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A92"
+  - slug: "albany-medical-college-md"
+    institution: "Albany Medical College"
+    program_name: null
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A93"
+  - slug: "albert-einstein-college-of-medicine-md"
+    institution: "Albert Einstein College of Medicine"
+    program_name: null
+    state: "NY"
+    region: "East"
+    accreditation_status: "probation"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the grid's New York 'Albert Einstein College of Medicine - Bronx Psychiatric Center' row; its 'Albert Einstein Medical Center' row is in PA."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A94"
+  - slug: "columbia-university-md"
+    institution: "Columbia University"
+    program_name: "Vagelos College of Physicians and Surgeons"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A95"
+  - slug: "cuny-md"
+    institution: "CUNY"
+    program_name: "School of Medicine"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched 'City College of New York', the CUNY campus this school sits on; the grid's 'CUNY School of Medicine' row is 35-of-36 '#N/A'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A96"
+  - slug: "hofstra-northwell-md"
+    institution: "Hofstra/Northwell"
+    program_name: "Donald and Barbara Zucker School of Medicine"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "Counseling", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Public Health"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'Hofstra University' row; the grid's Zucker-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A97"
+  - slug: "mount-sinai-md"
+    institution: "Mount Sinai"
+    program_name: "Icahn School of Medicine"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A98"
+  - slug: "university-at-buffalo-md"
+    institution: "University at Buffalo"
+    program_name: "Jacobs School of Medicine and Biomedical Sciences"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'University at Buffalo' row; the grid's Jacobs-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A99"
+  - slug: "new-york-medical-college-md"
+    institution: "New York Medical College"
+    program_name: null
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A100"
+  - slug: "nyu-new-york-md"
+    institution: "NYU"
+    program_name: "Grossman School of Medicine"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: New York, NY. Matched the evaluated 'New York University' row; the grid's Grossman row is 35-of-36 '#N/A'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A101"
+  - slug: "nyu-mineola-md"
+    institution: "NYU"
+    program_name: "Grossman Long Island School of Medicine"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Mineola, NY. Matched the evaluated 'New York University' row; the grid's Long Island row is 35-of-36 '#N/A'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A102"
+  - slug: "stony-brook-university-md"
+    institution: "Stony Brook University"
+    program_name: "Renaissance School of Medicine"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "CCS", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'SUNY at Stony Brook University' row; the grid's Renaissance-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A103"
+  - slug: "state-university-of-new-york-upstate-medical-university-md"
+    institution: "State University of New York Upstate Medical University"
+    program_name: "Alan and Marlene Norton College of Medicine"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the grid's 'SUNY Upstate Medical University' row; the appended Norton-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A104"
+  - slug: "suny-downstate-health-sciences-university-md"
+    institution: "SUNY Downstate Health Sciences University"
+    program_name: "College of Medicine"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A105"
+  - slug: "university-of-rochester-md"
+    institution: "University of Rochester"
+    program_name: "School of Medicine and Dentistry"
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A106"
+  - slug: "weill-cornell-medicine-md"
+    institution: "Weill Cornell Medicine"
+    program_name: null
+    state: "NY"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the grid's 'Weill Cornell Medical College' row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A107"
+  - slug: "east-carolina-university-md"
+    institution: "East Carolina University"
+    program_name: "Brody School of Medicine"
+    state: "NC"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'East Carolina University' row; the grid's Brody-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A108"
+  - slug: "duke-university-md"
+    institution: "Duke University"
+    program_name: "School of Medicine"
+    state: "NC"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A109"
+  - slug: "university-of-north-carolina-chapel-hill-md"
+    institution: "University of North Carolina"
+    program_name: "School of Medicine"
+    state: "NC"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "SAME INSTITUTION as the client row at MD!A5, which says 'Yes' while this row says 'No'. The grid's UNC row says 'Yes'. exxat_status follows this row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A110"
+  - slug: "wake-forest-university-md"
+    institution: "Wake Forest University"
+    program_name: "School of Medicine"
+    state: "NC"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A111"
+  - slug: "university-of-north-dakota-md"
+    institution: "University of North Dakota"
+    program_name: "School of Medicine and Health Sciences"
+    state: "ND"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A112"
+  - slug: "wright-state-university-md"
+    institution: "Wright State University"
+    program_name: "Boonshoft School of Medicine"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'Wright State University' row; the grid's Boonshoft-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A113"
+  - slug: "case-western-reserve-university-md"
+    institution: "Case Western Reserve University"
+    program_name: "School of Medicine"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid carries a second, shortened 'Case Western University' row with no Yes columns; counted once."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A114"
+  - slug: "northeast-ohio-medical-university-md"
+    institution: "Northeast Ohio Medical University"
+    program_name: "College of Medicine"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A115"
+  - slug: "the-ohio-state-university-md"
+    institution: "The Ohio State University"
+    program_name: "College of Medicine"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "CCS", "Occupational Therapy", "Physical Therapy", "Respiratory Care"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A116"
+  - slug: "university-of-cincinnati-md"
+    institution: "University of Cincinnati"
+    program_name: "College of Medicine"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Occupational Therapy", "PTA", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A117"
+  - slug: "university-of-toledo-md"
+    institution: "University of Toledo"
+    program_name: "College of Medicine and Life Sciences"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Respiratory Care", "Social Work", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A118"
+  - slug: "university-of-oklahoma-md"
+    institution: "University of Oklahoma"
+    program_name: "College of Medicine"
+    state: "OK"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Oklahoma City, OK. Matched 'University of Oklahoma Health Sciences Center', the OKC campus this college sits on."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A119"
+  - slug: "oregon-health-and-science-university-md"
+    institution: "Oregon Health & Science University"
+    program_name: "School of Medicine"
+    state: "OR"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Psychology", "Public Health"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A120"
+  - slug: "drexel-university-md"
+    institution: "Drexel University"
+    program_name: "College of Medicine"
+    state: "PA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A121"
+  - slug: "geisinger-commonwealth-school-of-medicine-md"
+    institution: "Geisinger Commonwealth School of Medicine"
+    program_name: null
+    state: "PA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the grid's evaluated row under this school's former name, 'The Commonwealth Medical College'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A122"
+  - slug: "temple-university-md"
+    institution: "Temple University"
+    program_name: "Lewis Katz School of Medicine"
+    state: "PA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Nursing"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'Temple University' row; the grid's Katz-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A123"
+  - slug: "penn-state-md"
+    institution: "Penn State"
+    program_name: "College of Medicine"
+    state: "PA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'Pennsylvania State University' row; the grid's Penn State College of Medicine row is 35-of-36 '#N/A'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A124"
+  - slug: "university-of-pennsylvania-md"
+    institution: "University of Pennsylvania"
+    program_name: "Raymond and Ruth Perelman School of Medicine"
+    state: "PA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'University of Pennsylvania' row; the grid's Perelman-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A125"
+  - slug: "thomas-jefferson-university-md"
+    institution: "Thomas Jefferson University"
+    program_name: "Sidney Kimmel Medical College"
+    state: "PA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid files its main Thomas Jefferson University row (15 Yes columns) under NJ, not PA; state agreement picked the East Falls campus row instead."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A126"
+  - slug: "university-of-pittsburgh-md"
+    institution: "University of Pittsburgh"
+    program_name: "School of Medicine"
+    state: "PA"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "Audiology", "CCS", "Chiro", "Counseling", "Health Information Technology", "NUT", "Nursing", "Physical Therapy", "Physician Assistant", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A127"
+  - slug: "ponce-health-sciences-university-md"
+    institution: "Ponce Health Sciences University"
+    program_name: "School of Medicine"
+    state: "PR"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the grid's evaluated row under this school's former name, 'Ponce School of Medicine and Health Sciences'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A128"
+  - slug: "san-juan-bautista-school-of-medicine-md"
+    institution: "San Juan Bautista School of Medicine"
+    program_name: null
+    state: "PR"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A129"
+  - slug: "universidad-central-del-caribe-md"
+    institution: "Universidad Central del Caribe"
+    program_name: "School of Medicine"
+    state: "PR"
+    region: null
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched grid row's discipline cells are '#N/A' in 35 of 36 columns — unevaluated, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A130"
+  - slug: "university-of-puerto-rico-md"
+    institution: "University of Puerto Rico"
+    program_name: "School of Medicine"
+    state: "PR"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched 'University of Puerto Rico - Medical Sciences Campus', the San Juan campus this school sits on."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A131"
+  - slug: "brown-university-md"
+    institution: "Brown University"
+    program_name: "The Warren Alpert Medical School"
+    state: "RI"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'Brown University' row; the grid's Alpert-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A132"
+  - slug: "medical-university-of-south-carolina-md"
+    institution: "Medical University of South Carolina"
+    program_name: "College of Medicine"
+    state: "SC"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A133"
+  - slug: "university-of-south-carolina-columbia-md"
+    institution: "University of South Carolina"
+    program_name: "School of Medicine, Columbia"
+    state: "SC"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Columbia, SC. Matched the grid's own Columbia row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A134"
+  - slug: "university-of-south-carolina-greenville-md"
+    institution: "University of South Carolina"
+    program_name: "School of Medicine, Greenville"
+    state: "SC"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["NUT", "Nursing", "Physical Therapy", "Social Work", "Teacher Education"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Greenville, SC. Grid has no Greenville row; disciplines come from the generic 'University of South Carolina' row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A135"
+  - slug: "university-of-south-dakota-md"
+    institution: "University of South Dakota"
+    program_name: "Sanford School of Medicine"
+    state: "SD"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A136"
+  - slug: "east-tennessee-state-university-md"
+    institution: "East Tennessee State University"
+    program_name: "James H. Quillen College of Medicine"
+    state: "TN"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Audiology", "Counseling", "NUT", "Occupational Therapy", "Physical Therapy", "Social Work", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A137"
+  - slug: "meharry-medical-college-md"
+    institution: "Meharry Medical College"
+    program_name: "School of Medicine"
+    state: "TN"
+    region: "South"
+    accreditation_status: "probation"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A138"
+  - slug: "university-of-tennessee-health-science-center-md"
+    institution: "University of Tennessee Health Science Center"
+    program_name: "College of Medicine"
+    state: "TN"
+    region: null
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CLS", "Medical Laboratory Science", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched grid row is '#N/A' in 30 of 36 columns; the five Yes cells are real, but the unevaluated columns mean this list may be short."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A139"
+  - slug: "vanderbilt-university-md"
+    institution: "Vanderbilt University"
+    program_name: "School of Medicine"
+    state: "TN"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A140"
+  - slug: "tcu-md"
+    institution: "TCU"
+    program_name: "Anne Burnett Marion School of Medicine"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'Texas Christian University' row; the grid's TCU-named medical school row is 35-of-36 '#N/A'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A141"
+  - slug: "baylor-college-of-medicine-md"
+    institution: "Baylor College of Medicine"
+    program_name: "School of Medicine"
+    state: "TX"
+    region: null
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Independent of Baylor University, whose grid row was therefore not used. Matched row is '#N/A' in 34 of 36 columns, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A142"
+  - slug: "the-university-of-texas-health-science-center-at-houston-md"
+    institution: "The University of Texas Health Science Center at Houston"
+    program_name: "McGovern Medical School"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Nursing"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A143"
+  - slug: "texas-tech-university-health-sciences-center-el-paso-md"
+    institution: "Texas Tech University Health Sciences Center"
+    program_name: "Paul L. Foster School of Medicine"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: El Paso, TX. Matched the evaluated TTUHSC row; the grid's Foster-named row is 35-of-36 '#N/A'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A144"
+  - slug: "texas-a-and-m-university-md"
+    institution: "Texas A&M University"
+    program_name: "College of Medicine"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid carries a second 'Texas A&M Health Science Center' row with no Yes columns; the university row was used."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A145"
+  - slug: "texas-tech-university-health-sciences-center-lubbock-md"
+    institution: "Texas Tech University Health Sciences Center"
+    program_name: "School of Medicine"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Lubbock, TX. Matched the same evaluated TTUHSC row as the El Paso program at MD!A144."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A146"
+  - slug: "the-university-of-texas-at-austin-md"
+    institution: "The University of Texas at Austin"
+    program_name: "Dell Medical School"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'University of Texas at Austin' row; the grid's Dell-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A147"
+  - slug: "the-university-of-texas-at-tyler-md"
+    institution: "The University of Texas at Tyler"
+    program_name: "School of Medicine"
+    state: "TX"
+    region: "South"
+    accreditation_status: "precandidate"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A148"
+  - slug: "the-university-of-texas-health-science-center-at-san-antonio-md"
+    institution: "The University of Texas Health Science Center at San Antonio"
+    program_name: "Joe R. and Teresa Lozano Long School of Medicine"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Speech-Language Pathology"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid carries a near-duplicate San Antonio row with the same Yes columns; counted once."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A149"
+  - slug: "university-of-houston-md"
+    institution: "University of Houston"
+    program_name: "Tilman J. Fertitta Family College of Medicine"
+    state: "TX"
+    region: "South"
+    accreditation_status: "candidate"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'University of Houston' row; the grid's Fertitta-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A150"
+  - slug: "university-of-texas-medical-branch-md"
+    institution: "University of Texas Medical Branch"
+    program_name: "John Sealy School of Medicine"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A151"
+  - slug: "university-of-texas-rio-grande-valley-md"
+    institution: "University of Texas Rio Grande Valley"
+    program_name: "School of Medicine"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A152"
+  - slug: "university-of-texas-southwestern-md"
+    institution: "University of Texas Southwestern"
+    program_name: "Medical School"
+    state: "TX"
+    region: "South"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Counseling", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid carries both a 'Medical School' and a 'Medical Center' row for this school; the Medical School row has one more Yes column."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A153"
+  - slug: "university-of-utah-md"
+    institution: "University of Utah"
+    program_name: "Spencer Fox Eccles School of Medicine"
+    state: "UT"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the campus row 'University of Utah'; the grid's 'University of Utah School of Medicine' row is evaluated but has no Yes columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A154"
+  - slug: "university-of-vermont-md"
+    institution: "University of Vermont"
+    program_name: "Robert Larner, M.D. College of Medicine"
+    state: "VT"
+    region: "East"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Medical Laboratory Science", "Nursing", "Occupational Therapy", "Physical Therapy", "Radiation Tech"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'University of Vermont' row; the grid's Larner-named row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A155"
+  - slug: "old-dominion-university-md"
+    institution: "Old Dominion University"
+    program_name: "Eastern Virginia Medical School"
+    state: "VA"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid carries a separate 'Eastern Virginia Medical School' row with no Yes columns; the ODU campus row this school merged into was used."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A156"
+  - slug: "university-of-virginia-md"
+    institution: "University of Virginia"
+    program_name: "School of Medicine"
+    state: "VA"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A157"
+  - slug: "virginia-commonwealth-university-md"
+    institution: "Virginia Commonwealth University"
+    program_name: "School of Medicine"
+    state: "VA"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A158"
+  - slug: "virginia-tech-md"
+    institution: "Virginia Tech"
+    program_name: "Carilion School of Medicine"
+    state: "VA"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'Virginia Polytechnic Institute and State University' row; the grid's Carilion row is 35-of-36 '#N/A'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A159"
+  - slug: "university-of-washington-md"
+    institution: "University of Washington"
+    program_name: "School of Medicine"
+    state: "WA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant", "Social Work"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A160"
+  - slug: "washington-state-university-md"
+    institution: "Washington State University"
+    program_name: "Elson S. Floyd College of Medicine"
+    state: "WA"
+    region: "West"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Social Work"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A161"
+  - slug: "marshall-university-md"
+    institution: "Marshall University"
+    program_name: "Joan C. Edwards School of Medicine"
+    state: "WV"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["NUT", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A162"
+  - slug: "west-virginia-university-md"
+    institution: "West Virginia University"
+    program_name: "School of Medicine"
+    state: "WV"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A163"
+  - slug: "medical-college-of-wisconsin-md"
+    institution: "Medical College of Wisconsin"
+    program_name: null
+    state: "WI"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A164"
+  - slug: "university-of-wisconsin-md"
+    institution: "University of Wisconsin"
+    program_name: "School of Medicine and Public Health"
+    state: "WI"
+    region: "Central"
+    accreditation_status: "accredited"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Counseling", "Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the evaluated 'University of Wisconsin-Madison' row; the grid's appended SMPH row is '#N/A' in 35 of 36 columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "MD!A165"

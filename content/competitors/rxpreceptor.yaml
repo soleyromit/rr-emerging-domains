@@ -1,0 +1,152 @@
+# Researched 2026-09-09 (one source, a single named mention). Re-researched 2026-09-10
+# (vendor domain, the login it redirects to, school-hosted preceptor training material,
+# a CORE-provided CE listing). That pass found the fact the first pass missed:
+# RxPreceptor is not a separate product. rxpreceptor.com redirects to PeopleGrove's CORE
+# ELMS login, the legacy academicsuiterx.com logins redirect to corehighered.com, and
+# CORE's own training listing calls the software "CORE ELMS /
+# RXpreceptor". This file therefore records only what is evidenced about the
+# RxPreceptor-branded surface itself; platform depth belongs in core-elms.yaml and is
+# NOT copied across. Nothing is filled in by analogy to CORE ELMS or PharmAcademic — the
+# identity finding below is evidenced by a redirect and a vendor listing, not assumed.
+competitor: "RxPreceptor"
+slug: "rxpreceptor"
+domains_served: ["Pharmacy"]
+category: "Pharmacy experiential / rotation tracking (APPE scheduling, hours and assessments) — legacy brand of CORE ELMS"
+company:
+  founded: "not publicly stated"
+  hq: "not publicly stated"
+  ownership: >
+    PeopleGrove, via CORE Higher Education Group. Verified 2026-09-10: https://www.rxpreceptor.com/
+    returns HTTP 302 to https://login.peoplegrove.com/login-elms, a page titled "ELMS
+    Login" carrying a CORE ELMS logo, a "© PeopleGrove" footer, and a password-reset link
+    still pointing at rxpreceptor.com. The legacy login hosts corroborate independently:
+    both https://academicsuiterx.com/login.php and
+    https://www.academicsuiterx.com/experiential_login.php return HTTP 301 to
+    https://corehighered.com/ (checked 2026-09-10) — the old RxPreceptor login URLs school
+    pages still publish now land on CORE's marketing homepage. Earlier operation was under
+    RXinsider: school pages at ULM and UT Tyler both tell preceptors their
+    account-activation email arrives from support@rxinsider.com. No public statement of a
+    founding date, HQ or transaction was found for the RxPreceptor brand itself.
+
+feature_teardown:
+  - pillar: "Clinical & Experiential Education"
+    competitor_capability: >
+      Preceptor-side rotation workflow, named tab by tab in a school-hosted RXpreceptor
+      preceptor training deck: submit availability by rotation date with a student count
+      per submission (rotation type and specialty optional); view assigned students under
+      "Rotation Schedule" once the school releases its schedules; open a "Student
+      Snapshot" per student; confirm or deny submitted student hours with notes, denied
+      hours returning to the student to edit; and approve or deny absences in a "Student
+      Absentee Log", including sending an absentee alert to the school.
+    depth_vs_prism: "unknown"
+    evidence: >
+      "You may submit your availability through RXpreceptor... choose the rotation date
+      and how many students you can take"; "You may confirm or deny all hours that your
+      student(s) submit... Any denied hours will be sent back to the student to edit". The
+      deck documents the preceptor surface only: how the school builds the schedule is
+      never shown, and no matching engine is named on any RxPreceptor-branded page found.
+      Rated "unknown". Note the scope limit deliberately — if the identity finding in
+      `ownership` holds, the depth to rate against is CORE ELMS's, already recorded in
+      core-elms.yaml; it is not re-derived here from this file's own sources.
+    source: "https://www.ulm.edu/pharmacy/documents/oee/preceptortraining.pdf"
+  - pillar: "Compliance Management"
+    competitor_capability: >
+      Requirement and document handling exists on the preceptor side: under "Profile
+      Information" a preceptor can "specify your student requirements" and "upload
+      rotation specific documents", and can then "view your student's requirements" in the
+      Student Snapshot. A Support/Document Library holds school-uploaded documents and
+      videos for preceptors.
+    depth_vs_prism: "unknown"
+    evidence: >
+      Verbatim from the same preceptor training deck. What it does NOT establish: which
+      requirement types are tracked (immunisation, background check, licensure), whether
+      expirations alert anyone, whether an unmet requirement blocks a placement, or
+      whether affiliation agreements are managed at all. "Requirements are visible to a
+      preceptor" is a long way from a compliance engine, so this is rated "unknown", not
+      "at-parity".
+    source: "https://www.ulm.edu/pharmacy/documents/oee/preceptortraining.pdf"
+  - pillar: "Surveys & Course Evaluations"
+    competitor_capability: >
+      Evaluation runs in both directions and is release-gated by the school. Preceptors
+      complete an "Evaluation of Student" form electronically with save-as-draft, and can
+      "view evaluations completed by your students about you and your site as well as
+      student self evaluations when your school opens them for viewing" — so
+      student-of-preceptor, student-of-site and student self-evaluation forms all exist.
+    depth_vs_prism: "unknown"
+    evidence: >
+      Verbatim from the same preceptor training deck. What it does NOT establish: any form
+      builder, survey administration outside a rotation, response-rate or aggregation
+      reporting, blinding, or didactic course evaluations. The deck shows a preceptor
+      filling in and reading forms, not the machinery behind them — rated "unknown".
+    source: "https://www.ulm.edu/pharmacy/documents/oee/preceptortraining.pdf"
+
+strengths:
+  - claim: >
+      Named as an incumbent in APPE scheduling alongside CORE ELMS and PharmAcademic
+      — enough to expect it in a competitive deal, not enough to characterise it.
+    source: "Internal: Pharmacy education in US eBook.docx (Google Drive, Emerging Domains folder), APPE scheduling chapter"
+  - claim: >
+      Brand outlives the vendor: schools still publish RxPreceptor-named pages and links
+      long after the CORE/PeopleGrove rebrand (WVU, UT Tyler, ULM all do), so the name
+      keeps circulating independently of current branding.
+    source: "https://pharmacy.hsc.wvu.edu/explearning/preceptor-information/rxpreceptor/"
+  - claim: >
+      The preceptor side is self-contained: availability, schedule view, hour confirm/deny
+      with send-back, absence approval and evaluations all sit behind one preceptor login,
+      with no school login required.
+    source: "https://www.ulm.edu/pharmacy/documents/oee/preceptortraining.pdf"
+
+weaknesses:
+  - claim: >
+      The brand has no product surface left. rxpreceptor.com serves no marketing or
+      feature page at all — it redirects straight to a PeopleGrove-hosted CORE ELMS login,
+      so a buyer researching "RxPreceptor" finds nothing.
+    source: "https://login.peoplegrove.com/login-elms"
+  - claim: >
+      No scheduling engine is visible on the preceptor side: preceptors submit availability
+      and then wait for the school to release schedules. No RxPreceptor-branded material
+      found describes how a schedule is built.
+    source: "https://www.ulm.edu/pharmacy/documents/oee/preceptortraining.pdf"
+  - claim: >
+      Documentation is second-hand and undated — the only substantive public description
+      found is a college-hosted preceptor deck, not vendor material. Anything current about
+      the platform has to be read off CORE ELMS instead.
+    source: "https://cesearchengine.com/ce_details.php?ce_id=6855"
+
+retention_anchor: >
+  Not RxPreceptor's own — it is CORE ELMS's, recorded in core-elms.yaml (multi-year
+  placement, compliance, evaluation and competency records per cohort). What the
+  RxPreceptor brand adds on top is inertia: preceptors and schools have bookmarked
+  rxpreceptor.com and academicsuiterx.com logins for years, and the vendor still catches
+  those URLs rather than letting them break — rxpreceptor.com lands on the live CORE ELMS
+  login, academicsuiterx.com on corehighered.com. Switching friction therefore includes
+  retraining people off a name, not just off a system.
+
+exxat_opportunity: >
+  The single most useful outcome of this pass is a disqualification: stop treating
+  RxPreceptor as a separate competitor. rxpreceptor.com redirects to PeopleGrove's CORE
+  ELMS login and CORE's own administrator-training listing calls the software "CORE ELMS
+  / RXpreceptor", so a school that says "we use RxPreceptor" is on CORE under a legacy
+  name. Practically: a deal naming RxPreceptor is a CORE displacement deal, and
+  core-elms.yaml's wedge applies unchanged — reporting depth and module cohesion are
+  CORE's own reviewers' complaints, so lead there. Do not lead on exam management: that
+  is unverified on CORE's side too, flagged "unable to verify" rather than absent in
+  core-elms.yaml, and it is not a proven gap. Qualify the name early — "is that CORE
+  ELMS?" — rather than scoping a second teardown. One genuine caution: the identity is
+  established by live redirects (rxpreceptor.com to CORE ELMS's login, academicsuiterx.com
+  to corehighered.com) plus a vendor-provided training listing, not by a vendor statement
+  that the products are the same, so confirm with the account before writing it into a
+  proposal.
+
+pricing_signal: "not publicly disclosed"
+
+last_researched: "2026-09-10"
+
+sources:
+  - "Internal: Pharmacy education in US eBook.docx (Google Drive, Emerging Domains folder), APPE scheduling chapter"
+  - "https://www.rxpreceptor.com/"
+  - "https://login.peoplegrove.com/login-elms"
+  - "https://www.ulm.edu/pharmacy/documents/oee/preceptortraining.pdf"
+  - "https://cesearchengine.com/ce_details.php?ce_id=6855"
+  - "https://pharmacy.hsc.wvu.edu/explearning/preceptor-information/rxpreceptor/"
+  - "https://www.uttyler.edu/pharmacy/experiential-education/rxpreceptor.php"

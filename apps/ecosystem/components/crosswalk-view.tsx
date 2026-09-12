@@ -10,6 +10,7 @@ import { Table, pixel, proportional } from "@astryxdesign/core/Table";
 import { Link } from "@astryxdesign/core/Link";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { DisciplineChip } from "@/components/discipline-chip";
+import { CompetitorLogoStrip } from "@/components/competitor-logo";
 import { FitBadge } from "@/components/fit-badge";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
 import type { StandardsCrosswalkForDomain } from "@/lib/content";
@@ -28,10 +29,16 @@ interface DomainRow extends Record<string, unknown> {
 export function CrosswalkView({
   domains,
   priorityDomains,
+  dissectedSlugs = [],
 }: {
   domains: StandardsCrosswalkForDomain[];
   priorityDomains: string[];
+  /** Route slugs that have a dissection manifest — those rows get a second link into
+   * the Dissection map. Passed in rather than derived here because the manifests are
+   * read from content/ through node:fs, which this client component cannot do. */
+  dissectedSlugs?: string[];
 }) {
+  const dissected = new Set(dissectedSlugs);
   const [query, setQuery] = useState("");
   const [scope, setScope] = useState<"priority" | "all">("all");
 
@@ -122,9 +129,22 @@ export function CrosswalkView({
               },
             },
             {
+              key: "competitor_logos",
+              header: "Competitors",
+              width: pixel(180),
+              renderCell: (r) =>
+                r.domain.competitors.length ? (
+                  <CompetitorLogoStrip competitors={r.domain.competitors} />
+                ) : (
+                  <Text type="body" color="secondary">
+                    None researched
+                  </Text>
+                ),
+            },
+            {
               key: "competitors",
-              header: "Competitor cells rated",
-              width: pixel(160),
+              header: "Cells rated",
+              width: pixel(130),
               renderCell: (r) => (
                 <Text type="body">
                   {r.domain.ratedCompetitorCellCount} / {r.domain.totalCompetitorCellCount}
@@ -134,14 +154,30 @@ export function CrosswalkView({
             {
               key: "link",
               header: "",
-              width: pixel(140),
+              // 175px, not the 140 one link needed: the second link's label is the
+              // longer of the two, and at 140 it wrapped onto a third line.
+              width: pixel(175),
               renderCell: (r) => {
                 const slug = matchDisciplineMeta(r.domain.domain)?.slug;
-                return slug ? (
-                  <Link href={`/domains/${slug}/standards`} color="accent" hasUnderline>
-                    View standards →
-                  </Link>
-                ) : null;
+                if (!slug) return null;
+                return (
+                  // Stacked, not side by side — two accent links on one line in a
+                  // 175px cell read as one wrapped phrase rather than two destinations.
+                  <Stack gap={1}>
+                    <Link href={`/domains/${slug}/standards`} color="accent" hasUnderline>
+                      View standards →
+                    </Link>
+                    {/* Only for a domain that really has a manifest: the other rows'
+                        Dissection tab is an honest "not dissected yet" state, and a
+                        link column advertising a map that has no nodes is the dead end
+                        this page's linking rule exists to avoid. */}
+                    {dissected.has(slug) ? (
+                      <Link href={`/domains/${slug}/dissect`} color="accent" hasUnderline>
+                        Dissection map →
+                      </Link>
+                    ) : null}
+                  </Stack>
+                );
               },
             },
           ]}

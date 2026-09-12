@@ -1,0 +1,599 @@
+# Level 0.5 ARTIFACT — NOT EVIDENCE. Exxat's own internal sales comparison chart,
+# reproduced verbatim so it can be pointed at and argued with, never cited as fact.
+#
+# citable_as_fact: false means exactly this: no file anywhere in content/ may use an id
+# from this file as a `source_id`. A Level 0.5 entry normally IS citable (see
+# content/sources/registry.yaml, help-center.yaml, playbooks.yaml) — this file is the
+# first one that is not, which is why the field exists. A Phase 1 integrity check
+# (check_vendor_comparison_isolation) enforces the rule mechanically; until it lands the
+# rule is this comment plus the field.
+#
+# WHY IT IS QUARANTINED, in the artifact's own numbers:
+#   - EXXAT is marked X on 81 of 81 feature rows, on both sheets, with zero per-row
+#     evidence of any kind. A chart on which the author never loses is a positioning
+#     document, not a comparison.
+#   - Its own two vendor sheets disagree with each other on 7 rows (known_contradictions
+#     below), in BOTH directions — the masked sheet is sometimes the generous one.
+#   - Nothing states when any cell was last checked against any competitor's product.
+#
+# HOW IT WAS TRANSCRIBED: mechanically, from the .xlsx named in transcribed_from below,
+# via openpyxl — not retyped by hand. Cell values are whitespace-stripped (one label,
+# `Document Status Tracker`, carries a trailing space in the source). Source typos are
+# preserved verbatim and are NOT transcription errors: `Institutioanl-Level` (system-),
+# `Placement Clearance Dashbaord` (placement-). row_id slugs follow the typo'd text so
+# the id stays derivable from the row label.
+#
+# Every `sheet2:` value is either "X" (the cell is marked) or null (the cell is empty).
+# Absence is the source's silence, not a researched finding of absence.
+artifact:
+  id: "sales-collateral-exxat-vendor-comparison-chart"
+  type: "sales-collateral"
+  origin: "first-party"
+  access: "internal"
+  title: "Exxat Vendor Comparison Chart"
+  # path: is the canonical vault location as given in the task brief. It was NOT verifiable
+  # from the machine that wrote this file (no PRISM-Expansion-Vault checkout present), so
+  # treat it as the intended home, not a confirmed one. transcribed_from: is the local copy
+  # actually parsed — note the ' 3' suffix: at least two downloaded revisions exist side by
+  # side, and nothing in the workbook carries a version or date.
+  path: "PRISM-Expansion-Vault/99-Assets/Exxat Vendor Comparison Chart.xlsx"
+  path_status: "unverified"
+  transcribed_from: "~/Downloads/Exxat Vendor Comparison Chart 3.xlsx"
+  transcribed: "2026-09-11"
+  citable_as_fact: false
+  provenance_note: >
+    Authored by Exxat sales. Exxat is marked present on all 81 feature rows with no
+    per-row evidence, and Sheet1 (7 named vendors) contradicts Sheet2 (3 masked vendors)
+    on 7 rows. Treat this as a record of what Exxat sales has been claiming, not of
+    what is true.
+  scope_note: >
+    A generic clinical-education product comparison. Contains none of pharmacy's actual
+    APPE-tracking incumbents (RxPreceptor, PharmAcademic, Influx, ExamSoft, eValue) — it
+    compares against a different competitor set entirely (CastleBranch, Typhon, Core ELMS,
+    Trajecsys, Experiential Learning Cloud, Project Concert).
+  workbook:
+    # Tab order as stored in the file. Sheet2 is first despite the name; Sheet1 is last.
+    - { sheet: "Sheet2", position: 1, vendor_columns: 4, masked: true, transcribed_here: "sections[].rows[].sheet2" }
+    - { sheet: "Module Based", position: 2, vendor_columns: 4, masked: true, transcribed_here: "module_grouping" }
+    - { sheet: "Sheet1", position: 3, vendor_columns: 7, masked: false, transcribed_here: "known_contradictions + unmasked_only_vendor_rows only" }
+  # EVERY entry below is a row where Sheet2's four masked columns and Sheet1's four
+  # corresponding named columns disagree outright — same vendor, same row, different
+  # answer. Computed exhaustively by diffing the two sheets, not spot-checked, so
+  # len(known_contradictions) == 7 IS the contradiction count: a consumer can count this
+  # list and render the number without filtering. Rows that are not contradictions live in
+  # unmasked_only_vendor_rows below and never in here.
+  #
+  # Field semantics, identical across both lists so the two values are always like-for-like:
+  #   sheet2:               who is marked in Sheet2's 4 masked columns
+  #   sheet1:               who is marked in the 4 Sheet1 columns those masks resolve to
+  #   sheet1_extra_vendors: who else Sheet1 marks in its 3 unmasked-only columns, or null
+  known_contradictions:
+    - row_id: "learning-activity-management-surveys"
+      row: "Surveys"
+      sheet2: "EXXAT"
+      sheet1: "EXXAT, Typhon, Core ELMS"
+      sheet1_extra_vendors: "Trajecsys, Experiential Learning Cloud, Project Concert"
+    - row_id: "learning-activity-management-competency-tracking"
+      row: "Competency Tracking"
+      sheet2: "EXXAT, Vendor 3"
+      sheet1: "EXXAT, Typhon, Core ELMS"
+      sheet1_extra_vendors: "Trajecsys, Experiential Learning Cloud, Project Concert"
+    - row_id: "learning-activity-management-customizable-reports"
+      row: "Customizable reports"
+      sheet2: "EXXAT, Vendor 3"
+      sheet1: "EXXAT, Typhon, Core ELMS"
+      sheet1_extra_vendors: "Trajecsys, Experiential Learning Cloud, Project Concert"
+    - row_id: "student-performance-tracking-skills-checklist"
+      row: "Skills Checklist"
+      sheet2: "EXXAT, Vendor 3"
+      sheet1: "EXXAT"
+      sheet1_extra_vendors: null
+    - row_id: "student-performance-tracking-early-risk-identification-low-score-indicators-notifications"
+      row: "Early Risk Identification (Low Score Indicators & Notifications)"
+      sheet2: "EXXAT, Vendor 3"
+      sheet1: "EXXAT"
+      sheet1_extra_vendors: null
+    - row_id: "support-onboarding-white-glove-implementation"
+      row: "White Glove Implementation"
+      sheet2: "EXXAT, Vendor 3"
+      sheet1: "EXXAT, Typhon, Core ELMS"
+      sheet1_extra_vendors: "Experiential Learning Cloud, Project Concert"
+    - row_id: "support-onboarding-free-importing-of-data-into-system"
+      row: "Free Importing of Data into system"
+      sheet2: "EXXAT"
+      sheet1: "EXXAT, CastleBranch, Typhon, Core ELMS"
+      sheet1_extra_vendors: "Experiential Learning Cloud"
+  # NOT contradictions, and deliberately not in the list above: on these rows the masked
+  # and named columns AGREE, and Sheet1 merely credits a vendor Sheet2 has no column for.
+  # This list is NOT exhaustive — on 41 of the 81 rows the masked columns agree and
+  # Sheet1 still credits an unmasked-only vendor, which is a property of the masked sheet's
+  # narrower scope, not a defect in the artifact. These 2 are recorded only because the
+  # planning brief named them as contradictions; they are kept here, out of the count, so
+  # that correction isn't silently lost.
+  unmasked_only_vendor_rows:
+    - row_id: "security-soc2-type-ii-certified"
+      row: "SOC2 Type II Certified"
+      sheet2: "EXXAT, Vendor 2"
+      sheet1: "EXXAT, Typhon"
+      sheet1_extra_vendors: "Experiential Learning Cloud"
+    - row_id: "support-onboarding-annual-user-conference"
+      row: "Annual User Conference"
+      sheet2: "EXXAT"
+      sheet1: "EXXAT"
+      sheet1_extra_vendors: "Experiential Learning Cloud"
+# Sheet1 row 2 maps Sheet2's masked labels onto real vendor names. sheet2_label: null
+# means Sheet1 carries a column the masked sheet simply does not have.
+unmasking_key:
+  - { sheet2_label: "EXXAT", sheet1_name: "EXXAT" }
+  - { sheet2_label: "Vendor 1", sheet1_name: "CastleBranch" }
+  - { sheet2_label: "Vendor 2", sheet1_name: "Typhon" }
+  - { sheet2_label: "Vendor 3", sheet1_name: "Core ELMS" }
+  - { sheet2_label: null, sheet1_name: "Trajecsys" }
+  - { sheet2_label: null, sheet1_name: "Experiential Learning Cloud" }
+  - { sheet2_label: null, sheet1_name: "Project Concert" }
+# Sheet2 verbatim: 10 sections, 81 feature rows, in the source's own order.
+# maps_to_capability_id was null on every row until 2026-09-11 (plan Task 2.9), when
+# lenses/feature-comparison-matrix.yaml got its first real capability rows. 44 of the 81
+# rows now name one; 37 stay null.
+#
+# A MAPPING IS NOT A CITATION. Nothing here becomes citable by being crosswalked. All the
+# field does is make a research backlog visible: "this quarantined row now has a rigorous,
+# independently-sourced counterpart" versus "this row has nothing behind it but the sales
+# chart." The `X` in a mapped row's own cells is still worth exactly what it was worth
+# before — nothing — and no id from this file may appear in `sources:` anywhere.
+#
+# The rule used, applied consistently so the 37 nulls are a decision and not fatigue: map
+# a row only where its subject is substantively covered by that pillar (so Contract
+# Management maps to compliance, because capability-map.yaml puts contracts and the
+# Placement Clearance contract gate inside the Compliance Management pillar). Leave null
+# for (a) platform, security, support and commercial attributes, which no pillar is about —
+# the whole System, Security and Support & Onboarding sections, 26 rows; (b) rows whose
+# subject spans two pillars (Site Profiles & Contracts) or is a generic entity (Student
+# Profiles, Tags); and (c) rows whose Student Performance Tracking framing does not line up
+# with a pillar at all (Skills Checklist, Course Gradebook, advising/improvement plans).
+# Note that ZERO rows map to pharmacy-exam-management: this 81-row chart contains no exam
+# row of any kind, which is itself a finding about the chart's scope.
+sections:
+  - name: "System"
+    rows:
+      - row: "Cloud-Based"
+        row_id: "system-cloud-based"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: null
+      - row: "Compatible with Computer, Tablet, Phone"
+        row_id: "system-compatible-with-computer-tablet-phone"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: null
+      - row: "Robust Role-Based Access Control (RBAC)"
+        row_id: "system-robust-role-based-access-control-rbac"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "Multi-Program & Multi-Campus Support"
+        row_id: "system-multi-program-multi-campus-support"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "Institutioanl-Level Application Access for Deans & Provosts"
+        row_id: "system-institutioanl-level-application-access-for-deans-provosts"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "Public API gateway"
+        row_id: "system-public-api-gateway"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: null
+      - row: "Student Mobile App"
+        row_id: "system-student-mobile-app"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: null
+  - name: "Data Management"
+    rows:
+      - row: "Site Profiles & Contracts"
+        row_id: "data-management-site-profiles-contracts"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: null
+      - row: "Preceptor Profiles with CVs & Licenses"
+        row_id: "data-management-preceptor-profiles-with-cvs-licenses"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Faculty Profiles with CVs & Licenses"
+        row_id: "data-management-faculty-profiles-with-cvs-licenses"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Secure Student Profile sharing with clinical partners"
+        row_id: "data-management-secure-student-profile-sharing-with-clinical-partners"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Tags for organizing sites, students, contracts, personnel, placements"
+        row_id: "data-management-tags-for-organizing-sites-students-contracts-personnel-placements"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "Student Profiles"
+        row_id: "data-management-student-profiles"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: null
+  - name: "Curriculum Management"
+    rows:
+      - row: "Syllabus Creation"
+        row_id: "curriculum-management-syllabus-creation"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: "pharmacy-curriculum-mapping"
+      - row: "Curriculum Mapping"
+        row_id: "curriculum-management-curriculum-mapping"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-curriculum-mapping"
+      - row: "AI Mapping"
+        row_id: "curriculum-management-ai-mapping"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: "pharmacy-curriculum-mapping"
+      - row: "Gaps & Redundancy Reports"
+        row_id: "curriculum-management-gaps-redundancy-reports"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: "pharmacy-curriculum-mapping"
+      - row: "Accreditation reporting"
+        row_id: "curriculum-management-accreditation-reporting"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-accreditation-management"
+  - name: "Compliance Management"
+    rows:
+      - row: "Document Repository"
+        row_id: "compliance-management-document-repository"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Document Status Tracker"
+        row_id: "compliance-management-document-status-tracker"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Configurable by Cohort and Document"
+        row_id: "compliance-management-configurable-by-cohort-and-document"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Integration with Background/Drug Screening"
+        row_id: "compliance-management-integration-with-background-drug-screening"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Integration with HIPAA & OSHA Training"
+        row_id: "compliance-management-integration-with-hipaa-osha-training"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Automated Alerts"
+        row_id: "compliance-management-automated-alerts"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Immunization Notification History"
+        row_id: "compliance-management-immunization-notification-history"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Reporting by Status and Document"
+        row_id: "compliance-management-reporting-by-status-and-document"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Graphical Reports"
+        row_id: "compliance-management-graphical-reports"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Faculty Compliance"
+        row_id: "compliance-management-faculty-compliance"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Document Review Service"
+        row_id: "compliance-management-document-review-service"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: "pharmacy-compliance-management"
+  - name: "Contract Management"
+    rows:
+      - row: "Site/Contract Repository"
+        row_id: "contract-management-site-contract-repository"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Routing Checklist"
+        row_id: "contract-management-routing-checklist"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Automated Expiration Notifications"
+        row_id: "contract-management-automated-expiration-notifications"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Contract Sharing Between Programs"
+        row_id: "contract-management-contract-sharing-between-programs"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+  - name: "Placement Management"
+    rows:
+      - row: "Site Availability"
+        row_id: "placement-management-site-availability"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
+      - row: "Preceptor Intake Forms"
+        row_id: "placement-management-preceptor-intake-forms"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
+      - row: "Rotation Scheduling"
+        row_id: "placement-management-rotation-scheduling"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
+      - row: "Slot Requests"
+        row_id: "placement-management-slot-requests"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
+      - row: "Student Preferences"
+        row_id: "placement-management-student-preferences"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
+      - row: "Student Self-Placement Requests"
+        row_id: "placement-management-student-self-placement-requests"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
+      - row: "Field Applications"
+        row_id: "placement-management-field-applications"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
+      - row: "AI Automated Placements"
+        row_id: "placement-management-ai-automated-placements"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
+      - row: "Custom Site Assessment Forms"
+        row_id: "placement-management-custom-site-assessment-forms"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
+      - row: "Post-Placement Thank you Emails"
+        row_id: "placement-management-post-placement-thank-you-emails"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "Placement Clearance Dashbaord"
+        row_id: "placement-management-placement-clearance-dashbaord"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-compliance-management"
+      - row: "Placement Notifications to Sites"
+        row_id: "placement-management-placement-notifications-to-sites"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
+  - name: "Learning Activity Management"
+    rows:
+      - row: "Time Tracking"
+        row_id: "learning-activity-management-time-tracking"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
+      - row: "Geo-Location Tracking"
+        row_id: "learning-activity-management-geo-location-tracking"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
+      - row: "Patient/Case Logging"
+        row_id: "learning-activity-management-patient-case-logging"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
+      - row: "ICD Coding"
+        row_id: "learning-activity-management-icd-coding"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
+      - row: "CPT Codes"
+        row_id: "learning-activity-management-cpt-codes"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-clinical-experiential-education"
+      - row: "Evaluations"
+        row_id: "learning-activity-management-evaluations"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-surveys-course-evaluations"
+      - row: "Surveys"
+        row_id: "learning-activity-management-surveys"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: "pharmacy-surveys-course-evaluations"
+      - row: "Competency Tracking"
+        row_id: "learning-activity-management-competency-tracking"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: "pharmacy-curriculum-mapping"
+      - row: "Learning Contracts"
+        row_id: "learning-activity-management-learning-contracts"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "Review and Approval of forms via direct email links"
+        row_id: "learning-activity-management-review-and-approval-of-forms-via-direct-email-links"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: "pharmacy-surveys-course-evaluations"
+      - row: "Outcomes/Assessment aggregate reports"
+        row_id: "learning-activity-management-outcomes-assessment-aggregate-reports"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: null
+      - row: "Customizable reports"
+        row_id: "learning-activity-management-customizable-reports"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: null
+  - name: "Student Performance Tracking"
+    rows:
+      - row: "Student Advising and Academic Improvement Plans"
+        row_id: "student-performance-tracking-student-advising-and-academic-improvement-plans"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "Skills Checklist"
+        row_id: "student-performance-tracking-skills-checklist"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: null
+      - row: "Early Risk Identification (Low Score Indicators & Notifications)"
+        row_id: "student-performance-tracking-early-risk-identification-low-score-indicators-notifications"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: null
+      - row: "Longitudinal Competency Tracking"
+        row_id: "student-performance-tracking-longitudinal-competency-tracking"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: "pharmacy-curriculum-mapping"
+      - row: "Course Gradebook"
+        row_id: "student-performance-tracking-course-gradebook"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+  - name: "Security"
+    rows:
+      - row: "SOC2 Type II Certified"
+        row_id: "security-soc2-type-ii-certified"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": "X", "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "ISO 27001 Certified"
+        row_id: "security-iso-27001-certified"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "ISO 42001 Certified"
+        row_id: "security-iso-42001-certified"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "Public Trust portal for Security Transparency"
+        row_id: "security-public-trust-portal-for-security-transparency"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "Data Encryption (At Rest & In Transit)"
+        row_id: "security-data-encryption-at-rest-in-transit"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "HIPAA Compliant"
+        row_id: "security-hipaa-compliant"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: null
+      - row: "FERPA Compliant"
+        row_id: "security-ferpa-compliant"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: null
+      - row: "TX-RAMP Level 2 Certified"
+        row_id: "security-tx-ramp-level-2-certified"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: null
+  - name: "Support & Onboarding"
+    rows:
+      - row: "White Glove Implementation"
+        row_id: "support-onboarding-white-glove-implementation"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: null
+      - row: "Free Importing of Data into system"
+        row_id: "support-onboarding-free-importing-of-data-into-system"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "Knowledgeable Account Manager"
+        row_id: "support-onboarding-knowledgeable-account-manager"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: null
+      - row: "Program Specific Adoption & Success Plan"
+        row_id: "support-onboarding-program-specific-adoption-success-plan"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "24/7 Live Chat Support"
+        row_id: "support-onboarding-24-7-live-chat-support"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "Email & Ticketing Support"
+        row_id: "support-onboarding-email-ticketing-support"
+        sheet2: { EXXAT: "X", "Vendor 1": "X", "Vendor 2": "X", "Vendor 3": "X" }
+        maps_to_capability_id: null
+      - row: "AI Chat Support"
+        row_id: "support-onboarding-ai-chat-support"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "Robust Help Center (Document/Videos/FAQS)"
+        row_id: "support-onboarding-robust-help-center-document-videos-faqs"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: null
+      - row: "Frequent Webinars"
+        row_id: "support-onboarding-frequent-webinars"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": "X" }
+        maps_to_capability_id: null
+      - row: "In Person Training Workshops"
+        row_id: "support-onboarding-in-person-training-workshops"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+      - row: "Annual User Conference"
+        row_id: "support-onboarding-annual-user-conference"
+        sheet2: { EXXAT: "X", "Vendor 1": null, "Vendor 2": null, "Vendor 3": null }
+        maps_to_capability_id: null
+# The 'Module Based' tab reorganises the same rows, with identical X marks (verified cell
+# by cell), into 3 purchasable modules — and drops System, Security and Support &
+# Onboarding entirely: 55 of the 81 rows survive. What a module does NOT include is
+# the commercially interesting part, so the dropped 26 are named below, not implied.
+module_grouping:
+  - module: "Clinical Education"
+    row_count: 39
+    row_ids:
+      - "data-management-site-profiles-contracts"
+      - "data-management-preceptor-profiles-with-cvs-licenses"
+      - "data-management-faculty-profiles-with-cvs-licenses"
+      - "data-management-secure-student-profile-sharing-with-clinical-partners"
+      - "data-management-tags-for-organizing-sites-students-contracts-personnel-placements"
+      - "data-management-student-profiles"
+      - "contract-management-site-contract-repository"
+      - "contract-management-routing-checklist"
+      - "contract-management-automated-expiration-notifications"
+      - "contract-management-contract-sharing-between-programs"
+      - "placement-management-site-availability"
+      - "placement-management-preceptor-intake-forms"
+      - "placement-management-rotation-scheduling"
+      - "placement-management-slot-requests"
+      - "placement-management-student-preferences"
+      - "placement-management-student-self-placement-requests"
+      - "placement-management-field-applications"
+      - "placement-management-ai-automated-placements"
+      - "placement-management-custom-site-assessment-forms"
+      - "placement-management-post-placement-thank-you-emails"
+      - "placement-management-placement-clearance-dashbaord"
+      - "placement-management-placement-notifications-to-sites"
+      - "learning-activity-management-time-tracking"
+      - "learning-activity-management-geo-location-tracking"
+      - "learning-activity-management-patient-case-logging"
+      - "learning-activity-management-icd-coding"
+      - "learning-activity-management-cpt-codes"
+      - "learning-activity-management-evaluations"
+      - "learning-activity-management-surveys"
+      - "learning-activity-management-competency-tracking"
+      - "learning-activity-management-learning-contracts"
+      - "learning-activity-management-review-and-approval-of-forms-via-direct-email-links"
+      - "learning-activity-management-outcomes-assessment-aggregate-reports"
+      - "learning-activity-management-customizable-reports"
+      - "student-performance-tracking-student-advising-and-academic-improvement-plans"
+      - "student-performance-tracking-skills-checklist"
+      - "student-performance-tracking-early-risk-identification-low-score-indicators-notifications"
+      - "student-performance-tracking-longitudinal-competency-tracking"
+      - "student-performance-tracking-course-gradebook"
+  - module: "Curriculum Mapping"
+    row_count: 5
+    row_ids:
+      - "curriculum-management-syllabus-creation"
+      - "curriculum-management-curriculum-mapping"
+      - "curriculum-management-ai-mapping"
+      - "curriculum-management-gaps-redundancy-reports"
+      - "curriculum-management-accreditation-reporting"
+  - module: "Compliance Management"
+    row_count: 11
+    row_ids:
+      - "compliance-management-document-repository"
+      - "compliance-management-document-status-tracker"
+      - "compliance-management-configurable-by-cohort-and-document"
+      - "compliance-management-integration-with-background-drug-screening"
+      - "compliance-management-integration-with-hipaa-osha-training"
+      - "compliance-management-automated-alerts"
+      - "compliance-management-immunization-notification-history"
+      - "compliance-management-reporting-by-status-and-document"
+      - "compliance-management-graphical-reports"
+      - "compliance-management-faculty-compliance"
+      - "compliance-management-document-review-service"
+# Rows on Sheet2 that no module on the 'Module Based' tab contains.
+rows_not_in_any_module:
+  row_count: 26
+  row_ids:
+    - "system-cloud-based"
+    - "system-compatible-with-computer-tablet-phone"
+    - "system-robust-role-based-access-control-rbac"
+    - "system-multi-program-multi-campus-support"
+    - "system-institutioanl-level-application-access-for-deans-provosts"
+    - "system-public-api-gateway"
+    - "system-student-mobile-app"
+    - "security-soc2-type-ii-certified"
+    - "security-iso-27001-certified"
+    - "security-iso-42001-certified"
+    - "security-public-trust-portal-for-security-transparency"
+    - "security-data-encryption-at-rest-in-transit"
+    - "security-hipaa-compliant"
+    - "security-ferpa-compliant"
+    - "security-tx-ramp-level-2-certified"
+    - "support-onboarding-white-glove-implementation"
+    - "support-onboarding-free-importing-of-data-into-system"
+    - "support-onboarding-knowledgeable-account-manager"
+    - "support-onboarding-program-specific-adoption-success-plan"
+    - "support-onboarding-24-7-live-chat-support"
+    - "support-onboarding-email-ticketing-support"
+    - "support-onboarding-ai-chat-support"
+    - "support-onboarding-robust-help-center-document-videos-faqs"
+    - "support-onboarding-frequent-webinars"
+    - "support-onboarding-in-person-training-workshops"
+    - "support-onboarding-annual-user-conference"

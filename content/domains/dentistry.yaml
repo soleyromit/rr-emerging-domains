@@ -11,6 +11,200 @@ market:
     - "https://adanews.ada.org/new-dentist/2025/june/new-dental-schools-drive-increasing-enrollment/"
     - "https://www.adea.org/docs/default-source/adea-main/publications/adea-trends/adea_trends_2024_25.pdf"
     - "https://www.ada.org/resources/research/health-policy-institute/dental-education"
+
+# Numeric, machine-readable sibling to the prose `market:` block above. The two
+# coexist deliberately and neither replaces the other: `market:` holds the cited
+# narrative a reader reads, `market_sizing:` holds the numbers a scorecard
+# criterion or an integrity check can point at. This is the block
+# content/dissection/dentistry.yaml's "market-size" question names as
+# `domains/dentistry.yaml#market_sizing`, alongside `market/programs/dentistry.yaml`.
+#
+# The figures in `market:` above are real but carry only bare URLs, no registered
+# source_id, and no per-field as-of date — copying them down here would turn
+# uncited prose into uncited machine-readable numbers, which is worse, not
+# better. That reasoning still stands and still governs this block: the numbers
+# below do NOT come from the prose above. Task 3.2 (2026-09-12) populated only
+# the fields a registered source_id can back — the CRM export's Dentistry sheet,
+# extracted row by row into content/market/programs/dentistry.yaml. Every field
+# that would need research beyond that mechanical pass (accredited_programs,
+# enrollment, acv, revenue_potential_usd, adjacency) is still null on purpose,
+# and confidence stays "low".
+market_sizing:
+  as_of: "2026-09-12"          # YYYY-MM-DD — when the numbers below were last set
+  unit: "program"              # the thing being counted in every count below
+  tam:
+    # 968 = the real row count of content/market/programs/dentistry.yaml,
+    # counted from the file. THREE cautions travel with it, all documented at
+    # length in that file's header:
+    #   1. Rows are PROGRAMS, not institutions — one row per CODA-recognized
+    #      program, so the 968 rows sit at 531 distinct institutions.
+    #   2. They are not all predoctoral dentistry, and this is the caution most
+    #      likely to mislead someone reading only this block. By the sheet's own
+    #      Discipline Code column only 45 rows are PREDOC (DDS/DMD); the rest are
+    #      dental hygiene (215), dental assisting (174), advanced/postdoctoral
+    #      residencies (512) and a handful of others. So 968 is NOT comparable to
+    #      the "77 CODA-accredited predoctoral programs" figure in the `market:`
+    #      prose above — different populations, not a discrepancy to be reconciled
+    #      by arithmetic.
+    #      THE RATIO HAZARD, stated because the numbers invite the wrong read:
+    #      968 against 77 is 12.6x, where Pharmacy's equivalent (149 tracked vs
+    #      145 ACPE-accredited) is 1.03x. Set side by side, tam.programs alone
+    #      makes Dentistry look like roughly 6.5x Pharmacy's market. On the
+    #      like-for-like comparison — degree-granting professional schools — it is
+    #      77 against 145, about HALF Pharmacy's. Any cross-domain ranking,
+    #      scorecard weight or revenue model built on tam.programs across domains
+    #      is comparing a 968 that counts every allied and postdoctoral program
+    #      against a 149 that counts only schools, and will be wrong by an order
+    #      of magnitude in Dentistry's favour.
+    #   3. It is not national. The sheet's 956-row directory block runs A-to-Z by
+    #      institution name but holds no row at all for 17 states (ND, OH, OK,
+    #      OR, PA, RI, SC, SD, TN, TX, UT, VA, VT, WA, WI, WV, WY). A state
+    #      filter was evidently applied before the paste; the sheet does not say
+    #      so, and nothing here guesses at what was dropped.
+    programs: 968
+    basis: "All 968 rows of the CRM Dentistry sheet = every CODA program type, not 968 dental schools: only 45 are predoctoral (77 nationally); 531 institutions."
+    source_id: "crm-export-new-logo-grid-2026"
+    # Added by Task 3.4, on the Task 3.2 review's recommendation. Caution 2 above
+    # and `basis` both already state in PROSE that only 45 of the 968 rows are
+    # predoctoral. This makes that one number machine-readable, so a future
+    # scorecard metric_ref or app page can read the comparable figure instead of
+    # parsing a comment — the ratio hazard above is only defused if the honest
+    # denominator is reachable by a program, not just by a careful reader.
+    #
+    # 45 = rows whose Discipline Code is "PREDOC" on the same CRM sheet that
+    # `programs: 968` is counted from, under the same already-registered
+    # source_id. No new research and no new source: this is a subset of a number
+    # this block already publishes, which is what keeps it inside a mechanical
+    # task's scope.
+    #
+    # This is the field to compare across domains — 45 predoctoral DDS/DMD
+    # programs against Pharmacy's 145 accredited PharmD programs — NOT
+    # tam.programs. Note it is still not the national figure: the 77 in `basis`
+    # is the national CODA count, and 45 is what survives this export's 17-state
+    # truncation (caution 3), so 45 is a floor, not a census.
+    #
+    # DELIBERATELY Dentistry-only. DO's and Medicine's tam.programs are already
+    # single-program-type counts against real anchors, so neither needs a subset
+    # field; adding one there would imply a mix they do not have.
+    #
+    # LIMITATION: check_market_sizing_integrity() validates an explicit list of
+    # field paths and this is not on it, so the count is carried but unchecked —
+    # its source_id is NOT verified to resolve. Teaching the checker about it is
+    # a schema change the Task 3.2 review scoped to its own task.
+    predoctoral_programs:
+      count: 45
+      code: "PREDOC"
+      source_id: "crm-export-new-logo-grid-2026"
+  accredited_programs:
+    # Still null, on purpose, and this is the field where that matters most for
+    # Dentistry. The `market:` prose above cites ADA HPI / ADEA for 77
+    # CODA-accredited predoctoral programs, but with bare URLs and no registered
+    # source_id, and Task 3.2 was a mechanical extraction that did not do the
+    # sourcing pass registering that would need. Filling this from the CRM
+    # sheet's own 917 "approved" rows was the other option and was rejected: it
+    # would restate tam from the same truncated export under a field name that
+    # implies accreditor authority. Registering the ADA HPI source is the work
+    # that fills this in, and it will need a variance_note.
+    count: null
+    qualifier: null            # e.g. "accredited PharmD programs" — stays null
+                               # while accredited_programs.count is null
+    source_id: null
+    variance_note: null        # <=200 soft / 400 hard chars — only when tam and
+                               # accredited_programs genuinely disagree
+  sam:
+    programs: 956
+    basis: "tam.programs minus current_clients.count minus churned_clients.count — every Dentistry row not already won or previously lost. 968 - 9 - 3 = 956."
+    derived_from: ["tam", "current_clients", "churned_clients"]
+  som:
+    programs: null
+    basis: "Not sized — no named target list or win-rate assumption exists yet"
+  enrollment:
+    students: null
+    as_of_year: null
+    trend: null                # growing | stable | declining | recovering | unknown
+    yoy_pct: null
+    source_id: null
+  current_clients:
+    # The 9 rows the Dentistry sheet's Client Y/N column marks "Yes". `named`
+    # holds content/market/programs/dentistry.yaml slugs, not institution names.
+    #
+    # 9 ROWS, 8 INSTITUTIONS: rows 3 and 8 are both Northern Arizona University
+    # (row 8 adds its Dental Hygiene detail), so the list below has nine entries
+    # at eight schools. The count stays in rows because tam does.
+    #
+    # CONFLICTS, recorded rather than resolved — three of these nine rows are
+    # contradicted elsewhere in the same sheet. Row 5 "The University of Texas
+    # Health Science Center at Houston" is a client while row 972 "UTHealth
+    # Houston School of Dentistry" is churned, and by name those are one
+    # university. Row 6 "University of the Pacific" is a client while the five
+    # "University of the Pacific Arthur A. Dugoni School of Dentistry" rows are
+    # "No". Row 11 "University of Florida - Dentistry" is a client while the two
+    # University of Florida dental rows are "No". Each row follows its own cell;
+    # a pass with CRM access should settle whether the real figure is 9, 8, or
+    # fewer.
+    count: 9
+    named:
+      - "northern-arizona-university-dentistry"
+      - "northern-arizona-university-dh"
+      - "oregon-health-sciences-university-dentistry"
+      - "the-university-of-texas-health-science-center-at-houston-dentistry"
+      - "university-of-the-pacific-dentistry"
+      - "hinds-community-college-dentistry"
+      - "texas-a-and-m-university-dentistry"
+      - "university-of-missouri-at-kansas-city-dentistry"
+      - "university-of-florida-dentistry-dentistry"
+    source_id: "crm-export-new-logo-grid-2026"
+  churned_clients:
+    # The 3 rows marked "Previous client" (sheet rows 972-974), at 3 distinct
+    # institutions. See the Houston conflict noted above: one of these three is
+    # also carried as a current client under a different name.
+    count: 3
+    named:
+      - "uthealth-houston-school-of-dentistry-dentistry"
+      - "mgh-institute-of-health-professions-dentistry"
+      - "louisiana-state-university-health-sciences-center-new-orleans-dentistry"
+    source_id: "crm-export-new-logo-grid-2026"
+  penetration_pct: 0.9         # 9 / 968 * 100 = 0.93, rounded to one decimal.
+                               # Both halves are rows, not institutions; on
+                               # institutions it would be 8 / 531 = 1.5
+  acv:
+    value_usd: null
+    basis: "Not sourced — no pricing artifact exists in this repo"
+    confidence: "unknown"      # unknown | low | medium | high
+  revenue_potential_usd: null  # HARD RULE: may only be non-null when
+                               # acv.value_usd is non-null and sourced. A revenue
+                               # number standing on an unsourced ACV is a guess
+                               # wearing a dollar sign
+  adjacency:
+    # Still null, deliberately, and for Dentistry the reason is stronger than it
+    # was for DO. Only 40 of the registry's 968 rows carry a non-empty
+    # other_disciplines_on_campus list, and the 928 empty ones are three
+    # different things: 259 confirmed negatives, 13 grid-matched rows whose Logo
+    # Grid row is the Excel error "#N/A" across its discipline columns, and 656
+    # rows whose institution never matched a grid row at all under the
+    # exact-name matching this task used. A cross-sell count built on that would
+    # publish two kinds of unknown as confirmed no-overlap. The hand pass that
+    # resolves institution-name variants is what unblocks this field.
+    claim: null                # <=150 soft / 300 hard chars — one line, sourced.
+                               # The cross-discipline overlap claim, not the case
+                               # for it: evidence goes to source_id
+    cross_discipline_overlap_institutions: null
+    source_id: null
+  confidence: "low"            # low | medium | high — "low" is the correct,
+                               # honest value for an all-null block
+
+# Shape only, no content yet: where this domain's programs sit inside an
+# institution and who actually signs. Populated alongside market_sizing in
+# Phase 2/3 — an empty buying_roles list means nobody has researched it, which
+# is a countable state, not a missing field.
+org_structure:
+  typical_parent: null         # <=200 soft / 400 hard chars, once known
+  buying_roles: []             # [{persona_ref, title_in_domain, decision_role, note?}]
+                               # persona_ref  — a content/personas/ file slug
+                               # decision_role — economic-buyer | champion | user
+                               #                 | blocker | influencer
+                               # note          — optional, <=200 soft / 400 hard
+  sources: []
 standards_bodies:
   - name: "CODA (Commission on Dental Accreditation)"
     type: "institutional accreditor — accredits predoctoral (DDS/DMD), advanced/postdoctoral (specialty residency, GPR, AEGD), and allied dental education programs; recognized by the U.S. Dept. of Education."
@@ -59,6 +253,10 @@ distinctive_pain_points:
     source: "https://www.dental.upenn.edu/admissions-academics/dmd-program/clinical-education/ (Penn Dental Medicine, DMD Clinical Education) and https://dental.buffalo.edu/education/dds-program1/about-the-program-dds/program-details/third-year.html (Univ. at Buffalo, D3 year clinical structure)"
   - claim: "Beyond the national INBDE, most U.S. jurisdictions still require a separate hands-on regional clinical licensure exam (ADEX/CDCA-WREB), which was historically performed on live patients and only shifted toward standardized manikin-based testing (CompeDont) starting in 2020 — an extra licensure-exam layer with its own scheduling/logistics that allied-health licensure (e.g., NCLEX) does not have."
     source: "https://adextesting.org/adex-dental/ and https://www.cdcaexams.org/category/dental-licensure/ (American Board of Dental Examiners / CDCA-WREB)"
+  - claim: "ADDED 2026-09-10: Federal loan changes (OBBBA) eliminate Grad PLUS for dental students starting a program on/after July 1, 2026, capping federal professional-program borrowing at $50,000/year and $200,000 aggregate — well below typical DDS/DMD cost of attendance — just as enrollment growth (new schools, 28,925 total) is raising the number of students who need to finance it."
+    source: "https://www.adea.org/godental/discover-dentistry/dental-blogs/financial-aid-advice/financial-aid-advice/2026/05/26/important-update-on-borrowing-for-dental-school and https://www.ada.org/resources/research/health-policy-institute/dental-education/federal-loan-caps-on-dental-education"
+  - claim: "ADDED 2026-09-10: CODA's 2026 fee schedule raised predoctoral annual accreditation fees 20% (to $10,260) and application fees 10% (to $74,140), with the annual fee doubled in a program's site-visit year — a rising direct cost of the same continuous self-study evidence Standard 1-2 requires programs to maintain."
+    source: "https://www.mouthhealthy.org/-/media/project/ada-organization/ada/coda/files/coda_communicator.pdf (CODA Communicator, Winter/Spring 2025, 'Finances' section)"
 sources:
   - "https://www.adea.org/detail-pages/blog/adea---news-and-events/2026/04/07/adea-releases-new-data-on-u.s.-dental-school-applicants-and-enrollees--2025-entering-class"
   - "https://adanews.ada.org/new-dentist/2025/june/new-dental-schools-drive-increasing-enrollment/"
@@ -79,3 +277,6 @@ sources:
   - "https://pmc.ncbi.nlm.nih.gov/articles/PMC11667986/"
   - "https://pmc.ncbi.nlm.nih.gov/articles/PMC4939555/"
   - "https://www.thescda.org/gpr-programs"
+  - "https://www.adea.org/godental/discover-dentistry/dental-blogs/financial-aid-advice/financial-aid-advice/2026/05/26/important-update-on-borrowing-for-dental-school"
+  - "https://www.ada.org/resources/research/health-policy-institute/dental-education/federal-loan-caps-on-dental-education"
+  - "https://www.mouthhealthy.org/-/media/project/ada-organization/ada/coda/files/coda_communicator.pdf"

@@ -8,12 +8,20 @@ import { KeyFindingList } from "@/components/key-finding-list";
 import { DisciplineVarianceList } from "@/components/discipline-variance-list";
 import { FlowDetail } from "@/components/flow-detail";
 import { FieldBlock } from "@/components/field-block";
+import { stripFileCitations } from "@/lib/strip-file-citations";
 import type { Flow, JourneyStage } from "@/lib/content";
 
 // Every long-form prose field in a stage (the four original narrative fields, plus
 // domain/discipline variance) gets the SAME treatment via FieldBlock: a one-line clamp
 // with a tooltip, expandable on demand. Nothing renders as an unclamped paragraph,
 // anywhere on this page.
+//
+// Every one of those fields also goes through stripFileCitations first, for the same
+// reason flow-step-detail.tsx and related-flows-preview.tsx do it: journey stage prose
+// carries inline "(../competitors/core-elms.yaml)"-style source citations, which are
+// correct at the content layer per ARCHITECTURE.md's citation rule and a raw-filename
+// violation the moment they render as reader-facing text. Applied to ALL stage prose,
+// not just the fields that happen to carry a citation today.
 
 export function JourneyStageSection({
   stage,
@@ -35,24 +43,24 @@ export function JourneyStageSection({
       ) : null}
 
       <Stack gap={3}>
-        <FieldBlock label="Current state in Prism" text={stage.current_state_in_prism} />
-        <FieldBlock label="Pain / gap" text={stage.pain_or_gap} />
-        <FieldBlock label="Accreditation link" text={stage.accreditation_link} />
-        <FieldBlock label="Competitor comparison" text={stage.competitor_comparison} />
+        <FieldBlock label="Current state in Prism" text={stripFileCitations(stage.current_state_in_prism)} />
+        <FieldBlock label="Pain / gap" text={stripFileCitations(stage.pain_or_gap)} />
+        <FieldBlock label="Accreditation link" text={stripFileCitations(stage.accreditation_link)} />
+        <FieldBlock label="Competitor comparison" text={stripFileCitations(stage.competitor_comparison)} />
       </Stack>
 
       {stage.domain_variance || stage.discipline_variance || stage.discipline_notes?.length ? (
         <Stack gap={3}>
           <FieldBlock
-            label="Domain variance (DO · Pharmacy · Dentistry · Medicine)"
-            text={stage.domain_variance}
+            label="Domain variance (Pharmacy · DO · Dentistry · Medicine)"
+            text={stripFileCitations(stage.domain_variance)}
           />
           {stage.discipline_notes?.length ? (
             <DisciplineVarianceList notes={stage.discipline_notes} />
           ) : (
             <FieldBlock
               label="Discipline variance (PT/PTA · OT/OTA · PA · SLP · Nursing · Social Work · Teacher Ed · CRNA)"
-              text={stage.discipline_variance}
+              text={stripFileCitations(stage.discipline_variance)}
             />
           )}
         </Stack>
