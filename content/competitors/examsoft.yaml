@@ -19,7 +19,7 @@ slug: "examsoft"
 # documented in depth by a fetched ACPE self-study; Dentistry by a fetched dental-school
 # procedures page; Medicine and DO rest on vendor case-study titles surfaced in search
 # (Touro College of Osteopathic Medicine) whose pages now 404 — real, but thinner.
-domains_served: ["DO", "Pharmacy", "Dentistry", "Medicine"]
+domains_served: ["DO", "Pharmacy", "Dentistry", "MD"]
 category: "Secure exam delivery, proctoring, and assessment analytics (item-level data tagged to outcomes and accreditation standards)"
 company:
   founded: "1998 (ExamSoft Worldwide, Inc.)"

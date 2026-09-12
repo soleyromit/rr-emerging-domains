@@ -25,7 +25,7 @@ slug: "influx"
 # nursing, medicine, business and education. Pharmacy is the only one of this repo's four
 # tracked domains with named customers and a dedicated product page; Medicine is listed by
 # the vendor without a named customer found. No DO- or dentistry-specific evidence found.
-domains_served: ["Pharmacy", "Medicine"]
+domains_served: ["Pharmacy", "MD"]
 category: "Cross-system academic data aggregation, learning analytics and accreditation reporting — an analytics layer over other vendors' systems, not a system of record"
 company:
   founded: "2015"
