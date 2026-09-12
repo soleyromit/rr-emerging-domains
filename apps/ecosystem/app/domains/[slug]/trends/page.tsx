@@ -13,9 +13,11 @@ import { MaturityScale } from "@/components/maturity-scale";
 import { FieldBlock } from "@/components/field-block";
 import { SourceList } from "@/components/source-list";
 import { CompetitorLogo } from "@/components/competitor-logo";
+import { Link } from "@astryxdesign/core/Link";
 import { getAccreditorTiers, getTrendsForDomain, type ResolvedTrendEntry, type KeyFinding } from "@/lib/content";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
 import { humanizeCompetitorSlug } from "@/lib/competitor-meta";
+import { dissectNodeHref, dissectionNodeId, dissectionNodeIds } from "@/lib/dissection-links";
 
 // Market/regulatory trends per domain, the demand-side sibling of the Standards
 // tab: standards are what the accreditor already requires, trends are what the
@@ -79,6 +81,12 @@ export default async function DomainTrendsPage({ params }: { params: Promise<{ s
     detail: leadSentence(t.detail),
   }));
 
+  // A trend is only ON the map when it has at least one edge there — a competitor that
+  // addresses it, or an exxat_ref that resolves to a core pillar. Roughly half do not
+  // (7 of Pharmacy's 14, 3 of DO's 8), and buildDissectionGraph drops the rest, so the
+  // footer link below is conditional rather than rendered for every card.
+  const dissectNodeIds = dissectionNodeIds(slug, entry.domain);
+
   const shipped = trends.filter((t) => t.exxat_status === "shipped").length;
   const contested = trends.filter(
     (t) => t.exxat_status !== "shipped" && t.addressedByCompetitors.length > 0
@@ -113,7 +121,9 @@ export default async function DomainTrendsPage({ params }: { params: Promise<{ s
         <Stack gap={3}>
           <Heading level={3}>Trend detail</Heading>
           <CollapsibleGroup type="multiple" hasDividers density="compact">
-            {trends.map((t) => (
+            {trends.map((t) => {
+              const mapHref = dissectNodeHref(slug, dissectNodeIds, dissectionNodeId.trend(t.id));
+              return (
               <Collapsible key={t.id} value={t.id} defaultIsOpen={false} trigger={t.trend}>
                 <Stack gap={3}>
                   <Stack gap={1.5}>
@@ -156,9 +166,19 @@ export default async function DomainTrendsPage({ params }: { params: Promise<{ s
                   )}
 
                   <SourceList sources={t.sources} />
+
+                  {/* Same "Text label xsm + Link" idiom as StandardDetail's link row. */}
+                  {mapHref ? (
+                    <Text type="label" color="secondary" size="xsm">
+                      <Link href={mapHref} color="accent" hasUnderline>
+                        See this trend on the Dissection map →
+                      </Link>
+                    </Text>
+                  ) : null}
                 </Stack>
               </Collapsible>
-            ))}
+              );
+            })}
           </CollapsibleGroup>
         </Stack>
       </Section>

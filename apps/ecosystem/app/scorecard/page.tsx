@@ -7,7 +7,7 @@ import { Banner } from "@astryxdesign/core/Banner";
 import { PageHeader } from "@/components/page-header";
 import { ScorecardChart } from "@/components/charts/scorecard-chart";
 import { ScorecardMatrix } from "@/components/scorecard-matrix";
-import { getScorecard, computeWeightedTotals, scorecardDomains } from "@/lib/content";
+import { getScorecard, computeWeightedTotals, scorecardDomains, listDissectionDomains } from "@/lib/content";
 
 export default function ScorecardPage() {
   const scorecard = getScorecard();
@@ -25,6 +25,10 @@ export default function ScorecardPage() {
   const domains = scorecardDomains(scorecard);
   const totals = computeWeightedTotals(scorecard, domains);
   const isPlaceholder = scorecard.criteria.every((c) => domains.every((d) => (c.scores?.[d] ?? 0) === 0));
+  // Derived, not assumed: all four scored domains happen to have a dissection manifest
+  // today, but a fifth column could be added to where-to-play.yaml tomorrow and its
+  // header must not link to a map that does not exist.
+  const dissectedSlugs = listDissectionDomains().map((d) => d.slug);
 
   return (
     <Stack gap={0}>
@@ -95,7 +99,7 @@ export default function ScorecardPage() {
               every domain&apos;s rationale on that criterion.
             </Text>
           </Stack>
-          <ScorecardMatrix criteria={scorecard.criteria} domains={domains} />
+          <ScorecardMatrix criteria={scorecard.criteria} domains={domains} dissectedSlugs={dissectedSlugs} />
         </Stack>
       </Section>
     </Stack>

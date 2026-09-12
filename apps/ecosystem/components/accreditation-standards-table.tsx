@@ -44,10 +44,17 @@ export function AccreditationStandardsTable({
   standardsCrosswalk,
   slug,
   hasWinBrief = false,
+  dissectHrefByElementId,
 }: {
   standardsCrosswalk: StandardsCrosswalkForDomain;
   slug: string;
   hasWinBrief?: boolean;
+  /** element_id -> a `?node=standard:…` deep link that is known to resolve in this
+   * domain's Dissection graph. Sparse on purpose: an element with no entry has no node
+   * on the map, and its panel shows no map link. Resolved server-side by the page,
+   * because the graph is built from content/ through node:fs and cannot be reached
+   * from this client component. */
+  dissectHrefByElementId?: Record<string, string>;
 }) {
   const rows: StandardRow[] = standardsCrosswalk.rows.map((r) => ({ _id: r.element_id, row: r }));
 
@@ -55,7 +62,14 @@ export function AccreditationStandardsTable({
     rowId: (item) => item._id,
     // Element + Exxat + Prism fit + one per competitor.
     columnCount: 3 + standardsCrosswalk.competitors.length,
-    renderPanel: (item) => <StandardDetail row={item.row} slug={slug} hasWinBrief={hasWinBrief} />,
+    renderPanel: (item) => (
+      <StandardDetail
+        row={item.row}
+        slug={slug}
+        hasWinBrief={hasWinBrief}
+        dissectHref={dissectHrefByElementId?.[item.row.element_id]}
+      />
+    ),
   });
 
   return (
@@ -150,8 +164,8 @@ export function AccreditationStandardsTable({
           width: pixel(140),
           // A dozen-plus "Not yet researched" pills per row, repeated down every
           // row, drowns out the handful of real ratings a sparsely-researched
-          // domain actually has — same "—" for an absent value used by
-          // domain-feature-comparison-table.tsx's competitor cells. The colored
+          // domain actually has — same "—" for an absent value that
+          // comparison-matrix.tsx uses for a missing cell. The colored
           // Badge stays reserved for an actual finding, so a real rating still
           // pops against a row of dashes.
           renderCell: (r: StandardRow) => {

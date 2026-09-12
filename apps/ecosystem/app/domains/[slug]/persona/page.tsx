@@ -15,6 +15,7 @@ import { SentenceList } from "@/components/sentence-list";
 import { FieldBlock } from "@/components/field-block";
 import { getAccreditorTiers, getDomainHubData, resolveRelatedFlows } from "@/lib/content";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
+import { dissectNodeHref, dissectionNodeId, dissectionNodeIds } from "@/lib/dissection-links";
 
 export default async function DomainPersonaPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -46,10 +47,34 @@ export default async function DomainPersonaPage({ params }: { params: Promise<{ 
   // The three sections below (pressure -> tools -> switching trigger) are a
   // causal sequence today rendered as unlinked cards; this connects them as
   // one thread, each node jumping to its real section rather than restating it.
+  //
+  // Phase 6 adds a fourth, terminal node that leaves the page: this same persona
+  // as an entity on the Dissection map, where the standards that cite it and the
+  // competitors that serve it are edges rather than prose. It is the one step whose
+  // href is absolute rather than an in-page anchor, which is why `href` is carried on
+  // the step instead of built from `id` at the render site.
+  //
+  // Conditional on the node really existing: a discipline persona is only on the map
+  // when some standard's persona_relevance or use-case audience names its file, which
+  // is true for Pharmacy and Dentistry and NOT for DO or Medicine (whose graphs carry
+  // only role-* persona nodes). Where it does not exist the thread simply ends at the
+  // switching trigger, as it did before.
+  const disciplinePersonaMapHref = dissectNodeHref(
+    slug,
+    dissectionNodeIds(slug, entry.domain),
+    dissectionNodeId.persona(`discipline-${slug}`)
+  );
+
   const narrativeSteps = [
-    { id: "pressure", label: "Today's pressure", count: persona.accreditation_pressure?.length ?? 0 },
-    { id: "tools", label: "Current tools", count: persona.current_tools?.length ?? 0 },
-    { id: "trigger", label: "What triggers switching", count: persona.switching_trigger ? 1 : 0 },
+    { id: "pressure", label: "Today's pressure", href: "#pressure", count: persona.accreditation_pressure?.length ?? 0 },
+    { id: "tools", label: "Current tools", href: "#tools", count: persona.current_tools?.length ?? 0 },
+    { id: "trigger", label: "What triggers switching", href: "#trigger", count: persona.switching_trigger ? 1 : 0 },
+    {
+      id: "map",
+      label: "Where they sit on the map",
+      href: disciplinePersonaMapHref ?? "",
+      count: disciplinePersonaMapHref ? 1 : 0,
+    },
   ].filter((s) => s.count > 0);
 
   return (
@@ -65,7 +90,7 @@ export default async function DomainPersonaPage({ params }: { params: Promise<{ 
             <Stack direction="horizontal" wrap="nowrap" isScrollable gap={0} vAlign="stretch">
               {narrativeSteps.map((step, i) => (
                 <Stack key={step.id} direction="horizontal" gap={0} vAlign="center" style={{ flexShrink: 0 }}>
-                  <Link href={`#${step.id}`}>
+                  <Link href={step.href}>
                     <Card variant="muted" padding={2}>
                       <Stack gap={0.5} width={160}>
                         <Text type="label" color="secondary" size="xsm">

@@ -7,6 +7,7 @@ import { Icon } from "@astryxdesign/core/Icon";
 import { Badge } from "@astryxdesign/core/Badge";
 import { Tooltip } from "@astryxdesign/core/Tooltip";
 import { Collapsible } from "@astryxdesign/core/Collapsible";
+import { ClickableCard } from "@astryxdesign/core/ClickableCard";
 import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList";
 import { Takeaway } from "@/components/takeaway";
 import { ExxatGapAnswer } from "@/components/exxat-gap-answer";
@@ -23,8 +24,11 @@ import {
   listDomains,
   getJourney,
   getJourneyStagesForDiscipline,
+  getDissectionManifest,
+  dissectionAnsweredCount,
   type AccreditationDoc,
 } from "@/lib/content";
+import { dissectHref } from "@/lib/dissection-links";
 
 // Keyed by route slug -> {journey slug, the exact key_findings/discipline_notes
 // `subject` string it was tagged with}. Every one of the 5 content/journeys/*.yaml
@@ -180,6 +184,22 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
     ? getJourneyStagesForDiscipline(scenarioConfig.journeySlug, scenarioConfig.subject)
     : [];
 
+  // Overview -> Dissection. Rendered ONLY where a manifest exists (4 of 13 routed
+  // domains today): the Dissection tab is a real page either way, but for the other 9
+  // it is a named "not dissected yet" empty state, and a card here advertising a
+  // six-question answer that does not exist would be exactly the overpromise this
+  // repo's content rules forbid. The tab itself stays in the nav for all of them.
+  //
+  // The card's own copy is DERIVED from the manifest — how many questions are really
+  // answered — so it never claims more coverage than the page it links to shows.
+  const dissectionManifest = getDissectionManifest(slug);
+  const dissectionSummary = dissectionManifest
+    ? {
+        answered: dissectionAnsweredCount(dissectionManifest),
+        total: dissectionManifest.questions.length,
+      }
+    : null;
+
   if (!tierEntry) return null;
 
   return (
@@ -195,6 +215,18 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
             <MetadataListItem label="Standards tracked">{standardsCrosswalk?.rows.length ?? 0}</MetadataListItem>
             <MetadataListItem label="Feature pillars rated">{featureComparison.rows.length}</MetadataListItem>
           </MetadataList>
+          {dissectionSummary ? (
+            <ClickableCard href={dissectHref(slug)} label="Dissection">
+              <Stack gap={1.5}>
+                <Text type="body" weight="semibold">
+                  Dissection — the six-question analysis of {entry.domain}
+                </Text>
+                <Text type="supporting">
+                  {`${dissectionSummary.answered} of ${dissectionSummary.total} questions answered, with the incumbent set, the researched feature matrix and a topology map of how this domain's standards, competitors, pillars, personas and trends connect.`}
+                </Text>
+              </Stack>
+            </ClickableCard>
+          ) : null}
         </Stack>
       </Section>
 

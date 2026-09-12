@@ -24,6 +24,7 @@ import { getAccreditorTiers, getDomainHubData, getScorecard, computeWeightedTota
 import type { StandardsCrosswalkCompetitorCell } from "@/lib/content";
 import { getSalesBrief } from "@/lib/sales-brief";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
+import { dissectNodeHref, dissectionNodeId, dissectionNodeIds } from "@/lib/dissection-links";
 import { extractLead } from "@/lib/markdown-sections";
 
 function bestRated(cells: StandardsCrosswalkCompetitorCell[]): StandardsCrosswalkCompetitorCell | undefined {
@@ -100,6 +101,12 @@ export default async function DomainWinPage({ params }: { params: Promise<{ slug
   const gapRows = (hub.standardsCrosswalk?.rows ?? [])
     .filter((r) => ["gap", "partial"].includes((r.exxat_compliance ?? "").toLowerCase()))
     .slice(0, 3);
+
+  // A gap card links to its own standard on the Dissection map — but only where that
+  // element really is a node. The map's standards come from the competitor-ratings
+  // lens, not from this crosswalk, so an unrated element (4 of Pharmacy's 20) has
+  // nothing to open and gets no link rather than a dead one.
+  const dissectNodeIdSet = dissectionNodeIds(slug, entry.domain);
 
   const highThreatCompetitors = (hub.landscapeEntry?.competitors ?? [])
     .slice()
@@ -221,6 +228,11 @@ export default async function DomainWinPage({ params }: { params: Promise<{ slug
               {gapRows.map((row) => {
                 const rated = row.competitors.filter((c) => c.rating && c.rating !== "unresearched");
                 const best = bestRated(rated);
+                const mapHref = dissectNodeHref(
+                  slug,
+                  dissectNodeIdSet,
+                  dissectionNodeId.standard(entry.domain, row.element_id)
+                );
                 return (
                   <Card key={row.element_id} variant="default">
                     <Stack gap={1.5}>
@@ -244,6 +256,13 @@ export default async function DomainWinPage({ params }: { params: Promise<{ slug
                           </Text>
                           <StandardsRatingBadge rating={best.rating} />
                         </Stack>
+                      ) : null}
+                      {mapHref ? (
+                        <Text type="label" color="secondary" size="xsm">
+                          <Link href={mapHref} color="accent" hasUnderline>
+                            Who else this touches →
+                          </Link>
+                        </Text>
                       ) : null}
                     </Stack>
                   </Card>

@@ -13,6 +13,7 @@ import { CoverageGapsCallout } from "@/components/coverage-gaps-callout";
 import { FitDistributionChart } from "@/components/charts/fit-distribution-chart";
 import { getAccreditorTiers, getDomainHubData, getTrendsForDomain, hasSalesBrief } from "@/lib/content";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
+import { dissectNodeHref, dissectionNodeId, dissectionNodeIds } from "@/lib/dissection-links";
 
 export default async function DomainStandardsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -21,6 +22,19 @@ export default async function DomainStandardsPage({ params }: { params: Promise<
 
   const { standardsCrosswalk, accreditationDoc } = getDomainHubData(entry.domain, slug);
   const trendCount = getTrendsForDomain(entry.domain).length;
+
+  // One `?node=standard:…` link per element that really IS a node on this domain's
+  // Dissection map. Built here rather than in the table because the graph is read from
+  // content/ on the server and the table is a client component. Sparse by construction:
+  // an element the competitor-ratings lens never rates has no node, gets no entry, and
+  // its detail panel shows no map link.
+  const dissectNodeIds = dissectionNodeIds(slug, entry.domain);
+  const dissectHrefByElementId = Object.fromEntries(
+    (standardsCrosswalk?.rows ?? []).flatMap((row) => {
+      const href = dissectNodeHref(slug, dissectNodeIds, dissectionNodeId.standard(entry.domain, row.element_id));
+      return href ? [[row.element_id, href] as const] : [];
+    })
+  );
 
   return (
     <Section padding={6} dividers={["bottom"]}>
@@ -109,6 +123,7 @@ export default async function DomainStandardsPage({ params }: { params: Promise<
               standardsCrosswalk={standardsCrosswalk}
               slug={slug}
               hasWinBrief={hasSalesBrief(slug)}
+              dissectHrefByElementId={dissectHrefByElementId}
             />
           </>
         )}

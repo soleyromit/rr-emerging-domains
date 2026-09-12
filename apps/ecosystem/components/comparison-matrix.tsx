@@ -15,9 +15,9 @@ import { useTableDetailPanel } from "@/lib/table-detail-panel";
 // The shape it exists for: "N subjects rated against M competitors/domains, and
 // behind every rating there is evidence someone should be able to open." The app
 // already had three hand-rolled versions of that shape (scorecard-table.tsx,
-// domain-feature-comparison-table.tsx, accreditation-standards-table.tsx), each
-// re-solving the row/column/cell plumbing and only one of them (accreditation)
-// solving the drill-down at all. This is that shape, once.
+// domain-feature-comparison-table.tsx and accreditation-standards-table.tsx — the
+// first two since retired), each re-solving the row/column/cell plumbing and only
+// one of them (accreditation) solving the drill-down at all. This is that shape, once.
 //
 // It knows NOTHING about scorecards, standards, competitors, or any content
 // vocabulary: the caller supplies the axes, the cell values, the cell renderer,
@@ -370,9 +370,8 @@ export function ComparisonMatrix<RowId extends string, ColId extends string, TVa
       renderCell: (item: MatrixTableRow<RowId>) => {
         const cell = cellIndex.get(cellKey(item._id, column.id));
         if (!cell) {
-          // Same "—" an absent value gets in domain-feature-comparison-table.tsx
-          // and accreditation-standards-table.tsx: a real rating stays visually
-          // loud because the gaps around it are quiet.
+          // Same "—" an absent value gets in accreditation-standards-table.tsx: a
+          // real rating stays visually loud because the gaps around it are quiet.
           return (
             emptyCell ?? (
               <Text type="supporting" size="sm" color="secondary">

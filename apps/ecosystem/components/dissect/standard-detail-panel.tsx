@@ -61,10 +61,24 @@ export function StandardDetail({
   row,
   slug,
   hasWinBrief,
+  dissectHref,
 }: {
   row: StandardsCrosswalkRow;
   slug: string;
   hasWinBrief: boolean;
+  /** A `/domains/{slug}/dissect?node=standard:…` link for THIS element, added to the
+   * link row below (Phase 6 cross-linking).
+   *
+   * Opt-in per call site rather than derived here, for two reasons. First, this panel
+   * renders on two surfaces and one of them IS the map: the topology graph opens this
+   * same component for a `standard` node, where "View in Dissection map" would be a
+   * link back to the panel the reader is already looking at — so that caller passes
+   * nothing. Second, not every standard is a node: buildDissectionGraph only creates
+   * one from a row in the competitor-ratings lens, so 4 of Pharmacy's 20 crosswalk
+   * elements have no node at all. The Standards tab resolves that against the real
+   * graph and passes a URL only where it will actually open something; `undefined`
+   * renders no link rather than a promise the map cannot keep. */
+  dissectHref?: string;
 }) {
   const hasRated = row.competitors.some((c) => c.rating && c.rating !== "unresearched");
   const ratedCount = row.competitors.filter((c) => c.rating && c.rating !== "unresearched").length;
@@ -318,6 +332,13 @@ export function StandardDetail({
           this row's typography consistent with every other link-out in the
           app rather than introducing a one-off size/weight here. */}
       <Stack direction="horizontal" gap={3} wrap="wrap">
+        {dissectHref ? (
+          <Text type="label" color="secondary" size="xsm">
+            <Link href={dissectHref} color="accent" hasUnderline>
+              View in Dissection map →
+            </Link>
+          </Text>
+        ) : null}
         <Text type="label" color="secondary" size="xsm">
           <Link href={`/domains/${slug}/trends`} color="accent" hasUnderline>
             Domain trends →

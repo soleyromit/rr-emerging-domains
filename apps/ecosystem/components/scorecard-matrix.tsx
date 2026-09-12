@@ -2,10 +2,12 @@
 
 import { Stack } from "@astryxdesign/core/Stack";
 import { Text } from "@astryxdesign/core/Text";
+import { Link } from "@astryxdesign/core/Link";
 import { Collapsible, CollapsibleGroup } from "@astryxdesign/core/Collapsible";
 import { ComparisonMatrix } from "@/components/comparison-matrix";
 import { FieldBlock } from "@/components/field-block";
 import { Takeaway } from "@/components/takeaway";
+import { matchDisciplineMeta } from "@/lib/discipline-meta";
 import type { ScorecardCriterion } from "@/lib/content";
 
 // The scorecard's "Scoring detail" grid, expressed as the app's generic
@@ -46,10 +48,16 @@ function scoreStatus(score: number): "success" | "info" | "warning" {
 export function ScorecardMatrix({
   criteria,
   domains,
+  dissectedSlugs = [],
 }: {
   criteria: ScorecardCriterion[];
   domains: string[];
+  /** Route slugs with a dissection manifest — those columns' headers become links into
+   * that domain's Dissection tab. Passed in rather than derived here: the manifests are
+   * read from content/ on the server and this is a client component. */
+  dissectedSlugs?: string[];
 }) {
+  const dissected = new Set(dissectedSlugs);
   const rowAxis = criteria.map((c) => ({
     id: c.name,
     label: c.name,
@@ -58,7 +66,34 @@ export function ScorecardMatrix({
     sublabel: `weight ${pct(c.weight ?? 0)}`,
   }));
 
-  const columnAxis = domains.map((d) => ({ id: d, name: d }));
+  // `name` stays the plain domain string — ComparisonMatrix uses it verbatim in the
+  // drill-down panel's own header and in every sentence rowPanelTakeaway builds, so a
+  // ReactNode there would render "[object Object] scores 4/5". Only `header`, the
+  // optional rich slot the component already exposes for exactly this, becomes a Link.
+  //
+  // Done entirely in this caller: ComparisonMatrixColumn has no `href` field and did
+  // not need one. Adding a prop would have put a link policy inside a shared component
+  // that three other pages render, to serve one of them.
+  //
+  // textWrap="wrap" for the same reason accreditation-standards-table.tsx's composite
+  // competitor headers set it — a header that is no longer a bare string does not
+  // inherit Table's own header-cell wrapping, and "Dentistry" in a narrow column
+  // overflows rather than wraps without it.
+  const columnAxis = domains.map((d) => {
+    const slug = matchDisciplineMeta(d)?.slug;
+    return {
+      id: d,
+      name: d,
+      header:
+        slug && dissected.has(slug) ? (
+          <Link href={`/domains/${slug}/dissect`} color="accent" hasUnderline>
+            <Text type="body" weight="semibold" textWrap="wrap">
+              {d}
+            </Text>
+          </Link>
+        ) : undefined,
+    };
+  });
 
   // Sparse on purpose: a criterion that genuinely has no score for a domain gets
   // the matrix's "—" rather than a fabricated 0. (With today's where-to-play.yaml
