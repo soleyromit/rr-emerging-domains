@@ -41,6 +41,16 @@ const FOLDER_NOUN: Record<string, string> = {
   sources: "source registry",
 };
 
+// The extensions a content citation can carry. ".yaml"/".yml" are the evidence files;
+// ".md" is the synthesis layer (content/synthesis/gap-analysis.md, prism-positioning.md,
+// the per-domain SALES.md briefs) plus the pasted-in transcript documents, and it is
+// cited in prose exactly the same way — content/prism/capability-map.yaml's pillar notes
+// name "gap-analysis.md" four times, in both the folder-qualified and the bare form.
+// Kept as one fragment so every guard below stays in lockstep across extensions: a
+// pattern that recognised ".md" in one position and not another would split a citation
+// mid-path, which is worse than not matching it at all.
+const EXT = String.raw`\.(?:ya?ml|md)`;
+
 // A bare (non-parenthesized) citation of a content file, in any of the shapes that
 // actually occur in committed prose:
 //
@@ -49,6 +59,8 @@ const FOLDER_NOUN: Record<string, string> = {
 //   accreditation/acpe.yaml                      folder-qualified, no prefix
 //   /Users/me/src/repo/content/prism/x.yaml      an absolute path a writer pasted in
 //   capability-map.yaml                          BARE — just the filename
+//   content/synthesis/gap-analysis.md            the same five shapes, ".md" flavour
+//   gap-analysis.md                              (both of these are real, in one file)
 //
 // The previous pattern required a literal "../" or "content/" prefix, so the last three
 // shapes never matched and rendered raw on screen. The same gap_note could even contain
@@ -56,21 +68,26 @@ const FOLDER_NOUN: Record<string, string> = {
 // at line 263 (caught) and a bare "capability-map.yaml" at line 113 (missed) — the same
 // reference, humanized in one sentence and raw in the other.
 //
-// Widening to a bare filename is safe because a ".yaml"/".yml" suffix is an extremely
-// rare token in English prose — it is effectively a filename marker on its own. The
-// guards keep it from over-reaching:
+// Widening to a bare filename is safe because a ".yaml"/".yml"/".md" suffix is an
+// extremely rare token in English prose — it is effectively a filename marker on its
+// own. (".md" survives the same scrutiny: the trailing \b plus the required [\w-]+ stem
+// means "M.D." and "MD/DO", the two credential spellings this corpus is full of, cannot
+// match — there is no stem character before the dot in the first and no dot at all in
+// the second.) The guards keep it from over-reaching:
 //   (?<![\w./-])          won't start mid-token, and won't chew a path segment out of a
 //                         real URL ("https://host/spec/openapi.yaml") the way an
 //                         unanchored match would — same reasoning as BARE_CODE_PATH.
-//   (?<=\.ya?ml\/)        ...except immediately after another .yaml, which is the one
+//   (?<=<EXT>\/)          ...except immediately after another citation, which is the one
 //                         place a match legitimately starts mid-token: writers list
 //                         files slash-separated ("coca.yaml/lcme.yaml/coda.yaml"). The
 //                         guard above would otherwise humanize only the FIRST and leave
 //                         "COCA accreditation record/lcme.yaml/coda.yaml" on screen.
-//   (?![\w.-]*\.ya?ml\/)  a path SEGMENT may not itself be a .yaml file, so that same
+//   (?![\w.-]*<EXT>\/)    a path SEGMENT may not itself be a content file, so that same
 //                         list is read as three separate citations, not one nonsense path.
-const BARE_YAML_PATH =
-  /(?:(?<![\w./-])|(?<=\.ya?ml\/))(?:\/|(?:\.\.\/)+)?(?:(?![\w.-]*\.ya?ml\/)[\w.-]+\/)*[\w-]+\.ya?ml\b/gi;
+const BARE_CONTENT_PATH = new RegExp(
+  String.raw`(?:(?<![\w./-])|(?<=${EXT}\/))(?:\/|(?:\.\.\/)+)?(?:(?![\w.-]*${EXT}\/)[\w.-]+\/)*[\w-]+${EXT}\b`,
+  "gi",
+);
 
 // Folder for a filename cited with no folder in front of it. A bare "coca.yaml" means
 // exactly what "../accreditation/coca.yaml" means, so resolving the folder here routes
@@ -175,16 +192,20 @@ function humanizeCodeRef(ref: string): string {
   return titleCase(basename.replace(/_/g, "-"));
 }
 
+// A whole parenthetical whose contents include a citation, e.g. "(competitors/emedley.yaml,
+// e-value.yaml)" or "(see content/synthesis/gap-analysis.md Pattern G)" — deleted outright,
+// because unlike a bare inline path the sentence still reads without it.
+const PAREN_CITATION = new RegExp(String.raw`\s*\([^()]*${EXT}[^()]*\)`, "gi");
+// Square brackets are the other citation bracket this corpus uses — domain and
+// persona prose ends claims with "[../domains/dentistry.yaml market]". Same rule,
+// same reason: the bracket is attribution, not part of the sentence.
+const BRACKET_CITATION = new RegExp(String.raw`\s*\[[^[\]]*${EXT}[^[\]]*\]`, "gi");
+
 export function stripFileCitations(text?: string): string | undefined {
   if (!text) return text;
-  const withoutParens = text
-    .replace(/\s*\([^()]*\.ya?ml[^()]*\)/gi, "")
-    // Square brackets are the other citation bracket this corpus uses — domain and
-    // persona prose ends claims with "[../domains/dentistry.yaml market]". Same rule,
-    // same reason: the bracket is attribution, not part of the sentence.
-    .replace(/\s*\[[^[\]]*\.ya?ml[^[\]]*\]/gi, "");
+  const withoutParens = text.replace(PAREN_CITATION, "").replace(BRACKET_CITATION, "");
   const humanized = withoutParens
-    .replace(BARE_YAML_PATH, (match) => humanizeSourceRef(match))
+    .replace(BARE_CONTENT_PATH, (match) => humanizeSourceRef(match))
     .replace(BARE_CODE_PATH, (match) => humanizeCodeRef(match));
   return humanized.replace(/\s{2,}/g, " ").trim();
 }
@@ -248,27 +269,34 @@ export function stripFileCitationsInMarkdown(text?: string | null): string | und
   return out.join("\n");
 }
 
+// The document-safe twins of PAREN_CITATION / BRACKET_CITATION.
+//
+// Leading whitespace is [^\S\r\n]* (spaces/tabs only), never \s*, so stripping a
+// citation at the start of a line cannot swallow the newline above it. The interior
+// excludes \n for the matching reason: a parenthetical that spans two lines would
+// otherwise take the line break (and the next line's "> " or list marker) with it,
+// silently welding two document lines into one. A multi-line citation therefore keeps
+// its parentheses and just gets its path humanized — prose that still reads, with the
+// document's line structure intact. Invariant: this function never changes line count.
+const MD_PAREN_CITATION = new RegExp(String.raw`[^\S\r\n]*\([^()\n]*${EXT}[^()\n]*\)`, "gi");
+const MD_BRACKET_CITATION = new RegExp(String.raw`[^\S\r\n]*\[[^[\]\n]*${EXT}[^[\]\n]*\]`, "gi");
+
 function humanizeMarkdownProse(text: string): string {
   const isLinkTarget = (full: string, offset: number) => full.slice(0, offset).endsWith("](");
   const withoutParens = text
-    // Leading whitespace is [^\S\r\n]* (spaces/tabs only), never \s*, so stripping a
-    // citation at the start of a line cannot swallow the newline above it. The interior
-    // excludes \n for the matching reason: a parenthetical that spans two lines would
-    // otherwise take the line break (and the next line's "> " or list marker) with it,
-    // silently welding two document lines into one. A multi-line citation therefore keeps
-    // its parentheses and just gets its path humanized — prose that still reads, with the
-    // document's line structure intact. Invariant: this function never changes line count.
-    .replace(/[^\S\r\n]*\([^()\n]*\.ya?ml[^()\n]*\)/gi, (match, offset: number, full: string) =>
+    .replace(MD_PAREN_CITATION, (match, offset: number, full: string) =>
       // "](" + "(" can't overlap, but a citation directly after a link's closing paren
-      // would; checking the character before the "(" keeps a real link intact.
+      // would; checking the character before the "(" keeps a real link intact. This is
+      // what protects "[PRODUCT.md](./PRODUCT.md)" now that ".md" is a matchable
+      // extension — the ".md" link targets in content/synthesis/*/ are real navigation.
       full.slice(0, offset + match.length - match.trimStart().length).endsWith("]") ? match : "",
     )
-    .replace(/[^\S\r\n]*\[[^[\]\n]*\.ya?ml[^[\]\n]*\]/gi, (match, offset: number, full: string) =>
+    .replace(MD_BRACKET_CITATION, (match, offset: number, full: string) =>
       // A "[...]" immediately followed by "(" is a link label, not a citation bracket.
       full.slice(offset + match.length).startsWith("(") ? match : "",
     );
   const humanized = withoutParens
-    .replace(BARE_YAML_PATH, (match, offset: number, full: string) =>
+    .replace(BARE_CONTENT_PATH, (match, offset: number, full: string) =>
       isLinkTarget(full, offset) ? match : humanizeSourceRef(match),
     )
     .replace(BARE_CODE_PATH, (match, offset: number, full: string) =>
