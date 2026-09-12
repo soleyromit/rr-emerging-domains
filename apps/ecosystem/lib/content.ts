@@ -58,6 +58,12 @@ export interface PrismPillar {
   notes?: string;
   why_it_matters?: string;
   features?: PrismPillarFeature[];
+  /** Really present on the two `status: roadmap` pillars, and undeclared here until
+   * Task 5.5 needed to render it. Holds `{target, source_id}` and nothing else today —
+   * and every real `source_id` in the file is null, i.e. the ship dates are the map's
+   * own assertion with no citation behind them. Typed as it really is so a UI can say
+   * that out loud rather than presenting an uncited date as sourced. */
+  roadmap?: { target?: string; source_id?: string | null };
 }
 
 export interface CapabilityMap {

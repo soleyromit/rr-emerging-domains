@@ -62,6 +62,8 @@ function EdgeSwatch({ kind, derived }: { kind: DissectionEdgeKind; derived?: boo
 export function TopologyGraphTree({
   graph,
   visibleKinds,
+  selectedId,
+  onSelect,
 }: {
   graph: DissectionGraph;
   /** The legend's current filter. The tree honours it for the same reason the drawing
@@ -70,6 +72,15 @@ export function TopologyGraphTree({
    * not a simplification. Entity counts are unaffected; only the connection lines under
    * an entity are, and an entity whose lines are filtered out says so. */
   visibleKinds: ReadonlySet<DissectionEdgeKind>;
+  /** The SAME selection the drawing uses — one state, two renderings. Task 5.4 left this
+   * unwired on purpose, judging it Task 5.5's call to design once there was something for
+   * a click to open; there is now. Tapping an entity row opens its detail panel, and the
+   * chevron still expands that entity's connections (TreeListItem routes a row click to
+   * `onClick` and keeps the toggle on its own button, so the two do not fight). Without
+   * this a phone reader — for whom the tree IS the map, not a fallback — could see every
+   * entity and open none of them. */
+  selectedId: string | null;
+  onSelect: (id: string | null) => void;
 }) {
   const labelOf = new Map(graph.nodes.map((n) => [n.id, n.label]));
 
@@ -109,6 +120,10 @@ export function TopologyGraphTree({
             // the manifest's own reason) sits after the count rather than replacing it.
             description: [connections, n.sublabel].filter(Boolean).join(" · "),
             endContent: n.outOfScope ? <Badge variant="gray" label="Not a target" /> : undefined,
+            // Same toggle semantics as the drawing's cards: clicking the selected entity
+            // again clears it, so the panel has a second way to be dismissed.
+            onClick: () => onSelect(selectedId === n.id ? null : n.id),
+            isSelected: selectedId === n.id,
             // Connection rows are leaves on purpose: TreeList only draws an expand
             // toggle when `children` is present, and a relationship has nothing under it.
             children: shown.map((e) => ({
@@ -132,7 +147,7 @@ export function TopologyGraphTree({
     <TreeList
       items={items}
       density="compact"
-      header={`${graph.nodes.length} entities grouped by what they are — expand one to see what it connects to`}
+      header={`${graph.nodes.length} entities grouped by what they are — select one to open its detail, or use its chevron to see what it connects to`}
     />
   );
 }

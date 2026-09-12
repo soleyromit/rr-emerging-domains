@@ -173,6 +173,28 @@ function pillarEdgeLabel(match: PillarRefMatch, raw?: string | null): string | u
   return rest || undefined;
 }
 
+/** Why a vendor with real evidence for this domain is nonetheless not one of its
+ * targets, in the manifest's own words — or undefined when it IS one.
+ *
+ * Exported because two surfaces render it and they must not drift: the graph node's
+ * `sublabel` (below, which the drawing's card and the tree's badge row both read) and
+ * Task 5.5's Competitor detail panel, which states the same exclusion in its Takeaway.
+ * A panel that quietly dropped this disclosure would present a vendor the manifest
+ * rules out as one of the domain's incumbents — the exact half of the two-halves rule
+ * the node comment below exists to enforce. */
+export function competitorScopeNote(
+  domain: string,
+  manifest: DissectionManifest,
+  slug: string,
+): string | undefined {
+  const inScope = new Set(dissectionInScopeIncumbents(manifest).map((i) => i.competitor_slug));
+  if (inScope.has(slug)) return undefined;
+  const incumbent = manifest.incumbent_set.find((i) => i.competitor_slug === slug);
+  return incumbent
+    ? `Not a target for ${domain}${incumbent.exclusion_reason ? ` — ${incumbent.exclusion_reason}` : ""}`
+    : "Not in this domain's incumbent set — rated here, but never named as a vendor to win against";
+}
+
 function noteUnmapped(b: Builder, ref: string | null | undefined, from: string) {
   if (!ref) return;
   const key = `${from}|${ref}`;
@@ -199,11 +221,9 @@ export function buildDissectionGraph(domain: string, manifest: DissectionManifes
     listDisciplinePersonas().map((p) => [`discipline-${p.slug}`, p.persona_name ?? p.domain]),
   );
   const inScope = new Set(dissectionInScopeIncumbents(manifest).map((i) => i.competitor_slug));
-  const incumbentBySlug = new Map(manifest.incumbent_set.map((i) => [i.competitor_slug, i]));
 
   const competitorNode = (slug: string) => {
     const c = competitorNames.get(slug);
-    const incumbent = incumbentBySlug.get(slug);
     // A competitor with a real, sourced rating or trend entry for this domain gets a
     // node even when the manifest rules it out — dropping it would delete researched
     // evidence, which is the rule dissect/page.tsx already states for its matrix
@@ -212,11 +232,7 @@ export function buildDissectionGraph(domain: string, manifest: DissectionManifes
     // this. An unlabelled RxPreceptor card sitting beside CORE ELMS would read as a
     // fifth Pharmacy incumbent, which the manifest explicitly says it is not.
     const outOfScope = !inScope.has(slug);
-    const scopeNote = !outOfScope
-      ? undefined
-      : incumbent
-        ? `Not a target for ${domain}${incumbent.exclusion_reason ? ` — ${incumbent.exclusion_reason}` : ""}`
-        : "Not in this domain's incumbent set — rated here, but never named as a vendor to win against";
+    const scopeNote = competitorScopeNote(domain, manifest, slug);
     // The vendor's category still matters; it just comes second to the disclosure.
     const sublabel = [scopeNote, c?.category].filter(Boolean).join(" · ") || undefined;
     return addNode(b, "competitor", slug, c?.competitor ?? slug, sublabel, outOfScope);

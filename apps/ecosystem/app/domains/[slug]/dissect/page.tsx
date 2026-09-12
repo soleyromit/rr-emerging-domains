@@ -12,6 +12,7 @@ import { DissectionMatrix, type DissectionMatrixIncumbent } from "@/components/d
 import { SalesReferenceMatrix } from "@/components/sales-reference-matrix";
 import { TopologyGraphPanel } from "@/components/dissect/topology-graph-panel";
 import { buildDissectionGraph } from "@/lib/dissection-graph";
+import { buildDissectionNodeDetails } from "@/lib/dissection-node-detail";
 import { layoutDissectionGraph } from "@/lib/graph-layout";
 import {
   dissectionAnsweredCount,
@@ -20,6 +21,7 @@ import {
   getDissectionManifest,
   getFeatureComparisonMatrixForDomain,
   getVendorComparisonChart,
+  hasSalesBrief,
   listCompetitors,
   listDissectionDomains,
   type DissectionManifest,
@@ -73,8 +75,36 @@ function questionSummary(manifest: DissectionManifest) {
   };
 }
 
-export default async function DomainDissectPage({ params }: { params: Promise<{ slug: string }> }) {
+/** `?node=<DissectionNode.id>` — the READ side of the topology map's deep links.
+ *
+ * Phase 6 adds the write side (links elsewhere in the app that point INTO this page at
+ * one node); this is the half that makes such a URL do anything, and it is built here
+ * because Phase 5's own verify step is "paste a ?node= deep link cold into the address
+ * bar and confirm it opens on that node", which is untestable without it.
+ *
+ * Validated HERE, against this domain's real graph, rather than in the client panel, for
+ * two reasons: a stale or mistyped id must land on the ordinary unselected page (no
+ * throw, no error, no broken-looking placeholder), and the section's own Collapsible has
+ * to be told to open — which only the server-rendered defaultValue below can do. An id
+ * that matches nothing returns undefined and the page renders exactly as it would with
+ * no query string at all. */
+function deepLinkedNodeId(
+  raw: string | string[] | undefined,
+  nodeIds: ReadonlySet<string>,
+): string | undefined {
+  const value = Array.isArray(raw) ? raw[0] : raw;
+  return value && nodeIds.has(value) ? value : undefined;
+}
+
+export default async function DomainDissectPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const { slug } = await params;
+  const query = await searchParams;
   // Same domain resolution as every sibling route under /domains/[slug] (see
   // layout.tsx, standards/page.tsx): accreditor-tiers is the canonical domain list
   // and matchDisciplineMeta maps its label to this URL segment.
@@ -145,6 +175,12 @@ export default async function DomainDissectPage({ params }: { params: Promise<{ 
   // browser bundle entirely.
   const graph = buildDissectionGraph(entry.domain, manifest);
   const graphLayout = layoutDissectionGraph(graph);
+  // Every node's detail, also server-side and for the same reason: the panels are client
+  // components and content/ is read through node:fs. One pass over the graph's own nodes,
+  // so there is exactly one entry per node and no node can open a panel about something
+  // else. See lib/dissection-node-detail.ts.
+  const graphDetails = buildDissectionNodeDetails(graph, manifest);
+  const deepLinkedNode = deepLinkedNodeId(query.node, new Set(graph.nodes.map((n) => n.id)));
 
   return (
     <Stack gap={0}>
@@ -197,8 +233,17 @@ export default async function DomainDissectPage({ params }: { params: Promise<{ 
           {/* Later Phase 5 sections are added as further Collapsible children here,
               each with its own `value`. `matrix` is the ONLY member of defaultValue:
               it is this tab's researched evidence, and every other section — the
-              quarantined sales chart first among them — has to be opened on purpose. */}
-          <CollapsibleGroup type="multiple" hasDividers defaultValue={["matrix"]}>
+              quarantined sales chart first among them — has to be opened on purpose.
+              The ONE exception is a real `?node=` deep link: the panel it points at
+              lives inside `standards-map`, and seeding selection into a section that is
+              still closed would open nothing a reader can see. So an arriving deep link
+              adds that section — and only when the id really resolves to a node, so a
+              stale link does not silently re-arrange the page either. */}
+          <CollapsibleGroup
+            type="multiple"
+            hasDividers
+            defaultValue={deepLinkedNode ? ["matrix", "standards-map"] : ["matrix"]}
+          >
             <Collapsible
               value="matrix"
               trigger={
@@ -266,7 +311,15 @@ export default async function DomainDissectPage({ params }: { params: Promise<{ 
                   : "Standards topology map (no relationships yet)"
               }
             >
-              <TopologyGraphPanel graph={graph} layout={graphLayout} domainLabel={entry.domain} />
+              <TopologyGraphPanel
+                graph={graph}
+                layout={graphLayout}
+                domainLabel={entry.domain}
+                domainSlug={slug}
+                details={graphDetails}
+                hasWinBrief={hasSalesBrief(slug)}
+                initialSelectedNodeId={deepLinkedNode}
+              />
             </Collapsible>
           </CollapsibleGroup>
         </Stack>
