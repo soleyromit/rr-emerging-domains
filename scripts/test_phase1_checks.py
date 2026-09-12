@@ -288,6 +288,15 @@ expect_clean("7 market sizing: the four real blocks pass — 3 all-null, Pharmac
              ccd.check_market_sizing_integrity)
 
 # ---------------------------------------------------------------- 8. market programs
+# This block overwrites a file that REALLY EXISTS in the copied tree
+# (content/market/programs/pharmacy.yaml), so its original text is saved here and put
+# back at the end of the block. It used to be unlink()ed instead, which silently broke a
+# later case: check_dissection_integrity() walks every manifest in the tree, and the real
+# content/dissection/pharmacy.yaml points its market-size question at exactly this path —
+# so test 9's expect_clean started reporting a dangling answered_in the moment the first
+# real manifest landed. A fixture that mutates real content must restore it, not delete
+# it; the checks under test are whole-directory scans and do not respect case boundaries.
+_real_market_programs = (C / "market" / "programs" / "pharmacy.yaml").read_text()
 write("market/programs/pharmacy.yaml", {
     "domain": "MD",
     "source_of_record": {"source_id": BAD, "row_count": 9,
@@ -338,7 +347,7 @@ write("market/programs/pharmacy.yaml", {
     ]})
 expect_clean("8b market programs: grid_matched true and false both pass on otherwise-valid rows",
              ccd.check_market_programs_integrity)
-(C / "market" / "programs" / "pharmacy.yaml").unlink()
+(C / "market" / "programs" / "pharmacy.yaml").write_text(_real_market_programs)
 
 # ---------------------------------------------------------------- 9. dissection
 tpl = yaml.safe_load((C / "dissection" / "_TEMPLATE.yaml").read_text())
