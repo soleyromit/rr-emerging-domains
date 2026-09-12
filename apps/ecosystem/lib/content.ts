@@ -3,6 +3,7 @@ import path from "node:path";
 import { load as loadYaml } from "js-yaml";
 import matter from "gray-matter";
 import { matchDisciplineMeta } from "./discipline-meta";
+import { stripFileCitations } from "./strip-file-citations";
 
 // content/ lives one level above apps/ecosystem, at the repo root.
 const CONTENT_ROOT = path.join(process.cwd(), "..", "..", "content");
@@ -595,7 +596,8 @@ export interface FeatureMapPillar {
   leader?: string | null;
   summary: string;
   opportunity: string;
-  sources?: string[];
+  // NOTE: content/feature-map/*.yaml carries a `sources:` array on every pillar. It is
+  // deliberately NOT declared here — see listFeatureMaps below.
 }
 
 export interface FeatureMap {
@@ -603,12 +605,54 @@ export interface FeatureMap {
   pillars: FeatureMapPillar[];
 }
 
+/** The YAML on disk, before projection — `sources` exists here and nowhere downstream. */
+interface FeatureMapFile {
+  domain: string;
+  pillars: (FeatureMapPillar & { sources?: string[] })[];
+}
+
 const FEATURE_MAP_SLUGS = ["do", "pharmacy", "dentistry", "medicine"];
 
+/**
+ * Reads the four feature-map files and projects each pillar down to the five fields
+ * /feature-map actually renders.
+ *
+ * The projection is the point, not tidiness. This is a server component handing props to
+ * two client components (FeatureMapHeatmap, FeatureMapTabs), so whatever this returns is
+ * serialized into the RSC flight payload and shipped to every browser that opens the page —
+ * rendered or not. Returning the raw YAML object put each pillar's `sources` array on the
+ * wire: 43 raw content filenames across 12 distinct paths, in a payload nobody reads,
+ * because neither consumer touches the field (the heatmap projects it away, the tabs render
+ * only pillar/leader/summary/opportunity).
+ *
+ * The fix is removing the data, NOT running it through stripFileCitations — humanizing a
+ * field that is never displayed would only ship prettier dead weight. Source attribution
+ * for these judgments lives in the YAML, which is where a researcher reads it.
+ *
+ * Spelling the projection out field-by-field rather than deleting a key is what makes it
+ * hold: a new `sources`-like field added to the YAML later is dropped by default instead of
+ * silently riding along to the client the way this one did for three follow-up tasks.
+ */
 export function listFeatureMaps(): FeatureMap[] {
-  return FEATURE_MAP_SLUGS.map((slug) => readYamlFile<FeatureMap>(`feature-map/${slug}.yaml`)).filter(
-    (f): f is FeatureMap => f != null
-  );
+  return FEATURE_MAP_SLUGS.map((slug) => readYamlFile<FeatureMapFile>(`feature-map/${slug}.yaml`))
+    .filter((f): f is FeatureMapFile => f != null)
+    .map((f) => ({
+      domain: f.domain,
+      // `summary` and `opportunity` are sanitized HERE, on the server, not in
+      // FeatureMapTabs where the summary one used to live. Both are true, and only one
+      // clears the payload: a "use client" component receives its props as serialized text
+      // and runs its sanitizer in the browser, so the RAW string — filenames and all — is
+      // what crosses the wire and sits in view-source forever. Sanitizing before the prop
+      // is built means the raw string never leaves the server. Same reasoning as
+      // dissection-node-detail.ts's builders.
+      pillars: (f.pillars ?? []).map((p) => ({
+        pillar: p.pillar,
+        status: p.status,
+        leader: p.leader,
+        summary: stripFileCitations(p.summary) ?? p.summary,
+        opportunity: stripFileCitations(p.opportunity) ?? p.opportunity,
+      })),
+    }));
 }
 
 // ---------- lenses (Level 2 reframings — rows×columns quick-scan views for leadership) ----------

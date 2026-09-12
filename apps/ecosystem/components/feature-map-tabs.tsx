@@ -8,8 +8,12 @@ import { Card } from "@astryxdesign/core/Card";
 import { Text } from "@astryxdesign/core/Text";
 import { Divider } from "@astryxdesign/core/Divider";
 import { StatusIcon, StatusBadge } from "@/components/feature-status";
-import { stripFileCitations } from "@/lib/strip-file-citations";
 import type { FeatureMap } from "@/lib/content";
+
+// No sanitizer import here on purpose. `summary` and `opportunity` arrive already
+// sanitized from listFeatureMaps, which runs on the server. Sanitizing again in this
+// client component would be harmless but misleading — it would suggest the raw text ever
+// reaches the browser, and the whole point of moving it server-side is that it does not.
 
 export function FeatureMapTabs({ featureMaps }: { featureMaps: FeatureMap[] }) {
   const [value, setValue] = useState(featureMaps[0]?.domain ?? "");
@@ -46,7 +50,7 @@ export function FeatureMapTabs({ featureMaps }: { featureMaps: FeatureMap[] }) {
                 ) : null}
 
                 <Text type="body" maxLines={4}>
-                  {stripFileCitations(p.summary)}
+                  {p.summary}
                 </Text>
 
                 <Divider />
@@ -55,6 +59,13 @@ export function FeatureMapTabs({ featureMaps }: { featureMaps: FeatureMap[] }) {
                   <Text type="label" color="secondary">
                     Opportunity for Exxat
                   </Text>
+                  {/* `opportunity` was the field still carrying a raw
+                      "content/prism/capability-map.yaml" after /feature-map's dead `sources`
+                      prop was dropped — `summary` beside it had been sanitized, this had
+                      not. Both are now cleaned in listFeatureMaps before the prop is built.
+                      Worth knowing why a markup scan never flagged it: this is a client
+                      component, so a non-selected tab's cards live only in the flight
+                      payload until the reader clicks that tab. */}
                   <Text type="supporting" maxLines={3}>
                     {p.opportunity}
                   </Text>
