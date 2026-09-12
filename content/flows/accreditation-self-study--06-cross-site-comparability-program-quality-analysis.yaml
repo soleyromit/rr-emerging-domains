@@ -31,7 +31,7 @@ steps:
     confirmed_by: >
       "Occupational Therapy (OT) Playbook.md" (Reports Walkthrough Scripts section,
       "Aggregate Report for Placement-Based Forms (OT)"), at
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
     elements:
       - element: "Group By selector"
         type: "report filter"
@@ -106,7 +106,7 @@ steps:
     confirmed_by: >
       "Occupational Therapy (OT) Playbook.md" (Reports Walkthrough Scripts section,
       "Comprehensive Report for Placement-Based Forms (OT)"), at
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
     elements:
       - element: "Scoring trend summary"
         type: "read-only rollup"
@@ -141,7 +141,7 @@ steps:
       too (10 data sources total).
     confirmed_by: >
       "Generating and Managing Custom Reports.md", at
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md
     elements:
       - element: "Pivot Report toggle"
         type: "toggle"
@@ -208,7 +208,7 @@ steps:
       accreditation-readiness view, not a site-comparability one.
     confirmed_by: >
       "Heatmap Report.md", at
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Heatmap Report.md
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Heatmap Report.md
     elements:
       - element: "Heatmap grid"
         type: "read-only rollup"
@@ -248,7 +248,7 @@ steps:
       text called "adjacent" to Program Quality Analytics.
     confirmed_by: >
       "Competency Framework Configuration and Management.md", at
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md
     elements:
       - element: "Course Type dropdown (Didactic / Experiential)"
         type: "toggle"
@@ -309,7 +309,7 @@ steps:
       site visit rather than during one.
     confirmed_by: >
       "Setup Faculty Compliance.md" and "Review Faculty Compliance Document.md", at
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/
     elements:
       - element: "Add New Requirement drawer"
         type: "input field"
@@ -374,20 +374,20 @@ steps:
           straightforward or even direct today.
 
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Self-service for building your custom reports.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Heatmap Report.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/Setup Faculty Compliance.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/Review Faculty Compliance Document.md"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/new-innovations.yaml"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Self-service for building your custom reports.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Heatmap Report.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/Setup Faculty Compliance.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/Review Faculty Compliance Document.md"
+  - "content/prism/capability-map.yaml"
+  - "content/accreditation/coca.yaml"
+  - "content/accreditation/lcme.yaml"
+  - "content/accreditation/acpe.yaml"
+  - "content/accreditation/coda.yaml"
+  - "content/competitors/core-elms.yaml"
+  - "content/competitors/elentra.yaml"
+  - "content/competitors/axium.yaml"
+  - "content/competitors/new-innovations.yaml"
 last_verified: "2026-08-24"

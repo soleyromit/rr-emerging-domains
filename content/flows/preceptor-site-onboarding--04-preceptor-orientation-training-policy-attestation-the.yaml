@@ -27,7 +27,7 @@ steps:
       Coordinator adds an Attestation or Attestation-with-signature question to the Custom
       Section — e.g., "I have reviewed the program's mission and the syllabus expectations for
       this experience" — and sends the form to a preceptor as part of one-time onboarding.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Experiential Supervisor Intake Form.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Experiential Supervisor Intake Form.md"
     elements:
       - element: "Question type dropdown in the Custom Section"
         type: "form builder (11-item list)"
@@ -75,7 +75,7 @@ steps:
       A Faculty Compliance Administrator defines a requirement (e.g., "Calibration/Orientation
       Training Completion"), configures it as mandatory, WITHOUT a document upload, WITH an
       expiration date, groups it, and bulk-assigns the group to a set of faculty.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/Setup Faculty Compliance.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/Setup Faculty Compliance.md"
     elements:
       - element: "Enable requirement / Make mandatory toggles"
         type: "toggle set"
@@ -135,7 +135,7 @@ steps:
     action: >
       A faculty member opens the Compliance tile, sees which requirements need their attestation
       and by when, and completes them (per step 2's configuration).
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Faculty/Step-by-Step Guides (How-tos)/Compliance/Uploading Compliance Documents - Faculty.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Faculty/Step-by-Step Guides (How-tos)/Compliance/Uploading Compliance Documents - Faculty.md"
     elements:
       - element: "Mandatory Requirements column"
         type: "read-only label"
@@ -175,7 +175,7 @@ steps:
     action: >
       Coordinator monitors this dashboard 6-8 weeks before rotations begin (Exxat's documented
       best practice) and follows up with preceptors showing Missing before the rotation starts.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md; corroborated by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md ('Placement Clearance Dashboard ... also flags whether orientation-completion certificates are present' and 'Personnel module/Certification section for orientation-completion certificates')"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md; corroborated by PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md ('Placement Clearance Dashboard ... also flags whether orientation-completion certificates are present' and 'Personnel module/Certification section for orientation-completion certificates')"
     elements:
       - element: "Preceptor CV / Preceptor License / Preceptor Certification columns"
         type: "read-only rollup (three-state)"
@@ -210,7 +210,7 @@ steps:
   - screen: "Placements > Course > Place Student drawer — Preceptor / Clinical Instructor selector"
     navigation_path: "Placements > [Course] > Placements page > By Location or By Student > place a slot"
     action: "Coordinator selects a preceptor from the dropdown and commits the placement, independently of that preceptor's status on the Clearance Dashboard two screens away."
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placing and Publishing Placements to Students.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placing and Publishing Placements to Students.md"
     elements:
       - element: "Preceptor / Clinical Instructor dropdown"
         type: "dropdown"
@@ -247,7 +247,7 @@ steps:
       status indicator for orientation/attestation — only passive reference material. A student in
       the equivalent position sees a pending-item count, a due date, and produces a timestamped
       audit record on completion.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md; /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module User Guide for Preceptors.md; contrast case: /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Profile/Acknowledging to Attestations.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md; PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module User Guide for Preceptors.md; contrast case: PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Profile/Acknowledging to Attestations.md"
     elements:
       - element: "Preceptor Module 'Resources' section"
         type: "static content list"
@@ -289,24 +289,24 @@ steps:
           elements above), not any deficiency in this element.
 
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Experiential Supervisor Intake Form.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/Setup Faculty Compliance.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Faculty/Step-by-Step Guides (How-tos)/Compliance/Uploading Compliance Documents - Faculty.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placing and Publishing Placements to Students.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module User Guide for Preceptors.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Profile/Acknowledging to Attestations.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Understanding User Roles in Exxat Prism.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/dentistry.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/flows/rotation-lifecycle--02-preceptor-site-faculty-credentialing-orientation-calibration.yaml (sibling flow — preceptor-as-entity and credentialing steps; this file scopes narrowly to the attestation/orientation-gate question specifically)"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Experiential Supervisor Intake Form.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Faculty Compliance/Setup Faculty Compliance.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Faculty/Step-by-Step Guides (How-tos)/Compliance/Uploading Compliance Documents - Faculty.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placing and Publishing Placements to Students.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module User Guide for Preceptors.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Profile/Acknowledging to Attestations.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Understanding User Roles in Exxat Prism.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "content/prism/capability-map.yaml"
+  - "content/accreditation/acpe.yaml"
+  - "content/accreditation/coca.yaml"
+  - "content/accreditation/coda.yaml"
+  - "content/domains/dentistry.yaml"
+  - "content/competitors/leo-davinci.yaml"
+  - "content/competitors/elentra.yaml"
+  - "content/competitors/one45.yaml"
+  - "content/flows/rotation-lifecycle--02-preceptor-site-faculty-credentialing-orientation-calibration.yaml (sibling flow — preceptor-as-entity and credentialing steps; this file scopes narrowly to the attestation/orientation-gate question specifically)"
 last_verified: "2026-08-24"

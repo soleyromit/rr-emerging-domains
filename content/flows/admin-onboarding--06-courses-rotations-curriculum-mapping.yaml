@@ -15,7 +15,7 @@
 # irreversibly get wrong on day one?"
 #
 # PRIMARY SOURCE for every step below is the general admin-tutorial transcript at
-# /Users/romitsoley/Downloads/exxat_transcripts.md — specifically the sections
+# exxat_transcripts.md — specifically the sections
 # "## 8/16 Setting Up Courses in Exxat Prism" (lines 655-805),
 # "## 14/16 Performing Curriculum Mapping in Exxat Prism" (lines 1497-1611), and
 # "## Heatmap Report in Exxat Prism (Curriculum Mapping)" (lines 1735-1745).
@@ -53,7 +53,7 @@ steps:
       "First, you will set up course organization options, add courses to the
       course catalog, create course offerings using these courses, then set up
       the course information for each course offering" (line 659).
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 659-669"
+    confirmed_by: "exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 659-669"
     elements:
       - element: "Terms (pencil icon > Term text box > Add), with drag-handle (double-ellipses) and up/down reorder arrows"
         type: "ordered list editor"
@@ -103,7 +103,7 @@ steps:
       container for every learning objective the curriculum map will use),
       program-wide course policies, and the term-level start/end date calendar.
       They also configure timesheet categories here.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 669-677"
+    confirmed_by: "exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 669-677"
     elements:
       - element: "Course Measure Categories (Course Management > Course Measure Categories)"
         type: "taxonomy list"
@@ -151,7 +151,7 @@ steps:
       The admin populates the master course list — either one course at a time
       or via a four-column CSV. This is the 'comprehensive master list of all
       courses' that the help center names as curriculum-mapping prerequisite #1.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 677-689"
+    confirmed_by: "exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 677-689"
     elements:
       - element: "Course Number (free-text)"
         type: "input field"
@@ -207,7 +207,7 @@ steps:
       offered to students. A single course can be used to create multiple course
       offerings' (line 689). This is the object every downstream journey
       (placements, wishlists, learning activities, mapping) actually attaches to.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 689-705"
+    confirmed_by: "exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 689-705"
     elements:
       - element: "Cohort selector (lockstep programs only) + auto-register-the-cohort confirmation"
         type: "dropdown + confirmation dialog"
@@ -271,7 +271,7 @@ steps:
       three-step wizard (prepare/download template → name the instance and
       upload → resolve validation errors and import), then confirms with a
       typed number.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 707-711; supplemented for the wizard's three named steps and the student-registration caveat by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Course Setup.md, 'Import Course Offerings'"
+    confirmed_by: "exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 707-711; supplemented for the wizard's three named steps and the student-registration caveat by PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Course Setup.md, 'Import Course Offerings'"
     elements:
       - element: "Download Template (asterisked mandatory columns)"
         type: "template download"
@@ -317,7 +317,7 @@ steps:
       details, grading scheme, requisites, textbooks, evaluation criteria,
       course policies, attributes, and faculty/staff assignment — then can emit
       it as a Word syllabus or jump straight to mapping.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 711-733"
+    confirmed_by: "exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 711-733"
     elements:
       - element: "Description text area"
         type: "input field"
@@ -421,7 +421,7 @@ steps:
     action: >
       The admin populates the roster — either by filtering and selecting
       students in-app, or by uploading an Excel list keyed on email address.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 745-759"
+    confirmed_by: "exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 745-759"
     elements:
       - element: "Select to Register (left-side filters: student name, cohort, group, tag, enrollment term, graduation term, campus, student category > Search Record > select > Register)"
         type: "filtered multi-select"
@@ -459,7 +459,7 @@ steps:
       forward — either forward (Clone, prefilled from source, change cohort/AY)
       or backward (create empty offerings first, then Clone From a populated
       sibling of the same parent course).
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 791-801"
+    confirmed_by: "exxat_transcripts.md, '8/16 Setting Up Courses in Exxat Prism', lines 791-801"
     elements:
       - element: "Clone drawer, step 1: prefilled attribute fields requiring change"
         type: "prefilled form"
@@ -497,7 +497,7 @@ steps:
       pre-loaded accreditation/professional standard set for their domain and
       adds any program-specific standard set — PLOs, SLOs, program goals — that
       the curriculum will also be mapped against.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1503-1513; cross-referenced to line 49 of the same transcript ('You can add standards to be mapped to course measures in the Curriculum Mapping section')"
+    confirmed_by: "exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1503-1513; cross-referenced to line 49 of the same transcript ('You can add standards to be mapped to course measures in the Curriculum Mapping section')"
     elements:
       - element: "Accreditation and Professional Standards list (pre-loaded, expandable parent > child > grandchild hierarchy)"
         type: "read-only hierarchical library"
@@ -543,7 +543,7 @@ steps:
       (course objectives, instructional objectives, lecture objectives, program
       outcomes...), each with an active bit. These are titles only — the actual
       objective text is entered per course later.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1515-1517"
+    confirmed_by: "exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1515-1517"
     elements:
       - element: "+ icon > course measure name"
         type: "input field"
@@ -573,7 +573,7 @@ steps:
       (what the content IS) and Mapping Attributes (what the student DOES with
       it). Optional in the product's own words, and the single biggest
       determinant of whether the resulting reports answer an accreditor.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1517-1525; Bloom's/Leo details from /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Bloom-s Taxonomy using Leo-AI.md"
+    confirmed_by: "exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1517-1525; Bloom's/Leo details from PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Bloom-s Taxonomy using Leo-AI.md"
     elements:
       - element: "Course and Measure Attributes (+ icon > category name > Active toggle; horizontal ellipses > Add Child > option name)"
         type: "two-level taxonomy builder"
@@ -612,7 +612,7 @@ steps:
       belong to it, declares which measures are in play, chains measures/courses
       to standard sets, picks the attributes to capture, previews the grid, and
       saves. This is the object every mapping report runs against.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1525-1539"
+    confirmed_by: "exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1525-1539"
     elements:
       - element: "Curriculum Name + Description"
         type: "input field set"
@@ -686,7 +686,7 @@ steps:
       values, optionally builds an event schedule, and enters the actual
       objective text with codes, attributes, tags, evidence documents, child
       measures, and cross-links.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1541-1561"
+    confirmed_by: "exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1541-1561"
     elements:
       - element: "Attributes section (pencil icon > per-category value dropdowns)"
         type: "multi-select per category"
@@ -749,7 +749,7 @@ steps:
       first optionally for the whole course, then measure by measure —
       attaching mapping-level attributes, tags, rationale notes, and evidence
       documents to each standard association.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1561-1575"
+    confirmed_by: "exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1561-1575"
     elements:
       - element: "Measure-category left rail with mapped-count badges"
         type: "read-only progress rollup"
@@ -817,7 +817,7 @@ steps:
       accreditation evidence — and, during onboarding specifically, uses the
       unmapped-standards view as the completeness checklist that tells them
       whether stage 6 is actually finished.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1577-1601, and '## Heatmap Report in Exxat Prism (Curriculum Mapping)', lines 1739-1745"
+    confirmed_by: "exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1577-1601, and '## Heatmap Report in Exxat Prism (Curriculum Mapping)', lines 1739-1745"
     elements:
       - element: "Mapping Summary dashboard (standards mapped / courses mapped / attribute and tag usage graphics; curriculum dropdown; hover for detail)"
         type: "report dashboard"
@@ -898,7 +898,7 @@ steps:
       curriculum forward for the next cohort — creating a new set of course
       offerings with a shifted academic schedule and copying the course setup
       and mapping setup along with it.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1601-1609"
+    confirmed_by: "exxat_transcripts.md, '14/16 Performing Curriculum Mapping in Exxat Prism', lines 1601-1609"
     elements:
       - element: "Clone Curriculum: new name, description, Cohort selector (lockstep)"
         type: "input field set + dropdown"
@@ -928,27 +928,27 @@ steps:
         gap_note: "That 'mapping setup' is clonable is the single largest labor saver across the whole stage — it means the expensive taxonomy work in steps 9-12 is a one-time cost, not an annual one."
 
 sources:
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '## 8/16 Setting Up Courses in Exxat Prism' (lines 655-805, 20-chapter course setup walkthrough: course organization, catalog, offerings, bulk import, About, registration, resources, events, communications/interventions, compliance, announcements, attestations, cloning, didactic offerings) [PRIMARY]"
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '## 14/16 Performing Curriculum Mapping in Exxat Prism' (lines 1497-1611, standards setup, course measures, attributes, curriculum grid build, mapping, mapping reports, curriculum cloning) [PRIMARY]"
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '## Heatmap Report in Exxat Prism (Curriculum Mapping)' (lines 1735-1745, standalone report tutorial; PA/ARC-PA-6th-edition entry point) [PRIMARY]"
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — line 49 (Program Details > Standards tab pointer), line 1187 ('12/16 Managing Faculty': Faculty Dashboard Configuration toggle for curriculum-grid access), line 1475 ('13/16 Managing Learning Activities': heat map as one of three visualization formats on the comprehensive forms report — a DIFFERENT heat map from the curriculum-mapping Heatmap Report; noted here to prevent conflation)"
-  - "/Users/romitsoley/Downloads/NursingTutorialsTranscripts.md — '1. Streamline Transition to Competency-Based Education' (lines 19-59: AACN Essentials pre-populated, sub-competency ABC vs. EFG mapping, bulk objective import claim, cumulative report modeled on the AACN Essentials Toolkit, knowledge/skill/behavior + introduce/reinforce/demonstrate crosswalk)"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md — 'Curriculum Mapping' section (ARC-PA pre-loaded standards, Map with Leo, the seven mapping reports, and the Heatmap 'cannot be downloaded' CSS note)"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md — ACOTE A.5.1 / A.5.4 / syllabus standards and the Generate Syllabus configurable-column list"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — 'Program Details & Curriculum Setup' and 'Curriculum Mapping' sections (grid-per-track, Map with Leo, Auto-Suggest Bloom's, report-to-standard mapping for ACEN/CCNE/COA)"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — CSWE EPAS AS 3.1.1/3.1.2/M3.2.1 implementation via custom standard sets, Course Measures, Client System Levels and Dimensions of Learning attributes"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — CAA/CFCC mapping, Mapped Standards Report gap identification, Cumulative Report navigation path"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — CAPTE 7 (2024) competency mapping noted as 'in progress'; seven CAPTE-mapped pre-built reports"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — explicit data-quality caveat that no TE curriculum-mapping or CAEP-standard source exists in this corpus"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Course Setup.md — Import Course Offerings three-step wizard and the 'does not automatically register students' constraint"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Curriculum Mapping with Leo.md — consent flow, AI Features Hub toggle, and the four stated curriculum-mapping prerequisites"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Bloom-s Taxonomy using Leo-AI.md — Leo verb-matching logic, refresh triggers, never-auto-apply guarantee"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml — Standard 6 Element 6.4; Standard 11 Elements 11.1/11.9"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml — Standard 2 Elements 2-1, 2-5, 2-6, 2-8, 2-9, 2-24; Standard 1 Element 1-2; Standard 3 Element 3-4"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml — Standard 2 Key Element 2.2.d; Standard 3 Key Elements 3.1.a/3.1.b/3.2.b/3.2.d/3.3.a/3.3.c"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml — Standard 6 Element 6.2; Standard 8 Elements 8.4/8.7; Standard 9 Elements 9.4/9.8"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml, emedley.yaml, one45.yaml, e-value.yaml, new-innovations.yaml, leo-davinci.yaml, core-elms.yaml, medhub.yaml, axium.yaml — Curriculum Mapping pillar rows and integration/audit-trail claims"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/journeys/competency-verification.yaml, stage 8 — precedent for the Program Details > Standards + Heatmap Report evidence base cited against COCA 11.9 / CODA 1-2 (inherited here, not re-derived)"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/flows/competency-verification--01-define-the-competency-framework-and-map.yaml — prior element-level trace of the same two modules from the competency angle; this file is the setup-mechanics complement, not a duplicate"
+  - "exxat_transcripts.md — '## 8/16 Setting Up Courses in Exxat Prism' (lines 655-805, 20-chapter course setup walkthrough: course organization, catalog, offerings, bulk import, About, registration, resources, events, communications/interventions, compliance, announcements, attestations, cloning, didactic offerings) [PRIMARY]"
+  - "exxat_transcripts.md — '## 14/16 Performing Curriculum Mapping in Exxat Prism' (lines 1497-1611, standards setup, course measures, attributes, curriculum grid build, mapping, mapping reports, curriculum cloning) [PRIMARY]"
+  - "exxat_transcripts.md — '## Heatmap Report in Exxat Prism (Curriculum Mapping)' (lines 1735-1745, standalone report tutorial; PA/ARC-PA-6th-edition entry point) [PRIMARY]"
+  - "exxat_transcripts.md — line 49 (Program Details > Standards tab pointer), line 1187 ('12/16 Managing Faculty': Faculty Dashboard Configuration toggle for curriculum-grid access), line 1475 ('13/16 Managing Learning Activities': heat map as one of three visualization formats on the comprehensive forms report — a DIFFERENT heat map from the curriculum-mapping Heatmap Report; noted here to prevent conflation)"
+  - "NursingTutorialsTranscripts.md — '1. Streamline Transition to Competency-Based Education' (lines 19-59: AACN Essentials pre-populated, sub-competency ABC vs. EFG mapping, bulk objective import claim, cumulative report modeled on the AACN Essentials Toolkit, knowledge/skill/behavior + introduce/reinforce/demonstrate crosswalk)"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md — 'Curriculum Mapping' section (ARC-PA pre-loaded standards, Map with Leo, the seven mapping reports, and the Heatmap 'cannot be downloaded' CSS note)"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md — ACOTE A.5.1 / A.5.4 / syllabus standards and the Generate Syllabus configurable-column list"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — 'Program Details & Curriculum Setup' and 'Curriculum Mapping' sections (grid-per-track, Map with Leo, Auto-Suggest Bloom's, report-to-standard mapping for ACEN/CCNE/COA)"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — CSWE EPAS AS 3.1.1/3.1.2/M3.2.1 implementation via custom standard sets, Course Measures, Client System Levels and Dimensions of Learning attributes"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — CAA/CFCC mapping, Mapped Standards Report gap identification, Cumulative Report navigation path"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — CAPTE 7 (2024) competency mapping noted as 'in progress'; seven CAPTE-mapped pre-built reports"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — explicit data-quality caveat that no TE curriculum-mapping or CAEP-standard source exists in this corpus"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Course Setup.md — Import Course Offerings three-step wizard and the 'does not automatically register students' constraint"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Curriculum Mapping with Leo.md — consent flow, AI Features Hub toggle, and the four stated curriculum-mapping prerequisites"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Bloom-s Taxonomy using Leo-AI.md — Leo verb-matching logic, refresh triggers, never-auto-apply guarantee"
+  - "content/accreditation/coca.yaml — Standard 6 Element 6.4; Standard 11 Elements 11.1/11.9"
+  - "content/accreditation/coda.yaml — Standard 2 Elements 2-1, 2-5, 2-6, 2-8, 2-9, 2-24; Standard 1 Element 1-2; Standard 3 Element 3-4"
+  - "content/accreditation/acpe.yaml — Standard 2 Key Element 2.2.d; Standard 3 Key Elements 3.1.a/3.1.b/3.2.b/3.2.d/3.3.a/3.3.c"
+  - "content/accreditation/lcme.yaml — Standard 6 Element 6.2; Standard 8 Elements 8.4/8.7; Standard 9 Elements 9.4/9.8"
+  - "content/competitors/elentra.yaml, emedley.yaml, one45.yaml, e-value.yaml, new-innovations.yaml, leo-davinci.yaml, core-elms.yaml, medhub.yaml, axium.yaml — Curriculum Mapping pillar rows and integration/audit-trail claims"
+  - "content/journeys/competency-verification.yaml, stage 8 — precedent for the Program Details > Standards + Heatmap Report evidence base cited against COCA 11.9 / CODA 1-2 (inherited here, not re-derived)"
+  - "content/flows/competency-verification--01-define-the-competency-framework-and-map.yaml — prior element-level trace of the same two modules from the competency angle; this file is the setup-mechanics complement, not a duplicate"
 
 last_verified: "2026-08-24"

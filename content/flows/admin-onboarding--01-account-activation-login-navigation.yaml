@@ -3,7 +3,7 @@
 #
 # SOURCING NOTE (deliberate, and the reason this file exists in this form):
 # the PRIMARY source for this stage is the raw tutorial transcript at
-# /Users/romitsoley/Downloads/exxat_transcripts.md — specifically "1/16
+# exxat_transcripts.md — specifically "1/16
 # Administrator Navigation in Exxat Prism" (lines 5-71), "16/16 (Part 1) How to
 # use Ask Leo" (lines 1683-1699), and "16/16 (Part 2) Using the Resource Center"
 # (lines 1701-1719). Earlier work in this repo laundered transcript content
@@ -48,12 +48,12 @@ steps:
       This is the only entry point for a standard (non-SSO) account — there is
       no self-registration path documented anywhere in the source material.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md line 9 ("1/16
+      exxat_transcripts.md line 9 ("1/16
       Administrator Navigation"): "You will receive an email invitation from the
       EXAT Prism support team. The invitation includes a link to activate your
       account. The email invite also includes the username for your account set
       up by your school. Simply click the link in the invite to activate your
-      account." Corroborated by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/School Administrator User Guide.md ("Logging In and Dashboard": "If you are not using Single Sign On, you will receive an invitation to set up your account.")
+      account." Corroborated by PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/School Administrator User Guide.md ("Logging In and Dashboard": "If you are not using Single Sign On, you will receive an invitation to set up your account.")
     elements:
       - element: "Activation link in the invitation email"
         type: "one-time link (email body)"
@@ -109,14 +109,14 @@ steps:
       Admin sets a first password against five stated complexity rules and clicks
       Submit; the system confirms the password was set successfully.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md line 11 ("1/16
+      exxat_transcripts.md line 11 ("1/16
       Administrator Navigation"): "For standard accounts, you'll be prompted to
       set up a new password following a few guidelines. Your password must be a
       minimum of eight characters with at least one uppercase character, one
       lowercase character, one numerical character, and one non-alphanumeric
       character... Once you've set up your password, click Submit. The system
       will notify you after your password is successfully set up." The identical
-      five rules are restated in /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Using User Settings- Administrators.md ("Password Guidelines").
+      five rules are restated in PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Using User Settings- Administrators.md ("Password Guidelines").
     elements:
       - element: "Password field + complexity rules"
         type: "input field with client-side validation"
@@ -141,11 +141,11 @@ steps:
       Admin enters the school-assigned username and the password they just set,
       and clicks LOGIN.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md line 11: "Go to
+      exxat_transcripts.md line 11: "Go to
       login.exat.com and log in to EXAT Prism using your login credentials you
       just set up." (Transcript renders the domain phonetically as
       'login.exat.com'; the product is Exxat Prism.) Login-screen sequence
-      corroborated by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Two-Factor Authentication (2FA) for Exxat Prism Non-SSO Admin Users.md ("Login Using 2FA", steps 1-2).
+      corroborated by PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Two-Factor Authentication (2FA) for Exxat Prism Non-SSO Admin Users.md ("Login Using 2FA", steps 1-2).
     elements:
       - element: "Username field"
         type: "input field"
@@ -178,7 +178,7 @@ steps:
       Admin enters their school email address, is redirected to their school's
       own login page, authenticates there, and is redirected back into Prism.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md line 13: "Single sign-on
+      exxat_transcripts.md line 13: "Single sign-on
       is a user authentication method that allows users to log in to multiple
       applications and websites using one set of credentials. Accounts using SSO
       verification verify your identity outside of the EXAT system... For single
@@ -187,9 +187,9 @@ steps:
       You will then be taken to your school's login page. Log in to your school
       portal, and you will be redirected to the EXAT site." Cross-discipline
       corroboration that SSO is the assumed default in practice:
-      /Users/romitsoley/Downloads/OTOTAVideosTranscripts.md line 75 ("log into
+      OTOTAVideosTranscripts.md line 75 ("log into
       Exxat using your university credentials") and
-      /Users/romitsoley/Downloads/PAVideosTranscripts.md line 23 ("Log in to
+      PAVideosTranscripts.md line 23 ("Log in to
       Exxat Prism using your university credentials").
     elements:
       - element: "School email address field (IdP discovery)"
@@ -228,7 +228,7 @@ steps:
       Navigation" video predates this rollout and describes a login flow with no
       second factor, which is itself worth knowing (the canonical onboarding
       video is out of date on the very first screen a new non-SSO admin sees).
-      Source is /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Two-Factor Authentication (2FA) for Exxat Prism Non-SSO Admin Users.md, corroborated by /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (exxat_advantage_layer, Trust Portal item: "mandatory Two-Factor Authentication rollout for all non-SSO users (students, faculty, admins) effective July 2025 with a 90-day setup grace window before lockout").
+      Source is PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Two-Factor Authentication (2FA) for Exxat Prism Non-SSO Admin Users.md, corroborated by content/prism/capability-map.yaml (exxat_advantage_layer, Trust Portal item: "mandatory Two-Factor Authentication rollout for all non-SSO users (students, faculty, admins) effective July 2025 with a 90-day setup grace window before lockout").
     elements:
       - element: "Setup with Phone Number (recommended path)"
         type: "button + phone input + Verify Phone Number"
@@ -275,7 +275,7 @@ steps:
       accepts. Acceptance is a hard gate — the transcript states the login does
       not complete until it is given, on both the standard and SSO paths.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md line 13 (standard path):
+      exxat_transcripts.md line 13 (standard path):
       "Click on the links to view and read EXAT's privacy policy and terms of
       use. Accept EXAT's privacy policy. Once you accept, you will log into your
       account." and line 15 (SSO path): "Accept EXAT's privacy policy and terms
@@ -310,7 +310,7 @@ steps:
       documented section groups. This is the primary orientation surface of the
       product and the one the rest of the tutorial library assumes you start from.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md lines 15-17 ("1/16
+      exxat_transcripts.md lines 15-17 ("1/16
       Administrator Navigation"): "The dashboard is your central hub, presenting
       all the available options tailored to your needs. Use the links on the
       dashboard to access different sections of the EXAT system. These sections
@@ -375,14 +375,14 @@ steps:
       Admin opens the hamburger menu to reach any module from anywhere, rather
       than routing back through the dashboard.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md line 17: "You can also
+      exxat_transcripts.md line 17: "You can also
       access these options anytime through the hamburger menu at the top of the
       page." This is the single most-repeated navigation instruction in the whole
       corpus and it is discipline-invariant — verbatim reliance on it appears in
-      /Users/romitsoley/Downloads/PTPTAVideosTranscripts.md lines 37, 79, 117;
-      /Users/romitsoley/Downloads/OTOTAVideosTranscripts.md lines 75, 91, 93, 95,
-      97, 119; /Users/romitsoley/Downloads/PAVideosTranscripts.md line 23;
-      /Users/romitsoley/Downloads/SLPVideosTranscripts.md line 23.
+      PTPTAVideosTranscripts.md lines 37, 79, 117;
+      OTOTAVideosTranscripts.md lines 75, 91, 93, 95,
+      97, 119; PAVideosTranscripts.md line 23;
+      SLPVideosTranscripts.md line 23.
     elements:
       - element: "Hamburger menu module list"
         type: "global navigation drawer"
@@ -405,7 +405,7 @@ steps:
       Admin types a name or ID and narrows with an entity filter to jump straight
       to a record, rather than navigating the module tree.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md lines 65-69: "The global
+      exxat_transcripts.md lines 65-69: "The global
       search bar in EXAP Prism allows you to efficiently search across the entire
       platform... you can effortlessly locate individuals, courses, sites and
       locations, placements, and standards... Click on the people filter if you
@@ -470,7 +470,7 @@ steps:
       Admin opens the Resource Center to self-serve training, release notes,
       events, the discipline community, and support escalation.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md lines 19-29 ("1/16
+      exxat_transcripts.md lines 19-29 ("1/16
       Administrator Navigation") and lines 1705-1719 ("16/16 (Part 2) Using the
       Resource Center") — the two are near-verbatim duplicates of each other,
       both stating the five sections are "product education, product updates,
@@ -485,7 +485,7 @@ steps:
         gap_severity: "configure-needed"
         gap_note: >
           The discipline-coverage asymmetry that matters most for expansion: the
-          help-guide mirror at /Users/romitsoley/Downloads/PRISM-Expansion-Vault/
+          help-guide mirror at PRISM-Expansion-Vault/
           99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/
           Discipline Specific Guides contains exactly six discipline folders —
           Nursing, OT-OTA, PA, PT-PTA, SLP, Social Work (SW). There is no folder
@@ -609,14 +609,14 @@ steps:
       uses the cited sources to jump to the underlying help article — the fastest
       documented path out of day-one confusion without opening a ticket.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md lines 1687-1699 ("16/16
+      exxat_transcripts.md lines 1687-1699 ("16/16
       (Part 1) How to use Ask Leo"), which is far richer than the one-paragraph
       version in the older 1/16 navigation video at line 31 ("click on the Ask
       Leo button, select one of the frequently asked questions, or ask a new
       question in the text area provided. Leo is still learning..."). Agentic
       behaviours (tag creation, opening the password-change flow, theme change,
       deep-link navigation, PDF export) come from
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (AI Insights item), sourced there to Exxat help-center documentation.
+      content/prism/capability-map.yaml (AI Insights item), sourced there to Exxat help-center documentation.
     elements:
       - element: "Ask Leo toolbar icon"
         type: "button"
@@ -714,7 +714,7 @@ steps:
       program administrators, and for Exxat associates — with module tagging and
       document attachment — during the setup period this journey covers.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md lines 31-35 ("1/16
+      exxat_transcripts.md lines 31-35 ("1/16
       Administrator Navigation"): "Click on the Onboarding Notes icon to access
       the Onboarding Notes section. Here, you can leave notes for yourself, EXAT
       associates, and other program administrators... Please note, these EXAT
@@ -768,14 +768,14 @@ steps:
       Admin personalizes the interface, manages their own credentials and
       sessions, reviews consent, and reaches the Trust Portal.
     confirmed_by: >
-      Named in /Users/romitsoley/Downloads/exxat_transcripts.md line 69
+      Named in exxat_transcripts.md line 69
       ("Personalize your experience with EXAP Prism by clicking on the dropdown
       menu next to your name. You can change the color theme to suit your
       preference and switch between light and dark modes. Additionally, you can
       manage your password and review the privacy policy and the terms of use.")
       — but the transcript predates and therefore omits Consent Detail,
       Logged-in Devices, Login History, Trust Portal and the Exxat Certification
-      link, all of which come from /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Using User Settings- Administrators.md
+      link, all of which come from PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Using User Settings- Administrators.md
     elements:
       - element: "Theme (Blue / Purple / High Contrast)"
         type: "selector, applies instantly"
@@ -874,7 +874,7 @@ steps:
       account activation, which is the persona of this stage.
     confirmed_by: >
       NOT covered by any tutorial transcript. Source is
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml, "Read-only accreditation site-visit accounts": "Exxat support can provision a dedicated read-only account specifically for accreditation site visitors on request — a purpose-built account type rather than repurposing a standard admin login." Cross-checked against the named program-level role catalog in the same file, which includes a "Read-Only Program Administrator" role.
+      content/prism/capability-map.yaml, "Read-only accreditation site-visit accounts": "Exxat support can provision a dedicated read-only account specifically for accreditation site visitors on request — a purpose-built account type rather than repurposing a standard admin login." Cross-checked against the named program-level role catalog in the same file, which includes a "Read-Only Program Administrator" role.
     elements:
       - element: "Read-only site-visit account type"
         type: "account/role provisioning (support-gated)"
@@ -904,31 +904,31 @@ steps:
           disproportionate trust payoff in the DO/Dentistry/Medicine sales cycle.
 
 sources:
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — PRIMARY. '1/16 Administrator Navigation in Exxat Prism' (lines 5-71; account activation lines 9-13, dashboard/hamburger/custom roles lines 15-17, Resource Center lines 19-29, chat + Ask Leo line 29-31, Onboarding Notes lines 31-35, global search lines 65-69, theme/password dropdown line 69); '16/16 (Part 1) How to use Ask Leo' (lines 1683-1699); '16/16 (Part 2) Using the Resource Center' (lines 1701-1719)"
-  - "/Users/romitsoley/Downloads/PTPTAVideosTranscripts.md (lines 37, 79, 117 — dashboard/hamburger navigation idiom, PT/PTA)"
-  - "/Users/romitsoley/Downloads/OTOTAVideosTranscripts.md (lines 75, 91-97, 119 — 'log into Exxat using your university credentials', dashboard/hamburger idiom, OT/OTA)"
-  - "/Users/romitsoley/Downloads/PAVideosTranscripts.md (line 23 — 'Log in to Exxat Prism using your university credentials', PA)"
-  - "/Users/romitsoley/Downloads/SLPVideosTranscripts.md (line 23 — dashboard/hamburger idiom, SLP)"
-  - "/Users/romitsoley/Downloads/NursingTutorialsTranscripts.md (checked — contains no account-activation, login, or navigation-chrome content; Nursing texture for this stage comes from the help-guide folder instead)"
-  - "/Users/romitsoley/Downloads/TEVideosTranscripts.md (checked — contains no account-activation, login, or navigation-chrome content)"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Two-Factor Authentication (2FA) for Exxat Prism Non-SSO Admin Users.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Using User Settings- Administrators.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/School Administrator User Guide.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Troubleshooting Guide.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Whitelist Communications from Exxat PRISM.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/ (directory listing — six discipline folders only: Nursing, OT-OTA, PA, PT-PTA, SLP, Social Work (SW))"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/ (directory listing — seven disciplines: PT, OT, PA, SLP, Nursing, Social Work, Teacher Education; none for DO, Pharmacy, Dentistry, Medicine)"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (Ask Leo agentic detail; 2FA July 2025 mandate; Trust Portal; support-gated configuration boundary incl. SSO config; role catalog; read-only site-visit accounts; live-chat hours correction)"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml (SAML/Shibboleth SSO, MFA, SOC 2/FERPA claims; mobile-app reliability complaints)"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml (generic SSO/LTI only; Customer Service 4.9/5, overall 4.7/5, ease of use 4.3/5)"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml (no sandbox / lack of comparable-program examples for new implementation teams; 'clunky' UI; poor mobile usability)"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml (public knowledge base; 'unable to verify whether this exists behind login'; outdated-interface complaint)"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml (product named 'Leo' — name-collision hazard, not an assistant)"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml ('AI-powered risk assessment' analytics — different shape from a conversational assistant)"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml (Curriculum Explorer/Search/Matrix; 20+ university Consortium model)"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml (RBAC + audit trails framed against HIPAA/FERPA/CODA)"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/new-innovations.yaml (APE with citation/concern tracking, CLER visit management)"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml (Element 1-2 — self-study reviewed before every site visit)"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml (Element 11.2 confidentiality — checked and deliberately NOT cited on 2FA; Element 11.9 precedent)"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/flows/competency-verification--08-close-the-loop-external-validation-against.yaml (precedent for the COCA 11.9 / CODA 1-2 pairing on the Program Details > Accreditation screen; deliberately not re-derived here)"
+  - "exxat_transcripts.md — PRIMARY. '1/16 Administrator Navigation in Exxat Prism' (lines 5-71; account activation lines 9-13, dashboard/hamburger/custom roles lines 15-17, Resource Center lines 19-29, chat + Ask Leo line 29-31, Onboarding Notes lines 31-35, global search lines 65-69, theme/password dropdown line 69); '16/16 (Part 1) How to use Ask Leo' (lines 1683-1699); '16/16 (Part 2) Using the Resource Center' (lines 1701-1719)"
+  - "PTPTAVideosTranscripts.md (lines 37, 79, 117 — dashboard/hamburger navigation idiom, PT/PTA)"
+  - "OTOTAVideosTranscripts.md (lines 75, 91-97, 119 — 'log into Exxat using your university credentials', dashboard/hamburger idiom, OT/OTA)"
+  - "PAVideosTranscripts.md (line 23 — 'Log in to Exxat Prism using your university credentials', PA)"
+  - "SLPVideosTranscripts.md (line 23 — dashboard/hamburger idiom, SLP)"
+  - "NursingTutorialsTranscripts.md (checked — contains no account-activation, login, or navigation-chrome content; Nursing texture for this stage comes from the help-guide folder instead)"
+  - "TEVideosTranscripts.md (checked — contains no account-activation, login, or navigation-chrome content)"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Two-Factor Authentication (2FA) for Exxat Prism Non-SSO Admin Users.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Using User Settings- Administrators.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/School Administrator User Guide.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Troubleshooting Guide.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Whitelist Communications from Exxat PRISM.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/ (directory listing — six discipline folders only: Nursing, OT-OTA, PA, PT-PTA, SLP, Social Work (SW))"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/ (directory listing — seven disciplines: PT, OT, PA, SLP, Nursing, Social Work, Teacher Education; none for DO, Pharmacy, Dentistry, Medicine)"
+  - "content/prism/capability-map.yaml (Ask Leo agentic detail; 2FA July 2025 mandate; Trust Portal; support-gated configuration boundary incl. SSO config; role catalog; read-only site-visit accounts; live-chat hours correction)"
+  - "content/competitors/medhub.yaml (SAML/Shibboleth SSO, MFA, SOC 2/FERPA claims; mobile-app reliability complaints)"
+  - "content/competitors/core-elms.yaml (generic SSO/LTI only; Customer Service 4.9/5, overall 4.7/5, ease of use 4.3/5)"
+  - "content/competitors/emedley.yaml (no sandbox / lack of comparable-program examples for new implementation teams; 'clunky' UI; poor mobile usability)"
+  - "content/competitors/one45.yaml (public knowledge base; 'unable to verify whether this exists behind login'; outdated-interface complaint)"
+  - "content/competitors/leo-davinci.yaml (product named 'Leo' — name-collision hazard, not an assistant)"
+  - "content/competitors/e-value.yaml ('AI-powered risk assessment' analytics — different shape from a conversational assistant)"
+  - "content/competitors/elentra.yaml (Curriculum Explorer/Search/Matrix; 20+ university Consortium model)"
+  - "content/competitors/axium.yaml (RBAC + audit trails framed against HIPAA/FERPA/CODA)"
+  - "content/competitors/new-innovations.yaml (APE with citation/concern tracking, CLER visit management)"
+  - "content/accreditation/coda.yaml (Element 1-2 — self-study reviewed before every site visit)"
+  - "content/accreditation/coca.yaml (Element 11.2 confidentiality — checked and deliberately NOT cited on 2FA; Element 11.9 precedent)"
+  - "content/flows/competency-verification--08-close-the-loop-external-validation-against.yaml (precedent for the COCA 11.9 / CODA 1-2 pairing on the Program Details > Accreditation screen; deliberately not re-derived here)"
 last_verified: "2026-08-24"

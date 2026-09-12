@@ -81,11 +81,27 @@
  *   /Users/<name>/Downloads/PRISM-Expansion-Vault/…/Clinical Internship Evaluation Tool
  *   - Version 2.0.md
  *
- * render in first-paint visible text on dozens of routes, and an independent crawl counted
- * ~1,008 such occurrences across ~48 routes that this tool reports as ZERO. They are a
- * real, visible disclosure of a contributor's home directory; they are also unfixable by
- * wiring a sanitizer call, because the sanitizer's pattern cannot match them either. They
- * need a content-layer fix, and they are tracked separately.
+ * used to render in first-paint visible text on dozens of routes, and an independent crawl
+ * counted ~1,008 such occurrences across ~48 routes that this tool reported as ZERO.
+ *
+ * THAT SPECIFIC INSTANCE IS NOW CLOSED. Follow-up 7 stripped the local machine-path prefixes
+ * (`/Users/<name>/Downloads/` and `/Users/<name>/Documents/GitHub/rr-emerging-domains/`) from
+ * 1,314 citations across 49 `content/*.yaml` files. The same independent crawl now counts
+ * **0 visible occurrences across 0 of 165 routes**. The evidentiary content — the document
+ * title, its line numbers, its quoted excerpts — was preserved verbatim; only the machine-path
+ * prefix was removed.
+ *
+ * THE BLIND SPOT ITSELF REMAINS, and that is why this paragraph is not deleted. The pattern
+ * still cannot match a spaced filename, so a spaced path reintroduced into content/ tomorrow
+ * would again be reported as zero. What changed is the count, not the capability. Guard it
+ * with the grep this task used, which needs no pattern at all:
+ *
+ *     grep -rn "/Users/" content/          # expect only sources/registry.yaml's 2 path: fields
+ *
+ * Note also that the spaced vault paths were never wholly invisible here: the detector matches
+ * their `2.0.md` tail and reports it as a filename literally named "0.md". Those findings are
+ * about the retained, legitimate document title, NOT the removed machine path, so they survive
+ * this fix unchanged. Do not read them as residual leak.
  *
  * So: a clean run of this tool means "no raw filename THIS DETECTOR CAN SEE", never "no raw
  * filenames". The report prints that caveat on every run for the same reason it is written
@@ -386,10 +402,12 @@ const SCOPE_CAVEAT =
   "NOTE ON SCOPE: these counts are what this detector's pattern can match, NOT a complete\n" +
   "leak total. The pattern is kept in lockstep with the sanitizer's own BARE_CONTENT_PATH,\n" +
   "whose path segments are [\\w.-]+ — so filenames containing SPACES are invisible to it.\n" +
-  "Contributor vault paths (\"…/Clinical Internship Evaluation Tool - Version 2.0.md\") are\n" +
-  "the real instance: ~1,008 occurrences across ~48 routes render in visible text and are\n" +
-  "reported here as zero. They need a content-layer fix, not a sanitizer call, and are\n" +
-  "tracked separately. Read a clean run as \"nothing this detector can see\".";
+  "Contributor vault paths (\"…/Clinical Internship Evaluation Tool - Version 2.0.md\") were\n" +
+  "the known instance: ~1,008 occurrences across ~48 routes rendered visibly and counted here\n" +
+  "as zero. Follow-up 7 fixed that in content/; an independent crawl now finds 0 across all\n" +
+  "165 routes. The BLIND SPOT REMAINS — a spaced path added tomorrow would again read as zero,\n" +
+  "so verify with: grep -rn \"/Users/\" content/ (expect only registry.yaml's 2 path: fields).\n" +
+  "Read a clean run as \"nothing this detector can see\".";
 
 export function formatReport(findings: Finding[], routeCount: number): string {
   const lines: string[] = [];

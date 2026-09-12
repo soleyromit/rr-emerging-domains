@@ -129,7 +129,7 @@ steps:
       already-scored assessment instruments (experiential evaluations, didactic
       assessments, or course grades) feed a given competency, then sets the
       scoring scale and threshold used to judge attainment.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
 
   - screen: "Competency Management — Map Competencies"
     navigation_path: "Curriculum Management > Competency Management > Setup tab > [Framework row] > Map"
@@ -238,7 +238,7 @@ steps:
       deployed instrument (not just the whole form) to a specific competency,
       then applies the mapping so competency scores in the Review Grid, Student
       Dashboard, and Competency Reports recalculate immediately.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
 
   - screen: "Course Learning Activities Setup — Forms/Evaluations"
     navigation_path: "Courses > [Course] > Learning Activities > Setup > Forms/Evaluations (+ icon)"
@@ -346,7 +346,7 @@ steps:
       competency-linked preceptor rating form) onto a course offering, using
       anchor-relative rather than fixed dates so the identical instrument
       definition redeploys unchanged across cohorts and sites.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
 
   - screen: "Course Learning Activities Setup — Add Assignment"
     navigation_path: "Courses > [Course] > Learning Activities > Setup > Forms/Evaluations (+ icon) > Add Assignment"
@@ -428,7 +428,7 @@ steps:
       The Coordinator builds a non-form scored instrument (e.g. an upload-
       based skills submission) as a reusable Assignment object rather than a
       structured evaluation form.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Assignments.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Assignments.md"
 
   - screen: "Learning Tool Interoperability — GoReact Linked Assignment"
     navigation_path: "Courses > [Course] > Learning Activities > Setup > Learning Tool Interoperability (+ icon); rubric assignment happens inside GoReact after Prism hands off"
@@ -548,7 +548,7 @@ steps:
       Assignment object to GoReact for rubric authoring and scoring; status
       flips Submitted -> Reviewed automatically once the rubric is posted in
       GoReact, with no manual reconciliation back into Prism.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Set-up and Review GoReact Linked Assignment.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Set-up and Review GoReact Linked Assignment.md"
 
   # SCHEMA v2 EXCEPTION: this step has zero elements by definition — the module
   # does not exist in Prism, so there is no field, button, or column to attach
@@ -563,7 +563,7 @@ steps:
       browser, item-banked, psychometrically-scored exam delivery (the
       standardized-exam half of "assessment instruments") cannot do it inside
       Prism today.
-    confirmed_by: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (Exam Management entry: status: roadmap, target: Q2 2027, no features listed)"
+    confirmed_by: "content/prism/capability-map.yaml (Exam Management entry: status: roadmap, target: Q2 2027, no features listed)"
     accreditation_citation: >
       CODA Standard 2, Element 2-5; ACPE Standard 7, Key Element 7.3.d
       (psychometrically valid exam scoring); LCME Standard 9, Element 9.4
@@ -589,16 +589,16 @@ steps:
       an inferred gap, it is a directly confirmed absence.
 
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Assignments.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Set-up and Review GoReact Linked Assignment.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Understanding Forms in Learning Activities.md"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Assignments.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Set-up and Review GoReact Linked Assignment.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Understanding Forms in Learning Activities.md"
+  - "content/prism/capability-map.yaml"
+  - "content/accreditation/coda.yaml"
+  - "content/accreditation/acpe.yaml"
+  - "content/competitors/emedley.yaml"
+  - "content/competitors/elentra.yaml"
+  - "content/competitors/one45.yaml"
+  - "content/competitors/axium.yaml"
 last_verified: "2026-08-24"

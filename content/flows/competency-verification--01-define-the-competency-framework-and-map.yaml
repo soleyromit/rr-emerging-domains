@@ -59,7 +59,7 @@ steps:
       the program will map against, and adds any sub-standard or
       program-specific standard/SLO not already pre-loaded, before mapping
       begins.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
 
   - screen: "Curriculum Mapping > Add Curriculum (4-step drawer: Details > Course Offering > Mapping Setup > Curriculum Grid)"
     navigation_path: "Curriculum Mapping dashboard > +Add Curriculum"
@@ -102,7 +102,7 @@ steps:
       each measure to the activated accreditor standards, and tags courses
       with the discipline-specific attribute set (the same mechanism already
       proven for ARC-PA/PANCE Topics and ACOTE/Lifespan tags).
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Adding Curriculum Grid in Curriculum Mapping.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Adding Curriculum Grid in Curriculum Mapping.md"
 
   - screen: "Course Objectives > Mapping (with Map with Leo AI assist)"
     navigation_path: "Curriculum Mapping > select Curriculum + Course Offering > Mapping icon > Course Objectives > select objective"
@@ -136,7 +136,7 @@ steps:
       objective and either maps it to standards manually or requests Leo's
       AI-suggested mapping, reviews/edits the suggested standards, and
       applies the approved subset.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Curriculum Mapping with Leo.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Curriculum Mapping with Leo.md"
 
   - screen: "Curriculum Mapping > Mapping Reports > Mapped Standards Report"
     navigation_path: "Curriculum Mapping dashboard > select Curriculum > Mapping Reports > Mapped Standards"
@@ -170,7 +170,7 @@ steps:
       site visit to confirm which of the four accreditors' standards still
       have zero mappings, and exports it as accreditation-readiness
       evidence.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
 
   - screen: "Curriculum Mapping > Mapping Reports > Heatmap Report"
     navigation_path: "Curriculum Mapping dashboard > select Curriculum > Mapping Reports > select standard > Other Reports > Heatmap Report"
@@ -195,7 +195,7 @@ steps:
       The Director scans the heatmap for lightly-mapped or unmapped cells —
       standards with little or no course coverage — before a curriculum
       committee review.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Heatmap Report.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Heatmap Report.md"
 
   - screen: "Competency Management > Setup > Add New (4-step drawer: Select Competency > Course Type > Scoring Source/Assessments > Summary)"
     navigation_path: "Curriculum Management section > Competency Management > Setup tab > Add New"
@@ -239,7 +239,7 @@ steps:
       assessments or course offerings, sets the scoring scale and threshold,
       and saves — after which Prism prompts to start mapping immediately or
       defer it.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
 
   - screen: "Competency Management > Review (cohort dashboard)"
     navigation_path: "Curriculum Management section > Competency Management > Review tab > select Competency framework > select Cohort"
@@ -288,28 +288,28 @@ steps:
       The Director reviews cohort-level competency attainment, drills into
       at-risk students from the Students in Cohort grid, and decides when to
       publish scores to students for the term.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
 
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Adding Curriculum Grid in Curriculum Mapping.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Curriculum Mapping with Leo.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Assigning Attributes to a Course for Curriculum Mapping.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Heatmap Report.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/do.yaml"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Adding Curriculum Grid in Curriculum Mapping.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Curriculum Mapping with Leo.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Assigning Attributes to a Course for Curriculum Mapping.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Heatmap Report.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "content/prism/capability-map.yaml"
+  - "content/accreditation/coca.yaml"
+  - "content/accreditation/acpe.yaml"
+  - "content/accreditation/coda.yaml"
+  - "content/accreditation/lcme.yaml"
+  - "content/competitors/core-elms.yaml"
+  - "content/competitors/leo-davinci.yaml"
+  - "content/competitors/emedley.yaml"
+  - "content/competitors/elentra.yaml"
+  - "content/competitors/one45.yaml"
+  - "content/domains/do.yaml"
 
 last_verified: "2026-08-24"

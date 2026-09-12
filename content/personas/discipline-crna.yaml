@@ -37,7 +37,7 @@
 # program-voice interview. Persona framing, JTBD wording, and switching_trigger
 # are Exxat-side synthesis.
 #
-# PRIMARY PRODUCT SOURCE: /Users/romitsoley/Downloads/CRNAVideosTranscripts.md —
+# PRIMARY PRODUCT SOURCE: CRNAVideosTranscripts.md —
 # three Program Administrator tutorial transcripts (Daily Clinical Evaluation
 # Report; Managing Clinical Case Experience Log; Echo360/GoReact LTI). Until
 # ../accreditation/coa.yaml was written this transcript was uncited by every
@@ -472,9 +472,9 @@ journey_crossref: >
   are COA's own assessment activity under the Policies and Procedures Manual. A
   Site Assessment form is how a program EVIDENCES F.4, not a visit F.4 requires.
 sources:
-  - "/Users/romitsoley/Downloads/CRNAVideosTranscripts.md — PRIMARY. Three Program Administrator video transcripts (Daily Clinical Evaluation Report, vimeo/1183750310; Managing Clinical Case Experience Log, vimeo/1171816402; Echo360-GoReact LTI Assignments, vimeo/1193140722), collated from https://help.exxatprism.com/hc/en-us/articles/45480522836369-CRNA-Videos. The only dedicated Level-0 CRNA product source in the vault; cited by line number throughout."
+  - "CRNAVideosTranscripts.md — PRIMARY. Three Program Administrator video transcripts (Daily Clinical Evaluation Report, vimeo/1183750310; Managing Clinical Case Experience Log, vimeo/1171816402; Echo360-GoReact LTI Assignments, vimeo/1193140722), collated from https://help.exxatprism.com/hc/en-us/articles/45480522836369-CRNA-Videos. The only dedicated Level-0 CRNA product source in the vault; cited by line number throughout."
   - "../accreditation/coa.yaml — the COA/CRNA standards registry (Standards for Accreditation of Nurse Anesthesia Programs, Practice Doctorate, May 2025 / effective January 1, 2026, plus the Appendix, the Guidelines for Counting Clinical Experiences rev. January 2026, and the Accreditation Policies and Procedures Manual rev. June 2026). Every element number and every prism_fit judgment in accreditation_pressure and jtbd is taken from it."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — CRNA-adjacent internal source: CRNA Program Administrator / Assistant roles and their licensure+NBCRNA requirements (line 16), the 2:1 preceptor cap (line 19), Patient Log = CCE Log terminology (lines 25, 78), D.1-D.50 as the configured competency framework (lines 27, 64), the CRNA patient-log field layout (line 80), the NBCRNA Transcript Report (line 83), Sites > Slots as where the ratio is monitored (line 73), ACLS/PALS at the Placement Clearance gate (lines 71, 101), and the COA critical-standard concept (line 120). Self-describes (line 10) as skewed toward accreditor-mapped features and CRNA logging."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — CRNA-adjacent internal source: CRNA Program Administrator / Assistant roles and their licensure+NBCRNA requirements (line 16), the 2:1 preceptor cap (line 19), Patient Log = CCE Log terminology (lines 25, 78), D.1-D.50 as the configured competency framework (lines 27, 64), the CRNA patient-log field layout (line 80), the NBCRNA Transcript Report (line 83), Sites > Slots as where the ratio is monitored (line 73), ACLS/PALS at the Placement Clearance gate (lines 71, 101), and the COA critical-standard concept (line 120). Self-describes (line 10) as skewed toward accreditor-mapped features and CRNA logging."
   - "./discipline-nursing.yaml — the parent-discipline persona whose CRNA mentions this file develops; read to avoid contradiction, and reconciled in the header note."
   - "../journeys/admin-onboarding-product-setup.yaml — stages 4 and 5 (Faculty Compliance as accreditation-load-bearing for Nursing; preceptors under Sites > Personnel)."
   - "../journeys/preceptor-site-onboarding.yaml — independent finding on slot '# of offers' as the only 2:1 evidence."

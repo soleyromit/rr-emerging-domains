@@ -3,7 +3,7 @@
 #
 # SOURCE DISCIPLINE (deliberate, and different from the four older journeys):
 # every step below is confirmed FIRST against the raw program-administrator tutorial
-# transcript at /Users/romitsoley/Downloads/exxat_transcripts.md — the actual narrated
+# transcript at exxat_transcripts.md — the actual narrated
 # product walkthrough — with line ranges and verbatim quotes. Help-center articles are
 # cited only as a SECONDARY corroboration, or where the transcript is silent (e.g. the
 # Experiential Supervisor Intake Form, which post-dates the 16-part tutorial series).
@@ -39,7 +39,7 @@ steps:
       areas — because these lists become filter dimensions on every later grid and drive the
       student location-area wishlist.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "5/16 Setting up Sites and Locations in
+      exxat_transcripts.md, "5/16 Setting up Sites and Locations in
       Exxat Prism" (lines 351-355): "Click on the Sites section from your dashboard or from the
       left hamburger menu, then click on the Setup tab and select the Sites Organization option.
       You can then set up site/location categories, personnel categories, and location areas."
@@ -86,7 +86,7 @@ steps:
       models their institution's contract-negotiation steps, and the contract status ladder —
       before any affiliation agreement is entered.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 357-361: "Navigate back to the Setup
+      exxat_transcripts.md, lines 357-361: "Navigate back to the Setup
       tab, then click on the Contract Organization option. On the contract organization page, you
       can set up contract categories, your routing checklist, and contract statuses... The routing
       checklist is mainly used for contract management. It can be used to capture important steps
@@ -124,7 +124,7 @@ steps:
       chooses) how much site data is common across sibling programs versus configured per program
       — a decision that is expensive to reverse once hundreds of site records exist.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 361-365: "All the information in green
+      exxat_transcripts.md, lines 361-365: "All the information in green
       is common, while all the information in red is configured per program... as of September 2025,
       we have made some changes to our site-sharing model. We used to have five different types of
       site-sharing models. We have since simplified this list of models into three models."
@@ -153,7 +153,7 @@ steps:
       The administrator creates the first site record — the organization that accepts students —
       and decides at creation time whether that organization is also itself a physical location.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 345-347 (hierarchy: "The first entity
+      exxat_transcripts.md, lines 345-347 (hierarchy: "The first entity
       is sites. This is the organization which accepts your students... The second entity is
       locations... The third entity is contracts... The fourth entity is personnel") and lines
       365-367 ("Click on the Sites tab, then click on the Add Site button... you will need to fill
@@ -207,7 +207,7 @@ steps:
       programs granted access, site-wide requirements, settings, payment terms, categories,
       documents and notes — knowing that almost all of it will be inherited by every child location.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 369-385 ("In the About tab, you can
+      exxat_transcripts.md, lines 369-385 ("In the About tab, you can
       populate information about the site that can be shared with students... any requirements added
       will automatically be inherited by all locations associated with the site"), and line 385 for
       the delete guard. Corroborated by help-center mirror: Sites > "Adding and Managing Sites.md".
@@ -276,7 +276,7 @@ steps:
       already covers several sites, or creating a new one — then fills in its contacts, covered
       programs, covered locations, routing checklist and documents.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 399-413: "The chain icon allows you to
+      exxat_transcripts.md, lines 399-413: "The chain icon allows you to
       link contracts you have already created for different sites. If, for example, you have multiple
       sites that are covered by the same contract, rather than consolidating them, you can easily link
       the contract"; "You can provide the contract with a name, contract number, tax ID, the name of
@@ -347,7 +347,7 @@ steps:
       affiliation agreement approaches its end date — turning a static contract record into a
       renewal workflow.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 413-419: "To set up auto-notifications
+      exxat_transcripts.md, lines 413-419: "To set up auto-notifications
       for expiring contracts, navigate to the Setup tab and click on the Auto-Notifications
       option... using the two rightmost dropdown menus, you can select the number of days, weeks, or
       months in advance of a contract expiration date for which you would like to be notified...
@@ -403,7 +403,7 @@ steps:
       actually placed at — including the rural/underserved attributes and the student-visibility
       decision.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 421-423: "you will provide some basic
+      exxat_transcripts.md, lines 421-423: "you will provide some basic
       information about this location, such as its name and whether it is active, address
       information, and contact information. Lastly, in the Additional Information section, you will
       provide some additional location information like if the location is in a rural area, if the
@@ -450,7 +450,7 @@ steps:
       categories, requirements, student requirement uploads, documents and notes — and adds
       location-only content such as housing and parking.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 423-431: "The location will inherit
+      exxat_transcripts.md, lines 423-431: "The location will inherit
       almost all site information, including contracts, settings, categories, requirements,
       site-specific requirements, documents, and notes"; "Toggle the Enabled for this Location bit to
       deactivate or activate these site-specific requirements"; "Toggle the Inherit Notes from Site
@@ -513,7 +513,7 @@ steps:
       site, reviews the explicit table of what moves and what does not, confirms, and then watches
       an asynchronous job complete.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 433-437: "In recent times, we have seen
+      exxat_transcripts.md, lines 433-437: "In recent times, we have seen
       many mergers and acquisitions, M&A, of hospitals and sites. As part of this process, locations
       that are part of one site must be merged with the new site... attributes inherited from site
       such as settings, categories, requirements, requirement uploads, notes, documents, and
@@ -568,7 +568,7 @@ steps:
       experiential supervisor, or both — sets their email-notification preferences, and associates
       them to the specific sites and locations they cover, with a primary site.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 439-451: "It is important to maintain an
+      exxat_transcripts.md, lines 439-451: "It is important to maintain an
       updated list of personnel so the correct people receive slot requests and the correct
       experiential supervisors can be assigned to student placements"; "Experiential supervisors
       supervise student placements and therefore are assigned to student placements for them to fill
@@ -625,7 +625,7 @@ steps:
       certifications, documents, assistants, notes — and manages their site/location associations
       over time, including disassociation when they leave.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 451-477: "The Slots and Placements tabs
+      exxat_transcripts.md, lines 451-477: "The Slots and Placements tabs
       appear only when the personnel member is marked as a clinical instructor"; "If there are any
       past or current placements assigned to the person at a location at this site, the person will
       continue to be associated with these placements to preserve any placement or form and
@@ -688,7 +688,7 @@ steps:
       customises it, building sections and questions, then publishes it so it becomes selectable
       when logging a site visit.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 493-513: "If you have never configured a
+      exxat_transcripts.md, lines 493-513: "If you have never configured a
       site assessment form in the past, you will have a table displaying our two standard site
       assessment forms"; "When you publish a site assessment form, this form will be used when adding
       an assessment to a site or location in the future. Once a published assessment form is used at
@@ -735,7 +735,7 @@ steps:
       recommendations in bulk, and thereafter filtering Exxat One-sourced sites out of slot-request
       emails.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "Linking Sites and Locations in Exxat One to
+      exxat_transcripts.md, "Linking Sites and Locations in Exxat One to
       Exxat Prism" (lines 1857-1891): "This is a one-time activity designed to establish a connection
       between the site and location information maintained by schools in Exxat Prism and the
       corresponding information in Exxat One"; "Below the site details, you'll find AI-generated
@@ -799,7 +799,7 @@ steps:
       log in, defines the rank and administrative-position vocabularies, and optionally preloads
       announcements and resources so the dashboard is not empty on first login.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "11/16 Setting up Faculty in Exxat Prism"
+      exxat_transcripts.md, "11/16 Setting up Faculty in Exxat Prism"
       (lines 1175-1193): "First, you will need to set up the faculty dashboard and configure faculty
       organization options. Then you will need to add faculty to the system and invite them to create
       their login"; "you can enable or disable access to their assigned course offerings, the student
@@ -854,7 +854,7 @@ steps:
       The administrator creates individual faculty and staff records and, at an SSO institution,
       attaches each person's SSO key before invitations go out.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 1193-1199: "If you're adding a staff
+      exxat_transcripts.md, lines 1193-1199: "If you're adding a staff
       member, make sure to select the staff option at the top. Then enter their first name, last name,
       email address, and assign any administrative positions as needed"; "if you assign an SSO key to
       a faculty member, they will be required to use SSO when logging in after you send their
@@ -891,7 +891,7 @@ steps:
       Rather than creating faculty one at a time, the administrator downloads the template,
       populates it offline, uploads it, resolves flagged errors and warnings, and confirms the import.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 1199-1205: "First, click the Download
+      exxat_transcripts.md, lines 1199-1205: "First, click the Download
       Template icon to get the import file... Fields marked with an asterisk symbol are required.
       Don't change the column headers or structure of the template... If you're including an
       administrative position, faculty rank, or faculty category, make sure those options are already
@@ -945,7 +945,7 @@ steps:
       including the all-important invitation link, previews it, and sends now or on a schedule — then
       tracks activation.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 1205-1211: "You can quickly check who's
+      exxat_transcripts.md, lines 1205-1211: "You can quickly check who's
       already activated their account by looking at the Account Status column. If you've assigned an
       SSO key to any of the selected faculty, they'll automatically receive an SSO login when
       invited"; "Don't forget to personalize the message using the merge fields... Be sure to include
@@ -991,7 +991,7 @@ steps:
       contact details are shared with students and sites, associating them to courses, students and
       placements, verifying the result through the faculty's own eyes, and maintaining records in bulk.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "12/16 Managing Faculty in Exxat Prism"
+      exxat_transcripts.md, "12/16 Managing Faculty in Exxat Prism"
       (lines 1223-1273): "Faculty assigned to students serve as academic advisors... Faculty assigned
       to courses are called course faculty... Faculty linked to placements are placement faculty";
       "Students and faculty can view this contact information in the School Contacts section, and
@@ -1071,7 +1071,7 @@ steps:
       announcements, rotation schedule, clinician resources, course documents and program contacts —
       previews it, and shares its URL with sites.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "6/16 Setting Up Site Resources in Exxat Prism"
+      exxat_transcripts.md, "6/16 Setting Up Site Resources in Exxat Prism"
       (lines 545-569): "The site resources page serves as a dedicated website to house these resources,
       which can be easily shared with sites... sites can access the information shared by the school
       without needing to log in. It is important to note that this page cannot be searched online";
@@ -1142,7 +1142,7 @@ steps:
       bundles them into groups, assigns groups to faculty, reviews submissions and schedules
       reminder notifications.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "Setting Up and Reviewing Faculty Compliance"
+      exxat_transcripts.md, "Setting Up and Reviewing Faculty Compliance"
       (lines 1935-1963): "Faculty compliance is a powerful feature that allows you to collect essential
       information from your faculty, such as healthcare records, identity information, insurance
       information, and licensure or certification information... To get started with faculty
@@ -1196,7 +1196,7 @@ steps:
       auditing personnel records for missing data, checking geographic coverage on the map, and
       exporting the faculty roster.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, lines 529-535: "Click on the Sites Missing
+      exxat_transcripts.md, lines 529-535: "Click on the Sites Missing
       Contracts tab to view a list of sites in your program that do not have contracts added"; "we are
       going to run the comprehensive personnel report... You will find helpful counts, total personnel,
       total preceptors, and the number of personnel missing different types of information at the top
@@ -1260,7 +1260,7 @@ discipline_notes:
       facility may have several SCCEs (one for IP, one for OP). The per-location designation and
       communication-preference overrides in step 11 are what make that expressible; a flat
       one-person-one-role model would not.
-    source: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md"
+    source: "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md"
   - discipline: "Occupational Therapy (OT/OTA)"
     note: >
       Terminology is renamed wholesale: Sites -> Agencies, Rotations -> Fieldwork Education,
@@ -1269,7 +1269,7 @@ discipline_notes:
       Locations' toggle (step 9) a standards-relevant control rather than a convenience, and
       C.1.7/C.1.10/C.1.13 (fieldwork-educator ratios and qualifications) load the personnel
       licensure/certification cards (step 12).
-    source: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+    source: "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
   - discipline: "Physician Assistant (PA)"
     note: >
       PA programs run two different slot-sourcing models that place different weight on the same
@@ -1278,7 +1278,7 @@ discipline_notes:
       are published to the student"). The Preceptor Based model makes the personnel-to-many-
       locations association from step 11 load-bearing rather than optional, and pairs with the
       'Follow the Preceptor' placement feature.
-    source: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+    source: "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
   - discipline: "Nursing"
     note: >
       The playbook is explicit that the preceptor lives "under Sites -> Personnel, not Faculty and
@@ -1288,7 +1288,7 @@ discipline_notes:
       assessments map to COA F.4 with follow-up dates pushed to the Program Calendar. Site
       sufficiency evidence (ACEN 4.9, CCNE II-C, COA A.10/F.1) is drawn from the Sites database
       plus a Slot Sufficiency Report under Sites > Reports.
-    source: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+    source: "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
   - discipline: "Speech-Language Pathology (SLP)"
     note: >
       The supervisor is the Clinical Educator (the UI also calls them experiential supervisor in
@@ -1297,7 +1297,7 @@ discipline_notes:
       SLP's documented accreditation artifact. Every SLP clinical-log report filters by Site,
       Location and Clinical Educator, so directory hygiene in steps 4-12 directly determines
       whether the 400-hour/KASA reporting is sliceable.
-    source: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md"
+    source: "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md"
   - discipline: "Social Work"
     note: >
       "Agency" is the consistent term for Site/Location, tracked in an Agencies module. Two
@@ -1306,7 +1306,7 @@ discipline_notes:
       instruction"). Prism's personnel model supports two associated people, but the
       qualification distinction that CSWE actually audits is not a structured attribute anywhere
       in step 11-12 — it would have to be carried in personnel categories or designation free text.
-    source: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md"
+    source: "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md"
   - discipline: "Teacher Education"
     note: >
       The TE playbook explicitly warns that terminology (Cooperating Teacher / Mentor Teacher /
@@ -1315,7 +1315,7 @@ discipline_notes:
       Site with schools as Locations, and the step-10 Move Location capability maps onto district
       reorganisation — but no TE source in this research confirms any of it, so this is the one
       discipline where stage-5 fit is inferred rather than documented.
-    source: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md"
+    source: "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md"
   - discipline: "Medicine (MD) — expansion domain"
     note: >
       The clerkship model is a clinical TEAM (attending -> fellow -> resident -> intern), not a
@@ -1325,7 +1325,7 @@ discipline_notes:
       adequacy that no field in stage 5 captures. Site scarcity is the domain's defining pressure
       (44% of AAMC-surveyed schools report pressure to pay community preceptors) — which makes the
       step-5 Payment Details card unusually relevant here.
-    source: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/medicine.yaml"
+    source: "content/domains/medicine.yaml"
   - discipline: "Osteopathic Medicine (DO) — expansion domain"
     note: >
       COMs recruit hundreds of independent community preceptors across many small sites rather
@@ -1336,7 +1336,7 @@ discipline_notes:
       categories, settings and personnel designations. Health-system consolidation makes the
       step-10 Move Location workflow disproportionately valuable — and its contracts-don't-move
       caveat disproportionately dangerous.
-    source: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/do.yaml"
+    source: "content/domains/do.yaml"
   - discipline: "Dentistry — expansion domain"
     note: >
       Most instruction happens in the school's OWN teaching clinic with chairside, per-procedure
@@ -1347,7 +1347,7 @@ discipline_notes:
       is the direct evidence that coda.yaml's 'faculty-side calibration tracking is unconfirmed'
       hedge is now resolvable. axiUm, the incumbent, is a practice-management system built around
       that in-house clinic and documents no external site directory at all.
-    source: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/dentistry.yaml; /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+    source: "content/domains/dentistry.yaml; content/competitors/axium.yaml"
   - discipline: "Pharmacy — expansion domain"
     note: >
       One-to-one preceptor supervision with a hard 2:1 ratio cap (ACPE 3.3.e) and four mandatory
@@ -1358,14 +1358,14 @@ discipline_notes:
       licensure cards. Note that this stage's evidence should trigger a re-rating of acpe.yaml
       3.5.b from 'Gap' to 'Configure': the site contract repository it says does not exist is
       documented in the primary transcript at lines 399-419.
-    source: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/pharmacy.yaml; /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
+    source: "content/domains/pharmacy.yaml; content/accreditation/acpe.yaml"
 
 sources:
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — PRIMARY. '5/16 Setting up Sites and Locations in Exxat Prism' (lines 341-539, 28 chapters); '6/16 Setting Up Site Resources in Exxat Prism' (lines 541-571); '11/16 Setting up Faculty in Exxat Prism' (lines 1169-1217); '12/16 Managing Faculty in Exxat Prism' (lines 1219-1287); 'Linking Sites and Locations in Exxat One to Exxat Prism' (lines 1857-1891); 'Processing Schedules from Exxat One to Exxat Prism' (lines 1893-1929, for the downstream dependency only); 'Setting Up and Reviewing Faculty Compliance' (lines 1931-1965)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/ — SECONDARY corroboration: Adding and Managing Sites.md, Adding and Managing Locations.md, Managing Personnel.md, Managing Contracts.md, Managing Site Organization and Auto-Notifications.md, Understanding Site Sharing Model in Exxat Prism.md, Understanding Site vs. Location.md, Managing Experiential Supervisor Intake Form.md (the last covers a feature that post-dates the tutorial series: intake requests are sent 'one supervisor at a time from each personnel profile. Bulk sending is planned for a future release')."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Data Feed Integration.md — negative evidence for the step-11 import gap: the documented feeds are student registration and course registration only; no site, location, or personnel feed."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/ — Physical Therapy (PT) Playbook.md, Occupational Therapy (OT) Playbook.md, Physician Assistant (PA) Playbook.md, Nursing Playbook.md, Speech-Language Pathology (SLP) Playbook.md, Social Work (SW) Playbook.md, Teacher Education (TE) Playbook.md."
-  - "/Users/romitsoley/Downloads/PTPTAVideosTranscripts.md; /Users/romitsoley/Downloads/OTOTAVideosTranscripts.md; /Users/romitsoley/Downloads/PAVideosTranscripts.md; /Users/romitsoley/Downloads/SLPVideosTranscripts.md; /Users/romitsoley/Downloads/NursingTutorialsTranscripts.md; /Users/romitsoley/Downloads/TEVideosTranscripts.md — used for discipline supervisor terminology (clinical instructor / fieldwork educator / clinical educator / preceptor) and for confirming that site+location+supervisor are standard report filter dimensions across disciplines."
+  - "exxat_transcripts.md — PRIMARY. '5/16 Setting up Sites and Locations in Exxat Prism' (lines 341-539, 28 chapters); '6/16 Setting Up Site Resources in Exxat Prism' (lines 541-571); '11/16 Setting up Faculty in Exxat Prism' (lines 1169-1217); '12/16 Managing Faculty in Exxat Prism' (lines 1219-1287); 'Linking Sites and Locations in Exxat One to Exxat Prism' (lines 1857-1891); 'Processing Schedules from Exxat One to Exxat Prism' (lines 1893-1929, for the downstream dependency only); 'Setting Up and Reviewing Faculty Compliance' (lines 1931-1965)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/ — SECONDARY corroboration: Adding and Managing Sites.md, Adding and Managing Locations.md, Managing Personnel.md, Managing Contracts.md, Managing Site Organization and Auto-Notifications.md, Understanding Site Sharing Model in Exxat Prism.md, Understanding Site vs. Location.md, Managing Experiential Supervisor Intake Form.md (the last covers a feature that post-dates the tutorial series: intake requests are sent 'one supervisor at a time from each personnel profile. Bulk sending is planned for a future release')."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Data Feed Integration.md — negative evidence for the step-11 import gap: the documented feeds are student registration and course registration only; no site, location, or personnel feed."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/ — Physical Therapy (PT) Playbook.md, Occupational Therapy (OT) Playbook.md, Physician Assistant (PA) Playbook.md, Nursing Playbook.md, Speech-Language Pathology (SLP) Playbook.md, Social Work (SW) Playbook.md, Teacher Education (TE) Playbook.md."
+  - "PTPTAVideosTranscripts.md; OTOTAVideosTranscripts.md; PAVideosTranscripts.md; SLPVideosTranscripts.md; NursingTutorialsTranscripts.md; TEVideosTranscripts.md — used for discipline supervisor terminology (clinical instructor / fieldwork educator / clinical educator / preceptor) and for confirming that site+location+supervisor are standard report filter dimensions across disciplines."
   - "../accreditation/lcme.yaml (Standard 1 Element 1.4; Standard 5 Element 5.5; Standard 3 Element 3.1)"
   - "../accreditation/coda.yaml (Standard 4 Element 4-6; Standard 2 Element 2-6; Standard 3 Element 3-4)"
   - "../accreditation/coca.yaml (Standard 6 Elements 6.9, 6.10, 6.11; Standard 5 Element 5.4)"

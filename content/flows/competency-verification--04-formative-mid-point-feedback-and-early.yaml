@@ -105,7 +105,7 @@ steps:
       automatically per placement instance rather than being hand-dated per
       student — the confirmed anchor-relative scheduling primitive that
       capability-map.yaml and lcme.yaml both point to for LCME 9.7.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md (line 34: 'Both the publish and due date are based on anchors, meaning you won't add an actual date, but rather the number of days before or after a placement start, mid, or end date.')"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md (line 34: 'Both the publish and due date are based on anchors, meaning you won't add an actual date, but rather the number of days before or after a placement start, mid, or end date.')"
 
   - screen: "Forms/Evaluations setup — Low Score Indicators & Auto Notifications"
     navigation_path: "Learning Activities > Setup > Forms/Evaluations > [form] (low-score threshold) and Learning Activities > Auto Notifications > Add Notification"
@@ -193,7 +193,7 @@ steps:
       recipients; separately, the coordinator configures an Auto Notification
       reminder anchored to "Middle of Placement" so the preceptor is nudged to
       submit on time in the first place.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Track low scores for timely interventions.md and /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Setup Auto Notifications for Forms and Evaluations.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Track low scores for timely interventions.md and PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Setup Auto Notifications for Forms and Evaluations.md"
 
   - screen: "Student 360 — Learning Activities tab (Forms/Evaluations)"
     navigation_path: "Students > [student] > Learning Activities > Forms/Evaluations"
@@ -222,7 +222,7 @@ steps:
       Coordinator clicks a form's status to open it, review the submitted
       midpoint evaluation, provide feedback, and update status on this same
       screen.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md (lines 466-480: 'For each learning activity, a status will indicate where they are in the process... With forms/evaluations, you will see the form, be able to update the status, provide feedback, and click Update once done.')"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md (lines 466-480: 'For each learning activity, a status will indicate where they are in the process... With forms/evaluations, you will see the form, be able to update the status, provide feedback, and click Update once done.')"
 
   - screen: "Student 360 — Interventions tab (Add Intervention drawer)"
     navigation_path: "Students > [student] > Interventions > + (Add), or Courses > [course offering] > Students > Communications & Interventions > [student] > Interventions"
@@ -359,7 +359,7 @@ steps:
       Communications & Interventions page for a placement-specific concern),
       scoped to the specific Course/Rotation/Site, describing the concern and
       setting a follow-up date.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md"
 
   - screen: "Students > Reports > Intervention Log"
     navigation_path: "Students > Reports > Intervention Log"
@@ -388,7 +388,7 @@ steps:
       student-performance meeting or a CODA self-study, to see every
       open/closed intervention across the program rather than one student at
       a time.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Viewing Student Reports.md (line 95, 'Intervention Log report')"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Viewing Student Reports.md (line 95, 'Intervention Log report')"
 
   - screen: "Student Competency Dashboard"
     navigation_path: "Students > [student] > Competency tab, or a published Competency Framework's Review Dashboard"
@@ -448,21 +448,21 @@ steps:
       across the competency the midpoint form maps to, informing what the
       Intervention record should say and giving LCME 8.6's "remedy before
       graduation" duty something concrete to act on.
-    confirmed_by: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (intelligence_layer > Competency Tracking, CONFIRMED SHIPPED via 'Setting Up Competency Management' tutorial transcript) and /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md (Student 'Competency' Tab), cross-confirmed by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md (line 62: 'Competency Tracker / Student Competency Dashboard — row-per-student, column-per-domain grid with drill-down to the specific sub-competency below threshold, supporting early remediation')"
+    confirmed_by: "content/prism/capability-map.yaml (intelligence_layer > Competency Tracking, CONFIRMED SHIPPED via 'Setting Up Competency Management' tutorial transcript) and PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md (Student 'Competency' Tab), cross-confirmed by PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md (line 62: 'Competency Tracker / Student Competency Dashboard — row-per-student, column-per-domain grid with drill-down to the specific sub-competency below threshold, supporting early remediation')"
 
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Track low scores for timely interventions.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Setup Auto Notifications for Forms and Evaluations.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Viewing Student Reports.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/dentistry.yaml"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Track low scores for timely interventions.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Setup Auto Notifications for Forms and Evaluations.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Viewing Student Reports.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+  - "content/prism/capability-map.yaml"
+  - "content/accreditation/lcme.yaml"
+  - "content/accreditation/coda.yaml"
+  - "content/competitors/emedley.yaml"
+  - "content/competitors/elentra.yaml"
+  - "content/competitors/core-elms.yaml"
+  - "content/domains/dentistry.yaml"
 last_verified: "2026-08-24"

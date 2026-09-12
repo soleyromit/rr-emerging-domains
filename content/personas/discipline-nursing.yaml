@@ -225,8 +225,8 @@ switching_trigger: >
   all flagged for follow-up when a Nursing-specific interview or playbook
   source exists.
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
-  - "/Users/romitsoley/Downloads/NursingTutorialsTranscripts.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+  - "NursingTutorialsTranscripts.md"
   - "https://help.exxatprism.com/hc/en-us/articles/32845825722769-Nursing-Tutorials"
   - "https://vimeo.com/1042550892"
   - "../journeys/admin-onboarding-product-setup.yaml"

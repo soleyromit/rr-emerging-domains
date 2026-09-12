@@ -112,7 +112,7 @@ steps:
       A preceptor navigates to instructor.exxat.com and, on first access, must complete a
       self-service password-reset round trip (there is no temporary credential) before reaching
       any dashboard content; a returning preceptor logs in directly with a stored password.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module User Guide for Preceptors.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module User Guide for Preceptors.md"
 
   - screen: "Sites > Personnel — Preceptor Login Eligibility Prerequisite"
     navigation_path: "Sites > Personnel (admin side); no dedicated 'activate preceptor login' screen is documented — eligibility is a side effect of two other admin actions"
@@ -168,7 +168,7 @@ steps:
       student placement, and then manually copies and sends the invitation template from their
       own email address — three separate, undocumented-as-automated steps that together make
       step 1's login possible.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md"
 
   - screen: "Emailed Delegator Link — No-Login Evaluation / Patient Log / FWPE Completion"
     navigation_path: "External: link arrives by email, opens the specific form directly in-browser — no Prism navigation path exists because no login/dashboard is involved"
@@ -272,12 +272,12 @@ steps:
       log, or FWPE form directly, without ever visiting instructor.exxat.com or authenticating —
       this path is entirely independent of steps 1-2.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
       Assistant (PA) Playbook.md (Delegator Links section); corroborated by
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
       Therapy (OT) Playbook.md ("Fieldwork Educator Access — No-Login, Magic-Link Completion");
       corroborated at the product-capability level by
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml
+      content/prism/capability-map.yaml
       ("Placement publish step & no-login external completion").
 
   - screen: "Preceptor Portal — Profile Edit (Basic Details / Documents)"
@@ -318,7 +318,7 @@ steps:
           look for: Prism runs two structurally separate preceptor-identity surfaces that do not
           reconcile. This upload is one; the Experiential Supervisor Intake Form (PIF) delegator
           link — which DOES sync one-way into the program-side Personnel record (per
-          /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+          PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
           for Preceptor Module/Submitting Experiential Supervisor Intake Form.md and confirmed in
           flows/rotation-lifecycle--02-preceptor-site-faculty-credentialing-orientation-calibration.yaml
           step 2) — is the other. A preceptor who uploads their license here has not produced
@@ -347,7 +347,7 @@ steps:
     action: >
       A preceptor edits their own profile and uploads a CV, license, or certification through the
       full portal, in the reasonable belief this updates their credentialing record.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module User Guide for Preceptors.md; caveat confirmed in /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module User Guide for Preceptors.md; caveat confirmed in PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md"
 
   - screen: "Notification Hub > Email Setup — Delegator Link Expiry & OTP Protection"
     navigation_path: "Notification Hub > Email Setup (admin-side configuration screen)"
@@ -414,19 +414,19 @@ steps:
     action: >
       An admin sets how long externally-shared delegator links stay valid and (via Exxat Support)
       whether OTP verification is required to open a shared-compliance link.
-    confirmed_by: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (One-Time-Password protection / Notification Hub Email Setup entry); corroborated by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md (Delegator Link Expiry)"
+    confirmed_by: "content/prism/capability-map.yaml (One-Time-Password protection / Notification Hub Email Setup entry); corroborated by PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md (Delegator Link Expiry)"
 
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module User Guide for Preceptors.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Submitting Experiential Supervisor Intake Form.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/flows/rotation-lifecycle--02-preceptor-site-faculty-credentialing-orientation-calibration.yaml"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module User Guide for Preceptors.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Preceptor Module Setup Guide.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Preceptor Module/Submitting Experiential Supervisor Intake Form.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "content/prism/capability-map.yaml"
+  - "content/accreditation/acpe.yaml"
+  - "content/accreditation/coca.yaml"
+  - "content/competitors/leo-davinci.yaml"
+  - "content/competitors/core-elms.yaml"
+  - "content/competitors/medhub.yaml"
+  - "content/flows/rotation-lifecycle--02-preceptor-site-faculty-credentialing-orientation-calibration.yaml"
 last_verified: "2026-08-24"

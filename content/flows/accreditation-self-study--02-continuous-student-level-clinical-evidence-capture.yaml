@@ -80,7 +80,7 @@ steps:
       Program admin activates a formative-feedback evaluation form and anchors its due date to
       the MID point of every rotation, so the LCME 9.7 midpoint-feedback trigger fires
       automatically per placement rather than needing a per-student calendar date.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
 
   - screen: "Placement 360 — Rotation Details panel (Setting field)"
     navigation_path: "Placements > [Placement ID] > Placement 360 > Rotation Details"
@@ -123,7 +123,7 @@ steps:
     action: >
       Admin or faculty opens a placement's Placement 360 page to confirm which setting category
       a given rotation is tagged with, before counting it toward a setting-gated requirement.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement 360.md; also confirmed as a named, filterable Custom Reports column ('Setting', example values Acute/Community/Outpatient) in Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement 360.md; also confirmed as a named, filterable Custom Reports column ('Setting', example values Acute/Community/Outpatient) in Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md"
 
   - screen: "Sites > Setup > Form Setup — Custom Site Assessment form builder"
     navigation_path: "Sites > Setup > Form Setup > Create New Form"
@@ -170,7 +170,7 @@ steps:
       the recurring Site Assessment form, so the answer becomes a discrete, queryable field
       that rolls into the Comprehensive Site Assessment report rather than living only in a
       site-visit PDF.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Configuring custom site assessment form in Exxat Prism-.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Configuring custom site assessment form in Exxat Prism-.md"
 
   - screen: "Course Setup — Timesheet Categorization"
     navigation_path: "Courses > Setup > Learning Activity > Timesheet > Edit (pencil icon) > Categorization"
@@ -237,7 +237,7 @@ steps:
       Admin defines a category list — for a Pharmacy program, e.g. Simulation, Community,
       Hospital/Health-System — that students must tag on every logged timesheet entry, either
       as the school-wide default or overridden per course.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Course Setup.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Course Setup.md"
 
   - screen: "Hours by Category report"
     navigation_path: "Learning Activities > Reports > Hours by Category (student- and faculty-facing); equivalently Learning Activities > Reports > Create Custom Reports > Timesheet data source for an admin pivot"
@@ -295,7 +295,7 @@ steps:
       A student, faculty member, or admin runs the report — filtered or pivoted by category —
       to check cumulative approved hours per category against the ACPE 300-hour/75-hour
       thresholds ahead of the IPPE window closing.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Coursework/Completing Timesheets.md (student-facing 'Hours by Category' report, filterable by course/rotation/setting/status); Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md (admin Timesheet-data-source pivot, 'Hours Logged (Total / Category-wise)' data point)"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Coursework/Completing Timesheets.md (student-facing 'Hours by Category' report, filterable by course/rotation/setting/status); Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md (admin Timesheet-data-source pivot, 'Hours Logged (Total / Category-wise)' data point)"
 
   - screen: "Comprehensive Report for Custom Values"
     navigation_path: "Learning Activities > [Learning Activity Group or Course] > Reports > Comprehensive Report for Custom Values"
@@ -371,7 +371,7 @@ steps:
       Faculty or admin runs the report to see, per student, per course/rotation/placement,
       progress against defined minimum and preferred per-diagnosis or per-procedure
       requirements, before graduation rather than at self-study time.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Comprehensive Report for Custom Values.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Comprehensive Report for Custom Values.md"
 
   - screen: "Faculty Attribute request (support-gated, no confirmed self-service screen)"
     navigation_path: "Not a Prism screen — requested via Support Ticket per the Product Customizations Guide's 'Feature Requests Guideline'"
@@ -400,25 +400,25 @@ steps:
       preceptor's personnel record, an admin would need to request a net-new Faculty
       Attribute from Exxat, since a physician credential-type (MD vs. DO) field is not among
       the four named, requestable options this guide documents.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Exxat Prism Product Customizations Guide.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Exxat Prism Product Customizations Guide.md"
 
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement 360.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Configuring custom site assessment form in Exxat Prism-.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Course Setup.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Coursework/Completing Timesheets.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Comprehensive Report for Custom Values.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Setting Up and Managing Patient Log - PA.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Patient Logs.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Exxat Prism Product Customizations Guide.md"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement 360.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Configuring custom site assessment form in Exxat Prism-.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Course Setup.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Coursework/Completing Timesheets.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Comprehensive Report for Custom Values.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Setting Up and Managing Patient Log - PA.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Patient Logs.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Getting Started for Admin (includes User Guides)/Exxat Prism Product Customizations Guide.md"
+  - "content/prism/capability-map.yaml"
+  - "content/accreditation/coca.yaml"
+  - "content/accreditation/acpe.yaml"
+  - "content/accreditation/lcme.yaml"
+  - "content/competitors/core-elms.yaml"
+  - "content/competitors/one45.yaml"
+  - "content/competitors/medhub.yaml"
+  - "content/competitors/e-value.yaml"
 last_verified: "2026-08-24"

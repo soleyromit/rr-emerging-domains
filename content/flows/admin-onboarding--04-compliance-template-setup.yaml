@@ -6,7 +6,7 @@
 #
 # SOURCING NOTE (deliberate, and the point of this file): every step below is
 # confirmed_by the raw admin tutorial transcript at
-# /Users/romitsoley/Downloads/exxat_transcripts.md with a section title and line
+# exxat_transcripts.md with a section title and line
 # range, NOT by a help-center paraphrase of that transcript. Help-center guides are
 # cited only where they document something the transcript does not narrate at all
 # (External Trainings / ComplianceJunction vendor fields; the institution-level
@@ -46,7 +46,7 @@ steps:
       always built from scratch and thereafter becomes the template for every later
       cohort. Apply Template is confirmed once and cannot be re-applied to that cohort.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, section "4/16 Managing Student
+      exxat_transcripts.md, section "4/16 Managing Student
       Compliance in Exxat Prism", lines 275-279 ("To set up student compliance documents,
       click on the Student Compliance section on your dashboard, then click on the Setup
       tab. You will first need to select a cohort... A template is a pre-saved
@@ -56,7 +56,7 @@ steps:
       One-way-door behavior of Apply Template ("You will not be able to apply a new
       template as a starting point for the selected Cohort's compliance setup once
       confirmed") is documented only in the help center:
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup
       Student Compliance Section.md, "Select a Template to Copy From", step 5 Note.
     elements:
@@ -75,7 +75,7 @@ steps:
         gap_note: >
           Worth naming for onboarding sequencing rather than as a product gap: cohort is a
           hard prerequisite, and per
-          /Users/romitsoley/Downloads/exxat_transcripts.md section "2/16 Setting up
+          exxat_transcripts.md section "2/16 Setting up
           Students in Exxat Prism" line 81, groups within a cohort exist partly because "a
           group of students have additional compliance requirements" — but the Setup tab
           confirmed in this step selects a COHORT, not a group. Whether group-level
@@ -135,7 +135,7 @@ steps:
       background check, drug screen, liability insurance, licensure, attestations) gets
       typed in.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, section "4/16 Managing Student
+      exxat_transcripts.md, section "4/16 Managing Student
       Compliance in Exxat Prism", lines 279-281 ("If you would like to add a new
       compliance category, click on the Add New Category button. You can then provide the
       category with a name and add requirements to this new category... If you would like
@@ -144,7 +144,7 @@ steps:
       name... If you would like to add multiple requirements at one time, click on the Add
       a Requirement button... Once you are done, click the Save button"). The named default
       category set is not enumerated in the transcript; it is confirmed by
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup
       Student Compliance Section.md, "Compliance Requirement Categories".
     elements:
@@ -224,7 +224,7 @@ steps:
       downloadable template or sample. This drawer is repeated once per requirement — it
       is the bulk of the labor in this stage.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, section "4/16 Managing Student
+      exxat_transcripts.md, section "4/16 Managing Student
       Compliance in Exxat Prism", lines 281-293 (alias/short name, Enabled bit,
       detailed vs. simplified collection, start/expiration date checkboxes and aliases, up
       to two additional questions, Expires Automatically In / Expires Automatically On,
@@ -361,7 +361,7 @@ steps:
         gap_note: >
           This is a privacy control that a new admin will treat as a convenience toggle.
           The Social Work playbook
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
           Work (SW) Playbook.md, "Compliance") independently flags the same field as
           "a privacy control worth flagging to admins configuring compliance categories."
       - element: "'Requires review' toggle (green review icon)"
@@ -448,14 +448,14 @@ steps:
       completion syncs back into Prism as a status rather than being tracked in a
       separate system. Configured per cohort, then published like any other requirement.
     confirmed_by: >
-      Not narrated in /Users/romitsoley/Downloads/exxat_transcripts.md — the 4/16 tutorial
+      Not narrated in exxat_transcripts.md — the 4/16 tutorial
       covers upload-based requirements only and never mentions External Trainings or a
       vendor integration. Confirmed instead by
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup
       HIPAA Training for Students by ComplianceJunction.md (steps 4-8), with the
       discipline-side confirmation of which vendors are in play in
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
       Work (SW) Playbook.md, "Compliance" (CISIVE and Universal for background
       checks/drug screenings, ComplianceJunction for HIPAA training; School Pay vs.
       Student Pay).
@@ -525,7 +525,7 @@ steps:
       is the moment the stage's work becomes visible outside the admin's screen, and the
       moment some configuration choices become permanent.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, section "4/16 Managing Student
+      exxat_transcripts.md, section "4/16 Managing Student
       Compliance in Exxat Prism", line 295 ("Once you have completely configured your
       compliance requirements for this cohort, click on the Publish button. This will
       publish this set of documents to all the students within the selected cohort. After
@@ -567,7 +567,7 @@ steps:
       requiring their attention, sets the date the reminders stop, and decides whether
       optional requirements are included.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, section "4/16 Managing Student
+      exxat_transcripts.md, section "4/16 Managing Student
       Compliance in Exxat Prism", lines 295-299 ("We offer the option to send out weekly
       reminders to students containing all their expiring and expired compliance
       documents... Documents marked with statuses such as Get started, In progress, Not
@@ -579,7 +579,7 @@ steps:
       Requirements bit"). The enumerated trigger list (Not Approved / Expiring / Expired /
       Past Due Date / Past Follow-up Date) and the "only enabled documents, only active
       students" constraints come from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup
       Student Compliance Section.md, "Set Up Auto-Notifications".
     elements:
@@ -653,7 +653,7 @@ steps:
       program-specific ones with merge fields — and can preview, send now, or schedule.
       The History view is where delivery is later verified.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, section "4/16 Managing Student
+      exxat_transcripts.md, section "4/16 Managing Student
       Compliance in Exxat Prism", lines 323-331 ("click on the Compose Email button... You
       will then select the template for the email you would like to send. You can select our
       pre-made standard template or any other template you have created. Click Add a
@@ -727,7 +727,7 @@ steps:
       used requirements, is edited per requirement rather than per cohort, and is
       distributed by group rather than by publish.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, section "Setting Up and Reviewing
+      exxat_transcripts.md, section "Setting Up and Reviewing
       Faculty Compliance", lines 1935-1943 ("To get started with faculty compliance, you'll
       need to have exs A approved as part of your services... In the faculty compliance
       page, you'll see a list of commonly used faculty compliance requirements that have
@@ -746,7 +746,7 @@ steps:
         accreditation_citation: >
           Nursing COA Standard B (faculty licensure/NBCRNA certification, several
           sub-standards marked critical) per
-          /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
+          PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
           Playbook.md, "Compliance" and "Accreditor Standards", which names Faculty
           Compliance as the mechanism for tracking faculty licensure/certification
           expiration. No element in ../accreditation/coca.yaml, coda.yaml, acpe.yaml or
@@ -849,7 +849,7 @@ steps:
       of assignment on the faculty side — the structural equivalent of the student side's
       per-cohort publish, but reusable and re-editable.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, section "Setting Up and Reviewing
+      exxat_transcripts.md, section "Setting Up and Reviewing
       Faculty Compliance", line 1945 ("Compliance groups allow you to organize related
       compliance documents together, making it easier to assign them to faculty members.
       Click on the group option from the left hand menu. To create a new group, click the
@@ -875,7 +875,7 @@ steps:
         gates_on: ["Everything a faculty member in this group is asked for"]
         accreditation_citation: >
           Nursing COA Standard B via
-          /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
+          PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
           Playbook.md — a licensure/certification group is how a nursing program would scope
           the critical faculty-credential sub-standards to the right faculty population.
         competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
@@ -899,7 +899,7 @@ steps:
       compliance groups to them, choosing whether to add to or replace their existing
       assignments.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, section "Setting Up and Reviewing
+      exxat_transcripts.md, section "Setting Up and Reviewing
       Faculty Compliance", line 1947 ("From the left hand menu, click on associate faculty.
       You'll see a table displaying all the faculty members in your system. Use the search
       box... or apply filters using the filter icon... select their names and click the
@@ -934,7 +934,7 @@ steps:
           This is the kind of bulk-operation semantic (replace vs. merge) that no competitor
           public documentation reaches; the closest comparable bulk mechanic anywhere in
           this corpus is Prism's own student Bulk Import
-          (/Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students in
+          (exxat_transcripts.md, "2/16 Setting up Students in
           Exxat Prism", lines 95-99), covered in stage 2 of this journey, not a competitor.
         gap_severity: "cosmetic"
         gap_note: >
@@ -949,7 +949,7 @@ steps:
       frequency, date window, and which requirements each campaign covers — then can later
       deactivate, edit, or delete them.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, section "Setting Up and Reviewing
+      exxat_transcripts.md, section "Setting Up and Reviewing
       Faculty Compliance", lines 1957-1961 ("documents marked with statuses such as Get
       started, in progress, not approved, expiring, or expired will require an action from
       the faculty member... navigate to the setup section and click on the auto notification
@@ -1025,7 +1025,7 @@ steps:
       the Exxat Approve review service that Guidelines for Reviewers, Review Clarifications
       and the whole Faculty Compliance module depend on.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, section "4/16 Managing Student
+      exxat_transcripts.md, section "4/16 Managing Student
       Compliance in Exxat Prism", lines 289-293 ("we offer the ability to protect student
       compliance information sent within shared student profiles and when emailing compliance
       information to experiential supervisors... please reach out to our support team at
@@ -1096,10 +1096,10 @@ steps:
       can edit — the requirements, auto-notification schedules, and student-specific due
       dates defined by each individual program, plus a cross-program student status table.
     confirmed_by: >
-      Not covered anywhere in /Users/romitsoley/Downloads/exxat_transcripts.md — the 16-part
+      Not covered anywhere in exxat_transcripts.md — the 16-part
       admin tutorial series is written from a single-program administrator's seat and never
       shows the institution tile. Confirmed by
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Institutional Users/Step-by-Step Guides (How-tos)/Institution Level- Compliance
       Management.md (steps 1-9).
     elements:
@@ -1172,18 +1172,18 @@ steps:
           tier — Approve is the hidden spine of this whole stage.
 
 sources:
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — section '4/16 Managing Student Compliance in Exxat Prism' (lines 267-339), PRIMARY for steps 1-3, 5-7 and 12"
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — section 'Setting Up and Reviewing Faculty Compliance' (lines 1931-1965), PRIMARY for steps 8-11"
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — section '2/16 Setting up Students in Exxat Prism' (lines 73-99), cohort/group prerequisite and the Bulk Import precedent referenced in step 10"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup Student Compliance Section.md — used only for the named category list, the Apply-Template irreversibility note, the enumerated auto-notification triggers, and the immutable Notification End Date"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup HIPAA Training for Students by ComplianceJunction.md — sole source for step 4 (External Trainings), absent from the transcript"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Institutional Users/Step-by-Step Guides (How-tos)/Institution Level- Compliance Management.md — sole source for step 13, absent from the transcript"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md — 'Student Compliance' section: OT starter taxonomy (COVID-19 Test/Vaccination, Flu, HepA, HepB, TB, CPR, Physical Exam, CBC; background check, drug screening; health and professional liability insurance)"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — 'Student Compliance' section and the 'ask the school where they're tracking compliance if they don't track it on Prism' onboarding caveat"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — 'Compliance' section: CISIVE/Universal/ComplianceJunction integrations, School Pay vs. Student Pay, 'Included in Profile Link' privacy control"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — 'Compliance' section: CRNA ACLS/PALS student certifications, Faculty Compliance mapped to COA Standard B"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md — Placement Clearance requirement list and Profile Share of selected compliance documents"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — 'Open Gaps': TE compliance (background check/fingerprinting) explicitly unpopulated"
+  - "exxat_transcripts.md — section '4/16 Managing Student Compliance in Exxat Prism' (lines 267-339), PRIMARY for steps 1-3, 5-7 and 12"
+  - "exxat_transcripts.md — section 'Setting Up and Reviewing Faculty Compliance' (lines 1931-1965), PRIMARY for steps 8-11"
+  - "exxat_transcripts.md — section '2/16 Setting up Students in Exxat Prism' (lines 73-99), cohort/group prerequisite and the Bulk Import precedent referenced in step 10"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup Student Compliance Section.md — used only for the named category list, the Apply-Template irreversibility note, the enumerated auto-notification triggers, and the immutable Notification End Date"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup HIPAA Training for Students by ComplianceJunction.md — sole source for step 4 (External Trainings), absent from the transcript"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Institutional Users/Step-by-Step Guides (How-tos)/Institution Level- Compliance Management.md — sole source for step 13, absent from the transcript"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md — 'Student Compliance' section: OT starter taxonomy (COVID-19 Test/Vaccination, Flu, HepA, HepB, TB, CPR, Physical Exam, CBC; background check, drug screening; health and professional liability insurance)"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — 'Student Compliance' section and the 'ask the school where they're tracking compliance if they don't track it on Prism' onboarding caveat"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — 'Compliance' section: CISIVE/Universal/ComplianceJunction integrations, School Pay vs. Student Pay, 'Included in Profile Link' privacy control"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — 'Compliance' section: CRNA ACLS/PALS student certifications, Faculty Compliance mapped to COA Standard B"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md — Placement Clearance requirement list and Profile Share of selected compliance documents"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — 'Open Gaps': TE compliance (background check/fingerprinting) explicitly unpopulated"
   - "../accreditation/coca.yaml (Standard 5 Element 5.4 — supervision-policy distribution/attestation; its own open question on document-acknowledgment item types)"
   - "../accreditation/coda.yaml (Standard 4 Element 4-6 — site-level agreement expiry, and its gap_note that site-level compliance-item tracking is unconfirmed)"
   - "../accreditation/acpe.yaml (Standard 3 Key Element 3.5.b — affiliation agreements; noted as adjacent-not-this-screen)"

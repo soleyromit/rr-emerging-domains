@@ -13,7 +13,7 @@
 # except where this stage's elements gate them.
 #
 # PRIMARY SOURCE for nearly every element below is the general admin-tutorial
-# transcript at /Users/romitsoley/Downloads/exxat_transcripts.md — specifically
+# transcript at exxat_transcripts.md — specifically
 # "2/16 Setting up Students in Exxat Prism" (lines 73-157) and "3/16 Managing
 # Students Profiles in Exxat Prism" (lines 159-265). Where the shipped UI has moved
 # past the video (notably "Student View" being superseded by "Student Experience
@@ -52,7 +52,7 @@ steps:
       bulk-import template will reject any cohort/group value that does not
       already exist here.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students in Exxat Prism"
+      exxat_transcripts.md, "2/16 Setting up Students in Exxat Prism"
       (lines 79-83): "click on the Students section from your dashboard or upper left-hand hamburger
       menu and select the Setup tab. You will automatically be taken to the cohort section... To add a
       new cohort, click on the Add Cohort button. You will then be able to enter the cohort's name and
@@ -143,7 +143,7 @@ steps:
       deferrable: "You can either set these attributes while importing your
       students or later after inviting them."
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students" (lines 83-89):
+      exxat_transcripts.md, "2/16 Setting up Students" (lines 83-89):
       "Click on the Enrollment Term option to provide student enrollment terms and dates. An
       enrollment term is the first term in which the student enrolled in your academic program...
       The graduation term is the last term in which the student is enrolled in your program...
@@ -252,7 +252,7 @@ steps:
       run; it is also the path a brand-new admin uses to create a single test
       student before trusting the import.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students" (lines 89-95):
+      exxat_transcripts.md, "2/16 Setting up Students" (lines 89-95):
       "To add individual students, navigate to the Students tab and click the Add Student button.
       A drawer will open for you to fill the information. You must enter the student's name, school
       email address, and cohort to save the information... If your school uses single sign-on
@@ -338,7 +338,7 @@ steps:
       re-upload, resolve validation, confirm with a typed number, watch the import
       instance complete.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students" (lines 95-103):
+      exxat_transcripts.md, "2/16 Setting up Students" (lines 95-103):
       "click on the Setup tab, click on the Student Management dropdown in the left-hand menu, and
       select the Bulk Import option... Click on the download template icon to download the import
       template... Any columns containing an asterisk will need this information to add the students.
@@ -443,7 +443,7 @@ steps:
       the step that converts roster rows into logged-in users. This is a 3-step
       drawer: recipients, email template, send-now-or-schedule.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students" (lines 103-111):
+      exxat_transcripts.md, "2/16 Setting up Students" (lines 103-111):
       "Click on the Setup tab, then click on the Student Management dropdown, and select Invite
       Students... Please note that if you have assigned a valid SSO key to a student you have
       selected, this student will be provided with an SSO login account when you invite them...
@@ -565,7 +565,7 @@ steps:
       their program actually cares about, exports, applies attribute changes across
       many students at once, and removes bad rows.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students" (lines 111-121):
+      exxat_transcripts.md, "2/16 Setting up Students" (lines 111-121):
       "The table will display the student's name, student ID, school email address, status, cohort,
       et cetera. If you would like to edit the columns of the table, click on the wrench icon...
       The column setup is sticky... To reset the columns to their default settings, click on the
@@ -663,7 +663,7 @@ steps:
       assignment, program-requirement status, and — when a student decelerates or
       switches track — the cohort migration.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "3/16 Managing Students Profiles" (lines 165-191):
+      exxat_transcripts.md, "3/16 Managing Students Profiles" (lines 165-191):
       "Think about tags as E post-it notes on individual students. Tags are useful because they're only
       for internal use and therefore the student cannot view these. For example, tags like new parent or
       needs public transport allow you to consider the needed accommodations while making placements...
@@ -846,7 +846,7 @@ steps:
       from the student's own seat before the class arrives, packages the profile
       for site personnel, and audits what the system has emailed this student.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "3/16 Managing Students Profiles" (lines 191-219):
+      exxat_transcripts.md, "3/16 Managing Students Profiles" (lines 191-219):
       "Most of the time students are supposed to fill out all the information in the student profile
       tab. You do have the ability to add and edit information on behalf of the student, but we advise
       you have you students fill it out initially. This section of the student profile is important
@@ -968,7 +968,7 @@ steps:
       because the distinction between them is a program policy decision a new
       admin must make before either log has any analytic value.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "3/16 Managing Students Profiles" (lines 229-245):
+      exxat_transcripts.md, "3/16 Managing Students Profiles" (lines 229-245):
       "Communications are typically notable conversations with the student, which are neutral.
       Interventions are notable conversations with students to help them overcome various academic,
       personal, and professional challenges. In terms of functionality, both the communication and
@@ -1050,7 +1050,7 @@ steps:
       This is the half of the stage that is invisible until the invitation is
       accepted, and the reason View As (step 8) is the correct final verification.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "2/16 Setting up Students" (lines 123-155):
+      exxat_transcripts.md, "2/16 Setting up Students" (lines 123-155):
       "This includes communicating with students via announcements, providing resources to cohorts of
       students, collecting signatures for attestations, assigning program requirements to students,
       setting up areas of professional interest for students to indicate their preference for,
@@ -1242,20 +1242,20 @@ steps:
           this granularity by any competitor teardown in this research.
 
 sources:
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '2/16 Setting up Students in Exxat Prism' (lines 73-157) [PRIMARY: cohorts, groups, enrollment/graduation terms, student categories, campuses, single add, SSO key, bulk import, invitations, merge fields, grid columns/filters, bulk update, delete, announcements, resources, attestations, program requirements, areas of professional interest, additional profile details, Student View toggles]"
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '3/16 Managing Students Profiles in Exxat Prism' (lines 159-265) [PRIMARY: student banner, profile image, tags (internal-only), Overview/Needs Attention, Academics tab, shared vs. internal notes, Update Cohort impact areas, program requirements Pending/Placed/Completed, associated staff & faculty + role-is-informational-only, attestation status, Profile tab sections, Share Profile / Generate URL / Download Profile / Share History, OTP protection for compliance, View As, Email History, Communications and Interventions tabs]"
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '1/16 Administrator Navigation in Exxat Prism' (lines 5-72) [navigation context: dashboard and hamburger-menu entry to Students]"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Managing Student Access and Attributes.md [help-center mirror: bulk-import Excel formatting traps (leading zeros, date-as-text), Add Student drawer defaults, override-recipient/reply-to on invitations, merge-field governance, Account Status values]"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Organizing Students.md [help-center mirror: cohort/calendar/category/campus management; 10-tag-per-student cap]"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Key Features of Student Management and Administration.md [help-center mirror ONLY source for Student Experience Settings > Actions and Permissions + Profile Fields, the required-field/import-template coupling, and the 'fields populated via a data feed' reference]"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md [cohort = graduation year; PT always lock-step; cohort movement common; Groups = Hybrid/Residentials/Online; Categories = Scholarship/Hybrid/Full time/Part time; announcements/resources/attestations conventions; per-setting Program Requirements; 'decelerated' marking for CAPTE AAR headcounts]"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md ['Program setup is always Lockstep'; per-campus Groups (Los Angeles/Brooklyn); CAPSTONE Student Category applied via filter-by-cohort + Bulk Update with type-the-number confirmation; Academics Profile contents; single-campus-address limitation; per-campus mission/vision]"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md [lockstep-only placement limits keyed to Location + Setting + Cohort; placement group per cohort; ARC-PA E-series advance-notice obligations for class-size changes and new distant campuses]"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md [two named cohort conventions (enrollment date vs. practicum start date) tied to whether the school has a banner/automated data feed; Groups = Foundation Year/Advanced Standing/Clinical Practice/Macro Practice/Behavioral Health/School Social Work; Campuses = Main/Satellite/Online/Regional; Categories = Full-Time/Part-Time/Traditional/Advanced Standing]"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md [explicit data-quality note: cohort/lock-step conventions and Groups/Categories usage patterns are NOT yet documented for Nursing]"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md [explicit data-quality caveat: no SLP cohort-pattern source exists]"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md [explicit data-quality caveat: TE cohort structure and terminology unconfirmed; single GoReact/Echo360 source only]"
+  - "exxat_transcripts.md — '2/16 Setting up Students in Exxat Prism' (lines 73-157) [PRIMARY: cohorts, groups, enrollment/graduation terms, student categories, campuses, single add, SSO key, bulk import, invitations, merge fields, grid columns/filters, bulk update, delete, announcements, resources, attestations, program requirements, areas of professional interest, additional profile details, Student View toggles]"
+  - "exxat_transcripts.md — '3/16 Managing Students Profiles in Exxat Prism' (lines 159-265) [PRIMARY: student banner, profile image, tags (internal-only), Overview/Needs Attention, Academics tab, shared vs. internal notes, Update Cohort impact areas, program requirements Pending/Placed/Completed, associated staff & faculty + role-is-informational-only, attestation status, Profile tab sections, Share Profile / Generate URL / Download Profile / Share History, OTP protection for compliance, View As, Email History, Communications and Interventions tabs]"
+  - "exxat_transcripts.md — '1/16 Administrator Navigation in Exxat Prism' (lines 5-72) [navigation context: dashboard and hamburger-menu entry to Students]"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Managing Student Access and Attributes.md [help-center mirror: bulk-import Excel formatting traps (leading zeros, date-as-text), Add Student drawer defaults, override-recipient/reply-to on invitations, merge-field governance, Account Status values]"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Organizing Students.md [help-center mirror: cohort/calendar/category/campus management; 10-tag-per-student cap]"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Key Features of Student Management and Administration.md [help-center mirror ONLY source for Student Experience Settings > Actions and Permissions + Profile Fields, the required-field/import-template coupling, and the 'fields populated via a data feed' reference]"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md [cohort = graduation year; PT always lock-step; cohort movement common; Groups = Hybrid/Residentials/Online; Categories = Scholarship/Hybrid/Full time/Part time; announcements/resources/attestations conventions; per-setting Program Requirements; 'decelerated' marking for CAPTE AAR headcounts]"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md ['Program setup is always Lockstep'; per-campus Groups (Los Angeles/Brooklyn); CAPSTONE Student Category applied via filter-by-cohort + Bulk Update with type-the-number confirmation; Academics Profile contents; single-campus-address limitation; per-campus mission/vision]"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md [lockstep-only placement limits keyed to Location + Setting + Cohort; placement group per cohort; ARC-PA E-series advance-notice obligations for class-size changes and new distant campuses]"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md [two named cohort conventions (enrollment date vs. practicum start date) tied to whether the school has a banner/automated data feed; Groups = Foundation Year/Advanced Standing/Clinical Practice/Macro Practice/Behavioral Health/School Social Work; Campuses = Main/Satellite/Online/Regional; Categories = Full-Time/Part-Time/Traditional/Advanced Standing]"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md [explicit data-quality note: cohort/lock-step conventions and Groups/Categories usage patterns are NOT yet documented for Nursing]"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md [explicit data-quality caveat: no SLP cohort-pattern source exists]"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md [explicit data-quality caveat: TE cohort structure and terminology unconfirmed; single GoReact/Echo360 source only]"
   - "content/accreditation/coca.yaml (Elements 11.5, 11.9, 6.11, 5.4)"
   - "content/accreditation/coda.yaml (Elements 1-2, 2-1, 2-2, 2-5)"
   - "content/accreditation/lcme.yaml (Elements 8.6, 8.7)"

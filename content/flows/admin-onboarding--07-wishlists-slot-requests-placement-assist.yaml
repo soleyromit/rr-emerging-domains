@@ -4,7 +4,7 @@
 #
 # SOURCING NOTE (deliberate, and the reason this file exists in this form): every step below
 # is confirmed directly against the raw admin-tutorial transcript at
-# /Users/romitsoley/Downloads/exxat_transcripts.md, cited by section heading and line range,
+# exxat_transcripts.md, cited by section heading and line range,
 # NOT against a help-center article that paraphrases the same video. Where a help-center doc
 # or discipline playbook adds something the transcript does not say, it is cited as a named
 # secondary source alongside the transcript, never in place of it.
@@ -39,7 +39,7 @@ steps:
       opens the Managing Slots tutorial here specifically because the defaults ship pre-populated
       and look finished.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, section "## 7/16 Managing Slots in Exxat
+      exxat_transcripts.md, section "## 7/16 Managing Slots in Exxat
       Prism", lines 579-584 ("navigate to the sites and location section... click on the setup
       tab and select the slot setup section. The slot type identifier identifies slots which are
       unique from other ones... The supervision type slot identifier is typically used to indicate
@@ -111,7 +111,7 @@ steps:
       instance is: request slots, request updated location information, both, or neither
       (neither = a plain informational email).
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
+      exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
       lines 585-587 ("click on the setup new communication button... indicate if you would like to
       set up a general email, a slot request email, a location update request email, or both...
       If you want to set up a general informational email, leave both bits inactive").
@@ -166,7 +166,7 @@ steps:
       This is the highest-leverage configuration screen in the stage — it is where a program constrains
       partner input so the returned data is usable by Placement Assist later.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
+      exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
       lines 587-599.
     elements:
       - element: "Choose Rotation (+ icon) — calendar-year filter, rotation multi-select, advanced-schedule sub-select"
@@ -271,7 +271,7 @@ steps:
       checked is simply not shown to the site, so this doubles as a scoping decision about how much
       partner attention to spend.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
+      exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
       lines 601-603.
     elements:
       - element: "Notes / Requirements / Housing and Parking Information Notes / Personnel checkboxes"
@@ -311,7 +311,7 @@ steps:
       Admin chooses who receives the request — by location or by individual personnel — filters the list,
       and paginates through selecting recipients.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
+      exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
       lines 605-613.
     elements:
       - element: "Locations table (name, site, personnel, settings, categories, last-request date and status)"
@@ -366,7 +366,7 @@ steps:
       used for student, location-contact, and experiential-supervisor notifications elsewhere in the
       stage, so getting it right once pays off repeatedly.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
+      exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
       lines 613-617; identical template mechanics restated for student notifications at lines 859-861
       and for placement notifications at lines 1121-1125.
     elements:
@@ -411,7 +411,7 @@ steps:
       Admin verifies the campaign actually landed. For a new program this is the first real feedback
       loop on the quality of the personnel email data imported in earlier onboarding stages.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
+      exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
       lines 617-625.
     elements:
       - element: "Status column: In Progress / Dropped / Bounced / Delivered / Opened / Link Clicked / Scheduled, with per-status counts at top"
@@ -470,7 +470,7 @@ steps:
       Admin reads what came back, and — critically for real programs — records the responses that arrived
       by phone, email, or PDF outside the system so the coverage picture is complete.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
+      exxat_transcripts.md, "## 7/16 Managing Slots in Exxat Prism",
       lines 629-643.
     elements:
       - element: "Response status band: No Response / Slots Offered / Contact Later / No Slots to Offer"
@@ -545,7 +545,7 @@ steps:
       where all current availability was negotiated before Prism existed, and the standing path for
       partners who will never use the response portal.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 10/16 Managing Placements in Exxat Prism",
+      exxat_transcripts.md, "## 10/16 Managing Placements in Exxat Prism",
       lines 965-973 ("Slots are an instance of location availability where students can be placed for a
       rotation... they are used by the auto-placement feature to find the best fit"); the same drawer is
       described from the slot-request side at "## 7/16 Managing Slots", lines 637-641.
@@ -636,7 +636,7 @@ steps:
       admin can miss entirely — it sets program-wide defaults for how students interact with placements,
       including whether they can create their own.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 10/16 Managing Placements in Exxat Prism",
+      exxat_transcripts.md, "## 10/16 Managing Placements in Exxat Prism",
       lines 941-947.
     elements:
       - element: "Follow the Preceptor (bit) + apply-by-default-on-creation (sub-bit)"
@@ -704,9 +704,9 @@ steps:
       managed across them at once. The PA and PT playbooks treat correct group design as the main lever
       for placement success, which makes this a setup decision rather than an operational one.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 10/16 Managing Placements in Exxat Prism",
+      exxat_transcripts.md, "## 10/16 Managing Placements in Exxat Prism",
       lines 947-953; strategy for how to compose groups from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md,
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md,
       "Best Practices — Placement Assist" (identify courses/settings with the fewest slots offered; create
       groups so hard-to-place courses run first).
     elements:
@@ -741,7 +741,7 @@ steps:
       Admin picks which preference instrument the program will use and defines the three dates that govern
       it. The type choice is the single most consequential and least reversible decision in this stage.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
       lines 813-817 and 851 ("You will still be able to make changes to the wishlist once it has been
       saved. However, you will not be able to change the wishlist type").
     elements:
@@ -805,7 +805,7 @@ steps:
       to reveal. The transcript's default is maximally permissive — all available slots are included until
       the admin excludes them.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
       lines 817-821.
     elements:
       - element: "Inclusion filters: Settings / States / Location Tags / Location Areas / Location Categories (pencil > uncheck to exclude)"
@@ -868,11 +868,11 @@ steps:
       Grouped here because the shared characteristic — an external dependency mid-setup — is the thing a new
       admin most needs warned about.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
       lines 835-843; corroborated for PT/OT by
-      /Users/romitsoley/Downloads/PTPTAVideosTranscripts.md, "## 2. Managing Exxat One Availability Based
+      PTPTAVideosTranscripts.md, "## 2. Managing Exxat One Availability Based
       Wishlist in Exxat Prism", lines 111-137 and the identical OT section at
-      /Users/romitsoley/Downloads/OTOTAVideosTranscripts.md, lines 113-139.
+      OTOTAVideosTranscripts.md, lines 113-139.
     elements:
       - element: "My Request — Select Form dropdown (template library)"
         type: "dropdown populated only by Exxat support"
@@ -954,7 +954,7 @@ steps:
       Admin finishes the wizard: optionally appends a questionnaire, chooses which enrolled students receive
       the wishlist, sets automated reminders, and reviews the summary before the irreversible save.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
       lines 845-853.
     elements:
       - element: "Questionnaire section (Yes/No, then add/reorder questions via drag handle or arrows)"
@@ -1012,7 +1012,7 @@ steps:
       formal wishlist — a lighter-weight parallel mechanism that a new admin should understand as an
       alternative, not a supplement, to wishlists.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
       lines 853-867.
     elements:
       - element: "Slot multi-select > Notify Student > student picker > Publish Slots"
@@ -1058,7 +1058,7 @@ steps:
       the per-student date override are configuration-adjacent behaviors a new admin must understand before
       the first cycle, not after.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
       lines 867-873.
     elements:
       - element: "Status counts: Not Started / Started Not Submitted / Submitted / Approved / No Longer Applicable"
@@ -1115,7 +1115,7 @@ steps:
       to a real Prism record (creating the site and location if needed), link or create the preceptor, route
       the preceptor agreement, and set four separate statuses before a placement can be created.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
       lines 873-905.
     elements:
       - element: "Dashboard graphs: submitted requests by status, courses by My Request status, students by My Request status"
@@ -1223,9 +1223,9 @@ steps:
       student-entered locations and supervisors to Prism records, track interview outcomes, and create a
       placement from the accepted suggestion.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
       lines 907-925; discipline context from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md
       (Field Application Form / Multi-Location Field Application Form; up to 10 placement suggestions per form).
     elements:
       - element: "Placement suggestion card (location details, supervisor details, interview status, interview schedule, student comments)"
@@ -1292,11 +1292,11 @@ steps:
       which settings belong to which course, and which slot attributes get priority — which is why this
       belongs in a setup journey even though the run itself is operational.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 10/16 Managing Placements in Exxat Prism",
+      exxat_transcripts.md, "## 10/16 Managing Placements in Exxat Prism",
       lines 993-1009; discipline strategy from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md
       ("Best Practices — Placement Assist") and
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
       ("Placement Assist is a popular feature for PT programs"); self-service discipline limitation per
       ../prism/capability-map.yaml (Placement Assist feature note).
     elements:
@@ -1426,7 +1426,7 @@ steps:
       Admin evaluates the proposed allocation and decides which suggestions to commit. Suggestions are never
       auto-committed — the review-then-commit boundary is the defining behavior a new admin must understand.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 10/16 Managing Placements in Exxat Prism",
+      exxat_transcripts.md, "## 10/16 Managing Placements in Exxat Prism",
       lines 995 and 1009-1013 ("Placement Assist does not automatically place students in the proposed slots,
       so you can have the final say and make manual changes to the suggested placements").
     elements:
@@ -1494,7 +1494,7 @@ steps:
       the location, collect the site's ranking of those students, then place from the site's response. This is
       the third preference channel in the stage and a distinct program-policy decision at setup time.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
+      exxat_transcripts.md, "## 9/16 Managing Wishlists in Exxat Prism",
       lines 925-935.
     elements:
       - element: "Email Recipient pencil (at least one recipient required before sending)"
@@ -1547,10 +1547,10 @@ steps:
       availability-based wishlist introduced in step 14, and it is real setup work for PT/PTA and OT/OTA
       programs onboarding onto Prism with an existing Exxat One footprint.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, section "## Processing Schedules from Exxat One to
+      exxat_transcripts.md, section "## Processing Schedules from Exxat One to
       Exxat Prism", lines 1897-1927; the wishlist-to-import loop is described end to end at
-      /Users/romitsoley/Downloads/PTPTAVideosTranscripts.md lines 131-135 and
-      /Users/romitsoley/Downloads/OTOTAVideosTranscripts.md lines 131-135.
+      PTPTAVideosTranscripts.md lines 131-135 and
+      OTOTAVideosTranscripts.md lines 131-135.
     elements:
       - element: "Access gate: dual login required"
         type: "precondition"
@@ -1621,20 +1621,20 @@ steps:
         gap_note: ""
 
 sources:
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — PRIMARY. Sections cited directly and by line range: '## 7/16 Managing Slots in Exxat Prism' (lines 573-654), '## 9/16 Managing Wishlists in Exxat Prism' (lines 807-936), '## 10/16 Managing Placements in Exxat Prism' (lines 937-1168), '## Processing Schedules from Exxat One to Exxat Prism' (lines 1893-1929). Every step's confirmed_by cites this file directly rather than a help-center paraphrase of the same videos."
-  - "/Users/romitsoley/Downloads/PTPTAVideosTranscripts.md — '## 2. Managing Exxat One Availability Based Wishlist in Exxat Prism' (lines 105-137). PT/PTA discipline texture on the availability-based wishlist and the wishlist-to-slot-request-to-import loop."
-  - "/Users/romitsoley/Downloads/OTOTAVideosTranscripts.md — '## 2. Managing Exxat One Availability Based Wishlist in Exxat Prism' (lines 107-139). Near-identical OT/OTA version, confirming the feature is genuinely shared across the four PT/PTA/OT/OTA disciplines and not PT-only."
-  - "/Users/romitsoley/Downloads/PAVideosTranscripts.md — checked; contains only patient-logging content, no wishlist/slot/Placement Assist coverage. Negative result used in the discipline-variance analysis."
-  - "/Users/romitsoley/Downloads/SLPVideosTranscripts.md — checked; clinical-logs content only, no coverage of this stage. Negative result."
-  - "/Users/romitsoley/Downloads/NursingTutorialsTranscripts.md — checked; competency-based-education content only, no coverage of this stage. Negative result."
-  - "/Users/romitsoley/Downloads/TEVideosTranscripts.md — checked; Echo360/GoReact assignment content only, no coverage of this stage. Negative result."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md — 'Wishlist' and 'Best Practices — Placement Assist' sections: wishlist-type-per-course-type conventions, the 2-4-month-ahead / short-open-window cadence, and staged placement-group strategy."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — 'Wishlist' section and 'Exxat One Availability-Based Wishlist' section."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md — 'Wishlist Setup' section (Level I / Level II / capstone patterns) and 'Exxat One Availability-Based Wishlist (PT/PTA/OT/OTA)' section."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — Field Application Form / Multi-Location Field Application Form, My Requests, and course-specific Wishlist Questionnaires as SW's analog to the PT slot-request/wishlist model."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — explicitly documents the absence of SLP slot-request, wishlist, and Placement Assist material (its own 'no equivalent playbook source' caveat and gaps list)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — gaps list naming slot-request cadence, wishlist behavior, and Placement Assist adoption as unknown for Nursing."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — gaps list naming placement/slot workflows as an open question for TE."
+  - "exxat_transcripts.md — PRIMARY. Sections cited directly and by line range: '## 7/16 Managing Slots in Exxat Prism' (lines 573-654), '## 9/16 Managing Wishlists in Exxat Prism' (lines 807-936), '## 10/16 Managing Placements in Exxat Prism' (lines 937-1168), '## Processing Schedules from Exxat One to Exxat Prism' (lines 1893-1929). Every step's confirmed_by cites this file directly rather than a help-center paraphrase of the same videos."
+  - "PTPTAVideosTranscripts.md — '## 2. Managing Exxat One Availability Based Wishlist in Exxat Prism' (lines 105-137). PT/PTA discipline texture on the availability-based wishlist and the wishlist-to-slot-request-to-import loop."
+  - "OTOTAVideosTranscripts.md — '## 2. Managing Exxat One Availability Based Wishlist in Exxat Prism' (lines 107-139). Near-identical OT/OTA version, confirming the feature is genuinely shared across the four PT/PTA/OT/OTA disciplines and not PT-only."
+  - "PAVideosTranscripts.md — checked; contains only patient-logging content, no wishlist/slot/Placement Assist coverage. Negative result used in the discipline-variance analysis."
+  - "SLPVideosTranscripts.md — checked; clinical-logs content only, no coverage of this stage. Negative result."
+  - "NursingTutorialsTranscripts.md — checked; competency-based-education content only, no coverage of this stage. Negative result."
+  - "TEVideosTranscripts.md — checked; Echo360/GoReact assignment content only, no coverage of this stage. Negative result."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md — 'Wishlist' and 'Best Practices — Placement Assist' sections: wishlist-type-per-course-type conventions, the 2-4-month-ahead / short-open-window cadence, and staged placement-group strategy."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — 'Wishlist' section and 'Exxat One Availability-Based Wishlist' section."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md — 'Wishlist Setup' section (Level I / Level II / capstone patterns) and 'Exxat One Availability-Based Wishlist (PT/PTA/OT/OTA)' section."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — Field Application Form / Multi-Location Field Application Form, My Requests, and course-specific Wishlist Questionnaires as SW's analog to the PT slot-request/wishlist model."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — explicitly documents the absence of SLP slot-request, wishlist, and Placement Assist material (its own 'no equivalent playbook source' caveat and gaps list)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — gaps list naming slot-request cadence, wishlist behavior, and Placement Assist adoption as unknown for Nursing."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — gaps list naming placement/slot workflows as an open question for TE."
   - "content/prism/capability-map.yaml — Placement Assist constraint-solver detail, weighted-difficulty example, and the PT-PTA/OT-OTA self-service limitation; 'Slot Request', 'Wishlist Setup', and 'Follow the Preceptor' feature entries."
   - "content/accreditation/acpe.yaml — Standard 3 Key Elements 3.1.b, 3.2, 3.3.a-e, 3.5.b."
   - "content/accreditation/coca.yaml — Standard 6, Element 6.9 (capacity adequacy, executed agreements, contingency for lost capacity)."

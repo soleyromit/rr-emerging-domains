@@ -26,8 +26,8 @@
 # Their gaps are catalogued per element below rather than summarised at screen level.
 #
 # SOURCE REMEDIATION (2026-08-25): the two Level-0 discipline video transcripts that document
-# this stage's central objects — /Users/romitsoley/Downloads/PAVideosTranscripts.md (Patient Log
-# setup and review) and /Users/romitsoley/Downloads/SLPVideosTranscripts.md (Clinical Log setup,
+# this stage's central objects — PAVideosTranscripts.md (Patient Log
+# setup and review) and SLPVideosTranscripts.md (Clinical Log setup,
 # review and the five-report family) — were cited in content/personas/, content/prism/
 # capability-map.yaml and admin-onboarding--08, but in NONE of this journey's eight flow files.
 # Both have now been read in full and threaded through the elements below. Two of the findings
@@ -248,7 +248,7 @@ steps:
           provide a standard template, but if you need a customized template, you can contact your
           CSS agent or account manager for assistance. You can also reach out to our support team at
           prism-support@exxat.com to request changes to EXISTING templates"
-          (/Users/romitsoley/Downloads/PAVideosTranscripts.md lines 27-29). Two things follow. The
+          (PAVideosTranscripts.md lines 27-29). Two things follow. The
           per-course template choice is how a PA program expresses that a surgery rotation and a
           behavioural-health rotation capture different fields, so one-template-per-course is the
           mechanism for variety rather than a limit on it — and the support dependency covers
@@ -331,7 +331,7 @@ steps:
       Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA
       Discipline/Setting Up and Managing Patient Log - PA.md (template availability and the
       Needs Attention feedback requirement);
-      /Users/romitsoley/Downloads/PAVideosTranscripts.md — "Physician Assistant: Setting up and
+      PAVideosTranscripts.md — "Physician Assistant: Setting up and
       Managing Patient Logs in Exxat Prism" (vimeo.com/1190121374, 6:26), READ IN FULL 2026-08-25
       and previously uncited anywhere in this journey's eight flow files. Lines 25-41 are the setup
       drawer (Learning Activities > select course > Setup > pencil on Patient Log; template
@@ -468,7 +468,7 @@ steps:
           approval of logs upon submission. IF YOU SELECT YES, THE OPTION FOR PRECEPTOR REVIEW OF
           THE PATIENT LOG WILL BE DISABLED. If you select No, you can then choose whether the
           preceptor should review the log before approval"
-          (/Users/romitsoley/Downloads/PAVideosTranscripts.md line 35).
+          (PAVideosTranscripts.md line 35).
         gates_on:
           - "Whether ANY preceptor review of a patient log is possible for this course — auto-approval does not merely skip review, it removes the option."
         accreditation_citation: >
@@ -509,7 +509,7 @@ steps:
           drawer carries a distinct GRADING TYPE field: "confirm whether this patient log will
           contribute to the course grade. If yes, enter the maximum score and the weightage it will
           cover. In the Grading Type field, specify the grading type you want to apply"
-          (/Users/romitsoley/Downloads/PAVideosTranscripts.md line 33).
+          (PAVideosTranscripts.md line 33).
         gates_on: ["How a log's contribution is expressed in the Gradebook"]
         accreditation_citation: >
           None directly — a grading-mechanics field, not an evidence field. Recorded because
@@ -558,10 +558,10 @@ steps:
       that the progress reports will later measure against.
     confirmed_by: >
       Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/
-      Course Setup.md; /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/
+      Course Setup.md; PRISM-Expansion-Vault/99-Assets/documents/
       Playbooks/Physician Assistant (PA) Playbook.md ("Configuring Minimum Diagnosis &
       Procedure Requirements", incl. the CSS note on separate Excel tabs);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
       Speech-Language Pathology (SLP) Playbook.md line 67 ("Min/max hour thresholds per
       participation-type/mode-of-delivery combination (used to flag under-logged students red in
       reports) are NOT self-service — programs must contact prism-support@exxat.com to configure
@@ -704,7 +704,7 @@ steps:
       and direct-contact/observation, tagged with age group, mode of delivery, training level
       and the supervising clinical educator, then routes it to that educator for review.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
       Speech-Language Pathology (SLP) Playbook.md lines 28-35 (Clinical Log defined as the
       per-encounter record of clinical educator, date, patient demographics and time split between
       intervention and evaluation; Clinical Educator a.k.a. experiential supervisor; Student
@@ -848,10 +848,10 @@ steps:
       Exxat-Help-Guides/Help for Students/Discipline Specific Guides/Nursing/CCE Case Log for
       Students.md (the full field list and status model); Exxat-Help-Guides/Help for Program
       Administrators/Discipline Specific Guides/Nursing/Help Guides for Nursing/CCE Log in
-      Exxat Prism.md; /Users/romitsoley/Downloads/CRNAVideosTranscripts.md, "Managing Clinical
+      Exxat Prism.md; CRNAVideosTranscripts.md, "Managing Clinical
       Case Experience Log in Exxat Prism" (lines 47-89; the "single CCE form" template at line
       59, the N-day submission window at line 63, the auto-approve/attestation exclusion at
-      line 71); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/
+      line 71); PRISM-Expansion-Vault/99-Assets/documents/
       Playbooks/Nursing Playbook.md ("Log fields (CRNA layout)"); content/accreditation/coa.yaml
       (Standards C.4, E.2.3, F.7)
 
@@ -967,13 +967,13 @@ steps:
       from on every timesheet entry, at the program-default level or overridden per course.
     confirmed_by: >
       Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/
-      Course Setup.md; /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/
+      Course Setup.md; PRISM-Expansion-Vault/99-Assets/documents/
       Playbooks/Nursing Playbook.md (Direct/Indirect/Simulation/In-Service);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
       Work (SW) Playbook.md line 141 ("Category is customizable and can track individual/group/
-      seminar hours separately", on a Timesheet that logs both in-person and virtual hours); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/
+      seminar hours separately", on a Timesheet that logs both in-person and virtual hours); PRISM-Expansion-Vault/99-Assets/
       documents/Playbooks/Physician Assistant (PA) Playbook.md (Telehealth Tracking, Option 1);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
       Occupational Therapy (OT) Playbook.md (Time Tracking — schools that skip categories);
       content/accreditation/arc-pa.yaml; content/accreditation/nursing.yaml;
       content/accreditation/cswe.yaml
@@ -1104,7 +1104,7 @@ steps:
       students — which is also, by omission, where a program discovers that duty-hour rules
       are not enforceable in Prism today.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md, "13/16 Managing Learning Activities"
+      exxat_transcripts.md, "13/16 Managing Learning Activities"
       (lines 1339-1350, the Rules block), as documented element-by-element in
       admin-onboarding--08-learning-activities-competency-management-reporting.yaml;
       content/accreditation/coa.yaml (Standard F.9, CRITICAL);
@@ -1279,7 +1279,7 @@ steps:
           field at all and that the CSWE expectation rides entirely on an optional notes box.
           That is too strong: the SW playbook enumerates the Timesheet's own field set as
           "date, ACTIVITY DESCRIPTION, site, Category"
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
           Work (SW) Playbook.md line 141), i.e. for Social Work the activity description is a
           named field on the entry, not a repurposed notes box. What is NOT corrected is the
           substance of the finding: no source read confirms the field is mandatory, and nothing
@@ -1291,7 +1291,7 @@ steps:
         type: "categorised hour capture (the mode distinction rides on the Category taxonomy, not on a dedicated field)"
         data_shown: >
           Per the SW playbook the Timesheet "logs in-person and virtual hours"
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
           Work (SW) Playbook.md line 141), alongside date, activity description, site and Category —
           where Category is customizable and is the mechanism that separates individual, group and
           seminar hours.
@@ -1345,7 +1345,7 @@ steps:
     confirmed_by: >
       Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Coursework/Completing
       Timesheets.md (all three entry paths, the location-tracking prompt, and the
-      status/editing-rights table); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/
+      status/editing-rights table); PRISM-Expansion-Vault/
       99-Assets/documents/Playbooks/Social Work (SW) Playbook.md lines 139-145 (the whole Field
       Hours section: line 141 the Timesheet field set — date, activity description, site, Category —
       plus in-person AND virtual hours and the customizable Category separating
@@ -1614,9 +1614,9 @@ steps:
           patient logs. You will need to review Pending Review patient logs and keep track of Needs
           Attention logs. IF A STUDENT FAILS TO ATTEND TO NEEDS ATTENTION LOGS, YOU MAY NEED TO
           REMIND THEM TO RESUBMIT THEM OUTSIDE OF THE EXXAT SYSTEM"
-          (/Users/romitsoley/Downloads/PAVideosTranscripts.md line 49). The SLP administrator
+          (PAVideosTranscripts.md line 49). The SLP administrator
           transcript says the same thing about clinical logs in near-identical words
-          (/Users/romitsoley/Downloads/SLPVideosTranscripts.md line 47).
+          (SLPVideosTranscripts.md line 47).
         gates_on: []
         accreditation_citation: >
           COA Standard C.4 (content/accreditation/coa.yaml) — logs reviewed on a REGULAR BASIS, and
@@ -1658,10 +1658,10 @@ steps:
         type: "read-only audit trail on an individual log"
         data_shown: >
           "You can also use the Edit option in the Action column and THE HISTORY ICON TO VIEW
-          CHANGES TO THAT LOG STATUS" (/Users/romitsoley/Downloads/PAVideosTranscripts.md line 59);
+          CHANGES TO THAT LOG STATUS" (PAVideosTranscripts.md line 59);
           the SLP transcript describes the same affordance under a different control — "Click on the
           View Log button to view the history of changes to that log status"
-          (/Users/romitsoley/Downloads/SLPVideosTranscripts.md line 57).
+          (SLPVideosTranscripts.md line 57).
         gates_on: []
         accreditation_citation: >
           COA Standard C.4 (content/accreditation/coa.yaml) — the log is simultaneously the academic
@@ -1727,26 +1727,26 @@ steps:
       Comment, audit log history, Approve/Not Approve, Not Approved email);
       Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA
       Discipline/Setting Up and Managing Patient Log - PA.md (mandatory Needs Attention
-      reason); /Users/romitsoley/Downloads/CRNAVideosTranscripts.md line 71 (attestation and
+      reason); CRNAVideosTranscripts.md line 71 (attestation and
       auto-approve mutual exclusion);
-      /Users/romitsoley/Downloads/PAVideosTranscripts.md lines 35, 39, 49, 55, 57 and 59 (the
+      PAVideosTranscripts.md lines 35, 39, 49, 55, 57 and 59 (the
       auto-approval / preceptor-review interlock; the STUDENT-side pre-submission attestation that
       contradicts the SLP and CRNA supervisor-side framing; the "remind them to resubmit them
       outside of the Exxat system" instruction for stranded Needs Attention logs; the mandatory
       reason on Need Attention; direct admin edits to a student submission followed by Update; and
       the Action-column Edit plus the history icon showing changes to a log's status);
-      /Users/romitsoley/Downloads/SLPVideosTranscripts.md lines 37 and 45-57 (the CLINICAL EDUCATOR
+      SLPVideosTranscripts.md lines 37 and 45-57 (the CLINICAL EDUCATOR
       attestation signed at review time; the three-status model; the identical "remind them to
       resubmit them outside of the Exxat system" instruction, here about clinical logs; the
       per-table Excel export icon; the status-count and total-time headers; the school-feedback
       requirement on Needs Attention; bulk Approve and Approve All Logs; and the View Log button
-      showing the history of changes to a log's status); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/
+      showing the history of changes to a log's status); PRISM-Expansion-Vault/
       99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md lines 46-47 and 64
       (CFCC Standard V-E clinical-supervisor accountability supported by a configurable
       clinical-supervisor attestation the educator completes WHILE APPROVING LOGS, at Dashboard >
-      Learning Activities > Set-up > Clinical Log (edit pencil) > Attestation); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/
+      Learning Activities > Set-up > Clinical Log (edit pencil) > Attestation); PRISM-Expansion-Vault/
       99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (auto-approval best
-      practice); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/
+      practice); PRISM-Expansion-Vault/99-Assets/documents/
       Playbooks/Occupational Therapy (OT) Playbook.md (Delegator Link Expiry default and
       recommendation; no-login FWPE completion); content/accreditation/coa.yaml (C.4);
       content/competitors/leo-davinci.yaml (no-login emailed links)
@@ -1877,9 +1877,9 @@ steps:
       content/accreditation/coa.yaml (Standard F.7, CRITICAL);
       content/accreditation/caa-asha.yaml (Standard 3.8B); content/accreditation/acote.yaml
       (Standards C.1.7, C.1.13); content/accreditation/cswe.yaml (AS B3.3.6 / M3.3.6);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
       Occupational Therapy (OT) Playbook.md (Supervision Type values; Placements by Educator
-      report); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/
+      report); PRISM-Expansion-Vault/99-Assets/documents/
       Playbooks/Social Work (SW) Playbook.md (supervisor mapping rules)
 
   - screen: "Attestations (Profile, Coursework, and Log Review)"
@@ -1962,14 +1962,14 @@ steps:
           Exxat-authored sources disagree, verbatim:
           - SLP: "activate the Enable Attestation bit to provide an attestation that CLINICAL
             EDUCATORS need to sign WHEN THEY REVIEW student submitted logs"
-            (/Users/romitsoley/Downloads/SLPVideosTranscripts.md line 37; same framing in
+            (SLPVideosTranscripts.md line 37; same framing in
             Speech-Language Pathology (SLP) Playbook.md line 64).
           - CRNA: "enable the Enable Attestation option to require PRECEPTORS to acknowledge an
-            attestation WHEN REVIEWING logs" (/Users/romitsoley/Downloads/CRNAVideosTranscripts.md
+            attestation WHEN REVIEWING logs" (CRNAVideosTranscripts.md
             line 71).
           - PA: "enable the attestation option if you want STUDENTS to acknowledge a statement
             BEFORE SUBMITTING THEIR LOGS. For example, you can include an academic integrity
-            statement" (/Users/romitsoley/Downloads/PAVideosTranscripts.md line 39).
+            statement" (PAVideosTranscripts.md line 39).
           So the same Enable Attestation toggle is documented as binding a DIFFERENT ACTOR at a
           DIFFERENT MOMENT depending on the discipline. Both readings share the same auto-approval
           exclusion, which is consistent with them being one mechanism rather than two — but they
@@ -2004,14 +2004,14 @@ steps:
       attestation as part of approving an individual log.
     confirmed_by: >
       Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Profile/Acknowledging
-      to Attestations.md; /Users/romitsoley/Downloads/CRNAVideosTranscripts.md line 71
+      to Attestations.md; CRNAVideosTranscripts.md line 71
       (Enable Attestation and the auto-approve exclusion);
-      /Users/romitsoley/Downloads/SLPVideosTranscripts.md line 37 (the same toggle described as an
+      SLPVideosTranscripts.md line 37 (the same toggle described as an
       attestation "that clinical educators need to sign when they review student submitted logs");
-      /Users/romitsoley/Downloads/PAVideosTranscripts.md lines 35 and 39 (the same toggle described
+      PAVideosTranscripts.md lines 35 and 39 (the same toggle described
       as a statement STUDENTS acknowledge BEFORE SUBMITTING, unavailable under auto-approval — and
       the separate finding that auto-approval also disables preceptor review outright);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
       Speech-Language Pathology (SLP) Playbook.md lines 46-47 and 64 (the clinical-educator
       attestation as the CFCC V-E hook, with its Learning Activities > Set-up > Clinical Log >
       Attestation navigation path); Exxat-Help-Guides/Help for Program Administrators/Discipline Specific
@@ -2177,10 +2177,10 @@ steps:
       Activities/Graphical Patient Log Summary Report.md;
       Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA
       Discipline/Setting Up and Managing Patient Log - PA.md (reports run on Pending Review
-      logs); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
+      logs); PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
       Physician Assistant (PA) Playbook.md (Comprehensive Report Patient Log; Group By lenses;
       two-level drill-down; Required Procedures Count Report);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
       Nursing Playbook.md (Patient Log Aggregate Report; Graphical Patient Log Summary);
       content/accreditation/arc-pa.yaml (B3.04 a-d, SSR Appendix 14D);
       content/accreditation/caa-asha.yaml (Standard 4.7 with 4.8)
@@ -2262,7 +2262,7 @@ steps:
           submitted and indicated that the type of service provided was VOICE AND RESONANCE to the
           adult age demographic, scroll to the intervention table, locate the Janet Brown student
           row and then scroll right to find the VOICE AND RESONANCE ADULT column"
-          (/Users/romitsoley/Downloads/SLPVideosTranscripts.md line 115). Voice and resonance is
+          (SLPVideosTranscripts.md line 115). Voice and resonance is
           one of ASHA's nine service-delivery areas, and it appears here as a live COLUMN HEADING
           in a shipped report rather than as a value a program invented.
           What that changes and what it does not. It changes the framing from "the taxonomy is a
@@ -2276,7 +2276,7 @@ steps:
       - element: "Four report-launch scopes (all courses / Learning Activity Group / a single course offering / a single rotation)"
         type: "four entry points into the same report set, each pre-scoping it differently"
         data_shown: >
-          Per /Users/romitsoley/Downloads/SLPVideosTranscripts.md lines 59-61 there are four ways to
+          Per SLPVideosTranscripts.md lines 59-61 there are four ways to
           reach the same reports, and the entry point determines the default scope: (1) Learning
           Activities > Reports runs across ALL courses; (2) opening a Learning Activity Group and
           selecting its Reports tab scopes to the courses in that group; (3) Course Offerings, or the
@@ -2316,7 +2316,7 @@ steps:
         type: "read-only multi-table report layout, exportable"
         data_shown: >
           The transcript walks the generated report top to bottom
-          (/Users/romitsoley/Downloads/SLPVideosTranscripts.md lines 87-91): placement information
+          (SLPVideosTranscripts.md lines 87-91): placement information
           for the selected student(s); a table of clinical hours by patient age demographic and mode
           of delivery with the total in the bottom-right; tables of intervention and evaluation hours
           against each type of service, bifurcated by age group; a table of total evaluation and
@@ -2390,7 +2390,7 @@ steps:
       accrual split by participation type, practice type, mode of delivery, training level and
       age group — and to catch under-logged students against configured minimums.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
       Speech-Language Pathology (SLP) Playbook.md lines 120-138 (the Reports table naming all five
       Clinical Log reports plus Clock Hours, Student Performance and Mapped Standards; the shared
       filter set — Course Offerings up to 50, Template, Rotation, Setting, Status, Site, Location,
@@ -2398,7 +2398,7 @@ steps:
       export split; and line 127 the 400-hour progress tracking on the Cumulative report), with
       line 100 for the student-facing Student Performance Report across the nine service delivery
       areas;
-      /Users/romitsoley/Downloads/SLPVideosTranscripts.md — "SLP Administrator Tutorials: Setting
+      SLPVideosTranscripts.md — "SLP Administrator Tutorials: Setting
       up and Reviewing Clinical Logs" (vimeo.com/1040505757, 21:40), READ IN FULL 2026-08-25 and
       previously uncited anywhere in this journey's eight flow files. Lines 59-63 (the four
       report-launch scopes, and the note that they only set the starting scope), 65-73 (the Clock
@@ -2522,13 +2522,13 @@ steps:
       categories are on track, approaching, or below the program minimum — and the admin
       exports the NBCRNA-formatted transcript for certification documentation.
     confirmed_by: >
-      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md, "Managing Clinical Case Experience
+      CRNAVideosTranscripts.md, "Managing Clinical Case Experience
       Log in Exxat Prism" (lines 83-87, incl. the colour semantics and the 200-vs-21 example);
       Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/Nursing/
       Help Guides for Nursing/CCE Log in Exxat Prism.md (NBCRNA Transcript report and Student
       Activity Insights); Exxat-Help-Guides/Help for Students/Discipline Specific Guides/
       Nursing/CCE Case Log for Students.md (student-side colour semantics);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
       Nursing Playbook.md (NBCRNA Transcript Report; Student Activity Insights);
       content/accreditation/coa.yaml (Standards C.4, E.2.3, F.7);
       content/competitors/new-innovations.yaml (ACGME case-log import)
@@ -2644,10 +2644,10 @@ steps:
       exports the raw entries as the audit trail, and uses the approved-hours total to generate
       educator thank-you certificates and CEU credit.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
       Occupational Therapy (OT) Playbook.md (Reports section: Raw Data Timesheet, Timesheet
       Hours Summary by Week; C.1.12 support model; Thanking Fieldwork Educator);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
       Physical Therapy (PT) Playbook.md lines 127-129 (the learning-activity inventory: PTSE 1,
       PTSE 2, CI Details Form and Timesheets as standard forms; weekly planning form, DCE surveys
       and Mid-Term Call Form as other forms; CIET v2, PTA CIET, SCIPAI, PTMACS, PTAMACS as
@@ -2752,10 +2752,10 @@ steps:
       supervisor reviews it inside GoReact with timestamped comments and a score, which syncs
       back to Prism.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher
       Education (TE) Playbook.md (the whole note — GoReact/Echo360 LTI is the only documented
       TE workflow, and the Open Gaps section enumerates what is not documented);
-      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md, "Setting Up and Managing Echo360
+      CRNAVideosTranscripts.md, "Setting Up and Managing Echo360
       (GoReact) Assignments in Exxat Prism" (lines 99-117 — the same integration documented
       for a second discipline, confirming it is not TE-specific);
       content/accreditation/caep.yaml (Standard R2, Component R2.3, incl. its gap_notes on
@@ -2869,13 +2869,13 @@ steps:
       Students.md (total logs / needs attention / in progress / average log entries per day);
       Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Learning Activities/
       Adding Clinical Hours.md (calendar icon; clinical-time totals on the placement card);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
       Work (SW) Playbook.md line 145 (Students > Overview showing cumulative logged hours alongside
       the placement/coursework snapshot) with line 144 (Hours by Category tracking accrual "across
       all a student's experiences");
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
       Playbook.md (Program Requirements hour thresholds on the student profile);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
       Therapy (PT) Playbook.md (per-setting Program Requirements);
       content/accreditation/cswe.yaml (AS 3.3.3); content/accreditation/nursing.yaml (III-H);
       content/accreditation/capte.yaml (Standard 6, Element 6H)
@@ -2905,18 +2905,18 @@ sources:
   - "Exxat-Help-Guides/Help for Site/Step-by-Step Guides (How-tos)/Managing Student Placements/Reviewing Student Clinical logs for Clinical Educator.md"
   - "Exxat-Help-Guides/Help for Site/Step-by-Step Guides (How-tos)/Managing Student Placements/Reviewing Student Timesheets.md"
   # --- Discipline playbooks (the eight existing disciplines) ---
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — READ IN FULL 2026-08-25 (previously cited by section name or per-stage sample). Lines used across this journey: 18-22 (DCE, ADCE, Program Coordinator, SCCE and CI role definitions, incl. the SCCE frequently also being a CI and regional SCCEs covering many facilities), 34-37 (APTA, CAPTE, ACAPT, ABPTRFE), 43 (the clinical-settings taxonomy), 45-53 (graduation-year cohorts, always Lock Step, cohort movement, off-track students and the original-rotation best practice), 55-60 (Groups, Categories, Announcements, Resources, Attestations, per-setting Program Requirements), 62-64 (compliance, and the instruction to ask where a school tracks compliance if not in Prism), 66-77 (course and rotation setup incl. the full field list and the ICE/DPE/residency special cases), 79-85 (the March 1 M1M cycle, reserved-vs-FCFS responses and Exxat One), 87-91 (wishlist patterns and Placement Assist), 93-97 (pre-placement activity), 99-108 (the four placement modes), 110-113 (slot confirmation and cancellation emails), 115-123 (placement notification lead times and the student-contacts-CI convention), 125-174 (the learning-activity and standard-instrument inventory: PTSE 1, PTSE 2, CIET v2, PTMACS/PTAMACS, SCIPAI and the Duke-developed Standard PT/PTA Surveys), 176-180 (thanking supervisors and the state-variable CEU conversion), 182-188 (pain points, incl. the four marketplace competitors at line 184 and the national competition for IP/acute slots at line 186), 190-197 (the enhancements list, incl. mapping competencies to CAPTE 2024 and the absent Exxat CSIF), 208-232 (the seven CAPTE-mapped reports and the five-section AAR pull sequence), 234-244 (CIET v2.0 full mechanics), 246-248 (the CI Details form as the licensure-renewal and eligibility-check mechanism), 250-259 (the four DCE performance-survey templates), 261-263 (low-score indicators and the support-gated notification), 265-270 (M1M email operations), 272-277 (PTMACS/PTAMACS additional mechanics), 279-281 (the Exxat One availability-based wishlist). In THIS file the load-bearing lines are 127-129 (the learning-activity inventory, which contains NO patient or encounter log — the basis for the encounter-log-unused finding), 69 and 176-180 (CEU credit derived from approved timesheet hours, and the state-variable conversion that leads many programs to list supervision hours instead of a CEU total), and 214-221 (the two CAPTE 6H reports sourced from PTSE 1 Questions 7 and 3 rather than from logged encounters)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — read IN FULL 2026-08-25 (previously consulted per-stage). Lines cited across this journey: 12 (the playbook's own data-quality caveat — it is synthesized from eight thin feature-specific artifacts, not a CSS playbook, so silence is documentation absence rather than product absence), 18-21 (ASHA / CAA / CFCC / KASA, and the nine KASA competencies a.k.a. nine service-delivery areas, whose individual names that source never enumerates), 25-35 (Course Offering, Rotation, Learning Activity Group, Clinical Log, Clinical Educator, Student Participation Type, Practice Type, Mode of Delivery, Training Level, Placement Setting, Age Group), 37 (no DCE/ACCE/SCCE-equivalent role terms are documented for SLP), 41-49 (CAA + CFCC curriculum mapping, the Mapped Standards Report, the beyond-KASA CSS dependency, the CFCC V-E attestation hook and its navigation, affiliation agreements in the Sites module, and the 400-hour tracking on the Clinical Clock Hours Report (Cumulative)), 53-67 (per-course-offering Clinical Log setup: template preview, activate toggle, the N-day submission window, grading, the wrench column customization with the first four columns fixed, clinical-educator review routing with a previewable email template, the attestation, and the support-gated min/max hour thresholds), 71-84 (the review workflow: the Logs Count / Log Hours by Status columns, Last Encounter and Last Update, the three-status colour model, the mandatory school-feedback note on Needs Attention, bulk approve and Approve All Logs, the 6am EST Statistics refresh, three export levels, and the filter set incl. Placement Faculty / Clinical Educator), 88-100 (no free off-the-shelf standard instruments; the configured toolkit — KASA Summary Forms, Clinical Supervisor Evaluations (Midterm & Final), Student Self-Assessments, Student Evaluations of Clinical Sites, Student Evaluations of Clinical Supervisors, Site Assessments aligned to program goals and accreditation standards, and custom forms — all support-gated to create; and the student-facing Student Performance Report across all nine service delivery areas), 104-105 (surveys buildable in Prism from December 2025), 109-114 (advisement via Communications & Interventions or custom workflow-based advisement forms with signature, plus profile-level and course-level attestations with their navigation paths), 118 (question-based early-alert notifications configured by support), 120-138 (the report suite, the shared filter set, the 50-course-offering cap, and the broader capability list incl. trend/exposure analysis, low-performance indicators and placement-readiness metrics), 142-149 (the discipline's own gap list — explicitly a DOCUMENTATION gap, plus the recurring self-service gap for SLP). In THIS file the load-bearing lines are 28-35 (the Clinical Log field vocabulary), 53-67 (the whole per-course Clinical Log setup drawer and the support-gated min/max thresholds), 71-84 (the review workflow, status model, bulk approve, the 6am EST Statistics refresh and the filter set), and 120-138 (the five-report Clinical Log family, the shared filter set and the 50-course-offering cap)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — READ IN FULL 2026-08-25. Lines cited in this file: 139-145 (the whole Field Hours section — the Timesheet field set of date, activity description, site and Category; in-person AND virtual hours; the customizable Category separating individual, group and seminar hours; automatic break/time-off deduction tied to CSWE rule; the student choice of Field Instructor or Task Supervisor as hours reviewer with Program Admin also able to approve; the Hours by Category Report against the 400 BSW / 900 MSW minimums; and the Students > Overview cumulative view) and line 163 (the AS 3.3.3 mapping that ties those four mechanisms together)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — READ IN FULL 2026-08-25 (73 lines). It is the thinnest discipline source in this corpus and its own line 12 says why: TE has no dedicated internal help-center playbook article and no CSS discipline playbook PDF, so the note is built from ONE program-administrator video tutorial covering the GoReact/Echo360 LTI integration, transcribed from auto-generated Vimeo captions. Substantive content: lines 19-26 (LTI integration with GoReact, now part of Echo360; assignments, student submissions and scores/status updates sync automatically; described as a genuinely connected two-way workflow in which administrators are not expected to recreate assignments in GoReact), 28-31 (activation is discipline/program-gated — if the Learning Tool Interoperability section is absent from Learning Activities > Setup the feature is not activated, and activation requires an Exxat support ticket), 33-45 (the administrator setup sequence: create at Learning Activities > Setup > Learning Tool Interoperability > +, configure LTI tool, title, description, placement-based vs. didactic, publish and due dates, grading and score settings and faculty visibility; activate and save; Prism auto-creates the matching GoReact activity on first save; GoReact-specific settings are then configured in GoReact and the activity marked Done, at which point the assignment becomes available to students), 47-52 (student workflow from My Coursework: redirect into GoReact, record directly, upload a video file, or submit other supported media, with status syncing back), 54-57 (faculty/reviewer workflow: timestamped comments, feedback, evaluations and scores, syncing back with no reconciliation step), 61 (further GoReact-side configuration is documented in GoReact's help centre, not Exxat's), and 63-73 (the Open Gaps list — TE terminology, program/setup patterns, compliance, placement and slot workflows, standard evaluation forms and reports, accreditor standards, and pain points are ALL explicitly unpopulated, with a standing instruction not to treat field-standard TE terms or CAEP standard numbers as Exxat-specific until confirmed against a TE-specific source). EVERY TE claim in this file that is not about the LTI integration is therefore reasoned from ../accreditation/caep.yaml and carries that caveat inline. In THIS file the load-bearing lines are 19-26 and 47-57 (the LTI video assignment as TE's only documented in-rotation capture surface) and 71 (standard evaluation forms and reports explicitly unavailable, which is why no TE hour or encounter surface can be asserted in either direction)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — READ IN FULL 2026-08-25 (previously cited by section name or per-stage sample). Lines used across this journey: 18-22 (DCE, ADCE, Program Coordinator, SCCE and CI role definitions, incl. the SCCE frequently also being a CI and regional SCCEs covering many facilities), 34-37 (APTA, CAPTE, ACAPT, ABPTRFE), 43 (the clinical-settings taxonomy), 45-53 (graduation-year cohorts, always Lock Step, cohort movement, off-track students and the original-rotation best practice), 55-60 (Groups, Categories, Announcements, Resources, Attestations, per-setting Program Requirements), 62-64 (compliance, and the instruction to ask where a school tracks compliance if not in Prism), 66-77 (course and rotation setup incl. the full field list and the ICE/DPE/residency special cases), 79-85 (the March 1 M1M cycle, reserved-vs-FCFS responses and Exxat One), 87-91 (wishlist patterns and Placement Assist), 93-97 (pre-placement activity), 99-108 (the four placement modes), 110-113 (slot confirmation and cancellation emails), 115-123 (placement notification lead times and the student-contacts-CI convention), 125-174 (the learning-activity and standard-instrument inventory: PTSE 1, PTSE 2, CIET v2, PTMACS/PTAMACS, SCIPAI and the Duke-developed Standard PT/PTA Surveys), 176-180 (thanking supervisors and the state-variable CEU conversion), 182-188 (pain points, incl. the four marketplace competitors at line 184 and the national competition for IP/acute slots at line 186), 190-197 (the enhancements list, incl. mapping competencies to CAPTE 2024 and the absent Exxat CSIF), 208-232 (the seven CAPTE-mapped reports and the five-section AAR pull sequence), 234-244 (CIET v2.0 full mechanics), 246-248 (the CI Details form as the licensure-renewal and eligibility-check mechanism), 250-259 (the four DCE performance-survey templates), 261-263 (low-score indicators and the support-gated notification), 265-270 (M1M email operations), 272-277 (PTMACS/PTAMACS additional mechanics), 279-281 (the Exxat One availability-based wishlist). In THIS file the load-bearing lines are 127-129 (the learning-activity inventory, which contains NO patient or encounter log — the basis for the encounter-log-unused finding), 69 and 176-180 (CEU credit derived from approved timesheet hours, and the state-variable conversion that leads many programs to list supervision hours instead of a CEU total), and 214-221 (the two CAPTE 6H reports sourced from PTSE 1 Questions 7 and 3 rather than from logged encounters)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — read IN FULL 2026-08-25 (previously consulted per-stage). Lines cited across this journey: 12 (the playbook's own data-quality caveat — it is synthesized from eight thin feature-specific artifacts, not a CSS playbook, so silence is documentation absence rather than product absence), 18-21 (ASHA / CAA / CFCC / KASA, and the nine KASA competencies a.k.a. nine service-delivery areas, whose individual names that source never enumerates), 25-35 (Course Offering, Rotation, Learning Activity Group, Clinical Log, Clinical Educator, Student Participation Type, Practice Type, Mode of Delivery, Training Level, Placement Setting, Age Group), 37 (no DCE/ACCE/SCCE-equivalent role terms are documented for SLP), 41-49 (CAA + CFCC curriculum mapping, the Mapped Standards Report, the beyond-KASA CSS dependency, the CFCC V-E attestation hook and its navigation, affiliation agreements in the Sites module, and the 400-hour tracking on the Clinical Clock Hours Report (Cumulative)), 53-67 (per-course-offering Clinical Log setup: template preview, activate toggle, the N-day submission window, grading, the wrench column customization with the first four columns fixed, clinical-educator review routing with a previewable email template, the attestation, and the support-gated min/max hour thresholds), 71-84 (the review workflow: the Logs Count / Log Hours by Status columns, Last Encounter and Last Update, the three-status colour model, the mandatory school-feedback note on Needs Attention, bulk approve and Approve All Logs, the 6am EST Statistics refresh, three export levels, and the filter set incl. Placement Faculty / Clinical Educator), 88-100 (no free off-the-shelf standard instruments; the configured toolkit — KASA Summary Forms, Clinical Supervisor Evaluations (Midterm & Final), Student Self-Assessments, Student Evaluations of Clinical Sites, Student Evaluations of Clinical Supervisors, Site Assessments aligned to program goals and accreditation standards, and custom forms — all support-gated to create; and the student-facing Student Performance Report across all nine service delivery areas), 104-105 (surveys buildable in Prism from December 2025), 109-114 (advisement via Communications & Interventions or custom workflow-based advisement forms with signature, plus profile-level and course-level attestations with their navigation paths), 118 (question-based early-alert notifications configured by support), 120-138 (the report suite, the shared filter set, the 50-course-offering cap, and the broader capability list incl. trend/exposure analysis, low-performance indicators and placement-readiness metrics), 142-149 (the discipline's own gap list — explicitly a DOCUMENTATION gap, plus the recurring self-service gap for SLP). In THIS file the load-bearing lines are 28-35 (the Clinical Log field vocabulary), 53-67 (the whole per-course Clinical Log setup drawer and the support-gated min/max thresholds), 71-84 (the review workflow, status model, bulk approve, the 6am EST Statistics refresh and the filter set), and 120-138 (the five-report Clinical Log family, the shared filter set and the 50-course-offering cap)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — READ IN FULL 2026-08-25. Lines cited in this file: 139-145 (the whole Field Hours section — the Timesheet field set of date, activity description, site and Category; in-person AND virtual hours; the customizable Category separating individual, group and seminar hours; automatic break/time-off deduction tied to CSWE rule; the student choice of Field Instructor or Task Supervisor as hours reviewer with Program Admin also able to approve; the Hours by Category Report against the 400 BSW / 900 MSW minimums; and the Students > Overview cumulative view) and line 163 (the AS 3.3.3 mapping that ties those four mechanisms together)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — READ IN FULL 2026-08-25 (73 lines). It is the thinnest discipline source in this corpus and its own line 12 says why: TE has no dedicated internal help-center playbook article and no CSS discipline playbook PDF, so the note is built from ONE program-administrator video tutorial covering the GoReact/Echo360 LTI integration, transcribed from auto-generated Vimeo captions. Substantive content: lines 19-26 (LTI integration with GoReact, now part of Echo360; assignments, student submissions and scores/status updates sync automatically; described as a genuinely connected two-way workflow in which administrators are not expected to recreate assignments in GoReact), 28-31 (activation is discipline/program-gated — if the Learning Tool Interoperability section is absent from Learning Activities > Setup the feature is not activated, and activation requires an Exxat support ticket), 33-45 (the administrator setup sequence: create at Learning Activities > Setup > Learning Tool Interoperability > +, configure LTI tool, title, description, placement-based vs. didactic, publish and due dates, grading and score settings and faculty visibility; activate and save; Prism auto-creates the matching GoReact activity on first save; GoReact-specific settings are then configured in GoReact and the activity marked Done, at which point the assignment becomes available to students), 47-52 (student workflow from My Coursework: redirect into GoReact, record directly, upload a video file, or submit other supported media, with status syncing back), 54-57 (faculty/reviewer workflow: timestamped comments, feedback, evaluations and scores, syncing back with no reconciliation step), 61 (further GoReact-side configuration is documented in GoReact's help centre, not Exxat's), and 63-73 (the Open Gaps list — TE terminology, program/setup patterns, compliance, placement and slot workflows, standard evaluation forms and reports, accreditor standards, and pain points are ALL explicitly unpopulated, with a standing instruction not to treat field-standard TE terms or CAEP standard numbers as Exxat-specific until confirmed against a TE-specific source). EVERY TE claim in this file that is not about the LTI integration is therefore reasoned from ../accreditation/caep.yaml and carries that caveat inline. In THIS file the load-bearing lines are 19-26 and 47-57 (the LTI video assignment as TE's only documented in-rotation capture surface) and 71 (standard evaluation forms and reports explicitly unavailable, which is why no TE hour or encounter surface can be asserted in either direction)."
   # --- Raw transcripts ---
-  - "/Users/romitsoley/Downloads/CRNAVideosTranscripts.md"
-  - "/Users/romitsoley/Downloads/PAVideosTranscripts.md — ADDED 2026-08-25. The single PA program-administrator video tutorial (Setting up and Managing Patient Logs in Exxat Prism), read in full. It was already cited in content/personas/discipline-pa.yaml, content/prism/capability-map.yaml and admin-onboarding--08, but in NONE of the eight rotation-lifecycle flow files — despite being the only PA product source for this stage's central object. This pass used it for the auto-approval/preceptor-review interlock (line 35), the student-side pre-submission attestation that contradicts the SLP and CRNA supervisor-side framing (line 39), the Grading Type field (line 33), the templates-as-log-types framing and the support dependency for changing EXISTING templates (lines 27-29), the absence of any in-product nudge for stranded Needs Attention logs (line 49), and the per-log status-change history icon (line 59)."
-  - "/Users/romitsoley/Downloads/SLPVideosTranscripts.md — ADDED 2026-08-25. The single SLP program-administrator video tutorial (Setting up and Reviewing Clinical Logs), read in full. Same situation as the PA transcript: already cited in content/personas/discipline-slp.yaml, capability-map.yaml and admin-onboarding--08, and in none of the eight rotation-lifecycle flow files. This pass used it for the four report-launch scopes (lines 59-61), the Clock Hours report's full output structure ending in the supervisor-attestation footer with reviewed-hours totals (lines 87-91), the clinical-educator-side attestation at review time (line 37), the identical remind-them-outside-Exxat instruction for stranded Needs Attention logs (line 47), the View Log status history (line 57), the red marking of students below a support-configured minimum (line 97), and — partially correcting the SLP playbook's own stated gap — the naming of 'voice and resonance' as a type of service in a shipped report column (line 115)."
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md (Managing Learning Activities, Timesheet Rules block — as documented in admin-onboarding--08)"
+  - "CRNAVideosTranscripts.md"
+  - "PAVideosTranscripts.md — ADDED 2026-08-25. The single PA program-administrator video tutorial (Setting up and Managing Patient Logs in Exxat Prism), read in full. It was already cited in content/personas/discipline-pa.yaml, content/prism/capability-map.yaml and admin-onboarding--08, but in NONE of the eight rotation-lifecycle flow files — despite being the only PA product source for this stage's central object. This pass used it for the auto-approval/preceptor-review interlock (line 35), the student-side pre-submission attestation that contradicts the SLP and CRNA supervisor-side framing (line 39), the Grading Type field (line 33), the templates-as-log-types framing and the support dependency for changing EXISTING templates (lines 27-29), the absence of any in-product nudge for stranded Needs Attention logs (line 49), and the per-log status-change history icon (line 59)."
+  - "SLPVideosTranscripts.md — ADDED 2026-08-25. The single SLP program-administrator video tutorial (Setting up and Reviewing Clinical Logs), read in full. Same situation as the PA transcript: already cited in content/personas/discipline-slp.yaml, capability-map.yaml and admin-onboarding--08, and in none of the eight rotation-lifecycle flow files. This pass used it for the four report-launch scopes (lines 59-61), the Clock Hours report's full output structure ending in the supervisor-attestation footer with reviewed-hours totals (lines 87-91), the clinical-educator-side attestation at review time (line 37), the identical remind-them-outside-Exxat instruction for stranded Needs Attention logs (line 47), the View Log status history (line 57), the red marking of students below a support-configured minimum (line 97), and — partially correcting the SLP playbook's own stated gap — the naming of 'voice and resonance' as a type of service in a shipped report column (line 115)."
+  - "exxat_transcripts.md (Managing Learning Activities, Timesheet Rules block — as documented in admin-onboarding--08)"
   # --- Repo ground truth ---
   - "content/prism/capability-map.yaml"
   - "content/flows/admin-onboarding--08-learning-activities-competency-management-reporting.yaml"
