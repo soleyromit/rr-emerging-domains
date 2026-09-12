@@ -97,5 +97,261 @@
 # lenses/standards-competitor-ratings.yaml is NOT reusable as-is here: it accepts only
 # "directional" and treats any other value — including "verified" — as unrecognized. Until
 # a rule for this file's two-value enum lands, the pairing is this comment.
+# ---------------------------------------------------------------------------
+# FIRST REAL ROWS, 2026-09-11 — Pharmacy only, and only the 5 vendors
+# content/dissection/pharmacy.yaml's `incumbent_set` actually scopes in:
+# core-elms, e-value, examsoft, influx, pharmacademic. `rxpreceptor` and
+# `medhub` are `not-a-target` there for reasons those files state (rxpreceptor
+# is not a separate product from CORE ELMS; the pharmacy book of business sits
+# on the E*Value side of the merged MedHub line), so neither gets a row here.
+#
+# ON evidence_strength: most rows are "directional". Almost everything the
+# 2026-09-04 domain-expert session says about pharmacy competitors is one
+# expert's recollection, and that session says of its own numbers that the
+# research "remains to be done". The four "verified" rows are the ones whose
+# claim is carried by public, independently-fetched material recorded in a
+# competitor file or in capability-map.yaml, not by the session: CORE's share
+# band (vendor's own 90% claim alongside the session's ~80%+), CORE's shipped
+# CompMS accreditation mapping, ExamSoft's shipped exam delivery against
+# Prism's roadmap pillar, and ASHP's own statement that PharmAcademic is the
+# residency documentation platform.
+#
+# ON CITING LEVEL-1 FILES: content/competitors/*.yaml and
+# content/prism/capability-map.yaml are cited the way this file's header says
+# to — by slug through `competitor_slug`, by teardown pillar through
+# `competitor_feature_ref`, and by pillar name through `prism_feature_ref`,
+# with the file named in prose inside `detail`. They are NOT put in
+# `sources[]`: `sources[].source_id` resolves only against the Level 0.5
+# source homes, so a Level-1 content path there is a hard FAIL, not a
+# citation. Task 2.7 established this on lenses/product-gaps.yaml.
+#
+# NOTE ON TEARDOWN PILLAR NAMES: `competitor_feature_ref` must match that
+# competitor's OWN feature_teardown spelling, which is not uniform across
+# files. core-elms.yaml and e-value.yaml suffix three pillars with Prism's
+# then-current roadmap quarter ("Accreditation Management (Prism roadmap Q3
+# 2027)"); examsoft.yaml, influx.yaml and pharmacademic.yaml use the bare
+# pillar name. `prism_feature_ref` always uses the bare capability-map name.
+#
+# WHAT IS DELIBERATELY NOT HERE, so an absent row is not misread as a settled
+# "no difference": no price-axis row for any vendor (every competitor file
+# records pricing as not publicly disclosed, so there is nothing to compare);
+# no services-axis row against CORE's 4.9/5 customer-service score; and no row
+# for Enflux's shipped accreditation reporting against Prism's Q3 2027 pillar,
+# which is the same timing argument the CORE CompMS row already makes and was
+# left unwritten rather than duplicated. All three are unresearched here.
 last_updated: "2026-09-11"
-differentiators: []
+differentiators:
+  - domain: "Pharmacy"
+    competitor_slug: "core-elms"
+    axis: "incumbency"
+    direction: "competitor-advantage"
+    claim: "CORE is the sitting incumbent in roughly four in five to nine in ten US pharmacy programs — the default a Pharmacy deal displaces, not one vendor among several"
+    prism_feature_ref: null
+    competitor_feature_ref: null
+    detail: >
+      The session calls CORE "our biggest competitor in pharmacy", at "about 80 or
+      more than 80% of pharmacy programs subscribed"; CORE's page claims 90%.
+      core-elms.yaml records both rather than averaging — expert recollection and
+      vendor claim are different evidence, both showing overwhelming incumbency.
+    counter_move: "Run the AACP pilot: curriculum mapping in Prism at a CORE-using pharmacy school, ExamSoft data imported and correlated against NAPLEX outcomes, published to the November abstract deadline."
+    counter_move_status: "in-flight"
+    evidence_strength: "verified"
+    persona_relevance: ["discipline-pharmacy", "lens-core-elms"]
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Sections 'Competitors as Vishaka describes them' and 'Use cases Ruchi asked for, and Vishaka's answers'"
+
+  - domain: "Pharmacy"
+    competitor_slug: "core-elms"
+    axis: "integration"
+    direction: "exxat-advantage"
+    claim: "LMS integration is named the second biggest pharmacy buying driver, and Exxat ships Canvas today where CORE names no LMS partner publicly at all"
+    prism_feature_ref: null
+    competitor_feature_ref: null
+    # prism_feature_ref stays null on purpose: LMS/SIS Integration lives in
+    # capability-map.yaml's exxat_advantage_layer, not in the six core_ring
+    # pillars this field may name. Same call product-gaps.yaml made on its
+    # `pharmacy-lms-breadth-beyond-canvas` row.
+    detail: >
+      A dean told Vishaka "once you have LMS integration, come back to me and talk
+      to me"; it removes manual grade transfer into the program's official
+      student channel. Canvas is shipped, Brightspace next, then Blackboard, no
+      dates. core-elms.yaml finds only generic SSO/LTI language, no named partner.
+    counter_move: "Reopen the channel with every pharmacy lead who asked for LMS integration, now that Canvas ships."
+    counter_move_status: "proposed"
+    evidence_strength: "directional"
+    evidence_note: "One session for both the rollout order and the buying-driver ranking; CORE's side is an absence of public partner names, not a demonstrated gap."
+    persona_relevance: ["discipline-pharmacy", "role-dean", "lens-core-elms"]
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'LMS integration'"
+
+  - domain: "Pharmacy"
+    competitor_slug: "core-elms"
+    axis: "product"
+    direction: "competitor-advantage"
+    claim: "CORE ships ACPE-aligned curriculum gap analysis today through its CompMS module; Prism's Accreditation Management pillar is a Q3 2027 roadmap item"
+    prism_feature_ref: "Accreditation Management"
+    competitor_feature_ref: "Accreditation Management (Prism roadmap Q3 2027)"
+    detail: >
+      CompMS maps competencies to accreditation standards and runs curriculum gap
+      assessments; CORE's pharmacy page claims its solutions "meet and exceed ACPE
+      Pharmacy Standards and CAPE Outcomes". Timing, not feature superiority —
+      core-elms.yaml flags CompMS bundling vs pricing as unconfirmed.
+    counter_move: "Launch the Q3 2027 Accreditation Management pillar with ACPE standards mapped explicitly, per core-elms.yaml's stated opportunity."
+    counter_move_status: "proposed"
+    evidence_strength: "verified"
+    persona_relevance: ["discipline-pharmacy", "role-dean", "role-compliance-accreditation-liaison", "lens-core-elms"]
+    sources:
+      - source_id: "product-page-core-compms-curriculum-mapping-2026"
+      - source_id: "product-page-core-elms-pharmacy-affiliation-agreements-2026"
+
+  - domain: "Pharmacy"
+    competitor_slug: "examsoft"
+    axis: "product"
+    direction: "competitor-advantage"
+    claim: "ExamSoft owns secure high-stakes exam delivery in pharmacy today; Prism's counterpart is a January soft launch against a Q2 2027 pillar target"
+    prism_feature_ref: "Exam Management"
+    competitor_feature_ref: "Exam Management"
+    detail: >
+      Examplify runs locked-down offline exams on a laptop or iPad, with ExamID and
+      ExamMonitor as separate proctoring products, per two college-hosted guides
+      examsoft.yaml cites. capability-map.yaml has Exam Management at roadmap, Q2
+      2027; the session puts Exxat's module at "a January soft launch".
+    counter_move: "Ship the exam module, soft-launching in January per the session, and compete on one platform holding both halves of the student record rather than on tagging depth."
+    counter_move_status: "in-flight"
+    evidence_strength: "verified"
+    persona_relevance: ["discipline-pharmacy", "role-dean"]
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'The ExamSoft + CORE + Influx stack — the thing to break'"
+
+  - domain: "Pharmacy"
+    competitor_slug: "examsoft"
+    axis: "distribution"
+    direction: "competitor-advantage"
+    claim: "ExamSoft is often bought by a central institutional office, so the director of clinical education Exxat sells to cannot displace it at all"
+    prism_feature_ref: null
+    competitor_feature_ref: null
+    detail: >
+      The session describes larger institutions running a central office for faculty
+      development and technology adoption that makes enterprise LMS, SIS and often
+      ExamSoft decisions from the institution-level dean's budget. examsoft.yaml
+      carries the same pattern as a retention anchor above the program.
+    counter_move: "Aim the ExamSoft-import story at the dean of assessment or curriculum chair rather than the DCE — the session's own role-split of assets."
+    counter_move_status: "proposed"
+    evidence_strength: "directional"
+    evidence_note: "One domain-expert session for the central-office pattern; no procurement record, org chart or named institution in this repo backs it."
+    persona_relevance: ["discipline-pharmacy", "role-dean"]
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Sections 'How placement is organized inside a university' and 'GTM targeting — the wrong tree'"
+
+  - domain: "Pharmacy"
+    competitor_slug: "influx"
+    axis: "distribution"
+    direction: "competitor-advantage"
+    claim: "Pharmacy programs run CORE, ExamSoft and Enflux as one recurring stack, so a Pharmacy deal displaces a three-vendor configuration, not a single product"
+    prism_feature_ref: null
+    competitor_feature_ref: null
+    detail: >
+      Verbatim: "In pharmacy, the popular [stack]... is CORE, ExamSoft, and Influx.
+      It's a combination technology stack that you are going to see again and again
+      in pharmacy programs." influx.yaml identifies that "Influx" as Enflux. The
+      session claims recurrence, not that the stack decides deals.
+    counter_move: "Land the September 12, 2026 release: free bulk import of ExamSoft reports and data for programs already on Prism for clinical management, putting both halves in one platform."
+    counter_move_status: "in-flight"
+    evidence_strength: "directional"
+    evidence_note: "A pharmacy ACPE self-study independently documents the ExamSoft/CORE pair at one program; that the stack recurs rests on the one session."
+    persona_relevance: ["discipline-pharmacy", "role-dean"]
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'The ExamSoft + CORE + Influx stack — the thing to break'"
+
+  - domain: "Pharmacy"
+    competitor_slug: "influx"
+    axis: "data"
+    direction: "exxat-advantage"
+    claim: "Enflux owns no primary data — it reads CORE and ExamSoft — so Prism collecting the clinical half itself removes the reason the third vendor exists"
+    prism_feature_ref: null
+    competitor_feature_ref: "Clinical & Experiential Education"
+    detail: >
+      Enflux's FAQ names its integrations as "ExamSoft, Canvas, and CORE": every
+      insight is downstream of another vendor's collection, including a Prism
+      competitor's. Per the session, Exxat stopped a path to integrate with Influx
+      because Prism's roadmap covers it — internal reasoning, not a position.
+    counter_move: "Build the cross-system insight layer into Prism rather than integrating with Enflux."
+    counter_move_status: "proposed"
+    evidence_strength: "directional"
+    evidence_note: "Enflux capability claims are vendor-asserted with no independent review corpus, and the Influx/Enflux identification is itself an inference."
+    persona_relevance: ["discipline-pharmacy", "role-dean"]
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'The ExamSoft + CORE + Influx stack — the thing to break'"
+
+  - domain: "Pharmacy"
+    competitor_slug: "e-value"
+    axis: "incumbency"
+    direction: "competitor-advantage"
+    claim: "e-Value still holds pharmacy subscribers, and it is the only pharmacy incumbent the session treats as displaceable rather than defended"
+    prism_feature_ref: null
+    competitor_feature_ref: null
+    detail: >
+      "There is still some pharmacy customers who are subscribing to e-Value." The
+      session carries an action item from a prior AACP, not yet acted on: curate the
+      e-Value pharmacy program list from booth-lead notes and a website sweep. Four
+      programs were flagged for demos; no count exists in this repo.
+    counter_move: "Curate the e-Value pharmacy program list from booth-lead notes and the program-website sweep, then run the four demos already flagged."
+    counter_move_status: "proposed"
+    evidence_strength: "directional"
+    evidence_note: "One session: the displaceability is the speaker's judgment and the install base is unquantified — 'some pharmacy customers', with no list curated."
+    persona_relevance: ["discipline-pharmacy", "lens-medhub"]
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'Competitors as Vishaka describes them'"
+
+  - domain: "Pharmacy"
+    competitor_slug: "e-value"
+    axis: "product"
+    direction: "unknown"
+    claim: "Called archaic and not significantly enhanced internally, yet this repo's own teardown documents an actively shipping product line — the direction is unsettled"
+    prism_feature_ref: null
+    competitor_feature_ref: null
+    detail: >
+      Session: "e-Value is archaic and they're not making any significant
+      enhancements." e-value.yaml finds the opposite publicly — shipped ACGME
+      accreditation automation, AAMC-aligned curriculum mapping, a BoardVitals
+      assessment module — and corrects the ownership guess: a 2015 merger, not an
+      offshoot.
+    counter_move: null
+    counter_move_status: "no-answer-yet"
+    evidence_strength: "directional"
+    evidence_note: "One expert recollection against one public-source teardown; no e-Value release notes or roadmap were examined either way."
+    persona_relevance: ["discipline-pharmacy", "lens-medhub"]
+    sources:
+      - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+        locator: "Section 'Competitors as Vishaka describes them'"
+      - source_id: "product-page-medhub-evalue-2026"
+
+  - domain: "Pharmacy"
+    competitor_slug: "pharmacademic"
+    # The 2026-09-04 session never mentions PharmAcademic at all — it names CORE,
+    # e-Value, MedHub, ExamSoft and Influx and nothing else. This row is therefore
+    # sourced entirely to pharmacademic.yaml's public research, not to the session.
+    axis: "distribution"
+    direction: "competitor-advantage"
+    claim: "ASHP requires PharmAcademic for accredited residency programs — an accreditor-mandated install base inside colleges of pharmacy that no feature pitch reaches"
+    prism_feature_ref: null
+    competitor_feature_ref: "Clinical & Experiential Education"
+    detail: >
+      ASHP's residency-resources page is the source, via pharmacademic.yaml; it has
+      no registry source_id, so sources[] cites the two PharmAcademic docs that do.
+      The mandate binds residency, not the PharmD experiential system of record, so
+      its presence in a college does not mean that seat is taken.
+    counter_move: "Treat residency as coexistence and compete only on the PharmD experiential and curricular-mapping side, per pharmacademic.yaml's stated posture."
+    counter_move_status: "proposed"
+    evidence_strength: "verified"
+    persona_relevance: ["discipline-pharmacy", "role-preceptor"]
+    sources:
+      - source_id: "doc-pharmacademic-preceptor-guide-2018"
+      - source_id: "press-pharmacademic-closeloop-case-study-2026"

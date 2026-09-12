@@ -101,9 +101,16 @@ questions:
 
   - key: "competitor-differentiation"
     answered_in: ["lenses/competitor-differentiation.yaml", "competitors/*.yaml"]
-    coverage: "stub"
-    confidence: "low"
-    gap_note: "Split state: competitors/*.yaml now carries real teardowns for every vendor above, but lenses/competitor-differentiation.yaml holds zero rows, so there is no head-to-head read (plan Task 2.8)."
+    coverage: "partial"
+    # Not "researched": 10 head-to-head rows now exist across all 5 in-scope
+    # vendors, but 6 of the 10 are "directional" and rest on the one 2026-09-04
+    # session. Confidence is a notch above features-to-build's "low" because the
+    # vendor teardowns underneath are independent public research, and 4 rows
+    # (CORE's share band, CORE's shipped CompMS mapping, ExamSoft's shipped exam
+    # delivery, ASHP's PharmAcademic mandate) are carried by that research rather
+    # than by the session.
+    confidence: "medium"
+    gap_note: "10 rows now cover all 5 in-scope vendors, but 6 are directional off the one session, no price or services axis is researched, and e-Value's direction stays 'unknown' on conflicting evidence."
 
   - key: "market-size"
     answered_in: ["domains/pharmacy.yaml#market_sizing", "market/programs/pharmacy.yaml"]
