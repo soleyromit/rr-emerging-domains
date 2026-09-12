@@ -171,7 +171,7 @@ export default function VendorComparisonChartPage() {
             <Collapsible value="unmasking" trigger="What the masked column labels stand for">
               <Stack gap={3}>
                 <Text type="supporting" maxLines={4}>
-                  {`The workbook carries a second, unmasked sheet that names the vendors the masked one hides. The masking is part of why this artifact is not citable, so the matrix above keeps the labels it was authored with; this mapping is recorded as a research note, not as a display convention.`}
+                  {`The workbook carries a second, unmasked sheet that names the vendors the masked one hides. The matrix above now shows those real names directly, resolved from this same key — the masking never affected whether the chart is citable (nothing in it is), only which vendors it names. This list is the same mapping, for reference.`}
                 </Text>
                 <Stack gap={1}>
                   {chart.unmasking_key
