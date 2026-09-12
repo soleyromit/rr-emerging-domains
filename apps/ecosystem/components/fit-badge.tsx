@@ -113,6 +113,16 @@ const STANDARDS_RATING_LABEL: Record<string, string> = {
   unresearched: "Not yet researched",
 };
 
+// The same words the badge shows, as a string — for a Takeaway/heading that has to
+// SAY the rating in a sentence rather than render a pill ("CORE ELMS is Fully
+// meeting on this capability"). Exported so a caller can't drift into its own
+// second spelling of this three-value vocabulary.
+export function standardsRatingLabel(rating?: string): string {
+  if (!rating) return STANDARDS_RATING_LABEL.unresearched;
+  const key = rating.toLowerCase().trim();
+  return STANDARDS_RATING_LABEL[key] ?? rating;
+}
+
 export function StandardsRatingBadge({ rating }: { rating?: string }) {
   if (!rating) return <Badge variant="neutral" label="Not yet researched" />;
   const key = rating.toLowerCase().trim();

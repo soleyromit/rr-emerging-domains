@@ -731,6 +731,250 @@ export function getFeatureComparisonForDomain(domain: string): FeatureComparison
   };
 }
 
+// ---------- feature-comparison MATRIX lens (content/lenses/feature-comparison-matrix.yaml) ----------
+//
+// NOT the same thing as getFeatureComparisonForDomain above, despite the name.
+// That one derives a pillar grid from each competitor file's own
+// feature_teardown[] (no per-cell authoring, no Exxat column, depth_vs_prism
+// vocabulary). This one reads the hand-authored, per-cell, source-cited lens —
+// one row per capability_id, an explicit Exxat/Prism verdict per row, and the
+// fully/partially/not-meeting vocabulary the accreditation crosswalk already
+// uses. The lens is sparse ON PURPOSE (14 of 30 possible Pharmacy cells today,
+// zero cells for every other domain), so callers must render absence honestly
+// rather than filling it in.
+
+/** `fully-meeting | partially-meeting | not-meeting` — same vocabulary as StandardsRatingBadge. */
+export type FeatureMatrixRating = string;
+
+interface RawFeatureMatrixCell {
+  domain: string;
+  pillar: string;
+  capability: string;
+  capability_id: string;
+  competitor_slug: string;
+  rating: FeatureMatrixRating;
+  rationale?: string;
+  competitor_feature_ref?: string;
+  evidence_strength?: string;
+  evidence_note?: string;
+  element_ids?: string[];
+  persona_relevance?: string[];
+  sources?: { source_id: string }[];
+}
+
+interface RawFeatureMatrixExxatCell {
+  domain: string;
+  capability_id: string;
+  exxat_coverage?: string;
+  prism_status?: string;
+  prism_feature_ref?: string;
+  rating: FeatureMatrixRating;
+  rationale?: string;
+  evidence_strength?: string;
+  evidence_note?: string;
+  sources?: { source_id: string }[];
+}
+
+interface RawFeatureComparisonMatrixDoc {
+  last_updated?: string;
+  cells?: RawFeatureMatrixCell[];
+  exxat_cells?: RawFeatureMatrixExxatCell[];
+}
+
+export interface FeatureMatrixCompetitorCell {
+  competitorSlug: string;
+  rating: FeatureMatrixRating;
+  rationale?: string;
+  /** The competitor's own name for the capability, per their file's teardown. */
+  featureRef?: string;
+  evidenceStrength?: string;
+  evidenceNote?: string;
+  sources: SourceRegistryEntry[];
+}
+
+export interface FeatureMatrixExxatCell {
+  rating: FeatureMatrixRating;
+  rationale?: string;
+  /** `shipped | roadmap` — what Prism actually does today, not what it is rated. */
+  prismStatus?: string;
+  featureRef?: string;
+  evidenceStrength?: string;
+  evidenceNote?: string;
+  sources: SourceRegistryEntry[];
+}
+
+export interface FeatureMatrixRow {
+  capabilityId: string;
+  /** The full authored capability sentence, e.g. "Curriculum mapping: course-to-standard ...". */
+  capability: string;
+  /** One of CANONICAL_PILLAR_ORDER. */
+  pillar: string;
+  cells: FeatureMatrixCompetitorCell[];
+  exxatCell?: FeatureMatrixExxatCell;
+}
+
+export interface FeatureComparisonMatrixForDomain {
+  domain: string;
+  /** Ordered by CANONICAL_PILLAR_ORDER; empty for a domain with no authored cells. */
+  rows: FeatureMatrixRow[];
+  /** Competitor slugs that actually have at least one cell here. */
+  competitorSlugs: string[];
+  /** Authored competitor cells (excludes the Exxat column). */
+  cellCount: number;
+  lastUpdated?: string;
+}
+
+// `domain` is the APP-LEVEL label the lens file itself uses ("Pharmacy",
+// "Medicine"), i.e. the same key set as DOMAIN_TO_ACCREDITATION_SLUG — not the
+// competitor files' "MD"-style code, so DOMAIN_TO_COMPETITOR_CODE does not apply.
+export function getFeatureComparisonMatrixForDomain(domain: string): FeatureComparisonMatrixForDomain {
+  // Fresh read per call, matching getCapabilityMap/getStandardsCompetitorRatings
+  // and every other single-file lens getter in this file. Only getSourceIndex
+  // caches, and it documents why.
+  const doc = readYamlFile<RawFeatureComparisonMatrixDoc>("lenses/feature-comparison-matrix.yaml");
+  const cells = (doc?.cells ?? []).filter((c) => c.domain === domain);
+  const exxatCells = (doc?.exxat_cells ?? []).filter((c) => c.domain === domain);
+
+  const byCapability = new Map<string, RawFeatureMatrixCell[]>();
+  for (const cell of cells) {
+    const list = byCapability.get(cell.capability_id);
+    if (list) list.push(cell);
+    else byCapability.set(cell.capability_id, [cell]);
+  }
+  // A capability can hold an Exxat verdict with no competitor cells yet — that is
+  // a real row (Prism has an answer, nobody has rated the incumbents), so the row
+  // set is the union of both lists, not just the competitor side.
+  for (const cell of exxatCells) {
+    if (!byCapability.has(cell.capability_id)) byCapability.set(cell.capability_id, []);
+  }
+
+  const exxatByCapability = new Map(exxatCells.map((c) => [c.capability_id, c]));
+
+  const rows: FeatureMatrixRow[] = [...byCapability.entries()].map(([capabilityId, raw]) => {
+    const exxat = exxatByCapability.get(capabilityId);
+    return {
+      capabilityId,
+      // Every cell on a row repeats the same capability/pillar strings; take the
+      // first that has one rather than asserting they agree.
+      capability: raw.find((c) => c.capability)?.capability ?? capabilityId,
+      pillar: normalizePillarName(raw.find((c) => c.pillar)?.pillar ?? ""),
+      cells: raw.map((c) => ({
+        competitorSlug: c.competitor_slug,
+        rating: c.rating,
+        rationale: c.rationale?.trim(),
+        featureRef: c.competitor_feature_ref,
+        evidenceStrength: c.evidence_strength,
+        evidenceNote: c.evidence_note?.trim(),
+        sources: resolveSourceIds(c.sources),
+      })),
+      exxatCell: exxat
+        ? {
+            rating: exxat.rating,
+            rationale: exxat.rationale?.trim(),
+            prismStatus: exxat.prism_status,
+            featureRef: exxat.prism_feature_ref,
+            evidenceStrength: exxat.evidence_strength,
+            evidenceNote: exxat.evidence_note?.trim(),
+            sources: resolveSourceIds(exxat.sources),
+          }
+        : undefined,
+    };
+  });
+
+  // Canonical pillar order first; anything the lens names that isn't one of the
+  // six canonical pillars still renders, after them, rather than disappearing.
+  rows.sort((a, b) => {
+    const ai = CANONICAL_PILLAR_ORDER.indexOf(a.pillar);
+    const bi = CANONICAL_PILLAR_ORDER.indexOf(b.pillar);
+    if (ai !== bi) return (ai < 0 ? CANONICAL_PILLAR_ORDER.length : ai) - (bi < 0 ? CANONICAL_PILLAR_ORDER.length : bi);
+    return a.capabilityId.localeCompare(b.capabilityId);
+  });
+
+  return {
+    domain,
+    rows,
+    competitorSlugs: [...new Set(cells.map((c) => c.competitor_slug))],
+    cellCount: cells.length,
+    lastUpdated: doc?.last_updated,
+  };
+}
+
+// ---------- dissection manifests (content/dissection/*.yaml) ----------
+
+/** The six fixed questions every manifest answers, in the order the files list them. */
+export type DissectionQuestionKey =
+  | "features-to-build"
+  | "competitor-differentiation"
+  | "market-size"
+  | "feature-comparison"
+  | "standards-to-product"
+  | "persona-and-document-lens";
+
+export type DissectionCoverage = "none" | "stub" | "partial" | "researched";
+
+export interface DissectionQuestion {
+  key: DissectionQuestionKey;
+  /** File paths (or a "computed — ..." prose marker) that hold the actual answer. */
+  answered_in: string[];
+  coverage: DissectionCoverage;
+  confidence: "low" | "medium" | "high";
+  gap_note: string;
+}
+
+export interface DissectionIncumbent {
+  competitor_slug: string;
+  role: "primary" | "switch-target" | "adjacent" | "secondary" | "not-a-target";
+  /** Present only on `not-a-target` entries — why this vendor is out of scope. */
+  exclusion_reason?: string;
+}
+
+export interface DissectionManifest {
+  /** The RAW domain value from content/domains/<slug>.yaml — "MD", not "Medicine". */
+  domain: string;
+  slug: string;
+  is_gtm_target: boolean;
+  /** The interview id this domain's understanding rests on; null where no session exists. */
+  template_of_record: string | null;
+  last_reviewed: string;
+  incumbent_set: DissectionIncumbent[];
+  questions: DissectionQuestion[];
+}
+
+/**
+ * One domain's dissection manifest, keyed by ROUTE slug (the `/domains/<slug>`
+ * segment), which is also the manifest's filename and its own `slug:` field.
+ * Returns null for the 9 of 13 routed domains that have no manifest yet — that
+ * absence is a real state the UI must render, not an error.
+ */
+export function getDissectionManifest(routeSlug: string): DissectionManifest | null {
+  return readYamlFile<DissectionManifest>(`dissection/${routeSlug}.yaml`);
+}
+
+/** Every domain that HAS a manifest — so a page can name which domains have been
+ * dissected without hardcoding a list that goes stale the day a fifth manifest lands.
+ * `domain` is the manifest's own RAW label ("MD", not "Medicine"); callers rendering
+ * it to a reader should resolve the route slug against the app's canonical domain
+ * list first and fall back to this only when it doesn't resolve. */
+export function listDissectionDomains(): { slug: string; domain: string }[] {
+  return readYamlDir<DissectionManifest>("dissection")
+    .filter((e) => e.data.domain)
+    .map((e) => ({ slug: e.data.slug ?? e.slug, domain: e.data.domain }));
+}
+
+/** A question is "answered" for coverage-counting only at partial or better — the
+ * same rule scripts/check_content_density.py applies, which is where the "DO 1/6"
+ * figure this repo quotes comes from. `stub` deliberately does not count. */
+export function dissectionAnsweredCount(manifest: DissectionManifest): number {
+  return manifest.questions.filter((q) => q.coverage === "partial" || q.coverage === "researched").length;
+}
+
+/** Incumbents actually in scope for a comparison — `not-a-target` entries are listed
+ * in the manifest so the exclusion is visible, but they are not competitors this
+ * domain is won against. */
+export function dissectionInScopeIncumbents(manifest: DissectionManifest): DissectionIncumbent[] {
+  return manifest.incumbent_set.filter((i) => i.role !== "not-a-target");
+}
+
 // Canonical lens domain name -> accreditation/*.yaml file slug.
 const DOMAIN_TO_ACCREDITATION_SLUG: Record<string, string> = {
   DO: "coca",

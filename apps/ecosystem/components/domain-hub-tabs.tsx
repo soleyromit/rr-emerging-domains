@@ -5,6 +5,11 @@ import { TabList, Tab } from "@astryxdesign/core/TabList";
 
 const BASE_TABS = [
   { segment: "", label: "Overview" },
+  // Dissection sits directly after Overview: it is the six-question answer to
+  // "what do we actually know about this domain", which frames every tab after
+  // it. Inserted into BASE_TABS rather than prepended, so a domain with a sales
+  // brief still reads "How we win" → Overview → Dissection.
+  { segment: "dissect", label: "Dissection" },
   { segment: "standards", label: "Standards" },
   // Trends sits right after Standards: both answer "what does this domain
   // demand of the product", standards from the accreditor and trends from the
