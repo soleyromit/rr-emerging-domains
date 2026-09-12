@@ -7,34 +7,73 @@ import { matchDisciplineMeta } from "./discipline-meta";
 // content/ lives one level above apps/ecosystem, at the repo root.
 const CONTENT_ROOT = path.join(process.cwd(), "..", "..", "content");
 
+// Every content read in this file bottoms out in readYamlFile or readYamlDir below,
+// so these two caches cover every accessor — present and future — in one place.
+//
+// Cached in PRODUCTION ONLY, matching (and for exactly the reason given by)
+// getSourceIndex()'s sourceIndexCache further down. content/ lives two levels above
+// apps/ecosystem, outside anything `next dev` watches for hot-reload: the only reason
+// a local content edit shows up without a server restart is that every dev request
+// does a genuinely fresh fs read. A cache that persisted in dev would serve a content
+// author stale YAML until they restarted the server, and this repo's working
+// convention is to keep that dev server alive. In production the process reads a
+// frozen content/ tree, so a per-process cache is always correct.
+//
+// Uncached, /domains/[slug]/dissect — necessarily dynamic, for its ?node= deep link —
+// re-parsed the same YAML dozens of times per request (buildDissectionGraph alone
+// calls listRolePersonas() inside a loop), measuring ~0.87s against ~0.026s for a
+// comparable static page.
+//
+// Callers must not mutate what these return: with the cache on, a returned object is
+// shared by every later reader of the same key. Every existing caller copies before
+// changing anything (`{...e.data}`, `[...items].sort()`), which is what makes this safe.
+const yamlFileCache = new Map<string, unknown>();
+const yamlDirCache = new Map<string, { slug: string; data: any }[]>();
+
 function readYamlFile<T = any>(relPath: string): T | null {
-  const full = path.join(CONTENT_ROOT, relPath);
-  if (!fs.existsSync(full)) return null;
-  try {
-    const raw = fs.readFileSync(full, "utf8");
-    return loadYaml(raw) as T;
-  } catch {
-    return null;
+  // A cached `null` (missing or unparseable file) is cached deliberately: within one
+  // production process the content tree does not change, so the miss is permanent and
+  // re-running existsSync on every call buys nothing.
+  if (process.env.NODE_ENV === "production" && yamlFileCache.has(relPath)) {
+    return yamlFileCache.get(relPath) as T | null;
   }
+  const full = path.join(CONTENT_ROOT, relPath);
+  let result: T | null = null;
+  if (fs.existsSync(full)) {
+    try {
+      const raw = fs.readFileSync(full, "utf8");
+      result = loadYaml(raw) as T;
+    } catch {
+      result = null;
+    }
+  }
+  if (process.env.NODE_ENV === "production") yamlFileCache.set(relPath, result);
+  return result;
 }
 
 function readYamlDir<T = any>(relDir: string): { slug: string; data: T }[] {
+  if (process.env.NODE_ENV === "production" && yamlDirCache.has(relDir)) {
+    return yamlDirCache.get(relDir) as { slug: string; data: T }[];
+  }
   const full = path.join(CONTENT_ROOT, relDir);
-  if (!fs.existsSync(full)) return [];
-  return fs
-    .readdirSync(full)
-    .filter((f) => f.endsWith(".yaml") && !f.startsWith("_TEMPLATE"))
-    .map((f) => {
-      const raw = fs.readFileSync(path.join(full, f), "utf8");
-      let data: T | null = null;
-      try {
-        data = loadYaml(raw) as T;
-      } catch {
-        data = null;
-      }
-      return { slug: f.replace(/\.yaml$/, ""), data: data as T };
-    })
-    .filter((entry) => entry.data != null);
+  const entries = !fs.existsSync(full)
+    ? []
+    : fs
+        .readdirSync(full)
+        .filter((f) => f.endsWith(".yaml") && !f.startsWith("_TEMPLATE"))
+        .map((f) => {
+          const raw = fs.readFileSync(path.join(full, f), "utf8");
+          let data: T | null = null;
+          try {
+            data = loadYaml(raw) as T;
+          } catch {
+            data = null;
+          }
+          return { slug: f.replace(/\.yaml$/, ""), data: data as T };
+        })
+        .filter((entry) => entry.data != null);
+  if (process.env.NODE_ENV === "production") yamlDirCache.set(relDir, entries);
+  return entries;
 }
 
 export function readMarkdownFile(relPath: string): string | null {
@@ -834,9 +873,10 @@ export interface FeatureComparisonMatrixForDomain {
 // "Medicine"), i.e. the same key set as DOMAIN_TO_ACCREDITATION_SLUG — not the
 // competitor files' "MD"-style code, so DOMAIN_TO_COMPETITOR_CODE does not apply.
 export function getFeatureComparisonMatrixForDomain(domain: string): FeatureComparisonMatrixForDomain {
-  // Fresh read per call, matching getCapabilityMap/getStandardsCompetitorRatings
-  // and every other single-file lens getter in this file. Only getSourceIndex
-  // caches, and it documents why.
+  // Read per call, matching getCapabilityMap/getStandardsCompetitorRatings and every
+  // other single-file lens getter in this file. readYamlFile memoizes the parse in
+  // production (and only there), so this stays a fresh read in dev — the shaping below
+  // is redone per call either way, and nothing here mutates `doc`.
   const doc = readYamlFile<RawFeatureComparisonMatrixDoc>("lenses/feature-comparison-matrix.yaml");
   const cells = (doc?.cells ?? []).filter((c) => c.domain === domain);
   const exxatCells = (doc?.exxat_cells ?? []).filter((c) => c.domain === domain);
@@ -1405,12 +1445,14 @@ let sourceIndexCache: Map<string, SourceRegistryEntry> | null = null;
 /** Every id a citation may legitimately resolve to, across all five Level 0.5 source
  * homes, keyed by id.
  *
- * Cached in production only. A resolve call would otherwise re-parse ~56KB of
- * registry.yaml plus four more homes, and a static build resolves thousands of ids —
- * but caching for the life of the process would make `next dev` serve stale citations
- * until the server is restarted, and this repo's working convention is to keep that dev
- * server alive. Nothing else in this file caches (`readYamlFile`/`readYamlDir` re-read
- * every call), so uncached-in-dev is also the file's established behavior. */
+ * Cached in production only. A resolve call would otherwise re-assemble the index from
+ * five homes, and a static build resolves thousands of ids — but caching for the life of
+ * the process would make `next dev` serve stale citations until the server is restarted,
+ * and this repo's working convention is to keep that dev server alive. `readYamlFile` and
+ * `readYamlDir` are gated on `NODE_ENV` the same way and for the same reason, so
+ * uncached-in-dev is the file's uniform behavior. This cache still earns its keep on top
+ * of theirs: it memoizes the assembled Map (five homes merged, collisions resolved,
+ * evidence_status backfilled), not just the raw YAML underneath it. */
 export function getSourceIndex(): Map<string, SourceRegistryEntry> {
   if (sourceIndexCache && process.env.NODE_ENV === "production") return sourceIndexCache;
   const index = new Map<string, SourceRegistryEntry>();

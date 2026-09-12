@@ -17,10 +17,13 @@ import { buildDissectionGraph } from "@/lib/dissection-graph";
 // pillar, a persona nothing cites, or a standard with no competitor rating simply is
 // not in the graph — even though the entity is real and has its own page elsewhere.
 //
-// No cache here, deliberately: nothing else in lib/content.ts caches either, and a
-// module-level memo would mean a content edit stops changing the app until the dev
-// server restarts. The cost is one graph build per rendering page, the same build the
-// Dissection tab itself already does.
+// No cache of the BUILT GRAPH here, deliberately: a module-level memo of it would have
+// to be gated on NODE_ENV the way lib/content.ts's readYamlFile/readYamlDir and
+// getSourceIndex are, or a content edit would stop changing the app until the dev server
+// restarts. It has not needed to be: the YAML underneath it is memoized in production, so
+// a graph build is now CPU over already-parsed objects rather than dozens of disk reads.
+// The cost is one graph build per rendering page, the same build the Dissection tab
+// itself already does.
 
 /** The Dissection tab itself, with no node selected. The honest fallback for a caller
  * whose specific node does not exist — the tab is a real page for every routed domain

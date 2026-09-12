@@ -14,7 +14,13 @@ import { leadSentence } from "@/lib/text";
 import { listCompetitors } from "@/lib/content";
 
 export default function CompetitorsPage() {
-  const competitors = listCompetitors().sort((a, b) => a.competitor.localeCompare(b.competitor));
+  // Copy before sorting. Safe either way today — listCompetitors() ends in a .map(), so
+  // the array it hands back is already a throwaway — but lib/content.ts now memoizes its
+  // YAML readers in production, and this was the one call site in the app sorting an
+  // accessor's return value in place. Push the memo up one level (cache listCompetitors
+  // itself) and the bare .sort() would start reordering shared state for every later
+  // reader; the spread makes that a non-event.
+  const competitors = [...listCompetitors()].sort((a, b) => a.competitor.localeCompare(b.competitor));
 
   return (
     <Stack gap={0}>
