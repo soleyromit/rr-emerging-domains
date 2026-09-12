@@ -92,6 +92,15 @@ while IFS=: read -r file line; do
 done < <(find app components -name "*.tsx" -print0 | xargs -0 awk '
   FNR == 1 { intrig = 0; depth = 0; buf = ""; tstart = 0 }
   {
+    # Comment lines render nothing, so they neither open a trigger nor
+    # contribute braces. Without this the token "trigger={" inside ordinary
+    # prose ("pass the trigger={ prop a bare string") opens a block whose brace
+    # never balances, stranding depth nonzero and silently skipping every real
+    # trigger in the rest of the file.
+    trimmed = $0
+    sub(/^[ \t]*/, "", trimmed)
+    if (trimmed ~ /^(\/\/|\{\/\*|\/\*|\*)/) next
+
     pos = 1
     if (!intrig) {
       idx = index($0, "trigger={")
@@ -99,6 +108,11 @@ done < <(find app components -name "*.tsx" -print0 | xargs -0 awk '
       intrig = 1; depth = 0; buf = ""; tstart = FNR
       pos = idx + 8              # land on the "{" of trigger={
     }
+    # Belt and braces for any OTHER way the counter could desync (a brace in a
+    # string literal, a trailing end-of-line comment). The longest real trigger
+    # block in this app is 24 lines, so abandoning one past 40 gives up at most
+    # a single block instead of the remainder of the file.
+    else if (FNR - tstart > 40) { intrig = 0; next }
     seg = substr($0, pos)
     n = length(seg)
     for (i = 1; i <= n; i++) {
@@ -157,6 +171,13 @@ done < <(find app components -name "*.tsx" -print0 | xargs -0 awk -v tags="$CONT
     trimmed = $0
     sub(/^[ \t]*/, "", trimmed)
 
+    # Hoisted above EVERY use, not just the content-tag match below: a comment
+    # merely discussing a <CollapsibleGroup ("this panel deliberately avoids a
+    # <CollapsibleGroup ...") used to open a phantom group and flag ordinary
+    # content near it, and a comment mentioning <Collapsible skewed the depth
+    # count. Comments render nothing, so they open nothing and nest nothing.
+    if (trimmed ~ /^(\/\/|\{\/\*|\/\*|\*)/) next
+
     if (!ingroup) {
       if ($0 ~ /<CollapsibleGroup([ \t>]|$)/) {
         if (trimmed ~ /\/>[ \t]*$/) next                                       # self-closing: no body
@@ -175,7 +196,7 @@ done < <(find app components -name "*.tsx" -print0 | xargs -0 awk -v tags="$CONT
     # opened on this line covers the rest of it (its trigger= prop included).
     opened = gsub(/<Collapsible([ \t>]|$)/, "&")
     closed = gsub(/<\/Collapsible>/, "&")
-    if (depth == 0 && opened == 0 && trimmed !~ /^(\/\/|\{\/\*|\/\*|\*)/) {
+    if (depth == 0 && opened == 0) {                                            # guard hoisted above
       if (match(trimmed, "<(" tags ")([ \t/>]|$)")) {
         tag = substr(trimmed, RSTART + 1, RLENGTH - 1)
         sub(/[^A-Za-z0-9_.].*$/, "", tag)
