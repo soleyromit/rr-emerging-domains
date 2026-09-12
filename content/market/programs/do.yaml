@@ -1,0 +1,1092 @@
+# DO — the per-program ground-truth registry under content/domains/do.yaml's
+# market_sizing block. Level 1: every row cites Level 0 (the CRM export below)
+# and nothing above it. See content/market/programs/_TEMPLATE.yaml for the
+# field-by-field schema and content/market/programs/pharmacy.yaml for the sibling
+# file this one follows.
+#
+# HOW THIS FILE WAS BUILT (2026-09-12), so a reader can re-derive it rather than
+# trust it:
+#   * Rows are the "DO" sheet of the new-logo-grid export, verbatim and in sheet
+#     order. Its header sits on row 2, not row 1 (the same quirk the Pharmacy
+#     sheet has), and there are 57 data rows: sheet rows 3-61, with rows 5 and 6
+#     blank, then 104 entirely blank rows (62-165) that are not data. `locator`
+#     on each row is the sheet cell its name came from.
+#   * THE ROWS ARE TEACHING LOCATIONS, NOT INSTITUTIONS. 12 institutions repeat
+#     across campuses (Edward Via 4, Lake Erie 4, Michigan State 3, Ohio 3,
+#     Philadelphia COM 3, and 9 more with 2 each), so the 57 rows sit at 36
+#     distinct institutions. Anything reading this file as a count of schools
+#     must deduplicate on `institution` first.
+#   * That 57 matches neither figure in do.yaml's own `market:` prose, which
+#     cites AACOM for "48 accredited colleges ... at 75 teaching locations". The
+#     discrepancy is stated, not resolved: this is a CRM sheet with its own
+#     coverage, not an accreditor directory, and nothing in the export explains
+#     the gap. Do not reconcile the two by arithmetic.
+#   * institution / program_name: the sheet gives ONE name string per row. It is
+#     split into the institution and the osteopathic program designation it
+#     embeds ("Michigan State University" + "College of Osteopathic Medicine");
+#     where the whole name IS the school and carries no separable institution
+#     ("Lake Erie College of Osteopathic Medicine", 19 rows), program_name is
+#     null and the full name stays in `institution`. The split is hand-made per
+#     row, not regex-derived — "Arkansas College of Osteopathic Medicine" has no
+#     institution prefix to strip, while "Ohio University Heritage College of
+#     Osteopathic Medicine" does.
+#   * slug is "{institution-slug}-do", with the sheet's City appended
+#     ("{institution-slug}-{city}-do") on every row whose institution appears
+#     more than once, since a bare institution slug would collide across
+#     campuses. Those rows also carry the campus in `notes`, because the schema
+#     has no city field and the teaching location is this domain's real unit.
+#   * accreditation_status is "unknown" on ALL 57 rows. This is not a gap in the
+#     extraction: the DO sheet HAS NO accreditation-status column at all, unlike
+#     the Pharmacy sheet. What it has is a "Year of Accreditation" column
+#     (column H, populated on all 57 rows, ranging 1892-2020) — a year, not a
+#     current status, and this schema has no field for it. Reading "has a year"
+#     as "accredited today" would be an inference the sheet does not make, so
+#     the year is deliberately NOT mirrored; it stays one cell away from each
+#     row's cited locator, at DO!H{row}.
+#   * class_size is null on all 57 rows and exxat_since is null on all 57 — the
+#     DO sheet carries neither column. Contact columns it DOES carry (contact
+#     name, title, email) are deliberately not mirrored. See pii_policy.
+#   * exxat_status maps the sheet's Client Y/N column: Yes -> client (2 rows),
+#     No -> not-tracked (55). The value "Previous client" that the Pharmacy
+#     sheet uses never appears on this sheet, so DO has ZERO churned rows —
+#     an observed absence, not an unchecked field. A plain "No" is NOT read as
+#     `prospect`; the sheet carries no signal distinguishing an actively
+#     prospected school from a cold one.
+#   * CROSS-SHEET CONFLICT, recorded rather than resolved. The master Logo Grid
+#     sheet has its own "DO/Doctor of Osteopathic Medicine" column, and exactly
+#     3 grid rows mark it "Yes": Des Moines University (agrees with this sheet),
+#     Noorda College of Osteopathic Medicine (this sheet says "No"), and
+#     Arkansas College of Health Education (whose name is not on the DO sheet at
+#     all, while the DO sheet's Arkansas College of Osteopathic Medicine client
+#     row has its own grid row marking DO "No"). exxat_status follows the DO
+#     sheet, the domain's own tab, on every row; the two conflicting rows say so
+#     in `notes`. A later pass with CRM access should settle which sheet is
+#     stale — on the grid's reading there would be 3 DO clients, not 2.
+#   * other_disciplines_on_campus lists the disciplines the master "Logo Grid"
+#     sheet marks "Yes" (i.e. already an Exxat client) for the SAME institution,
+#     DO itself excluded. A discipline the grid marks "No", "N/A" or "-" is not
+#     listed. Discipline labels follow Task 2.1's mapping: the grid's headers are
+#     rewritten to this repo's canonical domain labels where one exists (PT ->
+#     Physical Therapy, OT -> Occupational Therapy, PA -> Physician Assistant,
+#     NURS -> Nursing, SLP -> Speech-Language Pathology, MD -> Medicine, SW ->
+#     Social Work); columns with no canonical label keep the grid's own header
+#     verbatim (CCS, AT, PTA, ...) rather than being expanded into a guess.
+#   * Which grid row a program matched, where more than one named the same
+#     institution, was decided by this ladder, applied by hand and recorded in
+#     `notes` wherever the answer is not the obvious one: (1) a grid row naming
+#     this program's own campus/city wins; (2) else a row whose State agrees with
+#     the program's State; (3) else the row with evaluated discipline cells and
+#     the most information. Rule (3) is what keeps the Liberty, Touro, Kansas
+#     City, Rocky Vista and Incarnate Word rows off the grid's appended
+#     COM-named duplicates, whose cells are all "#N/A".
+#   * THE #N/A CAVEAT — read before aggregating. All 57 rows are
+#     grid_matched: true; not one DO program is missing from the Logo Grid. But
+#     11 of them (Edward Via x4, Lake Erie x4, Oklahoma State CHS x2, Idaho)
+#     matched a grid row whose every discipline cell is the literal Excel error
+#     "#N/A" — an unevaluated lookup, not a checked "no". For those 11 the empty
+#     other_disciplines_on_campus list is UNKNOWN, exactly what grid_matched
+#     exists to keep apart, and the boolean cannot say so because a row WAS
+#     found. So: of the 24 rows with an empty list, 13 are confirmed negatives
+#     and 11 are unknowns, and `grid_matched` alone will not separate them.
+#     Every one of the 11 says so in `notes`, but prose is human context, not a
+#     machine-checkable flag — an aggregate that needs the distinction must
+#     exclude these 11 locators explicitly: DO!A12-A16, A19-A22, A40, A41.
+#   * region comes only from the matched grid row's Region column, and only when
+#     that grid row's own State agrees with the program's State. 17 rows have a
+#     null region: the grid leaves Region blank on the appended COM rows (11 of
+#     the 17), or it files the institution under a state this campus is not in
+#     (Arkansas COM under CO, A.T. Still under AZ, NYIT's Jonesboro campus under
+#     NY, PCOM's two Georgia campuses under PA, Rocky Vista's Utah campus under
+#     CO). Those rows keep the institution's disciplines and drop the
+#     contradicted region rather than mirror a wrong one.
+#   * incumbent_vendor is "unknown" on all 57 rows and incumbent_evidence is null
+#     to match. Nothing in this export says which competitor any individual
+#     program runs; per-program incumbency is separate research, and "unknown" is
+#     a real, countable answer.
+#   * This file does NOT carry product gaps, competitor differentiation or a
+#     feature matrix for DO. Those exist for Pharmacy because a domain-expert
+#     session was held (2026-09-04); no such session exists for DO, and
+#     content/dissection/do.yaml records that absence as the gap it is.
+
+domain: "DO"
+
+source_of_record:
+  source_id: "crm-export-new-logo-grid-2026"
+  sheet: "DO"
+  extracted: "2026-09-12"
+  row_count: 57
+  pii_policy: >
+    Contact names/emails/phone numbers are deliberately NOT mirrored here. The
+    source spreadsheet remains the system of record for contact data; this file
+    holds counts, status, and structure only so content/ stays shareable.
+
+programs:
+  - slug: "arkansas-college-of-osteopathic-medicine-do"
+    institution: "Arkansas College of Osteopathic Medicine"
+    program_name: null
+    state: "AR"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "client"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid's own row for this school marks DO 'No'; a separate 'Arkansas College of Health Education' row marks DO 'Yes' and was not merged in."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A3"
+  - slug: "des-moines-university-do"
+    institution: "Des Moines University"
+    program_name: "College of Osteopathic Medicine"
+    state: "IA"
+    region: "Central"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "client"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the grid's longer name 'Des Moines University - Osteopathic Medical Center', whose DO cell is 'Yes', agreeing with this sheet."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A4"
+  - slug: "a-t-still-university-do"
+    institution: "A.T. Still University"
+    program_name: "Kirksville College of Osteopathic Medicine"
+    state: "MO"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched grid row is A. T. Still University filed under AZ; disciplines are the institution's, region dropped on the state mismatch."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A7"
+  - slug: "alabama-college-of-osteopathic-medicine-do"
+    institution: "Alabama College of Osteopathic Medicine"
+    program_name: null
+    state: "AL"
+    region: "South"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A8"
+  - slug: "burrell-college-of-osteopathic-medicine-do"
+    institution: "Burrell College of Osteopathic Medicine"
+    program_name: null
+    state: "NM"
+    region: "South"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A9"
+  - slug: "california-health-sciences-university-do"
+    institution: "California Health Sciences University"
+    program_name: "College of Osteopathic Medicine"
+    state: "CA"
+    region: "West"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A10"
+  - slug: "campbell-university-do"
+    institution: "Campbell University"
+    program_name: "School of Osteopathic Medicine"
+    state: "NC"
+    region: "South"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A11"
+  - slug: "edward-via-college-of-osteopathic-medicine-blacksburg-do"
+    institution: "Edward Via College of Osteopathic Medicine"
+    program_name: null
+    state: "VA"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Blacksburg, VA. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A12"
+  - slug: "edward-via-college-of-osteopathic-medicine-spartanburg-do"
+    institution: "Edward Via College of Osteopathic Medicine"
+    program_name: null
+    state: "SC"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Spartanburg, SC. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A13"
+  - slug: "edward-via-college-of-osteopathic-medicine-auburn-do"
+    institution: "Edward Via College of Osteopathic Medicine"
+    program_name: null
+    state: "AL"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Auburn, AL. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A14"
+  - slug: "edward-via-college-of-osteopathic-medicine-monroe-do"
+    institution: "Edward Via College of Osteopathic Medicine"
+    program_name: null
+    state: "LA"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Monroe, LA. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A15"
+  - slug: "idaho-college-of-osteopathic-medicine-do"
+    institution: "Idaho College of Osteopathic Medicine"
+    program_name: null
+    state: "ID"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A16"
+  - slug: "kansas-city-university-kansas-city-do"
+    institution: "Kansas City University"
+    program_name: "College of Osteopathic Medicine"
+    state: "MO"
+    region: "Central"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Kansas City, MO. Matched the grid's former name 'Kansas City University of Medicine and Biosciences'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A17"
+  - slug: "kansas-city-university-joplin-do"
+    institution: "Kansas City University"
+    program_name: "College of Osteopathic Medicine"
+    state: "MO"
+    region: "Central"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Joplin, MO. Matched the grid's former name 'Kansas City University of Medicine and Biosciences'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A18"
+  - slug: "lake-erie-college-of-osteopathic-medicine-erie-do"
+    institution: "Lake Erie College of Osteopathic Medicine"
+    program_name: null
+    state: "PA"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Erie, PA. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A19"
+  - slug: "lake-erie-college-of-osteopathic-medicine-greensburg-do"
+    institution: "Lake Erie College of Osteopathic Medicine"
+    program_name: null
+    state: "PA"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Greensburg, PA. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A20"
+  - slug: "lake-erie-college-of-osteopathic-medicine-bradenton-do"
+    institution: "Lake Erie College of Osteopathic Medicine"
+    program_name: null
+    state: "FL"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Bradenton, FL. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A21"
+  - slug: "lake-erie-college-of-osteopathic-medicine-elmira-do"
+    institution: "Lake Erie College of Osteopathic Medicine"
+    program_name: null
+    state: "NY"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Elmira, NY. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A22"
+  - slug: "liberty-university-do"
+    institution: "Liberty University"
+    program_name: "College of Osteopathic Medicine"
+    state: "VA"
+    region: "Central"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the 'Liberty University' row; the grid's 'Liberty University College of Osteopathic Medicine' row is all '#N/A'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A23"
+  - slug: "lincoln-memorial-university-harrogate-do"
+    institution: "Lincoln Memorial University"
+    program_name: "DeBusk College of Osteopathic Medicine"
+    state: "TN"
+    region: "South"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Harrogate, TN. Grid has only LMU branch rows (Tampa, Chattanooga); disciplines come from the Tampa row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A24"
+  - slug: "lincoln-memorial-university-knoxville-do"
+    institution: "Lincoln Memorial University"
+    program_name: "DeBusk College of Osteopathic Medicine"
+    state: "TN"
+    region: "South"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Knoxville, TN. Grid has only LMU branch rows (Tampa, Chattanooga); disciplines come from the Tampa row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A25"
+  - slug: "marian-university-do"
+    institution: "Marian University"
+    program_name: "College of Osteopathic Medicine"
+    state: "IN"
+    region: "Central"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A26"
+  - slug: "michigan-state-university-east-lansing-do"
+    institution: "Michigan State University"
+    program_name: "College of Osteopathic Medicine"
+    state: "MI"
+    region: "Central"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: East Lansing, MI."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A27"
+  - slug: "michigan-state-university-detroit-do"
+    institution: "Michigan State University"
+    program_name: "College of Osteopathic Medicine"
+    state: "MI"
+    region: "Central"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Detroit, MI."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A28"
+  - slug: "michigan-state-university-clinton-township-do"
+    institution: "Michigan State University"
+    program_name: "College of Osteopathic Medicine"
+    state: "MI"
+    region: "Central"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Clinton Township, MI."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A29"
+  - slug: "midwestern-university-downers-grove-do"
+    institution: "Midwestern University"
+    program_name: "Chicago College of Osteopathic Medicine"
+    state: "IL"
+    region: "Central"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Downers Grove, IL."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A30"
+  - slug: "midwestern-university-glendale-do"
+    institution: "Midwestern University"
+    program_name: "Arizona College of Osteopathic Medicine"
+    state: "AZ"
+    region: "West"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Glendale, AZ."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A31"
+  - slug: "new-york-institute-of-technology-old-westbury-do"
+    institution: "New York Institute of Technology"
+    program_name: "College of Osteopathic Medicine"
+    state: "NY"
+    region: "East"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Old Westbury, NY."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A32"
+  - slug: "new-york-institute-of-technology-jonesboro-do"
+    institution: "New York Institute of Technology"
+    program_name: "College of Osteopathic Medicine"
+    state: "AR"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Jonesboro, AR."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A33"
+  - slug: "noorda-college-of-osteopathic-medicine-do"
+    institution: "Noorda College of Osteopathic Medicine"
+    program_name: null
+    state: "UT"
+    region: "West"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid marks this school DO 'Yes' but this sheet's Client Y/N column says 'No'; exxat_status follows this sheet."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A34"
+  - slug: "nova-southeastern-university-fort-lauderdale-do"
+    institution: "Nova Southeastern University"
+    program_name: "Dr. Kiran C. Patel College of Osteopathic Medicine"
+    state: "FL"
+    region: "South"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Fort Lauderdale, FL."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A35"
+  - slug: "nova-southeastern-university-clearwater-do"
+    institution: "Nova Southeastern University"
+    program_name: "Dr. Kiran C. Patel College of Osteopathic Medicine"
+    state: "FL"
+    region: "South"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Clearwater, FL. Grid has no Clearwater row; matched its generic 'Nova Southeastern University - Florida' row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A36"
+  - slug: "ohio-university-athens-do"
+    institution: "Ohio University"
+    program_name: "Heritage College of Osteopathic Medicine"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Athens, OH."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A37"
+  - slug: "ohio-university-dublin-do"
+    institution: "Ohio University"
+    program_name: "Heritage College of Osteopathic Medicine"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Dublin, OH."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A38"
+  - slug: "ohio-university-cleveland-do"
+    institution: "Ohio University"
+    program_name: "Heritage College of Osteopathic Medicine"
+    state: "OH"
+    region: "Central"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Cleveland, OH."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A39"
+  - slug: "oklahoma-state-university-center-for-health-sciences-tulsa-do"
+    institution: "Oklahoma State University Center for Health Sciences"
+    program_name: "College of Osteopathic Medicine"
+    state: "OK"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Tulsa, OK. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A40"
+  - slug: "oklahoma-state-university-center-for-health-sciences-tahlequah-do"
+    institution: "Oklahoma State University Center for Health Sciences"
+    program_name: "College of Osteopathic Medicine"
+    state: "OK"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Tahlequah, OK. Matched grid row's discipline cells are all '#N/A' — unevaluated, so the empty list is unknown."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A41"
+  - slug: "pacific-northwest-university-of-health-sciences-do"
+    institution: "Pacific Northwest University of Health Sciences"
+    program_name: "College of Osteopathic Medicine"
+    state: "WA"
+    region: "West"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Grid carries a second, misspelled row ('Pacific Northwestern...') with the same Yes columns; counted once."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A42"
+  - slug: "philadelphia-college-of-osteopathic-medicine-philadelphia-do"
+    institution: "Philadelphia College of Osteopathic Medicine"
+    program_name: null
+    state: "PA"
+    region: "East"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Pharmacy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Philadelphia, PA."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A43"
+  - slug: "philadelphia-college-of-osteopathic-medicine-suwanee-do"
+    institution: "Philadelphia College of Osteopathic Medicine"
+    program_name: null
+    state: "GA"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Pharmacy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Suwanee, GA."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A44"
+  - slug: "philadelphia-college-of-osteopathic-medicine-moultrie-do"
+    institution: "Philadelphia College of Osteopathic Medicine"
+    program_name: null
+    state: "GA"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Pharmacy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Moultrie, GA."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A45"
+  - slug: "rocky-vista-university-parker-do"
+    institution: "Rocky Vista University"
+    program_name: "College of Osteopathic Medicine"
+    state: "CO"
+    region: "Central"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Parker, CO. Grid also has a duplicate 'Rocky Vista University College of Ostepathic Medicine' row with no Yes columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A46"
+  - slug: "rocky-vista-university-ivins-do"
+    institution: "Rocky Vista University"
+    program_name: "College of Osteopathic Medicine"
+    state: "UT"
+    region: null
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Ivins, UT. Grid also has a duplicate 'Rocky Vista University College of Ostepathic Medicine' row with no Yes columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A47"
+  - slug: "rowan-university-do"
+    institution: "Rowan University"
+    program_name: "School of Osteopathic Medicine"
+    state: "NJ"
+    region: "East"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A48"
+  - slug: "sam-houston-state-university-do"
+    institution: "Sam Houston State University"
+    program_name: "College of Osteopathic Medicine"
+    state: "TX"
+    region: "South"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A49"
+  - slug: "touro-college-of-osteopathic-medicine-new-york-do"
+    institution: "Touro College of Osteopathic Medicine"
+    program_name: null
+    state: "NY"
+    region: "East"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: New York, NY. Matched the grid's 'Touro College' row; its 'Touro College of Osteopathic Medicine' row is all '#N/A'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A50"
+  - slug: "touro-college-of-osteopathic-medicine-middletown-do"
+    institution: "Touro College of Osteopathic Medicine"
+    program_name: null
+    state: "NY"
+    region: "East"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Middletown, NY. Matched the grid's 'Touro College - Middletown' campus row."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A51"
+  - slug: "touro-university-california-do"
+    institution: "Touro University California"
+    program_name: "College of Osteopathic Medicine"
+    state: "CA"
+    region: "West"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched 'Touro University - California Campus'; the grid's COM-named row for this school is all '#N/A'."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A52"
+  - slug: "touro-university-nevada-do"
+    institution: "Touro University Nevada"
+    program_name: "College of Osteopathic Medicine"
+    state: "NV"
+    region: "West"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["CCS", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A53"
+  - slug: "university-of-the-incarnate-word-do"
+    institution: "University of the Incarnate Word"
+    program_name: "School of Osteopathic Medicine"
+    state: "TX"
+    region: "South"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "CCS", "Occupational Therapy", "Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Matched the university row; the grid's 'University of Incarnate Word School of Osteopathic Medicine' row has no Yes columns."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A54"
+  - slug: "university-of-new-england-do"
+    institution: "University of New England"
+    program_name: "College of Osteopathic Medicine"
+    state: "ME"
+    region: "East"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["AT", "Occupational Therapy", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A55"
+  - slug: "university-of-north-texas-health-science-center-do"
+    institution: "University of North Texas Health Science Center"
+    program_name: "Texas College of Osteopathic Medicine"
+    state: "TX"
+    region: "South"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Nursing", "Physical Therapy", "Physician Assistant"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A56"
+  - slug: "university-of-pikeville-do"
+    institution: "University of Pikeville"
+    program_name: "Kentucky College of Osteopathic Medicine"
+    state: "KY"
+    region: "Central"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A57"
+  - slug: "west-virginia-school-of-osteopathic-medicine-do"
+    institution: "West Virginia School of Osteopathic Medicine"
+    program_name: null
+    state: "WV"
+    region: "Central"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A58"
+  - slug: "western-university-of-health-sciences-pomona-do"
+    institution: "Western University of Health Sciences"
+    program_name: "College of Osteopathic Medicine of the Pacific"
+    state: "CA"
+    region: "West"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Pomona, CA. Grid has two rows for this university, this CA-filed one and an OR one; state agreement picked this one."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A59"
+  - slug: "western-university-of-health-sciences-lebanon-do"
+    institution: "Western University of Health Sciences"
+    program_name: "College of Osteopathic Medicine of the Pacific-Lebanon"
+    state: "OR"
+    region: "West"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: ["Physical Therapy"]
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: "Teaching location: Lebanon, OR. Matched the grid's OR-filed 'Western University of Health Sciences' row; the CA row serves the Pomona campus."
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A60"
+  - slug: "william-carey-university-do"
+    institution: "William Carey University"
+    program_name: "College of Osteopathic Medicine"
+    state: "MS"
+    region: "South"
+    accreditation_status: "unknown"
+    class_size: null
+    exxat_status: "not-tracked"
+    exxat_since: null
+    grid_matched: true
+    other_disciplines_on_campus: []
+    incumbent_vendor: "unknown"
+    incumbent_evidence: null
+    notes: null
+    sources:
+      - source_id: "crm-export-new-logo-grid-2026"
+        locator: "DO!A61"
