@@ -178,7 +178,19 @@ function pillarDetail(node: DissectionNode): PillarNodeDetail {
     // these are YAML scalars, not documents.
     notes: stripFileCitations(pillar?.notes),
     whyItMatters: stripFileCitations(pillar?.why_it_matters),
-    features: (pillar?.features ?? []).filter((f) => f.name),
+    // A feature's `detail` is the same kind of capability-map prose as `notes` above and
+    // renders in the same panel, so it needs the same treatment — it was the one field
+    // here that still leaked a raw citation ("...the competitive-comparability 'Gap' in
+    // gap-analysis.md, which is about cross-SITE statistics..." on the Heatmap Report
+    // feature). `name` is a short product noun ("Placement Clearance"), never a citation,
+    // but it costs nothing to route it through the same guard.
+    features: (pillar?.features ?? [])
+      .filter((f) => f.name)
+      .map((f) => ({
+        ...f,
+        name: stripFileCitations(f.name) ?? f.name,
+        detail: stripFileCitations(f.detail) ?? f.detail,
+      })),
     roadmapTarget: roadmap?.target ?? pillar?.target,
     roadmapSourceId: roadmap?.source_id ?? null,
     hasRoadmap: !!roadmap || !!pillar?.target,
