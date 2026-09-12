@@ -198,11 +198,14 @@ separately. They're not really linking their curriculum with their assessments."
 > **Editorial note on this passage's evidentiary status.** This passage was part of the
 > original verbatim extraction of the 2026-09-04 meeting, but it was omitted when this file
 > was first committed to the repo, so the committed record has been a real but partial one.
-> It has been added back here from that original extraction record. It has **not** been
-> independently re-verified against the raw recording — this repo has no access to the
-> Granola recording or its transcript, so no one working in this repo can currently check
-> the wording against the primary source. Treat it as verbatim-as-extracted, one step
-> weaker than the passages above it, and re-verify before quoting it externally.
+> It was recovered here from an earlier research pass conducted during this project. Do not
+> go looking for that pass: it is a working-session artifact, not a committed or citable
+> artifact in this repo, and there is no in-repo locator for it — the provenance chain for
+> this passage terminates outside the repo. It has also **not** been independently
+> re-verified against the raw recording — this repo has no access to the Granola recording
+> or its transcript, so no one working in this repo can currently check the wording against
+> the primary source. Treat it as verbatim-as-extracted, one step weaker than the passages
+> above it, and re-verify before quoting it externally.
 
 > "the evolution of the entire epic has been point solutions… 2025 is a year where
 > everyone's pitches via one platform that can allow you to do everything. So but the way
