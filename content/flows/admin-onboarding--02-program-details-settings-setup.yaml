@@ -13,7 +13,7 @@
 # read surfaces (Program 360, Program Calendar).
 #
 # PRIMARY SOURCE DISCIPLINE — every step below is confirmed first against the
-# raw admin tutorial transcript at /Users/romitsoley/Downloads/exxat_transcripts.md,
+# raw admin tutorial transcript at exxat_transcripts.md,
 # "1/16 Administrator Navigation in Exxat Prism" (lines 35-65), which is the
 # single tutorial that walks this entire stage end to end. Help-center articles
 # are cited only as SECONDARY confirmation where they add field-level detail
@@ -57,7 +57,7 @@ steps:
       access the Program Details section from your dashboard or the upper
       left-hand hamburger menu."
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation in Exxat Prism"
+      exxat_transcripts.md — "1/16 Administrator Navigation in Exxat Prism"
       (line 35-37): "In the Setup section of the Program Details page, you can provide some general
       information about the school. Click on your school logo box to change your school's logo. Then
       click the Upload Image button to select an image to be used as your school's logo... To change
@@ -140,7 +140,7 @@ steps:
       at the program's clinical-settings list. In practice this is the single
       highest-consequence and least self-service screen in the stage.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" narrates the
+      exxat_transcripts.md — "1/16 Administrator Navigation" narrates the
       Setup section and the clinical Settings sub-section at lines 46-48 ("We will now walk you through
       how to add clinical settings to your program. Settings are the settings in which students are
       placed for their placement experiences").
@@ -196,7 +196,7 @@ steps:
       The administrator records the program's mission and vision statements as
       free-text on the school profile.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (line 37-39):
+      exxat_transcripts.md — "1/16 Administrator Navigation" (line 37-39):
       "Click on the plus icon in the Mission and Vision section to add a mission and vision statement
       to your school's profile. Provide your statements in the text area provided, then click on the
       Save button."
@@ -247,7 +247,7 @@ steps:
       again," which is what a multiply-accredited program (e.g. a nursing
       program holding both CCNE and state board approval) needs.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (line 39):
+      exxat_transcripts.md — "1/16 Administrator Navigation" (line 39):
       "To add accreditation information, click on the plus icon in the Accreditation section. You can
       then provide the name of the accrediting body, the accreditation status, type of accreditation,
       details about the accreditation, the next accreditation date, and the most recent accreditation
@@ -373,7 +373,7 @@ steps:
       applied to specific learning activities. You can view the grade a
       student received on a learning activity from within the course grade book."
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (lines 41-45):
+      exxat_transcripts.md — "1/16 Administrator Navigation" (lines 41-45):
       "Grading schemes are used for storing the cutoff values of students' grades... There are two
       different types of grading schemes you can add here, letter grade-based or pass-and-fail-based...
       To add a new grading scheme, click on the Add New button... enter the first letter grade you would
@@ -474,7 +474,7 @@ steps:
       assign settings to slots, placements, sites, and locations to keep track
       of the setting involved in the placement."
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (lines 46-49):
+      exxat_transcripts.md — "1/16 Administrator Navigation" (lines 46-49):
       "To make changes to your program settings, click on the pencil icon. To add a new setting, provide
       the setting name, click on the Color dropdown to assign a color to this setting, then click on the
       Add button... Click on the Edit Name button to unlock the setting name to edit the settings name.
@@ -610,7 +610,7 @@ steps:
       the Program Details tab inventory — the transcript itself defers the
       substance to another tutorial.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (line 49):
+      exxat_transcripts.md — "1/16 Administrator Navigation" (line 49):
       "Now let's move to the Standards tab. You can add standards to be mapped to course measures in
       the Curriculum Mapping section. For more information about adding and mapping standards, please
       refer to our curriculum mapping tutorial."
@@ -634,7 +634,7 @@ steps:
       every email the system will later send to students, faculty, sites and
       preceptors.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (line 51):
+      exxat_transcripts.md — "1/16 Administrator Navigation" (line 51):
       "Now, let's switch to the Notification Hub in xAP Prism, where you can manage all email
       configurations and templates for your program in one centralized place. The Notification Hub
       consists of two main sections, Email Setup and Email Templates. Email Setup lets you define how
@@ -717,7 +717,7 @@ steps:
       "eliminating the need to navigate multiple workflows and ensuring
       consistent messaging across students, faculty, and other stakeholders."
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (lines 51-55):
+      exxat_transcripts.md — "1/16 Administrator Navigation" (lines 51-55):
       "Email templates provide a single place to create, manage, and maintain reusable communication
       templates... From here, you can choose a section and category to view templates. Click the View
       icon to view template content, or use the search bar to quickly find templates by name, subject,
@@ -896,7 +896,7 @@ steps:
       unassigning roles individually (By Name) or in bulk against one role
       (By Role).
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (lines 55-59):
+      exxat_transcripts.md — "1/16 Administrator Navigation" (lines 55-59):
       "In the User Roles section, you can manage the faculty and administrators who have access to your
       program. This section consists of two tabs: By Name and By Role... the table displays each person's
       name, username, email, number of associated roles, the modules they have access to, and the date
@@ -1002,7 +1002,7 @@ steps:
       during onboarding: it is the completeness checklist for the rest of
       product setup, showing which entities still have no records.
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (lines 59-61):
+      exxat_transcripts.md — "1/16 Administrator Navigation" (lines 59-61):
       "Next, let's move to the Program 360 tab. This tab gives program administrators instant visibility
       into student activity, placements, curriculum data, and site operations... It includes high-level
       overviews of core entities, academics, sites and contracts, slots, placements, and learning
@@ -1093,7 +1093,7 @@ steps:
       program-scoped and role-scoped: "The program calendar is specific to your
       program and is available for program administrators only."
     confirmed_by: >
-      /Users/romitsoley/Downloads/exxat_transcripts.md — "1/16 Administrator Navigation" (lines 61-65):
+      exxat_transcripts.md — "1/16 Administrator Navigation" (lines 61-65):
       "We will now cover how to use the program calendar to view, track, and manage all key events and
       deadlines in one place... The month view provides a high-level overview of all events. The week
       view gives a more detailed breakdown of events. The day view allows you to focus on daily
@@ -1179,9 +1179,9 @@ steps:
           live in a tool the admin must remember to open.
 
 sources:
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '1/16 Administrator Navigation in Exxat Prism' (https://vimeo.com/933464453), lines 35-65. PRIMARY SOURCE for this stage: Program Details/Setup, logo and program name, Details drawer, Mission and Vision, Accreditation instances, Grading Schemes (letter and pass/fail), clinical Settings, Standards tab pointer, Notification Hub (Email Setup + Email Templates), User Roles (By Name / By Role), Program 360, and Program Calendar are all narrated in this one transcript."
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — line 13 (SSO activation: 'For single sign-on accounts, support will let you know when you are ready to access your account') and line 17 ('We support custom roles based on your program's needs')."
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — '16/16 (Part 1) How to use Ask Leo' (line 1683) and '16/16 (Part 2) Using the Resource Center' (line 1701), for the distinction between Ask Leo (chatbot, covered in the 1/16 navigation transcript) and the newer AI Features Hub consent flow (not covered by any transcript)."
+  - "exxat_transcripts.md — '1/16 Administrator Navigation in Exxat Prism' (https://vimeo.com/933464453), lines 35-65. PRIMARY SOURCE for this stage: Program Details/Setup, logo and program name, Details drawer, Mission and Vision, Accreditation instances, Grading Schemes (letter and pass/fail), clinical Settings, Standards tab pointer, Notification Hub (Email Setup + Email Templates), User Roles (By Name / By Role), Program 360, and Program Calendar are all narrated in this one transcript."
+  - "exxat_transcripts.md — line 13 (SSO activation: 'For single sign-on accounts, support will let you know when you are ready to access your account') and line 17 ('We support custom roles based on your program's needs')."
+  - "exxat_transcripts.md — '16/16 (Part 1) How to use Ask Leo' (line 1683) and '16/16 (Part 2) Using the Resource Center' (line 1701), for the distinction between Ask Leo (chatbot, covered in the 1/16 navigation transcript) and the newer AI Features Hub consent flow (not covered by any transcript)."
   - ".../Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Details via Setup.md — SECONDARY: Program Information sub-sections (Terms, Professional years, Program clinical settings) and the CSR warning that calendar edits impact the entire course catalog, course offerings and curriculum grid."
   - ".../Program Details/Managing Your Program Information.md — SECONDARY: Details-drawer field list and mandatory-field flags."
   - ".../Program Details/Using Notification Hub.md — SECONDARY: OTP forward-protection behavior, template type definitions (Locked/Regular/Restricted), template constraints (unique name per category, category immutable, 2-character search minimum), and the unrecoverable-delete caveat."
@@ -1214,6 +1214,6 @@ sources:
   - "Playbooks/Social Work (SW) Playbook.md — CSWE; Agencies module setting type/population/services rather than a clinical-settings list."
   - "Playbooks/Teacher Education (TE) Playbook.md — CAEP; GoReact/Echo360 integration; no clinical-settings analogue."
   - "content/domains/do.yaml — OMS-3/OMS-4 clinical years, 48 COMs, rotation-site capacity as a named bottleneck (context for Professional years labeling)."
-  - "/Users/romitsoley/Downloads/OTOTAVideosTranscripts.md (line 79) — auto-notification drawer with email-template selection, evidence that template-driven automation exists elsewhere in the product and could plausibly be pointed at accreditation dates."
+  - "OTOTAVideosTranscripts.md (line 79) — auto-notification drawer with email-template selection, evidence that template-driven automation exists elsewhere in the product and could plausibly be pointed at accreditation dates."
 
 last_verified: "2026-08-24"

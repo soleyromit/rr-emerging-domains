@@ -213,7 +213,7 @@ switching_trigger: >
   conversation: the faculty-data forms (AS 4.2.1) stay outside the system
   regardless, so the pitch cannot claim full self-study coverage.
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md"
   - "https://www.cswe.org/"
   - "../competitors/core-elms.yaml"
   - "../competitors/e-value.yaml"

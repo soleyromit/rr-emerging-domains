@@ -228,18 +228,18 @@ steps:
       Just as a contract may cover one or many physical locations, a 'site' may include one or
       many physical locations."
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Understanding Site vs.
       Location.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
       Therapy (OT) Playbook.md (lines 221, 227-229 site categories; line 424 the contract-not-
-      required pain point); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/
+      required pain point); PRISM-Expansion-Vault/99-Assets/documents/
       Playbooks/Social Work (SW) Playbook.md (lines 25, 131 Agencies module);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
       Assistant (PA) Playbook.md (lines 141-152 PA-student naming requirement);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher
       Education (TE) Playbook.md (lines 12, 67-72 — the explicit "not confirmed for Exxat" caveat);
       ../accreditation/acote.yaml (Standard C.1.5); ../accreditation/caep.yaml (Component R2.3)
 
@@ -384,17 +384,17 @@ steps:
       For the four expansion domains this step is optional practice; for PA, OT, Social Work, SLP
       and CRNA the process itself is what their accreditor asks to see.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
       Assistant (PA) Playbook.md (lines 154-165 Site/Location Assessment and the two-form best
       practice; lines 194-196 Comprehensive Assessment Report; line 288 SSR Appendix 15);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
       Therapy (OT) Playbook.md (lines 235, 285-295 — Form Setup, the offline limitation, and the
-      site/personnel report family); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/
+      site/personnel report family); PRISM-Expansion-Vault/99-Assets/
       documents/Playbooks/Social Work (SW) Playbook.md (lines 131-136, 162-166, 179 — Agency
       Assessments, AS 3.3.4 mapping, Assessment Details);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language
       Pathology (SLP) Playbook.md (lines 67, 95, 98, 118, 149 — the support-ticket dependency);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
       Playbook.md (lines 72, 103 — COA F.4 site assessments and the student mobile app);
       ../accreditation/arc-pa.yaml (Element B3.02 a-c); ../accreditation/cswe.yaml (AS 3.3.4);
       ../accreditation/caa-asha.yaml (Standard 3.9B); ../accreditation/acote.yaml (Standard C.1.5);
@@ -480,14 +480,14 @@ steps:
       creates them), and only then can a placement be built against it — at which point the site
       re-enters the ordinary contracting and assessment path documented in the other steps.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work
       (SW) Playbook.md (lines 84-127 the Field Application Form workflow, mapping rules and
       interview statuses; lines 185-189 the temporary-placement workaround it replaced);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
       Therapy (OT) Playbook.md (lines 386, 393 capstone site proposal; lines 499-505 capstone form
       workflows including the OTD Capstone Memorandum of Understanding);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
-      Therapy (PT) Playbook.md (lines 91, 108); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
+      Therapy (PT) Playbook.md (lines 91, 108); PRISM-Expansion-Vault/
       99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (line 86);
       ../accreditation/cswe.yaml (AS 3.3.4, AS 3.3.7); ../accreditation/acote.yaml (Standard D.1.5
       with D.1.4)
@@ -751,11 +751,11 @@ steps:
       affiliation agreement) to this Site as well, avoiding duplicate data entry when one signed
       agreement covers multiple sites.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
       Therapy (OT) Playbook.md (lines 230, 232 — Contract Organization formats and the seven-value
-      institutional Contract Status set); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/
+      institutional Contract Status set); PRISM-Expansion-Vault/
       99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (lines 141-152 — ARC-PA
       5e/6e affiliation-agreement content requirements and the addendum remediation);
       ../accreditation/capte.yaml (Element 2D9 gap_notes, the five-clause finding);
@@ -888,11 +888,11 @@ steps:
       covers, the internal routing checklist, and the signed document itself (either uploaded or
       auto-generated from a template).
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
       Therapy (OT) Playbook.md (line 231 routing-checklist values; lines 297-305 and 426-436 —
-      C.1.4 and C.1.5 contract support); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/
+      C.1.4 and C.1.5 contract support); PRISM-Expansion-Vault/
       99-Assets/documents/Playbooks/Nursing Playbook.md (lines 118-120 — COA critical-standard
       concept); ../accreditation/acote.yaml (Standard C.1.5); ../accreditation/coa.yaml (Standard
       F.2 with Standard A.3)
@@ -983,14 +983,14 @@ steps:
       program re-entering the same affiliation agreement, and controls the sharing model that
       determines which programs can see it.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Institutional Users/Step-by-Step Guides (How-tos)/Institutional Level- Contracts and
-      Sites Management.md; /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      Sites Management.md; PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Understanding Site Sharing
       Model in Exxat Prism.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
       Therapy (OT) Playbook.md (line 233 — per-entity shared payload; lines 297-305 — C.1.4);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
       Therapy (PT) Playbook.md (lines 224-232 — the AAR five-pull sequence);
       ../accreditation/capte.yaml (Element 2D9); ../accreditation/coa.yaml (Standard F.2)
 
@@ -1092,16 +1092,16 @@ steps:
       6 months) rather than relying on someone remembering to check the Contracts report, and can
       pause, edit, or delete the notification later.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Planned Communications/Manage Contract Expirations Easily with
       Exxat Prism.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
       Therapy (OT) Playbook.md (line 234 — the "2 months within contract end date... repeats
-      weekly" configuration); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/
+      weekly" configuration); PRISM-Expansion-Vault/99-Assets/documents/
       Playbooks/Nursing Playbook.md (line 69 — the upload -> expiry alert -> Program Calendar ->
-      Placement Clearance chain); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/
+      Placement Clearance chain); PRISM-Expansion-Vault/99-Assets/
       documents/Playbooks/Physician Assistant (PA) Playbook.md (line 149);
       ../accreditation/nursing.yaml (ACEN Criterion 4.9); ../accreditation/acote.yaml (C.1.5)
 
@@ -1264,20 +1264,20 @@ steps:
       on site, and can bulk-download compliance documents or approve student-uploaded location
       documents directly from here.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance
-      Dashboard.md; /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      Dashboard.md; PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md
       ("Contract Status on Clearance Dashboard" section);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
       Therapy (OT) Playbook.md (lines 421-436 — placement-clearance requirements and the "verifies"
-      wording); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
+      wording); PRISM-Expansion-Vault/99-Assets/documents/Playbooks/
       Nursing Playbook.md (lines 71, 101 — "gating checkpoint" wording and CRNA ACLS/PALS);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work
       (SW) Playbook.md (lines 133-137, 151-152 — FI orientation certificates, alternative field
       instruction, third-party compliance vendors);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language
-      Pathology (SLP) Playbook.md (line 48); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language
+      Pathology (SLP) Playbook.md (line 48); PRISM-Expansion-Vault/
       99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (lines 130-135 — the four
       PA placement-clearance requirements); ../accreditation/acote.yaml (C.1.5);
       ../accreditation/nursing.yaml (ACEN 4.9); ../accreditation/cswe.yaml (AS 3.3.4, AS B3.3.6/
@@ -1495,19 +1495,19 @@ steps:
       rotation, one slot batch at a time; to add more capacity for the same rotation/setting, a
       new slot must be added rather than the existing one's offer count edited.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md
       ("Adding Slots by Site" / "Adding Slots by Location" sections);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
       Therapy (OT) Playbook.md (lines 236-237 Slot Type and Supervision Type value sets; line 403
       C.1.7 supervision-ratio tracking; line 380 Exxat One);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
       Assistant (PA) Playbook.md (lines 18-33 and 99-102 Site Based vs. Preceptor Based sourcing;
       lines 323-334 Max Placement Limit);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
       Therapy (PT) Playbook.md (lines 79-85, 104, 184 — M1M cycle, FCFS mix, Exxat One, and the
       four unresearched slot-sourcing competitors);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
       Playbook.md (line 73 — CRNA 2:1 assigned and monitored at Sites > Slots);
       ../accreditation/acote.yaml (Standard C.1.7); ../accreditation/coa.yaml (Standard F.7);
       ../accreditation/arc-pa.yaml (Element A1.10 a-b)
@@ -1655,7 +1655,7 @@ steps:
       of the site record the recipient may update, and then triages delivery failures on the Email
       Dashboard — because an undelivered request and a declined request look identical downstream.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
       Therapy (PT) Playbook.md — read IN FULL 2026-08-25. Lines 265-270 are the whole of this step
       (failed-delivery triage at Sites > Emails > Email Dashboard with Status filter = Failed, the
       four documented failure causes and three documented fixes including Exxat's whitelist letter;
@@ -1747,7 +1747,7 @@ steps:
       record when the affiliation requires compensation, and can later pull the Site Payment
       Report for reconciliation.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md
       ("Adding Payment Details" / "Site Payments Report" sections)
 
@@ -1900,13 +1900,13 @@ steps:
       where one exists, and writing the narrative the standard actually asks for. Every report on
       this screen produces volume; none produces a verdict.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
       Assistant (PA) Playbook.md (lines 116, 166-180 SCPE Details and the gold-in-gold-out workflow;
       lines 284-297 the SSR appendix table and the two Distribution of Slots reports);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
       Playbook.md (lines 68-70 — Sites database, Contracts, Slot Sufficiency Report; lines 116-118
       CCNE Standard II and COA Standard F mappings);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
       Therapy (PT) Playbook.md (lines 210-232 — the seven CAPTE-mapped reports including "Number and
       Variety of Clinical Sites (Standard 2C)" and "Number and Variety of Clinical Slots (Standard
       8F)", and the AAR five-pull sequence); ../accreditation/capte.yaml (Element 2D8, the version
@@ -1915,45 +1915,45 @@ steps:
       with Standard A.10)
 
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Understanding Site vs. Location.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Understanding Site Sharing Model in Exxat Prism.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Institutional Users/Step-by-Step Guides (How-tos)/Institutional Level- Contracts and Sites Management.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Manage Contract Expirations Easily with Exxat Prism.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/do.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/medicine.yaml"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Understanding Site vs. Location.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Managing Contracts.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Understanding Site Sharing Model in Exxat Prism.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Institutional Users/Step-by-Step Guides (How-tos)/Institutional Level- Contracts and Sites Management.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Manage Contract Expirations Easily with Exxat Prism.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
+  - "content/prism/capability-map.yaml"
+  - "content/accreditation/coca.yaml"
+  - "content/accreditation/lcme.yaml"
+  - "content/accreditation/acpe.yaml"
+  - "content/accreditation/coda.yaml"
+  - "content/competitors/core-elms.yaml"
+  - "content/competitors/emedley.yaml"
+  - "content/competitors/medhub.yaml"
+  - "content/domains/do.yaml"
+  - "content/domains/medicine.yaml"
 
   # --- Added 2026-08-25 with the eight existing-discipline extension (PT/PTA, OT/OTA, PA,
   # SLP, Nursing, Social Work, Teacher Education, CRNA). NOTE ON PATHS: the discipline
   # playbooks live under 99-Assets/documents/Playbooks/, not directly under 99-Assets/.
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — READ IN FULL 2026-08-25 (previously consulted per-stage; this pass added the whole M1M email-operations step). Lines 43 (the PT clinical-settings taxonomy the site/location Settings tags are populated from), 60 (per-setting Program Requirements — Rural, Underserved, School-based, Integrated Clinical Experience-Acute), 79-85 (M1M annual slot-request cycle, FCFS/reserved mix, Exxat One as the year-round alternative), 91 and 108 (MyRequest), 104 (FCFS competition and early publication to students), 110-113 (slot confirmation emails sent to the site contact and CI BEFORE a student is placed, and the obligation to cancel and release unused reserved slots so another school can use them), 184 (the four unresearched slot-sourcing competitors and the confirmed no-integration finding), 186 (national competition for IP and acute-care slots as an industry-level condition), 196-197 (expanding the Exxat One clinical-partner roster; the absent Exxat CSIF), 210-232 (the seven CAPTE-mapped reports and the AAR five-pull sequence), 265-270 (M1M email operations: failed-delivery triage, recipient targeting, the @Request Link template requirement, and selective field exposure in site-update requests)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md — lines 221 and 227-229 (site level categories, personnel categories, area tags), 230-237 (Contract Organization formats, institutional routing checklist, the seven-value Contract Status set, site sharing payload, auto-notification default, Slot Type, Supervision Type), 285-295 (site assessment, the offline limitation, site/personnel reports), 297-305 (C.1.4 contract monitoring), 377-403 (slot request, wishlist models, C.1.7 supervision-ratio tracking), 421-436 (placement-clearance requirements, the 'contract not required' pain point at line 424, and C.1.5 contract support), 499-505 (capstone form workflows incl. the OTD Capstone MOU)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md — lines 18-33 and 99-102 (Site Based vs. Preceptor Based slot sourcing), 86 (MyRequest), 116 (the seven ARC-PA core settings), 130-135 (the four placement-clearance requirements), 137-152 (Entering Contracts; the ARC-PA 6e B3.01 a-e requirement that agreements explicitly name 'Physician Assistant students', the addendum remediation, and multi-campus identification), 154-165 (Site/Location Assessment, the Initial/Ongoing Site Visit form pair, ARC-PA settings, personnel), 166-180 (SCPE Details and the 'gold in, gold out' portal-diff workflow), 194-196 (Comprehensive Assessment Report), 284-297 (SSR appendix table; Distribution of Slots Across Settings / by Location), 323-334 (Max Placement Limit — the PA-exclusive soft slot cap), 358 (student mobile app)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — READ IN FULL 2026-08-25. Line 48 (affiliation agreements 'stored, viewed, and monitored in the Sites module' — SLP's documented accreditation artifact for this stage, and the most accurate wording any playbook uses for the clearance dashboard), 67, 95, 98, 118 and 149 (the recurring prism-support@exxat.com dependency for custom forms, thresholds and notification rules — the SLP self-service carve-out)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — lines 68-73 (Sites database as sufficiency evidence; the contract chain 'upload -> expiry alert -> Program Calendar surfacing -> Placement Clearance gate'; Slot Sufficiency Report; Site Assessments with follow-up dates pushed to the Program Calendar; Sites > Slots as where the CRNA 2:1 ratio is assigned), 101-103 (CRNA ACLS/PALS student compliance; student mobile app), 116-120 (CCNE Standard II and COA Standard F mappings, and the COA 'critical standard' concept)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — READ IN FULL 2026-08-25. Line 25 (Agency = Site/Location, Agencies module), 84-127 (Multi-Location Field Application Forms, placement suggestions, the location/supervisor mapping rules incl. map-only-once, interview statuses, best practices), 129-137 (Agencies module and Agency Assessments; Personnel Certification for orientation certificates; Placement Clearance FI/Task Supervisor checks; alternative field instruction with two supervisors), 151-152 (CISIVE, Universal, ComplianceJunction integrations), 162-166 (CSWE AS 3.3.1 / 3.3.4 / B3.3.6 mappings), 179 (Assessment Details and Comprehensive Personnel reports), 185-189 (the temporary-placement/spreadsheet workaround this workflow replaced)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — READ IN FULL 2026-08-25 (all 73 lines). Lines 12-16 and 63-73. Cited ONLY for its own negative finding: the sole TE product source available is one video tutorial on the GoReact/Echo360 LTI integration, which touches nothing in this stage, and the playbook explicitly warns that TE terminology and placement workflows are 'NOT confirmed for Exxat' and that CAEP standard numbers should not be treated as Exxat-specific 'until confirmed against a TE-specific source.' Every TE clause in this file is reasoned from ../accreditation/caep.yaml and carries that caveat inline."
-  - "/Users/romitsoley/Downloads/CRNAVideosTranscripts.md — NEGATIVE EVIDENCE, recorded rather than omitted. All three transcribed CRNA administrator videos were read in full (lines 15-37 Daily Clinical Evaluation Report; 43-89 Managing Clinical Case Experience Log; 95-117 Echo360/GoReact assignments) and contain no mention of sites, locations, affiliation agreements, contracts, capacity, or slots. Every CRNA claim in this file therefore traces to the Nursing playbook and ../accreditation/coa.yaml, not to this transcript."
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/capte.yaml — Standard 2 Elements 2D8 (site sufficiency/variety, the developing-program 150%-of-charter-class projection, and the stale 2016 report-label version hazard) and 2D9 (current written agreements and the five-clause content finding)."
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acote.yaml — Standards C.1.2, C.1.4, C.1.5 (written agreements and the 'contract not required' false-positive finding), C.1.7 (fieldwork-educator ratio, planned-vs-realized reconciliation), D.1.5 with D.1.4 (doctoral capstone agreements)."
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/arc-pa.yaml — Standard A1 Element A1.10 a-b (site/preceptor sufficiency, students-each-site-can-accommodate, non-U.S. elective-only), Standard B3 Elements B3.01 a-e, B3.02 a-c (initial and ongoing site evaluation, and the missing recurrence semantics), B3.04 a-d."
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caa-asha.yaml — Standard 3.0B Standards 3.6B (setting/population/age-group breadth) and 3.9B (agreements governing external placements, site-suitability policy, and the SLP self-service gap)."
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/nursing.yaml — CCNE Standard II Key Elements II-C (clinical-site adequacy and the defined periodic process) and II-F (1:8 indirect NP supervision ratio); ACEN Standard 4 Criterion 4.9 (current written agreements)."
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coa.yaml — Standard F.7 CRITICAL (the hard 2:1 CRNA supervision cap, preceptor-shift-scoped, rated Build), Standard F.2 with Standard A.3 CRITICAL (legally binding site contracts, and the institution-level joint-governance agreement with no home), Standard F.1 with Standard A.10 BOTH CRITICAL (per-student sufficiency and the unjoined case-category minimums), Standards F.4 and F.6 (site assessments and orientation), Standard C.5 with D.12 (ACLS/PALS before clinical activities)."
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/cswe.yaml — Accreditation Standard 3.3, AS 3.3.1 (system-level field opportunities), AS 3.3.4 (identifying/approving field settings, FI orientation, effectiveness evaluation), AS 3.3.7 (employment-based placements — rated Gap), AS B3.3.6/M3.3.6 (Field Instructor qualification)."
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caep.yaml — Standard R2 Components R2.1 (partnerships for clinical preparation; district MOU across many school locations; the co-construction relationship record) and R2.3 (clinical experiences; the absent partner-school demographic field)."
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml — lines 26-28 (24+ named disciplines incl. nursing, PT/OT, PA, social work, athletic training) and 42, 51 (onboarding document collection incl. contracts)."
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml — line 14 (learner-driven elective selection within admin-set capacity rules — the closest published competitor concept to a slot cap)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — READ IN FULL 2026-08-25 (previously consulted per-stage; this pass added the whole M1M email-operations step). Lines 43 (the PT clinical-settings taxonomy the site/location Settings tags are populated from), 60 (per-setting Program Requirements — Rural, Underserved, School-based, Integrated Clinical Experience-Acute), 79-85 (M1M annual slot-request cycle, FCFS/reserved mix, Exxat One as the year-round alternative), 91 and 108 (MyRequest), 104 (FCFS competition and early publication to students), 110-113 (slot confirmation emails sent to the site contact and CI BEFORE a student is placed, and the obligation to cancel and release unused reserved slots so another school can use them), 184 (the four unresearched slot-sourcing competitors and the confirmed no-integration finding), 186 (national competition for IP and acute-care slots as an industry-level condition), 196-197 (expanding the Exxat One clinical-partner roster; the absent Exxat CSIF), 210-232 (the seven CAPTE-mapped reports and the AAR five-pull sequence), 265-270 (M1M email operations: failed-delivery triage, recipient targeting, the @Request Link template requirement, and selective field exposure in site-update requests)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md — lines 221 and 227-229 (site level categories, personnel categories, area tags), 230-237 (Contract Organization formats, institutional routing checklist, the seven-value Contract Status set, site sharing payload, auto-notification default, Slot Type, Supervision Type), 285-295 (site assessment, the offline limitation, site/personnel reports), 297-305 (C.1.4 contract monitoring), 377-403 (slot request, wishlist models, C.1.7 supervision-ratio tracking), 421-436 (placement-clearance requirements, the 'contract not required' pain point at line 424, and C.1.5 contract support), 499-505 (capstone form workflows incl. the OTD Capstone MOU)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md — lines 18-33 and 99-102 (Site Based vs. Preceptor Based slot sourcing), 86 (MyRequest), 116 (the seven ARC-PA core settings), 130-135 (the four placement-clearance requirements), 137-152 (Entering Contracts; the ARC-PA 6e B3.01 a-e requirement that agreements explicitly name 'Physician Assistant students', the addendum remediation, and multi-campus identification), 154-165 (Site/Location Assessment, the Initial/Ongoing Site Visit form pair, ARC-PA settings, personnel), 166-180 (SCPE Details and the 'gold in, gold out' portal-diff workflow), 194-196 (Comprehensive Assessment Report), 284-297 (SSR appendix table; Distribution of Slots Across Settings / by Location), 323-334 (Max Placement Limit — the PA-exclusive soft slot cap), 358 (student mobile app)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — READ IN FULL 2026-08-25. Line 48 (affiliation agreements 'stored, viewed, and monitored in the Sites module' — SLP's documented accreditation artifact for this stage, and the most accurate wording any playbook uses for the clearance dashboard), 67, 95, 98, 118 and 149 (the recurring prism-support@exxat.com dependency for custom forms, thresholds and notification rules — the SLP self-service carve-out)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — lines 68-73 (Sites database as sufficiency evidence; the contract chain 'upload -> expiry alert -> Program Calendar surfacing -> Placement Clearance gate'; Slot Sufficiency Report; Site Assessments with follow-up dates pushed to the Program Calendar; Sites > Slots as where the CRNA 2:1 ratio is assigned), 101-103 (CRNA ACLS/PALS student compliance; student mobile app), 116-120 (CCNE Standard II and COA Standard F mappings, and the COA 'critical standard' concept)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — READ IN FULL 2026-08-25. Line 25 (Agency = Site/Location, Agencies module), 84-127 (Multi-Location Field Application Forms, placement suggestions, the location/supervisor mapping rules incl. map-only-once, interview statuses, best practices), 129-137 (Agencies module and Agency Assessments; Personnel Certification for orientation certificates; Placement Clearance FI/Task Supervisor checks; alternative field instruction with two supervisors), 151-152 (CISIVE, Universal, ComplianceJunction integrations), 162-166 (CSWE AS 3.3.1 / 3.3.4 / B3.3.6 mappings), 179 (Assessment Details and Comprehensive Personnel reports), 185-189 (the temporary-placement/spreadsheet workaround this workflow replaced)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — READ IN FULL 2026-08-25 (all 73 lines). Lines 12-16 and 63-73. Cited ONLY for its own negative finding: the sole TE product source available is one video tutorial on the GoReact/Echo360 LTI integration, which touches nothing in this stage, and the playbook explicitly warns that TE terminology and placement workflows are 'NOT confirmed for Exxat' and that CAEP standard numbers should not be treated as Exxat-specific 'until confirmed against a TE-specific source.' Every TE clause in this file is reasoned from ../accreditation/caep.yaml and carries that caveat inline."
+  - "CRNAVideosTranscripts.md — NEGATIVE EVIDENCE, recorded rather than omitted. All three transcribed CRNA administrator videos were read in full (lines 15-37 Daily Clinical Evaluation Report; 43-89 Managing Clinical Case Experience Log; 95-117 Echo360/GoReact assignments) and contain no mention of sites, locations, affiliation agreements, contracts, capacity, or slots. Every CRNA claim in this file therefore traces to the Nursing playbook and ../accreditation/coa.yaml, not to this transcript."
+  - "content/accreditation/capte.yaml — Standard 2 Elements 2D8 (site sufficiency/variety, the developing-program 150%-of-charter-class projection, and the stale 2016 report-label version hazard) and 2D9 (current written agreements and the five-clause content finding)."
+  - "content/accreditation/acote.yaml — Standards C.1.2, C.1.4, C.1.5 (written agreements and the 'contract not required' false-positive finding), C.1.7 (fieldwork-educator ratio, planned-vs-realized reconciliation), D.1.5 with D.1.4 (doctoral capstone agreements)."
+  - "content/accreditation/arc-pa.yaml — Standard A1 Element A1.10 a-b (site/preceptor sufficiency, students-each-site-can-accommodate, non-U.S. elective-only), Standard B3 Elements B3.01 a-e, B3.02 a-c (initial and ongoing site evaluation, and the missing recurrence semantics), B3.04 a-d."
+  - "content/accreditation/caa-asha.yaml — Standard 3.0B Standards 3.6B (setting/population/age-group breadth) and 3.9B (agreements governing external placements, site-suitability policy, and the SLP self-service gap)."
+  - "content/accreditation/nursing.yaml — CCNE Standard II Key Elements II-C (clinical-site adequacy and the defined periodic process) and II-F (1:8 indirect NP supervision ratio); ACEN Standard 4 Criterion 4.9 (current written agreements)."
+  - "content/accreditation/coa.yaml — Standard F.7 CRITICAL (the hard 2:1 CRNA supervision cap, preceptor-shift-scoped, rated Build), Standard F.2 with Standard A.3 CRITICAL (legally binding site contracts, and the institution-level joint-governance agreement with no home), Standard F.1 with Standard A.10 BOTH CRITICAL (per-student sufficiency and the unjoined case-category minimums), Standards F.4 and F.6 (site assessments and orientation), Standard C.5 with D.12 (ACLS/PALS before clinical activities)."
+  - "content/accreditation/cswe.yaml — Accreditation Standard 3.3, AS 3.3.1 (system-level field opportunities), AS 3.3.4 (identifying/approving field settings, FI orientation, effectiveness evaluation), AS 3.3.7 (employment-based placements — rated Gap), AS B3.3.6/M3.3.6 (Field Instructor qualification)."
+  - "content/accreditation/caep.yaml — Standard R2 Components R2.1 (partnerships for clinical preparation; district MOU across many school locations; the co-construction relationship record) and R2.3 (clinical experiences; the absent partner-school demographic field)."
+  - "content/competitors/e-value.yaml — lines 26-28 (24+ named disciplines incl. nursing, PT/OT, PA, social work, athletic training) and 42, 51 (onboarding document collection incl. contracts)."
+  - "content/competitors/elentra.yaml — line 14 (learner-driven elective selection within admin-set capacity rules — the closest published competitor concept to a slot cap)."
   - "COMPETITOR-COVERAGE NOTE (2026-08-25): two honest findings recorded here rather than papered over. (1) For these eight disciplines the overlap with CORE ELMS and E*Value is same-buyer rather than adjacent — core-elms.yaml lines 27 and 113-114 name pharmacy, dental, nursing, PT, OT, PA, veterinary and social work; e-value.yaml lines 26-28 name 24+ including social work and athletic training — yet neither publishes a contract-screen or slot-screen field list, so nearly every element above still records 'not comparable at element level' honestly rather than inventing parity. (2) The PT playbook (line 184) names the real site-sourcing competitive set for PT/OT — myClinicalExchange (mCE), Clinician Nexus, ACEMAPP, and CastleBranch Bridges, 'direct competitors of Exxat/Exxat One' that 'will not integrate with us' — and NONE of the four has a teardown file in ../competitors/. That is a known research hole in this repo, not evidence of absence."
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/flows/admin-onboarding--05-sites-locations-personnel-management.yaml — style/precedent reference for how this repo writes discipline-specific element content alongside the four-domain baseline, and cross-checked against its Social Work discipline note (the Field Instructor qualification finding is reached independently here from the clearance side)."
+  - "content/flows/admin-onboarding--05-sites-locations-personnel-management.yaml — style/precedent reference for how this repo writes discipline-specific element content alongside the four-domain baseline, and cross-checked against its Social Work discipline note (the Field Instructor qualification finding is reached independently here from the clearance side)."
 last_verified: "2026-08-25"

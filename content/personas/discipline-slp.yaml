@@ -194,8 +194,8 @@ switching_trigger: >
   domain file, a CAA/CFCC standards teardown, and at least one teardown of the
   dedicated SLP clock-hour trackers actually incumbent in this market.
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md (itself a synthesis of eight Exxat Prism Help Center artifacts — see its data-quality caveat)"
-  - "/Users/romitsoley/Downloads/SLPVideosTranscripts.md (Setting up and Reviewing Clinical Logs admin tutorial, https://vimeo.com/1040505757)"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md (itself a synthesis of eight Exxat Prism Help Center artifacts — see its data-quality caveat)"
+  - "SLPVideosTranscripts.md (Setting up and Reviewing Clinical Logs admin tutorial, https://vimeo.com/1040505757)"
   - "https://help.exxatprism.com/hc/en-us/articles/43654417152529-SLP-Videos"
   - "../journeys/admin-onboarding-product-setup.yaml (stage 6 curriculum-mapping tie; stage 1 support-gating note; stage 8 clinical-log specifics)"
   - "../competitors/core-elms.yaml (nearest allied-health competitor signal; SLP not named — checked, no competitor file mentions SLP)"

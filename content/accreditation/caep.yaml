@@ -939,6 +939,6 @@ licensure_or_gme_layer:
       list; nothing found in this research changes that, so treat per-district
       requirement variation as an open question to verify with a CSS/CX owner
       before it appears in a customer conversation.
-    source: "Absence of any background-check requirement across CAEP Initial-Licensure components R1.1-R5.4, https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 10-47); TE compliance gap per /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md ('Open Gaps' — Compliance) and content/flows/admin-onboarding--04-compliance-template-setup.yaml"
+    source: "Absence of any background-check requirement across CAEP Initial-Licensure components R1.1-R5.4, https://caepnet.org/wp-content/uploads/2024/10/caep-2022-standards-workbook-final.pdf (pp. 10-47); TE compliance gap per PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md ('Open Gaps' — Compliance) and content/flows/admin-onboarding--04-compliance-template-setup.yaml"
 
 last_researched: "2026-08-25"

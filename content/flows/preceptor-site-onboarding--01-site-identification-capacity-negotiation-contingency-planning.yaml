@@ -88,7 +88,7 @@ steps:
       against (e.g. "accepts off-cycle rotations"), and records what documentation the site will
       require of students — all before any slot-count conversation happens.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md
       (steps 1-14 of "Adding Sites")
 
@@ -136,7 +136,7 @@ steps:
       vocabulary (slot type, supervision type) the negotiation will be recorded against, so every
       site's offered slots are comparable across the program.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md
       ("Configure Slots Setup" section)
 
@@ -213,7 +213,7 @@ steps:
       mid-year), a brand-new slot record must be added — the original Number of Offers cannot be
       incremented in place.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md
       ("Adding Slots by Site" / "Adding Slots by Location" sections)
 
@@ -271,7 +271,7 @@ steps:
       host a smaller total number of students across the year sets that real ceiling once, here,
       rather than the coordinator manually reconciling slot count against a verbal understanding.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Discipline Specific Guides/PA Discipline/Max Placement Limit
       (MAX Slot Limit).md
 
@@ -349,7 +349,7 @@ steps:
       the closest built-in report to "prove capacity was adequate," but for the current course
       offering, not a multi-year trend.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Accessing Placement
       Reports.md
 
@@ -440,10 +440,10 @@ steps:
       named, shared data sources in the same cross-module report builder, not a Nursing-specific
       feature.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and
       Managing Custom Reports.md (general cross-module mechanics: data sources, pivot,
-      filters); /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      filters); PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Discipline Specific Guides/Nursing/Accreditation Guides/CCNE
       Accreditation Standards Support Guide.md (the named "Custom Slot Sufficiency Report" example
       and its Total Slots Offered/Total Placements/Completed Placements Count field set, mapped
@@ -486,22 +486,22 @@ steps:
       backup-site, or waitlist feature.
 
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Max Placement Limit (MAX Slot Limit).md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Accessing Placement Reports.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Slots by Placements.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/Nursing/Accreditation Guides/CCNE Accreditation Standards Support Guide.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Institutional Users/Step-by-Step Guides (How-tos)/Institutional Level- Placement Report.md"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/do.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/medicine.yaml"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Sites/Adding and Managing Sites.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Max Placement Limit (MAX Slot Limit).md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Accessing Placement Reports.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Slots by Placements.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Generating and Managing Custom Reports.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/Nursing/Accreditation Guides/CCNE Accreditation Standards Support Guide.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Institutional Users/Step-by-Step Guides (How-tos)/Institutional Level- Placement Report.md"
+  - "content/prism/capability-map.yaml"
+  - "content/accreditation/coca.yaml"
+  - "content/accreditation/lcme.yaml"
+  - "content/accreditation/acpe.yaml"
+  - "content/competitors/emedley.yaml"
+  - "content/competitors/core-elms.yaml"
+  - "content/competitors/one45.yaml"
+  - "content/competitors/axium.yaml"
+  - "content/domains/do.yaml"
+  - "content/domains/medicine.yaml"
 last_verified: "2026-08-24"

@@ -209,8 +209,8 @@ journey_crossref: >
   discipline and notes ACOTE C.1.2 turns the "Show on Explore Clinical
   Locations" toggle into a standards-relevant control.
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
-  - "/Users/romitsoley/Downloads/OTOTAVideosTranscripts.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "OTOTAVideosTranscripts.md"
   - "https://help.exxatprism.com/hc/en-us/articles/43654179356177-OT-OTA-Videos"
   - "https://www.acoteonline.org/"  # accreditor named in the playbook; no dedicated ../accreditation/*.yaml exists for OT yet
   - "../competitors/core-elms.yaml"   # passing OT mention only — no OT-depth teardown

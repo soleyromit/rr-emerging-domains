@@ -26,7 +26,7 @@
 # planning and does not reproduce the standards document verbatim.
 #
 # PRODUCT-EVIDENCE NOTE: this file is the first artifact anywhere in the repo to
-# cite /Users/romitsoley/Downloads/CRNAVideosTranscripts.md — the only dedicated
+# cite CRNAVideosTranscripts.md — the only dedicated
 # Level-0 CRNA product source in the vault, previously uncited by every persona,
 # journey, and flow file. Every prism_fit below that rests on observed product
 # behavior is cited to that transcript by line number, in the confirmed_by style
@@ -101,7 +101,7 @@ standards:
       that could feed a real observed ratio is the CCE log's preceptor field,
       but the transcript describes the preceptor purely as a REVIEWER of the
       submitted log, never as a supervision-capacity dimension —
-      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md line 67: "If you
+      CRNAVideosTranscripts.md line 67: "If you
       select No, you must specify whether a preceptor should review the
       student's patient log. Click on the email template option to view the
       email that the preceptor will receive." No report in the transcript's
@@ -156,7 +156,7 @@ standards:
       This is shipped and in production for CRNA today — the strongest Transfer
       in this file. The Clinical & Experiential Education pillar's Patient Log
       IS the CCE log, confirmed verbatim in
-      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md line 57: "The case
+      CRNAVideosTranscripts.md line 57: "The case
       log, also referred to as the patient log in some institutions, may vary in
       name across schools. However, within Exxat Prism, it is labeled as the
       patient log." Setup runs through the standard Courses → Learning
@@ -230,7 +230,7 @@ standards:
       category, and the CRNA-specific Student Activity Insights report renders
       progress against them with exactly the traffic-light semantics this
       standard needs —
-      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md line 87: "A green
+      CRNAVideosTranscripts.md line 87: "A green
       cell signifies that the student has met or exceeded the minimum
       requirement, showing 100% or more completion. A yellow or amber cell
       indicates that the student is approaching the minimum, typically completing
@@ -293,7 +293,7 @@ standards:
       Clinical & Experiential Education ships a Timesheet learning activity —
       confirmed present for CRNA programs alongside Forms and Evaluations and
       Patient Logs in the same Learning Activities → Setup screen
-      (/Users/romitsoley/Downloads/CRNAVideosTranscripts.md line 103: "You'll now
+      (CRNAVideosTranscripts.md line 103: "You'll now
       see the Learning Tool Interoperability section alongside Forms and
       Evaluations, Timesheets, and Patient Logs") — and the limited-release
       geolocated Faculty Timesheet already proves Prism can capture
@@ -401,7 +401,7 @@ standards:
     prism_fit_rationale: >
       Prism has built a CRNA-specific report for exactly the volume problem this
       standard creates. Per
-      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md line 21: "The Daily
+      CRNAVideosTranscripts.md line 21: "The Daily
       Clinical Evaluation Report is designed for nursing CRNA programs, where
       daily clinical evaluations play a critical role in assessing student
       performance during clinical practice. Given the extended duration of CRNA
@@ -739,7 +739,7 @@ standards:
       clinical evaluation with both student and preceptor perspectives — but that
       instrument evaluates the STUDENT, which is H.1.1, the opposite direction
       from H.1.2. Nothing in
-      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md shows a student
+      CRNAVideosTranscripts.md shows a student
       evaluating a course, a site, or an instructor. (b) Exxat Surveys, the
       general-purpose builder, ships named templates only for PT (APTA-aligned
       Multi-Rater DCE Performance Survey set) and SLP (Graduating Student Survey,
@@ -1063,8 +1063,8 @@ verification_of_prior_repo_mentions:
       capture.
 
 sources_beyond_the_standards_document:
-  - "/Users/romitsoley/Downloads/CRNAVideosTranscripts.md — the only dedicated Level-0 CRNA product source in the vault (3 video transcripts: Daily Clinical Evaluation Report, Managing Clinical Case Experience Log, Echo360/GoReact LTI Assignments). Previously uncited anywhere in this repo; every product-behavior claim above that rests on observed CRNA workflow is cited to it by line number."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — internal synthesis from the ACEN/CCNE/COA Accreditation Standards Support Guides; source of the Sites-to-Slots ratio-monitoring claim, the D.1-D.50 competency-framework configuration, the NBCRNA Transcript Report, and the CRNA CCE log field layout. Self-describes as skewed toward accreditor-mapped features and CRNA logging and thin on general ADN/BSN conventions."
+  - "CRNAVideosTranscripts.md — the only dedicated Level-0 CRNA product source in the vault (3 video transcripts: Daily Clinical Evaluation Report, Managing Clinical Case Experience Log, Echo360/GoReact LTI Assignments). Previously uncited anywhere in this repo; every product-behavior claim above that rests on observed CRNA workflow is cited to it by line number."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md — internal synthesis from the ACEN/CCNE/COA Accreditation Standards Support Guides; source of the Sites-to-Slots ratio-monitoring claim, the D.1-D.50 competency-framework configuration, the NBCRNA Transcript Report, and the CRNA CCE log field layout. Self-describes as skewed toward accreditor-mapped features and CRNA logging and thin on general ADN/BSN conventions."
   - "../prism/capability-map.yaml — pillar names, shipped-vs-roadmap status, and the Compliance Management / Clinical & Experiential Education / Curriculum Mapping feature detail cited throughout."
   - "https://www.coacrna.org/wp-content/uploads/2026/01/Guidelines-for-Counting-Clinical-Experiences-Jan-2026.pdf — COA's companion interpretive document for case crediting (revised January 2026); the operative constraint layer over the Appendix minimums."
 

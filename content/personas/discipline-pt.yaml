@@ -206,8 +206,8 @@ switching_trigger: >
   setup for a PT program (the same journey's stage 4 also records the playbook's
   caveat that many PT programs never adopt the compliance module at all).
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md (Exxat internal PT playbook, help-center capture)"
-  - "/Users/romitsoley/Downloads/PTPTAVideosTranscripts.md (PT/PTA admin tutorial transcripts: CIET v2, Exxat One availability-based wishlist)"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md (Exxat internal PT playbook, help-center capture)"
+  - "PTPTAVideosTranscripts.md (PT/PTA admin tutorial transcripts: CIET v2, Exxat One availability-based wishlist)"
   - "https://help.exxatprism.com/hc/en-us/articles/43654428008081-PT-PTA-Videos"
   - "https://vimeo.com/1068220490"
   - "https://vimeo.com/1159562881"

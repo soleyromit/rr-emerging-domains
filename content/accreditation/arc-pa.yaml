@@ -108,7 +108,7 @@ standards:
       Report), which carries Licensure Details and Certification Details per
       preceptor.
     gap_notes: "The three-state tracker proves a license record EXISTS; it does not encode 'unrestricted and unencumbered,' which is a status attribute (board action, probation, restriction) with no field today. For the expansion domains this is the reusable lesson: 6e-style wording changes turn a document-presence check into a document-STATUS check, and Prism's compliance taxonomy is presence-oriented."
-    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 8, Standard A2.14). Placement Clearance four-entity gating: /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md ('Placement Clearance Requirements')"
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 8, Standard A2.14). Placement Clearance four-entity gating: PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md ('Placement Clearance Requirements')"
 
   - element_id: "Standard A2, Elements A2.15 and A2.16 a-d"
     element_title: "SCPE Preceptor Composition — Majority PA/Physician, and the New 10% Vetted-Clinician Allowance"
@@ -226,7 +226,7 @@ standards:
       one mapped objective, with sub-lettered standards such as B2.06a-f
       consolidated onto a single tab.
     gap_notes: "One concrete operational defect the PA playbook flags for CSS: the Heatmap Report cannot be downloaded — programs are advised to screenshot it. For a report whose entire purpose is accreditation-readiness evidence, screenshot-as-export is a real gap. Separately, B1.03 a-i (nine required syllabus elements per course) is adjacent and partially served by 'Generate Syllabus' but is not scoped as its own element here."
-    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 13, Standards B1.01 a-d and B1.02). Pre-loaded ARC-PA standards, attribute taxonomies, and the seven-report suite incl. the non-downloadable Heatmap: /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+    source: "https://www.arc-pa.org/wp-content/uploads/2025/10/Standards-6e-10-03-25-Pub-10-09-25.pdf (p. 13, Standards B1.01 a-d and B1.02). Pre-loaded ARC-PA standards, attribute taxonomies, and the seven-report suite incl. the non-downloadable Heatmap: PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
 
   - element_id: "Standard B3, Element B3.01 a-e"
     element_title: "SCPE Learning Outcomes — Telehealth Ceilings and the In-Person Direct-Patient-Care Requirement"
@@ -585,7 +585,7 @@ licensure_or_gme_layer:
       available proof that the accreditor-formatted-export pattern (alongside the
       B2 Instructional Objectives Report and the CAPTE dual-numbering precedent)
       is a real, repeatable product shape rather than a one-off.
-    source: "https://www.arc-pa.org/entry-level-program/entry-level-manuals-and-guides/ ; portal manual: https://www.arc-pa.org/wp-content/uploads/2026/03/Entry-Lvl-Portal-User-Manual-SF-03-2026.pdf ; 'gold in, gold out' reconciliation workflow: /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+    source: "https://www.arc-pa.org/entry-level-program/entry-level-manuals-and-guides/ ; portal manual: https://www.arc-pa.org/wp-content/uploads/2026/03/Entry-Lvl-Portal-User-Manual-SF-03-2026.pdf ; 'gold in, gold out' reconciliation workflow: PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
   - body: "ARC-PA Policies v14 (04.25.2026) — Policies 9.4 and 9.5 on AI use"
     what_it_governs: >
       ARC-PA's operating policies, separate from the Standards. Policy 9.4

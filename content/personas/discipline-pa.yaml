@@ -241,8 +241,8 @@ journey_crossref: >
   is exactly where this persona's primary slot-sufficiency and staged-placement jobs
   land during a new tenant's setup.
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
-  - "/Users/romitsoley/Downloads/PAVideosTranscripts.md (Patient Log setup/review tutorial, the only PA admin video transcribed)"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "PAVideosTranscripts.md (Patient Log setup/review tutorial, the only PA admin video transcribed)"
   - "../journeys/admin-onboarding-product-setup.yaml (PA discipline_variance notes across stages 3-8)"
   - "../competitors/core-elms.yaml (PA named among 15+ served disciplines)"
   - "../competitors/e-value.yaml (PA named among 24+ served disciplines)"

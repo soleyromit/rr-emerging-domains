@@ -68,7 +68,7 @@ steps:
     action: >
       Admin builds or edits the accreditor's element taxonomy by activating pre-loaded standards
       (if any exist for the domain) or manually adding standard codes/descriptions one at a time.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
 
   - screen: "Program Details > Setup > Standards — Program Specific Standards panel"
     navigation_path: "Program Details > Setup > Standards (left panel: Program Specific Standards)"
@@ -102,7 +102,7 @@ steps:
       workaround: programs create a "Program Specific Standard" to model an accreditor sub-element
       not natively represented in the pre-loaded taxonomy (e.g. "ARC-PA B3.03/B3.04 outcomes"),
       then map evaluation questions to it via Competency Management.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Standards.md; corroborated by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md (Standard B3.03 a-c and B3.05 a-f setup instructions: 'Create a program specific standard and name it ARC-PA B3.03/B3.04 outcomes')"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Standards.md; corroborated by PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md (Standard B3.03 a-c and B3.05 a-f setup instructions: 'Create a program specific standard and name it ARC-PA B3.03/B3.04 outcomes')"
 
   - screen: "Program Details > Setup > School Profile — Accreditation card"
     navigation_path: "Program Details > Setup > School Profile"
@@ -148,7 +148,7 @@ steps:
         gap_severity: "none"
         gap_note: "Domain-agnostic date fields; work today for any of the four accreditors with zero configuration."
     action: "Admin records a repeatable, structured entry per accreditor at the program level (a school running both MD and DO tracks would add two entries here)."
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Your Program Information.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Your Program Information.md"
 
   - screen: "Curriculum Mapping > Mapping Reports > Mapped Standards Report"
     navigation_path: "Curriculum Mapping > Mapping Reports (top-right) > select Curriculum/Cohort > select standard framework > Mapped Standards chart"
@@ -205,7 +205,7 @@ steps:
       Reviewer switches to the "Unmapped Standards" filter to find every element with no evidence
       attached, then exports a Word/Excel report scoped to the standard and its parent/child tree
       for the self-study appendix.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
 
   - screen: "Curriculum Mapping > Mapping Reports > Mapped Standards Report — Standard Description narrative"
     navigation_path: "Curriculum Mapping > Mapping Reports > (select a standard) > Standard Description section"
@@ -227,7 +227,7 @@ steps:
         gap_severity: "configure-needed"
         gap_note: "A real but shallow substitute for ongoing CQI monitoring: free text, no status/state machine, no alerting, and it must be manually re-authored every cycle."
     action: "Reviewer attaches a compliance narrative directly to a standard, alongside its mapped courses/measures, so the exported report reads as a self-study-ready package rather than a bare coverage matrix."
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
 
   - screen: "(No screen exists) — ongoing, cross-pillar compliance-monitoring dashboard"
     navigation_path: "N/A — not a shipped screen anywhere in Prism today"
@@ -250,22 +250,22 @@ steps:
         gap_severity: "gap"
         gap_note: "This is the one part of the stage 1 pain point that element-level tracing does NOT resolve — it remains a genuine, dated (Q3 2027) roadmap gap, not a configuration task."
     action: "N/A — this is the genuine, unresolved gap underneath the stage, distinct from the crosswalk-setup mechanics in steps 1-5 above, which are largely configuration work on an existing object model."
-    confirmed_by: "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (lines 705-725, Accreditation Management pillar, status: roadmap, target: Q3 2027)"
+    confirmed_by: "content/prism/capability-map.yaml (lines 705-725, Accreditation Management pillar, status: roadmap, target: Q3 2027)"
 
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Standards.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Your Program Information.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Program Standards.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Program Details/Managing Your Program Information.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "content/prism/capability-map.yaml"
+  - "content/accreditation/coca.yaml"
+  - "content/accreditation/lcme.yaml"
+  - "content/accreditation/acpe.yaml"
+  - "content/accreditation/coda.yaml"
+  - "content/competitors/elentra.yaml"
+  - "content/competitors/core-elms.yaml"
+  - "content/competitors/leo-davinci.yaml"
+  - "content/competitors/axium.yaml"
 last_verified: "2026-08-24"

@@ -143,8 +143,8 @@ switching_trigger: >
   program whose day-one experience quietly argues it is not the product's
   main audience. Flag both as hypotheses, not findings.
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md"
-  - "/Users/romitsoley/Downloads/TEVideosTranscripts.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md"
+  - "TEVideosTranscripts.md"
   - "https://help.exxatprism.com/hc/en-us/articles/47058294206993-TE-Videos"
   - "../journeys/admin-onboarding-product-setup.yaml"
   # Checked and confirmed NOT to cover TE (cited as absence, not evidence):

@@ -5,7 +5,7 @@
 #
 # SOURCING NOTE (important — this file exists to fix a prior sourcing defect):
 # the primary source here is the raw general admin-tutorial transcript at
-# /Users/romitsoley/Downloads/exxat_transcripts.md, cited by section heading and
+# exxat_transcripts.md, cited by section heading and
 # line range. Earlier work in this repo laundered the same content through
 # help-center paraphrases; every step below cites the transcript directly wherever
 # the transcript covers the step, and only reaches for the help-center mirror or a
@@ -41,7 +41,7 @@ steps:
       New admin opens the Learning Activity module for the first time and orients on
       the inventory of course offerings that can carry learning activities, before
       configuring anything.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities in Exxat Prism' (lines 1293-1298)"
+    confirmed_by: "exxat_transcripts.md, '13/16 Managing Learning Activities in Exxat Prism' (lines 1293-1298)"
     elements:
       - element: "Course offerings table (course number, course name, learning activities activated, academic schedule, cohort, additional course identifier)"
         type: "read-only rollup table"
@@ -77,7 +77,7 @@ steps:
       activity groups to group together courses of the same academic year, graduation
       term, or area of focus." This is the single highest-leverage setup decision in the
       stage: report scope is defined by group membership.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1299-1307); report-scoping consequence at lines 1443-1447"
+    confirmed_by: "exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1299-1307); report-scoping consequence at lines 1443-1447"
     elements:
       - element: "Group name text box"
         type: "input field"
@@ -126,7 +126,7 @@ steps:
       Admin opens one course's setup surface and sees the four learning-activity types
       plus Gradebook and Reports tabs. Per the transcript, setup is strictly per-course:
       "You will need to set up learning activities for each course individually."
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1307-1312)"
+    confirmed_by: "exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1307-1312)"
     elements:
       - element: "Forms & Evaluations / Patient Log / Timesheet / Time Off sections"
         type: "configuration section headers with add (+) or edit (pencil) affordances"
@@ -172,7 +172,7 @@ steps:
       for and information collected by" but are built by Exxat — "please reach out to your
       CSS agent or account manager for more information on how to get custom forms
       configured."
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1313-1321); form-type taxonomy in the standalone 'Forms/Evaluations Workflows in Exxat Prism' section (lines 1971-1986)"
+    confirmed_by: "exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1313-1321); form-type taxonomy in the standalone 'Forms/Evaluations Workflows in Exxat Prism' section (lines 1971-1986)"
     elements:
       - element: "Form picker list + search box"
         type: "single-select picker"
@@ -254,7 +254,7 @@ steps:
       possible to configure simple forms on your own called Assignments. Assignments can
       be used to collect any student written assignments, for example, a midterm
       reflection essay."
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1325-1329)"
+    confirmed_by: "exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1325-1329)"
     elements:
       - element: "Title text area + Instructions text area"
         type: "input fields"
@@ -321,7 +321,7 @@ steps:
       configurable timing, frequency, and stop conditions, auto-notifications help ensure
       that evaluation forms are completed on time and without sending unnecessary
       reminders after submission."
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1321-1325)"
+    confirmed_by: "exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1321-1325)"
     elements:
       - element: "Notification title"
         type: "input field"
@@ -387,7 +387,7 @@ steps:
       Per the transcript, the naming varies by discipline: "Different domains may use
       different names for patient logs. SLP programs call them clinical logs, and CRNA
       programs call them case logs."
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1329-1338). Discipline confirmation: /Users/romitsoley/Downloads/PAVideosTranscripts.md 'Physician Assistant: Setting up and Managing Patient Logs' and /Users/romitsoley/Downloads/SLPVideosTranscripts.md 'Setting up and Reviewing Clinical Logs'"
+    confirmed_by: "exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1329-1338). Discipline confirmation: PAVideosTranscripts.md 'Physician Assistant: Setting up and Managing Patient Logs' and SLPVideosTranscripts.md 'Setting up and Reviewing Clinical Logs'"
     elements:
       - element: "Patient log template dropdown + eye icon preview (PA transcript: 'Preview Layout' button)"
         type: "single-select picker with preview"
@@ -460,7 +460,7 @@ steps:
       Admin activates and rules-configures electronic hours logging. This is the screen
       that determines whether a program's clock-hour accreditation evidence is capturable
       at all.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1339-1350)"
+    confirmed_by: "exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1339-1350)"
     elements:
       - element: "Activate toggle"
         type: "toggle"
@@ -564,7 +564,7 @@ steps:
     action: >
       Admin activates student-initiated absence requests, including reason, make-up plan
       and (optionally) documentation.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1351-1356)"
+    confirmed_by: "exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1351-1356)"
     elements:
       - element: "Notify experiential supervisor on request (yes/no) + email template preview"
         type: "radio + template preview link"
@@ -622,7 +622,7 @@ steps:
       auto-provisions the matching activity in GoReact. Included here because it is a
       fifth learning-activity type a new admin may need on day one, and because its
       availability is discipline-gated.
-    confirmed_by: "/Users/romitsoley/Downloads/TEVideosTranscripts.md, 'Setting Up and Managing Echo360 (GoReact) Assignments in Exxat Prism' — not covered in the general admin transcript"
+    confirmed_by: "TEVideosTranscripts.md, 'Setting Up and Managing Echo360 (GoReact) Assignments in Exxat Prism' — not covered in the general admin transcript"
     elements:
       - element: "Learning Tool Interoperability section (visible alongside Forms and Evaluations, Timesheets, Patient Logs)"
         type: "configuration section, feature-flagged"
@@ -656,7 +656,7 @@ steps:
       Per the transcript, "while most forms and evaluations are initiated by the student,
       there may be some forms and evaluations which you need to distribute to the
       experiential supervisor," separated in the list by a thin gray line.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1359-1381)"
+    confirmed_by: "exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1359-1381)"
     elements:
       - element: "Distributable-forms table (form, number of placements, rotation, Distribution Status, Submission Status)"
         type: "read-only rollup with row selection"
@@ -673,7 +673,7 @@ steps:
         accreditation_citation: "ACPE Standard 3, Key Element 3.3.a (preceptor evaluation — the school-added vs student-added distinction determines whether the evaluator is a vetted preceptor)"
         competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
         gap_severity: "none"
-        gap_note: "The OT/FWPE transcript gives the operational rule a new admin will not infer: 'to avoid duplicate evaluations, Exxat recommends sending the form only to the fieldwork educator added by school' (/Users/romitsoley/Downloads/OTOTAVideosTranscripts.md)."
+        gap_note: "The OT/FWPE transcript gives the operational rule a new admin will not infer: 'to avoid duplicate evaluations, Exxat recommends sending the form only to the fieldwork educator added by school' (OTOTAVideosTranscripts.md)."
       - element: "Per-instance status columns (Not Distributed / Submitted / Pending Submission) per stakeholder type"
         type: "read-only status columns"
         data_shown: "Whether this exact form has previously reached this stakeholder"
@@ -737,7 +737,7 @@ steps:
       Admin works the review queue. All four activity types share one interaction grammar:
       a per-student table split into rotation accordions, status-colored counts, click a
       status to open that student's items, act, and update.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1357-1427). SLP-specific column set confirmed in /Users/romitsoley/Downloads/SLPVideosTranscripts.md; PA-specific in /Users/romitsoley/Downloads/PAVideosTranscripts.md"
+    confirmed_by: "exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1357-1427). SLP-specific column set confirmed in SLPVideosTranscripts.md; PA-specific in PAVideosTranscripts.md"
     elements:
       - element: "Forms & Evaluations summary grid (students in rows, forms across columns, rotation accordions)"
         type: "read-only status matrix"
@@ -826,7 +826,7 @@ steps:
       Admin verifies weightings sum correctly, fills in the scores the system cannot
       compute, and overrides where needed. Per the transcript, "you can use the gradebook
       to identify students who may need academic intervention."
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1427-1441). Grading-scheme prerequisite: same transcript, '1/16 Administrator Navigation' (line 41)"
+    confirmed_by: "exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1427-1441). Grading-scheme prerequisite: same transcript, '1/16 Administrator Navigation' (line 41)"
     elements:
       - element: "Total weightage indicator (top right of table)"
         type: "read-only rollup"
@@ -884,7 +884,7 @@ steps:
       off. Four navigation entry points pre-scope the report differently, but "once you
       are in the Learning Activity Reports section, you can change the courses, rotations,
       and other options."
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1441-1495); standalone sections 'Comprehensive Report for Placement Based Forms' (lines 1721-1733) and 'Hours Summary by Week Report' (lines 1747-1757)"
+    confirmed_by: "exxat_transcripts.md, '13/16 Managing Learning Activities' (lines 1441-1495); standalone sections 'Comprehensive Report for Placement Based Forms' (lines 1721-1733) and 'Hours Summary by Week Report' (lines 1747-1757)"
     elements:
       - element: "Select Course Offerings picker (search + type-switch, filter by cohort/academic year/term, select-all, Show More, X to remove, Clear All)"
         type: "multi-select picker with filters"
@@ -949,7 +949,7 @@ steps:
         accreditation_citation: "COCA Standard 11, Element 11.2 ('copies of the evaluation forms used' plus the response corpus)"
         competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research."
         gap_severity: "none"
-        gap_note: "For multi-term, multi-respondent forms the row count multiplies: the PT/PTA transcript documents four rows per student for a CIET run to midterm+final by student+CI (/Users/romitsoley/Downloads/PTPTAVideosTranscripts.md)."
+        gap_note: "For multi-term, multi-respondent forms the row count multiplies: the PT/PTA transcript documents four rows per student for a CIET run to midterm+final by student+CI (PTPTAVideosTranscripts.md)."
       - element: "Patient log reports — Aggregated Log Details / Comprehensive Report for Program-Specified Log Attributes / ICD-10 Codes Usage / CPT Codes Usage / Graphical Patient Log Summary (Statistics)"
         type: "report family"
         data_shown: "Aggregated Log Details: placements per student, total logs, average logs per placement, encounter time, option-selection counts. Program-specified attributes: an Excel sheet per custom-value category with preferred/minimum count columns, red/green conditional formatting against minimums. ICD/CPT: code x student x participation-level counts."
@@ -981,7 +981,7 @@ steps:
         accreditation_citation: "none of this repo's four accreditation files covers ASHA/CAA; the SLP transcript frames this as graduation-requirement and program-accreditation evidence generally"
         competitor_equivalent: "Not documented at this granularity by any competitor teardown in this research — no competitor file documents an age-group x service-type x participation-type hours matrix."
         gap_severity: "none"
-        gap_note: "The most discipline-shaped report in the library and a genuine differentiator: 'Let's say you would like a total number of direct contact intervention hours with the adult age group for a specific student — this report makes collecting these hours an easy task' (/Users/romitsoley/Downloads/SLPVideosTranscripts.md)."
+        gap_note: "The most discipline-shaped report in the library and a genuine differentiator: 'Let's say you would like a total number of direct contact intervention hours with the adult age group for a specific student — this report makes collecting these hours an easy task' (SLPVideosTranscripts.md)."
 
   - screen: "Reports — Custom tab (custom report builder)"
     navigation_path: "Learning Activities > Reports > Custom tab > Create New Report — or Reports section on the main dashboard, or the Reports tab within Students / Placements / Sites"
@@ -991,7 +991,7 @@ steps:
       course, or setting... track timesheet hours by preceptor and location, or even
       create a student watchlist to monitor those needing follow-ups or extra academic
       support."
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, standalone section 'Configuring Custom Reports' (lines 1759-1855)"
+    confirmed_by: "exxat_transcripts.md, standalone section 'Configuring Custom Reports' (lines 1759-1855)"
     elements:
       - element: "Contextual vs central entry points (section Reports tab vs main-dashboard Reports section)"
         type: "navigation pattern"
@@ -1073,7 +1073,7 @@ steps:
       competency evidence. First-run onboarding is explicit: "If this is your first time
       setting up Competency Management, a short notification will notify you that your
       competencies are not yet configured for mapping. Click the Configure Now button."
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '15/16 Setting Up Competency Management in Exxat Prism' (lines 1617-1639)"
+    confirmed_by: "exxat_transcripts.md, '15/16 Setting Up Competency Management in Exxat Prism' (lines 1617-1639)"
     elements:
       - element: "'Configure Now' first-run prompt on the empty Review tab"
         type: "empty-state call to action"
@@ -1155,7 +1155,7 @@ steps:
       Per the Nursing transcript: "This is a one-time activity that enables the system to
       calculate student competency achievement each time they get evaluated by their
       preceptors, clinical instructors or faculty."
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '15/16 Setting Up Competency Management' (lines 1639-1647); framing confirmed in /Users/romitsoley/Downloads/NursingTutorialsTranscripts.md 'Streamline Transition to Competency-Based Education'"
+    confirmed_by: "exxat_transcripts.md, '15/16 Setting Up Competency Management' (lines 1639-1647); framing confirmed in NursingTutorialsTranscripts.md 'Streamline Transition to Competency-Based Education'"
     elements:
       - element: "Assessments list (left rail) > question list > Add Mapping > competency picker"
         type: "mapping interface"
@@ -1220,7 +1220,7 @@ steps:
       Admin reads competency achievement at cohort level, drills into a student, and
       decides whether to publish scores to students. This is the output the whole stage
       exists to produce.
-    confirmed_by: "/Users/romitsoley/Downloads/exxat_transcripts.md, '15/16 Setting Up Competency Management' (lines 1647-1681)"
+    confirmed_by: "exxat_transcripts.md, '15/16 Setting Up Competency Management' (lines 1647-1681)"
     elements:
       - element: "Cohort grid (students in rows, parent-level competencies in columns, average competency score per cell)"
         type: "read-only matrix"
@@ -1312,14 +1312,14 @@ steps:
         gap_note: "All-or-nothing per framework, with no per-student or per-cohort staging. A new admin publishing for the first time should be warned it is immediately visible to every scored student — the transcript flags this ('Please keep in mind...') but the control itself is a two-click dropdown."
 
 sources:
-  - "/Users/romitsoley/Downloads/exxat_transcripts.md — PRIMARY. '13/16 Managing Learning Activities in Exxat Prism' (lines 1289-1495); '15/16 Setting Up Competency Management in Exxat Prism' (lines 1613-1681); standalone 'Comprehensive Report for Placement Based Forms (Forms/Evaluations)' (lines 1721-1733); 'Hours Summary by Week Report in Exxat Prism (Timesheet)' (lines 1747-1757); 'Configuring Custom Reports' (lines 1759-1855); 'Forms/Evaluations Workflows in Exxat Prism' (lines 1967-1987); grading-scheme prerequisite in '1/16 Administrator Navigation in Exxat Prism' (line 41)"
-  - "/Users/romitsoley/Downloads/PTPTAVideosTranscripts.md — 'How to use the CIET v2.0 Form' (multi-term workflow, school-specific benchmarks, prerequisite training quiz, concurrent blinded student/CI completion, four-row raw report shape)"
-  - "/Users/romitsoley/Downloads/OTOTAVideosTranscripts.md — 'Fieldwork Performance Evaluation in Exxat Prism' (AOTA FWPE form family, response-based and low-score notifications requiring a Prism support request, OT 111 / OTA 91 cutoffs, four FWPE report types, 'send only to the fieldwork educator added by school')"
-  - "/Users/romitsoley/Downloads/PAVideosTranscripts.md — 'Setting up and Managing Patient Logs in Exxat Prism' (patient log templates per course/rotation, CSS-agent dependency for custom templates, Preview Layout, bulk log review)"
-  - "/Users/romitsoley/Downloads/SLPVideosTranscripts.md — 'Setting up and Reviewing Clinical Logs' (clinical-log naming, Logs Count/Hours by Status columns, Clock Hours report by age group / mode of delivery / training level / participation type)"
-  - "/Users/romitsoley/Downloads/NursingTutorialsTranscripts.md — 'Streamline Transition to Competency-Based Education' (AACN Essentials framework creation, exposure-vs-achievement distinction, competency tracker grid, longitudinal and class-comparison views, skill achievement across didactic and clinical)"
-  - "/Users/romitsoley/Downloads/TEVideosTranscripts.md — 'Setting Up and Managing Echo360 (GoReact) Assignments in Exxat Prism' (LTI section, discipline/program feature gating via support ticket, auto-provisioning and score sync)"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md — used only where the general transcript is silent: the ARC-PA telehealth 50%/20% ceilings via Timesheet Hours by Categories, and the Competency Management > Review > ArcPA B3.03/B3.04 report path"
+  - "exxat_transcripts.md — PRIMARY. '13/16 Managing Learning Activities in Exxat Prism' (lines 1289-1495); '15/16 Setting Up Competency Management in Exxat Prism' (lines 1613-1681); standalone 'Comprehensive Report for Placement Based Forms (Forms/Evaluations)' (lines 1721-1733); 'Hours Summary by Week Report in Exxat Prism (Timesheet)' (lines 1747-1757); 'Configuring Custom Reports' (lines 1759-1855); 'Forms/Evaluations Workflows in Exxat Prism' (lines 1967-1987); grading-scheme prerequisite in '1/16 Administrator Navigation in Exxat Prism' (line 41)"
+  - "PTPTAVideosTranscripts.md — 'How to use the CIET v2.0 Form' (multi-term workflow, school-specific benchmarks, prerequisite training quiz, concurrent blinded student/CI completion, four-row raw report shape)"
+  - "OTOTAVideosTranscripts.md — 'Fieldwork Performance Evaluation in Exxat Prism' (AOTA FWPE form family, response-based and low-score notifications requiring a Prism support request, OT 111 / OTA 91 cutoffs, four FWPE report types, 'send only to the fieldwork educator added by school')"
+  - "PAVideosTranscripts.md — 'Setting up and Managing Patient Logs in Exxat Prism' (patient log templates per course/rotation, CSS-agent dependency for custom templates, Preview Layout, bulk log review)"
+  - "SLPVideosTranscripts.md — 'Setting up and Reviewing Clinical Logs' (clinical-log naming, Logs Count/Hours by Status columns, Clock Hours report by age group / mode of delivery / training level / participation type)"
+  - "NursingTutorialsTranscripts.md — 'Streamline Transition to Competency-Based Education' (AACN Essentials framework creation, exposure-vs-achievement distinction, competency tracker grid, longitudinal and class-comparison views, skill achievement across didactic and clinical)"
+  - "TEVideosTranscripts.md — 'Setting Up and Managing Echo360 (GoReact) Assignments in Exxat Prism' (LTI section, discipline/program feature gating via support ticket, auto-provisioning and score sync)"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Exxat Prism Reports to Support PA Accreditation (ARC-PA 6th Edition).md — used only where the general transcript is silent: the ARC-PA telehealth 50%/20% ceilings via Timesheet Hours by Categories, and the Competency Management > Review > ArcPA B3.03/B3.04 report path"
   - "content/accreditation/coca.yaml, coda.yaml, lcme.yaml, acpe.yaml — element IDs and required_software_behavior used for accreditation_citation"
   - "content/competitors/core-elms.yaml, e-value.yaml, emedley.yaml, elentra.yaml, leo-davinci.yaml, medhub.yaml, new-innovations.yaml, one45.yaml, axium.yaml — competitor_equivalent claims"
   - "content/domains/dentistry.yaml, pharmacy.yaml — discipline-specific consequences of the scored-forms-only and procedure-quota constraints"

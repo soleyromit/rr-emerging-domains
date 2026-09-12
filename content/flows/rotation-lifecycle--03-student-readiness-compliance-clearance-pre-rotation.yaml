@@ -176,7 +176,7 @@ steps:
           Shipped and in production, and the asymmetry with the four expansion
           domains is the finding: OT/OTA is the only discipline in the corpus
           with a written, enumerable starter taxonomy
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
           Therapy (OT) Playbook.md, section "6. Student Compliance"), and the
           PT playbook records only the health/immunization half plus the
           onboarding instruction "Ask the school where they are tracking
@@ -229,11 +229,11 @@ steps:
           coa.yaml's own gap_notes, the exemption taxonomy is a live hazard here
           — see the dedicated element in step 3. Source note: the Nursing
           Playbook
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
           Playbook.md, "Compliance" and "Clinical Sites, Contracts &
           Placements") names ACLS/PALS explicitly as the CRNA-specific
           certifications verified at the Placement Clearance gate. The CRNA
-          video transcripts at /Users/romitsoley/Downloads/CRNAVideosTranscripts.md
+          video transcripts at CRNAVideosTranscripts.md
           do NOT corroborate this — the only compliance-adjacent line in that
           file is line 49 (the CCE log keeping students "compliant with
           accreditation and certification standards"), and the transcripts
@@ -299,7 +299,7 @@ steps:
           the platform initiates the order and receives a synced status. A
           second, more important competitor finding sits outside
           content/competitors/ entirely: the PT Playbook
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
           Therapy (PT) Playbook.md) names myClinicalExchange (mCE), Clinician
           Nexus, ACEMAPP and CastleBranch Bridges as "third-party vendors that
           require student account registration and payments for slot requests or
@@ -360,7 +360,7 @@ steps:
           step scopes configuration to a COHORT. A TE program placing candidates
           across twenty districts with twenty different clearance packets has no
           documented modeling path. Compounding it: the TE playbook
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher
           Education (TE) Playbook.md, "Open Gaps") lists "Compliance —
           background-check/fingerprinting and other TE-specific compliance
           document patterns" as EXPLICITLY UNPOPULATED, so there is no
@@ -391,7 +391,7 @@ steps:
         gap_note: >
           Worth flagging precisely because SLP's compliance story is
           under-documented rather than absent: the SLP playbook
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language
           Pathology (SLP) Playbook.md, read in full 2026-08-25) contains NO
           compliance section at all — its own gap list at lines 142-149 is
           explicit that thin coverage is "a documentation gap, not necessarily a
@@ -412,7 +412,7 @@ steps:
           requirements — the SW playbook names accommodations, vaccination records, and
           background-check details specifically, and records that the section is "fully customizable
           and is commonly used IN PLACE OF a traditional field application form"
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
           Work (SW) Playbook.md line 77).
         gates_on:
           - "Nothing — and that is the finding. Data captured here does NOT feed the Requirement Upload Status or Compliance Status columns on the Placement Clearance Dashboard (step 7), because those columns evaluate compliance REQUIREMENTS, not profile fields."
@@ -467,7 +467,7 @@ steps:
       they fall under, whether each is mandatory (gating) or optional, and
       publishes the configuration so students can begin clearing it.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Student
       Compliance/Setup Student Compliance Section.md
 
@@ -512,7 +512,7 @@ steps:
         gap_severity: "none"
         gap_note: >
           Social Work is the discipline that surfaces this: the SW playbook
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
           Work (SW) Playbook.md line 149) enumerates the student-facing
           table columns as Mandatory Requirement, Categories, Status, Due Date,
           Follow-up Date, Expiration Date, Reason, Comment, Included in Profile
@@ -541,7 +541,7 @@ steps:
         gap_severity: "none"
         gap_note: >
           Small but genuinely discipline-flagged: the Nursing Playbook
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing
           Playbook.md, "Compliance") records that "a student mobile app is
           called out specifically in the COA guide for completing learning
           activities, submitting documentation, and tracking compliance on the
@@ -553,7 +553,7 @@ steps:
           content/prism/capability-map.yaml.
     action: "Student reviews outstanding compliance items and opens one to act on it."
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Students/Step-by-Step Guides (How-tos)/Compliance/Uploading
       Compliance Documents.md
 
@@ -688,7 +688,7 @@ steps:
           academic record") — the same trust mechanic applied to compliance.
     action: "Student uploads the actual evidence document and submits it for admin/Approve-team review."
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Students/Step-by-Step Guides (How-tos)/Compliance/Uploading
       Compliance Documents.md
 
@@ -747,7 +747,7 @@ steps:
           Confirmed as a shipped, named integration pair in
           content/prism/capability-map.yaml ("Third-party background check &
           drug screening integrations") and in the SW playbook
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
           Work (SW) Playbook.md line 151 — CISIVE and Universal named explicitly
           for SW). Configure-needed rather than
           shipped because the vendor relationship is a commercial prerequisite
@@ -820,7 +820,7 @@ steps:
         gap_note: >
           The immutable university-email binding is the operational trap, and it
           is documented in the SW playbook
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
           Work (SW) Playbook.md line 152): the ComplianceJunction account
           is "a one-time account setup tied to the student's university email
           (cannot be changed)." A student who sets it up under a personal
@@ -861,7 +861,7 @@ steps:
       own environment, and the resulting status syncs back into Prism as the
       requirement's status — no document upload occurs.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
       Work (SW) Playbook.md lines 147-153 (line 149 the centralized Compliance
       module and its full student-facing column list with the Approved / Pending
       Review / Needs Attention summary; line 150 the status ladder In Progress ->
@@ -956,7 +956,7 @@ steps:
           Structurally distinctive to Social Work and worth naming because it is
           the only place in this stage where an attestation gates something other
           than the compliance rollup itself. Per the SW playbook
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social
           Work (SW) Playbook.md line 82),
           attestations are "commonly required before a profile can be shared
           externally (e.g., consent to share profile with agencies) or before
@@ -1048,7 +1048,7 @@ steps:
           scoped against: for PT and OT the attestation item type is already a
           normal part of a program's setup, with due dates, shared to all
           cohorts. Confirmed in
-          /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
+          PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical
           Therapy (PT) Playbook.md ("Attestations: Profile verification and
           Profile update request are generally set up (with due dates), shared
           with all cohorts/students") and
@@ -1067,7 +1067,7 @@ steps:
       course-specific) and clicks I Agree to acknowledge it — a distinct item
       type from uploading a document.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Students/Step-by-Step Guides (How-tos)/Profile/Acknowledging to
       Attestations.md
 
@@ -1088,7 +1088,7 @@ steps:
         gap_note: ""
     action: "Student (or an admin viewing the profile) reviews the durable, timestamped record of every attestation agreed to."
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Students/Step-by-Step Guides (How-tos)/Profile/Acknowledging to
       Attestations.md; corroborated in
       content/prism/capability-map.yaml under "Two-tier attestations with
@@ -1141,7 +1141,7 @@ steps:
           is required when a site is added, so it flags missing contracts even
           when none is needed. Schools have requested a way to mark a site as
           'contract not required' so it isn't flagged as missing/incomplete"
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
           Therapy (OT) Playbook.md, "Placement Clearance Requirements"). This is
           the one documented defect in the clearance gate itself rather than in
           its inputs, and it degrades the gate in the worst way — by training
@@ -1312,7 +1312,7 @@ steps:
           "Requirements: add site/location-specific requirements students must
           submit when placed there — tracked via the Placement Clearance
           dashboard"
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
           Assistant (PA) Playbook.md, "Site/Location Assessment"); OT:
           "Location-specific requirements (COVID-19 vaccination, flu shots, CPR
           certification, etc.) can be set under Location Requirements, per what
@@ -1396,12 +1396,12 @@ steps:
       preceptor credentials — on anything short of fully clear before
       placement start.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement
       Clearance Dashboard.md; multi-entity gate (student + site + contract +
       preceptor) corroborated in the PA Playbook's "Placement Clearance
       Requirements" section
-      (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+      (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
       Assistant (PA) Playbook.md).
 
   - screen: "Placement Clearance report (course/placement-group scoped export)"
@@ -1452,7 +1452,7 @@ steps:
       status, does it show the status if the student has sent their profile
       or just the uploaded document? ... the Placements Clearance report only
       shows the status of uploaded documents and the site contract status." —
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help
       for Program Administrators/FAQs for Administrators/Frequently Asked
       Questions- Program Administrators.md. Navigation path corroborated in
       the Nursing COA Accreditation Standards Support Guide's "Placement
@@ -1528,7 +1528,7 @@ steps:
           supervise. LIMITATION: CV and other details collected via the
           Fieldwork Educator Details Form do not sync automatically with the
           system — schools must manually enter this data"
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
           Therapy (OT) Playbook.md, "Fieldwork Educator" section). The
           consequence lands exactly on this stage: the step 7 dashboard's
           Missing/Exists/NA preceptor tracker reads Missing until someone
@@ -1551,7 +1551,7 @@ steps:
       preceptor tracker.
     confirmed_by: >
       PA Playbook, "Personnel" and "Personnel data best practices" sections
-      (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
+      (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician
       Assistant (PA) Playbook.md); corroborated in
       content/prism/capability-map.yaml, "Personnel compliance" feature.
 
@@ -1806,7 +1806,7 @@ steps:
           OT playbook records the distinction in practice, with faculty mentors
           associated directly to student profiles and notes logged both
           internally and shared with the student
-          (/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
+          (PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational
           Therapy (OT) Playbook.md, "Student Profile" and "Communication and
           Intervention — A.3.5"). Social Work uses the same pair for field-visit
           documentation with attachments and email records (SW playbook lines
@@ -1893,43 +1893,43 @@ steps:
       (structured advising/incident log)" feature note.
 
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup Student Compliance Section.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Review Student Compliance Document.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Compliance/Uploading Compliance Documents.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Profile/Acknowledging to Attestations.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Rotation Readiness Checklist.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/FAQs for Administrators/Frequently Asked Questions- Program Administrators.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/Nursing/Accreditation Guides/COA Accreditation Standards Support Guide.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Setup Student Compliance Section.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Student Compliance/Review Student Compliance Document.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Compliance/Uploading Compliance Documents.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Profile/Acknowledging to Attestations.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Clearance Dashboard.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Rotation Readiness Checklist.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/FAQs for Administrators/Frequently Asked Questions- Program Administrators.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/Nursing/Accreditation Guides/COA Accreditation Standards Support Guide.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "content/prism/capability-map.yaml"
+  - "content/accreditation/coca.yaml"
+  - "content/accreditation/acpe.yaml"
+  - "content/accreditation/coda.yaml"
+  - "content/competitors/emedley.yaml"
   # --- Added 2026-08-25 for the eight existing-discipline extension ---
   # Discipline playbooks (per-student compliance taxonomy, gate practice, pain points)
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — READ IN FULL 2026-08-25. Lines cited in this file: 57-59 (Announcements shared with all cohorts; Handbooks, Policies and Evaluation & Grading shared as Resources; and the two attestations PT programs actually configure — Profile verification and Profile update request, with due dates, shared to all cohorts), 62-64 (the compliance section: students upload health and immunization records, plus the onboarding instruction to ASK where a school tracks compliance if it does not track it in Prism — i.e. Prism is not assumed to be the system of record even for PT), 93-97 (the three pre-placement checks: compliance status, site/location-specific document upload, and contract validity — treated by practitioners as three separate checks rather than one), and 184 (the four unresearched vendors whose entire business is student-paid compliance onboarding)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — read IN FULL 2026-08-25 (previously consulted per-stage). Lines cited across this journey: 12 (the playbook's own data-quality caveat — it is synthesized from eight thin feature-specific artifacts, not a CSS playbook, so silence is documentation absence rather than product absence), 18-21 (ASHA / CAA / CFCC / KASA, and the nine KASA competencies a.k.a. nine service-delivery areas, whose individual names that source never enumerates), 25-35 (Course Offering, Rotation, Learning Activity Group, Clinical Log, Clinical Educator, Student Participation Type, Practice Type, Mode of Delivery, Training Level, Placement Setting, Age Group), 37 (no DCE/ACCE/SCCE-equivalent role terms are documented for SLP), 41-49 (CAA + CFCC curriculum mapping, the Mapped Standards Report, the beyond-KASA CSS dependency, the CFCC V-E attestation hook and its navigation, affiliation agreements in the Sites module, and the 400-hour tracking on the Clinical Clock Hours Report (Cumulative)), 53-67 (per-course-offering Clinical Log setup: template preview, activate toggle, the N-day submission window, grading, the wrench column customization with the first four columns fixed, clinical-educator review routing with a previewable email template, the attestation, and the support-gated min/max hour thresholds), 71-84 (the review workflow: the Logs Count / Log Hours by Status columns, Last Encounter and Last Update, the three-status colour model, the mandatory school-feedback note on Needs Attention, bulk approve and Approve All Logs, the 6am EST Statistics refresh, three export levels, and the filter set incl. Placement Faculty / Clinical Educator), 88-100 (no free off-the-shelf standard instruments; the configured toolkit — KASA Summary Forms, Clinical Supervisor Evaluations (Midterm & Final), Student Self-Assessments, Student Evaluations of Clinical Sites, Student Evaluations of Clinical Supervisors, Site Assessments aligned to program goals and accreditation standards, and custom forms — all support-gated to create; and the student-facing Student Performance Report across all nine service delivery areas), 104-105 (surveys buildable in Prism from December 2025), 109-114 (advisement via Communications & Interventions or custom workflow-based advisement forms with signature, plus profile-level and course-level attestations with their navigation paths), 118 (question-based early-alert notifications configured by support), 120-138 (the report suite, the shared filter set, the 50-course-offering cap, and the broader capability list incl. trend/exposure analysis, low-performance indicators and placement-readiness metrics), 142-149 (the discipline's own gap list — explicitly a DOCUMENTATION gap, plus the recurring self-service gap for SLP). In THIS file the load-bearing lines are 109-114 (the two-tier attestation model — profile-level at Dashboard > Students > Set-up > Attestations, course-level at Dashboard > Courses > Course Offering > select course > Attestation > Set-up — and the two advisement paths) and 142-149 (the absence of any SLP compliance section, which is why the universal-precautions element in step 1 is grounded in caa-asha.yaml rather than in an SLP product source)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — read IN FULL 2026-08-25 (previously consulted per-stage). Lines cited in this file: 77 (Additional Profile Details used in place of a field application form — the parallel, ungated readiness-capture surface added to step 1), 79-80 (Communications vs. Interventions, both read-only to students, Interventions explicitly \"not necessarily disciplinary\"), 81 (student-initiated Share Profile, 25MB, PDF recommended), 82 (attestations gating external profile sharing and field-education unlock), 147-153 (the Compliance module column list, status ladder, CISIVE/Universal/ComplianceJunction integrations, School Pay vs. Student Pay, the immutable university-email binding, and the Included-in-Profile-Link privacy control), 196 (complete profiles and Field Application Forms early — vendor processing lead time)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — READ IN FULL 2026-08-25 (73 lines). It is the thinnest discipline source in this corpus and its own line 12 says why: TE has no dedicated internal help-center playbook article and no CSS discipline playbook PDF, so the note is built from ONE program-administrator video tutorial covering the GoReact/Echo360 LTI integration, transcribed from auto-generated Vimeo captions. Substantive content: lines 19-26 (LTI integration with GoReact, now part of Echo360; assignments, student submissions and scores/status updates sync automatically; described as a genuinely connected two-way workflow in which administrators are not expected to recreate assignments in GoReact), 28-31 (activation is discipline/program-gated — if the Learning Tool Interoperability section is absent from Learning Activities > Setup the feature is not activated, and activation requires an Exxat support ticket), 33-45 (the administrator setup sequence: create at Learning Activities > Setup > Learning Tool Interoperability > +, configure LTI tool, title, description, placement-based vs. didactic, publish and due dates, grading and score settings and faculty visibility; activate and save; Prism auto-creates the matching GoReact activity on first save; GoReact-specific settings are then configured in GoReact and the activity marked Done, at which point the assignment becomes available to students), 47-52 (student workflow from My Coursework: redirect into GoReact, record directly, upload a video file, or submit other supported media, with status syncing back), 54-57 (faculty/reviewer workflow: timestamped comments, feedback, evaluations and scores, syncing back with no reconciliation step), 61 (further GoReact-side configuration is documented in GoReact's help centre, not Exxat's), and 63-73 (the Open Gaps list — TE terminology, program/setup patterns, compliance, placement and slot workflows, standard evaluation forms and reports, accreditor standards, and pain points are ALL explicitly unpopulated, with a standing instruction not to treat field-standard TE terms or CAEP standard numbers as Exxat-specific until confirmed against a TE-specific source). EVERY TE claim in this file that is not about the LTI integration is therefore reasoned from ../accreditation/caep.yaml and carries that caveat inline. In THIS file the load-bearing line is 69, which lists TE-specific compliance — background-check and fingerprinting document patterns — as explicitly unpopulated, which is why the per-setting Program Requirements element in step 1 is an evidence gap on top of a product gap."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — READ IN FULL 2026-08-25. Lines cited in this file: 57-59 (Announcements shared with all cohorts; Handbooks, Policies and Evaluation & Grading shared as Resources; and the two attestations PT programs actually configure — Profile verification and Profile update request, with due dates, shared to all cohorts), 62-64 (the compliance section: students upload health and immunization records, plus the onboarding instruction to ASK where a school tracks compliance if it does not track it in Prism — i.e. Prism is not assumed to be the system of record even for PT), 93-97 (the three pre-placement checks: compliance status, site/location-specific document upload, and contract validity — treated by practitioners as three separate checks rather than one), and 184 (the four unresearched vendors whose entire business is student-paid compliance onboarding)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — read IN FULL 2026-08-25 (previously consulted per-stage). Lines cited across this journey: 12 (the playbook's own data-quality caveat — it is synthesized from eight thin feature-specific artifacts, not a CSS playbook, so silence is documentation absence rather than product absence), 18-21 (ASHA / CAA / CFCC / KASA, and the nine KASA competencies a.k.a. nine service-delivery areas, whose individual names that source never enumerates), 25-35 (Course Offering, Rotation, Learning Activity Group, Clinical Log, Clinical Educator, Student Participation Type, Practice Type, Mode of Delivery, Training Level, Placement Setting, Age Group), 37 (no DCE/ACCE/SCCE-equivalent role terms are documented for SLP), 41-49 (CAA + CFCC curriculum mapping, the Mapped Standards Report, the beyond-KASA CSS dependency, the CFCC V-E attestation hook and its navigation, affiliation agreements in the Sites module, and the 400-hour tracking on the Clinical Clock Hours Report (Cumulative)), 53-67 (per-course-offering Clinical Log setup: template preview, activate toggle, the N-day submission window, grading, the wrench column customization with the first four columns fixed, clinical-educator review routing with a previewable email template, the attestation, and the support-gated min/max hour thresholds), 71-84 (the review workflow: the Logs Count / Log Hours by Status columns, Last Encounter and Last Update, the three-status colour model, the mandatory school-feedback note on Needs Attention, bulk approve and Approve All Logs, the 6am EST Statistics refresh, three export levels, and the filter set incl. Placement Faculty / Clinical Educator), 88-100 (no free off-the-shelf standard instruments; the configured toolkit — KASA Summary Forms, Clinical Supervisor Evaluations (Midterm & Final), Student Self-Assessments, Student Evaluations of Clinical Sites, Student Evaluations of Clinical Supervisors, Site Assessments aligned to program goals and accreditation standards, and custom forms — all support-gated to create; and the student-facing Student Performance Report across all nine service delivery areas), 104-105 (surveys buildable in Prism from December 2025), 109-114 (advisement via Communications & Interventions or custom workflow-based advisement forms with signature, plus profile-level and course-level attestations with their navigation paths), 118 (question-based early-alert notifications configured by support), 120-138 (the report suite, the shared filter set, the 50-course-offering cap, and the broader capability list incl. trend/exposure analysis, low-performance indicators and placement-readiness metrics), 142-149 (the discipline's own gap list — explicitly a DOCUMENTATION gap, plus the recurring self-service gap for SLP). In THIS file the load-bearing lines are 109-114 (the two-tier attestation model — profile-level at Dashboard > Students > Set-up > Attestations, course-level at Dashboard > Courses > Course Offering > select course > Attestation > Set-up — and the two advisement paths) and 142-149 (the absence of any SLP compliance section, which is why the universal-precautions element in step 1 is grounded in caa-asha.yaml rather than in an SLP product source)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — read IN FULL 2026-08-25 (previously consulted per-stage). Lines cited in this file: 77 (Additional Profile Details used in place of a field application form — the parallel, ungated readiness-capture surface added to step 1), 79-80 (Communications vs. Interventions, both read-only to students, Interventions explicitly \"not necessarily disciplinary\"), 81 (student-initiated Share Profile, 25MB, PDF recommended), 82 (attestations gating external profile sharing and field-education unlock), 147-153 (the Compliance module column list, status ladder, CISIVE/Universal/ComplianceJunction integrations, School Pay vs. Student Pay, the immutable university-email binding, and the Included-in-Profile-Link privacy control), 196 (complete profiles and Field Application Forms early — vendor processing lead time)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — READ IN FULL 2026-08-25 (73 lines). It is the thinnest discipline source in this corpus and its own line 12 says why: TE has no dedicated internal help-center playbook article and no CSS discipline playbook PDF, so the note is built from ONE program-administrator video tutorial covering the GoReact/Echo360 LTI integration, transcribed from auto-generated Vimeo captions. Substantive content: lines 19-26 (LTI integration with GoReact, now part of Echo360; assignments, student submissions and scores/status updates sync automatically; described as a genuinely connected two-way workflow in which administrators are not expected to recreate assignments in GoReact), 28-31 (activation is discipline/program-gated — if the Learning Tool Interoperability section is absent from Learning Activities > Setup the feature is not activated, and activation requires an Exxat support ticket), 33-45 (the administrator setup sequence: create at Learning Activities > Setup > Learning Tool Interoperability > +, configure LTI tool, title, description, placement-based vs. didactic, publish and due dates, grading and score settings and faculty visibility; activate and save; Prism auto-creates the matching GoReact activity on first save; GoReact-specific settings are then configured in GoReact and the activity marked Done, at which point the assignment becomes available to students), 47-52 (student workflow from My Coursework: redirect into GoReact, record directly, upload a video file, or submit other supported media, with status syncing back), 54-57 (faculty/reviewer workflow: timestamped comments, feedback, evaluations and scores, syncing back with no reconciliation step), 61 (further GoReact-side configuration is documented in GoReact's help centre, not Exxat's), and 63-73 (the Open Gaps list — TE terminology, program/setup patterns, compliance, placement and slot workflows, standard evaluation forms and reports, accreditor standards, and pain points are ALL explicitly unpopulated, with a standing instruction not to treat field-standard TE terms or CAEP standard numbers as Exxat-specific until confirmed against a TE-specific source). EVERY TE claim in this file that is not about the LTI integration is therefore reasoned from ../accreditation/caep.yaml and carries that caveat inline. In THIS file the load-bearing line is 69, which lists TE-specific compliance — background-check and fingerprinting document patterns — as explicitly unpopulated, which is why the per-setting Program Requirements element in step 1 is an evidence gap on top of a product gap."
   # CRNA raw transcripts — reviewed and cited for what they do NOT contain (see step 1,
   # ACLS/PALS element gap_note): the file's only compliance-adjacent line is line 49
   # (the CCE log keeping students "compliant with accreditation and certification
   # standards"); there is no ACLS, PALS, background-check, immunization or
   # readiness-gate narration anywhere in its 117 lines.
-  - "/Users/romitsoley/Downloads/CRNAVideosTranscripts.md"
+  - "CRNAVideosTranscripts.md"
   # Accreditor registries for the eight existing disciplines
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/capte.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acote.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/arc-pa.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caa-asha.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/nursing.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coa.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/cswe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caep.yaml"
+  - "content/accreditation/capte.yaml"
+  - "content/accreditation/acote.yaml"
+  - "content/accreditation/arc-pa.yaml"
+  - "content/accreditation/caa-asha.yaml"
+  - "content/accreditation/nursing.yaml"
+  - "content/accreditation/coa.yaml"
+  - "content/accreditation/cswe.yaml"
+  - "content/accreditation/caep.yaml"
   # Competitor teardowns reviewed at compliance-gate granularity. core-elms.yaml is the
   # only one granular enough for an item-for-item comparison (it publicly enumerates
   # immunizations, CPR, background checks, drug checks, HIPAA training, licensing);
@@ -1940,14 +1940,14 @@ sources:
   # exists in this repo: myClinicalExchange (mCE), Clinician Nexus, ACEMAPP and
   # CastleBranch Bridges — the four vendors the PT playbook names as direct competitors on
   # exactly this workflow. That is the single largest competitor-research gap for this stage.
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/new-innovations.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
+  - "content/competitors/core-elms.yaml"
+  - "content/competitors/new-innovations.yaml"
+  - "content/competitors/medhub.yaml"
+  - "content/competitors/e-value.yaml"
+  - "content/competitors/axium.yaml"
+  - "content/competitors/elentra.yaml"
+  - "content/competitors/leo-davinci.yaml"
+  - "content/competitors/one45.yaml"
   # Cross-file consistency anchor for setup-vs-gate scope boundary
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/flows/admin-onboarding--04-compliance-template-setup.yaml"
+  - "content/flows/admin-onboarding--04-compliance-template-setup.yaml"
 last_verified: "2026-08-25"

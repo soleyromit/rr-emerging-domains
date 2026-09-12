@@ -466,18 +466,18 @@ steps:
       have the instrument built. The admin also sets the low-score threshold here, but must
       file a separate support request before any email fires off it.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Track low scores for timely interventions.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/Clinical Internship Evaluation Tool - Version 2.0.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/CIET Form (Clinical Internship Evaluation Tool) Configuration.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/OT-OTA Discipline/Help Guides for OT-OTA/Fieldwork Performance Evaluation Tool.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md (lines 127-129 the standard-instrument inventory; 131-136 PTSE 1 and its always-Yes placement rule; 145-151 CIET midterm-and-final vs. Final-only; 163-168 SCIPAI as the only multi-snapshot formative instrument; 261-263 the low-score threshold and its support-gated email);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md (lines 88-96 the configured-forms toolkit incl. Clinical Supervisor Evaluations Midterm & Final; line 98 form creation is support-gated);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md (lines 69-73 the three Learning Contract / Evaluation configuration models, incl. the four-way split that makes an SW midterm its own separately-anchored form);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md (lines 12 and 63-73 — cited only for its own negative finding: no TE evaluation instruments, reports or accreditor standards are documented, so no TE midpoint instrument can be asserted in either direction)
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Track low scores for timely interventions.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/Clinical Internship Evaluation Tool - Version 2.0.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/CIET Form (Clinical Internship Evaluation Tool) Configuration.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/OT-OTA Discipline/Help Guides for OT-OTA/Fieldwork Performance Evaluation Tool.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md (lines 127-129 the standard-instrument inventory; 131-136 PTSE 1 and its always-Yes placement rule; 145-151 CIET midterm-and-final vs. Final-only; 163-168 SCIPAI as the only multi-snapshot formative instrument; 261-263 the low-score threshold and its support-gated email);
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md (lines 88-96 the configured-forms toolkit incl. Clinical Supervisor Evaluations Midterm & Final; line 98 form creation is support-gated);
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md (lines 69-73 the three Learning Contract / Evaluation configuration models, incl. the four-way split that makes an SW midterm its own separately-anchored form);
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md (lines 12 and 63-73 — cited only for its own negative finding: no TE evaluation instruments, reports or accreditor standards are documented, so no TE midpoint instrument can be asserted in either direction)
 
   - screen: "Learning Activities Setup — Auto Notifications"
     navigation_path: "Learning Activities > Auto Notifications > Add Notification"
@@ -577,7 +577,7 @@ steps:
       of Placement," so the preceptor gets nudged automatically. The system auto-excludes
       submitted/reviewed forms and placements marked On Hold or Unsuccessful from receiving
       further reminders.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Setup Auto Notifications for Forms and Evaluations.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Setup Auto Notifications for Forms and Evaluations.md"
 
   - screen: "[OT/OTA] Standard AOTA FWPE — Send Form / Set up Automation (distribution automation, distinct from Auto Notifications)"
     navigation_path: "Learning Activities > [Course] > Setup > Forms/Evaluations (+) > Standard AOTA FWPE - Fieldwork Educator for OT|OTA > Send Form > Set up Automation"
@@ -662,9 +662,9 @@ steps:
       School, with a chosen email template — the concrete, in-production event that
       constitutes OT's midpoint formative feedback delivery.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/OT-OTA Discipline/Help Guides for OT-OTA/Fieldwork Performance Evaluation Tool.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md (FWPE — Notification Thresholds and Distribution Mechanics);
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acote.yaml (Standard C.1.15)
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/OT-OTA Discipline/Help Guides for OT-OTA/Fieldwork Performance Evaluation Tool.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md (FWPE — Notification Thresholds and Distribution Mechanics);
+      content/accreditation/acote.yaml (Standard C.1.15)
 
   - screen: "[OT/OTA] Standard AOTA FWPE midterm — Fieldwork Educator completion (no-login, emailed link)"
     navigation_path: "Emailed link ('here') > FWPE form opens directly in browser — no Prism account required"
@@ -811,10 +811,10 @@ steps:
       safety/ethics items is rated 1 or 2, the support-configured response-based notification
       fires to the named recipients.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Faculty/Discipline Specific Guides/OT -OTA/Completing FWPE Form - For Fieldwork Educators.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/OT-OTA Discipline/Help Guides for OT-OTA/Fieldwork Performance Evaluation Tool.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md;
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acote.yaml (Standard C.1.15)
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Faculty/Discipline Specific Guides/OT -OTA/Completing FWPE Form - For Fieldwork Educators.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/OT-OTA Discipline/Help Guides for OT-OTA/Fieldwork Performance Evaluation Tool.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md;
+      content/accreditation/acote.yaml (Standard C.1.15)
 
   - screen: "[PT/PTA] CIET v2.0 midterm — concurrent blinded student and Clinical Instructor completion"
     navigation_path: "Student: Learning Activities > Forms/Evaluations > [placement accordion] > CIET v2.0 > Get Started. Clinical Instructor: emailed link from the student's Send action."
@@ -961,10 +961,10 @@ steps:
       Midterm-Pending School Review status and either finalizes or un-submits, after which
       the form advances to the Final term workflow.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/Clinical Internship Evaluation Tool - Version 2.0.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/CIET Form (Clinical Internship Evaluation Tool) Configuration.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md lines 145-151 (CIET v2 measures professional behaviours and patient management; training quiz housed in Prism with CI attest-and-bypass; Midterm-and-Final with a Final-only option; the parallel workflow noted as forthcoming) and lines 234-244 (the parallel workflow now live: simultaneous completion via the same emailed link with each side hidden until both submit, the 15/20 quiz threshold with unlimited retakes and once-ever persistence, the 10,000-character silent-truncation cap, anchor-based publish/due dates, student cancellation revoking and later restoring the CI's access with in-progress work preserved, and the two dedicated reports);
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/capte.yaml (Standard 2, Element 2D4)
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/Clinical Internship Evaluation Tool - Version 2.0.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/CIET Form (Clinical Internship Evaluation Tool) Configuration.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md lines 145-151 (CIET v2 measures professional behaviours and patient management; training quiz housed in Prism with CI attest-and-bypass; Midterm-and-Final with a Final-only option; the parallel workflow noted as forthcoming) and lines 234-244 (the parallel workflow now live: simultaneous completion via the same emailed link with each side hidden until both submit, the 15/20 quiz threshold with unlimited retakes and once-ever persistence, the 10,000-character silent-truncation cap, anchor-based publish/due dates, student cancellation revoking and later restoring the CI's access with in-progress work preserved, and the two dedicated reports);
+      content/accreditation/capte.yaml (Standard 2, Element 2D4)
 
   - screen: "[PT/PTA] PTMACS / PTAMACS midterm — sequential, non-blinded CI evaluation on the student's self-evaluation"
     navigation_path: "CI: emailed link from notifications@exxat.com, sent after the student completes their self-evaluation. Student: Learning Activities > Forms/Evaluations > PTMACS|PTAMACS."
@@ -1084,10 +1084,10 @@ steps:
       Performance, and submits with an OK confirmation. The same cycle repeats from the
       student for the Final term.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Site/Discipline Specific Guides/PT-PTA Discipline/Completing the PTMACS for CIs.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Site/Discipline Specific Guides/PT-PTA Discipline/Completing the PTAMACS for CIs.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md lines 153-161 (PTMACS/PTAMACS: standard, free, Exxat-only, used by Texas Consortium programs and many PTA programs; the Student-self-eval > CI-eval > Student-review > School-review workflow and the SECEE variant) and lines 272-277 (the CI's distinct 1-10 Evaluation of Student Performance scale, the three optional supplemental Skill 35/36/37 questions defaulting to N/A, the shared 10,000-character comment cap, and SECEE being PTAMACS-only);
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/capte.yaml (Standard 2, Element 2D4)
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Site/Discipline Specific Guides/PT-PTA Discipline/Completing the PTMACS for CIs.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Site/Discipline Specific Guides/PT-PTA Discipline/Completing the PTAMACS for CIs.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md lines 153-161 (PTMACS/PTAMACS: standard, free, Exxat-only, used by Texas Consortium programs and many PTA programs; the Student-self-eval > CI-eval > Student-review > School-review workflow and the SECEE variant) and lines 272-277 (the CI's distinct 1-10 Evaluation of Student Performance scale, the three optional supplemental Skill 35/36/37 questions defaulting to N/A, the shared 10,000-character comment cap, and SECEE being PTAMACS-only);
+      content/accreditation/capte.yaml (Standard 2, Element 2D4)
 
   - screen: "Learning Activities > Review > Forms/Evaluations Summary (cross-student midpoint review with low-score highlighting)"
     navigation_path: "Courses > [Course Offering] > Learning Activities > Review > Forms/Evaluations Summary (or select a specific form from the left panel)"
@@ -1189,11 +1189,11 @@ steps:
       marks it reviewed or un-submits it back to the student or site for correction — then
       opens an Intervention on any student whose score warrants one.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Track low scores for timely interventions.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/CIET Form (Clinical Internship Evaluation Tool) Configuration.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/OT-OTA Discipline/Help Guides for OT-OTA/Fieldwork Performance Evaluation Tool.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md lines 261-263 (a numeric score threshold set at PTSE 1 / PTSE 2 activation, below-threshold submissions displayed in RED on the review screen, and automated low-score email notifications to a designated recipient that are not self-service and require an Exxat support ticket);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Track low scores for timely interventions.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/CIET Form (Clinical Internship Evaluation Tool) Configuration.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/OT-OTA Discipline/Help Guides for OT-OTA/Fieldwork Performance Evaluation Tool.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md lines 261-263 (a numeric score threshold set at PTSE 1 / PTSE 2 activation, below-threshold submissions displayed in RED on the review screen, and automated low-score email notifications to a designated recipient that are not self-service and require an Exxat support ticket);
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
 
   - screen: "Student 360 — Learning Activities tab (Forms/Evaluations)"
     navigation_path: "Students > [student] > Learning Activities > Forms/Evaluations"
@@ -1230,7 +1230,7 @@ steps:
     action: >
       Coordinator clicks a form's status to open it, review the submitted evaluation, and
       (per this same screen) provide feedback and update status.
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md"
 
   - screen: "Student 360 — Interventions tab"
     navigation_path: "Students > [student] > Interventions > + (Add)"
@@ -1447,11 +1447,11 @@ steps:
       Recorded as a correction rather than silently rewritten because "documented performance
       concern" would overstate what an SW program is actually logging.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md (Communication and Intervention — A.3.5);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md lines 79-80 (Communications = faculty advising notes and field-visit documentation with attachments/email records; Interventions = concerns/support activity, "not necessarily disciplinary"; both read-only to students) and line 18 (the Faculty Advisor role documents advising activity via the Communications tab);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (Student Intervention and Communication report);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md lines 109-111 (advisement documentation via Dashboard > Students > select student > Communication > Add Communication, and the alternative custom workflow-based advisement forms with signature capability, available via CSS/Account Manager rather than self-service)
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md (Communication and Intervention — A.3.5);
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md lines 79-80 (Communications = faculty advising notes and field-visit documentation with attachments/email records; Interventions = concerns/support activity, "not necessarily disciplinary"; both read-only to students) and line 18 (the Faculty Advisor role documents advising activity via the Communications tab);
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (Student Intervention and Communication report);
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md lines 109-111 (advisement documentation via Dashboard > Students > select student > Communication > Add Communication, and the alternative custom workflow-based advisement forms with signature capability, available via CSS/Account Manager rather than self-service)
 
   - screen: "Students > Reports > Intervention Log"
     navigation_path: "Students > Reports > Intervention Log"
@@ -1534,10 +1534,10 @@ steps:
       meeting or an accreditation self-study to see every open/closed intervention across the
       program, not one student at a time.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Viewing Student Reports.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md;
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md;
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acote.yaml, arc-pa.yaml, caa-asha.yaml, cswe.yaml, caep.yaml (all five recording the no-dedicated-report claim)
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Viewing Student Reports.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md;
+      content/accreditation/acote.yaml, arc-pa.yaml, caa-asha.yaml, cswe.yaml, caep.yaml (all five recording the no-dedicated-report claim)
 
   - screen: "Student Competency Dashboard"
     navigation_path: "Students > [student] > Competency tab, or via a published Competency Framework's Review Dashboard"
@@ -1633,10 +1633,10 @@ steps:
       below-threshold cells and drilling into the specific sub-competency, rather than
       student-by-student.
     confirmed_by: >
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (intelligence_layer > Competency Tracking, cross-confirmed by tutorial transcript and Exxat help-center documentation per that entry);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md (Student 'Competency' Tab);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md (Competency Management);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (Competency Framework & Competency Tracking Report)
+      content/prism/capability-map.yaml (intelligence_layer > Competency Tracking, cross-confirmed by tutorial transcript and Exxat help-center documentation per that entry);
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md (Student 'Competency' Tab);
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md (Competency Management);
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (Competency Framework & Competency Tracking Report)
 
   - screen: "[CRNA] Daily Clinical Forms/Evaluations Report (aggregation of high-frequency formative evaluations)"
     navigation_path: "Reports > Daily Clinical Forms and Evaluation Reports"
@@ -1658,7 +1658,7 @@ steps:
           daily.
         gap_severity: "none"
         gap_note: >
-          [CRNA] Complete as documented per /Users/romitsoley/Downloads/CRNAVideosTranscripts.md
+          [CRNA] Complete as documented per CRNAVideosTranscripts.md
           lines 21-25. This report exists because CRNA breaks the assumption every other
           discipline in this file makes — that "midpoint" is a single scheduled event. For
           nurse anesthesia the formative signal is continuous, and the load-bearing product
@@ -1750,9 +1750,9 @@ steps:
       responses, or both, and downloads per-student PDFs — then reads through each student's
       accumulated daily evaluations looking for the pattern that warrants an Intervention.
     confirmed_by: >
-      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md (lines 15-37, 'Daily Clinical Evaluation Report for CRNA Program');
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coa.yaml (Standard H.1.1 and H.1.1.1);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md (Evaluations & Forms — formative Daily/Midterm vs. Summative/Terminal)
+      CRNAVideosTranscripts.md (lines 15-37, 'Daily Clinical Evaluation Report for CRNA Program');
+      content/accreditation/coa.yaml (Standard H.1.1 and H.1.1.1);
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md (Evaluations & Forms — formative Daily/Midterm vs. Summative/Terminal)
 
   - screen: "[NURSING][CRNA] Student Activity Insights Report (color-coded mid-rotation pacing)"
     navigation_path: "Learning Activities > [Course] > Reports (Action column) > Student Activity Insights"
@@ -1829,10 +1829,10 @@ steps:
       below the program's minimum per category, drills into the underlying logs, and opens an
       Intervention while there is still rotation time left to fix the shortfall.
     confirmed_by: >
-      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md (lines 81-87, 'Managing Clinical Case Experience Log in Exxat Prism' — Viewing the CCE log report);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md (Student Activity Insights Report);
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coa.yaml (Standards C.4 and E.2.3);
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/nursing.yaml (CCNE Standard III, Key Element III-H)
+      CRNAVideosTranscripts.md (lines 81-87, 'Managing Clinical Case Experience Log in Exxat Prism' — Viewing the CCE log report);
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md (Student Activity Insights Report);
+      content/accreditation/coa.yaml (Standards C.4 and E.2.3);
+      content/accreditation/nursing.yaml (CCNE Standard III, Key Element III-H)
 
   - screen: "Clinical Log Report (hour-threshold and exposure-minimum configuration)"
     navigation_path: "Support-ticket/Account-Manager-gated configuration on the Clinical Log Report (not admin self-service)"
@@ -1920,10 +1920,10 @@ steps:
       falling behind. For Pharmacy and SLP that configuration is a support engagement; for PA
       the minimums are collected during patient-log setup.
     confirmed_by: >
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml (cross-cutting self-service-vs-support-gated configuration entry, listing 'per-participation-type hour thresholds on the Clinical Log Report' explicitly);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md line 67 (min/max hour thresholds per participation-type/mode-of-delivery combination, used to flag under-logged students red, NOT self-service — a prism-support@exxat.com request, "same as new custom forms"), line 128 (the Clinical Log Report as the surface those thresholds render on) and line 118 (question-based email notifications supporting real-time early-alert monitoring, also configured by the support team rather than by the program);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (Configuring Minimum Diagnosis & Procedure Requirements);
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caa-asha.yaml (Standard 4.0, Standard 4.3)
+      content/prism/capability-map.yaml (cross-cutting self-service-vs-support-gated configuration entry, listing 'per-participation-type hour thresholds on the Clinical Log Report' explicitly);
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md line 67 (min/max hour thresholds per participation-type/mode-of-delivery combination, used to flag under-logged students red, NOT self-service — a prism-support@exxat.com request, "same as new custom forms"), line 128 (the Clinical Log Report as the surface those thresholds render on) and line 118 (question-based email notifications supporting real-time early-alert monitoring, also configured by the support team rather than by the program);
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (Configuring Minimum Diagnosis & Procedure Requirements);
+      content/accreditation/caa-asha.yaml (Standard 4.0, Standard 4.3)
 
   - screen: "[TE] Learning Tool Interoperability (GoReact/Echo360) — video-based formative feedback"
     navigation_path: "Learning Activities > Setup > Learning Tool Interoperability > + (new assignment); reviewer work happens inside GoReact, not in Prism"
@@ -2028,54 +2028,54 @@ steps:
       uploads from My Coursework and is redirected into GoReact; faculty review inside GoReact
       with timestamped comments and scores, and only the score and status return to Prism.
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md
       (read in full 2026-08-25; lines 54-57 for the timestamped-comment review mechanic inside
       GoReact, and lines 63-73 for the Open Gaps list confirming that no TE-specific evaluation
       instrument, report, pain point or accreditor mapping exists in any Exxat source);
-      /Users/romitsoley/Downloads/CRNAVideosTranscripts.md (lines 95-117, 'Setting Up and Managing Echo360 (GoReact) Assignments in Exxat Prism');
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caep.yaml (Standard R3, Component R3.2 — mapping flagged as analyst inference, not an Exxat-sourced claim)
+      CRNAVideosTranscripts.md (lines 95-117, 'Setting Up and Managing Echo360 (GoReact) Assignments in Exxat Prism');
+      content/accreditation/caep.yaml (Standard R3, Component R3.2 — mapping flagged as analyst inference, not an Exxat-sourced claim)
 
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Setup Auto Notifications for Forms and Evaluations.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Viewing Student Reports.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Track low scores for timely interventions.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/Clinical Internship Evaluation Tool - Version 2.0.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/CIET Form (Clinical Internship Evaluation Tool) Configuration.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/Physical Therapist Student Evaluation (PTSE) Report.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Courses/Managing Course Activities - Activating Forms and Evaluations.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Learning Activities/Setup Auto Notifications for Forms and Evaluations.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Overview of Student Page.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Adding Interventions and Communications.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Students/Viewing Student Reports.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Planned Communications/Track low scores for timely interventions.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/Clinical Internship Evaluation Tool - Version 2.0.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/CIET Form (Clinical Internship Evaluation Tool) Configuration.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Help Guides/Physical Therapist Student Evaluation (PTSE) Report.md"
   # NOTE: the vault mirror of the article below contains only embedded images and no
   # extractable text. Listed for provenance; no substantive claim in this file rests on it.
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Planned Communication for PT-PTA/Low score indicators for PTSE forms.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Site/Discipline Specific Guides/PT-PTA Discipline/Completing the PTMACS for CIs.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Site/Discipline Specific Guides/PT-PTA Discipline/Completing the PTAMACS for CIs.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Faculty/Discipline Specific Guides/OT -OTA/Completing FWPE Form - For Fieldwork Educators.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/OT-OTA Discipline/Help Guides for OT-OTA/Fieldwork Performance Evaluation Tool.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — READ IN FULL 2026-08-25 (previously cited by section name or per-stage sample). Lines used across this journey: 18-22 (DCE, ADCE, Program Coordinator, SCCE and CI role definitions, incl. the SCCE frequently also being a CI and regional SCCEs covering many facilities), 34-37 (APTA, CAPTE, ACAPT, ABPTRFE), 43 (the clinical-settings taxonomy), 45-53 (graduation-year cohorts, always Lock Step, cohort movement, off-track students and the original-rotation best practice), 55-60 (Groups, Categories, Announcements, Resources, Attestations, per-setting Program Requirements), 62-64 (compliance, and the instruction to ask where a school tracks compliance if not in Prism), 66-77 (course and rotation setup incl. the full field list and the ICE/DPE/residency special cases), 79-85 (the March 1 M1M cycle, reserved-vs-FCFS responses and Exxat One), 87-91 (wishlist patterns and Placement Assist), 93-97 (pre-placement activity), 99-108 (the four placement modes), 110-113 (slot confirmation and cancellation emails), 115-123 (placement notification lead times and the student-contacts-CI convention), 125-174 (the learning-activity and standard-instrument inventory: PTSE 1, PTSE 2, CIET v2, PTMACS/PTAMACS, SCIPAI and the Duke-developed Standard PT/PTA Surveys), 176-180 (thanking supervisors and the state-variable CEU conversion), 182-188 (pain points, incl. the four marketplace competitors at line 184 and the national competition for IP/acute slots at line 186), 190-197 (the enhancements list, incl. mapping competencies to CAPTE 2024 and the absent Exxat CSIF), 208-232 (the seven CAPTE-mapped reports and the five-section AAR pull sequence), 234-244 (CIET v2.0 full mechanics), 246-248 (the CI Details form as the licensure-renewal and eligibility-check mechanism), 250-259 (the four DCE performance-survey templates), 261-263 (low-score indicators and the support-gated notification), 265-270 (M1M email operations), 272-277 (PTMACS/PTAMACS additional mechanics), 279-281 (the Exxat One availability-based wishlist). In THIS file the load-bearing lines are 131-136 (the PTSE 1 always-answer-Yes-to-requires-placement rule), 145-151 (CIET completed at Midterm and Final with a Final-only option), 163-168 (SCIPAI as the only instrument in the corpus designed for more than two capture points, assessing both student and CI, with the Student > CI > joint-review > SCCE > DCE chain and the DCE's audit-trail access), 234-244 (CIET v2.0 parallel blinded completion, the 15/20 quiz threshold, the 10,000-character cap, anchor-based due dates, and student cancellation revoking the CI's link), 261-263 (the numeric low-score threshold, the red display, and the support-ticket dependency for the outbound notification), and 272-277 (the PTMACS 1-10 scale and the three optional supplemental skills)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — read IN FULL 2026-08-25 (previously consulted per-stage). Lines cited across this journey: 12 (the playbook's own data-quality caveat — it is synthesized from eight thin feature-specific artifacts, not a CSS playbook, so silence is documentation absence rather than product absence), 18-21 (ASHA / CAA / CFCC / KASA, and the nine KASA competencies a.k.a. nine service-delivery areas, whose individual names that source never enumerates), 25-35 (Course Offering, Rotation, Learning Activity Group, Clinical Log, Clinical Educator, Student Participation Type, Practice Type, Mode of Delivery, Training Level, Placement Setting, Age Group), 37 (no DCE/ACCE/SCCE-equivalent role terms are documented for SLP), 41-49 (CAA + CFCC curriculum mapping, the Mapped Standards Report, the beyond-KASA CSS dependency, the CFCC V-E attestation hook and its navigation, affiliation agreements in the Sites module, and the 400-hour tracking on the Clinical Clock Hours Report (Cumulative)), 53-67 (per-course-offering Clinical Log setup: template preview, activate toggle, the N-day submission window, grading, the wrench column customization with the first four columns fixed, clinical-educator review routing with a previewable email template, the attestation, and the support-gated min/max hour thresholds), 71-84 (the review workflow: the Logs Count / Log Hours by Status columns, Last Encounter and Last Update, the three-status colour model, the mandatory school-feedback note on Needs Attention, bulk approve and Approve All Logs, the 6am EST Statistics refresh, three export levels, and the filter set incl. Placement Faculty / Clinical Educator), 88-100 (no free off-the-shelf standard instruments; the configured toolkit — KASA Summary Forms, Clinical Supervisor Evaluations (Midterm & Final), Student Self-Assessments, Student Evaluations of Clinical Sites, Student Evaluations of Clinical Supervisors, Site Assessments aligned to program goals and accreditation standards, and custom forms — all support-gated to create; and the student-facing Student Performance Report across all nine service delivery areas), 104-105 (surveys buildable in Prism from December 2025), 109-114 (advisement via Communications & Interventions or custom workflow-based advisement forms with signature, plus profile-level and course-level attestations with their navigation paths), 118 (question-based early-alert notifications configured by support), 120-138 (the report suite, the shared filter set, the 50-course-offering cap, and the broader capability list incl. trend/exposure analysis, low-performance indicators and placement-readiness metrics), 142-149 (the discipline's own gap list — explicitly a DOCUMENTATION gap, plus the recurring self-service gap for SLP). In THIS file the load-bearing lines are 88-96 (the configured-forms toolkit, incl. Clinical Supervisor Evaluations explicitly split Midterm & Final — SLP's actual midpoint instrument, and a configured form rather than a shipped standard one), 67 and 98 and 118 (the three separate support-ticket dependencies: min/max hour thresholds, new custom forms, and question-based early-alert notification rules), and 149 (the playbook's own framing of that cluster as a possible self-service gap for SLP specifically)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — read IN FULL 2026-08-25. Lines cited in this file: 18 (Faculty Advisor documents advising via Communications), 69-73 (the four-way split Learning Contract / Evaluation model — mid-term, final, Field Instructor rating and student rating completed independently, which is why an SW program configures four separately-anchored forms rather than one multi-term instrument), 79-80 (the Communications/Interventions split and the 'not necessarily disciplinary' framing corrected in the Interventions step)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — READ IN FULL 2026-08-25 (73 lines). It is the thinnest discipline source in this corpus and its own line 12 says why: TE has no dedicated internal help-center playbook article and no CSS discipline playbook PDF, so the note is built from ONE program-administrator video tutorial covering the GoReact/Echo360 LTI integration, transcribed from auto-generated Vimeo captions. Substantive content: lines 19-26 (LTI integration with GoReact, now part of Echo360; assignments, student submissions and scores/status updates sync automatically; described as a genuinely connected two-way workflow in which administrators are not expected to recreate assignments in GoReact), 28-31 (activation is discipline/program-gated — if the Learning Tool Interoperability section is absent from Learning Activities > Setup the feature is not activated, and activation requires an Exxat support ticket), 33-45 (the administrator setup sequence: create at Learning Activities > Setup > Learning Tool Interoperability > +, configure LTI tool, title, description, placement-based vs. didactic, publish and due dates, grading and score settings and faculty visibility; activate and save; Prism auto-creates the matching GoReact activity on first save; GoReact-specific settings are then configured in GoReact and the activity marked Done, at which point the assignment becomes available to students), 47-52 (student workflow from My Coursework: redirect into GoReact, record directly, upload a video file, or submit other supported media, with status syncing back), 54-57 (faculty/reviewer workflow: timestamped comments, feedback, evaluations and scores, syncing back with no reconciliation step), 61 (further GoReact-side configuration is documented in GoReact's help centre, not Exxat's), and 63-73 (the Open Gaps list — TE terminology, program/setup patterns, compliance, placement and slot workflows, standard evaluation forms and reports, accreditor standards, and pain points are ALL explicitly unpopulated, with a standing instruction not to treat field-standard TE terms or CAEP standard numbers as Exxat-specific until confirmed against a TE-specific source). EVERY TE claim in this file that is not about the LTI integration is therefore reasoned from ../accreditation/caep.yaml and carries that caveat inline. In THIS file the load-bearing lines are 54-57 (timestamped reviewer comments inside GoReact — the only confirmed TE formative-feedback mechanic) and 71-73 (no TE-specific assessment instruments, pre-built reports, pain points or working-style guidance exist, so no TE midpoint instrument or early-alert default can be asserted)."
-  - "/Users/romitsoley/Downloads/CRNAVideosTranscripts.md"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/capte.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acote.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/arc-pa.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caa-asha.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/nursing.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coa.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/cswe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caep.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/domains/pharmacy.yaml"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PT-PTA Discipline/Planned Communication for PT-PTA/Low score indicators for PTSE forms.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Site/Discipline Specific Guides/PT-PTA Discipline/Completing the PTMACS for CIs.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Site/Discipline Specific Guides/PT-PTA Discipline/Completing the PTAMACS for CIs.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Faculty/Discipline Specific Guides/OT -OTA/Completing FWPE Form - For Fieldwork Educators.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/OT-OTA Discipline/Help Guides for OT-OTA/Fieldwork Performance Evaluation Tool.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — READ IN FULL 2026-08-25 (previously cited by section name or per-stage sample). Lines used across this journey: 18-22 (DCE, ADCE, Program Coordinator, SCCE and CI role definitions, incl. the SCCE frequently also being a CI and regional SCCEs covering many facilities), 34-37 (APTA, CAPTE, ACAPT, ABPTRFE), 43 (the clinical-settings taxonomy), 45-53 (graduation-year cohorts, always Lock Step, cohort movement, off-track students and the original-rotation best practice), 55-60 (Groups, Categories, Announcements, Resources, Attestations, per-setting Program Requirements), 62-64 (compliance, and the instruction to ask where a school tracks compliance if not in Prism), 66-77 (course and rotation setup incl. the full field list and the ICE/DPE/residency special cases), 79-85 (the March 1 M1M cycle, reserved-vs-FCFS responses and Exxat One), 87-91 (wishlist patterns and Placement Assist), 93-97 (pre-placement activity), 99-108 (the four placement modes), 110-113 (slot confirmation and cancellation emails), 115-123 (placement notification lead times and the student-contacts-CI convention), 125-174 (the learning-activity and standard-instrument inventory: PTSE 1, PTSE 2, CIET v2, PTMACS/PTAMACS, SCIPAI and the Duke-developed Standard PT/PTA Surveys), 176-180 (thanking supervisors and the state-variable CEU conversion), 182-188 (pain points, incl. the four marketplace competitors at line 184 and the national competition for IP/acute slots at line 186), 190-197 (the enhancements list, incl. mapping competencies to CAPTE 2024 and the absent Exxat CSIF), 208-232 (the seven CAPTE-mapped reports and the five-section AAR pull sequence), 234-244 (CIET v2.0 full mechanics), 246-248 (the CI Details form as the licensure-renewal and eligibility-check mechanism), 250-259 (the four DCE performance-survey templates), 261-263 (low-score indicators and the support-gated notification), 265-270 (M1M email operations), 272-277 (PTMACS/PTAMACS additional mechanics), 279-281 (the Exxat One availability-based wishlist). In THIS file the load-bearing lines are 131-136 (the PTSE 1 always-answer-Yes-to-requires-placement rule), 145-151 (CIET completed at Midterm and Final with a Final-only option), 163-168 (SCIPAI as the only instrument in the corpus designed for more than two capture points, assessing both student and CI, with the Student > CI > joint-review > SCCE > DCE chain and the DCE's audit-trail access), 234-244 (CIET v2.0 parallel blinded completion, the 15/20 quiz threshold, the 10,000-character cap, anchor-based due dates, and student cancellation revoking the CI's link), 261-263 (the numeric low-score threshold, the red display, and the support-ticket dependency for the outbound notification), and 272-277 (the PTMACS 1-10 scale and the three optional supplemental skills)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — read IN FULL 2026-08-25 (previously consulted per-stage). Lines cited across this journey: 12 (the playbook's own data-quality caveat — it is synthesized from eight thin feature-specific artifacts, not a CSS playbook, so silence is documentation absence rather than product absence), 18-21 (ASHA / CAA / CFCC / KASA, and the nine KASA competencies a.k.a. nine service-delivery areas, whose individual names that source never enumerates), 25-35 (Course Offering, Rotation, Learning Activity Group, Clinical Log, Clinical Educator, Student Participation Type, Practice Type, Mode of Delivery, Training Level, Placement Setting, Age Group), 37 (no DCE/ACCE/SCCE-equivalent role terms are documented for SLP), 41-49 (CAA + CFCC curriculum mapping, the Mapped Standards Report, the beyond-KASA CSS dependency, the CFCC V-E attestation hook and its navigation, affiliation agreements in the Sites module, and the 400-hour tracking on the Clinical Clock Hours Report (Cumulative)), 53-67 (per-course-offering Clinical Log setup: template preview, activate toggle, the N-day submission window, grading, the wrench column customization with the first four columns fixed, clinical-educator review routing with a previewable email template, the attestation, and the support-gated min/max hour thresholds), 71-84 (the review workflow: the Logs Count / Log Hours by Status columns, Last Encounter and Last Update, the three-status colour model, the mandatory school-feedback note on Needs Attention, bulk approve and Approve All Logs, the 6am EST Statistics refresh, three export levels, and the filter set incl. Placement Faculty / Clinical Educator), 88-100 (no free off-the-shelf standard instruments; the configured toolkit — KASA Summary Forms, Clinical Supervisor Evaluations (Midterm & Final), Student Self-Assessments, Student Evaluations of Clinical Sites, Student Evaluations of Clinical Supervisors, Site Assessments aligned to program goals and accreditation standards, and custom forms — all support-gated to create; and the student-facing Student Performance Report across all nine service delivery areas), 104-105 (surveys buildable in Prism from December 2025), 109-114 (advisement via Communications & Interventions or custom workflow-based advisement forms with signature, plus profile-level and course-level attestations with their navigation paths), 118 (question-based early-alert notifications configured by support), 120-138 (the report suite, the shared filter set, the 50-course-offering cap, and the broader capability list incl. trend/exposure analysis, low-performance indicators and placement-readiness metrics), 142-149 (the discipline's own gap list — explicitly a DOCUMENTATION gap, plus the recurring self-service gap for SLP). In THIS file the load-bearing lines are 88-96 (the configured-forms toolkit, incl. Clinical Supervisor Evaluations explicitly split Midterm & Final — SLP's actual midpoint instrument, and a configured form rather than a shipped standard one), 67 and 98 and 118 (the three separate support-ticket dependencies: min/max hour thresholds, new custom forms, and question-based early-alert notification rules), and 149 (the playbook's own framing of that cluster as a possible self-service gap for SLP specifically)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — read IN FULL 2026-08-25. Lines cited in this file: 18 (Faculty Advisor documents advising via Communications), 69-73 (the four-way split Learning Contract / Evaluation model — mid-term, final, Field Instructor rating and student rating completed independently, which is why an SW program configures four separately-anchored forms rather than one multi-term instrument), 79-80 (the Communications/Interventions split and the 'not necessarily disciplinary' framing corrected in the Interventions step)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — READ IN FULL 2026-08-25 (73 lines). It is the thinnest discipline source in this corpus and its own line 12 says why: TE has no dedicated internal help-center playbook article and no CSS discipline playbook PDF, so the note is built from ONE program-administrator video tutorial covering the GoReact/Echo360 LTI integration, transcribed from auto-generated Vimeo captions. Substantive content: lines 19-26 (LTI integration with GoReact, now part of Echo360; assignments, student submissions and scores/status updates sync automatically; described as a genuinely connected two-way workflow in which administrators are not expected to recreate assignments in GoReact), 28-31 (activation is discipline/program-gated — if the Learning Tool Interoperability section is absent from Learning Activities > Setup the feature is not activated, and activation requires an Exxat support ticket), 33-45 (the administrator setup sequence: create at Learning Activities > Setup > Learning Tool Interoperability > +, configure LTI tool, title, description, placement-based vs. didactic, publish and due dates, grading and score settings and faculty visibility; activate and save; Prism auto-creates the matching GoReact activity on first save; GoReact-specific settings are then configured in GoReact and the activity marked Done, at which point the assignment becomes available to students), 47-52 (student workflow from My Coursework: redirect into GoReact, record directly, upload a video file, or submit other supported media, with status syncing back), 54-57 (faculty/reviewer workflow: timestamped comments, feedback, evaluations and scores, syncing back with no reconciliation step), 61 (further GoReact-side configuration is documented in GoReact's help centre, not Exxat's), and 63-73 (the Open Gaps list — TE terminology, program/setup patterns, compliance, placement and slot workflows, standard evaluation forms and reports, accreditor standards, and pain points are ALL explicitly unpopulated, with a standing instruction not to treat field-standard TE terms or CAEP standard numbers as Exxat-specific until confirmed against a TE-specific source). EVERY TE claim in this file that is not about the LTI integration is therefore reasoned from ../accreditation/caep.yaml and carries that caveat inline. In THIS file the load-bearing lines are 54-57 (timestamped reviewer comments inside GoReact — the only confirmed TE formative-feedback mechanic) and 71-73 (no TE-specific assessment instruments, pre-built reports, pain points or working-style guidance exist, so no TE midpoint instrument or early-alert default can be asserted)."
+  - "CRNAVideosTranscripts.md"
+  - "content/prism/capability-map.yaml"
+  - "content/accreditation/lcme.yaml"
+  - "content/accreditation/coda.yaml"
+  - "content/accreditation/acpe.yaml"
+  - "content/accreditation/capte.yaml"
+  - "content/accreditation/acote.yaml"
+  - "content/accreditation/arc-pa.yaml"
+  - "content/accreditation/caa-asha.yaml"
+  - "content/accreditation/nursing.yaml"
+  - "content/accreditation/coa.yaml"
+  - "content/accreditation/cswe.yaml"
+  - "content/accreditation/caep.yaml"
+  - "content/competitors/e-value.yaml"
+  - "content/competitors/core-elms.yaml"
+  - "content/competitors/emedley.yaml"
+  - "content/competitors/medhub.yaml"
+  - "content/competitors/one45.yaml"
+  - "content/domains/pharmacy.yaml"
 last_verified: "2026-08-25"

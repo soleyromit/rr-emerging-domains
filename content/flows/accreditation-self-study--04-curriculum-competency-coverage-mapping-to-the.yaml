@@ -53,7 +53,7 @@ steps:
         gap_note: "Sharpened from this element's own documented behaviour, not from new research: the cascade delete of every mapping tied to a standard is documented as happening without a separate confirmation of what is lost. A safeguard/confirmation gap on a destructive control, not a capability gap."
 
     action: "Admin activates the pre-loaded accreditor taxonomy, or — where COCA/ACPE/CODA/LCME are not yet pre-populated the way ARC-PA/ACOTE are — adds the taxonomy elements (e.g. COCA's 7 osteopathic core competencies including OPP/OMM, ACPE's 2.1.a-m elements, CODA's Standard 2-24 clinical categories, LCME's program objectives) as standards/sub-standards via this same drawer, before any course-level mapping can begin."
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
 
   - screen: "Course/Measure mapping grid"
     navigation_path: "Curriculum Mapping > [Course] > Go to Mapping > Course Objectives / Course Measures"
@@ -100,7 +100,7 @@ steps:
         gap_note: "Mature, shipped."
 
     action: "Faculty member or curriculum-committee mapper attaches each course objective/measure to one or more activated standards (manually or by reviewing and applying Leo's suggestions), tagging mappings for a lightweight review queue where needed."
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Adding- Editing & Deleting Mappings Course For Curriculum Mapping.md; /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Curriculum Mapping with Leo.md; /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (Curriculum Mapping section, lines ~52-76)"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Adding- Editing & Deleting Mappings Course For Curriculum Mapping.md; PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Curriculum Mapping with Leo.md; PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (Curriculum Mapping section, lines ~52-76)"
 
   - screen: "Mapping Summary Dashboard / Mapped Standards Report"
     navigation_path: "Curriculum Mapping > Mapping Reports"
@@ -155,7 +155,7 @@ steps:
         gap_note: "Word/Excel export on this report is confirmed. The PA playbook's note that the Heatmap Report cannot be downloaded and must be screenshotted is a limitation on an adjacent report, not on this control."
 
     action: "Accreditation liaison opens the Mapping Summary Dashboard, filters to Unmapped Standards to find which COCA/ACPE/CODA/LCME taxonomy elements still have zero course/measure coverage, and exports the report for the self-study evidence file."
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapping Summary Reports for Curriculum Mapping.md; /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapping Summary Reports for Curriculum Mapping.md; PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
 
   - screen: "Competency Management — Setup (Add New Framework)"
     navigation_path: "Curriculum Management > Competency Management > Setup > Add New"
@@ -210,7 +210,7 @@ steps:
         gap_note: ""
 
     action: "Program admin builds a competency framework that represents the accreditor's taxonomy element (e.g. one of COCA's 7 core competencies, an ACPE 2.1.a-m element, a CODA Standard 2-24 clinical category, or an LCME program objective — confirmed pattern from the PA playbook, which shows programs creating a framework named after the exact standard, e.g. 'ARC-PA B3.03/B3.04 outcomes'), selects which assessments or course grades feed it, and sets scale/threshold."
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md; /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (Competency Framework & Competency Tracking Report section, lines ~305-313)"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md; PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md (Competency Framework & Competency Tracking Report section, lines ~305-313)"
 
   - screen: "Competency Management — Review Dashboard"
     navigation_path: "Competency Management > Review > [Framework] > [Cohort]"
@@ -273,7 +273,7 @@ steps:
         gap_note: "This is the element the step-level 'gap' verdict actually attaches to, and it is a confirmed gap rather than an inferred one: this control is explicitly documented as visibility/reporting-only and as 'never touching the underlying calculation'. There is no enforcement or blocking action anywhere in the Competency Management module's documented workflow, so ACPE 7.3.d's readiness gate is unbuilt. Every sibling element on this screen reports attainment correctly; only this one is asked to enforce it and does not."
 
     action: "Liaison or program admin reviews cohort-level attainment ahead of a site visit, drills into a red-flagged domain or a specific student's report, and controls when scores become visible to students."
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md (Review Competency and Publish Competency Score sections)"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md (Review Competency and Publish Competency Score sections)"
 
   - screen: "My Competency Tracker (student-facing)"
     navigation_path: "Student Dashboard > My Competency Tracker"
@@ -328,24 +328,24 @@ steps:
         gap_note: ""
 
     action: "Student self-monitors progress toward a published competency and can export their own comprehensive score report."
-    confirmed_by: "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Competency Tracker/My Competency Tracker.md"
+    confirmed_by: "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Competency Tracker/My Competency Tracker.md"
 sources:
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Adding- Editing & Deleting Mappings Course For Curriculum Mapping.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Curriculum Mapping with Leo.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapping Summary Reports for Curriculum Mapping.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Competency Tracker/My Competency Tracker.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coda.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/lcme.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Managing Accreditation Standards for Curriculum Mapping.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Adding- Editing & Deleting Mappings Course For Curriculum Mapping.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping/Curriculum Mapping with Leo.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapping Summary Reports for Curriculum Mapping.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Curriculum Mapping Reports/Mapped Standards Report for Curriculum Mapping.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Competency Management/Competency Framework Configuration and Management.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Competency Tracker/My Competency Tracker.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "content/prism/capability-map.yaml"
+  - "content/accreditation/coca.yaml"
+  - "content/accreditation/acpe.yaml"
+  - "content/accreditation/coda.yaml"
+  - "content/accreditation/lcme.yaml"
+  - "content/competitors/leo-davinci.yaml"
+  - "content/competitors/core-elms.yaml"
+  - "content/competitors/e-value.yaml"
+  - "content/competitors/elentra.yaml"
+  - "content/competitors/axium.yaml"
 last_verified: "2026-08-24"

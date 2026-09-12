@@ -343,9 +343,9 @@ steps:
           IACET chapter do the conversion.
     action: "Admin defines the rotation shell (dates, duration floor, optional sub-blocks, cohort scope) that supply (slots) and demand (students) will later be matched into."
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Adding and Deleting Rotations.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Adding and Deleting Rotations.md;
       discipline-specific rotation-setup fields and lockstep model from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
       — read IN FULL 2026-08-25; lines 43 (the PT settings taxonomy), 45-53 (cohort by graduation
       year, "PT programs are always Lock Step", cohort movement on withdrawal/leave/failure, the
       off-track-but-same-cohort cases, and the keep-them-in-the-original-rotation best practice),
@@ -355,13 +355,13 @@ steps:
       cases: ICE, DPE, and the Mercer residency/fellowship pilot), 115-123 (placement-notification
       lead times, the student-contacts-CI-at-2-3-months convention, and the
       schools-provide-documentation norm), 182-188 (Pain Points) and
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
       (sections 9-10, "Cohort", "Rotation Setup"); cohort/track variance from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md
       (lines 41-44 the two named cohort-naming conventions and the infrastructure condition behind
       each; lines 48-50 Groups/Campuses/Categories value sets; lines 63-67 the three course-setup
       models) and
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md
       ("Program Details & Curriculum Setup"); accreditor duration floors from
       ../accreditation/capte.yaml (Standard 6, Element 6A), ../accreditation/acote.yaml
       (Standards C.1.12 and D.1.5), ../accreditation/cswe.yaml (AS 3.3.3),
@@ -500,13 +500,13 @@ steps:
           loses. Neither move is modelled as a tracked event here; both are email conventions.
     action: "Admin (or site personnel via a delegated Slot Request link) records how many placement openings exist, at what declared supervision ratio, broken out by setting/rotation/type — the supply side that allocation later consumes."
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Slots by Placements.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Slots by Placements.md;
       Supervision Type / Slot Type vocabularies and the OT fixed ratio value set from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
       (section 8 slot setup; "C.1.7: Ratio of Fieldwork Educators to Students") and
       ../accreditation/acote.yaml (Standard C.1.7); FCFS market behavior and slot
       confirmation/cancellation practice from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
       ("Slot Request"; "Slot Confirmation and Cancellation Emails"; "Pain Points"); ratio
       standards from ../accreditation/coa.yaml (Standard F.7) and ../accreditation/nursing.yaml
       (CCNE Standard II, Key Element II-F).
@@ -593,10 +593,10 @@ steps:
         gap_note: "Delta (2) from ACPE 3.3.e: it warns rather than blocks, so a non-compliant assignment can still be completed. Same PA-exclusive, lockstep-only availability as the limit field itself."
     action: "Site or admin caps total student intake for a location/setting/cohort combination; staff are warned but not stopped when a placement would exceed that cap."
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Max Placement Limit (MAX Slot Limit).md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Max Placement Limit (MAX Slot Limit).md;
       corroborated in detail (enablement dependency, no-Setting fallback, Limit-Exists label
       semantics, shared-rotation per-cohort deduction) by
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md
       ("Max Placement Limit (Slot Cap) — PA-Exclusive Feature"); ratio standards from
       ../accreditation/coa.yaml (Standard F.7) and ../accreditation/acote.yaml (Standard C.1.7).
 
@@ -679,9 +679,9 @@ steps:
         gap_note: "The concrete rank-order mechanism the journey's earlier hedge said was undocumented; it produces the ordered list Placement Assist consumes."
     action: "Admin configures which preference-collection instrument to use; students rank locations, settings, slots, or rotations before Placement Assist runs."
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Wishlists for Student Rotations.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Wishlists for Student Rotations.md;
       student-side steps confirmed via
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Coursework/Completing a Wishlist.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Coursework/Completing a Wishlist.md;
       discipline defaults and cadence from the PT playbook ("Wishlist"; "Slot Request" M1M),
       the OT playbook ("Wishlist Setup"), the PA playbook ("Wishlist"; "Best Practice"), and the
       SW playbook ("My Requests (parallel/alternate workflow)"); documented absences from the
@@ -744,13 +744,13 @@ steps:
           around the allocator for reasons the allocator cannot fix.
     action: "Admin scopes and launches an algorithmic matching run against a defined student population, rotation set, and preference source (or none, for randomized placement)."
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Using Placement Assist.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Using Placement Assist.md;
       placement-mode split from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
       ("Placements", section 10, including the explicit Level I / Level II / capstone preference
       note) and
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
-      ("Placements"); self-service scope from /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml.
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      ("Placements"); self-service scope from content/prism/capability-map.yaml.
 
   - screen: "Placement Assist — Advanced Options"
     navigation_path: "Placements > [Course or Placement Group] > Placement Assist > Setup > Advanced Option"
@@ -964,10 +964,10 @@ steps:
           build with four-domain payoff rather than a one-discipline feature.
     action: "Admin encodes the actual constraint-solving rules — caps, overlap exclusion, setting-eligibility, distance weighting, category weighting — that the algorithm applies across a run; per capability-map.yaml, runs execute in staged batches with weighted difficulty scores assigned to hard-to-fill specialties (e.g. Women's Health = 10, Pediatrics = 9) so scarce slots are placed first."
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Advanced Options in Placement Assist.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Advanced Options in Placement Assist.md;
       staged-batch/weighted-difficulty behavior corroborated by
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml
-      and by /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md
+      content/prism/capability-map.yaml
+      and by PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md
       ("Best Practices — Placement Assist", same Women's Health=10/Pediatrics=9 example);
       negative findings verified against that same Advanced Options doc and against the
       accreditor requirements in ../accreditation/coa.yaml (Standards F.7 and F.9),
@@ -1042,11 +1042,11 @@ steps:
           building a new constraint engine.
     action: "Admin reviews the algorithm's proposed matches and preference-satisfaction statistics, then selectively (or in bulk) converts suggestions into real placements — typically one scarcity-ordered batch at a time."
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Using Placement Assist.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Using Placement Assist.md;
       staged-batch sequencing from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md
       ("Best Practices — Placement Assist", items 1-2); scarcity market conditions from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
       ("Pain Points").
 
   - screen: "Manual / Direct Placement"
@@ -1162,14 +1162,14 @@ steps:
           did not. Cross-discipline reuse opportunity, not a new build.
     action: "Admin manually places students who were not matched by Placement Assist, hand-places into an experience type that does not use the allocator at all (OT capstone, OT Level II), or pre-matches students to interview-gated slots ahead of the common match day."
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Slots by Placements.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Slots by Placements.md;
       publish-as-a-distinct-step behavior corroborated by
-      /Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml;
+      content/prism/capability-map.yaml;
       OT capstone/Level II direct-placement preference and capstone configuration sequence from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
       ("Placements", section 10; capstone setup section) and ../accreditation/acote.yaml
       (Standard D.1.5 with D.1.4); PT pre-matching practice from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
       lines 99-108 (the four co-existing placement modes) and lines 115-123 (the
       placement-notification step: multi-month to multi-year lead times, Share Profile, the
       student-contacts-CI-at-2-3-months convention, compliance and site-required documents
@@ -1346,7 +1346,7 @@ steps:
           social-work-specific, and therefore a real differentiator if built.
     action: "Student runs their own multi-agency interview search and reports its state; admin reconciles the student's typed entries onto real Agency/Personnel records and converts an accepted offer into a placement. No allocation algorithm participates."
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md
       (lines 84-96 the Multi-Location Field Application Form workflow steps 1-6 and the ten-suggestion
       ceiling; line 95 Interview Status and Schedule Date as reportable columns; line 99 the
       Interview Status lifecycle with Placement Accepted terminal and exclusive; lines 101-105 the
@@ -1459,7 +1459,7 @@ steps:
         data_shown: >
           Nothing at the point of assignment. Timesheets exist for CRNA programs (confirmed present
           alongside Forms and Evaluations and Patient Logs in Learning Activities > Setup,
-          /Users/romitsoley/Downloads/CRNAVideosTranscripts.md line 103), and the CCE log captures
+          CRNAVideosTranscripts.md line 103), and the CCE log captures
           anesthesia time and clinical hours per encounter — but both are retrospective capture, and
           neither is consulted when a placement is created.
         gates_on: []
@@ -1489,9 +1489,9 @@ steps:
       behavior and the Build verdict; Standard F.9 — CRITICAL; Standard F.5 — CRITICAL, for the
       credentialed-supervisor link; Standard F.1 with A.10 for resource sufficiency);
       Sites > Slots as the CRNA ratio-capture path from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md
       ("Clinical Sites, Contracts & Placements"); source-coverage finding verified line by line
-      against /Users/romitsoley/Downloads/CRNAVideosTranscripts.md (video 1 at lines 15-37, video 2
+      against CRNAVideosTranscripts.md (video 1 at lines 15-37, video 2
       at lines 43-89 with the preceptor-as-reviewer text at line 67 and the student-scoped report at
       line 83, video 3 at lines 95-117 with the Timesheets presence confirmation at line 103);
       cross-referenced against ../journeys/preceptor-site-onboarding.yaml.
@@ -1611,7 +1611,7 @@ steps:
       placement-model divergence warning, the absent partner-school demographics field, the PIF
       bulk-send limitation, the Faculty Compliance add-on cost, and the missing
       Interventions/Communications report);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md
       — read IN FULL 2026-08-25 and cited here specifically for what it does NOT contain. Line 12
       records that TE has no dedicated internal help-center playbook article and no CSS discipline
       playbook PDF, and that the entire note is built from ONE program-administrator video tutorial
@@ -1698,14 +1698,14 @@ steps:
           Prism without passing through a documented program-side gate.
     action: "Students rank real partner availabilities; the admin converts a ranking into a targeted slot request to that partner, tracks it in Exxat One, and imports the approved schedule back into Prism as a placement."
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
       ("Exxat One Availability-Based Wishlist (PT/PTA/OT/OTA)" — setup fields, admin flow, and
       closing-the-loop via Import Schedules);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
       ("Additional Confirmed Detail — Exxat One Availability-Based Wishlist"; "Slot Request" for the
       March-2024 debut and year-round cadence; "Pain Points" for the mCE / Clinician Nexus / ACEMAPP
       / CastleBranch Bridges marketplace competitors and the no-integration finding);
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/ExxatOne Availability based Wishlist.md.
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/ExxatOne Availability based Wishlist.md.
 
   - screen: "Placement Capacity & Utilization Reports"
     navigation_path: "Placements > [Course or Placement Group] > Reports; plus Sites > Reports for the discipline-specific sufficiency reports"
@@ -1866,19 +1866,19 @@ steps:
           for capacity evidence in disciplines that have no slot to count.
     action: "Coordinator monitors fill rates, realized supervision ratios, and placement status across the program; exports data for planning, for accreditor-portal reconciliation, or for accreditation self-study."
     confirmed_by: >
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Accessing Placement Reports.md;
+      PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Accessing Placement Reports.md;
       CAPTE report inventory, the 2C/8F numbering defect, and the AAR pull sequence from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md
       ("CAPTE-Mapped Reports"; "AAR (Annual Accreditation Report) Data Gathering") and
       ../accreditation/capte.yaml (Standard 2, Element 2D8);
-      SCPE Details from /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md
+      SCPE Details from PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md
       ("SCPE Details — Tracking Sufficiency of Sites and Slots (ARC-PA 6th ed. A1.10 a-b, B3.01 a)";
       "Distribution of Slots Across Settings and Distribution of Slots by Location") and
       ../accreditation/arc-pa.yaml (Element A1.10 a-b);
-      Slot Sufficiency Report from /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md
+      Slot Sufficiency Report from PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md
       ("Clinical Sites, Contracts & Placements") and ../accreditation/nursing.yaml (CCNE Key Element II-C);
       Placements by Educator and the 2-3 year per-site download practice from
-      /Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
+      PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md
       ("C.1.7: Ratio of Fieldwork Educators to Students"; "Placement Reports") and
       ../accreditation/acote.yaml (Standard C.1.7);
       SW and TE report inventories (and their absences) from the SW and TE playbooks plus
@@ -1886,50 +1886,50 @@ steps:
 
 sources:
   # --- Prism help-center: core placement workflow (four-domain baseline, unchanged) ---
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Dashboard.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Using Placement Assist.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Advanced Options in Placement Assist.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Slots by Placements.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Adding and Deleting Rotations.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Wishlists for Student Rotations.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Accessing Placement Reports.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/ExxatOne Availability based Wishlist.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Max Placement Limit (MAX Slot Limit).md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Coursework/Completing a Wishlist.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Placement Dashboard.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Using Placement Assist.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Advanced Options in Placement Assist.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Slots by Placements.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Adding and Deleting Rotations.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Managing Wishlists for Student Rotations.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/Accessing Placement Reports.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Step-by-Step Guides (How-tos)/Placements/ExxatOne Availability based Wishlist.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Program Administrators/Discipline Specific Guides/PA Discipline/Max Placement Limit (MAX Slot Limit).md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Exxat-Help-Guides/Help for Students/Step-by-Step Guides (How-tos)/Coursework/Completing a Wishlist.md"
   # --- Discipline playbooks: the eight disciplines Prism already serves ---
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — READ IN FULL 2026-08-25 (previously consulted per-stage). Lines cited in this file: 43 (the clinical-settings taxonomy that populates Setting tags), 45-53 (graduation-year cohorts, always Lock Step, cohort movement, off-track students and the keep-them-in-the-original-rotation best practice), 55-60 (Groups, Categories and per-setting Program Requirements), 68-71 (the full rotation-setup field list incl. the two visibility toggles), 73-77 (ICE, DPE and the Mercer residency/fellowship pilot), 79-85 (the March 1 M1M cycle, the climbing FCFS share, and Exxat One as the year-round alternative), 87-91 (slot-based and location-based wishlists, Placement Assist, limited MyRequest), 99-108 (the four co-existing placement modes), 110-113 (slot confirmation and cancellation emails), 115-123 (placement-notification lead times and the student-contacts-CI convention), 184-188 (pain points incl. split terminal rotations, the four marketplace competitors, and national IP/acute-slot competition), 279-281 (the Exxat One availability-based wishlist)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — read IN FULL 2026-08-25 (previously consulted per-stage). Lines cited across this journey: 12 (the playbook's own data-quality caveat — it is synthesized from eight thin feature-specific artifacts, not a CSS playbook, so silence is documentation absence rather than product absence), 18-21 (ASHA / CAA / CFCC / KASA, and the nine KASA competencies a.k.a. nine service-delivery areas, whose individual names that source never enumerates), 25-35 (Course Offering, Rotation, Learning Activity Group, Clinical Log, Clinical Educator, Student Participation Type, Practice Type, Mode of Delivery, Training Level, Placement Setting, Age Group), 37 (no DCE/ACCE/SCCE-equivalent role terms are documented for SLP), 41-49 (CAA + CFCC curriculum mapping, the Mapped Standards Report, the beyond-KASA CSS dependency, the CFCC V-E attestation hook and its navigation, affiliation agreements in the Sites module, and the 400-hour tracking on the Clinical Clock Hours Report (Cumulative)), 53-67 (per-course-offering Clinical Log setup: template preview, activate toggle, the N-day submission window, grading, the wrench column customization with the first four columns fixed, clinical-educator review routing with a previewable email template, the attestation, and the support-gated min/max hour thresholds), 71-84 (the review workflow: the Logs Count / Log Hours by Status columns, Last Encounter and Last Update, the three-status colour model, the mandatory school-feedback note on Needs Attention, bulk approve and Approve All Logs, the 6am EST Statistics refresh, three export levels, and the filter set incl. Placement Faculty / Clinical Educator), 88-100 (no free off-the-shelf standard instruments; the configured toolkit — KASA Summary Forms, Clinical Supervisor Evaluations (Midterm & Final), Student Self-Assessments, Student Evaluations of Clinical Sites, Student Evaluations of Clinical Supervisors, Site Assessments aligned to program goals and accreditation standards, and custom forms — all support-gated to create; and the student-facing Student Performance Report across all nine service delivery areas), 104-105 (surveys buildable in Prism from December 2025), 109-114 (advisement via Communications & Interventions or custom workflow-based advisement forms with signature, plus profile-level and course-level attestations with their navigation paths), 118 (question-based early-alert notifications configured by support), 120-138 (the report suite, the shared filter set, the 50-course-offering cap, and the broader capability list incl. trend/exposure analysis, low-performance indicators and placement-readiness metrics), 142-149 (the discipline's own gap list — explicitly a DOCUMENTATION gap, plus the recurring self-service gap for SLP). In THIS file the load-bearing lines are 142-149 — the playbook's own gap list, which states there is no SLP-specific slot-request cycle, wishlist pattern or Placement Assist usage note, and frames that as a documentation gap rather than a confirmed product gap. That distinction is preserved on the wishlist-defaults element and must not be upgraded into a product claim in either direction."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — READ IN FULL 2026-08-25 (previously consulted per-stage). Lines cited in this file: 26-28 (Field Application Form / Placement Suggestion / Learning Contract terminology), 41-50 (the two cohort-naming conventions and the Groups/Campuses/Categories value sets), 63-67 (the three course-setup models), 84-127 (the whole Field Application Forms, Interview Statuses and Placement Creation section — the ten-suggestion ceiling, the six workflow steps, the status lifecycle, the mapping rules, the three Create Placement branches, My Requests and course-specific Wishlist Questionnaires, the navigation path and the best-practice list), 183 (the Download Raw Response export with Interview Status and Schedule Date as added columns), 185-189 (the temporary-placement anti-pattern this workflow replaced), 197 (expect Field Application Forms and My Requests to be used more heavily and iteratively than a single-wishlist PT/OT slot process)."
-  - "/Users/romitsoley/Downloads/PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — READ IN FULL 2026-08-25 (73 lines). It is the thinnest discipline source in this corpus and its own line 12 says why: TE has no dedicated internal help-center playbook article and no CSS discipline playbook PDF, so the note is built from ONE program-administrator video tutorial covering the GoReact/Echo360 LTI integration, transcribed from auto-generated Vimeo captions. Substantive content: lines 19-26 (LTI integration with GoReact, now part of Echo360; assignments, student submissions and scores/status updates sync automatically; described as a genuinely connected two-way workflow in which administrators are not expected to recreate assignments in GoReact), 28-31 (activation is discipline/program-gated — if the Learning Tool Interoperability section is absent from Learning Activities > Setup the feature is not activated, and activation requires an Exxat support ticket), 33-45 (the administrator setup sequence: create at Learning Activities > Setup > Learning Tool Interoperability > +, configure LTI tool, title, description, placement-based vs. didactic, publish and due dates, grading and score settings and faculty visibility; activate and save; Prism auto-creates the matching GoReact activity on first save; GoReact-specific settings are then configured in GoReact and the activity marked Done, at which point the assignment becomes available to students), 47-52 (student workflow from My Coursework: redirect into GoReact, record directly, upload a video file, or submit other supported media, with status syncing back), 54-57 (faculty/reviewer workflow: timestamped comments, feedback, evaluations and scores, syncing back with no reconciliation step), 61 (further GoReact-side configuration is documented in GoReact's help centre, not Exxat's), and 63-73 (the Open Gaps list — TE terminology, program/setup patterns, compliance, placement and slot workflows, standard evaluation forms and reports, accreditor standards, and pain points are ALL explicitly unpopulated, with a standing instruction not to treat field-standard TE terms or CAEP standard numbers as Exxat-specific until confirmed against a TE-specific source). EVERY TE claim in this file that is not about the LTI integration is therefore reasoned from ../accreditation/caep.yaml and carries that caveat inline. In THIS file the load-bearing lines are 67 (TE terminology — the Rotation/Placement, Cohort and cooperating-teacher equivalents — is unconfirmed for Exxat and must not be treated as Exxat-specific) and 70 (placement and slot workflows, incl. how TE placement requests, wishlists and confirmations compare to PT/OT/PA patterns, are explicitly unavailable), which together are why every element in the TE placement step is marked inferred."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physical Therapy (PT) Playbook.md — READ IN FULL 2026-08-25 (previously consulted per-stage). Lines cited in this file: 43 (the clinical-settings taxonomy that populates Setting tags), 45-53 (graduation-year cohorts, always Lock Step, cohort movement, off-track students and the keep-them-in-the-original-rotation best practice), 55-60 (Groups, Categories and per-setting Program Requirements), 68-71 (the full rotation-setup field list incl. the two visibility toggles), 73-77 (ICE, DPE and the Mercer residency/fellowship pilot), 79-85 (the March 1 M1M cycle, the climbing FCFS share, and Exxat One as the year-round alternative), 87-91 (slot-based and location-based wishlists, Placement Assist, limited MyRequest), 99-108 (the four co-existing placement modes), 110-113 (slot confirmation and cancellation emails), 115-123 (placement-notification lead times and the student-contacts-CI convention), 184-188 (pain points incl. split terminal rotations, the four marketplace competitors, and national IP/acute-slot competition), 279-281 (the Exxat One availability-based wishlist)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Occupational Therapy (OT) Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Physician Assistant (PA) Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Speech-Language Pathology (SLP) Playbook.md — read IN FULL 2026-08-25 (previously consulted per-stage). Lines cited across this journey: 12 (the playbook's own data-quality caveat — it is synthesized from eight thin feature-specific artifacts, not a CSS playbook, so silence is documentation absence rather than product absence), 18-21 (ASHA / CAA / CFCC / KASA, and the nine KASA competencies a.k.a. nine service-delivery areas, whose individual names that source never enumerates), 25-35 (Course Offering, Rotation, Learning Activity Group, Clinical Log, Clinical Educator, Student Participation Type, Practice Type, Mode of Delivery, Training Level, Placement Setting, Age Group), 37 (no DCE/ACCE/SCCE-equivalent role terms are documented for SLP), 41-49 (CAA + CFCC curriculum mapping, the Mapped Standards Report, the beyond-KASA CSS dependency, the CFCC V-E attestation hook and its navigation, affiliation agreements in the Sites module, and the 400-hour tracking on the Clinical Clock Hours Report (Cumulative)), 53-67 (per-course-offering Clinical Log setup: template preview, activate toggle, the N-day submission window, grading, the wrench column customization with the first four columns fixed, clinical-educator review routing with a previewable email template, the attestation, and the support-gated min/max hour thresholds), 71-84 (the review workflow: the Logs Count / Log Hours by Status columns, Last Encounter and Last Update, the three-status colour model, the mandatory school-feedback note on Needs Attention, bulk approve and Approve All Logs, the 6am EST Statistics refresh, three export levels, and the filter set incl. Placement Faculty / Clinical Educator), 88-100 (no free off-the-shelf standard instruments; the configured toolkit — KASA Summary Forms, Clinical Supervisor Evaluations (Midterm & Final), Student Self-Assessments, Student Evaluations of Clinical Sites, Student Evaluations of Clinical Supervisors, Site Assessments aligned to program goals and accreditation standards, and custom forms — all support-gated to create; and the student-facing Student Performance Report across all nine service delivery areas), 104-105 (surveys buildable in Prism from December 2025), 109-114 (advisement via Communications & Interventions or custom workflow-based advisement forms with signature, plus profile-level and course-level attestations with their navigation paths), 118 (question-based early-alert notifications configured by support), 120-138 (the report suite, the shared filter set, the 50-course-offering cap, and the broader capability list incl. trend/exposure analysis, low-performance indicators and placement-readiness metrics), 142-149 (the discipline's own gap list — explicitly a DOCUMENTATION gap, plus the recurring self-service gap for SLP). In THIS file the load-bearing lines are 142-149 — the playbook's own gap list, which states there is no SLP-specific slot-request cycle, wishlist pattern or Placement Assist usage note, and frames that as a documentation gap rather than a confirmed product gap. That distinction is preserved on the wishlist-defaults element and must not be upgraded into a product claim in either direction."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Nursing Playbook.md"
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Social Work (SW) Playbook.md — READ IN FULL 2026-08-25 (previously consulted per-stage). Lines cited in this file: 26-28 (Field Application Form / Placement Suggestion / Learning Contract terminology), 41-50 (the two cohort-naming conventions and the Groups/Campuses/Categories value sets), 63-67 (the three course-setup models), 84-127 (the whole Field Application Forms, Interview Statuses and Placement Creation section — the ten-suggestion ceiling, the six workflow steps, the status lifecycle, the mapping rules, the three Create Placement branches, My Requests and course-specific Wishlist Questionnaires, the navigation path and the best-practice list), 183 (the Download Raw Response export with Interview Status and Schedule Date as added columns), 185-189 (the temporary-placement anti-pattern this workflow replaced), 197 (expect Field Application Forms and My Requests to be used more heavily and iteratively than a single-wishlist PT/OT slot process)."
+  - "PRISM-Expansion-Vault/99-Assets/documents/Playbooks/Teacher Education (TE) Playbook.md — READ IN FULL 2026-08-25 (73 lines). It is the thinnest discipline source in this corpus and its own line 12 says why: TE has no dedicated internal help-center playbook article and no CSS discipline playbook PDF, so the note is built from ONE program-administrator video tutorial covering the GoReact/Echo360 LTI integration, transcribed from auto-generated Vimeo captions. Substantive content: lines 19-26 (LTI integration with GoReact, now part of Echo360; assignments, student submissions and scores/status updates sync automatically; described as a genuinely connected two-way workflow in which administrators are not expected to recreate assignments in GoReact), 28-31 (activation is discipline/program-gated — if the Learning Tool Interoperability section is absent from Learning Activities > Setup the feature is not activated, and activation requires an Exxat support ticket), 33-45 (the administrator setup sequence: create at Learning Activities > Setup > Learning Tool Interoperability > +, configure LTI tool, title, description, placement-based vs. didactic, publish and due dates, grading and score settings and faculty visibility; activate and save; Prism auto-creates the matching GoReact activity on first save; GoReact-specific settings are then configured in GoReact and the activity marked Done, at which point the assignment becomes available to students), 47-52 (student workflow from My Coursework: redirect into GoReact, record directly, upload a video file, or submit other supported media, with status syncing back), 54-57 (faculty/reviewer workflow: timestamped comments, feedback, evaluations and scores, syncing back with no reconciliation step), 61 (further GoReact-side configuration is documented in GoReact's help centre, not Exxat's), and 63-73 (the Open Gaps list — TE terminology, program/setup patterns, compliance, placement and slot workflows, standard evaluation forms and reports, accreditor standards, and pain points are ALL explicitly unpopulated, with a standing instruction not to treat field-standard TE terms or CAEP standard numbers as Exxat-specific until confirmed against a TE-specific source). EVERY TE claim in this file that is not about the LTI integration is therefore reasoned from ../accreditation/caep.yaml and carries that caveat inline. In THIS file the load-bearing lines are 67 (TE terminology — the Rotation/Placement, Cohort and cooperating-teacher equivalents — is unconfirmed for Exxat and must not be treated as Exxat-specific) and 70 (placement and slot workflows, incl. how TE placement requests, wishlists and confirmations compare to PT/OT/PA patterns, are explicitly unavailable), which together are why every element in the TE placement step is marked inferred."
   # --- Raw transcripts (CRNA: read in full; contains NO placement/capacity content — see the CRNA step) ---
-  - "/Users/romitsoley/Downloads/CRNAVideosTranscripts.md"
+  - "CRNAVideosTranscripts.md"
   # --- Prism internal synthesis ---
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/prism/capability-map.yaml"
+  - "content/prism/capability-map.yaml"
   # --- Accreditor registries: four expansion domains ---
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acpe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coca.yaml"
+  - "content/accreditation/acpe.yaml"
+  - "content/accreditation/coca.yaml"
   # --- Accreditor registries: the eight served disciplines ---
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/capte.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/acote.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/arc-pa.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caa-asha.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/nursing.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/coa.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/cswe.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/accreditation/caep.yaml"
+  - "content/accreditation/capte.yaml"
+  - "content/accreditation/acote.yaml"
+  - "content/accreditation/arc-pa.yaml"
+  - "content/accreditation/caa-asha.yaml"
+  - "content/accreditation/nursing.yaml"
+  - "content/accreditation/coa.yaml"
+  - "content/accreditation/cswe.yaml"
+  - "content/accreditation/caep.yaml"
   # --- Competitor teardowns (all nine reviewed for placement-matching granularity) ---
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/core-elms.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/one45.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/e-value.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/elentra.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/emedley.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/leo-davinci.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/medhub.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/new-innovations.yaml"
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/competitors/axium.yaml"
+  - "content/competitors/core-elms.yaml"
+  - "content/competitors/one45.yaml"
+  - "content/competitors/e-value.yaml"
+  - "content/competitors/elentra.yaml"
+  - "content/competitors/emedley.yaml"
+  - "content/competitors/leo-davinci.yaml"
+  - "content/competitors/medhub.yaml"
+  - "content/competitors/new-innovations.yaml"
+  - "content/competitors/axium.yaml"
   # --- Sibling flow files cross-referenced (not re-derived from) ---
-  - "/Users/romitsoley/Documents/GitHub/rr-emerging-domains/content/flows/admin-onboarding--07-wishlists-slot-requests-placement-assist.yaml"
+  - "content/flows/admin-onboarding--07-wishlists-slot-requests-placement-assist.yaml"
 last_verified: "2026-08-25"
