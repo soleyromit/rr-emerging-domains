@@ -48,10 +48,33 @@ const DEPTH_LABEL: Record<string, string> = {
   unknown: "Unverified",
 };
 
+// The same words the badge shows, as a string — for a Takeaway/heading that has to
+// SAY the depth in a sentence rather than render a pill ("E*Value is ahead of Prism
+// on Curriculum Mapping"). Exported for the same reason standardsRatingLabel is: a
+// caller that needs the words in prose must not drift into a second spelling of a
+// vocabulary this file already owns.
+export function depthLabel(depth?: string): string {
+  if (!depth) return "Unknown";
+  return DEPTH_LABEL[depth.toLowerCase()] ?? depth;
+}
+
+// Same depth value, mapped to a Banner/Takeaway status instead of a Badge variant —
+// the DEPTH_VARIANT colors read from Prism's point of view (a competitor "ahead" is
+// the bad news, "behind" is the good news), and this keeps a panel's one-line verdict
+// agreeing with the pill beside it rather than each guessing its own color.
+export function depthStatus(depth?: string): "success" | "warning" | "error" | "info" {
+  if (!depth) return "info";
+  const key = Object.keys(DEPTH_VARIANT).find((k) => depth.toLowerCase().includes(k));
+  if (key === "ahead") return "error";
+  if (key === "at-parity") return "warning";
+  if (key === "behind") return "success";
+  return "info";
+}
+
 export function DepthBadge({ depth }: { depth?: string }) {
   if (!depth) return <Badge variant="neutral" label="Unknown" />;
   const key = Object.keys(DEPTH_VARIANT).find((k) => depth.toLowerCase().includes(k));
-  return <Badge variant={key ? DEPTH_VARIANT[key] : "neutral"} label={DEPTH_LABEL[depth.toLowerCase()] ?? depth} />;
+  return <Badge variant={key ? DEPTH_VARIANT[key] : "neutral"} label={depthLabel(depth)} />;
 }
 
 export function StatusBadge({ status }: { status?: string }) {
