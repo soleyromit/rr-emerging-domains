@@ -20,6 +20,9 @@ import {
   listCompetitors,
   getScorecard,
   computeWeightedTotals,
+  getAccreditationForDomain,
+  accreditorShortName,
+  fitCounts,
 } from "@/lib/content";
 
 // "H1/H2/H3" was internal shorthand leaking straight onto the page as a badge
@@ -88,6 +91,17 @@ export default function OverviewPage() {
   const totals = scorecard ? computeWeightedTotals(scorecard) : null;
   const leader = totals ? Object.entries(totals).sort((a, b) => b[1] - a[1])[0] : null;
 
+  // The Takeaway below quotes Pharmacy's pillar-fit split. It used to hard-type
+  // "4 Transfer / 12 Configure / 4 Gap" — figures that had gone stale against
+  // content/accreditation/acpe.yaml (really 4 / 13 / 3) and survived three
+  // rounds of number fixes only because the wrong pair still summed to 20.
+  // Derived now, off the same `prism_fit` field and the same exported
+  // fitCounts() helper /domains/[slug] and /go-to-market#whats-missing read,
+  // so it cannot drift again. Null-guarded: if the ACPE doc ever goes missing
+  // the sentence drops the parenthetical rather than printing a stale one.
+  const acpeDoc = getAccreditationForDomain("Pharmacy")[0] ?? null;
+  const acpeFit = acpeDoc ? fitCounts(acpeDoc) : null;
+
   return (
     <Stack gap={0}>
       <Section padding={6} dividers={["bottom"]}>
@@ -103,8 +117,14 @@ export default function OverviewPage() {
             incumbent disruption) with Pharmacy a close second (4.05 / 5) — that scoring is real and unedited, see the{" "}
             <Link href="/go-to-market#which-domain" hasUnderline>scorecard</Link>. Pharmacy is the domain actually being targeted
             first, for reasons outside that weighted model. The two conclusions aren&apos;t in conflict: Pharmacy
-            also has the highest pillar-fit ratio of any domain researched (4 Transfer / 12 Configure / 4 Gap on
-            ACPE), the smallest accreditation build, and a live switching-cost window as ACPE retires AAMS for its
+            also has the highest pillar-fit ratio of any domain researched
+            {acpeFit && acpeDoc ? (
+              <>
+                {" "}({acpeFit.Transfer} Transfer / {acpeFit.Configure} Configure / {acpeFit.Gap} Gap on{" "}
+                {accreditorShortName(acpeDoc)})
+              </>
+            ) : null}
+            , the smallest accreditation build, and a live switching-cost window as ACPE retires AAMS for its
             own PHARMS platform — see the{" "}
             <Link href="/domains/pharmacy" hasUnderline>Pharmacy domain hub</Link>,{" "}
             <Link href="/go-to-market#whats-missing" hasUnderline>gap analysis</Link>, or{" "}
