@@ -4,6 +4,9 @@ competitor: "Experiential Learning Cloud (Lumivero)"
 slug: "experiential-learning-cloud"
 domains_served: ["Education/Teacher Prep", "Social Work", "Counseling"]   # NOT primarily a health-sciences ELMS per Prism's template categories — see note below; some institutions also route "healthcare professional" field placements through it (South Alabama case study), but no discipline-specific health-sciences marketing page or named health-sciences accreditor (ACEN, CCNE, CAPTE, ACPE, ARC-PA) was found
 category: "Field placement + assessment/accreditation management for experiential learning programs (originally teacher-prep/social-work/counseling-focused, not built as a clinical/health-sciences ELMS the way Prism, CORE ELMS, or Exxat are)"
+# Vendor's own published mark, fetched 2026-09-09 from its official site (or its current
+# parent brand's) and committed under apps/ecosystem/public/logos/ — see _TEMPLATE.yaml.
+logo_asset: "experiential-learning-cloud.svg"
 company:
   founded: >
     The product itself is a 2025 merger of two older products, not a new company: Sonia

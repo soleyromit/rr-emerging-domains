@@ -2504,6 +2504,101 @@ def summarize_unresearched_accreditation():
     return lines
 
 
+def check_competitor_logo_assets():
+    """`logo_asset` in content/competitors/*.yaml names a real vendor-published mark
+    committed under apps/ecosystem/public/logos/. Three things have to agree or the app
+    draws the wrong thing, and only one of them is visible from any single file:
+
+      1. content  — the competitor's `logo_asset` (the authority on WHICH file)
+      2. disk     — apps/ecosystem/public/logos/<file> actually exists
+      3. registry — apps/ecosystem/lib/competitor-logos.ts's COMPETITOR_LOGO_ASSETS,
+                    which is the ONLY copy the app's many "use client" competitor
+                    surfaces can read (lib/content.ts pulls node:fs and cannot be
+                    imported from a browser chunk), plus each mark's backing hint.
+
+    An unpopulated `logo_asset` is a correct, expected state — four researched
+    competitors have no legitimately-sourced mark — so absence from all three is silent.
+    What this FAILs on is DISAGREEMENT: a declared file that is not on disk (the app
+    would render a broken image where it promised a logo), a declaration the registry
+    does not carry (client surfaces would silently drop to initials while server ones
+    show the mark), or a registry entry no competitor declares (a stale asset nothing
+    can reach). The registry is parsed with a regex rather than imported because this
+    script is Python at the repo root; the literal it reads is kept in a flat
+    `slug: { file: "x" }` shape for exactly that reason."""
+    problems = []
+    logos_dir = REPO / "apps" / "ecosystem" / "public" / "logos"
+    registry_path = REPO / "apps" / "ecosystem" / "lib" / "competitor-logos.ts"
+
+    declared = {}
+    for f in sorted((CONTENT / "competitors").glob("*.yaml")):
+        if f.name.startswith("_TEMPLATE"):
+            continue
+        doc = yaml.safe_load(f.read_text()) or {}
+        asset = doc.get("logo_asset")
+        if asset is None:
+            continue
+        slug = doc.get("slug") or f.stem
+        if not isinstance(asset, str) or not asset.strip():
+            problems.append(f"competitors/{f.name}: logo_asset is present but not a filename")
+            continue
+        asset = asset.strip()
+        if not re.fullmatch(r"[a-z0-9][a-z0-9._-]*\.(svg|png|jpe?g|webp)", asset):
+            problems.append(
+                f"competitors/{f.name}: logo_asset {asset!r} is not a plain image filename "
+                f"— it must name a file committed under apps/ecosystem/public/logos/, never a URL or a path"
+            )
+            continue
+        declared[slug] = asset
+        if not (logos_dir / asset).exists():
+            problems.append(
+                f"competitors/{f.name}: logo_asset {asset!r} is not in apps/ecosystem/public/logos/ "
+                f"— the app would render a broken image instead of the initials fallback"
+            )
+
+    if not registry_path.exists():
+        problems.append(
+            "apps/ecosystem/lib/competitor-logos.ts is missing — every client-rendered "
+            "competitor surface would silently fall back to initials"
+        )
+        return problems
+
+    text = registry_path.read_text()
+    body = re.search(
+        r"COMPETITOR_LOGO_ASSETS:\s*Record<string,\s*CompetitorLogoAsset>\s*=\s*\{(.*?)\n\};",
+        text,
+        re.S,
+    )
+    if not body:
+        problems.append(
+            "apps/ecosystem/lib/competitor-logos.ts: could not find the COMPETITOR_LOGO_ASSETS "
+            "object literal — keep it in the flat `slug: { file: \"x\" }` shape this check parses"
+        )
+        return problems
+    registry = dict(
+        re.findall(r'^\s*"?([A-Za-z0-9_-]+)"?:\s*\{\s*file:\s*"([^"]+)"', body.group(1), re.M)
+    )
+
+    for slug, asset in sorted(declared.items()):
+        if slug not in registry:
+            problems.append(
+                f"competitors/{slug}.yaml declares logo_asset {asset!r} but "
+                f"lib/competitor-logos.ts has no entry for {slug!r} — client-rendered "
+                f"competitor surfaces would show initials while server-rendered ones show the logo"
+            )
+        elif registry[slug] != asset:
+            problems.append(
+                f"competitors/{slug}.yaml declares logo_asset {asset!r} but "
+                f"lib/competitor-logos.ts registers {registry[slug]!r} for it"
+            )
+    for slug, asset in sorted(registry.items()):
+        if slug not in declared:
+            problems.append(
+                f"lib/competitor-logos.ts registers {asset!r} for {slug!r}, but "
+                f"content/competitors/{slug}.yaml does not declare a logo_asset"
+            )
+    return problems
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--warn-only", action="store_true", help="never exit non-zero")
@@ -2630,6 +2725,7 @@ def main():
     integrity_problems += check_capability_roadmap_integrity()
     integrity_problems += check_gtm_isolation()
     integrity_problems += check_vendor_comparison_isolation()
+    integrity_problems += check_competitor_logo_assets()
     unresearched = summarize_unresearched_accreditation()
 
     if not results and not integrity_problems and not INTEGRITY_WARNINGS:

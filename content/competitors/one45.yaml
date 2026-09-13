@@ -2,6 +2,9 @@ competitor: "one45 (Acuity Insights)"
 slug: "one45"
 domains_served: ["MD"]
 category: "Med-ed program management (scheduling, curriculum, assessment/evaluation) for medical schools & residencies"
+# Vendor's own published mark, fetched 2026-09-09 from its official site (or its current
+# parent brand's) and committed under apps/ecosystem/public/logos/ — see _TEMPLATE.yaml.
+logo_asset: "one45.png"
 company:
   founded: "2001 (one45, Vancouver, BC); acquired by Altus Assessments in Aug 2021; Altus renamed to Acuity Insights in Nov 2022"
   hq: "Toronto, Ontario, Canada (Acuity Insights parent co.); one45 product originated in Vancouver, BC"

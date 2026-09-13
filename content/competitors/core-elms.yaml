@@ -9,6 +9,9 @@ competitor: "CORE ELMS (CORE Higher Ed)"
 slug: "core-elms"
 domains_served: ["Pharmacy", "Dentistry"]   # also serves broad "allied health" (nursing, PT, OT, PA, social work, etc.) but not DO/Medicine-specific per template categories
 category: "Experiential/clinical education management (ELMS) across health sciences + broader experiential-ed disciplines"
+# Vendor's own published mark, fetched 2026-09-09 from its official site (or its current
+# parent brand's) and committed under apps/ecosystem/public/logos/ — see _TEMPLATE.yaml.
+logo_asset: "core-elms.svg"
 company:
   founded: "2006, per Crunchbase acquisition profile summary of CORE Higher Education Group (not independently confirmed on corehighered.com itself)"
   hq: "1 Coastway Blvd, Suite 101, Warwick, RI 02886 (also referenced as West Warwick, RI in secondary sources)"

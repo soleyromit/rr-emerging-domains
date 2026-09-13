@@ -135,6 +135,10 @@ export interface Competitor {
   slug: string;
   domains_served: string[];
   category?: string;
+  /** Filename of a real vendor-published mark committed under public/logos/, or absent
+   *  when none has been legitimately sourced — see content/competitors/_TEMPLATE.yaml.
+   *  Absent is a correct state, not a gap: CompetitorLogo renders initials for it. */
+  logo_asset?: string;
   company?: { founded?: string; hq?: string; ownership?: string };
   feature_teardown?: CompetitorFeature[];
   strengths?: { claim: string; source?: string }[];
@@ -784,6 +788,32 @@ export interface CompetitorLandscape {
 
 export function getCompetitorLandscape(): CompetitorLandscape | null {
   return readYamlFile<CompetitorLandscape>("lenses/competitor-landscape.yaml");
+}
+
+/** Highest threat rating a competitor holds in ANY researched domain, plus which domains
+ *  carry it. `threat` is a per-domain synthesis judgment in
+ *  lenses/competitor-landscape.yaml — there is no such thing as a domain-free threat
+ *  level in the content — so this is an explicitly-labelled rollup, used only by the
+ *  cross-domain /competitive-landscape grid, which must say "highest rating in any
+ *  researched domain" rather than presenting it as one global rating. A domain-filtered
+ *  view reads that domain's own rating directly instead of calling this. */
+export const THREAT_RANK: Record<string, number> = { high: 3, medium: 2, low: 1 };
+
+export function getCompetitorThreatRollup(): Record<string, { threat: string; domains: string[] }> {
+  const out: Record<string, { threat: string; domains: string[] }> = {};
+  for (const d of getCompetitorLandscape()?.domains ?? []) {
+    for (const c of d.competitors ?? []) {
+      const rank = THREAT_RANK[c.threat?.toLowerCase?.().trim() ?? ""] ?? 0;
+      const prev = out[c.slug];
+      if (!prev) {
+        out[c.slug] = { threat: c.threat, domains: [d.domain] };
+        continue;
+      }
+      prev.domains.push(d.domain);
+      if (rank > (THREAT_RANK[prev.threat?.toLowerCase?.().trim() ?? ""] ?? 0)) prev.threat = c.threat;
+    }
+  }
+  return out;
 }
 
 // Competitor files use "MD" for Medicine (matching their own domains_served

@@ -4,6 +4,9 @@ competitor: "MedHub"
 slug: "medhub"
 domains_served: ["DO", "MD"]
 category: "Med-ed management (UME+GME), part of a combined MedHub/E*Value healthcare-education suite"
+# Vendor's own published mark, fetched 2026-09-09 from its official site (or its current
+# parent brand's) and committed under apps/ecosystem/public/logos/ — see _TEMPLATE.yaml.
+logo_asset: "medhub.webp"
 company:
   founded: "2002 (originated from projects for the University of Michigan Health System, including a web-based shift/call scheduling engine for surgery residents)"
   hq: "Minneapolis, MN (510 Marquette Ave S, 3rd Floor, Minneapolis, MN 55402)"

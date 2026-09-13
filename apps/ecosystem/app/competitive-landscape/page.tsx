@@ -1,7 +1,5 @@
 import { Section } from "@astryxdesign/core/Section";
 import { Stack } from "@astryxdesign/core/Stack";
-import { Grid } from "@astryxdesign/core/Grid";
-import { ClickableCard } from "@astryxdesign/core/ClickableCard";
 import { Text } from "@astryxdesign/core/Text";
 import { Heading } from "@astryxdesign/core/Heading";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
@@ -11,9 +9,17 @@ import { DisciplineChip } from "@/components/discipline-chip";
 import { CompetitorDepthChart } from "@/components/charts/competitor-depth-chart";
 import { CompetitorScanTable } from "@/components/competitor-scan-table";
 import { DomainFilterNotice, resolveDomainFilter } from "@/components/competitive-landscape-filter";
+import { CompetitorLogoGrid } from "@/components/competitor-logo-grid";
+import type { CompetitorLogoGridEntry } from "@/components/competitor-logo-grid";
 import { leadSentence } from "@/lib/text";
 import { stripFileCitations } from "@/lib/strip-file-citations";
-import { getFeatureComparisonForDomain, listCompetitors } from "@/lib/content";
+import {
+  getCompetitorLandscape,
+  getCompetitorThreatRollup,
+  getFeatureComparisonForDomain,
+  listCompetitors,
+  THREAT_RANK,
+} from "@/lib/content";
 
 // The by-competitor pivot of /competitive-landscape — one competitor, all six
 // pillars. Was /competitors (now a permanent redirect here, see next.config.ts).
@@ -46,6 +52,87 @@ export default async function CompetitiveLandscapePage({
         return all.filter((c) => inDomain.has(c.slug));
       })()
     : all;
+
+  // Threat banding for the teardown grid. `threat` is a per-domain synthesis judgment in
+  // lenses/competitor-landscape.yaml, so which reading applies depends on the filter:
+  //
+  //  - filtered  -> that domain's own rating and its own rationale, read straight from
+  //                 the landscape entry. No derivation, no rollup.
+  //  - unfiltered -> the HIGHEST rating the vendor holds in any researched domain, which
+  //                 is a computed aggregate and is labelled as one on the page. Anything
+  //                 else would have to either invent a global rating or pick one domain's
+  //                 arbitrarily. A vendor no domain has rated (examsoft, influx today)
+  //                 lands in the grid's explicit unrated band rather than being dropped
+  //                 or silently sorted to the bottom of a "low" group.
+  const domainThreats = filter
+    ? new Map(
+        (getCompetitorLandscape()?.domains.find((d) => d.domain === filter.domain)?.competitors ?? []).map(
+          (c) => [c.slug, c] as const,
+        ),
+      )
+    : null;
+  const rollup = filter ? null : getCompetitorThreatRollup();
+
+  const gridEntries: CompetitorLogoGridEntry[] = competitors.map((c) => {
+    const rated = domainThreats?.get(c.slug);
+    const threat = rated?.threat ?? rollup?.[c.slug]?.threat;
+    // Filtered, the rationale IS the reason for the band, so it is the most useful line.
+    // Unfiltered there is no single rationale (a vendor can be rated in six domains), so
+    // the vendor's own category stays, as it did before this grid replaced the plain one.
+    //
+    // Rationale and category are NOT run through leadSentence: both are already one
+    // sentence, and leadSentence splits on a period, so CORE's rationale ("CORE claims
+    // 90% of U.S. pharmacy programs partner with them — …") rendered as the four words
+    // "CORE claims 90% of U.S." on the Pharmacy filter. The grid tile's own two-line
+    // clamp is what shortens these, and it clamps without amputating a claim mid-fact.
+    // exxat_opportunity is a genuine multi-sentence paragraph, so it still gets a lead.
+    const note = rated?.rationale
+      ? stripFileCitations(rated.rationale)
+      : c.category
+        ? stripFileCitations(c.category)
+        : undefined;
+    // The "where Prism can win here" lead the card this grid replaced carried as its own
+    // second line. Kept, so the grid is not a net loss of information: it fell back to
+    // the vendor's first strength when no opportunity was written, and still does.
+    const signal = c.exxat_opportunity
+      ? stripFileCitations(leadSentence(c.exxat_opportunity))
+      : c.strengths?.[0]
+        ? stripFileCitations(leadSentence(c.strengths[0].claim))
+        : undefined;
+    return {
+      slug: c.slug,
+      competitor: c.competitor,
+      logo_asset: c.logo_asset,
+      threat,
+      note,
+      secondaryNote: note === signal ? undefined : signal,
+      meta: (c.domains_served ?? []).length ? (
+        <Stack direction="horizontal" gap={1.5} wrap="wrap">
+          {(c.domains_served ?? []).map((d) => (
+            <DisciplineChip key={d} subject={d} />
+          ))}
+        </Stack>
+      ) : undefined,
+    };
+  });
+
+  // Order inside the page mirrors the banding, so the DOM order and the visual order
+  // agree for a keyboard/screen-reader pass through the grid.
+  gridEntries.sort(
+    (a, b) =>
+      (THREAT_RANK[b.threat?.toLowerCase() ?? ""] ?? 0) - (THREAT_RANK[a.threat?.toLowerCase() ?? ""] ?? 0) ||
+      a.competitor.localeCompare(b.competitor),
+  );
+
+  const groupCaption = filter
+    ? `Banded by each vendor's researched threat rating in ${filter.domain}, with that domain's own rationale.`
+    : "Banded by the highest threat rating each vendor holds in any researched domain — a rollup across domains, not a single global rating. Scope to one domain to see that domain's own rating and its rationale.";
+
+  // A vendor can be rated in another domain and still be unrated in the one on screen, so
+  // the filtered view cannot reuse the cross-domain "no domain has rated these" wording.
+  const unratedCaption = filter
+    ? `Researched as active in ${filter.domain}, but not rated in its landscape entry`
+    : undefined;
 
   return (
     <Stack gap={0}>
@@ -115,37 +202,12 @@ export default async function CompetitiveLandscapePage({
                 <Heading level={2}>Full teardowns ({competitors.length})</Heading>
                 <Text type="supporting">Open a competitor for company facts, full strengths/weaknesses, and the sourced feature-by-feature dossier.</Text>
               </Stack>
-              <Grid columns={{ minWidth: 320 }} gap={4}>
-                {competitors.map((c) => {
-                  const signal = c.exxat_opportunity
-                    ? stripFileCitations(leadSentence(c.exxat_opportunity))
-                    : c.strengths?.[0]
-                      ? stripFileCitations(leadSentence(c.strengths[0].claim))
-                      : undefined;
-                  return (
-                    <ClickableCard key={c.slug} href={`/competitors/${c.slug}`} label={c.competitor}>
-                      <Stack gap={2}>
-                        <Heading level={3}>{c.competitor}</Heading>
-                        {c.category ? (
-                          <Text type="supporting" size="xsm" maxLines={2}>
-                            {c.category}
-                          </Text>
-                        ) : null}
-                        <Stack direction="horizontal" gap={1.5} wrap="wrap">
-                          {(c.domains_served ?? []).map((d) => (
-                            <DisciplineChip key={d} subject={d} />
-                          ))}
-                        </Stack>
-                        {signal ? (
-                          <Text type="supporting" size="xsm" maxLines={2}>
-                            {signal}
-                          </Text>
-                        ) : null}
-                      </Stack>
-                    </ClickableCard>
-                  );
-                })}
-              </Grid>
+              <CompetitorLogoGrid
+                entries={gridEntries}
+                groupCaption={groupCaption}
+                unratedCaption={unratedCaption}
+                minTileWidth={264}
+              />
             </Stack>
           </Section>
         </>

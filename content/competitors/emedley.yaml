@@ -2,6 +2,9 @@ competitor: "eMedley (AllofE Solutions)"
 slug: "emedley"
 domains_served: ["MD", "DO"]
 category: "Med-ed management (curriculum, clinical education, testing/evaluations) for health science programs"
+# Vendor's own published mark, fetched 2026-09-09 from its official site (or its current
+# parent brand's) and committed under apps/ecosystem/public/logos/ — see _TEMPLATE.yaml.
+logo_asset: "emedley.png"
 company:
   founded: "1999 (AllofE Solutions; site footer reads '©1999-2026 AllofE Solutions')"
   hq: "Lawrence, KS (2510 W 6th St, Lawrence, KS 66049)"

@@ -5,6 +5,21 @@ competitor: "Example Competitor Name"
 slug: "example-competitor"
 domains_served: ["DO", "MD"]          # subset of: DO, Pharmacy, Dentistry, Medicine
 category: "e.g. 'Med-ed management (UME+GME)'"
+
+# OPTIONAL. Filename (not a URL, not a path) of a real logo asset committed under
+# apps/ecosystem/public/logos/, plus a comment above it saying where the file came from.
+# Fill this in ONLY when the vendor's own published mark — from its official site, its
+# current parent brand's site, or an explicitly licensed press/brand kit — has actually
+# been downloaded and committed. If no such asset has been legitimately sourced, OMIT the
+# field: the UI falls back to a colored-initials tile, which is the honest state, not a
+# gap, and four of this directory's competitors sit on that path today.
+# Never point this at a hotlinked third-party URL, a logo-scraping CDN, a generic icon,
+# or a redrawn approximation of someone's trademark — a fabricated mark is worse than
+# initials. apps/ecosystem/lib/competitor-logos.ts carries the render-side hints for each
+# asset; scripts/check_content_density.py FAILs if the two disagree or if the named file
+# is not on disk.
+# logo_asset: "example-competitor.svg"
+
 company:
   founded: "year, or 'not publicly stated'"
   hq: "city, state/country, or 'not publicly stated'"

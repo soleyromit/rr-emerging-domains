@@ -2,6 +2,9 @@ competitor: "E*Value (MedHub)"
 slug: "e-value"
 domains_served: ["DO", "MD", "Pharmacy"]
 category: "Med-ed management (UME + GME + advanced-practice health sciences)"
+# Vendor's own published mark, fetched 2026-09-09 from its official site (or its current
+# parent brand's) and committed under apps/ecosystem/public/logos/ — see _TEMPLATE.yaml.
+logo_asset: "e-value.jpeg"
 company:
   founded: "2002 (per CB Insights company profile; not independently confirmed on medhub.com itself)"
   hq: "Minneapolis, MN"

@@ -4,6 +4,9 @@ competitor: "axiUm (Exan / Henry Schein One)"
 slug: "axium"
 domains_served: ["Dentistry"]
 category: "Academic dental EHR + practice management (dental school clinical/education suite)"
+# Vendor's own published mark, fetched 2026-09-09 from its official site (or its current
+# parent brand's) and committed under apps/ecosystem/public/logos/ — see _TEMPLATE.yaml.
+logo_asset: "axium.svg"
 company:
   founded: "Exan Software founded 1989; axiUm product launched 1995 (per search-engine-summarized secondary sources, not independently confirmed on a primary Exan/Henry Schein page — treat founding year as best-available, not fully verified)"
   hq: "Originally Port Coquitlam, British Columbia, Canada (Exan Group headquarters at time of 2012 acquisition); now operated as Exan Software, a Henry Schein One company"

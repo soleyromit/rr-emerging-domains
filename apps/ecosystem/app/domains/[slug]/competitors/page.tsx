@@ -5,9 +5,8 @@ import { Text } from "@astryxdesign/core/Text";
 import { Collapsible } from "@astryxdesign/core/Collapsible";
 import { ClickableCard } from "@astryxdesign/core/ClickableCard";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
-import { List, ListItem } from "@astryxdesign/core/List";
-import { ThreatBadge } from "@/components/fit-badge";
-import { CompetitorLogo } from "@/components/competitor-logo";
+import { CompetitorLogoGrid } from "@/components/competitor-logo-grid";
+import type { CompetitorLogoGridEntry } from "@/components/competitor-logo-grid";
 import { humanizeSourceRef, stripFileCitations } from "@/lib/strip-file-citations";
 import { SentenceList } from "@/components/sentence-list";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
@@ -16,11 +15,18 @@ import {
   getDissectionManifest,
   getDomainHubData,
   getFeatureComparisonMatrixForDomain,
+  listCompetitors,
   listFeatureMaps,
+  THREAT_RANK,
 } from "@/lib/content";
 import { dissectHref } from "@/lib/dissection-links";
 
-const VISIBLE_COMPETITOR_COUNT = 4;
+// The threat bands that stay open in the scan layer. Everything below them collapses,
+// which is the same density discipline the old flat "first 4, rest behind a Collapsible"
+// split enforced — but cut on the reading that actually matters (how dangerous a vendor
+// is here) instead of on list position. Across all 13 domains no band exceeds 5 vendors,
+// so an open High+Medium pair stays scannable.
+const OPEN_THREAT_BANDS = new Set(["high", "medium"]);
 
 export default async function DomainCompetitorsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -28,8 +34,31 @@ export default async function DomainCompetitorsPage({ params }: { params: Promis
   if (!entry) notFound();
 
   const { landscapeEntry, featureComparison } = getDomainHubData(entry.domain, slug);
-  const visibleCompetitors = landscapeEntry?.competitors.slice(0, VISIBLE_COMPETITOR_COUNT) ?? [];
-  const overflowCompetitors = landscapeEntry?.competitors.slice(VISIBLE_COMPETITOR_COUNT) ?? [];
+
+  // The landscape lens carries the name/slug/threat/rationale but not the logo, which is
+  // declared per competitor in content/competitors/<slug>.yaml. Join them here, on the
+  // server, so the grid draws the real mark where one has been sourced and falls back to
+  // initials where none has — never a broken image, and never a slug rendered as text.
+  const logoAssets = new Map(listCompetitors().map((c) => [c.slug, c.logo_asset] as const));
+  const threatRank = (t?: string) => THREAT_RANK[t?.toLowerCase().trim() ?? ""] ?? 0;
+  const toEntry = (c: { slug: string; competitor: string; threat: string; rationale: string }) =>
+    ({
+      slug: c.slug,
+      competitor: c.competitor,
+      logo_asset: logoAssets.get(c.slug),
+      threat: c.threat,
+      note: stripFileCitations(c.rationale),
+    }) satisfies CompetitorLogoGridEntry;
+
+  const ranked = [...(landscapeEntry?.competitors ?? [])].sort((a, b) => threatRank(b.threat) - threatRank(a.threat));
+  const isOpenBand = (t?: string) => OPEN_THREAT_BANDS.has(t?.toLowerCase().trim() ?? "");
+  // Nine of the 13 domains have a high- or medium-rated vendor. Where none does (today
+  // Occupational Therapy, whose one researched competitor is rated low), splitting on the
+  // band would leave the scan layer empty above a collapsed section — so that domain
+  // shows its whole, short list open instead of hiding all of it behind a trigger.
+  const anyOpenBand = ranked.some((c) => isOpenBand(c.threat));
+  const visibleCompetitors = (anyOpenBand ? ranked.filter((c) => isOpenBand(c.threat)) : ranked).map(toEntry);
+  const overflowCompetitors = (anyOpenBand ? ranked.filter((c) => !isOpenBand(c.threat)) : []).map(toEntry);
 
   // 2026-09-13 nav consolidation: the depth chart and the pillar × competitor
   // cross-tab (FeatureDepthChart + FeatureTeardownMatrix) that used to render in
@@ -81,33 +110,20 @@ export default async function DomainCompetitorsPage({ params }: { params: Promis
               description="This isn't a gap in the table — it's the honest current state of research for this domain."
             />
           ) : (
-            <Stack gap={3}>
-              <List hasDividers>
-                {visibleCompetitors.map((c) => (
-                  <ListItem
-                    key={c.slug}
-                    href={`/competitors/${c.slug}`}
-                    startContent={<CompetitorLogo slug={c.slug} competitor={c.competitor} size={28} />}
-                    label={c.competitor}
-                    description={<Text type="supporting" size="sm" maxLines={2}>{stripFileCitations(c.rationale)}</Text>}
-                    endContent={<ThreatBadge threat={c.threat} />}
-                  />
-                ))}
-              </List>
+            <Stack gap={4}>
+              <CompetitorLogoGrid
+                entries={visibleCompetitors}
+                groupCaption={`Every vendor researched as active in ${entry.domain}, banded by its threat rating here and shown with its own mark. A vendor with no logo has no legitimately-sourced one yet, not a broken image.`}
+              />
               {overflowCompetitors.length ? (
-                <Collapsible trigger={`Show ${overflowCompetitors.length} more competitors`} defaultIsOpen={false}>
-                  <List hasDividers>
-                    {overflowCompetitors.map((c) => (
-                      <ListItem
-                        key={c.slug}
-                        href={`/competitors/${c.slug}`}
-                        startContent={<CompetitorLogo slug={c.slug} competitor={c.competitor} size={28} />}
-                        label={c.competitor}
-                        description={<Text type="supporting" size="sm" maxLines={2}>{stripFileCitations(c.rationale)}</Text>}
-                        endContent={<ThreatBadge threat={c.threat} />}
-                      />
-                    ))}
-                  </List>
+                <Collapsible
+                  trigger={`Show ${overflowCompetitors.length} lower-threat ${overflowCompetitors.length === 1 ? "competitor" : "competitors"}`}
+                  defaultIsOpen={false}
+                >
+                  <CompetitorLogoGrid
+                    entries={overflowCompetitors}
+                    groupCaption={`Researched as active in ${entry.domain}, but rated a narrower or weaker footprint here.`}
+                  />
                 </Collapsible>
               ) : null}
               {landscapeEntry.sources?.length ? (
