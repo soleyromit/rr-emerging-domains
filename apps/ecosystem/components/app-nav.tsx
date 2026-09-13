@@ -49,9 +49,15 @@ const SECTIONS = [
   {
     title: "Strategy",
     items: [
-      { href: "/scorecard", label: "Where-to-play scorecard" },
-      { href: "/synthesis/gap-analysis", label: "Gap analysis" },
-      { href: "/synthesis/positioning", label: "Positioning brief" },
+      // One entry, three anchored sections — NOT tabs. The where-to-play
+      // scorecard (was /scorecard), the gap analysis (was
+      // /synthesis/gap-analysis) and the positioning brief (was
+      // /synthesis/positioning) are three ordered steps of one decision —
+      // which domain, what is missing there, what to say in the room — and
+      // had zero links between them as three sidebar rows. They are now
+      // #which-domain / #whats-missing / #what-to-say on /go-to-market, read
+      // front to back with next/prev links (see app/go-to-market/page.tsx).
+      { href: "/go-to-market", label: "Go-to-market" },
       { href: "/repo-comparison", label: "Enterprise repo" },
     ],
   },

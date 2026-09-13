@@ -101,13 +101,13 @@ export default function OverviewPage() {
           <Takeaway status="info" title="Pharmacy is the confirmed GTM target — per stakeholder direction, 2026-09-10">
             The where-to-play scorecard's own math still names DO the analytical leader (4.40 / 5, on growth and
             incumbent disruption) with Pharmacy a close second (4.05 / 5) — that scoring is real and unedited, see the{" "}
-            <Link href="/scorecard" hasUnderline>scorecard</Link>. Pharmacy is the domain actually being targeted
+            <Link href="/go-to-market#which-domain" hasUnderline>scorecard</Link>. Pharmacy is the domain actually being targeted
             first, for reasons outside that weighted model. The two conclusions aren&apos;t in conflict: Pharmacy
             also has the highest pillar-fit ratio of any domain researched (4 Transfer / 12 Configure / 4 Gap on
             ACPE), the smallest accreditation build, and a live switching-cost window as ACPE retires AAMS for its
             own PHARMS platform — see the{" "}
             <Link href="/domains/pharmacy" hasUnderline>Pharmacy domain hub</Link>,{" "}
-            <Link href="/synthesis/gap-analysis" hasUnderline>gap analysis</Link>, or{" "}
+            <Link href="/go-to-market#whats-missing" hasUnderline>gap analysis</Link>, or{" "}
             <Link href="/domains/pharmacy/win" hasUnderline>how we win Pharmacy</Link> for the full
             evidence.
           </Takeaway>
@@ -136,8 +136,23 @@ export default function OverviewPage() {
             <MetadataListItem label="Confirmed GTM target">Pharmacy</MetadataListItem>
             <MetadataListItem label="Domains in scope">Pharmacy · DO · Dentistry · Medicine</MetadataListItem>
             <MetadataListItem label="Domain profiles researched">{domains.length} / 4</MetadataListItem>
+            {/* This figure is computed here by an independent
+                getScorecard()+computeWeightedTotals() call — the same pair
+                /go-to-market's step 1 and every domain's Win tab each call for
+                themselves. The link is the trace-back: it lands on the weighted
+                table the number falls out of, so a reader never has to take it
+                on trust. */}
             <MetadataListItem label="Scorecard's analytical leader">
-              {leader ? `${leader[0]} — ${leader[1].toFixed(2)} / 5` : "Not yet scored"}
+              {leader ? (
+                <>
+                  {`${leader[0]} — ${leader[1].toFixed(2)} / 5`}{" "}
+                  <Link href="/go-to-market#which-domain" hasUnderline>
+                    see the scoring
+                  </Link>
+                </>
+              ) : (
+                "Not yet scored"
+              )}
             </MetadataListItem>
           </MetadataList>
         </Stack>
@@ -207,7 +222,7 @@ export default function OverviewPage() {
             <NavCard href="/domains" title="Domains" desc="One hub per discipline — accreditor structure, standards, competitors, and persona." />
             <NavCard href="/roles" title="Roles" desc="Cross-cutting roles — top tasks, pains, and how each competitor implicitly serves them." />
             <NavCard href="/journeys" title="Journeys" desc="Current-state vs. gap-state, across the 4 domains." />
-            <NavCard href="/scorecard" title="Where-to-play scorecard" desc="Which domain to enter first, and why." />
+            <NavCard href="/go-to-market" title="Go-to-market" desc="Which domain to enter first, what the product is missing there, and what is safe to claim in the room." />
           </Grid>
         </Stack>
       </Section>

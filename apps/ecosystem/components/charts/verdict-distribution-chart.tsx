@@ -9,7 +9,7 @@ export type VerdictTone = "lead" | "hold" | "behind";
 const TONE_ORDER: VerdictTone[] = ["lead", "hold", "behind"];
 const TONE_LABEL: Record<VerdictTone, string> = { lead: "Lead", hold: "Hold", behind: "Behind" };
 // Same colors as the Badge variants this page already uses (BADGE_BY_TONE in
-// app/synthesis/positioning/page.tsx), so the chart visually matches the badges.
+// app/go-to-market/page.tsx), so the chart visually matches the badges.
 const TONE_COLOR: Record<VerdictTone, string> = {
   lead: "var(--color-icon-green)",
   hold: "var(--color-icon-yellow)",

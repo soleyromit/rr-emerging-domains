@@ -45,7 +45,7 @@ export default function ProductCapabilityMapPage() {
             Every accreditation file researched independently converges on the same missing object: something that
             knows what an accreditation standard is, tracks evidence against it, and records that a finding changed
             something — the unshipped Accreditation Management pillar (Q3 2027). See{" "}
-            <Link href="/synthesis/gap-analysis" hasUnderline>gap analysis</Link> for the full case.
+            <Link href="/go-to-market#whats-missing" hasUnderline>gap analysis</Link> for the full case.
           </Takeaway>
         </Stack>
       </Section>

@@ -1,5 +1,5 @@
 // Parses content/synthesis/{slug}/SALES.md into structured data for the "How we
-// win" domain page. Same precedent as app/synthesis/positioning/page.tsx's
+// win" domain page. Same precedent as app/go-to-market/page.tsx's
 // parseVerdictTable: split on markdown structure rather than a table parser,
 // so a row/line that ever grows unexpected shape drops out instead of
 // rendering garbage. Pure functions only — no React, no JSX.

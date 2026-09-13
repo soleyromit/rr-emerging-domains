@@ -38,9 +38,11 @@ divider:
 ```
 
 Reference implementations, in the order they were built well: `/product`
-(`app/product/page.tsx`), `/synthesis/gap-analysis`, `/synthesis/vocabulary`,
-`/repo-comparison`, `/synthesis/positioning`. If you're building a new page and it has
-more than ~3 sections' worth of content, copy one of these, don't start from scratch.
+(`app/product/page.tsx`), `/standards/glossary`, `/repo-comparison`, and
+`/go-to-market` (`app/go-to-market/page.tsx`, which applies the shape three times over
+— once per anchored step; the gap-analysis and positioning pages it absorbed were two
+of the originals). If you're building a new page and it has more than ~3 sections'
+worth of content, copy one of these, don't start from scratch.
 
 **Default-open state matters as much as the divider.** A `CollapsibleGroup` with every
 item open by default is the two-zone pattern in name only — see `journeys/[slug]`

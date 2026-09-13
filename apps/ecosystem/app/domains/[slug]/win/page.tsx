@@ -175,6 +175,23 @@ export default async function DomainWinPage({ params }: { params: Promise<{ slug
           />
 
           <MetadataList columns={4}>
+            {/* The scorecard figures on this page come from this page's own
+                getScorecard()+computeWeightedTotals() call — the same pair the
+                homepage and /go-to-market's step 1 each run independently. The
+                rank badge in the header above states the conclusion; this tile
+                shows the weighted number behind it and links back to the table
+                it is computed from, so the three surfaces are traceable to one
+                source instead of three unexplained figures. */}
+            {domainRank >= 0 && domainScore != null ? (
+              <MetadataListItem label="Weighted scorecard total">
+                <>
+                  {`${domainScore.toFixed(2)} / 5 — rank ${domainRank + 1} of ${ranked.length}`}{" "}
+                  <Link href="/go-to-market#which-domain" hasUnderline>
+                    see the scoring
+                  </Link>
+                </>
+              </MetadataListItem>
+            ) : null}
             <MetadataListItem label="Standards met">
               {totalStandards ? `${compliantCount} / ${totalStandards}` : "Not yet mapped"}
             </MetadataListItem>

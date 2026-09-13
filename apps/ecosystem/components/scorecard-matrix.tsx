@@ -16,7 +16,7 @@ import type { ScorecardCriterion } from "@/lib/content";
 // hand-rolled Table that used to live in scorecard-table.tsx.
 //
 // Why this file exists at all rather than the swap happening inline in
-// app/scorecard/page.tsx: ComparisonMatrix is a client component whose axes are
+// app/go-to-market/page.tsx: ComparisonMatrix is a client component whose axes are
 // configured with render props (renderCell / rowPanel / rowPanelTakeaway), and a
 // server component cannot pass functions across the RSC boundary. So the page
 // keeps doing the server-side YAML read and hands this client wrapper only
@@ -121,7 +121,7 @@ export function ScorecardMatrix({
   return (
     <ComparisonMatrix<string, string, ScoreCellValue>
       variant="rigorous"
-      // Matches this page's own container (app/scorecard/page.tsx renders a
+      // Matches this page's own container (app/go-to-market/page.tsx renders a
       // plain, non-muted Section) so the sticky row-label column's opaque
       // background doesn't show a darker band against the scrolled data cells.
       stickyRowBackground="var(--color-background-surface)"

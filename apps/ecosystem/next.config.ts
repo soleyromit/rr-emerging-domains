@@ -26,10 +26,18 @@ const nextConfig: NextConfig = {
       { source: "/feature-map", destination: "/competitive-landscape/by-pillar", permanent: true },
       // 2026-09-13 nav consolidation: /crosswalk and /synthesis/vocabulary became
       // the two tabs of /standards, the second renamed Vocabulary → Glossary.
-      // /synthesis/gap-analysis and /synthesis/positioning stay where they are,
-      // so only the one exact /synthesis child path is redirected.
       { source: "/crosswalk", destination: "/standards", permanent: true },
       { source: "/synthesis/vocabulary", destination: "/standards/glossary", permanent: true },
+      // 2026-09-13 nav consolidation: /scorecard, /synthesis/gap-analysis and
+      // /synthesis/positioning became three anchored SECTIONS of one linear
+      // /go-to-market page (not tabs — they are ordered steps of one decision),
+      // so each old route redirects to its own step anchor rather than to the
+      // page top. Nothing is left under /synthesis now; each of its two child
+      // paths is redirected explicitly, matching the exact-path convention the
+      // entries above use.
+      { source: "/scorecard", destination: "/go-to-market#which-domain", permanent: true },
+      { source: "/synthesis/gap-analysis", destination: "/go-to-market#whats-missing", permanent: true },
+      { source: "/synthesis/positioning", destination: "/go-to-market#what-to-say", permanent: true },
     ];
   },
 };
