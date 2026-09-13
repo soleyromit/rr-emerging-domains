@@ -322,7 +322,7 @@
 - [ ] **Step 1:** Read `verdict-distribution-chart.tsx`'s current data inputs and confirm which two real, already-computed metrics can serve as the plot's two axes.
 - [ ] **Step 2:** Build the quadrant SVG: two axes, gridlines, four labeled quadrant background regions, plotted points per domain/competitor.
 - [ ] **Step 3:** Add the explicit Gartner-style disclosure line near the chart: this graphic is a summary; open the underlying row for full evidence and caveats — matching this app's own existing evidence-status discipline, just stated on-page the way Gartner does.
-- [ ] **Step 4:** Wire the quadrant view into `/competitive-landscape` as a third `view=quadrant` option.
+- [ ] **Step 4:** Wire the quadrant view into `/competitive-landscape` as a third real route (e.g. `app/competitive-landscape/by-quadrant/page.tsx`), matching Task 1.2's actual real convention — `/competitive-landscape` (by-competitor, default) and `/competitive-landscape/by-pillar` are real route segments, **not** `?view=` query params (an earlier version of this plan assumed query-param pivots before Task 1.1's implementer found and confirmed the app's real route-based tab convention; that correction was carried into Tasks 1.2/1.3 but was missed here — verify the real current structure of `app/competitive-landscape/` yourself before writing any code, don't assume either shape).
 - [ ] **Step 5:** `cd apps/ecosystem && npx tsc --noEmit && npm run check:density && npx next build`.
 - [ ] **Step 6:** In `npm run dev`: confirm the quadrant renders with real, labeled axes and quadrant names, confirm every plotted point is still clickable through to its evidence.
 - [ ] **Step 7:** Commit.
