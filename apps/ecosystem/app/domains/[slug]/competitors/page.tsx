@@ -7,8 +7,6 @@ import { ClickableCard } from "@astryxdesign/core/ClickableCard";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { List, ListItem } from "@astryxdesign/core/List";
 import { ThreatBadge } from "@/components/fit-badge";
-import { FeatureDepthChart } from "@/components/charts/feature-depth-chart";
-import { FeatureTeardownMatrix } from "@/components/feature-teardown-matrix";
 import { CompetitorLogo } from "@/components/competitor-logo";
 import { humanizeSourceRef, stripFileCitations } from "@/lib/strip-file-citations";
 import { SentenceList } from "@/components/sentence-list";
@@ -18,6 +16,7 @@ import {
   getDissectionManifest,
   getDomainHubData,
   getFeatureComparisonMatrixForDomain,
+  listFeatureMaps,
 } from "@/lib/content";
 import { dissectHref } from "@/lib/dissection-links";
 
@@ -32,12 +31,17 @@ export default async function DomainCompetitorsPage({ params }: { params: Promis
   const visibleCompetitors = landscapeEntry?.competitors.slice(0, VISIBLE_COMPETITOR_COUNT) ?? [];
   const overflowCompetitors = landscapeEntry?.competitors.slice(VISIBLE_COMPETITOR_COUNT) ?? [];
 
-  // The pillar × competitor cross-tab under the chart below is FeatureTeardownMatrix —
-  // the same feature_teardown data the retired hand-rolled DomainFeatureComparisonTable
-  // showed (Phase 6), re-expressed through the app's generic ComparisonMatrix, with the
-  // capability/evidence/source each cell's drill-down now carries that the old table
-  // never rendered. Every word of it also still renders in full on /competitors/{slug},
-  // which each row of the list above and each column header of the matrix links to.
+  // 2026-09-13 nav consolidation: the depth chart and the pillar × competitor
+  // cross-tab (FeatureDepthChart + FeatureTeardownMatrix) that used to render in
+  // full here are gone, replaced by the summary card below. This tab keeps only
+  // what is genuinely domain-specific — the threat-ranked landscape list above,
+  // which exists nowhere else — and hands the cross-domain comparison to
+  // /competitive-landscape, where both pivots of it now live.
+  //
+  // No content became unreachable in the move: every cell of that grid was drawn
+  // from each competitor's own feature_teardown, and each competitor's full
+  // pillar-by-pillar teardown still renders on /competitors/{slug}, which every
+  // row of the list above links to.
   //
   // The card below points at the Dissection tab's matrix, which is a
   // DIFFERENT lens (per-capability, hand-authored, with an explicit Exxat verdict) —
@@ -46,6 +50,15 @@ export default async function DomainCompetitorsPage({ params }: { params: Promis
   // Dissection tab for the other 9 routed domains has no matrix to arrive at.
   const dissectionManifest = getDissectionManifest(slug);
   const dissectionMatrix = dissectionManifest ? getFeatureComparisonMatrixForDomain(entry.domain) : null;
+
+  // Counts for the summary card are read from the SAME source its link opens
+  // (content/feature-map/*.yaml via listFeatureMaps, which is what
+  // /competitive-landscape/by-pillar renders), not from the teardown grid this tab
+  // used to draw. A preview that counted a different dataset than the page it
+  // opens is a link that lies about its destination.
+  const featureMap = listFeatureMaps().find((fm) => matchDisciplineMeta(fm.domain)?.slug === slug) ?? null;
+  const pillarCounts = { leading: 0, behind: 0, opportunity: 0 };
+  for (const p of featureMap?.pillars ?? []) pillarCounts[p.status] += 1;
 
   return (
     <>
@@ -122,18 +135,38 @@ export default async function DomainCompetitorsPage({ params }: { params: Promis
             />
           ) : (
             <Stack gap={4}>
-              {/* Two lenses on the same feature_teardown data, deliberately both kept:
-                  the chart answers "how does each competitor stack up overall" (one bar
-                  per competitor, pillar dimension collapsed), the matrix answers "who is
-                  ahead on THIS pillar" (the cross-tab the chart structurally cannot
-                  show). Chart first as the scan layer, grid below it for the row-by-row
-                  read, with each cell's capability/evidence/source one click deeper. */}
-              <FeatureDepthChart domain={featureComparison} />
-              <FeatureTeardownMatrix comparison={featureComparison} />
+              {/* The pivot in the href follows the data, not a fixed default. Only the
+                  four feature-map domains have pillar cells to show, so for the other
+                  nine this card would otherwise open a by-pillar view whose only content
+                  is its own empty state — a link that reads like a destination and
+                  arrives at nothing. Those domains DO have competitors (that is the
+                  branch we are inside), so they get the by-competitor pivot, which is
+                  one tab click from the other either way. */}
+              <ClickableCard
+                href={
+                  featureMap
+                    ? `/competitive-landscape/by-pillar?domain=${slug}`
+                    : `/competitive-landscape?domain=${slug}`
+                }
+                label={`${entry.domain} competitive landscape`}
+              >
+                <Stack gap={1.5}>
+                  <Text type="body" weight="semibold">
+                    {featureMap
+                      ? `See ${entry.domain} pillar by pillar on the competitive landscape`
+                      : `See ${entry.domain} on the competitive landscape`}
+                  </Text>
+                  <Text type="supporting" maxLines={3}>
+                    {featureMap
+                      ? `${pillarCounts.leading} pillars where Prism leads, ${pillarCounts.behind} where a named competitor leads, and ${pillarCounts.opportunity} nobody has built yet — each with the reasoning and the specific opening, scoped to ${entry.domain} and switchable to the by-competitor view.`
+                      : `The ${featureComparison.competitors.length === 1 ? "one researched competitor" : `${featureComparison.competitors.length} researched competitors`} active in ${entry.domain}, each with a full teardown against Prism's pillars. No pillar × domain map has been researched for ${entry.domain} yet, so that pivot is empty for it.`}
+                  </Text>
+                </Stack>
+              </ClickableCard>
               <Text type="supporting" size="sm" color="secondary">
                 Each competitor&apos;s full pillar-by-pillar teardown — every capability, depth
-                rating and the evidence behind it — is also on that competitor&apos;s own page,
-                linked from each column header and from the list above.
+                rating and the evidence behind it — is on that competitor&apos;s own page, linked
+                from the list above.
               </Text>
               {dissectionMatrix ? (
                 <ClickableCard href={dissectHref(slug)} label="Dissection">

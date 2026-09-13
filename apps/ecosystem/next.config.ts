@@ -18,6 +18,12 @@ const nextConfig: NextConfig = {
       // tabs of /product. Same reason as above — old bookmarks keep working.
       { source: "/prism", destination: "/product", permanent: true },
       { source: "/prism/vocabulary", destination: "/product/vocabulary", permanent: true },
+      // 2026-09-13 nav consolidation: /competitors and /feature-map became the two
+      // pivots of /competitive-landscape. Note /competitors/:slug is NOT redirected
+      // and must not be — the per-competitor teardown pages still live there, and a
+      // `source: "/competitors"` entry matches only the exact index path.
+      { source: "/competitors", destination: "/competitive-landscape", permanent: true },
+      { source: "/feature-map", destination: "/competitive-landscape/by-pillar", permanent: true },
     ];
   },
 };

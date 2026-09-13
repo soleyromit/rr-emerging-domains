@@ -53,7 +53,7 @@ export default async function CompetitorDetailPage({ params }: { params: Promise
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
           <Breadcrumbs>
-            <BreadcrumbItem href="/competitors">Competitors</BreadcrumbItem>
+            <BreadcrumbItem href="/competitive-landscape">Competitive landscape</BreadcrumbItem>
             <BreadcrumbItem isCurrent>{competitor.competitor}</BreadcrumbItem>
           </Breadcrumbs>
           <PageHeader

@@ -19,8 +19,12 @@ const SECTIONS = [
   {
     title: "Market",
     items: [
-      { href: "/feature-map", label: "Feature map" },
-      { href: "/competitors", label: "Competitor matrix" },
+      // One entry, two pivots: the competitor teardown index (was /competitors)
+      // and the pillar × domain feature map (was /feature-map) are the same
+      // market sliced on different axes, so they are sibling tabs under
+      // /competitive-landscape (see app/competitive-landscape/layout.tsx)
+      // instead of two sidebar rows.
+      { href: "/competitive-landscape", label: "Competitive landscape" },
       // Listed here while it holds no entries, deliberately: the page states its own
       // absence and cites the session that planned the work, which is only readable if
       // the page is reachable. A nav item is not a claim that research exists behind it.

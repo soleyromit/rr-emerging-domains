@@ -203,8 +203,7 @@ export default function OverviewPage() {
           <Heading level={2}>Explore the research</Heading>
           <Grid columns={{ minWidth: 260 }} gap={4}>
             <NavCard href="/product" title="Product" desc="What Prism is today, what's on its own roadmap, and the vocabulary the system runs on." />
-            <NavCard href="/feature-map" title="Feature map" desc="Every pillar × domain — who leads, and the whitespace nobody's built yet." />
-            <NavCard href="/competitors" title="Competitor matrix" desc="Incumbents per domain, feature-level teardown vs. Prism." />
+            <NavCard href="/competitive-landscape" title="Competitive landscape" desc="Incumbents and their feature-level teardown vs. Prism, pivotable to every pillar × domain — who leads, and the whitespace nobody's built yet." />
             <NavCard href="/domains" title="Domains" desc="One hub per discipline — accreditor structure, standards, competitors, and persona." />
             <NavCard href="/roles" title="Roles" desc="Cross-cutting roles — top tasks, pains, and how each competitor implicitly serves them." />
             <NavCard href="/journeys" title="Journeys" desc="Current-state vs. gap-state, across the 4 domains." />
