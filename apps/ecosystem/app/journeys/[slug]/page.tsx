@@ -18,6 +18,7 @@ import { DisciplineChip } from "@/components/discipline-chip";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
 import { stripFileCitations } from "@/lib/strip-file-citations";
 import { listJourneys, getJourney, getFlowsByStageForJourney } from "@/lib/content";
+import { journeyCompareHref, listComparableDisciplines } from "@/lib/journey-comparison";
 
 export function generateStaticParams() {
   return listJourneys().map((j) => ({ slug: j.slug }));
@@ -31,6 +32,11 @@ export default async function JourneyDetailPage({ params }: { params: Promise<{ 
   const flowsByStage = getFlowsByStageForJourney(slug);
   const stages = journey.stages ?? [];
   const hasDisciplineVariance = stages.some((s) => s.discipline_variance);
+  // Disciplines this journey really writes something about — NOT every discipline the
+  // comparison page can offer. The page deliberately lets a reader pick one with nothing
+  // written (an honest empty column is a finding); a link advertising a comparison on a
+  // journey that only covers one discipline would not be.
+  const comparableCount = listComparableDisciplines(slug).filter((d) => d.stageCount > 0).length;
 
   const allFlows = Object.values(flowsByStage);
   const allElements = allFlows.flatMap((f) => f.steps?.flatMap((s) => s.elements ?? []) ?? []);
@@ -78,6 +84,17 @@ export default async function JourneyDetailPage({ params }: { params: Promise<{ 
             description={`${stages.length} stages · citing ${Object.keys(flowsByStage).length} element-level flow file${
               Object.keys(flowsByStage).length === 1 ? "" : "s"
             }`}
+            // The entry point into the two-discipline view of this same journey. Rendered
+            // only where there are at least two disciplines to compare, so the link never
+            // promises a comparison the content cannot make — the same "resolve, never
+            // assume" rule UI-DENSITY-PATTERNS.md applies to every lateral cross-link.
+            endContent={
+              comparableCount >= 2 ? (
+                <Link href={journeyCompareHref(slug)} color="accent" hasUnderline>
+                  Compare across domains →
+                </Link>
+              ) : null
+            }
           />
           {journey.persona ? (
             <Stack gap={1}>
