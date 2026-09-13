@@ -379,7 +379,9 @@ export default function GoToMarketPage() {
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
           <PageHeader
-            eyebrow="Strategy"
+            // Was "Strategy" — the eyebrow names the sidebar group, and this page moved
+            // into `Market` when `Strategy` was deleted (2026-09-13 nav consolidation).
+            eyebrow="Market"
             title="Go-to-market — which domain, what is missing, what to say"
             description="Three ordered steps of one decision, in the order you should read them. Pick the domain to enter, see what the product is missing once you are in it, then decide what is safe to claim in the room. Each step ends with a link to the next."
           />

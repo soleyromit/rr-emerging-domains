@@ -354,8 +354,10 @@ same annotate-don't-rewrite discipline as the Pattern-G block.
 `positioning-and-element-flows-plan.md` has **no page in `apps/ecosystem/` by
 design** — it is a process record kept for traceability, not reader-facing content,
 so its absence from the app is intentional and not a coverage bug. The other three
-synthesis documents each render at `/synthesis/gap-analysis`,
-`/synthesis/vocabulary`, and `/synthesis/positioning`.
+synthesis documents all still render, at their post-consolidation routes (2026-09-13):
+`gap-analysis.md` and `prism-positioning.md` are now two of the three anchored steps of
+`/go-to-market` (`#whats-missing` and `#what-to-say`), and `vocabulary-glossary.md`
+renders at `/standards/glossary`.
 
 Nothing below Level 5 ever cites anything in this folder. If a synthesis insight
 deserves reuse, it gets pushed down: a fact goes to a Level-1 registry with a real

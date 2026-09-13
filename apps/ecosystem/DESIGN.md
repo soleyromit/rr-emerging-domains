@@ -12,7 +12,8 @@ better spacing.
 
 ## The bug this doc exists to prevent
 
-Every domain tab (`app/domains/[slug]/{overview,standards,trends,competitors,persona}`)
+Every domain tab (`app/domains/[slug]/` — Overview plus `{dissect,standards,trends,competitors,win}`;
+the `persona` tab this was written against was folded into Overview's `#buyer-profile` on 2026-09-13)
 was built correctly against `UI-DENSITY-PATTERNS.md` — two-zone shape, `FieldBlock`
 clamps, `Collapsible` deep dives, real bar charts for distribution data — and still
 read as a dashboard with no visuals, no scenarios, no sense of story. The content was
@@ -34,7 +35,7 @@ worked result of every rule below.
 | **Sequential/temporal structure** (a real timeline: rotation years, standards effective dates, a program's own stage order) | A clamped paragraph behind a "read more" | Hand-composed `Stack`/`Card`+chevron timeline, one node per real stop, headline stat first | `components/clinical-education-timeline.tsx`, wired into `app/domains/[slug]/page.tsx`'s `DOMAIN_CLINICAL_TIMELINE` |
 | **Causal chain** (standard → Exxat status → competitor → the specific feature that covers it) | Nested nothing-detail cards you have to read top to bottom to find "so who solves it" | A compact chevron chain as the card's *header* (3 nodes max — don't invent a branch the data doesn't have), full prose/sources kept below unchanged | `components/exxat-gap-answer.tsx`'s `GapChain` |
 | **Maturity/progression state** (shipped vs. roadmap vs. unaddressed; none vs. partial vs. full) | A single standalone colored `Badge` | A 3-step scale showing the whole path with one stop lit, so "roadmap" reads as *further along than unaddressed*, not just "a different color" | `components/maturity-scale.tsx`, wired into `app/domains/[slug]/trends/page.tsx` |
-| **Scenario/persona narrative** (pressure → current behavior → the thing that finally makes someone switch) | Parallel fact-card grids with no connective thread | An opening vignette (the persona's *own* first sentence, given visual weight — never invented prose) + a small stepper linking the sections in causal order via same-page anchors | `app/domains/[slug]/persona/page.tsx`'s `vignette`/`narrativeSteps` |
+| **Scenario/persona narrative** (pressure → current behavior → the thing that finally makes someone switch) | Parallel fact-card grids with no connective thread | An opening vignette (the persona's *own* first sentence, given visual weight — never invented prose) + the sections that follow it in causal order | `app/domains/[slug]/page.tsx`'s `personaVignette` and the `#buyer-profile` section below it (absorbed from the retired `/domains/[slug]/persona` tab, 2026-09-13) |
 | **Rich narrative content that already exists elsewhere in the repo** (a journey/flow with real, sourced, discipline-specific stages) | Leaving it reachable only from the separate top-level Journeys/Flows nav, with no link in from the domain it's actually about | Surface the domain-relevant slice directly on that domain's Overview tab, filtered to the stages that actually mention it, with a link out to the full journey for the rest | `lib/content.ts`'s `getJourneyStagesForDiscipline`, `components/pharmacy-scenario.tsx` |
 | **Real distribution/count data** (severity counts, fit counts, depth counts across many rows) | Reaching for a hand-composed diagram just because "diagrams are the fix now" | The existing Plot bar charts (`fit-distribution-chart.tsx`, `feature-depth-chart.tsx`, etc.) are already correct for this shape — keep them, don't replace real statistical data with a stylized illustration | `components/charts/*.tsx` |
 

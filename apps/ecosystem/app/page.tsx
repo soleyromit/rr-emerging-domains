@@ -1,8 +1,6 @@
 import { Section } from "@astryxdesign/core/Section";
 import { Stack } from "@astryxdesign/core/Stack";
-import { Grid } from "@astryxdesign/core/Grid";
 import { Card } from "@astryxdesign/core/Card";
-import { ClickableCard } from "@astryxdesign/core/ClickableCard";
 import { Heading } from "@astryxdesign/core/Heading";
 import { Text } from "@astryxdesign/core/Text";
 import { Badge } from "@astryxdesign/core/Badge";
@@ -210,8 +208,11 @@ export default function OverviewPage() {
         </Stack>
       </Section>
 
+      {/* Last section on the page since the "Explore the research" card grid was removed
+          (2026-09-13 nav consolidation) — so no bottom divider, which would otherwise
+          dangle under the final block. */}
       {capMap ? (
-        <Section padding={6} dividers={["bottom"]} variant="muted">
+        <Section padding={6} variant="muted">
           <Stack gap={2}>
             <Heading level={2}>Where this stands on Prism&apos;s own roadmap</Heading>
             <Text type="supporting">
@@ -232,33 +233,6 @@ export default function OverviewPage() {
           </Stack>
         </Section>
       ) : null}
-
-      <Section padding={6}>
-        <Stack gap={4}>
-          <Heading level={2}>Explore the research</Heading>
-          <Grid columns={{ minWidth: 260 }} gap={4}>
-            <NavCard href="/product" title="Product" desc="What Prism is today, what's on its own roadmap, and the vocabulary the system runs on." />
-            <NavCard href="/competitive-landscape" title="Competitive landscape" desc="Incumbents and their feature-level teardown vs. Prism, pivotable to every pillar × domain — who leads, and the whitespace nobody's built yet." />
-            <NavCard href="/domains" title="Domains" desc="One hub per discipline — accreditor structure, standards, competitors, and persona." />
-            <NavCard href="/roles" title="Roles" desc="Cross-cutting roles — top tasks, pains, and how each competitor implicitly serves them." />
-            <NavCard href="/journeys" title="Journeys" desc="Current-state vs. gap-state, across the 4 domains." />
-            <NavCard href="/go-to-market" title="Go-to-market" desc="Which domain to enter first, what the product is missing there, and what is safe to claim in the room." />
-          </Grid>
-        </Stack>
-      </Section>
     </Stack>
-  );
-}
-
-function NavCard({ href, title, desc }: { href: string; title: string; desc: string }) {
-  return (
-    <ClickableCard href={href} label={title}>
-      <Stack gap={1.5}>
-        <Text type="body" weight="semibold">
-          {title}
-        </Text>
-        <Text type="supporting">{desc}</Text>
-      </Stack>
-    </ClickableCard>
   );
 }

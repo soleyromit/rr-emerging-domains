@@ -4,10 +4,16 @@ import { usePathname } from "next/navigation";
 import { AppShell } from "@astryxdesign/core/AppShell";
 import { SideNav, SideNavHeading, SideNavSection, SideNavItem } from "@astryxdesign/core/SideNav";
 import { Text } from "@astryxdesign/core/Text";
+import { Link } from "@astryxdesign/core/Link";
 import { Stack } from "@astryxdesign/core/Stack";
 
+// Six groups, ten rows — the final shape of the 2026-09-13 nav consolidation. Three
+// things landed here in this pass: `Overview` became `Start here` (it names what a
+// first-time reader should do, not what the page is); `Go-to-market` moved out of
+// `Strategy` into `Market`, which deleted `Strategy` entirely; and `Enterprise repo`
+// left the research nav for the SideNav footer below.
 const SECTIONS = [
-  { title: "Overview", items: [{ href: "/", label: "Executive summary" }] },
+  { title: "Start here", items: [{ href: "/", label: "Executive summary" }] },
   {
     title: "Product",
     // One entry, two tabs: the capability map and the system vocabulary are both
@@ -33,9 +39,22 @@ const SECTIONS = [
       // /standards (see app/standards/layout.tsx) instead of two sidebar rows in
       // two different groups.
       { href: "/standards", label: "Standards & glossary" },
+      // One entry, three anchored sections — NOT tabs. The where-to-play scorecard (was
+      // /scorecard), the gap analysis (was /synthesis/gap-analysis) and the positioning
+      // brief (was /synthesis/positioning) are three ordered steps of one decision —
+      // which domain, what is missing there, what to say in the room — and had zero
+      // links between them as three sidebar rows. They are now #which-domain /
+      // #whats-missing / #what-to-say on /go-to-market, read front to back with
+      // next/prev links (see app/go-to-market/page.tsx).
+      // Moved here from the deleted `Strategy` group: it belongs in `Market` because it
+      // is the conclusion the two rows above are the evidence for, and reads last for
+      // that reason.
+      { href: "/go-to-market", label: "Go-to-market" },
       // Listed here while it holds no entries, deliberately: the page states its own
       // absence and cites the session that planned the work, which is only readable if
       // the page is reachable. A nav item is not a claim that research exists behind it.
+      // Last in the group on purpose — an acknowledged-empty placeholder should not sit
+      // between the researched rows and the conclusion they feed.
       { href: "/archetypes", label: "University archetypes" },
     ],
   },
@@ -46,21 +65,11 @@ const SECTIONS = [
       { href: "/journeys", label: "Journeys" },
     ],
   },
-  {
-    title: "Strategy",
-    items: [
-      // One entry, three anchored sections — NOT tabs. The where-to-play
-      // scorecard (was /scorecard), the gap analysis (was
-      // /synthesis/gap-analysis) and the positioning brief (was
-      // /synthesis/positioning) are three ordered steps of one decision —
-      // which domain, what is missing there, what to say in the room — and
-      // had zero links between them as three sidebar rows. They are now
-      // #which-domain / #whats-missing / #what-to-say on /go-to-market, read
-      // front to back with next/prev links (see app/go-to-market/page.tsx).
-      { href: "/go-to-market", label: "Go-to-market" },
-      { href: "/repo-comparison", label: "Enterprise repo" },
-    ],
-  },
+  // One row, and that is fine: `Domains` lost its second row when /crosswalk was
+  // absorbed into /standards, but it stays its own section rather than folding into
+  // `Market`. The four domain hubs are the spine of the whole evidence base, not one
+  // market artifact among several, and this repo already runs single-row sections
+  // (`Product`, `Reference — unverified`) — a lone row is not by itself a reason to merge.
   {
     title: "Domains",
     items: [{ href: "/domains", label: "Domains" }],
@@ -105,7 +114,23 @@ export function AppNav({ children }: { children: React.ReactNode }) {
             />
           }
           footer={
-            <Stack gap={0.5} padding={2} width="100%">
+            <Stack gap={1} padding={2} width="100%">
+              {/* The app's only footer, and it is the SideNav's — rendered by app/layout.tsx
+                  on every route, so this link is reachable from every page without adding a
+                  second chrome element. `Enterprise repo` lives here rather than in the
+                  research nav above because which tool this evidence base is kept in is an
+                  internal tooling decision, not product or market research; it was only ever
+                  a row under `Strategy` for lack of anywhere else to put it. */}
+              <Link
+                href="/repo-comparison"
+                type="supporting"
+                size="2xs"
+                color="secondary"
+                display="block"
+                hasUnderline
+              >
+                Enterprise repo
+              </Link>
               <Text type="supporting" size="2xs" display="block" textWrap="wrap">
                 Romit Soley × Ruchi — working draft
               </Text>

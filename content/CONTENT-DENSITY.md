@@ -37,7 +37,7 @@ overage explicitly allowlisted with a reason, not silently shipped.
 | `journeys/*.yaml` `domain_variance` / `discipline_variance` (legacy single-string) | 1,800 | 3,000 | measured from domain_variance's own already-fine range |
 | `journeys/*.yaml` `current_state_in_prism` / `pain_or_gap` / `accreditation_link` / `competitor_comparison` | 2,000 | 3,500 | guards drift; non-blocking at time of writing |
 | `flows/*.yaml` `gap_note` (per element) | 500 (warn) | 1,500 (fail) | only the true tail (~1% of entries) should block |
-| `personas/discipline-*.yaml` `archetype_summary` | 2,200 | 2,800 | already gated behind click-to-expand on `/personas`; guards drift |
+| `personas/discipline-*.yaml` `archetype_summary` | 2,200 | 2,800 | already gated behind click-to-expand on `/domains/[slug]#buyer-profile`; guards drift |
 | `personas/discipline-*.yaml` `accreditation_pressure[].detail` / `current_tools[].detail` | 350 | 700 | per decomposed point, not per field — see below |
 | `personas/discipline-*.yaml` `jtbd[].job` | 300 | 500 | **new 2026-08-26** — was unceilinged (root cause of its length); measured off the corpus's cleanest existing entries (214-292 chars) that already read as one plain JTBD sentence with no inline accreditor-element numbers |
 | `personas/role-*.yaml` `day_in_the_life_summary` | 2,200 | 2,800 | same treatment as discipline `archetype_summary` |
@@ -202,7 +202,7 @@ already behind a `Collapsible`.
 `synthesis/positioning-and-element-flows-plan.md` is explicitly self-described as
 "process record, kept for traceability" — it has no page in `apps/ecosystem/` by design.
 This is not a coverage gap; see the note in `ARCHITECTURE.md`'s Level 5b section. Its
-sibling `prism-positioning.md` does have a page (`/synthesis/positioning`), because it's
+sibling `prism-positioning.md` does render (as `/go-to-market#what-to-say`), because it's
 the actual GTM brief per `ARCHITECTURE.md`'s own Level-5b description, not a process doc.
 
 ## When you're an agent writing new content/ fields
