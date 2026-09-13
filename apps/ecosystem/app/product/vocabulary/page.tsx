@@ -28,10 +28,10 @@ export default function ProductVocabularyPage() {
                 clinical site. DO, Pharmacy, Dentistry, and Medicine — the four target domains — each get their own
                 card below; the rest are Exxat&rsquo;s existing served disciplines, for comparison. For accreditor
                 terms — COM, EPA, USMLE, and the rest — see{" "}
-                <Link href="/synthesis/vocabulary" hasUnderline>
-                  Vocabulary glossary
+                <Link href="/standards/glossary" hasUnderline>
+                  the Glossary tab
                 </Link>{" "}
-                under Strategy.
+                under Standards &amp; glossary.
               </>
             }
           />

@@ -19,7 +19,12 @@ import { readMarkdownFile, listAccreditation } from "@/lib/content";
 import { stripFileCitationsInMarkdown } from "@/lib/strip-file-citations";
 import { parseGlossary, buildRosettaTermIndex } from "@/lib/glossary";
 
-export default function VocabularyPage() {
+// The "Glossary" tab of /standards. Was /synthesis/vocabulary (now a permanent
+// redirect here, see next.config.ts), and renamed Vocabulary → Glossary because
+// /product's own second tab is the Prism system vocabulary — two sidebar rows
+// called Vocabulary was the collision this merge closes. Its sibling tab, the
+// coverage map, is ../page.tsx; the tab list lives in ../layout.tsx.
+export default function StandardsGlossaryPage() {
   const content = stripFileCitationsInMarkdown(readMarkdownFile("synthesis/vocabulary-glossary.md"));
 
   if (!content) {
@@ -41,7 +46,7 @@ export default function VocabularyPage() {
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
           <PageHeader
-            eyebrow="Strategy"
+            eyebrow="Market"
             title="Speak COCA, ACPE, CODA, and LCME before the first call"
             description="Organized by domain: term → plain-English definition → which Prism pillar it touches → how to say it to a dean. Roadmap pillars are labeled honestly, not oversold."
             endContent={

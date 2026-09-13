@@ -25,6 +25,14 @@ const SECTIONS = [
       // /competitive-landscape (see app/competitive-landscape/layout.tsx)
       // instead of two sidebar rows.
       { href: "/competitive-landscape", label: "Competitive landscape" },
+      // One entry, two tabs: the cross-domain standards coverage map (was
+      // /crosswalk, filed under Domains) and the accreditor glossary (was
+      // /synthesis/vocabulary, filed under Strategy) are the two halves of one
+      // question — which standards exist and how much Prism covers, and what
+      // those standards are actually saying — so they are sibling tabs under
+      // /standards (see app/standards/layout.tsx) instead of two sidebar rows in
+      // two different groups.
+      { href: "/standards", label: "Standards & glossary" },
       // Listed here while it holds no entries, deliberately: the page states its own
       // absence and cites the session that planned the work, which is only readable if
       // the page is reachable. A nav item is not a claim that research exists behind it.
@@ -44,16 +52,12 @@ const SECTIONS = [
       { href: "/scorecard", label: "Where-to-play scorecard" },
       { href: "/synthesis/gap-analysis", label: "Gap analysis" },
       { href: "/synthesis/positioning", label: "Positioning brief" },
-      { href: "/synthesis/vocabulary", label: "Vocabulary glossary" },
       { href: "/repo-comparison", label: "Enterprise repo" },
     ],
   },
   {
     title: "Domains",
-    items: [
-      { href: "/domains", label: "Domains" },
-      { href: "/crosswalk", label: "Crosswalk" },
-    ],
+    items: [{ href: "/domains", label: "Domains" }],
   },
   // Its own section, LAST, and never folded into "Market": everything above this
   // line is researched and cited, and this is not. A quarantined sales artifact

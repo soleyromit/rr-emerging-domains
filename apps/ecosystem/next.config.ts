@@ -24,6 +24,12 @@ const nextConfig: NextConfig = {
       // `source: "/competitors"` entry matches only the exact index path.
       { source: "/competitors", destination: "/competitive-landscape", permanent: true },
       { source: "/feature-map", destination: "/competitive-landscape/by-pillar", permanent: true },
+      // 2026-09-13 nav consolidation: /crosswalk and /synthesis/vocabulary became
+      // the two tabs of /standards, the second renamed Vocabulary → Glossary.
+      // /synthesis/gap-analysis and /synthesis/positioning stay where they are,
+      // so only the one exact /synthesis child path is redirected.
+      { source: "/crosswalk", destination: "/standards", permanent: true },
+      { source: "/synthesis/vocabulary", destination: "/standards/glossary", permanent: true },
     ];
   },
 };
