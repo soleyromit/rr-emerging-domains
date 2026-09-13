@@ -202,7 +202,7 @@ export default function OverviewPage() {
         <Stack gap={4}>
           <Heading level={2}>Explore the research</Heading>
           <Grid columns={{ minWidth: 260 }} gap={4}>
-            <NavCard href="/prism" title="PRISM capability map" desc="What Prism is today, and what's on its own roadmap." />
+            <NavCard href="/product" title="Product" desc="What Prism is today, what's on its own roadmap, and the vocabulary the system runs on." />
             <NavCard href="/feature-map" title="Feature map" desc="Every pillar × domain — who leads, and the whitespace nobody's built yet." />
             <NavCard href="/competitors" title="Competitor matrix" desc="Incumbents per domain, feature-level teardown vs. Prism." />
             <NavCard href="/domains" title="Domains" desc="One hub per discipline — accreditor structure, standards, competitors, and persona." />

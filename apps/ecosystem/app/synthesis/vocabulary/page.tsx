@@ -55,8 +55,8 @@ export default function VocabularyPage() {
             uses daily. Then open the tab for the domain you&rsquo;re walking into and scan the term names —
             each row expands to the full entry only if you need it. Looking for Prism&rsquo;s own product terms —
             Placement, Slot, Wishlist — instead? See{" "}
-            <Link href="/prism/vocabulary" hasUnderline>
-              System vocabulary
+            <Link href="/product/vocabulary" hasUnderline>
+              the Vocabulary tab under Product
             </Link>
             .
           </Takeaway>

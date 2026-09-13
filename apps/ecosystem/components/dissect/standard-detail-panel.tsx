@@ -56,7 +56,7 @@ function personaLabel(slug: string): string {
 // fix is: one prominent verdict, then named, closed sections a reader opens only
 // for the layer they actually want (the standard's official text / why Exxat is
 // rated this way / proposed use cases / competitor research), matching the exact
-// pattern `/prism` and the other reference pages already use.
+// pattern `/product` and the other reference pages already use.
 export function StandardDetail({
   row,
   slug,

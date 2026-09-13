@@ -11,7 +11,9 @@ import { DisciplineProfileCards } from "@/components/discipline-profile-cards";
 import { WishlistModes } from "@/components/wishlist-modes";
 import { CourseModelSplit } from "@/components/course-model-split";
 
-export default function PrismVocabularyPage() {
+// The "Vocabulary" tab of /product. Its sibling tab, Capability map, is
+// ../page.tsx; the tab list lives in ../layout.tsx.
+export default function ProductVocabularyPage() {
   return (
     <Stack gap={0}>
       <Section padding={6} dividers={["bottom"]}>

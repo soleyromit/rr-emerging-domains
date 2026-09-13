@@ -31,11 +31,12 @@ export function PillarDetailPanel({
    * member of this panel's group. See node-detail-panel.tsx. */
   connections?: ReactNode;
 }) {
-  // /prism renders all six pillars as cards and has no per-pillar anchor or query param
-  // to jump to (re-checked against app/prism/page.tsx as of this task) — so this links
-  // to the map plainly rather than to a fragment that would silently do nothing.
+  // /product's capability-map tab renders all six pillars as cards and has no per-pillar
+  // anchor or query param to jump to (re-checked against app/product/page.tsx as of this
+  // task) — so this links to the map plainly rather than to a fragment that would
+  // silently do nothing.
   const crossLinks: CrossLinks = [
-    { label: "The full Prism capability map", href: "/prism" },
+    { label: "The full Prism capability map", href: "/product" },
     { label: `${domainLabel} overview`, href: `/domains/${domainSlug}` },
   ];
 

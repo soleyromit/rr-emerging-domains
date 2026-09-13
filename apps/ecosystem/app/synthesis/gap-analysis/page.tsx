@@ -31,7 +31,7 @@ const EXPANSION_ACCREDITORS = ["coca", "lcme", "acpe", "coda"];
 const ALL_FOUR_DOMAINS = ["DO", "Pharmacy", "Dentistry", "Medicine"];
 
 const PATTERN_SECTION_PREFIX = "4.";
-// Deep-dive sections start closed, matching /prism and /synthesis/vocabulary.
+// Deep-dive sections start closed, matching /product and /synthesis/vocabulary.
 const OPEN_BY_DEFAULT: string[] = [];
 
 interface CrossDomainPattern {

@@ -10,10 +10,11 @@ const SECTIONS = [
   { title: "Overview", items: [{ href: "/", label: "Executive summary" }] },
   {
     title: "Product",
-    items: [
-      { href: "/prism", label: "PRISM capability map" },
-      { href: "/prism/vocabulary", label: "System vocabulary" },
-    ],
+    // One entry, two tabs: the capability map and the system vocabulary are both
+    // about Prism itself rather than the market, and neither carried a
+    // perspective the other lacked, so they are sibling tabs under /product
+    // (see app/product/layout.tsx) instead of two sidebar rows.
+    items: [{ href: "/product", label: "Product" }],
   },
   {
     title: "Market",
@@ -62,8 +63,10 @@ const SECTIONS = [
 
 const ALL_HREFS = SECTIONS.flatMap((s) => s.items.map((i) => i.href));
 
-// Longest-prefix match only — otherwise a parent route like "/prism" stays
-// highlighted alongside a more specific child like "/prism/vocabulary".
+// Longest-prefix match only — otherwise a parent route that is itself a nav item
+// would stay highlighted alongside a more specific child that is also a nav item.
+// A sub-route with no nav row of its own (e.g. /product/vocabulary, a tab of the
+// /product entry) correctly keeps its parent selected.
 function isNavItemSelected(href: string, pathname: string): boolean {
   if (href === "/") return pathname === "/";
   if (!pathname.startsWith(href)) return false;

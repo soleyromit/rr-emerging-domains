@@ -18,7 +18,9 @@ import { PrismFeaturesChart } from "@/components/charts/prism-features-chart";
 import { getCapabilityMap } from "@/lib/content";
 import { stripFileCitations } from "@/lib/strip-file-citations";
 
-export default function PrismPage() {
+// The "Capability map" tab of /product (default). Its sibling tab, Vocabulary,
+// is vocabulary/page.tsx; the tab list lives in layout.tsx.
+export default function ProductCapabilityMapPage() {
   const capMap = getCapabilityMap();
 
   if (!capMap) {

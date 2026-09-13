@@ -2468,7 +2468,7 @@ def check_capability_roadmap_integrity():
         if sid is not None and sid not in source_ids:
             _warn(f"{where}: roadmap.source_id {sid!r} not found in {SOURCE_HOMES_DESC}")
         # The mirror invariant. The flat pillar-level `target:` is read directly by
-        # apps/ecosystem/app/prism/page.tsx ("Target: Q2 2027"), so Task 1.6 kept it rather
+        # apps/ecosystem/app/product/page.tsx ("Target: Q2 2027"), so Task 1.6 kept it rather
         # than blanking the UI — which means the date is now stated twice on the same
         # entry. Both are documented in the same "Qn YYYY" form specifically so this stays
         # a literal string equality rather than a format-normalizing comparison.

@@ -7,7 +7,7 @@ import { PlotFigure } from "./plot-figure";
  *
  * This is a client component, so its props are serialized into the flight payload and sent
  * to every browser. Typed as PrismPillar it was handed the whole capability-map pillar
- * objects, and the six raw content filenames left in /prism's served bytes after the render
+ * objects, and the six raw content filenames left in /product's served bytes after the render
  * sites on that page were sanitized were all in THIS prop: the `notes`, `why_it_matters` and
  * `features[].detail` prose, shipped in full so a bar chart could call `.length` on an array.
  *

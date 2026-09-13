@@ -37,8 +37,8 @@ divider:
 </CollapsibleGroup>
 ```
 
-Reference implementations, in the order they were built well: `/prism`
-(`app/prism/page.tsx`), `/synthesis/gap-analysis`, `/synthesis/vocabulary`,
+Reference implementations, in the order they were built well: `/product`
+(`app/product/page.tsx`), `/synthesis/gap-analysis`, `/synthesis/vocabulary`,
 `/repo-comparison`, `/synthesis/positioning`. If you're building a new page and it has
 more than ~3 sections' worth of content, copy one of these, don't start from scratch.
 
@@ -224,7 +224,7 @@ wrapped `Text` gets its normal clamp + hover tooltip:
 ```
 
 See `app/personas/page.tsx` (jtbd, top_pains, how_they_implicitly_serve_roles),
-`app/prism/page.tsx` (feature `detail`, intelligence-layer capabilities, open
+`app/product/page.tsx` (feature `detail`, intelligence-layer capabilities, open
 questions), and `app/competitors/page.tsx` (strengths/weaknesses `claim`) for the
 fixed pattern — all were plain-string `label`/`description` bound to fields that
 run past 1,000 characters in real content before the 2026-08-25 fix.
