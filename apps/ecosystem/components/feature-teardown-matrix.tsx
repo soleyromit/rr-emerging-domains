@@ -46,6 +46,18 @@ interface TeardownCellValue {
   source?: string;
 }
 
+// depthLabel() returns sentence-case words, and half of them CONTAIN the product name
+// ("Ahead of Prism", "Behind Prism", "Prism only"). A blanket .toLowerCase() on the whole
+// label to make it read mid-sentence therefore also lowercased "Prism" — "…is rated ahead
+// of prism here". Lowercase the leading character only, and leave labels that start with
+// the product name alone. fit-badge.tsx stays the single owner of the words themselves;
+// this only adjusts the casing at the one place that speaks them mid-sentence.
+function depthPhrase(depth?: string): string {
+  const label = depthLabel(depth);
+  if (label.startsWith("Prism")) return label;
+  return label.charAt(0).toLowerCase() + label.slice(1);
+}
+
 /** A teardown row exists for this pillar only if it carries at least one researched field. */
 function isResearched(cell: { capability?: string; depth?: string; evidence?: string }) {
   return Boolean(cell.capability || cell.depth || cell.evidence);
@@ -86,7 +98,7 @@ export function FeatureTeardownMatrix({ comparison }: { comparison: FeatureCompa
   // proportional(1), for the reason dissection-matrix.tsx spells out: fixed pixel widths
   // pin the table wider than the viewport and silently clip the right-hand edge of every
   // drill-down panel. That matters more here than anywhere else in the app, because
-  // Medicine renders nine competitor columns.
+  // Medicine renders ten competitor columns.
   const columnAxis = comparison.competitors.map((c) => ({
     id: c.slug,
     // Stays the plain competitor name: ComparisonMatrix renders `name` verbatim in its
@@ -147,7 +159,7 @@ export function FeatureTeardownMatrix({ comparison }: { comparison: FeatureCompa
       detailCloseLabel="Hide evidence"
       // The badge alone, not badge-over-capability the way scorecard-matrix.tsx and
       // dissection-matrix.tsx render their rationale. Those matrices carry four to six
-      // columns; this one carries up to nine, so a proportional column is ~100px wide
+      // columns; this one carries up to ten, so a proportional column is ~100px wide
       // and a clamped capability line renders three or four words per row before the
       // ellipsis — noise that pushes the badges apart without informing anyone. The
       // capability is one click away in the panel, in full, where it is readable.
@@ -188,9 +200,14 @@ export function FeatureTeardownMatrix({ comparison }: { comparison: FeatureCompa
             }
           >
             <Text type="supporting" maxLines={3}>
+              {/* Says only what THIS panel renders. The row-label view lists each
+                  competitor's capability and depth badge; the cited evidence lives one
+                  more click down, in the per-cell panel — so promising "the evidence
+                  below" here sent a reader looking for a Blockquote that is not on
+                  this screen. */}
               {ahead.length
-                ? `${ahead.map((v) => v.competitor).join(", ")} — each one's capability and the evidence behind the rating is below.`
-                : `All ${researched.length} researched ratings on this pillar are at parity or behind, with the evidence behind each below.`}
+                ? `${ahead.map((v) => v.competitor).join(", ")} — each one's capability and depth rating is below; click a competitor's cell for the cited evidence.`
+                : `All ${researched.length} researched ratings on this pillar are at parity or behind — each one's capability and depth rating is below; click a cell for the cited evidence.`}
             </Text>
           </Takeaway>
         );
@@ -214,7 +231,7 @@ export function FeatureTeardownMatrix({ comparison }: { comparison: FeatureCompa
           defaultValue={column ? ["why"] : ["all-competitors"]}
         >
           {column && value ? (
-            <Collapsible value="why" trigger={`Why ${column.name} is rated ${depthLabel(value.depth).toLowerCase()} here`}>
+            <Collapsible value="why" trigger={`Why ${column.name} is rated ${depthPhrase(value.depth)} here`}>
               <CellEvidence value={value} />
             </Collapsible>
           ) : null}
