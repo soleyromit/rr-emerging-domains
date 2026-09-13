@@ -413,12 +413,28 @@ const NOT_A_RENDER = /\.length\b|\.filter\(|\.some\(|\.every\(|\.find\(|\.sort\(
 /**
  * A CONTAINER read is only a hazard where the whole subtree is handed downstream — a
  * `prop: src.container` assignment in an object literal, which is exactly the shape the
- * accreditation_pressure leak had. Where a container is iterated, counted or tested, the
- * prose is reached through a LEAF field on the element, and that leaf read is judged on
- * its own line. Without this split, adding containers to the scan turned every
- * `doc.stages.forEach(` and `if (!doc?.standards)` in the codebase into a finding: 20
+ * accreditation_pressure leak had. Without this split, adding containers to the scan turned
+ * every `doc.stages.forEach(` and `if (!doc?.standards)` in the codebase into a finding: 20
  * lib/ file:field pairs became 32 and app/ went from 5 to 22, none of the additions real.
  * Leaf fields do NOT get this gate — a leaf is prose wherever it is read.
+ *
+ * THE PRICE OF THAT PRECISION, stated plainly so nobody mistakes this gate for complete.
+ * Only a container read written as an object-literal property on its own line is seen. Two
+ * real pass-through shapes are skipped today, both verified against this scanner:
+ *
+ *   a) a bare assignment — `const p = node.accreditation_pressure;`. There is no `name:`
+ *      prefix, so PASS_THROUGH does not match and the read is dropped, even though the
+ *      whole subtree has just been handed to `p` and may be rendered anywhere below.
+ *   b) a single-line return — `return { pressure: p?.accreditation_pressure };`. ITERATION
+ *      matches on `^\s*return`, so the line is dropped despite being a pass-through, not
+ *      an iteration.
+ *
+ * Both are false NEGATIVES, and both are accepted deliberately: the alternative measured
+ * above (dropping the gate) is 12 extra lib/ pairs and 17 extra app/ pairs of pure noise,
+ * which is a check nobody keeps running. What the gate genuinely catches is the multi-line
+ * `prop: src.container` builder form — the shape the one leak that actually shipped had.
+ * If a leak ever escapes in shape (a) or (b), this gate is the thing to revisit; the fix is
+ * a narrower ITERATION and an assignment-aware PASS_THROUGH, not a wider net.
  */
 const PASS_THROUGH = /^\s*[A-Za-z_$][\w$]*\s*:/;
 const ITERATION =
@@ -567,9 +583,15 @@ const ALLOWED = new Set([
   // content field somewhere in the corpus whose value happens to be long prose containing a
   // citation; this is not that field.
   "app/reference/vendor-comparison-chart/page.tsx:type",
-  // The `.map((q) => (` iteration header. The render is per-element inside the callback and
-  // IS wrapped — `{stripFileCitations(q)}` — just beyond this scan's proximity window.
-  "app/prism/page.tsx:open_questions_for_phase_2",
+  // NOTE: there was a fourth entry here, `app/prism/page.tsx:open_questions_for_phase_2`,
+  // whose stated reason was that the per-element wrap sat "just beyond this scan's proximity
+  // window". That stopped being true when sanitizedAt replaced the flat ±2-line window with a
+  // bracket walk: `.map((q) => {` leaves a group open, so the walk reaches the
+  // `stripFileCitations(q)` on the very next line and the read is correctly judged sanitized.
+  // Neither the old scanner nor the current one produces the finding, so the entry suppressed
+  // nothing. Removed rather than kept "just in case" — a dead entry is a claim about the
+  // codebase that no longer holds, and it teaches the next reader the wrong thing about how
+  // far the proximity walk reaches.
 ]);
 
 /**
@@ -652,7 +674,12 @@ const offenders = [
   ...unsanitizedReads(citationFields, "app", [".tsx"]).filter(
     (o) => !ALLOWED.has(`${o.file}:${o.field}`),
   ),
-  ...unsanitizedReads(citationFields, "lib", [".ts"]).filter(
+  // `.tsx` as well as `.ts`: lib/ holds a couple of component files (lib/table-detail-panel.tsx),
+  // and scanning only `.ts` would silently skip any future one that reads a content field.
+  // No current finding depends on this — adding `.tsx` leaves the lib/ scan at the same 21
+  // raw matches across the same 16 file:field pairs, so lib/table-detail-panel.tsx
+  // contributes zero. It is future-proofing, verified not to move today's numbers.
+  ...unsanitizedReads(citationFields, "lib", [".ts", ".tsx"]).filter(
     (o) => !ALLOWED_LIB.has(`${o.file}:${o.field}`),
   ),
 ];
@@ -693,6 +720,21 @@ if (offenders.length) {
 
 const fixtureDir = mkdtempSync(join(tmpdir(), "sanitizer-regress-"));
 try {
+  // PROVENANCE OF THIS FIXTURE, because it looks hand-written and it is.
+  //
+  // It is a hand-written reproduction of the real pre-fix lib/dissection-node-detail.ts —
+  // specifically personaDetail as it stood at commit 61c1273^, the parent of the commit that
+  // fixed the accreditation_pressure leak. It is kept as a literal rather than read with
+  // `git show 61c1273^:apps/ecosystem/lib/dissection-node-detail.ts` on purpose: a live git
+  // call inside a test is fragile across shallow clones, rebases and history rewrites, and
+  // would make `npm test` fail for a reason that has nothing to do with the sanitizer.
+  //
+  // The three load-bearing lines below — the two sanitized siblings and the raw
+  // `accreditationPressure: p?.accreditation_pressure ?? [],` directly beneath them — were
+  // compared against the real historical file during review and are byte-identical to it,
+  // indentation included. What is dropped is only scaffolding the scanner never reads: the
+  // surrounding comment block and the sibling fields (type/key/kind/name/...) above them.
+  // If you change these three lines, re-check them against 61c1273^ first.
   writeFileSync(
     join(fixtureDir, "pre-fix-persona-detail.ts"),
     [
