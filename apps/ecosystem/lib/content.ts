@@ -477,7 +477,11 @@ export function getJourneyStagesForDiscipline(journeySlug: string, subject: stri
       index: i,
       stageLabel: stage.stage,
       headline: finding?.headline,
-      disciplineDetail: finding?.detail ?? note?.detail ?? "",
+      // Its one consumer already wraps (components/domain-scenario.tsx:62), so this is
+      // belt-and-braces — but wrapping here means `detail`, a name shared by half a dozen
+      // unrelated records, needs no blanket ALLOWED_LIB entry that would also silence the
+      // next genuine unsanitized `.detail` read added to this file.
+      disciplineDetail: stripFileCitations(finding?.detail ?? note?.detail ?? "") ?? "",
       flowSlug: flow?.slug,
       flowName: flow?.flow_name,
     });
@@ -948,23 +952,29 @@ export function getFeatureComparisonMatrixForDomain(domain: string): FeatureComp
       // first that has one rather than asserting they agree.
       capability: raw.find((c) => c.capability)?.capability ?? capabilityId,
       pillar: normalizePillarName(raw.find((c) => c.pillar)?.pillar ?? ""),
+      // rationale AND evidenceNote are both authored prose that cites source files.
+      // DissectionMatrix wrapped only the first of the pair (dissection-matrix.tsx:104,
+      // :246, :329) and rendered evidenceNote raw eleven lines below it, at
+      // dissection-matrix.tsx:115 — the same "sanitized sibling beside an unsanitized one"
+      // shape as the accreditation_pressure leak. Wrapped here at the builder so the two
+      // travel together and no future render site has to remember.
       cells: raw.map((c) => ({
         competitorSlug: c.competitor_slug,
         rating: c.rating,
-        rationale: c.rationale?.trim(),
+        rationale: stripFileCitations(c.rationale?.trim()),
         featureRef: c.competitor_feature_ref,
         evidenceStrength: c.evidence_strength,
-        evidenceNote: c.evidence_note?.trim(),
+        evidenceNote: stripFileCitations(c.evidence_note?.trim()),
         sources: resolveSourceIds(c.sources),
       })),
       exxatCell: exxat
         ? {
             rating: exxat.rating,
-            rationale: exxat.rationale?.trim(),
+            rationale: stripFileCitations(exxat.rationale?.trim()),
             prismStatus: exxat.prism_status,
             featureRef: exxat.prism_feature_ref,
             evidenceStrength: exxat.evidence_strength,
-            evidenceNote: exxat.evidence_note?.trim(),
+            evidenceNote: stripFileCitations(exxat.evidence_note?.trim()),
             sources: resolveSourceIds(exxat.sources),
           }
         : undefined,
@@ -1766,7 +1776,10 @@ export function getStandardsCrosswalkForDomain(domain: string): StandardsCrosswa
       useCase: u.use_case,
       status: u.status,
       audience: u.audience ?? [],
-      detail: u.detail,
+      // Rendered raw at components/dissect/standard-detail-panel.tsx:190, inside the one
+      // section on that panel that is open by DEFAULT (defaultValue={["use-cases"]} at
+      // standard-detail-panel.tsx:114) — so a citation here needed no click to be seen.
+      detail: stripFileCitations(u.detail),
       relatedFlows: resolveRelatedFlows(u.related_flows),
       prismFeatureRef: u.prism_feature_ref,
       sources: resolveSourceIds(u.sources),
@@ -1796,12 +1809,18 @@ export function getStandardsCrosswalkForDomain(domain: string): StandardsCrosswa
         competitor: c.competitor,
         slug: c.slug,
         rating: rated?.rating ?? ("unresearched" as const),
-        rationale: rated?.rationale,
+        // Both cited prose, and both rendered raw on the standards panel:
+        // components/dissect/standard-detail-panel.tsx:274 (rationale) and :294
+        // (evidenceNote, on the "directional" branch). The OTHER consumer of these same
+        // cells, components/exxat-gap-answer.tsx:171, did wrap rationale — so the field
+        // rendered clean on the gap surface and raw on the panel beside it, which is why
+        // this survived a surface-by-surface review. Wrapped at the builder, once.
+        rationale: stripFileCitations(rated?.rationale),
         source: rated?.source,
         competitorFeatureRef: rated?.competitor_feature_ref,
         sources: resolveSourceIds(rated?.sources),
         evidenceStrength: rated?.evidence_strength,
-        evidenceNote: rated?.evidence_note,
+        evidenceNote: stripFileCitations(rated?.evidence_note),
       };
     });
 
