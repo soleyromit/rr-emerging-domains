@@ -16,6 +16,7 @@ import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList"
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { PageHeader } from "@/components/page-header";
 import { Takeaway } from "@/components/takeaway";
+import { CitationMark } from "@/components/citation-mark";
 import { DisciplineChip } from "@/components/discipline-chip";
 import { IconTile } from "@/components/status-pill";
 import { ScorecardChart } from "@/components/charts/scorecard-chart";
@@ -33,6 +34,7 @@ import {
   getFlowsByStageForJourney,
 } from "@/lib/content";
 import { stripFileCitations, stripFileCitationsInMarkdown } from "@/lib/strip-file-citations";
+import { numberCitations } from "@/lib/page-citations";
 import {
   splitSectionsAtLevel,
   getPreamble,
@@ -80,6 +82,15 @@ const OPEN_BY_DEFAULT: string[] = [];
 // Section titles the positioning step surfaces above the fold rather than
 // leaving in the deep-dive stack. Matched on prefix so the headings can keep
 // their trailing em-dash subtitles.
+// The two external documents the step-3 headline rests on: Standards 2025 itself,
+// and the ACPE letter that announced AAMS's retirement in favour of PHARMS. Every
+// other claim in this step — the verdict map, the weighted scores, the lead/concede
+// calls — is this repo's own analysis of its own flow files, so none of them carries
+// a mark. Attributing an internal verdict to an outside authority would be the
+// opposite of what a citation is for.
+const ACPE_STANDARDS_SOURCE = "doc-acpe-standards-2025-full-text";
+const ACPE_PHARMS_SOURCE = "doc-acpe-dear-dean-standards-2025-2024";
+
 const HEADLINE_SECTION_PREFIX = "The one-sentence version";
 const VERDICT_SECTION_PREFIX = "Verified lead / concede map";
 const PERSONA_SECTION_PREFIX = "Who's in the room";
@@ -394,6 +405,7 @@ export default function GoToMarketPage() {
   const personaSection = positioningSections.find((s) => s.title.startsWith(PERSONA_SECTION_PREFIX));
   const guardrailSection = positioningSections.find((s) => s.title.startsWith(GUARDRAIL_SECTION_PREFIX));
   const otherPositioningSections = positioningSections.filter((s) => s !== verdictSection);
+  const cites = numberCitations([ACPE_STANDARDS_SOURCE, ACPE_PHARMS_SOURCE]);
   const verdicts = verdictSection ? parseVerdictTable(verdictSection.body) : [];
   const leadCount = verdicts.filter((v) => v.tone === "lead").length;
   const holdCount = verdicts.length - leadCount;
@@ -748,6 +760,20 @@ export default function GoToMarketPage() {
             <Takeaway title="Sell the evidence ACPE Standards 2025 + PHARMS is about to demand — Pharmacy confirmed first, DO the analytical runner-up">
               {headline ||
                 "PRISM is the system of record for clinical/experiential education, and ACPE's Standards 2025 + PHARMS transition ask for exactly the evidence our placement engine already produces."}
+              {/* The headline's two external facts: the standards it says every
+                  pharmacy program must re-prove itself against, and the submission
+                  platform that changed in the same cycle. Both marks sit at the end
+                  of the sentence rather than mid-clause because the sentence is one
+                  verbatim string lifted from the positioning brief — splitting it to
+                  place a marker inside would mean editing the quoted source. */}
+              <CitationMark
+                citation={cites[ACPE_STANDARDS_SOURCE]}
+                claim="ACPE Standards 2025 is what pharmacy programs must re-prove themselves against"
+              />
+              <CitationMark
+                citation={cites[ACPE_PHARMS_SOURCE]}
+                claim="ACPE retired AAMS for its own PHARMS submission platform in the same cycle"
+              />
             </Takeaway>
           ) : (
             <EmptyState

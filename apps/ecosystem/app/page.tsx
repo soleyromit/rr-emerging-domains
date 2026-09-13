@@ -12,6 +12,8 @@ import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList"
 import { Link } from "@astryxdesign/core/Link";
 import { PageHeader } from "@/components/page-header";
 import { Takeaway } from "@/components/takeaway";
+import { CitationMark } from "@/components/citation-mark";
+import { numberCitations } from "@/lib/page-citations";
 import {
   getCapabilityMap,
   listDomains,
@@ -48,6 +50,15 @@ const HORIZONS = [
 ];
 
 // 2-month window from kickoff (2026-08-24) to the leadership readout (~2026-10-24).
+// The one claim on this page that rests on a checkable external document rather
+// than on this repo's own analysis. Deliberately a list of one: the horizons, the
+// timeline, the scorecard leader and the pillar-fit split are all derived from
+// content/ this research produced (and the roadmap pillars below carry
+// `source_id: null` in the capability map — honestly unsourced, per its own
+// note), so none of them gets a mark. A citation mark on an internal conclusion
+// would imply an outside authority that does not exist.
+const ACPE_PHARMS_SOURCE = "doc-acpe-dear-dean-standards-2025-2024";
+
 const TIMELINE = [
   {
     phase: "Week 1 — Foundation",
@@ -99,6 +110,7 @@ export default function OverviewPage() {
   // the sentence drops the parenthetical rather than printing a stale one.
   const acpeDoc = getAccreditationForDomain("Pharmacy")[0] ?? null;
   const acpeFit = acpeDoc ? fitCounts(acpeDoc) : null;
+  const cites = numberCitations([ACPE_PHARMS_SOURCE]);
 
   return (
     <Stack gap={0}>
@@ -123,7 +135,12 @@ export default function OverviewPage() {
               </>
             ) : null}
             , the smallest accreditation build, and a live switching-cost window as ACPE retires AAMS for its
-            own PHARMS platform — see the{" "}
+            own PHARMS platform
+            <CitationMark
+              citation={cites[ACPE_PHARMS_SOURCE]}
+              claim="ACPE retires AAMS for its own PHARMS platform"
+            />{" "}
+            — see the{" "}
             <Link href="/domains/pharmacy" hasUnderline>Pharmacy domain hub</Link>,{" "}
             <Link href="/go-to-market#whats-missing" hasUnderline>gap analysis</Link>, or{" "}
             <Link href="/domains/pharmacy/win" hasUnderline>how we win Pharmacy</Link> for the full
