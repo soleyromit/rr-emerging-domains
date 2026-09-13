@@ -194,12 +194,31 @@ export function getAccreditationForDomain(domainLabel: string): AccreditationDoc
   );
 }
 
+// content/domains/*.yaml's optional `closest_analog:` block — the one discipline this
+// domain's accreditation structure most resembles, so a reader knows what can be
+// scaffolded rather than rebuilt. OPTIONAL AND USUALLY ABSENT: only Pharmacy carries
+// one today, because the 2026-09-12 planning session is the only real source in this
+// repo that establishes an analog for a domain. An absent block means UNRESEARCHED and
+// must render as nothing at all — not an empty card, not a "no analog found" placeholder.
+//
+// `domain_slug` is null whenever the analog has no domain hub page of its own (OT/PT
+// does not), and a null slug must NOT become a link — see UI-DENSITY-PATTERNS.md's
+// lateral cross-link rule: an unresolvable cross-reference degrades to plain text.
+export interface DomainClosestAnalog {
+  discipline: string;
+  domain_slug?: string | null;
+  similarity?: string;
+  reuse_note?: string;
+  source?: string;
+}
+
 export interface DomainProfile {
   domain: string;
   full_name: string;
   credential?: string;
   program_length_years?: number;
   market?: { program_count?: string; program_count_trend?: string; total_enrollment?: string; sources?: string[] };
+  closest_analog?: DomainClosestAnalog;
   standards_bodies?: { name: string; type: string }[];
   clinical_education_shape?: string;
   distinctive_pain_points?: { claim: string; source?: string }[];

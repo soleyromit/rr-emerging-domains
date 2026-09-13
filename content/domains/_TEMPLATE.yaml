@@ -90,6 +90,30 @@ org_structure:
                                #                 | blocker | influencer
                                # note          — optional, <=200 soft / 400 hard
   sources: []
+# OPTIONAL. The single discipline whose accreditation structure this domain most
+# resembles, so a reader (and a build plan) knows what can be scaffolded rather than
+# rebuilt. Omit the whole block when no real source establishes an analog — an absent
+# block reads as UNRESEARCHED, which is the honest state; a guessed one is
+# indistinguishable from a researched one the moment it is committed (the same
+# sparse-by-design rule content/ARCHITECTURE.md states for the Level-2 lenses).
+# Never write it out as `closest_analog: null`; just leave it off the file.
+#
+# closest_analog:
+#   discipline: "OT/PT"        # plain label. This discipline may have no domain hub
+#                              # page of its own — that is expected, see domain_slug.
+#   domain_slug: null          # a route slug ONLY if listDomains() really has it;
+#                              # otherwise null, and the renderer shows `discipline`
+#                              # as plain text. Never construct a Link from a slug
+#                              # that does not resolve (apps/ecosystem's lateral
+#                              # cross-link rule — a stale reference degrades to
+#                              # text, never to a 404).
+#   similarity: "..."          # <=160 soft / 260 hard chars — ONE sentence, the real
+#                              # structural reason the two are alike, not a guess.
+#   reuse_note: "..."          # <=200 soft / 350 hard chars — what specifically can
+#                              # be scaffolded from the analog rather than rebuilt
+#                              # from zero. The move, not the argument for it.
+#   source: "..."              # where the analog claim comes from, same free-prose
+#                              # shape as distinctive_pain_points[].source below.
 standards_bodies:
   - name: "COCA"
     type: "institutional accreditor"

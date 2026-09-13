@@ -176,6 +176,18 @@ org_structure:
   sources:
     - source_id: "doc-pharmacy-education-us-ebook-2026"
     - source_id: "interview-vishaka-pharmacy-understanding-2026-09-04"
+# See content/domains/_TEMPLATE.yaml for the block's shape and ceilings. Pharmacy is
+# the only domain file that carries it: the 2026-09-12 planning session is the one
+# real source in this repo that establishes an analog for a domain, so do.yaml,
+# dentistry.yaml and medicine.yaml deliberately omit the block rather than guess one.
+# `domain_slug` stays null because OT/PT is not a slug listDomains() returns — the
+# renderer therefore shows the label as plain text, not a link.
+closest_analog:
+  discipline: "OT/PT"
+  domain_slug: null
+  similarity: "OT/PT uses a single unified accreditor with a multi-visit-cycle structure comparable to Pharmacy's ACPE standards, per the 2026-09-12 planning session."
+  reuse_note: "OT/PT's requirement-to-requirement accreditation mapping is already ~90-100% complete against Exact; use it as the starting scaffold for Pharmacy's own mapping instead of starting from zero."
+  source: "2026-09-12 Exact pharmacy domain planning session (Granola transcript)"
 standards_bodies:
   - name: "ACPE"
     type: "institutional accreditor"

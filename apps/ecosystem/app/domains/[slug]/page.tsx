@@ -8,6 +8,7 @@ import { Badge } from "@astryxdesign/core/Badge";
 import { Tooltip } from "@astryxdesign/core/Tooltip";
 import { Collapsible } from "@astryxdesign/core/Collapsible";
 import { ClickableCard } from "@astryxdesign/core/ClickableCard";
+import { Link } from "@astryxdesign/core/Link";
 import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList";
 import { Takeaway } from "@/components/takeaway";
 import { ExxatGapAnswer } from "@/components/exxat-gap-answer";
@@ -198,6 +199,24 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
   //
   // The card's own copy is DERIVED from the manifest — how many questions are really
   // answered — so it never claims more coverage than the page it links to shows.
+  // content/domains/*.yaml's optional `closest_analog:` block. Absent for 3 of the 4
+  // expansion domains and that is the researched state, not a hole to fill: nothing in
+  // this repo establishes an analog for DO, Dentistry or Medicine, so their Overview
+  // renders NO callout at all rather than an empty card or a "none found" placeholder.
+  //
+  // The link is resolved, never assumed. `domain_slug` becomes an href only when
+  // listDomains() really returns that route slug; otherwise the discipline renders as
+  // plain text — UI-DENSITY-PATTERNS.md's lateral cross-link rule ("a broken or stale
+  // content reference should degrade to plain text, not a link to a 404"). Pharmacy's
+  // real value is `domain_slug: null` today, because OT/PT has no domain hub page, so
+  // the plain-text branch is the one that actually renders.
+  const closestAnalog = domainProfile?.closest_analog;
+  const analogSlug = closestAnalog?.domain_slug ?? null;
+  const analogHref =
+    analogSlug && listDomains().some((d) => matchDisciplineMeta(d.domain)?.slug === analogSlug)
+      ? `/domains/${analogSlug}`
+      : null;
+
   const dissectionManifest = getDissectionManifest(slug);
   const dissectionSummary = dissectionManifest
     ? {
@@ -278,6 +297,61 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
                   {stripFileCitations(domainProfile.market.program_count_trend)}
                 </MetadataListItem>
               </MetadataList>
+            ) : null}
+            {closestAnalog ? (
+              <Card variant="blue">
+                <Stack gap={2}>
+                  <Text type="label" color="secondary">
+                    Closest comparable discipline
+                  </Text>
+                  <Text type="body" weight="semibold">
+                    {analogHref ? (
+                      <Link href={analogHref} color="accent" hasUnderline>
+                        {closestAnalog.discipline}
+                      </Link>
+                    ) : (
+                      closestAnalog.discipline
+                    )}
+                  </Text>
+                  {/* Deliberately NOT FieldBlock, unlike the rest of this page. Both
+                      fields are hard-ceilinged short (260 / 350 chars, see
+                      content/CONTENT-DENSITY.md), so nothing here clamps at this width —
+                      but FieldBlock renders its "Read the full section" toggle off a flat
+                      `text.length > 180` test, so reuse_note (190 chars) got a toggle that
+                      changed to "Show less" and revealed nothing. Verified in the browser
+                      2026-09-13, which is the only way that shows up: it type-checks and
+                      builds either way. An affordance that promises hidden content and has
+                      none is exactly UI-DENSITY-PATTERNS.md's fake-level failure, so these
+                      are plain clamped Text — which still gets Text's own automatic
+                      hover tooltip if a future entry does overflow at the ceiling. */}
+                  <Stack gap={1}>
+                    <Text type="label" color="secondary" size="xsm">
+                      Why they&apos;re alike
+                    </Text>
+                    <Text type="body" size="sm" maxLines={3}>
+                      {stripFileCitations(closestAnalog.similarity)}
+                    </Text>
+                  </Stack>
+                  <Stack gap={1}>
+                    <Text type="label" color="secondary" size="xsm">
+                      What can be reused
+                    </Text>
+                    <Text type="body" size="sm" maxLines={3}>
+                      {stripFileCitations(closestAnalog.reuse_note)}
+                    </Text>
+                  </Stack>
+                  {closestAnalog.source ? (
+                    <Stack gap={1}>
+                      <Text type="label" color="secondary" size="xsm">
+                        Source
+                      </Text>
+                      <Text type="supporting" size="sm" maxLines={2}>
+                        {closestAnalog.source}
+                      </Text>
+                    </Stack>
+                  ) : null}
+                </Stack>
+              </Card>
             ) : null}
           </Stack>
         </Section>

@@ -180,6 +180,14 @@ DOMAIN_CEILINGS = {
     "market_sizing.adjacency.claim": (150, 300),
     "org_structure.typical_parent": (200, 400),
     "org_structure.buying_roles[].note": (200, 400),
+    # The optional `closest_analog:` block, added 2026-09-13. Ceilinged in the same
+    # commit that introduced the field rather than after the first long one lands —
+    # CONTENT-DENSITY.md's opening incident is exactly what an unceilinged new prose
+    # field does. `similarity` is one sentence naming both disciplines and the axis
+    # (the differentiators[].claim register); `reuse_note` is the stated move only
+    # (the counter_move register), never the argument for it.
+    "closest_analog.similarity": (160, 260),
+    "closest_analog.reuse_note": (200, 350),
 }
 # content/market/programs/*.yaml — added 2026-09-11 with the family itself, which holds
 # only _TEMPLATE.yaml today. `notes` is one line about one program in a file of hundreds
