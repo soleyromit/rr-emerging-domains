@@ -98,8 +98,24 @@ export function CitationMark({ citation, claim }: { citation?: NumberedCitation;
           anchor that opens the source in a new tab, which is the navigation
           this mechanism exists to avoid. The link lives inside the preview,
           where the reader chooses it. tabIndex makes the marker focusable so
-          the preview is reachable from the keyboard, not hover-only. */}
-      <Citation number={number} variant="number" source={{ title }} tabIndex={0} />
+          the preview is reachable from the keyboard, not hover-only.
+
+          The cost of withholding the url is that Citation also withholds its own
+          numberInteractive/numberHover styles, which it applies only when href is
+          set — leaving a marker that opens a preview on hover but says nothing
+          about being interactive, and carries no margin to separate it from a
+          neighbouring mark. Both are restored by the .citation-mark rule in
+          app/globals.css (which explains the cascade layer it sits in). Styling
+          lives there rather than here because a hover state cannot be expressed
+          in the inline `style` prop this app otherwise uses, and this app does
+          not run the StyleX compiler that `xstyle` would need. */}
+      <Citation
+        number={number}
+        variant="number"
+        source={{ title }}
+        tabIndex={0}
+        className="citation-mark"
+      />
     </HoverCard>
   );
 }
