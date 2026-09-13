@@ -45,8 +45,8 @@ export default function StandardsGlossaryPage() {
       {/* ---------- Bite-sized: what this is, how much of it there is ---------- */}
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
+          {/* No eyebrow — the layout's breadcrumb states the trail above both tabs. */}
           <PageHeader
-            eyebrow="Market"
             title="Speak COCA, ACPE, CODA, and LCME before the first call"
             description="Organized by domain: term → plain-English definition → which Prism pillar it touches → how to say it to a dean. Roadmap pillars are labeled honestly, not oversold."
             endContent={

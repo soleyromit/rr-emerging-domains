@@ -31,8 +31,9 @@ export default function StandardsCoverageMapPage() {
     <Stack gap={0}>
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
+          {/* No eyebrow: it said "Market", naming the sidebar group, and the breadcrumb
+              in app/standards/layout.tsx now states that trail above both tabs. */}
           <PageHeader
-            eyebrow="Market"
             title="Standards crosswalk"
             description={
               "Every domain's accreditation-standards coverage at a glance — Prism fit " +

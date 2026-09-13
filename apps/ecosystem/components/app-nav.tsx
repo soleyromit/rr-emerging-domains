@@ -12,10 +12,41 @@ import { Stack } from "@astryxdesign/core/Stack";
 // first-time reader should do, not what the page is); `Go-to-market` moved out of
 // `Strategy` into `Market`, which deleted `Strategy` entirely; and `Enterprise repo`
 // left the research nav for the SideNav footer below.
+//
+// ---------------------------------------------------------------------------
+// GROUP LABELS ARE ACTION TITLES, NOT CATEGORIES (task 4.4)
+//
+// McKinsey's Pyramid Principle calls a headline that states a conclusion an
+// "action title", and tests a deck by the "ghost deck": read only the headlines,
+// in order, and see whether they already tell the story without the slides. Four
+// of these six labels were bare category nouns — `Product`, `Market`, `Customer`,
+// `Domains` — which ghost-read as a filing cabinet ("product, market, customer,
+// domains") rather than an argument. Read top to bottom now:
+//
+//   Start here → What we ship today → Where we win or lose → Who we're building
+//   for → Inside each domain → Unverified — don't cite
+//
+// That is the story: orient yourself, here is the product, here is what the
+// market does to it, here is who buys, here is each domain in depth, and this
+// last thing is not evidence. A leadership skimmer who never opens a page still
+// leaves with the shape of the argument.
+//
+// The other two already carried a conclusion, so neither was churned for the
+// sake of it: `Start here` is an instruction (Phase 1 chose it for exactly this
+// reason) and is untouched, and the quarantine label already stated a verdict —
+// it was only turned around, from `Reference — unverified` (category noun first,
+// verdict as a trailing qualifier) to the instruction the page itself gives
+// ("Not citable as fact — anywhere, for any purpose", see
+// app/reference/vendor-comparison-chart/page.tsx).
+//
+// Where a page's PageHeader eyebrow named its sidebar group, that string moved
+// with the label. On the four merged destinations the eyebrow is gone entirely —
+// the breadcrumb in their layouts now states the same trail, one element higher.
+// ---------------------------------------------------------------------------
 const SECTIONS = [
   { title: "Start here", items: [{ href: "/", label: "Executive summary" }] },
   {
-    title: "Product",
+    title: "What we ship today",
     // One entry, two tabs: the capability map and the system vocabulary are both
     // about Prism itself rather than the market, and neither carried a
     // perspective the other lacked, so they are sibling tabs under /product
@@ -23,7 +54,7 @@ const SECTIONS = [
     items: [{ href: "/product", label: "Product" }],
   },
   {
-    title: "Market",
+    title: "Where we win or lose",
     items: [
       // One entry, two pivots: the competitor teardown index (was /competitors)
       // and the pillar × domain feature map (was /feature-map) are the same
@@ -46,7 +77,7 @@ const SECTIONS = [
       // links between them as three sidebar rows. They are now #which-domain /
       // #whats-missing / #what-to-say on /go-to-market, read front to back with
       // next/prev links (see app/go-to-market/page.tsx).
-      // Moved here from the deleted `Strategy` group: it belongs in `Market` because it
+      // Moved here from the deleted `Strategy` group: it belongs in this group because it
       // is the conclusion the two rows above are the evidence for, and reads last for
       // that reason.
       { href: "/go-to-market", label: "Go-to-market" },
@@ -59,27 +90,32 @@ const SECTIONS = [
     ],
   },
   {
-    title: "Customer",
+    title: "Who we're building for",
     items: [
       { href: "/roles", label: "Roles" },
       { href: "/journeys", label: "Journeys" },
     ],
   },
-  // One row, and that is fine: `Domains` lost its second row when /crosswalk was
+  // One row, and that is fine: this group lost its second row when /crosswalk was
   // absorbed into /standards, but it stays its own section rather than folding into
-  // `Market`. The four domain hubs are the spine of the whole evidence base, not one
-  // market artifact among several, and this repo already runs single-row sections
-  // (`Product`, `Reference — unverified`) — a lone row is not by itself a reason to merge.
+  // `Where we win or lose`. The four domain hubs are the spine of the whole evidence
+  // base, not one market artifact among several, and this repo already runs single-row
+  // sections — a lone row is not by itself a reason to merge.
+  //
+  // "Inside each domain", not "Each domain, dissected": the dissection framework
+  // covers the domains it has been run on, not all of them, and a group label that
+  // asserted otherwise would be the blanket-coverage claim this repo has already had
+  // to fix once. This one promises only what the section does — take you inside.
   {
-    title: "Domains",
+    title: "Inside each domain",
     items: [{ href: "/domains", label: "Domains" }],
   },
-  // Its own section, LAST, and never folded into "Market": everything above this
-  // line is researched and cited, and this is not. A quarantined sales artifact
+  // Its own section, LAST, and never folded into the market group: everything above
+  // this line is researched and cited, and this is not. A quarantined sales artifact
   // sitting as a peer of the competitor matrix would borrow that section's standing,
   // which is precisely what the label and the position exist to deny it.
   {
-    title: "Reference — unverified",
+    title: "Unverified — don't cite",
     items: [{ href: "/reference/vendor-comparison-chart", label: "Vendor comparison chart (unverified)" }],
   },
 ];

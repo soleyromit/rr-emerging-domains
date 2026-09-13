@@ -138,8 +138,10 @@ export default async function CompetitiveLandscapePage({
     <Stack gap={0}>
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
+          {/* No eyebrow: it said "Market", naming the sidebar group, and the breadcrumb
+              in app/competitive-landscape/layout.tsx now states that trail above the
+              pivots for all three of them. */}
           <PageHeader
-            eyebrow="Market"
             title="Every incumbent already ships what Prism's 2027 roadmap promises — but none of them enforce compliance"
             description="Feature-level teardown per competitor, judged against Prism's real pillars. Every claim below is sourced."
           />

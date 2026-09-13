@@ -50,8 +50,8 @@ export default async function CompetitiveLandscapeByPillarPage({
     <Stack gap={0}>
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
+          {/* No eyebrow — the layout's breadcrumb states the trail above the pivots. */}
           <PageHeader
-            eyebrow="Market"
             title={
               filter
                 ? `${filter.domain}: ${totalCells} pillar cells — where Prism leads, where a competitor leads, and where nobody has built it yet`

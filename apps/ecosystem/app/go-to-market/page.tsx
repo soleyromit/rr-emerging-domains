@@ -9,6 +9,7 @@ import { Banner } from "@astryxdesign/core/Banner";
 import { Icon } from "@astryxdesign/core/Icon";
 import { Link } from "@astryxdesign/core/Link";
 import { Divider } from "@astryxdesign/core/Divider";
+import { Breadcrumbs, BreadcrumbItem } from "@astryxdesign/core/Breadcrumbs";
 import { Markdown } from "@astryxdesign/core/Markdown";
 import { Collapsible, CollapsibleGroup } from "@astryxdesign/core/Collapsible";
 import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList";
@@ -442,10 +443,18 @@ export default function GoToMarketPage() {
       {/* ================= The funnel, and how to read it ================= */}
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
+          {/* The only one of the four merged destinations with no layout.tsx — its three
+              steps are anchors on this one page, not sub-routes, so there is nothing for
+              a layout to render above. The breadcrumb therefore sits here, in the page's
+              own first Section, but is the same two crumbs and the same component the
+              other three destinations and the domain hub use: sidebar group, then this
+              destination. The eyebrow it replaces said "Market"; both said the same
+              thing, and the breadcrumb says it in the shape the rest of the app uses. */}
+          <Breadcrumbs>
+            <BreadcrumbItem>Where we win or lose</BreadcrumbItem>
+            <BreadcrumbItem isCurrent>Go-to-market</BreadcrumbItem>
+          </Breadcrumbs>
           <PageHeader
-            // Was "Strategy" — the eyebrow names the sidebar group, and this page moved
-            // into `Market` when `Strategy` was deleted (2026-09-13 nav consolidation).
-            eyebrow="Market"
             title="Go-to-market — which domain, what is missing, what to say"
             description="Three ordered steps of one decision, in the order you should read them. Pick the domain to enter, see what the product is missing once you are in it, then decide what is safe to claim in the room. Each step ends with a link to the next."
           />

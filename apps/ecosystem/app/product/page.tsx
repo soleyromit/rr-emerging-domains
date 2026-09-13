@@ -40,7 +40,9 @@ export default function ProductCapabilityMapPage() {
       {/* ---------- Bite-sized: headline, one takeaway, one chart ---------- */}
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
-          <PageHeader eyebrow="Product" title={`${capMap.product} today — three pillars ship, three are on the roadmap`} description={capMap.tagline} />
+          {/* No eyebrow: it said "Product", naming the sidebar group, and the
+              breadcrumb in app/product/layout.tsx now states that trail above the tabs. */}
+          <PageHeader title={`${capMap.product} today — three pillars ship, three are on the roadmap`} description={capMap.tagline} />
           <Takeaway title="The roadmap gap is not generic — it's the exact shape of what four accreditors ask for">
             Every accreditation file researched independently converges on the same missing object: something that
             knows what an accreditation standard is, tracks evidence against it, and records that a finding changed

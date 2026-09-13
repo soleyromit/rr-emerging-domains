@@ -94,7 +94,9 @@ export default function VendorComparisonChartPage() {
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
           <PageHeader
-            eyebrow="Reference — unverified"
+            // Names the sidebar group, which task 4.4 tightened from the noun-first
+            // "Reference — unverified" to the instruction this page's own banner gives.
+            eyebrow="Unverified — don't cite"
             title={artifact.title}
             description="Exxat sales' own internal comparison chart, transcribed verbatim so it can be pointed at and argued with. It is not research, and nothing in this repo cites it."
           />

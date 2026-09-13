@@ -1,5 +1,6 @@
 import { Section } from "@astryxdesign/core/Section";
 import { Stack } from "@astryxdesign/core/Stack";
+import { Breadcrumbs, BreadcrumbItem } from "@astryxdesign/core/Breadcrumbs";
 import { StandardsTabs } from "@/components/standards-tabs";
 
 // One route for "what do the accreditors require, and what do their words mean":
@@ -17,7 +18,20 @@ export default function StandardsLayout({ children }: { children: React.ReactNod
   return (
     <Stack gap={0}>
       <Section padding={6}>
-        <StandardsTabs />
+        {/* Breadcrumb in the layout, not the pages: it renders once above both tabs,
+            so /standards and /standards/glossary both carry it. Same two crumbs and
+            same component as the domain hub (app/domains/[slug]/layout.tsx) — the
+            sidebar group, then this destination. It matters more here than anywhere
+            else in this merge: the glossary used to live under a different sidebar
+            group entirely (/synthesis/vocabulary, under `Strategy`), so a reader
+            who remembers it from there needs the trail to say where it went. */}
+        <Stack gap={4}>
+          <Breadcrumbs>
+            <BreadcrumbItem>Where we win or lose</BreadcrumbItem>
+            <BreadcrumbItem isCurrent>Standards &amp; glossary</BreadcrumbItem>
+          </Breadcrumbs>
+          <StandardsTabs />
+        </Stack>
       </Section>
       {children}
     </Stack>

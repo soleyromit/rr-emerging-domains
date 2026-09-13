@@ -18,8 +18,9 @@ export default function ProductVocabularyPage() {
     <Stack gap={0}>
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
+          {/* No eyebrow — the breadcrumb in app/product/layout.tsx states the trail
+              above the tabs for every tab, this one included. */}
           <PageHeader
-            eyebrow="Product"
             title="Placement, Slot, Wishlist — one system, twelve shapes"
             description={
               <>

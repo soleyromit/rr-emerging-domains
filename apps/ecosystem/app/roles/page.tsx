@@ -24,7 +24,8 @@ export default function RolesIndexPage() {
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
           <PageHeader
-            eyebrow="Customer"
+            // Names the sidebar group; "Customer" became an action title in task 4.4.
+            eyebrow="Who we're building for"
             title="Roles"
             description="Cross-cutting roles — the people who touch Prism day to day, across every domain. Each role's page also links out to the domains and competitors that content is grounded in."
           />

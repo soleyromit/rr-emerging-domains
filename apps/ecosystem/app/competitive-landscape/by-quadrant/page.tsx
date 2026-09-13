@@ -52,8 +52,8 @@ export default async function CompetitiveLandscapeByQuadrantPage({
     <Stack gap={0}>
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
+          {/* No eyebrow — the layout's breadcrumb states the trail above the pivots. */}
           <PageHeader
-            eyebrow="Market"
             title={
               plotted === 0
                 ? "No vendor has a verified pillar judgment in this slice yet"

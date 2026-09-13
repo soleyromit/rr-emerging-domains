@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { Section } from "@astryxdesign/core/Section";
 import { Stack } from "@astryxdesign/core/Stack";
+import { Breadcrumbs, BreadcrumbItem } from "@astryxdesign/core/Breadcrumbs";
 import { CompetitiveLandscapeTabs } from "@/components/competitive-landscape-tabs";
 
 // One route for "where does Prism stand against the field": the per-competitor
@@ -18,9 +19,22 @@ export default function CompetitiveLandscapeLayout({ children }: { children: Rea
   return (
     <Stack gap={0}>
       <Section padding={6}>
-        <Suspense fallback={null}>
-          <CompetitiveLandscapeTabs />
-        </Suspense>
+        {/* Breadcrumb in the layout, not the pages: it renders once above all three
+            pivots, so /competitive-landscape, /by-pillar and /by-quadrant all carry
+            it. Same two crumbs and same component as the domain hub
+            (app/domains/[slug]/layout.tsx) — sidebar group, then this destination.
+            Outside the Suspense boundary on purpose: it reads nothing dynamic, so
+            it should render statically rather than be held behind the tab list's
+            useSearchParams. */}
+        <Stack gap={4}>
+          <Breadcrumbs>
+            <BreadcrumbItem>Where we win or lose</BreadcrumbItem>
+            <BreadcrumbItem isCurrent>Competitive landscape</BreadcrumbItem>
+          </Breadcrumbs>
+          <Suspense fallback={null}>
+            <CompetitiveLandscapeTabs />
+          </Suspense>
+        </Stack>
       </Section>
       {children}
     </Stack>

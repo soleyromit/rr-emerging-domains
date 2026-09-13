@@ -76,7 +76,8 @@ export default function ArchetypesPage() {
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
           <PageHeader
-            eyebrow="Market"
+            // Names the sidebar group; "Market" became an action title in task 4.4.
+            eyebrow="Where we win or lose"
             title="University archetypes"
             description="Institutions grouped by who is already inside them — Exxat, a competitor, or nobody — with the identifying traits that put a university in a group and the approach that follows from it."
           />
