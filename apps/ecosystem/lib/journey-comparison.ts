@@ -3,6 +3,7 @@ import {
   getJourneyStagesForDiscipline,
   listJourneys,
   type DisciplineJourneyStage,
+  type Journey,
 } from "@/lib/content";
 import { ALL_DISCIPLINE_META, matchDisciplineMeta } from "@/lib/discipline-meta";
 
@@ -63,22 +64,16 @@ function stageLabel(stage: string, index: number): string {
 }
 
 /**
- * discipline slug -> the `subject` string content actually uses for it.
+ * discipline slug -> { the exact `subject` spellings these journeys use -> how many
+ * key_findings/discipline_notes entries use each }.
  *
- * DERIVED from every journey's own key_findings/discipline_notes rather than
- * hardcoded, because the two vocabularies genuinely differ: the URL wants "pt",
- * content writes "PT/PTA", and inventing either half here is how a column silently
- * renders empty for a discipline that has eight stages written about it. A
- * discipline no journey names at all is absent from this map and is therefore not
- * offered as a comparison option — the alternative is guessing at a subject string,
- * and a guess that misses looks exactly like real absence.
+ * DERIVED from the journeys' own content rather than hardcoded, because the two
+ * vocabularies genuinely differ: the URL wants "pt", content writes "PT/PTA", and
+ * inventing either half here is how a column silently renders empty for a discipline
+ * that has eight stages written about it.
  */
-function subjectBySlug(): Map<string, string> {
-  const out = new Map<string, string>();
-  // Sorted so the mapping is deterministic; readdir order isn't guaranteed, and a
-  // discipline written two ways across two journeys must not resolve differently
-  // depending on filesystem order.
-  const journeys = [...listJourneys()].sort((x, y) => x.slug.localeCompare(y.slug));
+function tallySubjects(journeys: Journey[]): Map<string, Map<string, number>> {
+  const tally = new Map<string, Map<string, number>>();
   for (const journey of journeys) {
     for (const stage of journey.stages ?? []) {
       const subjects = [
@@ -88,11 +83,56 @@ function subjectBySlug(): Map<string, string> {
       for (const subject of subjects) {
         if (!subject) continue;
         const meta = matchDisciplineMeta(subject);
-        if (meta && !out.has(meta.slug)) out.set(meta.slug, subject);
+        if (!meta) continue;
+        const counts = tally.get(meta.slug) ?? new Map<string, number>();
+        counts.set(subject, (counts.get(subject) ?? 0) + 1);
+        tally.set(meta.slug, counts);
       }
     }
   }
+  return tally;
+}
+
+/** One spelling per discipline: the one those journeys use most, with alphabetical
+ * order breaking a tie so the choice never depends on readdir order. */
+function dominantSubjects(journeys: Journey[]): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const [slug, counts] of tallySubjects(journeys)) {
+    const best = [...counts.entries()].sort((x, y) => y[1] - x[1] || x[0].localeCompare(y[0]))[0];
+    if (best) out.set(slug, best[0]);
+  }
   return out;
+}
+
+/**
+ * discipline slug -> the `subject` string to hand getJourneyStagesForDiscipline FOR
+ * THIS JOURNEY.
+ *
+ * Resolved from the TARGET journey's own stages first, and only then from the rest of
+ * the corpus. That order is the whole point: a global first-match map is correct only
+ * while every journey happens to spell a discipline the same way, and the day one file
+ * writes "OT/OTA" where another writes "Occupational Therapy", a global map hands the
+ * other journey a subject string its own content never uses — and
+ * getJourneyStagesForDiscipline matches with `===`, so the column renders empty and
+ * looks exactly like "nothing is written here". That is the failure the two-field
+ * (discipline_notes / key_findings) check in that function exists to avoid, undone one
+ * layer up.
+ *
+ * The corpus-wide fallback is still worth having: it is what keeps a discipline this
+ * journey never names pickable at all (with an honest zero-stage column) instead of
+ * vanishing from the picker. For such a discipline both maps agree on the answer —
+ * no entries, therefore no stages — so the fallback can only be wrong about a
+ * spelling that this journey, by definition, does not contain.
+ */
+function subjectsForJourney(journeySlug: string): Map<string, string> {
+  // Sorted so the corpus-wide pass is deterministic; readdir order isn't guaranteed.
+  const corpus = [...listJourneys()].sort((x, y) => x.slug.localeCompare(y.slug));
+  const journey = getJourney(journeySlug);
+  const resolved = new Map(dominantSubjects(corpus));
+  for (const [slug, subject] of dominantSubjects(journey ? [journey] : [])) {
+    resolved.set(slug, subject);
+  }
+  return resolved;
 }
 
 /**
@@ -101,10 +141,12 @@ function subjectBySlug(): Map<string, string> {
  * Deliberately not filtered to the ones with content: a discipline with zero stages
  * written for this journey is a real, pickable answer ("nothing is written about
  * Medicine here"), and hiding it would turn an honest absence into an invisible one.
- * The `stageCount` is what the picker shows so the choice is informed.
+ * The `stageCount` is what the picker shows so the choice is informed. A discipline no
+ * journey anywhere names is absent — the alternative is guessing at a subject string,
+ * and a guess that misses looks exactly like real absence.
  */
 export function listComparableDisciplines(journeySlug: string): ComparableDiscipline[] {
-  const subjects = subjectBySlug();
+  const subjects = subjectsForJourney(journeySlug);
   return ALL_DISCIPLINE_META.flatMap((meta) => {
     const subject = subjects.get(meta.slug);
     if (!subject) return [];
@@ -126,11 +168,86 @@ function firstValue(raw: string | string[] | undefined): string | undefined {
   return Array.isArray(raw) ? raw[0] : raw;
 }
 
-/** True when there is at least one stage exactly one of them has something written at —
- * i.e. this pair has something for the comparison to actually show. */
-function diverges(x: ComparableDiscipline, y: ComparableDiscipline): boolean {
-  if (x.stageCount !== y.stageCount) return true;
-  return [...x.coveredStages].some((index) => !y.coveredStages.has(index));
+/**
+ * How many stages exactly ONE of the two has something written at — the size of the
+ * symmetric difference of their covered-stage sets, and literally the count the page's
+ * own takeaway reports as "diverge at N of M stages".
+ *
+ * This, not total coverage, is what makes a default pair worth landing on: it is the
+ * number of rows that will carry an "Only X" badge.
+ */
+function divergenceCount(x: ComparableDiscipline, y: ComparableDiscipline): number {
+  let count = 0;
+  for (const index of x.coveredStages) if (!y.coveredStages.has(index)) count++;
+  for (const index of y.coveredStages) if (!x.coveredStages.has(index)) count++;
+  return count;
+}
+
+/**
+ * Ranks one candidate pair. Most divergent first, because that is the question the
+ * page exists to answer; richest-pair-overall breaks a tie, so between two equally
+ * divergent pairs the one with more actually-written content wins. `options` arrives
+ * already sorted (coverage desc, then label), so scanning it in order with a strict
+ * `>` makes the winner deterministic without a third tie-break.
+ */
+function pairScore(x: ComparableDiscipline, y: ComparableDiscipline): [number, number] {
+  return [divergenceCount(x, y), x.stageCount + y.stageCount];
+}
+
+function beats(candidate: [number, number], best: [number, number] | null): boolean {
+  if (!best) return true;
+  return candidate[0] !== best[0] ? candidate[0] > best[0] : candidate[1] > best[1];
+}
+
+/**
+ * Every discipline is a candidate while the count stays small (all 13 entries in
+ * lib/discipline-meta.ts is 78 pairs over precomputed Sets — nothing). The cap exists
+ * so that a registry that one day grows to hundreds degrades to "the best-covered N"
+ * rather than to a quadratic scan on every request.
+ */
+const MAX_DEFAULT_PAIR_CANDIDATES = 24;
+
+/**
+ * A discipline with nothing written on this journey stays PICKABLE — an honest empty
+ * column is a finding — but it must never be DERIVED, because it wins on divergence
+ * for the wrong reason: a column of eight dashes has a maximal symmetric difference
+ * against anything, and five of this repo's six journeys have at least one discipline
+ * sitting at zero. Defaulting there lands the reader on the takeaway's own warning
+ * state ("X has nothing written on this journey") instead of on a comparison.
+ *
+ * So the ranking runs twice: over pairs with content on both sides first, and over
+ * everything only if this journey genuinely cannot field two written columns.
+ */
+function hasContentOnBothSides(x: ComparableDiscipline, y: ComparableDiscipline): boolean {
+  return x.stageCount > 0 && y.stageCount > 0;
+}
+
+/** The partner that diverges most from a discipline the reader already chose. */
+function bestPartnerFor(
+  anchor: ComparableDiscipline,
+  options: ComparableDiscipline[],
+): ComparableDiscipline {
+  const candidates = options.slice(0, MAX_DEFAULT_PAIR_CANDIDATES).filter((o) => o.slug !== anchor.slug);
+  const pick = (eligible: (candidate: ComparableDiscipline) => boolean): ComparableDiscipline | null => {
+    let best: ComparableDiscipline | null = null;
+    let bestScore: [number, number] | null = null;
+    for (const candidate of candidates) {
+      if (!eligible(candidate)) continue;
+      const score = pairScore(anchor, candidate);
+      if (beats(score, bestScore)) {
+        best = candidate;
+        bestScore = score;
+      }
+    }
+    return best;
+  };
+  return (
+    pick((candidate) => hasContentOnBothSides(anchor, candidate)) ??
+    pick(() => true) ??
+    // Only reachable if the cap excluded every alternative, which needs the anchor to
+    // sit past position 24; take any other option rather than return the anchor twice.
+    options.find((o) => o.slug !== anchor.slug)!
+  );
 }
 
 /**
@@ -138,13 +255,24 @@ function diverges(x: ComparableDiscipline, y: ComparableDiscipline): boolean {
  * `?node=`: a slug that doesn't resolve (stale link, typo, a discipline no journey
  * names) is ignored and the page renders its derived default instead of 404-ing or
  * rendering an empty comparison. Two identical slugs fall back the same way — a
- * discipline compared against itself is a page with nothing to say.
+ * discipline compared against itself is a page with nothing to say. A half-specified
+ * pair keeps the side the reader did name, on the side they named it, and derives only
+ * the other one.
  *
- * The default pair is the journey's best-covered discipline against the best-covered
- * one that does NOT cover exactly the same stages, so landing here cold shows the page
- * doing its job rather than an empty frame waiting on two clicks — or, worse, two
- * disciplines written at identical stages, which renders a comparison with nothing to
- * compare. Falls back to plain second-best when every other discipline is identical.
+ * The derived default is the pair — among those with something written on BOTH sides,
+ * see hasContentOnBothSides — whose covered stages differ the MOST: the largest
+ * "only A" + "only B" count, with richest total coverage breaking a tie. Picking for
+ * coverage alone is what the first version of this function did, by taking the
+ * best-covered discipline and then the first partner that differed at all; because that
+ * list is sorted by coverage, "differs at all" always landed on the partner differing
+ * at the FEWEST stages — on rotation-lifecycle, a 1-of-8 difference, the smallest
+ * visible result the page can produce. Landing cold on the least divergent pair
+ * available argues against the page's own reason to exist.
+ *
+ * This stays a general rule computed from content, not an editorial pick: no discipline
+ * is named here, and a journey where every discipline is written at identical stages
+ * still resolves (to its two best-covered, with a takeaway that honestly says they
+ * agree).
  */
 export function resolveComparePair(
   options: ComparableDiscipline[],
@@ -153,12 +281,37 @@ export function resolveComparePair(
 ): { a: ComparableDiscipline; b: ComparableDiscipline } | null {
   if (options.length < 2) return null;
   const bySlug = new Map(options.map((o) => [o.slug, o]));
-  const a = bySlug.get(firstValue(rawA) ?? "") ?? options[0];
+  const requestedA = bySlug.get(firstValue(rawA) ?? "");
   const requestedB = bySlug.get(firstValue(rawB) ?? "");
-  if (requestedB && requestedB.slug !== a.slug) return { a, b: requestedB };
-  const others = options.filter((o) => o.slug !== a.slug);
-  const b = others.find((o) => diverges(a, o)) ?? others[0];
-  return { a, b };
+  if (requestedA && requestedB && requestedA.slug !== requestedB.slug) {
+    return { a: requestedA, b: requestedB };
+  }
+  // Exactly one side resolved (or both named the same discipline): keep it where the
+  // reader put it and derive its most divergent partner.
+  if (requestedA) return { a: requestedA, b: bestPartnerFor(requestedA, options) };
+  if (requestedB) return { a: bestPartnerFor(requestedB, options), b: requestedB };
+
+  const candidates = options.slice(0, MAX_DEFAULT_PAIR_CANDIDATES);
+  const pick = (
+    eligible: (x: ComparableDiscipline, y: ComparableDiscipline) => boolean,
+  ): { a: ComparableDiscipline; b: ComparableDiscipline } | null => {
+    let best: { a: ComparableDiscipline; b: ComparableDiscipline } | null = null;
+    let bestScore: [number, number] | null = null;
+    for (let i = 0; i < candidates.length; i++) {
+      for (let j = i + 1; j < candidates.length; j++) {
+        if (!eligible(candidates[i], candidates[j])) continue;
+        const score = pairScore(candidates[i], candidates[j]);
+        if (beats(score, bestScore)) {
+          best = { a: candidates[i], b: candidates[j] };
+          bestScore = score;
+        }
+      }
+    }
+    return best;
+  };
+  // Two written columns if this journey has them; otherwise the best it can field,
+  // which the takeaway will correctly flag as an empty column rather than a comparison.
+  return pick(hasContentOnBothSides) ?? pick(() => true) ?? { a: options[0], b: options[1] };
 }
 
 /** The WRITE side of the same contract. It lives in its own import-free module so the

@@ -50,6 +50,37 @@ function EmptyCell() {
   );
 }
 
+/**
+ * One grid cell: the column's heading (first row only) sitting DIRECTLY above that
+ * column's own card, rather than both headings sharing a separate grid of their own
+ * above the stages.
+ *
+ * That separate heading grid was the bug. It collapsed at the same ~656px container
+ * width as the stage grid below it, which put `<Heading>A` immediately on top of
+ * `<Heading>B` with no content between them — two titles in a row before any stage,
+ * which reads as a rendering fault rather than as a header. Keeping each heading
+ * inside its own column makes the single-column case correct by construction, with no
+ * media query and no client-side width check: stacked, the reader gets
+ * "A → A's card → B → B's card", and side by side the two headings still line up over
+ * their columns exactly as before.
+ */
+function ComparisonColumn({
+  discipline,
+  stage,
+  heading,
+}: {
+  discipline: ComparableDiscipline;
+  stage?: DisciplineJourneyStage;
+  heading?: string;
+}) {
+  return (
+    <Stack gap={2}>
+      {heading ? <Heading level={2}>{heading}</Heading> : null}
+      <ComparisonCell discipline={discipline} stage={stage} />
+    </Stack>
+  );
+}
+
 function ComparisonCell({
   discipline,
   stage,
@@ -198,16 +229,7 @@ export default async function JourneyComparePage({
           <EmptyState title="No stages mapped yet" description="This journey has no stages to compare." />
         ) : (
           <Stack gap={5}>
-            {/* The column headers, once, above the stages — the discipline chips inside
-                each cell repeat them, which is what keeps the single-column layout
-                readable once the grid stacks under ~680px and these headers are far
-                above the cell being read. */}
-            <Grid columns={{ minWidth: 320, max: 2 }} gap={3}>
-              <Heading level={2}>{a.label}</Heading>
-              <Heading level={2}>{b.label}</Heading>
-            </Grid>
-
-            {comparison.rows.map((row) => (
+            {comparison.rows.map((row, rowIndex) => (
               <Stack key={row.index} gap={2}>
                 <Stack direction="horizontal" gap={2} vAlign="center" wrap="wrap">
                   <Text type="label" weight="semibold">
@@ -218,10 +240,17 @@ export default async function JourneyComparePage({
                 {/* Two columns above ~680px, one below it: `max: 2` caps the track
                     count and `minWidth: 320` is what makes the second track drop —
                     the same responsive pair components/course-model-split.tsx uses,
-                    rather than a hand-written media query. */}
+                    rather than a hand-written media query.
+
+                    The column headings ride INSIDE the first row's two cells (see
+                    ComparisonColumn) rather than in a grid of their own above the
+                    stages, so they stack with the column they name instead of piling
+                    up on each other when this grid collapses. Below the first row the
+                    per-cell DisciplineChip is what keeps a stacked column identifiable
+                    once the headings have scrolled away. */}
                 <Grid columns={{ minWidth: 320, max: 2 }} gap={3}>
-                  <ComparisonCell discipline={a} stage={row.a} />
-                  <ComparisonCell discipline={b} stage={row.b} />
+                  <ComparisonColumn discipline={a} stage={row.a} heading={rowIndex === 0 ? a.label : undefined} />
+                  <ComparisonColumn discipline={b} stage={row.b} heading={rowIndex === 0 ? b.label : undefined} />
                 </Grid>
               </Stack>
             ))}
