@@ -294,7 +294,7 @@
 ### Task 4.1: Restructure the matrix detail panel into Fact → Impact → Act, and make it a persistent synced side panel instead of a replacing modal
 
 **Files:**
-- Modify: `components/comparison-matrix.tsx` — the `renderPanel`/row-panel rendering logic (the shared machinery every one of `dissection-matrix.tsx`, `scorecard-matrix.tsx`, `feature-teardown-matrix.tsx`, `sales-reference-matrix.tsx` calls into)
+- Modify: `components/comparison-matrix.tsx` — the `renderPanel`/row-panel rendering logic. **Note: only 3 real callers remain, not 4** — Task 1.2's review found `components/feature-teardown-matrix.tsx` has zero call sites after the Competitive-landscape merge (it was never actually shared machinery the way an earlier audit claimed; only `app/domains/[slug]/competitors/page.tsx` used it, and that page's matrix render was replaced by a summary+link). Its dead-code fate is still an open, parked decision for the plan owner — do not delete `feature-teardown-matrix.tsx` in this task, but do not update it either, since nothing renders it. The 3 real callers are `dissection-matrix.tsx`, `scorecard-matrix.tsx`, `sales-reference-matrix.tsx`.
 - Read first: `lib/table-detail-panel.tsx` (`useTableDetailPanel`) — today's panel expansion mechanism, which replaces the row's space in-line; confirm whether the design system's `Table` component supports a fixed side-panel layout mode before assuming a full rewrite is needed
 
 **Interfaces:**
@@ -303,10 +303,10 @@
 
 - [ ] **Step 1:** Read `lib/table-detail-panel.tsx` and the design system's `Table` docs for any existing side-panel/split-view layout primitive.
 - [ ] **Step 2:** Redesign `ComparisonMatrixPanelContext`'s render contract to expose three named sections instead of one undifferentiated block; update `comparison-matrix.tsx`'s panel rendering to lay them out as Fact (top, most prominent), Impact (below, supporting), Act (below that, optional, visually secondary if empty).
-- [ ] **Step 3:** Update each of the 4 real callers (`dissection-matrix.tsx`, `scorecard-matrix.tsx`, `feature-teardown-matrix.tsx`, `sales-reference-matrix.tsx`) to map their existing panel content into the three slots — this is content re-slotting, not new copywriting; do not invent new "Act" text where a caller has none.
+- [ ] **Step 3:** Update each of the 3 real callers (`dissection-matrix.tsx`, `scorecard-matrix.tsx`, `sales-reference-matrix.tsx`) to map their existing panel content into the three slots — this is content re-slotting, not new copywriting; do not invent new "Act" text where a caller has none. Leave `feature-teardown-matrix.tsx` untouched (dead code, see Files note above).
 - [ ] **Step 4:** If Step 1 found a real side-panel layout primitive, switch from the current expand-in-place panel to a persistent panel that stays visible and updates as the reader moves between rows (matches Stripe docs' synced-panel pattern — claim and proof stay visible together, never one hiding behind a click). If no such primitive exists, keep today's expand-in-place mechanism and note in the commit message that the persistent-panel upgrade is deferred pending a design-system capability, not skipped by choice.
 - [ ] **Step 5:** `cd apps/ecosystem && npx tsc --noEmit && npm run check:density && npx next build`.
-- [ ] **Step 6:** In `npm run dev`: open a row panel on all 4 matrix types, confirm Fact/Impact/Act render in the new structure, confirm no caller shows an empty "Act" heading with nothing under it.
+- [ ] **Step 6:** In `npm run dev`: open a row panel on all 3 real matrix types, confirm Fact/Impact/Act render in the new structure, confirm no caller shows an empty "Act" heading with nothing under it.
 - [ ] **Step 7:** Commit.
 
 ### Task 4.2: Replace bar/table competitive verdicts with a named two-axis quadrant plot
