@@ -25,7 +25,9 @@ function domainCardVariant(meta: DisciplineMeta | null): DomainCardVariant | "mu
 
 // Single hub per discipline: accreditor structure, full standards table, competitor
 // landscape, and discipline persona all live under this one route as sibling tabs
-// (page.tsx = Overview, standards/, competitors/, persona/) instead of four
+// (page.tsx = Overview, standards/, competitors/ — the persona got its own tab until
+// the 2026-09-13 nav consolidation folded it into Overview's Buyer profile section,
+// /domains/[slug]#buyer-profile) instead of four
 // separate pages (/domains/[slug], /accreditation/[domain], the embedded view on
 // what is now /standards and was then /crosswalk,
 // view, /personas/discipline/[slug]) that duplicated and never cross-linked each
