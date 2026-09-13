@@ -57,13 +57,13 @@
 
 **Interfaces:**
 - Consumes: `listFeatureMaps()` (pillar pivot) and `listCompetitors()` (competitor pivot) from `lib/content.ts` — both already exist and already feed the two pages being merged; no new data function needed
-- Produces: `/competitive-landscape?view={competitor|pillar}&domain={slug?}` — `view` selects which axis is the row axis; `domain` (optional) filters to one domain, reusing whatever domain-filter logic `app/domains/[slug]/competitors/page.tsx` already applies today
+- Produces: `/competitive-landscape` with the pivot as a real route segment, **not** a query param — Task 1.1's implementer found and confirmed this app's real tab/pivot convention is route-based (`app/domains/[slug]/layout.tsx` + `components/domain-hub-tabs.tsx`, `TabList` + `router.push` over real sub-routes, e.g. `app/product/layout.tsx` + `components/product-tabs.tsx` + a `vocabulary/` sub-route from Task 1.1's own commit `e6bdc22`), so mirror that exactly: `/competitive-landscape` (by-competitor, default) and `/competitive-landscape/by-pillar` as sub-routes, not `?view=`. `domain` (optional) stays a query-param *filter* layered on top of whichever route is active, since it's an orthogonal narrowing, not a mutually-exclusive view — reuse whatever domain-filter logic `app/domains/[slug]/competitors/page.tsx` already applies today.
 
 - [ ] **Step 1:** `grep -rn 'href="/competitors\|href="/feature-map' apps/ecosystem/app apps/ecosystem/components` and list every hit.
 - [ ] **Step 2:** Read `app/competitors/page.tsx`, `app/feature-map/page.tsx`, and `app/domains/[slug]/competitors/page.tsx` in full to confirm they really do call the same underlying matrix component with only different axis/filter arguments (the IA audit already found this from source, but re-confirm the exact call signatures before merging).
-- [ ] **Step 3:** Build `components/competitive-landscape-view.tsx`: a client component holding `view` and `domain` as URL search-param-backed state (match this app's existing pattern for URL-backed toggle state — check `app/domains/[slug]/dissect/page.tsx` or `app/scorecard/page.tsx` for precedent before inventing one), rendering the by-competitor body when `view=competitor`, the by-pillar body when `view=pillar`, each optionally filtered to `domain`.
+- [ ] **Step 3:** Build the pivot as real route segments per the Interfaces note above (mirroring `app/product/layout.tsx` + `components/product-tabs.tsx` from Task 1.1, commit `e6bdc22`) — `app/competitive-landscape/layout.tsx` + a tab component + `app/competitive-landscape/by-pillar/page.tsx`, not a client-side `?view=` toggle. `domain` stays a `?domain=` query param read the normal Next.js way (searchParams) inside whichever route is active.
 - [ ] **Step 4:** Create `app/competitive-landscape/page.tsx` wiring the above, defaulting to `view=competitor` with no domain filter (matches today's `/competitors` default).
-- [ ] **Step 5:** Update `app/domains/[slug]/competitors/page.tsx`: strip the full matrix render, add a short summary (reuse this domain's existing threat-level competitor list at the top of the page — keep that part, it's genuinely domain-specific and not duplicated elsewhere) plus the link to `/competitive-landscape?view=pillar&domain={slug}`.
+- [ ] **Step 5:** Update `app/domains/[slug]/competitors/page.tsx`: strip the full matrix render, add a short summary (reuse this domain's existing threat-level competitor list at the top of the page — keep that part, it's genuinely domain-specific and not duplicated elsewhere) plus the link to `/competitive-landscape/by-pillar?domain={slug}`.
 - [ ] **Step 6:** Update every link found in Step 1 to the new URL shape.
 - [ ] **Step 7:** Update sidebar nav: delete `Feature map` and `Competitor matrix`, add one `Competitive landscape` row.
 - [ ] **Step 8:** Delete `app/competitors/page.tsx` and `app/feature-map/page.tsx`.
@@ -74,16 +74,16 @@
 ### Task 1.3: Merge Crosswalk + Vocabulary glossary into one "Standards & glossary" page
 
 **Files:**
-- Create: `app/standards/page.tsx` (replaces `app/crosswalk/page.tsx` and `app/synthesis/vocabulary/page.tsx`)
+- Create: `app/standards/layout.tsx` + `app/standards/page.tsx` (Coverage map, default route) + `app/standards/glossary/page.tsx` (replaces `app/crosswalk/page.tsx` and `app/synthesis/vocabulary/page.tsx`) — Task 1.1's implementer (commit `e6bdc22`) confirmed this app's real tab convention is route-based (`layout.tsx` + a tab-bar component + real sub-routes, `TabList`/`router.push`, not a client-side query-param toggle or same-file tab components) — mirror `app/product/layout.tsx` + `components/product-tabs.tsx` exactly, don't reintroduce the query-param/same-file pattern this plan originally (incorrectly) described.
 - Modify: every `<Link href="/crosswalk"` or `href="/synthesis/vocabulary"` site-wide
 - Delete: `app/crosswalk/page.tsx`, `app/synthesis/vocabulary/page.tsx` once repointed
 
 **Interfaces:**
-- Consumes: `listStandardsCrosswalkDomains()` + `getStandardsCrosswalkForDomain()` (Coverage-map tab) and whatever `app/synthesis/vocabulary/page.tsx` reads today (Glossary tab) — reuse both bodies verbatim inside tabs, same pattern as Task 1.1
-- Produces: `/standards` with two tabs, `Coverage map` (default) and `Glossary` — rename the second tab's label from "Vocabulary" to "Glossary" everywhere it appears in copy, closing the System-vocabulary/Vocabulary-glossary name collision noted earlier this session
+- Consumes: `listStandardsCrosswalkDomains()` + `getStandardsCrosswalkForDomain()` (Coverage-map route) and whatever `app/synthesis/vocabulary/page.tsx` reads today (Glossary route) — reuse both bodies verbatim inside the two routes, same pattern as Task 1.1
+- Produces: `/standards` (Coverage map, default) and `/standards/glossary` — rename the second route's label from "Vocabulary" to "Glossary" everywhere it appears in copy, closing the System-vocabulary/Vocabulary-glossary name collision noted earlier this session
 
 - [ ] **Step 1:** `grep -rn 'href="/crosswalk\|href="/synthesis/vocabulary' apps/ecosystem/app apps/ecosystem/components` and list every hit — pay special attention to `components/crosswalk-view.tsx`'s own per-row links (`:167`, `:175` per the IA audit) into `/domains/{slug}/standards` and `/domains/{slug}/dissect`, which must keep working unchanged since those are the pairing the audit found already "earns its hop."
-- [ ] **Step 2:** Create `app/standards/page.tsx`; move the two source pages' JSX into `CoverageMapTab` and `GlossaryTab`.
+- [ ] **Step 2:** Create `app/standards/layout.tsx` (tab bar) + `app/standards/page.tsx` + `app/standards/glossary/page.tsx`; move the two source pages' JSX in as each route's body, matching Task 1.1's real structure.
 - [ ] **Step 3:** Update sidebar nav: delete `Crosswalk` and `Vocabulary glossary`, add one `Standards & glossary` row (keep it filed under the same group as `Competitive landscape` and `Go-to-market` — see Task 1.6).
 - [ ] **Step 4:** Update every link found in Step 1 (except the domain-hub-bound ones inside `crosswalk-view.tsx`, which move as-is into the new page).
 - [ ] **Step 5:** Delete `app/crosswalk/page.tsx` and `app/synthesis/vocabulary/page.tsx`.
