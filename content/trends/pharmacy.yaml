@@ -81,7 +81,7 @@ trends:
 
   - id: "site-capacity-preceptor-supply-crunch"
     trend: "Experiential site capacity and preceptor supply are structurally constrained"
-    detail: "Named barriers: programs competing for the same sites, site saturation, and preceptor workplace demands and burnout. This is the demand-side half of the existing gap at ACPE Standard 3, key element 3.5.b (affiliation agreements). Recorded 'unaddressed' rather than 'gap' only because exxat_status has no gap value — with no competitor on it either, it renders as a gap."
+    detail: "Named barriers: programs competing for the same sites, site saturation, and preceptor workplace demands and burnout. This is the demand-side half of ACPE Standard 3, key element 3.5.b (affiliation agreements): the paperwork half is rated Configure since the 2026-09-10 correction, but nothing addresses there being too few sites to sign agreements with. Recorded 'unaddressed' rather than 'gap' only because exxat_status has no gap value — with no competitor on it either, it renders as a gap."
     exxat_status: "unaddressed"
     exxat_ref: null
     addressed_by_competitors: []

@@ -36,11 +36,11 @@
 
 ## C. Design opportunities, prioritized
 
-Correcting a citation error found while building this doc: `accreditation/acpe.yaml`'s own 12 standards entries split **4 Transfer / 6 Configure / 2 Gap** — not the "4/5/3" cited in `scorecard/where-to-play.yaml` and `gap-analysis.md`. Priorities below use the actual per-element fit.
+`accreditation/acpe.yaml`'s own 12 standards entries split **4 Transfer / 7 Configure / 1 Gap**. *(Re-counted 2026-09-13: was 4/6/2 here until 3.5.b was corrected from Gap to Configure on 2026-09-10 — a discrepancy this doc previously flagged against `scorecard/where-to-play.yaml` and `gap-analysis.md`, both since corrected too. The file has since grown past these 12 entries; across all 20 the split is 4 Transfer / 13 Configure / 3 Gap.)* Priorities below use the actual per-element fit.
 
 | Priority | Element | Fit | Design need |
 |---|---|---|---|
-| 1 | 3.5.b — Affiliation agreements with practice facilities | **Gap** | Net-new: site-level contract/document repository. Compliance Management today only gates student-side items (immunizations, background checks) — no pillar, current or roadmap, names site-contract tracking. Multi-campus/distance programs add a per-state licensure dimension. |
+| 1 | 3.5.b — Affiliation agreements with practice facilities | Configure *(corrected 2026-09-13, was Gap — the ACPE accreditation record re-rated 3.5.b Configure on 2026-09-10)* | No longer the net-new build this row assumed, and no longer priority 1: a site-scoped Contract object ships today, with expiry alerts, cross-site linking, a routing checklist and a Contract Status column on the Placement Clearance Dashboard. What is left is Configure-tier — make an expiring contract block new scheduling at that site rather than only flag it, and add the per-state licensure dimension multi-campus/distance programs need on the site record. |
 | 2 | 7.5.b — Continuous compliance with accreditation standards | **Gap** | Net-new: the not-yet-built Accreditation Management pillar (roadmap Q3 2027) — no current pillar aggregates evidence against named standard numbers. This is the Liaison's #1 pain, repo-wide. |
 | 3 | 3.1.b — IPPE duration (hour categories) | Configure | Extend the placement engine's hour-tracking with a setting-category taxonomy (community/hospital/other) and two 75-hour sub-thresholds, simulation excluded. Open question: does the current engine aggregate by *custom category*, or only a single total per placement? |
 | 4 | 3.2.b/3.2.d — APPE duration + 4 required settings | Configure | Same engine, add the four-setting taxonomy and a per-student graduation-gating coverage check. |

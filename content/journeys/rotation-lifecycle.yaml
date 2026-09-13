@@ -104,14 +104,13 @@ stages:
       has lapsed," which this pass confirms does NOT exist (Contract Status is
       diagnostic-only) — that specific piece is a genuine, now-precise build gap under the
       Configure rating. ACPE Standard 3, Key Element 3.5.b (executed current agreement per
-      practice facility) — accreditation/acpe.yaml still rates this **Gap**, with a rationale
-      ("no pillar today models site-level compliance/contract documents") that this pass
-      shows is now out of date: a site-level contract/document repository does exist and
-      ships today. That file's rating has not been revised as part of this pass, but its
-      premise no longer holds — ACPE 3.5.b's real remaining shortfall is the same missing
-      scheduling-block behavior (and an unconfirmed per-state licensure dimension) the other
-      three accreditors also face, which argues for realigning it toward Configure rather
-      than Gap in a follow-up pass on acpe.yaml itself. CODA Standard 4, Element 4-6 (written
+      practice facility) — accreditation/acpe.yaml rated this **Gap** at the time of this
+      pass, with a rationale ("no pillar today models site-level compliance/contract
+      documents") that the pass showed to be out of date: a site-level contract/document
+      repository does exist and ships today. That file was revised on 2026-09-10 and now
+      rates 3.5.b **Configure**, in line with the other three accreditors — ACPE 3.5.b's
+      real remaining shortfall is the same missing scheduling-block behavior (and an
+      unconfirmed per-state licensure dimension) the other three also face. CODA Standard 4, Element 4-6 (written
       agreement for any site not owned by the sponsoring institution) — same resolution as
       COCA/LCME: Configure holds, caveat answered the same way.
     competitor_comparison: >
