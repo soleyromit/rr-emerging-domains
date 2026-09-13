@@ -803,7 +803,11 @@ function matchesDomain(served: string, domain: string): boolean {
   return a === b || a.includes(b) || b.includes(a);
 }
 
-function normalizePillarName(pillar: string): string {
+// Exported for lib/competitor-quadrant.ts, which counts the same canonical pillars off
+// the same teardown entries — a second copy of this regex would be the one place the
+// grid and the quadrant could disagree about whether "Exam Management (Prism roadmap
+// Q2 2027)" is the Exam Management pillar.
+export function normalizePillarName(pillar: string): string {
   // Strip a trailing "(Prism roadmap ...)"-style annotation some competitor files
   // bake into the pillar name itself, so the same pillar groups together across files.
   return pillar.replace(/\s*\([^)]*\)\s*$/, "").trim();

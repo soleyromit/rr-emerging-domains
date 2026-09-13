@@ -29,3 +29,20 @@ svg[class*="plot-"] {
   --plot-background: var(--color-background-popover);
   color: var(--color-text-primary);
 }
+
+/* Every point in the two quadrant plots (components/charts/competitor-quadrant-chart.tsx
+   and verdict-distribution-chart.tsx) is a real link — Plot's `href` channel wraps the
+   mark in an SVG <a>. An SVG anchor gets none of the affordances a browser gives an HTML
+   <a>: no pointer cursor, no focus ring. Both are added here rather than per chart
+   because a mark option cannot set either. Same unlayered, class-prefix-matched scoping
+   as the rule above, for the same cascade reason. The selector is the bare `a`, not
+   `a[href]`: Plot writes the link as the legacy `xlink:href` attribute (see applyHref in
+   @observablehq/plot's style.js), which not every engine reflects to an unprefixed
+   `[href]` attribute selector. */
+svg[class*="plot-"] a {
+  cursor: pointer;
+}
+svg[class*="plot-"] a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}

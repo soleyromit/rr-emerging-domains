@@ -13,6 +13,8 @@ import { TabList, Tab } from "@astryxdesign/core/TabList";
 const TABS = [
   { segment: "", label: "By competitor" },
   { segment: "by-pillar", label: "By pillar" },
+  // The third pivot (task 4.2): the same depth judgments placed on two named axes.
+  { segment: "by-quadrant", label: "By quadrant" },
 ];
 
 export function CompetitiveLandscapeTabs() {

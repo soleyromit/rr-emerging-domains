@@ -29,6 +29,7 @@ import {
   listDissectionDomains,
   listStandardsCrosswalkDomains,
   getStandardsCrosswalkForDomain,
+  getFlowsByStageForJourney,
 } from "@/lib/content";
 import { stripFileCitations, stripFileCitationsInMarkdown } from "@/lib/strip-file-citations";
 import {
@@ -262,6 +263,18 @@ function parseVerdictTable(body: string): StageVerdict[] {
     });
 }
 
+// The journey the verdict table's stages ARE — its rows are numbered 1-8 against the
+// same eight-stage rotation lifecycle, and the brief's own guardrail 4 says a lead claim
+// is earned from that stage's `flows/*.yaml` trace. That trace is what gives the
+// quadrant its two axes.
+const VERDICT_JOURNEY = "rotation-lifecycle";
+
+/** "3. Compliance clearance gate" -> 3. Null for a row the brief never numbered. */
+function verdictStageNumber(stage: string): number | null {
+  const m = stage.trim().match(/^(\d+)/);
+  return m ? Number(m[1]) : null;
+}
+
 /** Count of body rows in the first markdown table of a section. */
 function countTableRows(section?: MarkdownSection): number {
   if (!section) return 0;
@@ -372,6 +385,33 @@ export default function GoToMarketPage() {
   const headline = headlineSection ? extractLead(headlineSection.body, 1) : "";
   // Intro prose between the `## Verified lead / concede map` heading and the table.
   const verdictIntro = verdictSection ? verdictSection.body.split("\n|")[0].trim() : "";
+
+  // The quadrant's two axes, computed per stage off the element-level flow the verdict
+  // was verified against. Both counts read the SAME fields the journey and flow pages
+  // already count — `accreditation_citation` presence, and the
+  // gap/configure-needed half of the `gap_severity` vocabulary — so a coordinate here
+  // and a severity bar over on /journeys/rotation-lifecycle cannot disagree.
+  const verdictFlows = getFlowsByStageForJourney(VERDICT_JOURNEY);
+  const verdictPoints = verdicts.map((v) => {
+    const n = verdictStageNumber(v.stage);
+    const flow = n ? verdictFlows[n] : undefined;
+    const elements = flow?.steps?.flatMap((s) => s.elements ?? []) ?? [];
+    const gaps = elements.filter(
+      (e) => e.gap_severity === "gap" || e.gap_severity === "configure-needed"
+    ).length;
+    return {
+      stage: v.stage,
+      tone: v.tone,
+      verdict: v.verdict,
+      stageNumber: n ?? undefined,
+      elementCount: elements.length,
+      citedElements: elements.filter((e) => !!e.accreditation_citation).length,
+      gapShare: elements.length ? Math.round((gaps / elements.length) * 100) : undefined,
+      flowSlug: flow?.slug,
+      flowName: flow?.flow_name,
+    };
+  });
+  const plottedStages = verdictPoints.filter((p) => p.flowSlug && p.gapShare != null).length;
 
   return (
     <Stack gap={0}>
@@ -714,7 +754,18 @@ export default function GoToMarketPage() {
 
           {verdicts.length ? (
             <Section padding={6} dividers={["bottom"]}>
-              <VerdictDistributionChart rows={verdicts.map((v) => ({ stage: v.stage, tone: v.tone }))} />
+              <Stack gap={3}>
+                <Stack gap={1}>
+                  <Heading level={3}>Where each stage sits: accreditation pull against verified gap load</Heading>
+                  <Text type="supporting">
+                    Two named axes, both counted off the element-level flow each verdict was verified against —
+                    how many of that stage&apos;s elements carry an accreditation citation, and what share of them
+                    are still rated a gap or configure-needed. {plottedStages} of {verdicts.length} stages are
+                    placed; the colour is the brief&apos;s own verdict.
+                  </Text>
+                </Stack>
+                <VerdictDistributionChart rows={verdictPoints} />
+              </Stack>
             </Section>
           ) : null}
 
