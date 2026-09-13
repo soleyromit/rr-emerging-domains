@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState, type ReactNode } from "react";
-import { Table, pixel, proportional } from "@astryxdesign/core/Table";
+import { useCallback, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { Table, pixel, proportional, useTableStickyColumns } from "@astryxdesign/core/Table";
 import type { ColumnWidth, TableColumn, TableDensity } from "@astryxdesign/core/Table";
 import { Stack } from "@astryxdesign/core/Stack";
 import { Text } from "@astryxdesign/core/Text";
@@ -120,6 +120,18 @@ interface ComparisonMatrixBaseProps<RowId extends string, ColId extends string, 
   emptyCell?: ReactNode;
   /** @default "balanced" */
   density?: TableDensity;
+  /**
+   * The pinned row-label column paints an OPAQUE background so scrolled data
+   * cells can't show through it — but every non-pinned cell is transparent,
+   * so it inherits whatever the page's own container actually is. The design
+   * system's plugin default (`--color-background-card`) coincidentally
+   * matches one of `--color-background-surface` / `--color-background-muted`
+   * depending on color scheme (theme-neutral: card matches surface in light
+   * mode, muted in dark mode) — never both, and never reliably. Pass the real
+   * ambient background token here; there is no correct default that works
+   * for every caller in every color scheme, so this has none.
+   */
+  stickyRowBackground?: string;
 }
 
 interface ComparisonMatrixRigorousProps<RowId extends string, ColId extends string, TValue>
@@ -210,6 +222,7 @@ export function ComparisonMatrix<RowId extends string, ColId extends string, TVa
     renderCell,
     rowAxisHeader,
     rowAxisWidth = 220,
+    stickyRowBackground,
     emptyCell,
     density = "balanced",
   } = props;
@@ -266,6 +279,12 @@ export function ComparisonMatrix<RowId extends string, ColId extends string, TVa
     columnCount: 1 + columnAxis.length,
     renderPanel,
   });
+
+  // Pins the row-label column to the left edge on horizontal scroll — the
+  // matrix's own subject stays readable no matter how many column-axis
+  // entries scroll past it (Medicine's real 10-competitor grid is the case
+  // this exists for).
+  const stickyColumns = useTableStickyColumns<MatrixTableRow<RowId>>({ startKeys: ["__row_axis__"] });
 
   panelRendererRef.current = (item: MatrixTableRow<RowId>) => {
     if (!rowPanel) return null;
@@ -416,16 +435,24 @@ export function ComparisonMatrix<RowId extends string, ColId extends string, TVa
     })),
   ];
 
+  // A plain div, not a design-system wrapper: its only job is putting
+  // `--table-sticky-background` where the CSS custom property can cascade
+  // down into the pinned column's cells (a real DOM property lookup, not a
+  // StyleX-time value — `Table` itself has no plain `style` prop to carry
+  // this). Omitted entirely when the caller passes nothing, so the plugin's
+  // own default still applies exactly as it did before this prop existed.
   const table = (
-    <Table<MatrixTableRow<RowId>>
-      data={tableRows}
-      idKey="_id"
-      density={density}
-      textOverflow="wrap"
-      verticalAlign="top"
-      plugins={rowPanel ? { detailPanel } : undefined}
-      columns={columns}
-    />
+    <div style={stickyRowBackground ? ({ "--table-sticky-background": stickyRowBackground } as CSSProperties) : undefined}>
+      <Table<MatrixTableRow<RowId>>
+        data={tableRows}
+        idKey="_id"
+        density={density}
+        textOverflow="wrap"
+        verticalAlign="top"
+        plugins={rowPanel ? { detailPanel, stickyColumns } : { stickyColumns }}
+        columns={columns}
+      />
+    </div>
   );
 
   if (props.variant === "unverified") {

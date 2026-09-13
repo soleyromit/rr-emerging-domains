@@ -120,6 +120,11 @@ export function SalesReferenceMatrix({
         </Text>
         <ComparisonMatrix<string, string, boolean>
           variant="unverified"
+          // Matches this page's own container (app/domains/[slug]/dissect/page.tsx
+          // renders the deep-dive area inside a muted Section) so the sticky
+          // row-label column's opaque background doesn't show a lighter band
+          // against the scrolled data cells.
+          stickyRowBackground="var(--color-background-muted)"
           rowAxisHeader="Feature row (chart section)"
           rowAxisWidth={260}
           rowAxis={rowAxis}
