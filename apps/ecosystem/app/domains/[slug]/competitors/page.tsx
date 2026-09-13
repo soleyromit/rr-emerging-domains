@@ -8,6 +8,7 @@ import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { List, ListItem } from "@astryxdesign/core/List";
 import { ThreatBadge } from "@/components/fit-badge";
 import { FeatureDepthChart } from "@/components/charts/feature-depth-chart";
+import { FeatureTeardownMatrix } from "@/components/feature-teardown-matrix";
 import { CompetitorLogo } from "@/components/competitor-logo";
 import { humanizeSourceRef, stripFileCitations } from "@/lib/strip-file-citations";
 import { SentenceList } from "@/components/sentence-list";
@@ -31,13 +32,14 @@ export default async function DomainCompetitorsPage({ params }: { params: Promis
   const visibleCompetitors = landscapeEntry?.competitors.slice(0, VISIBLE_COMPETITOR_COUNT) ?? [];
   const overflowCompetitors = landscapeEntry?.competitors.slice(VISIBLE_COMPETITOR_COUNT) ?? [];
 
-  // The pillar × competitor table that used to sit under this chart is gone (Phase 6).
-  // What it showed was each competitor file's own feature_teardown, and every word of
-  // that — capability, depth, evidence, source — still renders in full on
-  // /competitors/{slug}, which each row of the list above already links to. The chart
-  // below keeps the cross-competitor comparison at depth-distribution level.
+  // The pillar × competitor cross-tab under the chart below is FeatureTeardownMatrix —
+  // the same feature_teardown data the retired hand-rolled DomainFeatureComparisonTable
+  // showed (Phase 6), re-expressed through the app's generic ComparisonMatrix, with the
+  // capability/evidence/source each cell's drill-down now carries that the old table
+  // never rendered. Every word of it also still renders in full on /competitors/{slug},
+  // which each row of the list above and each column header of the matrix links to.
   //
-  // The card that replaces it points at the Dissection tab's matrix, which is a
+  // The card below points at the Dissection tab's matrix, which is a
   // DIFFERENT lens (per-capability, hand-authored, with an explicit Exxat verdict) —
   // so its trigger copy states that lens's own real cell count rather than implying it
   // absorbed the teardown grid. It is only rendered where a manifest exists; the
@@ -120,10 +122,18 @@ export default async function DomainCompetitorsPage({ params }: { params: Promis
             />
           ) : (
             <Stack gap={4}>
+              {/* Two lenses on the same feature_teardown data, deliberately both kept:
+                  the chart answers "how does each competitor stack up overall" (one bar
+                  per competitor, pillar dimension collapsed), the matrix answers "who is
+                  ahead on THIS pillar" (the cross-tab the chart structurally cannot
+                  show). Chart first as the scan layer, grid below it for the row-by-row
+                  read, with each cell's capability/evidence/source one click deeper. */}
               <FeatureDepthChart domain={featureComparison} />
+              <FeatureTeardownMatrix comparison={featureComparison} />
               <Text type="supporting" size="sm" color="secondary">
-                Each competitor&apos;s pillar-by-pillar capability, depth rating and the evidence
-                behind it is on that competitor&apos;s own page, linked from the list above.
+                Each competitor&apos;s full pillar-by-pillar teardown — every capability, depth
+                rating and the evidence behind it — is also on that competitor&apos;s own page,
+                linked from each column header and from the list above.
               </Text>
               {dissectionMatrix ? (
                 <ClickableCard href={dissectHref(slug)} label="Dissection">
