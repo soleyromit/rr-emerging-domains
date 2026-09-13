@@ -21,7 +21,7 @@ import { Takeaway } from "@/components/takeaway";
 //
 // This is a THIRD panel mechanism in this codebase and deliberately not a unification
 // of the other two. lib/table-detail-panel.tsx opens a full-width row under a Table
-// row; ComparisonMatrix's rowPanel/rowPanelTakeaway open one under a matrix row. Both
+// row; ComparisonMatrix's rowPanel + Fact/Impact/Act slots open one under a matrix row. Both
 // are about a ROW of a grid and both hook into a table's own layout. This one is about
 // a NODE of a graph, has no table to insert itself into, and is rendered by ordinary
 // composition. Nothing would be shared by merging them except the word "panel".

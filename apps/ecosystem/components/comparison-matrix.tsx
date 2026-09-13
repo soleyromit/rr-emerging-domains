@@ -8,6 +8,10 @@ import { Text } from "@astryxdesign/core/Text";
 import { Link } from "@astryxdesign/core/Link";
 import { Badge } from "@astryxdesign/core/Badge";
 import { Divider } from "@astryxdesign/core/Divider";
+// The design system's own "is there anything here to render" test — the same one
+// Banner uses to decide whether it has a description at all. Imported rather than
+// re-implemented so a slot's idea of empty and a Banner's cannot drift apart.
+import { isRenderable } from "@astryxdesign/core/utils";
 import { useTableDetailPanel } from "@/lib/table-detail-panel";
 
 // A generic row × column comparison matrix with a per-cell drill-down panel.
@@ -32,6 +36,28 @@ import { useTableDetailPanel } from "@/lib/table-detail-panel";
 // intersection the reader actually clicked, so the panel can lead with that
 // cell's evidence. Clicking a different cell in an open row re-focuses the panel
 // instead of closing it; clicking the open cell again closes the row.
+//
+// The panel's CONTENT is a Fact → Impact → Act battlecard (the Klue structure):
+// the rated claim, then what follows from it, then the move it implies, as three
+// named slots a caller fills independently. Its MECHANISM is still expand-in-
+// place, and that half is deferred rather than declined. The intended upgrade is
+// Stripe's synced-panel pattern — a panel pinned beside the grid that re-points
+// as the reader moves between rows, so claim and proof stay on screen together
+// instead of one hiding behind a click. The design system has nothing to build
+// that on today:
+//   - Table's public API (Table/index.ts) exports twelve plugins and no side
+//     panel. `useTableRowExpansion` is full-width-below-row, like ours.
+//   - TablePlugin's row hook offers `afterRow` only (Table/types.ts) — a sibling
+//     `<tr>`. There is no beside-the-table slot to render into at all.
+//   - "Support Panels — Displays row details in a side panel" appears ONLY in
+//     Table.doc.mjs's `usage.anatomy` guidance prose, with no prop, plugin or
+//     export behind it. It documents an aspiration, not a capability.
+//   - Layout/LayoutPanel IS a real start/end panel primitive, but it is a page
+//     shell ("@position Page shell and app layout", height="fill" with its own
+//     internal scroll). Every caller here renders inside an AppShell page's
+//     Section; nesting a second shell to get a split view would take over the
+//     page's scrolling to lay out one content block.
+// Revisit when Table grows a real side-panel plugin.
 //
 // `variant` is a real constraint, not a style flag. `"unverified"` is for data
 // that is deliberately quarantined — present because someone asked for it, not
@@ -150,18 +176,40 @@ interface ComparisonMatrixRigorousProps<RowId extends string, ColId extends stri
    */
   rowPanel: (ctx: ComparisonMatrixPanelContext<RowId, ColId, TValue>) => ReactNode;
   /**
-   * The panel's own scan layer: the ONE verdict a reader needs without opening
-   * anything — typically a `<Takeaway>`, the way `StandardDetail` leads with
-   * "Exxat is Compliant — Prism fit: Transfer" before its Divider.
+   * FACT — the rated claim itself and nothing else: "Elentra is
+   * partially-meeting on Curriculum mapping", "Pharmacy scores 4/5". Typically
+   * a `<Takeaway>`, the way `StandardDetail` leads with "Exxat is Compliant —
+   * Prism fit: Transfer" before its Divider.
    *
-   * Rendered between the component-owned header row (row · column · value ·
-   * close) and the `DEEP DIVE` Divider, so a caller can complete the two-zone
-   * shape in its documented order instead of being forced to put its verdict
-   * below the Divider — which would inverse the very pattern
-   * UI-DENSITY-PATTERNS.md exists to enforce.
+   * First and most prominent of the panel's three scan-layer slots, all of
+   * which render between the component-owned header row (row · column · value ·
+   * close) and the `DEEP DIVE` Divider — so a caller completes the two-zone
+   * shape in UI-DENSITY-PATTERNS.md's documented order instead of being forced
+   * to put its verdict below the Divider.
+   */
+  rowPanelFact?: (ctx: ComparisonMatrixPanelContext<RowId, ColId, TValue>) => ReactNode;
+  /**
+   * IMPACT — what follows from the fact: why this rating matters to a reader
+   * who has to act on it. The supporting prose under the verdict, not a second
+   * statement of the verdict.
+   */
+  rowPanelImpact?: (ctx: ComparisonMatrixPanelContext<RowId, ColId, TValue>) => ReactNode;
+  /**
+   * ACT — the move this fact implies. Genuinely optional: no matrix in this app
+   * has authored next-step content per cell yet, and none of them fabricates
+   * one. A caller with nothing real to put here omits the prop entirely rather
+   * than returning a placeholder, and the slot's heading never renders.
+   */
+  rowPanelAct?: (ctx: ComparisonMatrixPanelContext<RowId, ColId, TValue>) => ReactNode;
+  /**
+   * @deprecated The undifferentiated single-block scan layer the three named
+   * slots above replaced. Renders unlabelled, above them, exactly where and how
+   * it always did — so the one caller still passing it renders unchanged.
    *
-   * Optional: a panel whose deep-dive sections speak for themselves can omit it
-   * and nothing about the layout changes.
+   * That caller is `feature-teardown-matrix.tsx`, which has had zero call sites
+   * since the Competitive-landscape merge and whose deletion is a parked
+   * decision for the plan owner, not this component's to make. This prop exists
+   * only to keep that dead file compiling; delete both together.
    */
   rowPanelTakeaway?: (ctx: ComparisonMatrixPanelContext<RowId, ColId, TValue>) => ReactNode;
   /** @default "Show detail" */
@@ -178,7 +226,14 @@ interface ComparisonMatrixUnverifiedProps<RowId extends string, ColId extends st
    * evidence to drill into; a panel here would imply otherwise.
    */
   rowPanel?: never;
-  /** Not available on this variant either — there is no panel to lead. */
+  /**
+   * None of the panel's scan-layer slots is available on this variant either —
+   * there is no panel for them to lead. Same structural reason as `rowPanel`:
+   * a Fact slot here would state a rating this data does not have.
+   */
+  rowPanelFact?: never;
+  rowPanelImpact?: never;
+  rowPanelAct?: never;
   rowPanelTakeaway?: never;
   /** The badge shown above the matrix. @default "Unverified" */
   unverifiedLabel?: string;
@@ -212,6 +267,30 @@ function warnOnDuplicate(isDuplicate: boolean, what: string) {
   console.warn(`ComparisonMatrix: ${what}. The later entry wins and the earlier one is dropped.`);
 }
 
+// One of the panel's three named scan-layer slots.
+//
+// The heading renders ONLY when the slot has content. A render prop returning
+// `null` for a particular row or cell is the normal case — no matrix in this app
+// has authored Act content yet, and a row-label panel often has no Impact — and
+// an "ACT" heading with nothing under it reads as content that failed to load
+// rather than content that was never claimed to exist. So the guard is on the
+// RENDERED node, not on whether the prop was passed: a caller that supplies the
+// prop and returns null for this cell still gets no heading.
+//
+// (An array of nulls would slip past `isRenderable`. Every caller returns a
+// single element or null, and Banner draws the same line in the same place.)
+function PanelSlot({ label, content, isLead }: { label: string; content: ReactNode; isLead?: boolean }) {
+  if (!isRenderable(content)) return null;
+  return (
+    <Stack gap={1}>
+      <Text type="label" size="xsm" color={isLead ? undefined : "secondary"}>
+        {label}
+      </Text>
+      {content}
+    </Stack>
+  );
+}
+
 export function ComparisonMatrix<RowId extends string, ColId extends string, TValue>(
   props: ComparisonMatrixProps<RowId, ColId, TValue>,
 ) {
@@ -228,6 +307,9 @@ export function ComparisonMatrix<RowId extends string, ColId extends string, TVa
   } = props;
 
   const rowPanel = props.variant === "rigorous" ? props.rowPanel : undefined;
+  const rowPanelFact = props.variant === "rigorous" ? props.rowPanelFact : undefined;
+  const rowPanelImpact = props.variant === "rigorous" ? props.rowPanelImpact : undefined;
+  const rowPanelAct = props.variant === "rigorous" ? props.rowPanelAct : undefined;
   const rowPanelTakeaway = props.variant === "rigorous" ? props.rowPanelTakeaway : undefined;
   const triggerLabel = props.variant === "rigorous" ? (props.detailTriggerLabel ?? "Show detail") : "";
   const closeLabel = props.variant === "rigorous" ? (props.detailCloseLabel ?? "Hide detail") : "";
@@ -323,10 +405,20 @@ export function ComparisonMatrix<RowId extends string, ColId extends string, TVa
           </Link>
         </Stack>
 
-        {/* The caller's own scan layer — the verdict — still ABOVE the Divider,
-            so the panel reads in UI-DENSITY-PATTERNS.md's documented order:
-            takeaway first, deep dive behind a divider. */}
+        {/* Deprecated single-block scan layer, unlabelled and unchanged — see
+            `rowPanelTakeaway`'s doc comment for the one dead caller it serves. */}
         {rowPanelTakeaway ? rowPanelTakeaway(panelCtx) : null}
+
+        {/* FACT → IMPACT → ACT: the caller's own scan layer, still ABOVE the
+            Divider so the panel reads in UI-DENSITY-PATTERNS.md's documented
+            order (verdict first, deep dive behind a divider) — but split into
+            three named slots rather than one undifferentiated block, so a
+            reader gets the claim, then what follows from it, then the move it
+            implies, in that order, without having to parse which is which.
+            Each slot disappears entirely when its caller has nothing for it. */}
+        <PanelSlot label="FACT" content={rowPanelFact?.(panelCtx)} isLead />
+        <PanelSlot label="IMPACT" content={rowPanelImpact?.(panelCtx)} />
+        <PanelSlot label="ACT" content={rowPanelAct?.(panelCtx)} />
 
         <Divider label="DEEP DIVE — OPTIONAL DETAIL BELOW" />
 

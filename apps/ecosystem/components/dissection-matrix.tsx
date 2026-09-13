@@ -23,7 +23,7 @@ import type { SourceRegistryEntry } from "@/lib/content";
 //
 // Why this file exists rather than the matrix being built inline in
 // app/domains/[slug]/dissect/page.tsx: ComparisonMatrix is a client component
-// configured with render props (renderCell / rowPanel / rowPanelTakeaway), and a
+// configured with render props (renderCell / rowPanel / rowPanelFact / …), and a
 // server component cannot pass functions across the RSC boundary. Same split
 // scorecard-matrix.tsx uses — the page does the YAML read and hands this wrapper
 // only serializable data.
@@ -252,17 +252,43 @@ export function DissectionMatrix({
           </Text>
         </Stack>
       )}
-      rowPanelTakeaway={({ row, column, value }) => {
+      // FACT — the rated claim on its own line: "Elentra is partially-meeting on
+      // Curriculum mapping". Exactly the sentence this panel always led with; the
+      // prose that used to sit under it inside the same Takeaway is now IMPACT.
+      rowPanelFact={({ row, column, value }) => {
         if (column && value) {
           return (
             <Takeaway
               status={ratingStatus(value.rating)}
               title={`${column.name} is ${standardsRatingLabel(value.rating).toLowerCase()} on ${row.label}`}
-            >
-              <Text type="supporting" maxLines={2}>
-                {evidenceLine(value)}
-              </Text>
-            </Takeaway>
+            />
+          );
+        }
+        const values = rowValues(row.id);
+        const rated = values.filter((v) => v.value).length;
+        return (
+          <Takeaway
+            status={rated === values.length ? "info" : "warning"}
+            title={`${rated} of ${values.length} columns are rated on ${row.label}`}
+          />
+        );
+      }}
+      // IMPACT — what the reader can do with the fact above, which on this matrix
+      // is governed by how far the evidence behind it actually reaches. A
+      // directional read of a vendor's own marketing page and a verdict a customer
+      // institution attests to are the same badge and very different ammunition;
+      // this is the slot that says which one a reader is holding.
+      //
+      // On the row-label panel it is the coverage consequence instead: which
+      // columns are silent, and that their silence is unresearched rather than a
+      // finding. Both are verbatim the prose that used to be the Takeaway's body —
+      // relocated, not rewritten.
+      rowPanelImpact={({ row, column, value }) => {
+        if (column && value) {
+          return (
+            <Text type="supporting" maxLines={2}>
+              {evidenceLine(value)}
+            </Text>
           );
         }
         const values = rowValues(row.id);
@@ -270,20 +296,21 @@ export function DissectionMatrix({
         const unrated = values.filter((v) => !v.value);
         const one = unrated.length === 1;
         return (
-          <Takeaway
-            status={rated === values.length ? "info" : "warning"}
-            title={`${rated} of ${values.length} columns are rated on ${row.label}`}
-          >
-            <Text type="supporting" maxLines={3}>
-              {rated === values.length
-                ? "Every column on this capability has an authored, sourced verdict. All of them are below."
-                : `${unrated.map((v) => v.name).join(", ")} ${one ? "is" : "are"} unrated here: nobody has researched ${
-                    one ? "that vendor" : "those vendors"
-                  } on this capability — not that ${one ? "it falls" : "they fall"} short.`}
-            </Text>
-          </Takeaway>
+          <Text type="supporting" maxLines={3}>
+            {rated === values.length
+              ? "Every column on this capability has an authored, sourced verdict. All of them are below."
+              : `${unrated.map((v) => v.name).join(", ")} ${one ? "is" : "are"} unrated here: nobody has researched ${
+                  one ? "that vendor" : "those vendors"
+                } on this capability — not that ${one ? "it falls" : "they fall"} short.`}
+          </Text>
         );
       }}
+      // No `rowPanelAct`: feature-comparison-matrix.yaml authors a rating, a
+      // rationale, a feature name, an evidence grade and sources per cell — it
+      // authors no next step, and this file is a transcription of that lens, not a
+      // second opinion on it. A "so go do X" written here would be the one sentence
+      // in the panel with no source behind it, sitting under a heading that reads
+      // as sourced. Omitted rather than stubbed, so the slot never renders.
       rowPanel={({ row, column, value }) => (
         <CollapsibleGroup
           // Remount when the panel re-focuses onto another cell: defaultValue is
