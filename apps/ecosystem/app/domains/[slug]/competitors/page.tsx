@@ -28,6 +28,22 @@ import { dissectHref } from "@/lib/dissection-links";
 // so an open High+Medium pair stays scannable.
 const OPEN_THREAT_BANDS = new Set(["high", "medium"]);
 
+// Band labels, highest first, for the scan-layer caption. The caption has to name the
+// bands that are actually on screen: on most domains the scan layer holds only High and
+// Medium and the rest of the list is collapsed below it, so a caption claiming "every
+// vendor" would sit over a partial grid (DO shows 1 of 6 vendors open).
+const BAND_LABELS: [key: string, label: string][] = [
+  ["high", "High"],
+  ["medium", "Medium"],
+  ["low", "Low"],
+];
+
+function joinPhrases(parts: string[]): string {
+  if (parts.length <= 1) return parts[0] ?? "";
+  if (parts.length === 2) return `${parts[0]} and ${parts[1]}`;
+  return `${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`;
+}
+
 export default async function DomainCompetitorsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const entry = getAccreditorTiers()?.domains.find((d) => matchDisciplineMeta(d.domain)?.slug === slug);
@@ -59,6 +75,30 @@ export default async function DomainCompetitorsPage({ params }: { params: Promis
   const anyOpenBand = ranked.some((c) => isOpenBand(c.threat));
   const visibleCompetitors = (anyOpenBand ? ranked.filter((c) => isOpenBand(c.threat)) : ranked).map(toEntry);
   const overflowCompetitors = (anyOpenBand ? ranked.filter((c) => !isOpenBand(c.threat)) : []).map(toEntry);
+
+  // The caption is written against what this domain actually renders open, not against the
+  // full researched set: only where nothing is collapsed can it claim to cover every
+  // vendor — true today on Medicine (6 vendors, none rated low), and on any domain whose
+  // whole list stays open through the !anyOpenBand branch above. Where a band IS collapsed
+  // (Pharmacy hides 2 of its 5, DO 1 of 6, Dentistry 1 of 3) it names the bands actually
+  // open and counts what is behind the toggle, so the sentence is true on every domain.
+  const logoNote =
+    "A vendor with no logo has no legitimately-sourced one yet, not a broken image.";
+  const shownBands = BAND_LABELS.filter(([key]) =>
+    visibleCompetitors.some((c) => c.threat?.toLowerCase().trim() === key),
+  ).map(([, label]) => label);
+  const gridCaption = !overflowCompetitors.length
+    ? `Every vendor researched as active in ${entry.domain}, banded by its threat rating here and shown with its own mark. ${logoNote}`
+    : // Suspended hyphen, so two bands read "High- and Medium-threat vendors".
+      `${
+        shownBands.length
+          ? `${joinPhrases(shownBands.map((l, i) => (i < shownBands.length - 1 ? `${l}-` : l)))}-threat`
+          : "The highest-rated"
+      } ${visibleCompetitors.length === 1 ? "vendor" : "vendors"} researched as active in ${
+        entry.domain
+      }, shown with ${visibleCompetitors.length === 1 ? "its" : "each vendor's"} own mark — the remaining ${
+        overflowCompetitors.length === 1 ? "one sits" : `${overflowCompetitors.length} sit`
+      } behind the toggle below. ${logoNote}`;
 
   // 2026-09-13 nav consolidation: the depth chart and the pillar × competitor
   // cross-tab (FeatureDepthChart + FeatureTeardownMatrix) that used to render in
@@ -113,7 +153,7 @@ export default async function DomainCompetitorsPage({ params }: { params: Promis
             <Stack gap={4}>
               <CompetitorLogoGrid
                 entries={visibleCompetitors}
-                groupCaption={`Every vendor researched as active in ${entry.domain}, banded by its threat rating here and shown with its own mark. A vendor with no logo has no legitimately-sourced one yet, not a broken image.`}
+                groupCaption={gridCaption}
               />
               {overflowCompetitors.length ? (
                 <Collapsible
