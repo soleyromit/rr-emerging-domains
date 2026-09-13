@@ -14,7 +14,7 @@
 > See [`synthesis/prism-positioning.md`](../prism-positioning.md) for the full override
 > note. *(`scorecard/where-to-play.yaml`)*
 
-> **Citation discrepancy worth fixing at the source:** `scorecard/where-to-play.yaml`, `synthesis/gap-analysis.md`, and `personas/discipline-pharmacy.yaml` all describe the ACPE pillar-fit split as "4 Transfer / 5 Configure / 3 Gap." Counting `accreditation/acpe.yaml`'s own 12 standards entries directly gives **4 Transfer / 6 Configure / 2 Gap** instead. This doc uses the ground-truth file's actual count; the downstream synthesis docs should be corrected to match, per `ARCHITECTURE.md`'s own rule that a lower layer is annotated, not silently overridden by an upper one.
+> **Re-counted 2026-09-13:** `accreditation/acpe.yaml`'s own 12 original standards entries split **4 Transfer / 7 Configure / 1 Gap** (was 4/6/2 here until 3.5.b was corrected from Gap to Configure on 2026-09-10). The file has since grown past these 12 entries; across all 20 the split is **4 Transfer / 13 Configure / 3 Gap**. This doc uses the ground-truth file's actual count, per `ARCHITECTURE.md`'s own rule that a lower layer is annotated, not silently overridden by an upper one.
 
 **Why now:** ACPE's Standards 2025 (effective for evaluations from fall 2025, superseding Standards 2016) landed in the same cycle ACPE retired AACP's AAMS platform for its own submission system, PHARMS — every accredited program has to re-map its evidence and re-learn where it's submitted, regardless of which vendor they're on. That's the moment switching cost looks smallest. *(`personas/discipline-pharmacy.yaml`, "switching_trigger")*
 

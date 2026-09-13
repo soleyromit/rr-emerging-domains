@@ -36,7 +36,7 @@
 
 ## C. Design opportunities, prioritized
 
-Correcting a citation error found while building this doc: `accreditation/acpe.yaml`'s own 12 standards entries split **4 Transfer / 7 Configure / 1 Gap** — not the "4/5/3" cited in `scorecard/where-to-play.yaml` and `gap-analysis.md`. *(Re-counted 2026-09-13: was 4/6/2 here until 3.5.b was corrected from Gap to Configure on 2026-09-10. The file has since grown past these 12 entries; across all 20 the split is 4 Transfer / 13 Configure / 3 Gap.)* Priorities below use the actual per-element fit.
+`accreditation/acpe.yaml`'s own 12 standards entries split **4 Transfer / 7 Configure / 1 Gap**. *(Re-counted 2026-09-13: was 4/6/2 here until 3.5.b was corrected from Gap to Configure on 2026-09-10 — a discrepancy this doc previously flagged against `scorecard/where-to-play.yaml` and `gap-analysis.md`, both since corrected too. The file has since grown past these 12 entries; across all 20 the split is 4 Transfer / 13 Configure / 3 Gap.)* Priorities below use the actual per-element fit.
 
 | Priority | Element | Fit | Design need |
 |---|---|---|---|
