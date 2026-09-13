@@ -44,10 +44,14 @@ interface StageVerdict {
   leadLine: string;
 }
 
-const BADGE_BY_TONE: Record<VerdictTone, "success" | "warning" | "red"> = {
+// Semantic variants only — `behind` is bad news on the same three-state scale as
+// `lead`/`hold`, so it takes the semantic `error` rather than the non-semantic `red`
+// tint it used to carry (which rendered lighter than every other bad-news badge in
+// this app and read as a weaker signal than it is).
+const BADGE_BY_TONE: Record<VerdictTone, "success" | "warning" | "error"> = {
   lead: "success",
   hold: "warning",
-  behind: "red",
+  behind: "error",
 };
 
 function stripInline(cell: string): string {

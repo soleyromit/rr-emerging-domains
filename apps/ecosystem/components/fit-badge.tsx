@@ -17,10 +17,14 @@ type BadgeVariant =
   | "teal"
   | "yellow";
 
+// `build` is the "neutral, not-a-verdict" slot in an otherwise semantic scale, so it
+// takes the semantic accent variant (`info` — Badge's `info` IS the accent color:
+// background `--color-accent`) rather than the non-semantic `blue` tint. Same slot
+// and same variant StatusBadge below gives "Roadmap".
 const FIT_VARIANT: Record<string, BadgeVariant> = {
   transfer: "success",
   configure: "warning",
-  build: "blue",
+  build: "info",
   gap: "error",
 };
 
@@ -30,11 +34,13 @@ export function FitBadge({ fit }: { fit?: string }) {
   return <Badge variant={key ? FIT_VARIANT[key] : "neutral"} label={fit} />;
 }
 
+// Same reasoning as FIT_VARIANT above: `prism-only` is the not-a-verdict slot, so it
+// carries the semantic accent variant (`info`) instead of the `blue` tint.
 const DEPTH_VARIANT: Record<string, BadgeVariant> = {
   ahead: "error",
   "at-parity": "warning",
   behind: "success",
-  "prism-only": "blue",
+  "prism-only": "info",
 };
 
 // "unknown" shows up as a real value in feature_teardown rows (the researcher
