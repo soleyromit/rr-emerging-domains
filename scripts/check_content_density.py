@@ -197,6 +197,22 @@ MARKET_PROGRAMS_CEILINGS = {
     "programs[].notes": (150, 300),
     "source_of_record.pii_policy": (300, 500),
 }
+# content/archetypes/*.yaml — added 2026-09-13 with the family itself, which holds only
+# _TEMPLATE.yaml today and ships ZERO real entries on purpose: the 2026-09-12 planning
+# session assigned university archetypes as strategy work and no research has produced
+# one. Wired up now so the first real entry is gated on arrival rather than retrofitted
+# — the same call DISSECTION_CEILINGS and MARKET_PROGRAMS_CEILINGS document above, and
+# the failure CONTENT-DENSITY.md's opening incident is about. `name` is the scannable
+# row label (the cells[].capability register); `description` the sourced paragraph
+# behind it (the gaps[].detail register); each `identifying_traits[]` entry one
+# checkable criterion (the evidence_note register, per entry — the decompose rule);
+# `gtm_approach` the stated move only (the counter_move register).
+ARCHETYPE_CEILINGS = {
+    "name": (120, 220),
+    "description": (300, 600),
+    "identifying_traits[]": (150, 300),
+    "gtm_approach": (200, 350),
+}
 # content/interviews/*.md FRONT-MATTER only — added to CONTENT-DENSITY.md 2026-09-11 with
 # the session schema, wired here 2026-09-11. The markdown body below the front-matter is a
 # Level 0 transcript and stays deliberately unceilinged; trimming a primary source destroys
@@ -2540,6 +2556,13 @@ def main():
         if f.name.startswith("_TEMPLATE"):
             continue
         check_file(f, MARKET_PROGRAMS_CEILINGS, results)
+    # content/archetypes/ holds only _TEMPLATE.yaml today, so this loop measures nothing
+    # yet — enumerated anyway, because a declared ceiling that main() never walks is the
+    # state content/gtm/ was in on 2026-09-11: documentation that could not fire.
+    for f in sorted((CONTENT / "archetypes").glob("*.yaml")):
+        if f.name.startswith("_TEMPLATE"):
+            continue
+        check_file(f, ARCHETYPE_CEILINGS, results)
     sources_file = CONTENT / "sources" / "registry.yaml"
     if sources_file.exists():
         check_file(sources_file, SOURCES_CEILINGS, results)

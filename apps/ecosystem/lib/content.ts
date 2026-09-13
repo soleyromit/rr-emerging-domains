@@ -154,6 +154,37 @@ export function getCompetitor(slug: string): Competitor | null {
   return listCompetitors().find((c) => c.slug === slug) ?? null;
 }
 
+/** Which side of the Exxat footprint an archetype sits on. Spelled `exxat_` rather than
+ * `exact_`: the 2026-09-12 Granola transcript this family comes from mis-hears "Exxat"
+ * as "Exact" throughout, and letting that reach a schema key would freeze a recognizer
+ * artifact into the content model — the same defect the closest_analog work was reviewed
+ * for one commit earlier. Typed as a union plus `string` the way `prism_fit` and
+ * `exxat_compliance` above are, for the identical reason: the value is read straight from
+ * YAML and is not re-validated here, so a typo must render as itself rather than be
+ * silently narrowed to a legal value. */
+export type ArchetypeFootprint = "current-customer" | "competitor-customer" | "unengaged" | string;
+
+export interface UniversityArchetype {
+  name: string;
+  description: string;
+  exxat_footprint: ArchetypeFootprint;
+  identifying_traits: string[];
+  gtm_approach: string;
+  /** A Level 0.5 source id or a public URL — see content/archetypes/_TEMPLATE.yaml. */
+  source: string;
+}
+
+/** content/archetypes/*.yaml — university segments by vendor footprint, for GTM
+ * targeting. RETURNS AN EMPTY ARRAY TODAY, and that is the correct state: the directory
+ * holds only _TEMPLATE.yaml, because the 2026-09-12 planning session assigned this work
+ * and no research has since produced an archetype. readYamlDir already skips _TEMPLATE*
+ * files and returns [] for a directory it cannot find, so nothing here needs a special
+ * case for empty — /archetypes renders an honest empty state off the same length check
+ * every other index page uses. */
+export function listArchetypes(): UniversityArchetype[] {
+  return readYamlDir<UniversityArchetype>("archetypes").map((e) => e.data);
+}
+
 export interface AccreditationStandard {
   element_id: string;
   element_title?: string;

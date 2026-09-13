@@ -1,0 +1,76 @@
+# TEMPLATE — copy this file to content/archetypes/<slug>.yaml for one university
+# archetype. Files beginning with _TEMPLATE are skipped by this repo's YAML directory
+# readers and by scripts/check_content_density.py, so this file is documentation —
+# never rendered, never checked as content.
+#
+# THIS DIRECTORY IS DELIBERATELY EMPTY OF REAL ENTRIES.
+# The archetype work was assigned, not done. The 2026-09-12 pharmacy domain planning
+# session (content/interviews/2026-09-12-romit-ruchi-pharmacy-domain-planning.md,
+# source id interview-romit-ruchi-pharmacy-domain-planning-2026-09-12) records it as a
+# consultant-side deliverable — "Archetype universities against the Exxat footprint.
+# Taken by the consultant side explicitly 'because that's something will be part of
+# strategy.'" — and nothing since has produced an archetype. An example entry written
+# to make /archetypes look populated would be indistinguishable, once committed, from a
+# researched one; the app therefore renders an honest empty state instead. The first
+# real entry arrives with this schema and these ceilings already in force.
+#
+# WHAT THIS FAMILY IS FOR
+# Level 2 — a re-cut. See content/ARCHITECTURE.md for the citation-level model. An
+# archetype is a segmentation of real institutions by the one axis the 2026-09-12
+# session named: whether Exxat, a competitor, or nobody is already inside the
+# university. It cites down — at Level 0/0.5 sources and at the Level 1 registries
+# (market/programs/*.yaml for the named institutions behind a segment,
+# competitors/*.yaml for a footprint claim about a vendor). It never cites sideways at
+# another Level 2 file, and never at content/gtm/, which holds the work assignment
+# rather than the finding.
+#
+# NOT THE SAME AS content/personas/. personas/discipline-*.yaml is the *discipline*
+# program archetype ("what a PharmD program looks like"); this family segments
+# *institutions* by vendor footprint for targeting. If what you have is a claim about
+# how a discipline's programs work, it belongs there, not here.
+
+name: "Example archetype name"        # the scannable label a reader skims down a list,
+                                      # e.g. the institution shape plus the footprint
+                                      # axis. 120 soft / 220 hard.
+
+description: "One paragraph saying what this segment actually is and why it groups together."
+                                      # 300 soft / 600 hard. The argument for the
+                                      # segment, not a restatement of the traits below.
+
+# Which side of the Exxat footprint this segment sits on. Exactly one of the three —
+# not a free string, and not a hedge. "unengaged" means no clinical-education platform
+# of the kind Prism competes with is known to be in place; if which vendor is in place
+# is unknown, that is a research gap to record in the entry's own `description`, not a
+# fourth enum value.
+#
+# NAMED `exxat_`, NOT `exact_`. The 2026-09-12 Granola recognizer renders "Exxat" as
+# "Exact" throughout, and that artifact reached authored content once already — it was
+# a review finding on the task immediately before this one, fixed in the same block of
+# work. Every other schema in this repo spells the company's own name the company's way
+# (`exxat_opportunity` in competitors/, `exxat_compliance` in accreditation/,
+# `exxat_cells` in lenses/feature-comparison-matrix.yaml), and a field name is authored
+# content that outlives the transcript it came from.
+exxat_footprint: "current-customer"   # current-customer | competitor-customer | unengaged
+
+# The decomposed test for "is a given university in this segment?" — one criterion per
+# entry, each independently checkable against a source. 150 soft / 300 hard EACH, which
+# is the decompose-before-you-write-an-essay rule from content/CONTENT-DENSITY.md: a
+# trait that needs a paragraph is really two traits.
+identifying_traits:
+  - "One checkable criterion."
+  - "Another checkable criterion."
+
+gtm_approach: "The stated move for this segment — one sentence with a subject and a mechanism."
+                                      # 200 soft / 350 hard. The move only, never the
+                                      # justification for it: that is `description` and
+                                      # the source behind it.
+
+# Where this archetype comes from. A source id from any of the five Level 0.5 homes
+# (sources/registry.yaml, help-center.yaml, playbooks.yaml, support-tickets/*.yaml, or
+# an interviews/*.md front-matter `id:`), or a public URL. Not free prose naming a
+# meeting — an unresolvable citation reads as sourced while pointing at nothing.
+#
+# Left as an unmistakable placeholder rather than a real id on purpose: a plausible
+# default is the one a copied file keeps, and a segment silently citing whichever
+# session happened to sit in the template is worse than one that fails to resolve.
+source: "<a Level 0.5 source id, or https://...>"

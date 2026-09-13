@@ -20,6 +20,10 @@ const SECTIONS = [
     items: [
       { href: "/feature-map", label: "Feature map" },
       { href: "/competitors", label: "Competitor matrix" },
+      // Listed here while it holds no entries, deliberately: the page states its own
+      // absence and cites the session that planned the work, which is only readable if
+      // the page is reachable. A nav item is not a claim that research exists behind it.
+      { href: "/archetypes", label: "University archetypes" },
     ],
   },
   {
