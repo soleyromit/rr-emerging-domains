@@ -7,6 +7,7 @@ import { Heading } from "@astryxdesign/core/Heading";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList";
 import { PageHeader } from "@/components/page-header";
+import { Takeaway } from "@/components/takeaway";
 import { firstSentence } from "@/lib/text";
 import { listRolePersonas } from "@/lib/content";
 
@@ -39,10 +40,18 @@ export default function RolesIndexPage() {
           <EmptyState title="No role personas yet" description="Populates as research completes." />
         ) : (
           <Stack gap={3}>
-            <Text type="supporting" size="xsm" color="secondary">
-              Every role file&apos;s &quot;applies across domains&quot; list is identical (DO/Pharmacy/Dentistry/Medicine)
-              and predates the 12-discipline expansion — a content backlog item, not filtered or corrected here.
-            </Text>
+            {/* A warning Takeaway, not small gray supporting text: this is a known,
+                named defect in the data on the page below it — the same category as
+                sales-reference-matrix.tsx's "not evidence" quarantine notice, which
+                carries a warning Banner. A caveat a reader can skim past is a caveat
+                that didn't land, so it gets that same weight. */}
+            <Takeaway
+              status="warning"
+              title={`Every role file's "applies across domains" list is stale`}
+            >
+              All of them read the same four (DO/Pharmacy/Dentistry/Medicine) and predate the
+              12-discipline expansion — a content backlog item, not filtered or corrected here.
+            </Takeaway>
             <Grid columns={{ minWidth: 320 }} gap={4}>
               {roles.map((r) => (
                 <ClickableCard key={r.slug} href={`/roles/${r.slug}`} label={r.role_name}>

@@ -462,7 +462,13 @@ export function ComparisonMatrix<RowId extends string, ColId extends string, TVa
             variant is that a reader cannot mistake this matrix for the sourced
             one while scanning it. */}
         <Stack direction="horizontal" gap={2} vAlign="center" wrap="wrap">
-          <Badge variant="warning" label={props.unverifiedLabel ?? "Unverified"} />
+          {/* `neutral`, not `warning`: this is the SAME word DepthBadge already renders
+              for its `unknown` depth (fit-badge.tsx), and that one is neutral gray. Two
+              "Unverified" pills at two different severities is a collision — a reader
+              can't tell whether the amber one means something worse. The loud signal on
+              this variant is the warning Banner its caller wraps it in (see
+              sales-reference-matrix.tsx), not a second amber pill inside it. */}
+          <Badge variant="neutral" label={props.unverifiedLabel ?? "Unverified"} />
           {props.unverifiedNote ? (
             <Text type="supporting" size="xsm" color="secondary" maxLines={3}>
               {props.unverifiedNote}
