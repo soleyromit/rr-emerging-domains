@@ -195,22 +195,13 @@ export default async function DomainDissectPage({
             </Text>
           </Stack>
 
-          {/* `info`, unconditionally. This banner restates a COUNT — the same
-              `{q.answered} / {q.total}` the MetadataList repeats immediately below it —
-              so it is informational, not a verdict. It used to compute a severity
-              (success / warning / error) off that count, and the `warning` branch (the
-              common one: some questions answered, some not) painted this banner the
-              same amber as the genuine quarantine notice further down this same page
-              (components/sales-reference-matrix.tsx renders the sales chart inside a
-              `Banner status="warning"` titled "internal sales collateral, not
-              evidence"). Two amber banners on one tab, one a progress stat and one a
-              don't-trust-this-data flag, gave the reader no way to tell which was
-              which. Nothing is lost by dropping the severity: the counts themselves,
-              including which questions are still at stub, are in the title and
-              description below. Same reasoning and same variant as the stat Takeaway
-              in components/scorecard-matrix.tsx. */}
+          {/* The middle (partway) branch was `warning`, which collided with the genuine
+              quarantine notice further down this same page (components/sales-reference-matrix.tsx
+              renders the sales chart in a `Banner status="warning"`): one amber meant
+              "research is partway done", the other "do not trust this data". It is now `info`.
+              `success` (complete) and `error` (empty shell) are kept — neither collided. */}
           <Takeaway
-            status="info"
+            status={q.unstarted.length === 0 ? "success" : q.answered === 0 ? "error" : "info"}
             title={`${q.answered} of ${q.total} dissection questions have partial-or-better coverage`}
           >
             <Text type="supporting" maxLines={3}>
