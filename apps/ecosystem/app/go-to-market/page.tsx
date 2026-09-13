@@ -76,6 +76,20 @@ const ALL_FOUR_DOMAINS = ["DO", "Pharmacy", "Dentistry", "Medicine"];
 
 const PATTERN_SECTION_PREFIX = "4.";
 const EXEC_SUMMARY_SECTION_PREFIX = "1.";
+// The gap-analysis document's own §0 is not rendered at all — unlike §4 and §1, which
+// are excluded from the deep-dive stack only because this page renders them in a richer
+// shape higher up. §0's entire content is a four-domain Transfer/Configure/Gap table
+// plus the two conclusions drawn from it, and BOTH went stale against the accreditation
+// files they cite: the table still totals 10/32/14 (the real files now sum to
+// 10/33/13, ACPE having grown to 4/13/3), and its first conclusion asserts COCA is
+// "the only one where Gaps outnumber Configures (7 of 12)" when coca.yaml rates 7
+// Configure against 5 Gap — the opposite. Everything §0 was for is now computed live
+// from those same files in this step's own counts, chart and Takeaway above, so
+// rendering it verbatim put a false claim on the page directly underneath the correct
+// figure. The source document keeps its §0 as written (it carries its own dated
+// correction history, which ARCHITECTURE.md's annotate-don't-rewrite rule protects);
+// this page just stops presenting a superseded tally as current.
+const SUPERSEDED_SECTION_PREFIX = "0. The numbers first";
 // Deep-dive sections start closed, matching /product and /standards/glossary.
 const OPEN_BY_DEFAULT: string[] = [];
 
@@ -382,7 +396,8 @@ export default function GoToMarketPage() {
   const gapSections = gapContent ? splitSectionsAtLevel(gapContent, 2) : [];
   const patternSection = gapSections.find((s) => s.title.startsWith(PATTERN_SECTION_PREFIX));
   const execSummarySection = gapSections.find((s) => s.title.startsWith(EXEC_SUMMARY_SECTION_PREFIX));
-  const otherGapSections = gapSections.filter((s) => s !== patternSection);
+  const supersededGapSection = gapSections.find((s) => s.title.startsWith(SUPERSEDED_SECTION_PREFIX));
+  const otherGapSections = gapSections.filter((s) => s !== patternSection && s !== supersededGapSection);
   const patternSubsections = patternSection ? splitSectionsAtLevel(patternSection.body, 3) : [];
   const patterns = patternSubsections.map(parsePattern);
   const letteredPatterns = patterns.filter((p) => p.letter);
@@ -694,10 +709,17 @@ export default function GoToMarketPage() {
           <Heading level={3}>The full gap analysis, section by section</Heading>
           {gapContent ? (
             <>
+              {/* The old blanket "nothing is summarized away" no longer held once §0
+                  stopped rendering, and a page whose fix was "don't show a stale tally"
+                  must not replace it with a stale promise. It now says which section is
+                  withheld and why, so a reader who wants §0's history knows the file is
+                  where to find it. */}
               <Text type="supporting">
-                Nothing is summarized away — each section below is the verbatim source text from{" "}
-                <code>content/synthesis/gap-analysis.md</code>. This is the hand-authored half of this step; the
-                counts above it are computed.
+                Each section below is the verbatim source text from{" "}
+                <code>content/synthesis/gap-analysis.md</code> — nothing is summarized away, with one
+                exception: that document&apos;s §0 tally is superseded by the live counts at the top of this
+                step and is not repeated here. This is the hand-authored half of this step; the counts above
+                it are computed.
               </Text>
               <CollapsibleGroup
                 type="multiple"

@@ -17,7 +17,7 @@ A positioning brief, not a research document — every claim here is downstream 
 
 ## Lead domain: Pharmacy (confirmed) — DO is the scorecard's analytical pick
 
-**Pharmacy is the domain actually being taken to market first.** Its own case, independent of the override: highest Prism pillar-fit ratio of any domain researched (4 Transfer / 12 Configure / 4 Gap across 20 researched ACPE elements — the smallest real build of the four, updated 2026-09-10 from an earlier 12-element pass), a live switching-cost window as ACPE retired AAMS for its own PHARMS submission platform in the same cycle Standards 2025 took effect, and the second-highest weighted score (4.05, 0.35 behind DO) on the scorecard itself.
+**Pharmacy is the domain actually being taken to market first.** Its own case, independent of the override: highest Prism pillar-fit ratio of any domain researched (4 Transfer / 13 Configure / 3 Gap across 20 researched ACPE elements — the smallest real build of the four, updated 2026-09-10 from an earlier 12-element pass; split re-counted 2026-09-13 directly from `accreditation/acpe.yaml`, which was off by one in the Configure and Gap columns), a live switching-cost window as ACPE retired AAMS for its own PHARMS submission platform in the same cycle Standards 2025 took effect, and the second-highest weighted score (4.05, 0.35 behind DO) on the scorecard itself.
 
 **DO's case is real and still the scorecard's own top pick (4.40 weighted vs. Pharmacy 4.05, Medicine 3.85, Dentistry 2.75, `scorecard/where-to-play.yaml`)** — worth knowing for the DO fast-follow pitch once Pharmacy is in market. It's the only domain scoring 5/5 on both accreditation pressure *and* incumbent weakness simultaneously:
 
