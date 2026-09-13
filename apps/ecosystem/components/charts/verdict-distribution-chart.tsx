@@ -30,8 +30,10 @@ export interface VerdictRow {
   stageNumber?: number;
   /** Verified elements in this stage's element-level flow file. */
   elementCount?: number;
-  /** Of those, how many carry an `accreditation_citation`. The x axis. */
+  /** Of those, how many actually name an accreditation standard. Shown, not plotted. */
   citedElements?: number;
+  /** `citedElements` as a percentage of `elementCount`. The x axis. */
+  citedShare?: number;
   /** Of those, the percentage rated `gap` or `configure-needed`. The y axis. */
   gapShare?: number;
   /** The flow this stage was verified against — every point links to it. */
@@ -54,65 +56,95 @@ export interface VerdictRow {
 // components/flow-detail.tsx and lib/content.ts's use-case index already count. Nothing
 // is scored, weighted, or invented here.
 //
+// Both axes are SHARES of the same denominator, deliberately. An earlier version plotted
+// the raw count of cited elements, which made the x position track how many elements a
+// flow file happens to have — a 104-element flow outscored a 66-element one on volume
+// alone, so the divider mostly separated thoroughly-annotated flows from thinly-annotated
+// ones rather than heavily-cited stages from lightly-cited ones. Normalising removes that
+// confound; it does not turn either axis into a business score, which is why the region
+// names below describe the two measurements rather than prescribing an action.
+//
 // Deliberately NOT shared with the competitive-landscape quadrant
 // (components/charts/competitor-quadrant-chart.tsx): different content, different axes,
 // different regions. They share a visual grammar, not an implementation.
 // ---------------------------------------------------------------------------
 
+// Keyed the way lib/competitor-quadrant-model.ts keys its regions: the assignment
+// function returns a key from this union, never a display string, so renaming a region
+// is one edit and a typo is a type error rather than a point that silently belongs to no
+// region.
+type VerdictRegion = "cited-unbuilt" | "cited-covered" | "less-cited-unbuilt" | "less-cited-covered";
+
 interface Region {
+  key: VerdictRegion;
   name: string;
   meaning: string;
   fill: string;
   corner: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 }
 
+// The names describe the two measured shares and nothing beyond them. An earlier pass
+// called these "Fund the build" and "Lead with this" — business verbs the axes cannot
+// carry, since one of them is "how much of this flow file cites a standard" and the
+// other is Prism's own gap rating. Which stage to fund is a decision the row underneath
+// supports; the quadrant only says where the two percentages put it.
 const REGIONS: Region[] = [
   {
-    name: "Fund the build",
-    meaning: "Accreditors cite this stage heavily and most of its verified elements are a gap or need configuring.",
+    key: "cited-unbuilt",
+    name: "Cited and unbuilt",
+    meaning:
+      "Most of this stage's elements name an accreditation standard, and most are still rated a gap or configure-needed.",
     fill: "var(--color-background-red)",
     corner: "top-right",
   },
   {
-    name: "Lead with this",
-    meaning: "Accreditors cite it heavily and Prism already covers most of it — the safest ground in the room.",
+    key: "cited-covered",
+    name: "Cited and covered",
+    meaning:
+      "Most elements name a standard and most are already covered — the best-evidenced ground, subject to the row's own caveats.",
     fill: "var(--color-background-green)",
     corner: "bottom-right",
   },
   {
-    name: "Quiet debt",
-    meaning: "Fewer citations, but most elements still unbuilt — real work, low external pressure so far.",
+    key: "less-cited-unbuilt",
+    name: "Less cited, unbuilt",
+    meaning:
+      "A smaller share cites a standard, but most elements are still a gap or need configuring.",
     fill: "var(--color-background-yellow)",
     corner: "top-left",
   },
   {
-    // Named for what the two axes actually measure, not for a business conclusion:
-    // fewer cited elements is partly how deeply the stage has been verified, so
-    // "low stakes" would assert more than the data carries.
-    name: "Lower pressure",
-    meaning: "Fewer cited elements and less of it missing — lower measured pressure on either axis.",
+    key: "less-cited-covered",
+    name: "Less cited, covered",
+    meaning: "A smaller share cites a standard and less of it is missing — lower reading on both measures.",
     fill: "var(--color-background-muted)",
     corner: "bottom-left",
   },
 ];
+
+const REGION_NAME = Object.fromEntries(REGIONS.map((r) => [r.key, r.name])) as Record<
+  VerdictRegion,
+  string
+>;
 
 interface Point extends VerdictRow {
   x: number;
   y: number;
   href: string;
   label: string;
-  region: string;
+  region: VerdictRegion;
+  regionName: string;
 }
 
 const GAP_DIVIDER = 50;
 
-function regionFor(x: number, y: number, xDivider: number): string {
-  const heavy = x >= xDivider;
+function regionFor(x: number, y: number, xDivider: number): VerdictRegion {
+  const cited = x >= xDivider;
   const gappy = y >= GAP_DIVIDER;
-  if (heavy && gappy) return "Fund the build";
-  if (heavy) return "Lead with this";
-  if (gappy) return "Quiet debt";
-  return "Lower pressure";
+  if (cited && gappy) return "cited-unbuilt";
+  if (cited) return "cited-covered";
+  if (gappy) return "less-cited-unbuilt";
+  return "less-cited-covered";
 }
 
 export function VerdictDistributionChart({ rows }: { rows: VerdictRow[] }) {
@@ -120,45 +152,55 @@ export function VerdictDistributionChart({ rows }: { rows: VerdictRow[] }) {
     return <EmptyState title="No verdicts parsed yet" />;
   }
 
-  // A stage is plottable only when it has a real element-level flow behind it. One
-  // without is dropped and counted below rather than parked at (0, 0), which would
-  // read as "nothing cited, nothing missing" — a claim the absence of a file cannot make.
+  // A stage is plottable only when it has a real element-level flow behind it AND that
+  // flow has elements to take a percentage of. Either way it is dropped and counted
+  // below rather than parked at (0, 0), which would read as "nothing cited, nothing
+  // missing" — a claim neither a missing file nor an empty one can make.
   const plottable = rows.filter(
-    (r) => r.flowSlug && typeof r.citedElements === "number" && typeof r.gapShare === "number"
+    (r) => r.flowSlug && typeof r.citedShare === "number" && typeof r.gapShare === "number"
   );
-  const dropped = rows.length - plottable.length;
+  // Split by WHY, because the two cases need different words: a stage with no flow file
+  // at all is un-verified, while one whose flow file has no elements is verified to an
+  // empty trace. The old sentence said "no element-level flow file yet" for both.
+  const droppedNoFlow = rows.filter((r) => !r.flowSlug).length;
+  const droppedNoElements = rows.length - plottable.length - droppedNoFlow;
 
   if (plottable.length === 0) {
     return (
       <EmptyState
         title="No element-level flow behind these verdicts yet"
-        description="A stage is placed on the quadrant once the flow file it was verified against exists."
+        description="A stage is placed on the quadrant once the flow file it was verified against exists and carries elements."
       />
     );
   }
 
   // The vertical divider is the average across the stages actually plotted, stated on
-  // the chart — there is no external threshold for "a lot of cited elements", so the
+  // the chart — there is no external threshold for "a heavily cited stage", so the
   // honest split is this set's own centre of gravity rather than a made-up round number.
-  const xDivider =
-    plottable.reduce((sum, r) => sum + (r.citedElements ?? 0), 0) / plottable.length;
+  const xDivider = plottable.reduce((sum, r) => sum + (r.citedShare ?? 0), 0) / plottable.length;
 
   const points: Point[] = plottable.map((r, i) => {
-    const x = r.citedElements ?? 0;
+    const x = r.citedShare ?? 0;
     const y = r.gapShare ?? 0;
+    const region = regionFor(x, y, xDivider);
     return {
       ...r,
       x,
       y,
       href: `/flows/${r.flowSlug}`,
       label: String(r.stageNumber ?? i + 1),
-      region: regionFor(x, y, xDivider),
+      region,
+      regionName: REGION_NAME[region],
     };
   });
 
-  const xMax = Math.max(...points.map((p) => p.x));
+  // Both axes are percentages, so both run the full 0-100 — no data-derived upper bound
+  // to pad, and therefore no way for an empty or all-zero set to collapse the domain to
+  // [0, 0] the way a `Math.ceil(max * 1.12)` bound could. A truncated percentage axis
+  // would also exaggerate the distances between stages, which is the opposite of what
+  // this normalisation is for.
   const lo = 0;
-  const hi = Math.ceil((xMax * 1.12) / 10) * 10;
+  const hi = 100;
 
   const boxes = REGIONS.map((r) => {
     const left = r.corner === "top-left" || r.corner === "bottom-left";
@@ -186,7 +228,12 @@ export function VerdictDistributionChart({ rows }: { rows: VerdictRow[] }) {
           marginRight: 28,
           marginTop: 28,
           marginBottom: 52,
-          x: { label: "Accreditation-cited elements verified at this stage", domain: [lo, hi], grid: true },
+          x: {
+            label: "Verified elements naming an accreditation standard (%)",
+            domain: [lo, hi],
+            grid: true,
+            tickFormat: (d: number) => `${d}%`,
+          },
           y: {
             label: "Verified elements rated a gap or configure-needed (%)",
             domain: [0, 100],
@@ -226,12 +273,12 @@ export function VerdictDistributionChart({ rows }: { rows: VerdictRow[] }) {
               channels: {
                 Stage: "stage",
                 Verdict: (d: Point) => d.verdict ?? TONE_LABEL[d.tone],
-                Quadrant: "region",
+                Quadrant: "regionName",
                 // The flow's real name, never its file slug — the rule every label in
                 // this app follows (UI-DENSITY-PATTERNS.md, "no raw filenames").
                 "Verified against": (d: Point) => d.flowName ?? "—",
                 "Elements verified": "elementCount",
-                "Accreditation-cited": "citedElements",
+                "Naming a standard": (d: Point) => `${d.citedElements} of ${d.elementCount} (${d.x}%)`,
                 "Gap or configure-needed": (d: Point) => `${d.y}%`,
               },
               tip: { format: { x: false, y: false, fill: false, r: false } },
@@ -260,10 +307,17 @@ export function VerdictDistributionChart({ rows }: { rows: VerdictRow[] }) {
         verdict was verified against — the screens, the cited standard and the gap note behind both coordinates —
         and the full verdict, its caveats and what changed at verification are in the map below. Colour is the
         brief&apos;s own verdict, position is the element evidence; where the two disagree, read the row before
-        repeating either. The vertical divider is this set&apos;s own average ({Math.round(xDivider)} cited
-        elements), not an external benchmark; the horizontal one is half the verified elements.
-        {dropped > 0
-          ? ` ${dropped} stage${dropped === 1 ? "" : "s"} in the map below ${dropped === 1 ? "has" : "have"} no element-level flow file yet and ${dropped === 1 ? "is" : "are"} not plotted.`
+        repeating either. Both axes are percentages of the same verified elements, so a longer flow file does not
+        move a stage rightward for being longer — but a citation share still counts how much of a stage has been
+        annotated against a standard, not how hard an accreditor leans on it. The vertical divider is this
+        set&apos;s own average ({Math.round(xDivider)}% of elements naming a standard), not an external benchmark;
+        the horizontal one is half the verified elements. An element whose citation field says &ldquo;None…&rdquo;
+        is counted as not citing a standard.
+        {droppedNoFlow > 0
+          ? ` ${droppedNoFlow} stage${droppedNoFlow === 1 ? "" : "s"} in the map below ${droppedNoFlow === 1 ? "has" : "have"} no element-level flow file yet and ${droppedNoFlow === 1 ? "is" : "are"} not plotted.`
+          : ""}
+        {droppedNoElements > 0
+          ? ` ${droppedNoElements} ${droppedNoElements === 1 ? "has a flow file with no elements in it, so there is nothing to take a percentage of" : "have flow files with no elements in them, so there is nothing to take a percentage of"}.`
           : ""}
       </Text>
       <Stack gap={2}>
@@ -284,8 +338,8 @@ export function VerdictDistributionChart({ rows }: { rows: VerdictRow[] }) {
                 label={TONE_LABEL[p.tone]}
               />
               <Text type="supporting" size="xsm">
-                {p.region} — {p.citedElements} of {p.elementCount} elements carry an accreditation citation, {p.y}%
-                rated a gap or configure-needed
+                {p.regionName} — {p.x}% of its {p.elementCount} verified elements name an accreditation standard (
+                {p.citedElements} of {p.elementCount}), {p.y}% rated a gap or configure-needed
               </Text>
             </Stack>
           ))}

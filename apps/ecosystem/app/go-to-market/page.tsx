@@ -275,6 +275,23 @@ function verdictStageNumber(stage: string): number | null {
   return m ? Number(m[1]) : null;
 }
 
+// `accreditation_citation` is a prose field, and a filled-in one very often says the
+// OPPOSITE of a citation — "None at this element…", "None — no accreditation standard in
+// the source material asks for…", "Not the element where evidence for a standard lives…".
+// Presence is therefore not coverage: across the eight rotation-lifecycle flows, 553 of
+// 598 elements have the field filled but 75 of those explicitly disclaim a standard, so
+// presence-counting overstated every stage and claimed 73 of 73 for one that has 52.
+// The two anchored denial openers below are the only ones the real content uses (checked
+// against every non-empty value in content/flows/rotation-lifecycle--*.yaml); a value
+// that merely mentions "none" mid-sentence ("…satisfies none of them the same way") is a
+// real citation and still counts.
+const CITATION_DENIAL = /^(none|not the element)\b/i;
+
+function citesAStandard(citation?: string | null): boolean {
+  const text = (citation ?? "").trim();
+  return !!text && !CITATION_DENIAL.test(text);
+}
+
 /** Count of body rows in the first markdown table of a section. */
 function countTableRows(section?: MarkdownSection): number {
   if (!section) return 0;
@@ -387,8 +404,8 @@ export default function GoToMarketPage() {
   const verdictIntro = verdictSection ? verdictSection.body.split("\n|")[0].trim() : "";
 
   // The quadrant's two axes, computed per stage off the element-level flow the verdict
-  // was verified against. Both counts read the SAME fields the journey and flow pages
-  // already count — `accreditation_citation` presence, and the
+  // was verified against. Both read the SAME fields the journey and flow pages
+  // already count — the `accreditation_citation` text, and the
   // gap/configure-needed half of the `gap_severity` vocabulary — so a coordinate here
   // and a severity bar over on /journeys/rotation-lifecycle cannot disagree.
   const verdictFlows = getFlowsByStageForJourney(VERDICT_JOURNEY);
@@ -399,19 +416,26 @@ export default function GoToMarketPage() {
     const gaps = elements.filter(
       (e) => e.gap_severity === "gap" || e.gap_severity === "configure-needed"
     ).length;
+    const cited = elements.filter((e) => citesAStandard(e.accreditation_citation)).length;
     return {
       stage: v.stage,
       tone: v.tone,
       verdict: v.verdict,
       stageNumber: n ?? undefined,
       elementCount: elements.length,
-      citedElements: elements.filter((e) => !!e.accreditation_citation).length,
+      citedElements: cited,
+      // The x axis is the SHARE, not the count: a 104-element flow would otherwise
+      // out-score a 66-element one on volume alone, which measures how much of the
+      // stage has been written down, not how hard accreditors lean on it.
+      citedShare: elements.length ? Math.round((cited / elements.length) * 100) : undefined,
       gapShare: elements.length ? Math.round((gaps / elements.length) * 100) : undefined,
       flowSlug: flow?.slug,
       flowName: flow?.flow_name,
     };
   });
-  const plottedStages = verdictPoints.filter((p) => p.flowSlug && p.gapShare != null).length;
+  const plottedStages = verdictPoints.filter(
+    (p) => p.flowSlug && p.gapShare != null && p.citedShare != null
+  ).length;
 
   return (
     <Stack gap={0}>
@@ -756,11 +780,12 @@ export default function GoToMarketPage() {
             <Section padding={6} dividers={["bottom"]}>
               <Stack gap={3}>
                 <Stack gap={1}>
-                  <Heading level={3}>Where each stage sits: accreditation pull against verified gap load</Heading>
+                  <Heading level={3}>Where each stage sits: citation coverage against verified gap load</Heading>
                   <Text type="supporting">
-                    Two named axes, both counted off the element-level flow each verdict was verified against —
-                    how many of that stage&apos;s elements carry an accreditation citation, and what share of them
-                    are still rated a gap or configure-needed. {plottedStages} of {verdicts.length} stages are
+                    Two named axes, both shares of the element-level flow each verdict was verified against — what
+                    share of that stage&apos;s elements name an accreditation standard, and what share of them are
+                    still rated a gap or configure-needed. Both are percentages of the same denominator, so a longer
+                    flow file does not score higher for being longer. {plottedStages} of {verdicts.length} stages are
                     placed; the colour is the brief&apos;s own verdict.
                   </Text>
                 </Stack>

@@ -57,7 +57,13 @@ export default async function CompetitiveLandscapeByQuadrantPage({
             title={
               plotted === 0
                 ? "No vendor has a verified pillar judgment in this slice yet"
-                : `${counts.displacement} of ${plotted} assessed vendors lead Prism on ${quadrant.majority} or more of its six pillars`
+                : // The count is the "Displacement threats" region alone, so the headline has to
+                  // say the whole predicate that region stands for. A vendor in "Split decisions"
+                  // also leads Prism on `majority` or more pillars — it is only excluded because
+                  // Prism leads it on `majority` or more too. Without the trailing clause the
+                  // sentence is true today purely because that region happens to be empty, and
+                  // would go quietly wrong the first time a vendor lands in it.
+                  `${counts.displacement} of ${plotted} assessed vendors lead Prism on ${quadrant.majority} or more of its six pillars while Prism leads them on fewer`
             }
             description={`Two named axes, both counts of the same researched depth judgments the other two pivots read: the pillars Prism leads (rated "behind" or "Prism-only") against the pillars the vendor leads (rated "ahead of Prism"). No score and no weighting — each of the six canonical pillars is counted once, on the side the research already put it.`}
           />
