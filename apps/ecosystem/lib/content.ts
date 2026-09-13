@@ -209,6 +209,13 @@ export interface DomainClosestAnalog {
   domain_slug?: string | null;
   similarity?: string;
   reuse_note?: string;
+  /** Registered citations, the `{source_id}[]` shape every other sourced block in these
+   * files uses — resolved through the source index and rendered by SourceList, so an
+   * internal session cites as a real, openable record rather than as a prose note. */
+  sources?: { source_id: string }[];
+  /** Free-prose fallback, rendered as raw supporting text with no resolution. Kept in the
+   * type because the schema still allows it for an external URL with no registry entry,
+   * but `sources` above is the correct field for an internal meeting. */
   source?: string;
 }
 
@@ -1689,7 +1696,10 @@ export function getSourceIndex(): Map<string, SourceRegistryEntry> {
   return index;
 }
 
-function resolveSourceIds(ids: { source_id: string }[] | undefined): SourceRegistryEntry[] {
+/** Exported because listDomains() returns raw YAML with no resolution pass of its own, so
+ * a domain page resolving `closest_analog.sources` needs the same resolver every derived
+ * loader in this file already uses — one code path, one `.filter(Boolean)` drop rule. */
+export function resolveSourceIds(ids: { source_id: string }[] | undefined): SourceRegistryEntry[] {
   if (!ids?.length) return [];
   const bySid = getSourceIndex();
   return ids.map((s) => bySid.get(s.source_id)).filter((s): s is SourceRegistryEntry => Boolean(s));

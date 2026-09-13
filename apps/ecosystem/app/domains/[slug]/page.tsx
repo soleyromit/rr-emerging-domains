@@ -27,8 +27,10 @@ import {
   getJourneyStagesForDiscipline,
   getDissectionManifest,
   dissectionAnsweredCount,
+  resolveSourceIds,
   type AccreditationDoc,
 } from "@/lib/content";
+import { SourceList } from "@/components/source-list";
 import { dissectHref } from "@/lib/dissection-links";
 
 // Keyed by route slug -> {journey slug, the exact key_findings/discipline_notes
@@ -216,6 +218,15 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
     analogSlug && listDomains().some((d) => matchDisciplineMeta(d.domain)?.slug === analogSlug)
       ? `/domains/${analogSlug}`
       : null;
+  // The analog's citation resolves through the source index and renders with SourceList,
+  // the same component every other citation surface in this app uses — not as a raw
+  // string. A raw string bypasses the kind badge, the date line, the evidence-status
+  // caveat AND stripFileCitations, and it resolves to nothing a reader can open. The
+  // internal session behind Pharmacy's block is registered at
+  // content/interviews/2026-09-12-romit-ruchi-pharmacy-domain-planning.md for exactly
+  // this reason. `closest_analog.source` (free prose) remains in the schema as a marked
+  // fallback and still renders below, so an older file does not silently lose its source.
+  const analogSources = resolveSourceIds(closestAnalog?.sources);
 
   const dissectionManifest = getDissectionManifest(slug);
   const dissectionSummary = dissectionManifest
@@ -340,13 +351,14 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
                       {stripFileCitations(closestAnalog.reuse_note)}
                     </Text>
                   </Stack>
+                  {analogSources.length ? <SourceList sources={analogSources} label="Source" /> : null}
                   {closestAnalog.source ? (
                     <Stack gap={1}>
                       <Text type="label" color="secondary" size="xsm">
                         Source
                       </Text>
                       <Text type="supporting" size="sm" maxLines={2}>
-                        {closestAnalog.source}
+                        {stripFileCitations(closestAnalog.source)}
                       </Text>
                     </Stack>
                   ) : null}
