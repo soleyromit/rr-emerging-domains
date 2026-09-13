@@ -279,8 +279,9 @@ check(
 //   3. A field renamed or a site moved -> update ALLOWED.
 // ---------------------------------------------------------------------------
 
-import { readdirSync, readFileSync, statSync } from "node:fs";
-import { join, relative } from "node:path";
+import { mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, relative, resolve } from "node:path";
 import { load as loadYaml } from "js-yaml";
 
 const APP_DIR = new URL("..", import.meta.url).pathname;
@@ -327,9 +328,27 @@ const CITATION_BY_DESIGN = new Set([
  */
 const MIN_PROSE_LENGTH = 60;
 
-function fieldsCarryingCitations(): Set<string> {
-  const found = new Set<string>();
-  const visit = (node: unknown, key: string | undefined) => {
+/**
+ * Two sets, because a citation reaches the screen by two different routes.
+ *
+ *   leaves     The key whose own string value holds the citation — `.rationale`,
+ *              `.notes`. Reading one of these is reading the prose itself.
+ *   containers The key one level ABOVE such a leaf — `accreditation_pressure`, whose
+ *              value is a list of `{point, detail}` records and whose citation lives on
+ *              the inner `detail`. Reading a container hands the whole subtree, prose
+ *              included, to whatever is downstream.
+ *
+ * Containers are why this function returns a pair rather than one set. The
+ * accreditation_pressure leak was a container read: the field NAME the builder wrote
+ * (`p?.accreditation_pressure`) never appeared in a leaf-only set, because the citation
+ * sat on the `detail` key nested inside it. A leaf-only scan cannot see that read at all,
+ * which is half of why that bug shipped past this check. The two sets are kept apart
+ * rather than merged because they need different render tests — see PASS_THROUGH below.
+ */
+function fieldsCarryingCitations(): { leaves: Set<string>; containers: Set<string> } {
+  const leaves = new Set<string>();
+  const parents = new Set<string>();
+  const visit = (node: unknown, key: string | undefined, parentKey: string | undefined) => {
     if (typeof node === "string") {
       if (
         key &&
@@ -337,26 +356,35 @@ function fieldsCarryingCitations(): Set<string> {
         node.length > MIN_PROSE_LENGTH &&
         CITATION.test(node)
       ) {
-        found.add(key);
+        leaves.add(key);
+        if (parentKey && parentKey !== key && !CITATION_BY_DESIGN.has(parentKey)) {
+          parents.add(parentKey);
+        }
       }
       return;
     }
     if (Array.isArray(node)) {
-      for (const v of node) visit(v, key);
+      // A sequence is not a key level: its items keep the key the sequence is bound to,
+      // so `accreditation_pressure: [{detail: ...}]` still reports `accreditation_pressure`
+      // as the parent of `detail`, not the anonymous list item.
+      for (const v of node) visit(v, key, parentKey);
       return;
     }
     if (node && typeof node === "object") {
-      for (const [k, v] of Object.entries(node)) visit(v, k);
+      for (const [k, v] of Object.entries(node)) visit(v, k, key);
     }
   };
   for (const file of walk(CONTENT_DIR, [".yaml", ".yml"])) {
     try {
-      visit(loadYaml(readFileSync(file, "utf8")), undefined);
+      visit(loadYaml(readFileSync(file, "utf8")), undefined, undefined);
     } catch {
       // A content file that does not parse is the density checker's problem, not this test's.
     }
   }
-  return found;
+  // A name that is a leaf SOMEWHERE is treated as a leaf everywhere: the stricter of the
+  // two tests wins, so a genuine prose read is never downgraded to the container rule.
+  for (const l of leaves) parents.delete(l);
+  return { leaves, containers: parents };
 }
 
 /**
@@ -382,37 +410,135 @@ interface Unsanitized {
  */
 const NOT_A_RENDER = /\.length\b|\.filter\(|\.some\(|\.every\(|\.find\(|\.sort\(|\bkey=/;
 
-function unsanitizedReads(fields: Set<string>): Unsanitized[] {
+/**
+ * A CONTAINER read is only a hazard where the whole subtree is handed downstream — a
+ * `prop: src.container` assignment in an object literal, which is exactly the shape the
+ * accreditation_pressure leak had. Where a container is iterated, counted or tested, the
+ * prose is reached through a LEAF field on the element, and that leaf read is judged on
+ * its own line. Without this split, adding containers to the scan turned every
+ * `doc.stages.forEach(` and `if (!doc?.standards)` in the codebase into a finding: 20
+ * lib/ file:field pairs became 32 and app/ went from 5 to 22, none of the additions real.
+ * Leaf fields do NOT get this gate — a leaf is prose wherever it is read.
+ */
+const PASS_THROUGH = /^\s*[A-Za-z_$][\w$]*\s*:/;
+const ITERATION =
+  /\.(?:map|forEach|flatMap|reduce|flat|join|slice|concat|entries|keys)\(|^\s*(?:if|for|while|return|const|let|var)\b/;
+
+/** Net parenthesis balance of one line: > 0 means it leaves a group open. */
+function netParens(line: string): number {
+  return (line.match(/\(/g) ?? []).length - (line.match(/\)/g) ?? []).length;
+}
+
+/**
+ * Is the read on line `i` actually wrapped in a sanitizer?
+ *
+ * This replaced a flat "±2 lines" text window, and the replacement is the other half of
+ * why the accreditation_pressure leak shipped past this check. That field sat two lines
+ * below two SANITIZED SIBLINGS:
+ *
+ *     archetypeSummary: stripFileCitations(p?.archetype_summary),
+ *     switchingTrigger: stripFileCitations(p?.switching_trigger),
+ *     accreditationPressure: p?.accreditation_pressure ?? [],   <-- raw, and passed
+ *
+ * The window saw "stripFileCitations" nearby and called the third line sanitized. Nearby
+ * is not the same statement. So instead of a line count this walks the actual bracket
+ * structure, in the only two directions a sanitizer for THIS read can live:
+ *
+ *   backward, to the statement HEAD — but only through lines that leave a group open
+ *     (`field: stripFileCitations(` has net > 0), which is precisely what a finished
+ *     sibling property (net == 0) does not do. That one condition is what makes the
+ *     three lines above come out right.
+ *   forward, into the statement BODY — but only when this line itself opens a group, so
+ *     `x: (a?.b ?? []).map((p) => ({ point: stripFileCitations(p.point) }))` spread over
+ *     several lines still reads as sanitized. That is the shape of the FIX for the same
+ *     field, so without this half the check would flag the corrected code.
+ */
+function sanitizedAt(lines: string[], i: number): boolean {
+  if (SANITIZERS.test(lines[i])) return true;
+  let back = 0;
+  for (let j = i - 1; j >= 0 && i - j <= 3; j--) {
+    back += netParens(lines[j]);
+    if (back < 0) break;
+    if (back > 0 && SANITIZERS.test(lines[j])) return true;
+  }
+  let fwd = netParens(lines[i]);
+  for (let j = i + 1; j < lines.length && j - i <= 6; j++) {
+    // A line opening `.`, `?` or `:` continues the statement even when the line before it
+    // closed every bracket it opened:
+    //   `.`  a method chain — `features: (pillar?.features ?? [])` is net-zero and the
+    //        `.map((f) => ({ ... }))` carrying its sanitizers starts on the NEXT line.
+    //   `?`/`:`  a ternary whose test is the bare field read and whose branches, one line
+    //        down, hold the wrap — `const signal = c.exxat_opportunity` /
+    //        `  ? stripFileCitations(leadSentence(c.exxat_opportunity))`. The single-line
+    //        existence-test lookahead cannot see that `?`, because it is not on the line.
+    const chained = /^\s*[.?:]/.test(lines[j]);
+    if (fwd <= 0 && !chained) break;
+    if (SANITIZERS.test(lines[j])) return true;
+    fwd += netParens(lines[j]);
+  }
+  return false;
+}
+
+/**
+ * Scan one source directory for unsanitized reads of `fields`.
+ *
+ * SCOPE, and why it is two directories and not three. `app/` and `lib/` are scanned;
+ * `components/` is not.
+ *
+ *   app/    A page reads lib/content.ts getters directly, so what it holds is raw YAML and
+ *           an unwrapped render there is a real bug. The routes are where the bugs were,
+ *           five times running.
+ *   lib/    The builders (lib/dissection-node-detail.ts is the big one) read raw content
+ *           directly — exactly like an app/ page does — so the same reasoning applies, and
+ *           lib/ is where this series' worst gaps actually lived: personaDetail's
+ *           accreditation_pressure leak shipped past this very check while lib/ was
+ *           excluded. Added in follow-up 8, which closed that gap; the retroactive test
+ *           below pins it. Widening the directory turned out to be the SMALLEST part of
+ *           that work: pointed at lib/ unchanged, the scan still missed the very leak it
+ *           was widened for, three times over — see fieldsCarryingCitations (containers),
+ *           the `??` note in the loop below, and sanitizedAt. A scope change alone would
+ *           have closed the gap on paper and left the bug catchable by nobody.
+ *   components/  EXCLUDED, and this exclusion is justified by measurement, not by symmetry
+ *           with the above. Components mostly receive props already sanitized upstream by a
+ *           lib/ builder, and a static scan cannot follow that dataflow — including them
+ *           produced ~40 findings of which every single one was a false positive, which is
+ *           a check nobody will keep running. That argument does NOT apply to lib/, which
+ *           is why lib/ is in and components/ is out.
+ *
+ * The matching logic below is shared unmodified across both directories. It operates on
+ * plain text lines, not on JSX syntax, so it transfers to `.ts` as-is — verified
+ * empirically when lib/ was added rather than assumed.
+ */
+function unsanitizedReads(
+  fields: { leaves: Set<string>; containers: Set<string> },
+  dir: string,
+  exts: string[],
+): Unsanitized[] {
   const out: Unsanitized[] = [];
-  // Scoped to app/ deliberately. A page under app/ reads lib/content.ts getters directly,
-  // so what it holds is raw YAML and an unwrapped render there is a real bug. Components
-  // under components/ mostly receive props already sanitized by a lib/ builder
-  // (dissection-node-detail.ts is the big one), and a static scan cannot follow that
-  // dataflow — including them produced ~40 findings of which every single one was a false
-  // positive, which is a check nobody will keep running. The routes are where the bugs
-  // were, five times running.
-  //
-  // KNOWN GAP, tracked as follow-on work: excluding components/ is justified by the
-  // false-positive rate above; excluding lib/ is NOT justified by the same reasoning, and
-  // lib/ is where this series' worst gaps have actually lived. The builders in
-  // lib/dissection-node-detail.ts read raw content directly — exactly like an app/ page —
-  // so the false-positive argument does not apply to them. A leak in personaDetail's
-  // accreditation_pressure shipped past this very check for that reason. Widening to the
-  // lib/ builders is the obvious next improvement; it was deliberately deferred rather than
-  // rushed, because getting the allowlist wrong here makes the check noisy and ignored.
-  for (const file of walk(join(APP_DIR, "app"), [".tsx"])) {
+  // resolve(), not join(), so an absolute dir is honoured — the retroactive fixture below
+  // scans a temp directory rather than a path under the app.
+  for (const file of walk(resolve(APP_DIR, dir), exts)) {
     const lines = readFileSync(file, "utf8").split("\n");
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
       if (/^\s*(\/\/|\*|\/\*|\{\/\*)/.test(line)) continue;
       if (NOT_A_RENDER.test(line)) continue;
-      for (const field of fields) {
+      for (const field of [...fields.leaves, ...fields.containers]) {
         // A ternary TEST ("{x.notes ? (") is an existence check; the render is on a later
-        // line and gets judged on its own.
-        if (new RegExp(String.raw`\.${field}\b\s*\?(?!\.)`).test(line)) continue;
+        // line and gets judged on its own. `??` is NOT that: `x.notes ?? []` is a DEFAULT,
+        // and the value flows onward. The original `(?!\.)` lookahead only excluded `?.`,
+        // so every `field ?? fallback` read in the codebase was being skipped as a mere
+        // existence test — including `p?.accreditation_pressure ?? []`, the exact line of
+        // this series' worst leak.
+        if (new RegExp(String.raw`\.${field}\b\s*\?(?![.?])`).test(line)) continue;
         if (!new RegExp(String.raw`\.${field}\b`).test(line)) continue;
-        const window_ = lines.slice(Math.max(0, i - 2), i + 3).join("\n");
-        if (SANITIZERS.test(window_)) continue;
+        if (
+          fields.containers.has(field) &&
+          (!PASS_THROUGH.test(line) || ITERATION.test(line))
+        ) {
+          continue;
+        }
+        if (sanitizedAt(lines, i)) continue;
         out.push({
           file: relative(APP_DIR, file),
           line: i + 1,
@@ -446,16 +572,90 @@ const ALLOWED = new Set([
   "app/prism/page.tsx:open_questions_for_phase_2",
 ]);
 
+/**
+ * The lib/ equivalent of ALLOWED, kept SEPARATE on purpose.
+ *
+ * The two directories share field names — `persona`, `type`, `detail` all collide — and an
+ * `app/` entry's reason is almost never the `lib/` entry's reason. Merging the sets would
+ * let a stated reason silently cover a read it was never written about, which is the exact
+ * failure the "every entry states WHY" rule exists to prevent.
+ *
+ * Every entry below was traced to its render site before being written down.
+ */
+const ALLOWED_LIB = new Set([
+  // --- Not prose: a closed node-kind enum -------------------------------------------
+  // `DissectionNodeType` ("pillar" | "persona" | "competitor" | ...). These are a sort
+  // rank, a lane index and a switch dispatch; none renders text. The name collides with a
+  // content field `type` elsewhere in the corpus whose value is long prose.
+  "lib/dissection-graph.ts:type",
+  "lib/dissection-node-detail.ts:type",
+  "lib/graph-layout.ts:type",
+  // `optStr(snap.type) ?? "support-ticket"` — a short source-kind enum, same collision.
+  "lib/content.ts:type",
+
+  // --- Not a render: predicate, slug or href ----------------------------------------
+  // `ref.flow.replace(/\.yaml$/i, "")` converts a citation-shaped ref INTO a slug; the
+  // extension is removed on this very line. The other `flow` read builds `/flows/${slug}`.
+  "lib/content.ts:flow",
+  // `elementProseHit(stage.accreditation_link, ...)` returns a boolean.
+  "lib/content.ts:accreditation_link",
+  // buildComputedUseCaseIndex's `prose` haystack (content.ts:1235-1237). Its only use is
+  // the `prose.some((p) => elementProseHit(p, id, accreditorShort))` predicate at :1240.
+  // The match records pushed at :1242-1250 carry kind/label/href/context only — the
+  // citation text never leaves the matcher.
+  "lib/content.ts:accreditation_citation",
+
+  // --- Sanitized downstream, at the render site -------------------------------------
+  // normalizeStage only ALIASES drifted key spellings onto a canonical name. Both render
+  // sites wrap: components/journey-stage-section.tsx:56 and :63, and the list variant at
+  // components/discipline-variance-list.tsx:25.
+  "lib/content.ts:domain_variance",
+  "lib/content.ts:discipline_variance",
+  // StandardsCrosswalkRow prose. Every render site wraps:
+  // components/dissect/standard-detail-panel.tsx:153 and :155,
+  // components/exxat-gap-answer.tsx:131, app/domains/[slug]/win/page.tsx:259.
+  "lib/content.ts:prism_fit_rationale",
+  "lib/content.ts:gap_notes",
+  // featureTeardown is handed through raw but its only render path is the shared
+  // CompetitorFeatureDossier, which wraps both prose fields at
+  // components/competitor-feature-dossier.tsx:34 (competitor_capability) and :40 (evidence).
+  "lib/dissection-node-detail.ts:feature_teardown",
+
+  // --- Built, but never rendered ----------------------------------------------------
+  // FeatureComparisonRow cells. The one consumer, components/charts/feature-depth-chart.tsx:29-32,
+  // projects only {competitor, depth, pillar} into Observable Plot; capability/evidence/
+  // source/slug are dropped there. They still ship in the RSC payload, which is the
+  // sanitizer-audit tool's tracked payload-only tier, not a visible defect.
+  "lib/content.ts:competitor_capability",
+  "lib/content.ts:evidence",
+  // SourceRegistryEntry.what_it_supports has ZERO readers under app/ or components/ —
+  // components/source-list.tsx:96-125 reads publisher/date/evidence_status/type/title/url/id
+  // only. Built from prose (`caveat`, `finding`), so it is a latent hazard the moment
+  // anyone renders it, but it is not on screen today.
+  "lib/content.ts:what_it_supports",
+  "lib/content.ts:caveat",
+]);
+
 const citationFields = fieldsCarryingCitations();
 check(
   "content/ still carries prose file citations (if 0, this whole check is silently vacuous)",
-  citationFields.size > 0,
+  citationFields.leaves.size > 0,
+  true,
+);
+check(
+  "content/ nests citations inside container fields (the accreditation_pressure shape)",
+  citationFields.containers.size > 0,
   true,
 );
 
-const offenders = unsanitizedReads(citationFields).filter(
-  (o) => !ALLOWED.has(`${o.file}:${o.field}`),
-);
+const offenders = [
+  ...unsanitizedReads(citationFields, "app", [".tsx"]).filter(
+    (o) => !ALLOWED.has(`${o.file}:${o.field}`),
+  ),
+  ...unsanitizedReads(citationFields, "lib", [".ts"]).filter(
+    (o) => !ALLOWED_LIB.has(`${o.file}:${o.field}`),
+  ),
+];
 
 if (offenders.length) {
   failures.push(
@@ -463,10 +663,65 @@ if (offenders.length) {
       offenders
         .map((o) => `      ${o.file}:${o.line}  [${o.field}]  ${o.text}`)
         .join("\n") +
-      "\n    Wrap each in stripFileCitations, or add it to ALLOWED with a stated reason.",
+      "\n    Wrap each in stripFileCitations, or add it to ALLOWED/ALLOWED_LIB with a stated reason.",
   );
 } else {
   passed++;
+}
+
+// ---------------------------------------------------------------------------
+// 6. THE RETROACTIVE TEST — does the scanner above actually catch the bug it was
+//    widened for?
+//
+// A checker that reports zero proves nothing on its own; it reports zero both when the
+// tree is clean and when the checker is blind. So this feeds it the REAL pre-fix source
+// of the leak it missed — personaDetail's `accreditation_pressure`, as it stood in commit
+// 61c1273's parent — and requires a finding.
+//
+// The fixture is the genuine shape, reproduced verbatim rather than simplified, because
+// all three of its details are what defeated the previous scanner and each is now a
+// separate reason this test can fail:
+//
+//   1. the citation lives on `detail`, NESTED inside accreditation_pressure, so a
+//      leaf-only field set never contained the name the builder actually reads;
+//   2. the read is `?? []`, which the old ternary-existence lookahead skipped wholesale;
+//   3. it sits directly beneath two SANITIZED SIBLINGS, which the old ±2-line window
+//      accepted as proof that this line was sanitized too.
+//
+// If someone simplifies any of the three away, this stops testing what it says it tests.
+// ---------------------------------------------------------------------------
+
+const fixtureDir = mkdtempSync(join(tmpdir(), "sanitizer-regress-"));
+try {
+  writeFileSync(
+    join(fixtureDir, "pre-fix-persona-detail.ts"),
+    [
+      "function personaDetail(node: DissectionNode): PersonaNodeDetail {",
+      "    return {",
+      "      competitorReads: [],",
+      "      archetypeSummary: stripFileCitations(p?.archetype_summary),",
+      "      switchingTrigger: stripFileCitations(p?.switching_trigger),",
+      "      accreditationPressure: p?.accreditation_pressure ?? [],",
+      "      found: !!p,",
+      "    };",
+      "}",
+      "",
+    ].join("\n"),
+  );
+  const caught = unsanitizedReads(citationFields, fixtureDir, [".ts"]);
+  check(
+    "the real pre-fix accreditation_pressure leak is flagged (commit 61c1273's parent)",
+    caught.some((o) => o.field === "accreditation_pressure"),
+    true,
+  );
+  check(
+    "its two already-sanitized siblings are NOT flagged alongside it",
+    caught.map((o) => o.field).filter((f) => f === "archetype_summary" || f === "switching_trigger")
+      .length,
+    0,
+  );
+} finally {
+  rmSync(fixtureDir, { recursive: true, force: true });
 }
 
 // ---------------------------------------------------------------------------
