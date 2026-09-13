@@ -3,6 +3,15 @@
 // (matrices, chips, chart legends, table rows). Colors are deliberately kept out of the
 // red/yellow/green/blue family — those are reserved for gap-severity semantics elsewhere
 // (see fit-badge.tsx) — so discipline identity never gets confused with a severity signal.
+//
+// That reservation leaves fewer usable tints than there are entries, so tints repeat:
+// purple is DO/OT/CRNA, teal is Pharmacy/PA, orange is Dentistry/Nursing, cyan is
+// Medicine/SLP, pink is PT/TE. Hue alone therefore cannot identify an entry, and the fix
+// is a second visual dimension rather than more colors: every entry also carries a
+// `glyph`, rendered as a small leading icon by DisciplineChip, so two chips sharing a
+// tint differ in shape as well as in their code text. Glyphs only have to separate the
+// 2-3 entries inside one tint family, so pick a shape that is obviously distinct from
+// its own tint-mates first and evocative of the discipline second.
 
 export type BadgeVariant =
   | "neutral"
@@ -20,31 +29,61 @@ export type BadgeVariant =
   | "teal"
   | "yellow";
 
+// Glyph *keys*, not icon components: this module is plain data imported by server
+// components, and a React component value can't cross the server/client boundary as a
+// prop. components/discipline-chip.tsx holds the one key -> lucide-icon map, typed as an
+// exhaustive Record<DisciplineGlyph, IconType>, so adding an entry here without giving it
+// a glyph is a type error rather than a silently icon-less chip.
+export type DisciplineGlyph =
+  | "stethoscope"
+  | "hand"
+  | "syringe"
+  | "pill"
+  | "clipboard"
+  | "tooth"
+  | "pulse"
+  | "bag"
+  | "speech"
+  | "dumbbell"
+  | "cap"
+  | "handshake"
+  | "brain";
+
 export interface DisciplineMeta {
   slug: string;
   label: string;
   code: string;
   kind: "domain" | "discipline";
   badgeVariant: BadgeVariant;
+  /** Shape cue that separates this entry from its tint-mates — see the header note. */
+  glyph: DisciplineGlyph;
 }
 
 export const DOMAINS: DisciplineMeta[] = [
-  { slug: "do", label: "DO — Osteopathic Medicine", code: "DO", kind: "domain", badgeVariant: "purple" },
-  { slug: "pharmacy", label: "Pharmacy", code: "RPh", kind: "domain", badgeVariant: "teal" },
-  { slug: "dentistry", label: "Dentistry", code: "DDS", kind: "domain", badgeVariant: "orange" },
-  { slug: "medicine", label: "Medicine (MD)", code: "MD", kind: "domain", badgeVariant: "cyan" },
+  // purple family: DO / OT / CRNA — stethoscope vs. open hand vs. syringe.
+  { slug: "do", label: "DO — Osteopathic Medicine", code: "DO", kind: "domain", badgeVariant: "purple", glyph: "stethoscope" },
+  // teal family: Pharmacy / PA — pill vs. clipboard.
+  { slug: "pharmacy", label: "Pharmacy", code: "RPh", kind: "domain", badgeVariant: "teal", glyph: "pill" },
+  // orange family: Dentistry / Nursing — tooth/smile vs. heart-pulse.
+  { slug: "dentistry", label: "Dentistry", code: "DDS", kind: "domain", badgeVariant: "orange", glyph: "tooth" },
+  // cyan family: Medicine / SLP — medical bag vs. speech bubble.
+  { slug: "medicine", label: "Medicine (MD)", code: "MD", kind: "domain", badgeVariant: "cyan", glyph: "bag" },
 ];
 
 export const DISCIPLINES: DisciplineMeta[] = [
-  { slug: "pt", label: "Physical Therapy (PT/PTA)", code: "PT", kind: "discipline", badgeVariant: "pink" },
-  { slug: "ot", label: "Occupational Therapy (OT/OTA)", code: "OT", kind: "discipline", badgeVariant: "purple" },
-  { slug: "pa", label: "Physician Assistant", code: "PA", kind: "discipline", badgeVariant: "teal" },
-  { slug: "slp", label: "Speech-Language Pathology", code: "SLP", kind: "discipline", badgeVariant: "cyan" },
-  { slug: "nursing", label: "Nursing", code: "RN", kind: "discipline", badgeVariant: "orange" },
-  { slug: "social-work", label: "Social Work", code: "SW", kind: "discipline", badgeVariant: "neutral" },
-  { slug: "te", label: "Teacher Education", code: "TE", kind: "discipline", badgeVariant: "pink" },
-  { slug: "crna", label: "CRNA (Nurse Anesthesia)", code: "CRNA", kind: "discipline", badgeVariant: "purple" },
-  { slug: "counseling", label: "Counseling", code: "COUN", kind: "discipline", badgeVariant: "info" },
+  // pink family: PT / TE — dumbbell vs. graduation cap.
+  { slug: "pt", label: "Physical Therapy (PT/PTA)", code: "PT", kind: "discipline", badgeVariant: "pink", glyph: "dumbbell" },
+  { slug: "ot", label: "Occupational Therapy (OT/OTA)", code: "OT", kind: "discipline", badgeVariant: "purple", glyph: "hand" },
+  { slug: "pa", label: "Physician Assistant", code: "PA", kind: "discipline", badgeVariant: "teal", glyph: "clipboard" },
+  { slug: "slp", label: "Speech-Language Pathology", code: "SLP", kind: "discipline", badgeVariant: "cyan", glyph: "speech" },
+  { slug: "nursing", label: "Nursing", code: "RN", kind: "discipline", badgeVariant: "orange", glyph: "pulse" },
+  // SW and COUN are the only sole occupants of their tint, so their glyph is pure
+  // recognition rather than disambiguation — but they still carry one, because a chip row
+  // where some chips have a glyph and others don't reads as a bug, not as a signal.
+  { slug: "social-work", label: "Social Work", code: "SW", kind: "discipline", badgeVariant: "neutral", glyph: "handshake" },
+  { slug: "te", label: "Teacher Education", code: "TE", kind: "discipline", badgeVariant: "pink", glyph: "cap" },
+  { slug: "crna", label: "CRNA (Nurse Anesthesia)", code: "CRNA", kind: "discipline", badgeVariant: "purple", glyph: "syringe" },
+  { slug: "counseling", label: "Counseling", code: "COUN", kind: "discipline", badgeVariant: "info", glyph: "brain" },
 ];
 
 export const ALL_DISCIPLINE_META: DisciplineMeta[] = [...DOMAINS, ...DISCIPLINES];
