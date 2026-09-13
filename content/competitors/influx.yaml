@@ -19,7 +19,7 @@
 # — Enflux has no Capterra or G2 listing that search surfaced — so unlike core-elms.yaml
 # there is no third-party check on the vendor's claims here. Treat capability claims as
 # vendor-asserted and outcome numbers as vendor-published customer results.
-competitor: "Enflux (recorded in the 2026-09-04 session as \"Influx\")"
+competitor: "Enflux"
 slug: "influx"
 # Vendor lists 15+ health-sciences disciplines including pharmacy, PA, PT, veterinary,
 # nursing, medicine, business and education. Pharmacy is the only one of this repo's four

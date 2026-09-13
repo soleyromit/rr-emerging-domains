@@ -73,7 +73,7 @@ feature_teardown:
       delivery/proctoring). axiUm's assessment tooling is centered on clinical
       competency/procedure grading and faculty sign-off, not written/practical exam
       administration.
-    depth_vs_prism: "unable to verify"
+    depth_vs_prism: "unknown"
     evidence: "No exam-management feature found on any public axiUm/Exan/Henry Schein One page reviewed."
     source: "unable to verify"
   - pillar: "Accreditation Management (Prism roadmap Q3 2027)"

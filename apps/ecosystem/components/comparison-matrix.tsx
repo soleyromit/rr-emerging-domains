@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useRef, useState, type ReactNode } from "react";
-import { Table, pixel, proportional } from "@astryxdesign/core/Table";
+import { Table, pixel, proportional, useTableStickyColumns } from "@astryxdesign/core/Table";
 import type { ColumnWidth, TableColumn, TableDensity } from "@astryxdesign/core/Table";
 import { Stack } from "@astryxdesign/core/Stack";
 import { Text } from "@astryxdesign/core/Text";
@@ -267,6 +267,13 @@ export function ComparisonMatrix<RowId extends string, ColId extends string, TVa
     renderPanel,
   });
 
+  // Pins the row-label column to the left edge on horizontal scroll — the
+  // matrix's own subject stays readable no matter how many column-axis
+  // entries scroll past it (Medicine's real 10-competitor grid is the case
+  // this exists for). A no-op when the plugins prop below merges it in
+  // unconditionally; the hook itself has no "off" state to branch on.
+  const stickyColumns = useTableStickyColumns<MatrixTableRow<RowId>>({ startKeys: ["__row_axis__"] });
+
   panelRendererRef.current = (item: MatrixTableRow<RowId>) => {
     if (!rowPanel) return null;
     const focusedId = focusByRow[item._id] ?? null;
@@ -423,7 +430,7 @@ export function ComparisonMatrix<RowId extends string, ColId extends string, TVa
       density={density}
       textOverflow="wrap"
       verticalAlign="top"
-      plugins={rowPanel ? { detailPanel } : undefined}
+      plugins={rowPanel ? { detailPanel, stickyColumns } : { stickyColumns }}
       columns={columns}
     />
   );
