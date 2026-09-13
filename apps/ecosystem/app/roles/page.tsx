@@ -12,9 +12,9 @@ import { firstSentence } from "@/lib/text";
 import { listRolePersonas } from "@/lib/content";
 
 // Cross-cutting people who touch Prism day to day, independent of any one domain —
-// kept separate from the domain hub (unlike discipline personas, which moved to
-// /domains/[slug]/persona) because a role's content is meant to apply across
-// multiple domains at once, not be scoped to one.
+// kept separate from the domain hub (unlike discipline personas, which live inside it
+// — /domains/[slug]#buyer-profile since the 2026-09-13 tab consolidation) because a
+// role's content is meant to apply across multiple domains at once, not be scoped to one.
 export default function RolesIndexPage() {
   const roles = listRolePersonas();
   const totalPains = roles.reduce((sum, r) => sum + (r.top_pains?.length ?? 0), 0);
