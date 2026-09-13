@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Cut `apps/ecosystem`'s global nav from 15 items/7 groups to 9 items/6 groups and its domain tabs from 7 to 5 by merging pages that render the same underlying data with no distinguishing perspective; fix the 9 color/badge collisions where one visual signal carries two meanings; and add the three real content gaps a live domain-planning meeting exposed (domain adjacency, a university-archetypes scaffold, cross-domain journey comparison) — without fabricating any content the evidence doesn't support.
+**Goal:** Cut `apps/ecosystem`'s global nav from 15 items/7 groups to 9 items/6 groups and its domain tabs from 7 to 6 (revised from an original "to 5" target — see the note on Task 1.5 below) by merging pages that render the same underlying data with no distinguishing perspective; fix the 9 color/badge collisions where one visual signal carries two meanings; and add the three real content gaps a live domain-planning meeting exposed (domain adjacency, a university-archetypes scaffold, cross-domain journey comparison) — without fabricating any content the evidence doesn't support.
 
 **Architecture:** Three independent phases, each safely committable and reviewable on its own — nothing in Phase 2 or 3 depends on Phase 1 landing first, so they can run in any order or in parallel worktrees if desired. Phase 1 merges routes and deletes the ones it absorbs, replacing every internal link to a deleted route. Phase 2 is a pure content-and-prop change inside existing badge/banner components — no new components, only corrected variant choices and, where genuinely needed, new named severity states. Phase 3 adds one optional YAML field, one new content-schema file (currently empty of real entries — this plan does **not** invent archetype data), and one new page composed entirely from an existing, already-cross-domain-aware library function.
 
@@ -122,7 +122,9 @@
 - [ ] **Step 11:** In `npm run dev`: click through all three sections via the next/prev links; confirm the homepage and every domain's Win tab now link back to `/go-to-market`; confirm the gap-analysis section's numbers either match Crosswalk's live figures or are explicitly labeled as coming from a different source; confirm all three old routes redirect to their anchored section (not 404).
 - [ ] **Step 12:** Commit.
 
-### Task 1.5: Reduce domain tabs from 7 to 5 — fold Persona into Overview (renamed "Buyer profile"), fix the mis-targeted Roles cross-link
+### Task 1.5: Reduce domain tabs from 7 to 6 — fold Persona into Overview (renamed "Buyer profile"), fix the mis-targeted Roles cross-link
+
+*Note: originally planned as "7 to 5," assuming Task 1.2 would remove Competitors as a full tab entry. Task 1.2's actual review found that assumption's premise (an earlier audit's "identical machinery" claim) was itself wrong, and the controller ruled to keep Competitors as a thinner, real tab (gutted to a domain-specific summary + link, not deleted) rather than force a false consolidation. This task therefore only removes Persona — a real, correct "7 to 6," not a shortfall.*
 
 **Files:**
 - Modify: `app/domains/[slug]/page.tsx` (Overview tab) — add a "Buyer profile" section rendering what `app/domains/[slug]/persona/page.tsx` renders today
