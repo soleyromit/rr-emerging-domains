@@ -114,8 +114,9 @@ stages:
       (see the new flow file) confirms a mature, shipped, site-scoped Contracts object —
       cross-site linking, expiry alerts, a routing checklist for negotiation/sign-off,
       template-based generation, institutional rollup — in production use by PA/OT
-      schools. ACPE 3.5.b's flat "Gap" rating in ../accreditation/acpe.yaml is superseded
-      by this evidence; COCA 6.9/LCME 1.4/CODA 4-6's "Configure" ratings undersold how
+      schools. ACPE 3.5.b's flat "Gap" rating in ../accreditation/acpe.yaml was superseded
+      by this evidence and corrected to "Configure" on 2026-09-10; COCA 6.9/LCME
+      1.4/CODA 4-6's "Configure" ratings undersold how
       much is already built. What genuinely remains open: (1) whether "Needs Attention"
       hard-blocks scheduling or is only advisory is unconfirmed anywhere in the sourced
       material; (2) OT programs have a confirmed production friction point relevant to
@@ -129,10 +130,10 @@ stages:
       volume than a dental school's mostly-owned clinic.
     accreditation_link: >
       ACPE Standard 3, Key Element 3.5.b — fully executed agreement per practice facility
-      [../accreditation/acpe.yaml still rates this a flat "Gap," but element-level tracing
-      now shows that rating outdated: Contracts, linking, expiry alerts, and
-      location-level status gating are already shipped under Sites — should be re-rated
-      Configure like the other three accreditors, pending a formal file update]. COCA
+      [../accreditation/acpe.yaml rated this a flat "Gap" until 2026-09-10; element-level
+      tracing showed that rating outdated — Contracts, linking, expiry alerts, and
+      location-level status gating are already shipped under Sites — and the file now
+      rates it Configure, like the other three accreditors]. COCA
       Standard 6, Element 6.9 — executed agreements with renewal alerts [Configure; the
       prior open question of repointing Compliance Management's expiry tracking at sites
       is resolved — Contracts is its own already-site-scoped object, not Compliance
@@ -160,7 +161,7 @@ stages:
       cannot be resolved as a comparative claim in either direction.
     key_findings:
       - subject: "Pharmacy"
-        headline: "ACPE 3.5.b's flat Gap rating is outdated — Contracts already ships"
+        headline: "ACPE 3.5.b's flat Gap rating was corrected to Configure — Contracts already ships"
         severity: "none"
         detail: "Element-level tracing confirms a mature, site-scoped Contract object: name, number, tax ID, start/expiration, template-based generation, routing checklist, cross-site linking, expiry auto-notifications and institutional rollup, in production use by PA and OT schools."
       - subject: "Dentistry"

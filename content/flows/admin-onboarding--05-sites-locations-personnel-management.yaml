@@ -115,7 +115,7 @@ steps:
         accreditation_citation: "ACPE Standard 3, Key Element 3.5.b (a fully executed, current affiliation agreement on file for every practice facility) — the status ladder is what distinguishes 'executed' from 'in negotiation' when a surveyor asks."
         competitor_equivalent: "CORE ELMS (core-elms.yaml) documents 'affiliation agreement tracking with expiration alerts' at pillar level; whether its agreement records carry a configurable status ladder is not published, so no element-level comparison is possible."
         gap_severity: "configure-needed"
-        gap_note: "Same shared-contracts lock as the routing checklist. Also note the ACPE file (acpe.yaml, 3.5.b) currently rates site-level contract management as 'Gap' — 'site affiliation-agreement management isn't named in any current or roadmap pillar.' This transcript contradicts that: a full contract object with status, expiry, documents, routing and auto-notification ships today. acpe.yaml 3.5.b should be re-rated Configure on the strength of transcript lines 399-419."
+        gap_note: "Same shared-contracts lock as the routing checklist. Also note the ACPE file rated site-level contract management 'Gap' — 'site affiliation-agreement management isn't named in any current or roadmap pillar' — until this transcript contradicted it: a full contract object with status, expiry, documents, routing and auto-notification ships today. That re-rating landed on the strength of transcript lines 399-419; 3.5.b has been Configure since 2026-09-10."
 
   - screen: "Sites > Setup > Site Sharing Model"
     navigation_path: "Sites > Setup tab > Site Sharing Model"
@@ -290,7 +290,7 @@ steps:
         accreditation_citation: "LCME Standard 1, Element 1.4; CODA Standard 4, Element 4-6; ACPE Standard 3, Key Element 3.5.b — a master agreement covering a health system with many hospitals is exactly the case all three standards produce, and linking (rather than copying) keeps one authoritative expiry date."
         competitor_equivalent: "eMedley eKeeper — 'affiliation agreement tracking with auto-expiration reminders' (emedley.yaml) — and CORE ELMS — 'affiliation agreement tracking with expiration alerts' (core-elms.yaml) — both ship agreement tracking, but neither publishes whether one agreement record can span multiple site records. The many-to-many linkage is un-benchmarked."
         gap_severity: "none"
-        gap_note: "Directly contradicts acpe.yaml's 3.5.b rating of 'Gap' ('no pillar today models site-level compliance/contract documents'). It ships, with many-to-many linkage."
+        gap_note: "Directly contradicted acpe.yaml's then-current 3.5.b rating of 'Gap' ('no pillar today models site-level compliance/contract documents'); that rating was corrected to Configure on 2026-09-10. It ships, with many-to-many linkage."
       - element: "Contract Information fields — Name, Contract Number, Tax ID, Initiated By, Start Date, End Date, Open-Ended bit, Contract Template, Active bit, Status, Notes, Add Reference Address"
         type: "input field set"
         data_shown: "The core agreement record. 'Open-ended' means no end date; 'Contract Template' is reference-only, indicating which entity's template was used in negotiation."
@@ -1355,9 +1355,9 @@ discipline_notes:
       Settings card (steps 5 and 10) the field the whole curriculum-coverage argument rests on, and
       the personnel Slots/Placements grids (step 12) the ratio's raw data. ACPE also requires a
       majority-U.S.-licensed-pharmacist calculation per student — a roster query against the
-      licensure cards. Note that this stage's evidence should trigger a re-rating of acpe.yaml
-      3.5.b from 'Gap' to 'Configure': the site contract repository it says does not exist is
-      documented in the primary transcript at lines 399-419.
+      licensure cards. Note that this stage's evidence triggered the re-rating of acpe.yaml
+      3.5.b from 'Gap' to 'Configure' (landed 2026-09-10): the site contract repository it
+      said does not exist is documented in the primary transcript at lines 399-419.
     source: "content/domains/pharmacy.yaml; content/accreditation/acpe.yaml"
 
 sources:

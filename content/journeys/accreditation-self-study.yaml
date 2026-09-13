@@ -250,12 +250,13 @@ stages:
       Partial and the weakest confirmed part of the shipped stack. Compliance Management
       (shipped) tracks items gating placement start/continuation, but the capability map itself
       flags the item taxonomy as unconfirmed and — critically — every accreditation file
-      independently notes it is confirmed for STUDENT-level items only. Site-level affiliation
-      agreements, preceptor licensure, faculty calibration, and policy attestations are all the
-      same pattern applied to a different entity, and that extension is unverified. acpe.yaml
-      rates site affiliation agreements a hard "Gap"; lcme.yaml and coda.yaml rate the same
-      requirement "Configure" with the identical caveat — the three files disagree on severity
-      precisely because the underlying entity model is unconfirmed.
+      independently notes it is confirmed for STUDENT-level items only. Preceptor licensure,
+      faculty calibration, and policy attestations are the same pattern applied to a different
+      entity, and that extension is unverified. Site-level affiliation agreements are the
+      exception and no longer belong in that list: they have their own shipped Contract object
+      under Sites, which is why acpe.yaml's 3.5.b rating was corrected from "Gap" to "Configure"
+      on 2026-09-10, aligning it with lcme.yaml and coda.yaml. All four now carry the same
+      narrower caveat — the contract record exists, but nothing confirms it blocks scheduling.
     pain_or_gap: >
       A lapsed affiliation agreement at a site where students are actively placed is a
       citation-grade finding in all four domains, and today nothing structurally blocks it.
@@ -270,7 +271,7 @@ stages:
       calibration training tracked per site with alerts when a site falls out of calibration.
     accreditation_link: >
       ACPE Standard 3, Key Element 3.5.b (executed, current affiliation agreement per practice
-      facility) — rated Gap; 3.3.a (preceptor criteria, majority U.S.-licensed pharmacists,
+      facility) — rated Configure since the 2026-09-10 correction, was Gap; 3.3.a (preceptor criteria, majority U.S.-licensed pharmacists,
       performance evaluations on file); 3.3.c (preceptor orientation before accepting a
       student). LCME Standard 1, Element 1.4 (Affiliation Agreements, clause-level). COCA
       Standard 6, Element 6.9 (executed agreements for every contracted site + contingency
@@ -316,9 +317,9 @@ stages:
         severity: "gap"
         detail: "State boards license the practice facilities and multi-campus or distance programs routinely cross state lines, so a single national compliance status on a site record cannot express whether that site is valid for the state the rotation occurs in."
       - subject: "Pharmacy"
-        headline: "CORE ELMS ships affiliation-agreement expiry alerts; Prism's Compliance is student-level"
-        severity: "gap"
-        detail: "CORE ELMS tracks affiliation agreements with expiration alerts and preceptor licensure in a HIPAA-compliant document store, and reviewers cite that module for accreditation and audits. Prism's shipped Compliance Management is confirmed for student-level items only, and acpe.yaml rates ACPE 3.5.b a hard Gap."
+        headline: "Prism matches CORE ELMS on agreement expiry alerts; the blocking behavior is the open half"
+        severity: "configure-needed"
+        detail: "CORE ELMS tracks affiliation agreements with expiration alerts and preceptor licensure in a HIPAA-compliant document store. Prism ships its own site-scoped Contract object with expiry alerts, which is why acpe.yaml re-rated ACPE 3.5.b from Gap to Configure on 2026-09-10; neither vendor documents a lapsed agreement actually blocking new scheduling."
       - subject: "Dentistry"
         headline: "Dentistry's burden is faculty calibration under CODA 2-6, not affiliation agreements"
         severity: "gap"

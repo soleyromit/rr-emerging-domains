@@ -812,10 +812,11 @@ stages:
       1.4, CODA Standard 4, Element 4-6, ACPE Standard 3, Key Element 3.5.b, and COCA
       Standard 6, Element 6.9 — and the Sites Missing Contracts tab is the single best
       coverage check for all four. Two prior repo hedges are resolved by this
-      transcript: acpe.yaml rates 3.5.b a Gap ("site affiliation-agreement management
+      transcript: acpe.yaml rated 3.5.b a Gap ("site affiliation-agreement management
       isn't named in any current or roadmap pillar") when a full contract object with
       status, expiry, documents, routing and notification demonstrably ships
-      (transcript lines 399-419), and coda.yaml's 2-6 note that "faculty-side
+      (transcript lines 399-419) — that rating was corrected to Configure on
+      2026-09-10 — and coda.yaml's 2-6 note that "faculty-side
       calibration/credential tracking is an open Phase 2 question" is answered by the
       shipped Faculty Compliance module collecting licensure/certification with
       expiration dates, group assignment, review states and recurring reminders. The
