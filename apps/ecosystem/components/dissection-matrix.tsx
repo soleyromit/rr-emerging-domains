@@ -222,6 +222,11 @@ export function DissectionMatrix({
   return (
     <ComparisonMatrix<string, string, MatrixCellValue>
       variant="rigorous"
+      // Matches this page's own container (app/domains/[slug]/dissect/page.tsx
+      // renders the deep-dive area inside a muted Section) so the sticky
+      // row-label column's opaque background doesn't show a lighter band
+      // against the scrolled data cells.
+      stickyRowBackground="var(--color-background-muted)"
       // Names the column in the order it actually renders: the bold line is the
       // pillar, the line under it is that pillar's capability detail. Mirrors
       // scorecard-matrix.tsx's "Criterion (weight)" label-then-sublabel shape.

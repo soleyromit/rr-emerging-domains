@@ -151,6 +151,10 @@ export function FeatureTeardownMatrix({ comparison }: { comparison: FeatureCompa
   return (
     <ComparisonMatrix<string, string, TeardownCellValue>
       variant="rigorous"
+      // Matches this page's own container (app/domains/[slug]/competitors/page.tsx
+      // renders a plain, non-muted Section) so the sticky row-label column's
+      // opaque background doesn't show a darker band against the scrolled data cells.
+      stickyRowBackground="var(--color-background-surface)"
       rowAxisHeader="Pillar"
       rowAxis={rowAxis}
       columnAxis={columnAxis}
