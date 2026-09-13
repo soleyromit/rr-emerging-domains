@@ -53,10 +53,19 @@ import { useTableDetailPanel } from "@/lib/table-detail-panel";
 //     Table.doc.mjs's `usage.anatomy` guidance prose, with no prop, plugin or
 //     export behind it. It documents an aspiration, not a capability.
 //   - Layout/LayoutPanel IS a real start/end panel primitive, but it is a page
-//     shell ("@position Page shell and app layout", height="fill" with its own
-//     internal scroll). Every caller here renders inside an AppShell page's
-//     Section; nesting a second shell to get a split view would take over the
-//     page's scrolling to lay out one content block.
+//     shell ("@position Page shell and app layout") and this component always
+//     renders inside one already. Layout.doc.mjs carries an explicit `guidance:
+//     false` — a documented don't — reading "Nest multiple Layout components; use
+//     one per page shell and compose content within its slots", and Layout's own
+//     outer wrapper is built to escape its container: it applies negative inline
+//     and block margins (`calc(-1 * var(--container-padding-*))`, Layout.tsx's
+//     `layoutOuter`) to break out of the padding around it. Every caller here
+//     renders inside an AppShell page's Section, so a nested Layout would both
+//     break that documented rule and pull itself out of the Section's padding it
+//     is supposed to sit inside. (NOT a height problem: `LayoutHeight` is
+//     'fill' | 'auto', and 'auto' is documented as "Layout grows with content,
+//     container/page scrolls" — an earlier version of this comment claimed
+//     height="fill"'s internal scroll was the blocker, which was wrong.)
 // Revisit when Table grows a real side-panel plugin.
 //
 // `variant` is a real constraint, not a style flag. `"unverified"` is for data

@@ -253,15 +253,23 @@ export function DissectionMatrix({
         </Stack>
       )}
       // FACT — the rated claim on its own line: "Elentra is partially-meeting on
-      // Curriculum mapping". Exactly the sentence this panel always led with; the
-      // prose that used to sit under it inside the same Takeaway is now IMPACT.
+      // Curriculum mapping", with how far the evidence behind it reaches directly
+      // under it. That evidence line is part of the CLAIM, not a consequence of it:
+      // "verified against cited evidence — 2 cited sources" says how well sourced
+      // this rating is, which is provenance. Under an IMPACT heading it would
+      // answer the wrong question, so it stays where it has always rendered —
+      // inside the Fact Takeaway.
       rowPanelFact={({ row, column, value }) => {
         if (column && value) {
           return (
             <Takeaway
               status={ratingStatus(value.rating)}
               title={`${column.name} is ${standardsRatingLabel(value.rating).toLowerCase()} on ${row.label}`}
-            />
+            >
+              <Text type="supporting" maxLines={2}>
+                {evidenceLine(value)}
+              </Text>
+            </Takeaway>
           );
         }
         const values = rowValues(row.id);
@@ -273,24 +281,25 @@ export function DissectionMatrix({
           />
         );
       }}
-      // IMPACT — what the reader can do with the fact above, which on this matrix
-      // is governed by how far the evidence behind it actually reaches. A
-      // directional read of a vendor's own marketing page and a verdict a customer
-      // institution attests to are the same badge and very different ammunition;
-      // this is the slot that says which one a reader is holding.
+      // IMPACT — what follows from the fact above.
       //
-      // On the row-label panel it is the coverage consequence instead: which
-      // columns are silent, and that their silence is unresearched rather than a
-      // finding. Both are verbatim the prose that used to be the Takeaway's body —
-      // relocated, not rewritten.
+      // ONLY the row-label panel has one: which columns are silent, and that their
+      // silence means nobody researched them rather than that they fall short.
+      // That is a consequence a reader acts on — it tells them not to carry an
+      // absent cell into a conversation as a weakness.
+      //
+      // A CELL panel returns `null` here, deliberately and visibly. The only
+      // per-cell prose feature-comparison-matrix.yaml authors beyond the rating is
+      // the rationale (in the deep dive) and the evidence grade — and the evidence
+      // grade is provenance, which belongs with the Fact it qualifies, not under a
+      // heading that promises "what this means competitively". The lens authors no
+      // per-cell "so what for us", so there is nothing true to put here; the
+      // missing IMPACT heading is that content gap made visible rather than
+      // papered over with a sentence nothing sourced.
+      // (Branch condition is `column && value`, the same test the Fact slot above
+      // uses, so the two slots can never disagree about which panel they are in.)
       rowPanelImpact={({ row, column, value }) => {
-        if (column && value) {
-          return (
-            <Text type="supporting" maxLines={2}>
-              {evidenceLine(value)}
-            </Text>
-          );
-        }
+        if (column && value) return null;
         const values = rowValues(row.id);
         const rated = values.filter((v) => v.value).length;
         const unrated = values.filter((v) => !v.value);
