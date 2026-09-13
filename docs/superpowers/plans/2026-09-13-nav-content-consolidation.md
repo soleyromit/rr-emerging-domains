@@ -53,6 +53,7 @@
 - Modify: `app/domains/[slug]/competitors/page.tsx` — replace its full matrix render with a summary card + `<Link href="/competitive-landscape?domain={slug}">View {domain}'s competitive landscape →</Link>`
 - Modify: domain tab config (the 7-tab list) — remove `Competitors` as a full tab route if Task 1.2 and the Phase-1 domain-tab reduction (Task 1.5) land together; otherwise leave the tab, just gut its body per the line above
 - Delete: `app/competitors/page.tsx`, `app/feature-map/page.tsx` once repointed
+- Modify: `next.config.ts` — add `{ source: "/competitors", destination: "/competitive-landscape", permanent: true }` and `{ source: "/feature-map", destination: "/competitive-landscape/by-pillar", permanent: true }`, following this file's own established "IA consolidation" redirect convention (dated comment, 3 existing entries from the 2026-08-27 `/lenses`/`/accreditation`/`/personas` consolidation — Task 1.1's review found and fixed a missed instance of this exact convention, don't repeat that miss)
 - Read first, do not modify: `components/feature-teardown-matrix.tsx`, `components/comparison-matrix.tsx` (the shared matrix machinery every one of these three pages already calls — confirmed identical by the IA audit; this task changes *routing*, not the matrix component itself)
 
 **Interfaces:**
@@ -67,15 +68,17 @@
 - [ ] **Step 6:** Update every link found in Step 1 to the new URL shape.
 - [ ] **Step 7:** Update sidebar nav: delete `Feature map` and `Competitor matrix`, add one `Competitive landscape` row.
 - [ ] **Step 8:** Delete `app/competitors/page.tsx` and `app/feature-map/page.tsx`.
-- [ ] **Step 9:** `cd apps/ecosystem && npx tsc --noEmit && npm run check:density && npx next build`.
-- [ ] **Step 10:** In `npm run dev`: confirm `/competitive-landscape` in both `view` states matches the old two pages' content exactly; confirm every domain's Competitors tab now shows the summary + working link; confirm the link lands pre-filtered to the right domain and pivot.
-- [ ] **Step 11:** Commit.
+- [ ] **Step 9:** Add the two redirect entries to `next.config.ts` per the Files note above.
+- [ ] **Step 10:** `cd apps/ecosystem && npx tsc --noEmit && npm run check:density && npx next build`.
+- [ ] **Step 11:** In `npm run dev`: confirm `/competitive-landscape` in both `view` states matches the old two pages' content exactly; confirm every domain's Competitors tab now shows the summary + working link; confirm the link lands pre-filtered to the right domain and pivot; confirm `/competitors` and `/feature-map` redirect (not 404).
+- [ ] **Step 12:** Commit.
 
 ### Task 1.3: Merge Crosswalk + Vocabulary glossary into one "Standards & glossary" page
 
 **Files:**
 - Create: `app/standards/layout.tsx` + `app/standards/page.tsx` (Coverage map, default route) + `app/standards/glossary/page.tsx` (replaces `app/crosswalk/page.tsx` and `app/synthesis/vocabulary/page.tsx`) — Task 1.1's implementer (commit `e6bdc22`) confirmed this app's real tab convention is route-based (`layout.tsx` + a tab-bar component + real sub-routes, `TabList`/`router.push`, not a client-side query-param toggle or same-file tab components) — mirror `app/product/layout.tsx` + `components/product-tabs.tsx` exactly, don't reintroduce the query-param/same-file pattern this plan originally (incorrectly) described.
 - Modify: every `<Link href="/crosswalk"` or `href="/synthesis/vocabulary"` site-wide
+- Modify: `next.config.ts` — add `{ source: "/crosswalk", destination: "/standards", permanent: true }` and `{ source: "/synthesis/vocabulary", destination: "/standards/glossary", permanent: true }`, following the same convention Task 1.1's review fixed a missed instance of
 - Delete: `app/crosswalk/page.tsx`, `app/synthesis/vocabulary/page.tsx` once repointed
 
 **Interfaces:**
@@ -87,9 +90,10 @@
 - [ ] **Step 3:** Update sidebar nav: delete `Crosswalk` and `Vocabulary glossary`, add one `Standards & glossary` row (keep it filed under the same group as `Competitive landscape` and `Go-to-market` — see Task 1.6).
 - [ ] **Step 4:** Update every link found in Step 1 (except the domain-hub-bound ones inside `crosswalk-view.tsx`, which move as-is into the new page).
 - [ ] **Step 5:** Delete `app/crosswalk/page.tsx` and `app/synthesis/vocabulary/page.tsx`.
-- [ ] **Step 6:** `cd apps/ecosystem && npx tsc --noEmit && npm run check:density && npx next build`.
-- [ ] **Step 7:** In `npm run dev`: confirm both tabs render fully; confirm every domain-row link inside the Coverage map tab still lands on that domain's real Standards tab and Dissection tab.
-- [ ] **Step 8:** Commit.
+- [ ] **Step 6:** Add the two redirect entries to `next.config.ts` per the Files note above.
+- [ ] **Step 7:** `cd apps/ecosystem && npx tsc --noEmit && npm run check:density && npx next build`.
+- [ ] **Step 8:** In `npm run dev`: confirm both tabs render fully; confirm every domain-row link inside the Coverage map tab still lands on that domain's real Standards tab and Dissection tab; confirm `/crosswalk` and `/synthesis/vocabulary` redirect (not 404).
+- [ ] **Step 9:** Commit.
 
 ### Task 1.4: Merge Scorecard + Gap analysis + Positioning brief into one linked "Go-to-market" flow, and reconcile Gap analysis's numbers with Crosswalk's live data
 
@@ -99,6 +103,7 @@
 - Modify: `app/synthesis/gap-analysis/page.tsx`'s data source — read the same live `listStandardsCrosswalkDomains()`/`getStandardsCrosswalkForDomain()` data `/standards`'s Coverage-map tab uses, instead of the separate hand-authored markdown doc (IA audit finding #3: today these compute "how many standards, how many gaps" two different ways with no disclosure)
 - Modify: `app/page.tsx` and `app/domains/[slug]/win/page.tsx` — both independently call `getScorecard()`+`computeWeightedTotals()` (IA audit finding #2); add a `<Link href="/go-to-market">` next to each rendered figure so a reader can trace the number back to its source
 - Delete: `app/scorecard/page.tsx`, `app/synthesis/gap-analysis/page.tsx`, `app/synthesis/positioning/page.tsx` once repointed (their content lives inside `app/go-to-market/page.tsx` now)
+- Modify: `next.config.ts` — add `{ source: "/scorecard", destination: "/go-to-market#which-domain", permanent: true }`, `{ source: "/synthesis/gap-analysis", destination: "/go-to-market#whats-missing", permanent: true }`, `{ source: "/synthesis/positioning", destination: "/go-to-market#what-to-say", permanent: true }`, following the same convention Task 1.1's review fixed a missed instance of
 
 **Interfaces:**
 - Consumes: `getScorecard()`+`computeWeightedTotals()` (step 1), `listStandardsCrosswalkDomains()`+`getStandardsCrosswalkForDomain()` (step 2 — **not** `readMarkdownFile` as today), whatever `app/synthesis/positioning/page.tsx` reads today (step 3)
@@ -112,9 +117,10 @@
 - [ ] **Step 6:** Update sidebar nav: delete `Where-to-play scorecard`, `Gap analysis`, `Positioning brief`; add one `Go-to-market` row.
 - [ ] **Step 7:** Update every link found in Step 1 to the new anchored sections.
 - [ ] **Step 8:** Delete the three old route files.
-- [ ] **Step 9:** `cd apps/ecosystem && npx tsc --noEmit && npm run check:density && npx next build`.
-- [ ] **Step 10:** In `npm run dev`: click through all three sections via the next/prev links; confirm the homepage and every domain's Win tab now link back to `/go-to-market`; confirm the gap-analysis section's numbers either match Crosswalk's live figures or are explicitly labeled as coming from a different source.
-- [ ] **Step 11:** Commit.
+- [ ] **Step 9:** Add the three redirect entries to `next.config.ts` per the Files note above.
+- [ ] **Step 10:** `cd apps/ecosystem && npx tsc --noEmit && npm run check:density && npx next build`.
+- [ ] **Step 11:** In `npm run dev`: click through all three sections via the next/prev links; confirm the homepage and every domain's Win tab now link back to `/go-to-market`; confirm the gap-analysis section's numbers either match Crosswalk's live figures or are explicitly labeled as coming from a different source; confirm all three old routes redirect to their anchored section (not 404).
+- [ ] **Step 12:** Commit.
 
 ### Task 1.5: Reduce domain tabs from 7 to 5 — fold Persona into Overview (renamed "Buyer profile"), fix the mis-targeted Roles cross-link
 
