@@ -11,6 +11,9 @@ category: >
   experiential-learning-management suite. Five branded products share eight core
   modules; deepest incumbency is in nursing (pre-licensure through DNP) and advanced
   practice/NP programs.
+# Vendor's own published mark, fetched 2026-09-09 from its official site (or its current
+# parent brand's) and committed under apps/ecosystem/public/logos/ — see _TEMPLATE.yaml.
+logo_asset: "typhon.svg"
 company:
   founded: >
     1995, per Typhon Group's own copyright notice ("© 1995-2026 Typhon Group, LLC")

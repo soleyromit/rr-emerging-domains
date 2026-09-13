@@ -4,21 +4,17 @@ import * as Plot from "@observablehq/plot";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { PlotFigure } from "./plot-figure";
 import type { Competitor } from "@/lib/content";
+// The vocabulary module, not lib/content.ts — see lib/competitor-depth.ts's own comment
+// for why a client component cannot import the latter at runtime.
+import { DEPTH_ORDER, normalizeDepth, type DepthVsPrism } from "@/lib/competitor-depth";
 
-const DEPTH_ORDER = ["behind", "at-parity", "ahead", "prism-only", "unknown"];
-const DEPTH_COLOR: Record<string, string> = {
+const DEPTH_COLOR: Record<DepthVsPrism, string> = {
   behind: "var(--color-icon-green)",
   "at-parity": "var(--color-icon-yellow)",
   ahead: "var(--color-icon-red)",
   "prism-only": "var(--color-icon-blue)",
   unknown: "var(--color-icon-gray)",
 };
-
-function normalizeDepth(d?: string) {
-  if (!d) return "unknown";
-  const lower = d.toLowerCase();
-  return DEPTH_ORDER.find((k) => lower.includes(k)) ?? "unknown";
-}
 
 export function CompetitorDepthChart({ competitors }: { competitors: Competitor[] }) {
   const rows = competitors.flatMap((c) =>

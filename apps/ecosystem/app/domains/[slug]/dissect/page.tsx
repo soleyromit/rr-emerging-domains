@@ -195,8 +195,13 @@ export default async function DomainDissectPage({
             </Text>
           </Stack>
 
+          {/* The middle (partway) branch was `warning`, which collided with the genuine
+              quarantine notice further down this same page (components/sales-reference-matrix.tsx
+              renders the sales chart in a `Banner status="warning"`): one amber meant
+              "research is partway done", the other "do not trust this data". It is now `info`.
+              `success` (complete) and `error` (empty shell) are kept — neither collided. */}
           <Takeaway
-            status={q.unstarted.length === 0 ? "success" : q.answered === 0 ? "error" : "warning"}
+            status={q.unstarted.length === 0 ? "success" : q.answered === 0 ? "error" : "info"}
             title={`${q.answered} of ${q.total} dissection questions have partial-or-better coverage`}
           >
             <Text type="supporting" maxLines={3}>

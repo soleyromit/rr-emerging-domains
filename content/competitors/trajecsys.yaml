@@ -4,6 +4,9 @@ competitor: "Trajecsys (a Portico brand)"
 slug: "trajecsys"
 domains_served: ["Nursing", "Radiologic Technology / Diagnostic Medical Imaging (incl. CT, MRI, Mammography)", "Respiratory Therapy", "Diagnostic Medical Sonography", "Surgical Technology", "Nuclear Medicine Technology", "Dental Hygiene / Dental Assisting", "Medical Laboratory Science", "EMT / Paramedic", "Nutrition and Dietetics"]   # site claims support for "well over 60" program types nationwide; the above are the ones with direct evidence (named modality pages, partner/accreditor relationships, or case studies)
 category: "Clinical recordkeeping and tracking software (narrower scope than a full ELMS platform) for nursing and allied-health programs"
+# Vendor's own published mark, fetched 2026-09-09 from its official site (or its current
+# parent brand's) and committed under apps/ecosystem/public/logos/ — see _TEMPLATE.yaml.
+logo_asset: "trajecsys.png"
 company:
   founded: >
     2005, founded by two clinical educators. Co-founder/President Larry Pickett, M.A.

@@ -15,6 +15,59 @@
   }
 }
 
+@layer components {
+  /* The inline citation marker (components/citation-mark.tsx), which renders the
+     design system's Citation in variant="number" WITHOUT a url — deliberately, so
+     it stays a span that previews in place rather than an anchor that navigates
+     away. Two things the DS therefore does not give it, both added here:
+
+     1. Separation. The `number` variant carries no margin of its own (only the
+        `label` variant does), so two marks placed next to each other in JSX — which
+        is exactly what the Go-to-market positioning headline does — render as one
+        run-together blob, JSX having collapsed the whitespace between the elements.
+        A margin on the marker fixes every placement at once, including future ones,
+        where a literal {" "} only fixes the one an author remembers to write it in.
+        4px rather than the DS's 2px text-to-label gap because this must separate two
+        adjacent rounded pills, not just a pill from a word.
+
+     2. An interactive affordance. The DS applies `numberInteractive`/`numberHover`
+        only when `href` is present, so the url-less marker showed no cursor change
+        and no hover state — even though hovering it really does open a preview.
+        Discoverability is the whole point of the mechanism, so both are restored by
+        hand: the pointer cursor, and on hover the DS's own `--color-overlay-hover`,
+        composited OVER the pill's accent-muted fill as a gradient layer rather than
+        replacing it (replacing would flatten the blue pill to grey, which reads as
+        less emphasis on hover, not more). That overlay is only 5%, and the marks sit
+        inside a Takeaway whose local scope collapses the whole text ramp onto one
+        value — measured: `--color-text-primary`, `--color-text-secondary` and
+        `--color-text-blue` all resolve to #c7d3ff there, so a text-colour hover would
+        have been a silent no-op — hence the 1px ring as the load-bearing cue. A ring
+        appearing where there was none is a change of shape, which survives any scope
+        that flattens colours; `--color-border-blue` is one step up the same ramp as
+        the pill's own `--color-background-blue`. Gated on `(hover: hover)` like the
+        DS's own rules, so a touch tap does not leave a stuck hover state.
+
+     Scoped to this one class and placed in `components`, which the layer order at the
+     top of this file declares after `astryx-base` — that is where the DS's compiled
+     StyleX lives, so this wins the cascade without needing inflated specificity or an
+     unlayered rule. */
+  .citation-mark {
+    margin-inline-start: var(--spacing-1);
+    cursor: pointer;
+    transition-property: background-color, box-shadow;
+  }
+
+  @media (hover: hover) {
+    .citation-mark:hover {
+      background-image: linear-gradient(
+        var(--color-overlay-hover),
+        var(--color-overlay-hover)
+      );
+      box-shadow: 0 0 0 1px var(--color-border-blue);
+    }
+  }
+}
+
 /* Observable Plot hardcodes tooltip/marker backgrounds to --plot-background: white
    via a zero-specificity :where() rule injected into every chart's own <style>
    block (see @observablehq/plot's plot.js) — this app never overrode it, so every
@@ -28,4 +81,21 @@
 svg[class*="plot-"] {
   --plot-background: var(--color-background-popover);
   color: var(--color-text-primary);
+}
+
+/* Every point in the two quadrant plots (components/charts/competitor-quadrant-chart.tsx
+   and verdict-distribution-chart.tsx) is a real link — Plot's `href` channel wraps the
+   mark in an SVG <a>. An SVG anchor gets none of the affordances a browser gives an HTML
+   <a>: no pointer cursor, no focus ring. Both are added here rather than per chart
+   because a mark option cannot set either. Same unlayered, class-prefix-matched scoping
+   as the rule above, for the same cascade reason. The selector is the bare `a`, not
+   `a[href]`: Plot writes the link as the legacy `xlink:href` attribute (see applyHref in
+   @observablehq/plot's style.js), which not every engine reflects to an unprefixed
+   `[href]` attribute selector. */
+svg[class*="plot-"] a {
+  cursor: pointer;
+}
+svg[class*="plot-"] a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }

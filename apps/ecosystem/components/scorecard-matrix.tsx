@@ -16,8 +16,8 @@ import type { ScorecardCriterion } from "@/lib/content";
 // hand-rolled Table that used to live in scorecard-table.tsx.
 //
 // Why this file exists at all rather than the swap happening inline in
-// app/scorecard/page.tsx: ComparisonMatrix is a client component whose axes are
-// configured with render props (renderCell / rowPanel / rowPanelTakeaway), and a
+// app/go-to-market/page.tsx: ComparisonMatrix is a client component whose axes are
+// configured with render props (renderCell / rowPanel / rowPanelFact / …), and a
 // server component cannot pass functions across the RSC boundary. So the page
 // keeps doing the server-side YAML read and hands this client wrapper only
 // serializable data — exactly the split ScorecardTable already had.
@@ -68,7 +68,7 @@ export function ScorecardMatrix({
   }));
 
   // `name` stays the plain domain string — ComparisonMatrix uses it verbatim in the
-  // drill-down panel's own header and in every sentence rowPanelTakeaway builds, so a
+  // drill-down panel's own header and in every sentence the Fact/Impact slots build, so a
   // ReactNode there would render "[object Object] scores 4/5". Only `header`, the
   // optional rich slot the component already exposes for exactly this, becomes a Link.
   //
@@ -121,7 +121,7 @@ export function ScorecardMatrix({
   return (
     <ComparisonMatrix<string, string, ScoreCellValue>
       variant="rigorous"
-      // Matches this page's own container (app/scorecard/page.tsx renders a
+      // Matches this page's own container (app/go-to-market/page.tsx renders a
       // plain, non-muted Section) so the sticky row-label column's opaque
       // background doesn't show a darker band against the scrolled data cells.
       stickyRowBackground="var(--color-background-surface)"
@@ -144,18 +144,16 @@ export function ScorecardMatrix({
           </Text>
         </Stack>
       )}
-      // Above the DEEP DIVE divider: the arithmetic the table could never show —
-      // what this score actually contributes once its weight is applied.
-      rowPanelTakeaway={({ row, column, value }) =>
+      // FACT — the score, stated once. Same sentence this panel always led with;
+      // the weight arithmetic that used to sit under it inside the same Takeaway
+      // is now the IMPACT slot, because it is what FOLLOWS from the score rather
+      // than part of it.
+      rowPanelFact={({ row, column, value }) =>
         column && value ? (
           <Takeaway
             status={scoreStatus(value.score)}
             title={`${column.name} scores ${value.score}/5 — contributes ${value.contribution.toFixed(2)} of its weighted total`}
-          >
-            <Text type="supporting" maxLines={2}>
-              {`${row.label} carries ${pct(value.weight)} of the scorecard, so a ${value.score} here is worth ${value.weight.toFixed(2)} × ${value.score} = ${value.contribution.toFixed(2)} out of a possible ${(value.weight * 5).toFixed(2)}.`}
-            </Text>
-          </Takeaway>
+          />
         ) : (
           <Takeaway
             status="info"
@@ -167,6 +165,25 @@ export function ScorecardMatrix({
           </Takeaway>
         )
       }
+      // IMPACT — the arithmetic the table could never show: what this score
+      // actually contributes once its weight is applied, which is the only
+      // reason a 4 on a 10% criterion and a 4 on a 35% one are not the same
+      // finding. Verbatim the prose that used to be the Takeaway's body.
+      //
+      // Null on the row-label panel: "every domain is listed below" is
+      // navigation, not impact, so it stays with the fact it belongs to and this
+      // slot renders nothing rather than a heading over a signpost.
+      rowPanelImpact={({ row, column, value }) =>
+        column && value ? (
+          <Text type="supporting" maxLines={2}>
+            {`${row.label} carries ${pct(value.weight)} of the scorecard, so a ${value.score} here is worth ${value.weight.toFixed(2)} × ${value.score} = ${value.contribution.toFixed(2)} out of a possible ${(value.weight * 5).toFixed(2)}.`}
+          </Text>
+        ) : null
+      }
+      // No `rowPanelAct`: where-to-play.yaml authors criteria, weights, scores and
+      // rationale — it authors no next step per criterion × domain, and inventing
+      // one here would put unsourced advice under a heading that reads as sourced.
+      // The prop is omitted rather than stubbed, so the slot never renders.
       rowPanel={({ row, column, value }) => {
         const criterion = criterionByName.get(row.id);
         return (

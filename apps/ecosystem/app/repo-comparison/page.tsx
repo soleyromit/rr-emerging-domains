@@ -165,7 +165,11 @@ export default function RepoComparisonPage() {
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
           <PageHeader
-            eyebrow="Strategy"
+            // Was "Strategy", a sidebar group that no longer exists. This page left the
+            // research nav entirely in the 2026-09-13 consolidation — it is reached from
+            // the SideNav footer now — so the eyebrow names what it actually is rather
+            // than a group it no longer sits in.
+            eyebrow="Internal tooling"
             title={`${tools.length} repository tools, ${requirementCount} hard requirements, 1 decision: a git repo of Markdown/YAML`}
             description="Scan the requirement scorecard below; the full decision memo — every option, every price, every source — is still here, one click down."
             endContent={

@@ -16,7 +16,10 @@ const BASE_TABS = [
   // market, and both are read before the competitor-by-competitor detail.
   { segment: "trends", label: "Trends" },
   { segment: "competitors", label: "Competitors" },
-  { segment: "persona", label: "Persona" },
+  // No Persona tab: 2026-09-13 nav consolidation folded the discipline persona into
+  // Overview as its "Buyer profile" section (/domains/[slug]#buyer-profile). It was
+  // one tab's worth of content about who buys, read once, and it belongs beside the
+  // rest of the domain's framing rather than behind a seventh tab.
 ];
 
 // "How we win" is prepended — the whole point is to be the most discoverable

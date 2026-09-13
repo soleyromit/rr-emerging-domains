@@ -2,6 +2,9 @@ competitor: "Leo (DaVinci Education)"
 slug: "leo-davinci"
 domains_served: ["MD", "DO", "Pharmacy", "Dentistry"]
 category: "Med-ed management (curriculum, clinical, assessment & accreditation) for medical/health-science schools"
+# Vendor's own published mark, fetched 2026-09-09 from its official site (or its current
+# parent brand's) and committed under apps/ecosystem/public/logos/ — see _TEMPLATE.yaml.
+logo_asset: "leo-davinci.png"
 company:
   founded: "2011 (as LCMS+, a spin-out of Duke School of Medicine; rebranded 'Leo' under DaVinci Education in 2019)"
   hq: "Chapel Hill, NC (510 Meadowmont Village Circle #129)"

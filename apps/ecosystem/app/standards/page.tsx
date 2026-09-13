@@ -11,7 +11,10 @@ import {
   PRIORITY_DOMAINS,
 } from "@/lib/content";
 
-export default function CrosswalkPage() {
+// The "Coverage map" tab of /standards (default). Was /crosswalk (now a
+// permanent redirect here, see next.config.ts). Its sibling tab, the accreditor
+// glossary, is glossary/page.tsx; the tab list lives in layout.tsx.
+export default function StandardsCoverageMapPage() {
   const domains = listStandardsCrosswalkDomains()
     .map((d) => getStandardsCrosswalkForDomain(d))
     .filter((d): d is NonNullable<typeof d> => d != null);
@@ -28,8 +31,9 @@ export default function CrosswalkPage() {
     <Stack gap={0}>
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
+          {/* No eyebrow: it said "Market", naming the sidebar group, and the breadcrumb
+              in app/standards/layout.tsx now states that trail above both tabs. */}
           <PageHeader
-            eyebrow="Market"
             title="Standards crosswalk"
             description={
               "Every domain's accreditation-standards coverage at a glance — Prism fit " +

@@ -573,8 +573,10 @@ function unsanitizedReads(
  */
 const ALLOWED = new Set([
   // `dissectionNodeId.persona(...)` is a function on a helper object. It collides with the
-  // content field name `persona` and renders nothing.
-  "app/domains/[slug]/persona/page.tsx:persona",
+  // content field name `persona` and renders nothing. Moved 2026-09-13 from
+  // app/domains/[slug]/persona/page.tsx, which no longer exists: that tab is now the Buyer
+  // profile section of the Overview page, and the same call moved with it.
+  "app/domains/[slug]/page.tsx:persona",
   // app/page.tsx's roadmap timeline is a TIMELINE const literal declared at the top of that
   // file. Its `detail` strings are written in the .tsx, never loaded from content/, so they
   // cannot carry a content filename. Same for the HORIZONS const beside it.

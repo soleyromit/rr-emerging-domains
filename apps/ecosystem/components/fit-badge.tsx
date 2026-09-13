@@ -17,10 +17,14 @@ type BadgeVariant =
   | "teal"
   | "yellow";
 
+// `build` is the "neutral, not-a-verdict" slot in an otherwise semantic scale, so it
+// takes the semantic accent variant (`info` — Badge's `info` IS the accent color:
+// background `--color-accent`) rather than the non-semantic `blue` tint. Same slot
+// and same variant StatusBadge below gives "Roadmap".
 const FIT_VARIANT: Record<string, BadgeVariant> = {
   transfer: "success",
   configure: "warning",
-  build: "blue",
+  build: "info",
   gap: "error",
 };
 
@@ -30,11 +34,13 @@ export function FitBadge({ fit }: { fit?: string }) {
   return <Badge variant={key ? FIT_VARIANT[key] : "neutral"} label={fit} />;
 }
 
+// Same reasoning as FIT_VARIANT above: `prism-only` is the not-a-verdict slot, so it
+// carries the semantic accent variant (`info`) instead of the `blue` tint.
 const DEPTH_VARIANT: Record<string, BadgeVariant> = {
   ahead: "error",
   "at-parity": "warning",
   behind: "success",
-  "prism-only": "blue",
+  "prism-only": "info",
 };
 
 // "unknown" shows up as a real value in feature_teardown rows (the researcher
@@ -221,12 +227,27 @@ export function TrendCoverageBadge({ severity }: { severity?: string }) {
   );
 }
 
+// `gap`, `workaround` and `inverted` were all `error` — one red for three different
+// answers, so the pill told a reader nothing the label hadn't already said. They are
+// now three treatments:
+//   - `gap` stays `error`: nothing exists. The worst case, and the one red belongs to it.
+//   - `workaround` drops to `warning`: a real but partial mitigation exists, which is
+//     the same severity `configure` carries (and deliberately shares its amber — both
+//     mean "reachable, but not natively"). The distinction they lose to each other is
+//     smaller than the one they both gain against `gap`.
+//   - `inverted` takes `purple`: not a point on the worse/better scale at all — the
+//     mechanic runs backwards (the student proposes the site rather than the admin
+//     offering capacity), which is a *different shape*, not a worse one. Checked the
+//     way PrismFeatureBadge below checked before claiming `teal`: `purple` is used in
+//     this app only as an IDENTITY color (lib/discipline-meta.ts, lib/competitor-meta.ts,
+//     components/source-list.tsx, components/dissect/topology-graph.tsx) and by no
+//     severity scale, so it cannot be misread as a fit/gap rating.
 const DIVERGENCE_VARIANT: Record<string, BadgeVariant> = {
   "native fit": "success",
   configure: "warning",
   gap: "error",
-  workaround: "error",
-  inverted: "error",
+  workaround: "warning",
+  inverted: "purple",
   unconfirmed: "neutral",
 };
 

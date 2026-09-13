@@ -45,15 +45,17 @@ export function PersonaDetailPanel({
 
   // A role persona has its own page under /roles/{slug} (the persona file's slug minus
   // the role- prefix — the same value listRolePersonas exposes and generateStaticParams
-  // registers). A discipline persona does not: its page IS this domain's persona tab.
-  // Linking a discipline node at /roles/... would 404, so it doesn't.
+  // registers). A discipline persona does not: since the 2026-09-13 tab consolidation
+  // its home is the Buyer profile section of this domain's Overview
+  // (/domains/{slug}#buyer-profile — the retired /domains/{slug}/persona tab). Linking a
+  // discipline node at /roles/... would 404, so it doesn't.
   const crossLinks: CrossLinks = isRole
     ? [
         { label: `${detail.name} in full`, href: `/roles/${roleSlug}` },
-        { label: `${domainLabel} persona`, href: `/domains/${domainSlug}/persona` },
+        { label: `${domainLabel}'s buyer profile`, href: `/domains/${domainSlug}#buyer-profile` },
       ]
     : [
-        { label: `${domainLabel} persona in full`, href: `/domains/${domainSlug}/persona` },
+        { label: `${domainLabel}'s buyer profile in full`, href: `/domains/${domainSlug}#buyer-profile` },
         { label: `${domainLabel} overview`, href: `/domains/${domainSlug}` },
       ];
 

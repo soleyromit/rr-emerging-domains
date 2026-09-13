@@ -59,7 +59,10 @@ export default function DomainsIndexPage() {
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
           <PageHeader
-            eyebrow="Market"
+            // The eyebrow names the sidebar group this page sits in. It said "Market",
+            // which was stale twice over: this page has been the `Domains` group's index
+            // since Phase 1, and that group is now labelled by what it does (task 4.4).
+            eyebrow="Inside each domain"
             title="Domains"
             description="Every tracked discipline, PA/OT/Nursing first. Open one for its full accreditor structure, standards, competitors, and persona — one hub, four tabs."
           />

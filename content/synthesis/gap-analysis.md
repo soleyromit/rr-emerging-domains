@@ -211,7 +211,7 @@ Standards doc: ACPE Standards 2025, effective fall 2025 — https://www.acpe-acc
 | 3.3.e | Student-to-preceptor ratio 2:1 maximum, real-time block | Transfer | None documented enforcing the cap at assignment time |
 | 3.4.a | Practice facility quality criteria: licensure + outcome-achievement evaluation | Configure | CORE ELMS (Site Assessment); axiUm (site profiles, dental-specific) |
 | 3.5.a | Experiential education personnel: leader qualifications + staffing adequacy | **Gap** | None documented — no vendor models institutional staffing ratios |
-| 3.5.b | **Executed, current affiliation agreement per practice facility** | **Gap** | CORE ELMS; eMedley eKeeper — both ship agreement tracking with expiry alerts today |
+| 3.5.b | Executed, current affiliation agreement per practice facility | Configure *(corrected 2026-09-13, was mislabeled Gap — the ACPE accreditation record's own 3.5.b rating was corrected to Configure on 2026-09-10: Compliance Management's shipped "Contracts with expiry alerts" tracks affiliation agreements per location)* | CORE ELMS; eMedley eKeeper — both ship agreement tracking with expiry alerts today |
 | 3.5.c | Student remuneration/employment attestation (no pay, no self-placement conflict) | Configure | None documented as a distinct attestation type |
 | 2.2.d | Curriculum/APPE mapping to 2.1.a-m outcomes (from AACP COEPA 2022) | Transfer | CORE CompMS; Leo; Elentra; eMedley — all rated "ahead" on named-taxonomy depth |
 | 7.3.c | Experiential QA: standardized components + consistent assessment across sites | Transfer | None on drift analytics — CORE's own reviewers call its reporting suite shallow |

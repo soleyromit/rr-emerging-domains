@@ -54,7 +54,7 @@ last_updated: "2026-09-11"
 # real roadmap-doc citation) is Phase 2/3 work, once such a source exists.
 #
 # Mirror rule for the flat pillar-level `target:` field: both roadmap pillars
-# below already carry a `target:` that apps/ecosystem/app/prism/page.tsx renders
+# below already carry a `target:` that apps/ecosystem/app/product/page.tsx renders
 # ("Target: Q2 2027"). That field stays until a UI change moves the reader onto
 # `roadmap.target`; while both exist, `roadmap.target` MUST mirror it verbatim,
 # character for character — one date stated twice, never allowed to diverge.

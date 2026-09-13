@@ -308,7 +308,9 @@ export async function auditRoute(base: string, route: string): Promise<Finding[]
  * failures. Keep this list tiny, and only for cases a human has actually looked at.
  */
 const INTENTIONAL: { route: string; filename: string }[] = [
-  { route: "/synthesis/gap-analysis", filename: "content/synthesis/gap-analysis.md" },
+  // Was /synthesis/gap-analysis until the 2026-09-13 nav consolidation; the same
+  // provenance line now renders in /go-to-market's "what is missing" step.
+  { route: "/go-to-market", filename: "content/synthesis/gap-analysis.md" },
   { route: "/repo-comparison", filename: "content/enterprise-repo/tool-comparison.md" },
 ];
 

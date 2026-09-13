@@ -212,6 +212,7 @@ file that needs a new fact sends it down to Level 1 first.
 | `lenses/accreditor-tiers.yaml`, `lenses/competitor-landscape.yaml` (the original 2, 2026-08-26) | Cross-cutting rows×columns quick-scan views spanning all 13 domains at once, requested directly by the sales/product team (see `interviews/2026-08-26-wilson-nursing-crosswalk.md`). `accreditor-tiers` cites `accreditation/`, `domains/`, and `interviews/`; `competitor-landscape` cites `competitors/` by name (`threat` is this file's own synthesis judgment, not a field lifted from Level 1). |
 | `lenses/standards-competitor-ratings.yaml`, `lenses/standards-use-cases.yaml` | The same reframing done at *element* granularity, keyed by (domain, `element_id`). Ratings cites `accreditation/` by `element_id` and `competitors/` by slug; use-cases cites `accreditation/` and a `source_id`. They exist as lenses rather than as fields on `accreditation/*.yaml` because Level 3 flows already cite `accreditation/` — hanging the answer off Level 1 would close a citation cycle. |
 | `lenses/product-gaps.yaml`, `lenses/competitor-differentiation.yaml`, `lenses/feature-comparison-matrix.yaml` (new 2026-09-11) | The three lenses that own answers to specific *dissection questions* (below). `product-gaps` = "what should we build for this domain," as a countable list of gaps rather than a paragraph of strategy. `competitor-differentiation` = per-(domain, competitor) head-to-head reasoning, and the only home in the repo for the **non-product** axes (distribution, incumbency, price, services) that decide deals and fit nowhere in a feature teardown. `feature-comparison-matrix` = the feature/pillar-level sibling of `standards-competitor-ratings`. All three cite `domains/`, `competitors/`, `prism/capability-map.yaml` and Level 0.5 `source_id`s downward and assert nothing that isn't grounded there. |
+| `archetypes/*.yaml` (new 2026-09-13 — **zero entries today**, the directory holds only `_TEMPLATE.yaml`) | Institutions re-cut by *vendor footprint*: whether Exxat, a competitor, or nobody is already inside the university, with the checkable traits that place one in a segment and the approach that follows. Cites `market/programs/*.yaml` for the named institutions behind a segment, `competitors/*.yaml` for a footprint claim about a vendor, and Level 0.5 source ids. Distinct from `personas/discipline-*.yaml`, which is the *discipline* program archetype, not an institutional segment. The family is empty on purpose: `interviews/2026-09-12-romit-ruchi-pharmacy-domain-planning.md` records archetype universities as consultant-side strategy work that was assigned and has not been done, so `/archetypes` renders that absence rather than an illustrative entry. |
 | `trends/*.yaml` (one per expansion domain) | What is *changing* in the domain — standards revisions, pedagogy and capacity shifts, AI pressure — each trend tagged with Exxat's status against it (`exxat_status` / `exxat_ref` from `prism/capability-map.yaml`) and which competitors, if any, already address it. Cites `prism/`, `competitors/` and Level 0.5 source ids. |
 
 **The six dissection questions, and which file owns each.** A `dissection/{slug}.yaml`
@@ -353,8 +354,10 @@ same annotate-don't-rewrite discipline as the Pattern-G block.
 `positioning-and-element-flows-plan.md` has **no page in `apps/ecosystem/` by
 design** — it is a process record kept for traceability, not reader-facing content,
 so its absence from the app is intentional and not a coverage bug. The other three
-synthesis documents each render at `/synthesis/gap-analysis`,
-`/synthesis/vocabulary`, and `/synthesis/positioning`.
+synthesis documents all still render, at their post-consolidation routes (2026-09-13):
+`gap-analysis.md` and `prism-positioning.md` are now two of the three anchored steps of
+`/go-to-market` (`#whats-missing` and `#what-to-say`), and `vocabulary-glossary.md`
+renders at `/standards/glossary`.
 
 Nothing below Level 5 ever cites anything in this folder. If a synthesis insight
 deserves reuse, it gets pushed down: a fact goes to a Level-1 registry with a real
@@ -422,6 +425,7 @@ source, or it stays opinion and stays here.
 | A named individual program — its institution, accreditation status, or whether it's an Exxat client | **`market/programs/{slug}.yaml`** (Level 1), one row, `locator:` naming the sheet cell |
 | A transcript or notes from a call you just had | **`interviews/`** — body is Level 0, and give it front-matter (Level 0.5) so it can be cited by id |
 | The same facts re-cut for a program archetype, human role, or competitor-through-a-role lens | **`personas/`** (Level 2) |
+| A segment of *institutions* defined by which vendor is already inside them | **`archetypes/{slug}.yaml`** (Level 2) — one file per segment; the named institutions in it stay rows in `market/programs/` |
 | A pillar-level competitive verdict for one domain | **`feature-map/`** (Level 2) |
 | A specific thing we should build for a domain, or why a named competitor wins/loses there | **`lenses/product-gaps.yaml`** / **`lenses/competitor-differentiation.yaml`** (Level 2) |
 | A per-capability rating of a competitor against Prism, with its evidence strength | **`lenses/feature-comparison-matrix.yaml`** (Level 2) |

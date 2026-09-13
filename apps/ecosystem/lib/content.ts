@@ -135,6 +135,10 @@ export interface Competitor {
   slug: string;
   domains_served: string[];
   category?: string;
+  /** Filename of a real vendor-published mark committed under public/logos/, or absent
+   *  when none has been legitimately sourced — see content/competitors/_TEMPLATE.yaml.
+   *  Absent is a correct state, not a gap: CompetitorLogo renders initials for it. */
+  logo_asset?: string;
   company?: { founded?: string; hq?: string; ownership?: string };
   feature_teardown?: CompetitorFeature[];
   strengths?: { claim: string; source?: string }[];
@@ -152,6 +156,37 @@ export function listCompetitors(): Competitor[] {
 
 export function getCompetitor(slug: string): Competitor | null {
   return listCompetitors().find((c) => c.slug === slug) ?? null;
+}
+
+/** Which side of the Exxat footprint an archetype sits on. Spelled `exxat_` rather than
+ * `exact_`: the 2026-09-12 Granola transcript this family comes from mis-hears "Exxat"
+ * as "Exact" throughout, and letting that reach a schema key would freeze a recognizer
+ * artifact into the content model — the same defect the closest_analog work was reviewed
+ * for one commit earlier. Typed as a union plus `string` the way `prism_fit` and
+ * `exxat_compliance` above are, for the identical reason: the value is read straight from
+ * YAML and is not re-validated here, so a typo must render as itself rather than be
+ * silently narrowed to a legal value. */
+export type ArchetypeFootprint = "current-customer" | "competitor-customer" | "unengaged" | string;
+
+export interface UniversityArchetype {
+  name: string;
+  description: string;
+  exxat_footprint: ArchetypeFootprint;
+  identifying_traits: string[];
+  gtm_approach: string;
+  /** A Level 0.5 source id or a public URL — see content/archetypes/_TEMPLATE.yaml. */
+  source: string;
+}
+
+/** content/archetypes/*.yaml — university segments by vendor footprint, for GTM
+ * targeting. RETURNS AN EMPTY ARRAY TODAY, and that is the correct state: the directory
+ * holds only _TEMPLATE.yaml, because the 2026-09-12 planning session assigned this work
+ * and no research has since produced an archetype. readYamlDir already skips _TEMPLATE*
+ * files and returns [] for a directory it cannot find, so nothing here needs a special
+ * case for empty — /archetypes renders an honest empty state off the same length check
+ * every other index page uses. */
+export function listArchetypes(): UniversityArchetype[] {
+  return readYamlDir<UniversityArchetype>("archetypes").map((e) => e.data);
 }
 
 export interface AccreditationStandard {
@@ -194,12 +229,38 @@ export function getAccreditationForDomain(domainLabel: string): AccreditationDoc
   );
 }
 
+// content/domains/*.yaml's optional `closest_analog:` block — the one discipline this
+// domain's accreditation structure most resembles, so a reader knows what can be
+// scaffolded rather than rebuilt. OPTIONAL AND USUALLY ABSENT: only Pharmacy carries
+// one today, because the 2026-09-12 planning session is the only real source in this
+// repo that establishes an analog for a domain. An absent block means UNRESEARCHED and
+// must render as nothing at all — not an empty card, not a "no analog found" placeholder.
+//
+// `domain_slug` is null whenever the analog has no domain hub page of its own (OT/PT
+// does not), and a null slug must NOT become a link — see UI-DENSITY-PATTERNS.md's
+// lateral cross-link rule: an unresolvable cross-reference degrades to plain text.
+export interface DomainClosestAnalog {
+  discipline: string;
+  domain_slug?: string | null;
+  similarity?: string;
+  reuse_note?: string;
+  /** Registered citations, the `{source_id}[]` shape every other sourced block in these
+   * files uses — resolved through the source index and rendered by SourceList, so an
+   * internal session cites as a real, openable record rather than as a prose note. */
+  sources?: { source_id: string }[];
+  /** Free-prose fallback, rendered as raw supporting text with no resolution. Kept in the
+   * type because the schema still allows it for an external URL with no registry entry,
+   * but `sources` above is the correct field for an internal meeting. */
+  source?: string;
+}
+
 export interface DomainProfile {
   domain: string;
   full_name: string;
   credential?: string;
   program_length_years?: number;
   market?: { program_count?: string; program_count_trend?: string; total_enrollment?: string; sources?: string[] };
+  closest_analog?: DomainClosestAnalog;
   standards_bodies?: { name: string; type: string }[];
   clinical_education_shape?: string;
   distinctive_pain_points?: { claim: string; source?: string }[];
@@ -729,6 +790,32 @@ export function getCompetitorLandscape(): CompetitorLandscape | null {
   return readYamlFile<CompetitorLandscape>("lenses/competitor-landscape.yaml");
 }
 
+/** Highest threat rating a competitor holds in ANY researched domain, plus which domains
+ *  carry it. `threat` is a per-domain synthesis judgment in
+ *  lenses/competitor-landscape.yaml — there is no such thing as a domain-free threat
+ *  level in the content — so this is an explicitly-labelled rollup, used only by the
+ *  cross-domain /competitive-landscape grid, which must say "highest rating in any
+ *  researched domain" rather than presenting it as one global rating. A domain-filtered
+ *  view reads that domain's own rating directly instead of calling this. */
+export const THREAT_RANK: Record<string, number> = { high: 3, medium: 2, low: 1 };
+
+export function getCompetitorThreatRollup(): Record<string, { threat: string; domains: string[] }> {
+  const out: Record<string, { threat: string; domains: string[] }> = {};
+  for (const d of getCompetitorLandscape()?.domains ?? []) {
+    for (const c of d.competitors ?? []) {
+      const rank = THREAT_RANK[c.threat?.toLowerCase?.().trim() ?? ""] ?? 0;
+      const prev = out[c.slug];
+      if (!prev) {
+        out[c.slug] = { threat: c.threat, domains: [d.domain] };
+        continue;
+      }
+      prev.domains.push(d.domain);
+      if (rank > (THREAT_RANK[prev.threat?.toLowerCase?.().trim() ?? ""] ?? 0)) prev.threat = c.threat;
+    }
+  }
+  return out;
+}
+
 // Competitor files use "MD" for Medicine (matching their own domains_served
 // convention) while the rest of the app (personas, journeys, lenses above) says
 // "Medicine" — normalize once here rather than editing 9+ existing competitor files.
@@ -746,7 +833,11 @@ function matchesDomain(served: string, domain: string): boolean {
   return a === b || a.includes(b) || b.includes(a);
 }
 
-function normalizePillarName(pillar: string): string {
+// Exported for lib/competitor-quadrant.ts, which counts the same canonical pillars off
+// the same teardown entries — a second copy of this regex would be the one place the
+// grid and the quadrant could disagree about whether "Exam Management (Prism roadmap
+// Q2 2027)" is the Exam Management pillar.
+export function normalizePillarName(pillar: string): string {
   // Strip a trailing "(Prism roadmap ...)"-style annotation some competitor files
   // bake into the pillar name itself, so the same pillar groups together across files.
   return pillar.replace(/\s*\([^)]*\)\s*$/, "").trim();
@@ -1670,7 +1761,10 @@ export function getSourceIndex(): Map<string, SourceRegistryEntry> {
   return index;
 }
 
-function resolveSourceIds(ids: { source_id: string }[] | undefined): SourceRegistryEntry[] {
+/** Exported because listDomains() returns raw YAML with no resolution pass of its own, so
+ * a domain page resolving `closest_analog.sources` needs the same resolver every derived
+ * loader in this file already uses — one code path, one `.filter(Boolean)` drop rule. */
+export function resolveSourceIds(ids: { source_id: string }[] | undefined): SourceRegistryEntry[] {
   if (!ids?.length) return [];
   const bySid = getSourceIndex();
   return ids.map((s) => bySid.get(s.source_id)).filter((s): s is SourceRegistryEntry => Boolean(s));

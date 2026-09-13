@@ -18,7 +18,8 @@ export default function JourneysPage() {
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
           <PageHeader
-            eyebrow="Customer"
+            // Names the sidebar group; "Customer" became an action title in task 4.4.
+            eyebrow="Who we're building for"
             title="Evidence gets lost at two points — intake and findings — across every domain"
             description="Stage by stage, cross-referencing current state, gaps, accreditation, competitors, and — where researched — discipline-level variance. Open a journey for the full element-level walkthrough."
           />

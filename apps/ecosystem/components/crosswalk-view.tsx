@@ -112,17 +112,26 @@ export function CrosswalkView({
               header: "Prism fit",
               width: pixel(220),
               renderCell: (r) => {
-                const counts = { Transfer: 0, Configure: 0, Gap: 0 };
+                // Build is a real `prism_fit` value, not a hypothetical: CAEP rates 1
+                // element Build and COA rates 2. Without a bucket for it those rows
+                // silently dropped elements — the "Standards" column said 14 while the
+                // badges beside it summed to 13 and 12 — so this tally now covers the
+                // SAME four-value vocabulary FitBadge's own FIT_VARIANT maps
+                // (transfer/configure/build/gap), and the badge labels reuse those
+                // exact words so the fit language is spelled once, not twice.
+                const counts = { Transfer: 0, Configure: 0, Build: 0, Gap: 0 };
                 for (const row of r.domain.rows) {
                   const fit = (row.prism_fit ?? "").toLowerCase();
                   if (fit.includes("transfer")) counts.Transfer += 1;
                   else if (fit.includes("configure")) counts.Configure += 1;
+                  else if (fit.includes("build")) counts.Build += 1;
                   else if (fit.includes("gap")) counts.Gap += 1;
                 }
                 return (
                   <Stack direction="horizontal" gap={1} wrap="wrap">
                     {counts.Transfer ? <FitBadge fit={`Transfer (${counts.Transfer})`} /> : null}
                     {counts.Configure ? <FitBadge fit={`Configure (${counts.Configure})`} /> : null}
+                    {counts.Build ? <FitBadge fit={`Build (${counts.Build})`} /> : null}
                     {counts.Gap ? <FitBadge fit={`Gap (${counts.Gap})`} /> : null}
                   </Stack>
                 );

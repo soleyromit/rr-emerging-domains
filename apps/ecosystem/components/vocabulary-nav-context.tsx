@@ -20,7 +20,7 @@ const VocabularyNavContext = createContext<VocabularyNavValue | null>(null);
 
 // Bridges RosettaCards (a Rosetta cell click) to GlossaryTabs (switch tab +
 // open + scroll to that term) even though they're rendered as siblings from
-// a server component (app/synthesis/vocabulary/page.tsx) with no shared
+// a server component (app/standards/glossary/page.tsx) with no shared
 // client-side parent state otherwise.
 export function VocabularyNavProvider({ children }: { children: ReactNode }) {
   const [jumpTarget, setJumpTarget] = useState<JumpTarget | null>(null);

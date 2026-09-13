@@ -90,6 +90,47 @@ org_structure:
                                #                 | blocker | influencer
                                # note          — optional, <=200 soft / 400 hard
   sources: []
+# OPTIONAL. The single discipline whose accreditation structure this domain most
+# resembles, so a reader (and a build plan) knows what can be scaffolded rather than
+# rebuilt. Omit the whole block when no real source establishes an analog — an absent
+# block reads as UNRESEARCHED, which is the honest state; a guessed one is
+# indistinguishable from a researched one the moment it is committed (the same
+# sparse-by-design rule content/ARCHITECTURE.md states for the Level-2 lenses).
+# Never write it out as `closest_analog: null`; just leave it off the file.
+#
+# closest_analog:
+#   discipline: "OT/PT"        # plain label. This discipline may have no domain hub
+#                              # page of its own — that is expected, see domain_slug.
+#   domain_slug: null          # a route slug ONLY if listDomains() really has it;
+#                              # otherwise null, and the renderer shows `discipline`
+#                              # as plain text. Never construct a Link from a slug
+#                              # that does not resolve (apps/ecosystem's lateral
+#                              # cross-link rule — a stale reference degrades to
+#                              # text, never to a 404).
+#   similarity: "..."          # <=160 soft / 260 hard chars — ONE sentence, the real
+#                              # structural reason the two are alike, not a guess.
+#   reuse_note: "..."          # <=200 soft / 350 hard chars — what specifically can
+#                              # be scaffolded from the analog rather than rebuilt
+#                              # from zero. The move, not the argument for it.
+#   sources:                   # WHERE THE ANALOG CLAIM COMES FROM. Use a registered
+#     - source_id: "..."       # `source_id`, the same shape org_structure.sources uses
+#                              # above — it resolves through the source index and renders
+#                              # as a real citation (kind badge, title, date), and the
+#                              # content checker FAILs an id that resolves to nothing.
+#                              # An INTERNAL MEETING is registered by adding a Level 0.5
+#                              # record under content/interviews/ whose front-matter `id:`
+#                              # is that source_id (see
+#                              # content/interviews/2026-09-12-romit-ruchi-pharmacy-domain-planning.md,
+#                              # which is what pharmacy.yaml's block cites). Do NOT cite
+#                              # an internal session as free prose: every free-prose
+#                              # `source:` string elsewhere in these files is an external
+#                              # URL, so a prose meeting reference looks like a citation
+#                              # while resolving to nothing a reader can open.
+#   source: "..."              # FALLBACK ONLY, and mark it as one. Acceptable when the
+#                              # source is an external URL with no registry entry, or as
+#                              # an explicitly temporary placeholder while the interview
+#                              # record is still being written. It renders as raw prose,
+#                              # not a citation. Prefer `sources:` above.
 standards_bodies:
   - name: "COCA"
     type: "institutional accreditor"

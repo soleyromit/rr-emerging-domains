@@ -4,6 +4,9 @@ competitor: "Elentra"
 slug: "elentra"
 domains_served: ["MD", "DO"]
 category: "Health professions education platform (curriculum, assessment, competency, clinical scheduling, accreditation) — spans UME/GME-adjacent workflows across 14 disciplines including Medicine (MD/DO), Nursing, Dentistry, Pharmacy, PT, and Veterinary Medicine"
+# Vendor's own published mark, fetched 2026-09-09 from its official site (or its current
+# parent brand's) and committed under apps/ecosystem/public/logos/ — see _TEMPLATE.yaml.
+logo_asset: "elentra.png"
 company:
   founded: "2004 (built internally at Queen's University); formalized as the multi-institution Elentra Consortium in 2008"
   hq: "171 Wellington Street, Suite 101, Kingston, ON K7L 3E3, Canada"

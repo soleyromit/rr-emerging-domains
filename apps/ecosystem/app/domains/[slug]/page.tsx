@@ -6,14 +6,19 @@ import { Text } from "@astryxdesign/core/Text";
 import { Icon } from "@astryxdesign/core/Icon";
 import { Badge } from "@astryxdesign/core/Badge";
 import { Tooltip } from "@astryxdesign/core/Tooltip";
-import { Collapsible } from "@astryxdesign/core/Collapsible";
+import { Collapsible, CollapsibleGroup } from "@astryxdesign/core/Collapsible";
 import { ClickableCard } from "@astryxdesign/core/ClickableCard";
+import { Link } from "@astryxdesign/core/Link";
+import { Divider } from "@astryxdesign/core/Divider";
+import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList";
 import { Takeaway } from "@/components/takeaway";
 import { ExxatGapAnswer } from "@/components/exxat-gap-answer";
 import { ClinicalEducationTimeline, type ClinicalEducationTimelineStage } from "@/components/clinical-education-timeline";
 import { DomainScenario } from "@/components/domain-scenario";
 import { FieldBlock } from "@/components/field-block";
+import { PersonaSpecList } from "@/components/persona-spec-list";
+import { ProseItemList } from "@/components/prose-item-list";
 import { SentenceList } from "@/components/sentence-list";
 import { humanizeSourceRef, stripFileCitations } from "@/lib/strip-file-citations";
 import { matchDisciplineMeta } from "@/lib/discipline-meta";
@@ -26,9 +31,12 @@ import {
   getJourneyStagesForDiscipline,
   getDissectionManifest,
   dissectionAnsweredCount,
+  resolveRelatedFlows,
+  resolveSourceIds,
   type AccreditationDoc,
 } from "@/lib/content";
-import { dissectHref } from "@/lib/dissection-links";
+import { SourceList } from "@/components/source-list";
+import { dissectHref, dissectNodeHref, dissectionNodeId, dissectionNodeIds } from "@/lib/dissection-links";
 
 // Keyed by route slug -> {journey slug, the exact key_findings/discipline_notes
 // `subject` string it was tagged with}. Every one of the 5 content/journeys/*.yaml
@@ -177,10 +185,14 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
   const entry = getAccreditorTiers()?.domains.find((d) => matchDisciplineMeta(d.domain)?.slug === slug);
   if (!entry) notFound();
 
-  const { tierEntry, landscapeEntry, featureComparison, standardsCrosswalk, accreditationDoc } = getDomainHubData(
-    entry.domain,
-    slug
-  );
+  const {
+    tierEntry,
+    landscapeEntry,
+    featureComparison,
+    standardsCrosswalk,
+    accreditationDoc,
+    disciplinePersona: persona,
+  } = getDomainHubData(entry.domain, slug);
   const editorial = DOMAIN_EDITORIAL[slug] ?? computedEditorial(accreditationDoc);
   const domainProfile = listDomains().find((d) => d.domain?.toLowerCase() === slug);
   const timelineStages = DOMAIN_CLINICAL_TIMELINE[slug] ?? [];
@@ -198,6 +210,58 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
   //
   // The card's own copy is DERIVED from the manifest — how many questions are really
   // answered — so it never claims more coverage than the page it links to shows.
+  // content/domains/*.yaml's optional `closest_analog:` block. Absent for 3 of the 4
+  // expansion domains and that is the researched state, not a hole to fill: nothing in
+  // this repo establishes an analog for DO, Dentistry or Medicine, so their Overview
+  // renders NO callout at all rather than an empty card or a "none found" placeholder.
+  //
+  // The link is resolved, never assumed. `domain_slug` becomes an href only when
+  // listDomains() really returns that route slug; otherwise the discipline renders as
+  // plain text — UI-DENSITY-PATTERNS.md's lateral cross-link rule ("a broken or stale
+  // content reference should degrade to plain text, not a link to a 404"). Pharmacy's
+  // real value is `domain_slug: null` today, because OT/PT has no domain hub page, so
+  // the plain-text branch is the one that actually renders.
+  const closestAnalog = domainProfile?.closest_analog;
+  const analogSlug = closestAnalog?.domain_slug ?? null;
+  const analogHref =
+    analogSlug && listDomains().some((d) => matchDisciplineMeta(d.domain)?.slug === analogSlug)
+      ? `/domains/${analogSlug}`
+      : null;
+  // The analog's citation resolves through the source index and renders with SourceList,
+  // the same component every other citation surface in this app uses — not as a raw
+  // string. A raw string bypasses the kind badge, the date line, the evidence-status
+  // caveat AND stripFileCitations, and it resolves to nothing a reader can open. The
+  // internal session behind Pharmacy's block is registered at
+  // content/interviews/2026-09-12-romit-ruchi-pharmacy-domain-planning.md for exactly
+  // this reason. `closest_analog.source` (free prose) remains in the schema as a marked
+  // fallback and still renders below, so an older file does not silently lose its source.
+  const analogSources = resolveSourceIds(closestAnalog?.sources);
+
+  // ---- Buyer profile (the discipline persona, folded in from the retired Persona tab).
+  // Same `disciplinePersona` field the tab consumed; only its render location and the
+  // section heading changed. The tab's own narrative stepper did NOT come across: three
+  // of its four steps were in-page anchors (#pressure / #tools / #trigger) into sections
+  // that are closed-by-default Collapsibles here, so each would have scrolled to a
+  // trigger revealing nothing — exactly UI-DENSITY-PATTERNS.md's fake-affordance
+  // failure. Its one step that left the page, the persona's own node on the Dissection
+  // map, is kept below as a plain cross-link, still resolved (not assumed) against the
+  // real graph: `dissectNodeHref` returns undefined for the 2 of 4 dissected domains
+  // whose graph carries no discipline-persona node, and nothing renders.
+  const jtbdItems = (persona?.jtbd ?? []).map((j) => ({
+    primary: j.job,
+    secondary: stripFileCitations(j.evidence_or_rationale),
+    secondaryLabel: "Evidence / rationale",
+    relatedFlows: resolveRelatedFlows(j.related_flows),
+  }));
+  const personaVignette = stripFileCitations(persona?.archetype_summary)?.split(/(?<=[.!?])\s+/)[0];
+  const personaMapHref = persona
+    ? dissectNodeHref(
+        slug,
+        dissectionNodeIds(slug, entry.domain),
+        dissectionNodeId.persona(`discipline-${slug}`)
+      )
+    : undefined;
+
   const dissectionManifest = getDissectionManifest(slug);
   const dissectionSummary = dissectionManifest
     ? {
@@ -279,9 +343,184 @@ export default async function DomainOverviewPage({ params }: { params: Promise<{
                 </MetadataListItem>
               </MetadataList>
             ) : null}
+            {closestAnalog ? (
+              <Card variant="blue">
+                <Stack gap={2}>
+                  <Text type="label" color="secondary">
+                    Closest comparable discipline
+                  </Text>
+                  <Text type="body" weight="semibold">
+                    {analogHref ? (
+                      <Link href={analogHref} color="accent" hasUnderline>
+                        {closestAnalog.discipline}
+                      </Link>
+                    ) : (
+                      closestAnalog.discipline
+                    )}
+                  </Text>
+                  {/* Deliberately NOT FieldBlock, unlike the rest of this page. Both
+                      fields are hard-ceilinged short (260 / 350 chars, see
+                      content/CONTENT-DENSITY.md), so nothing here clamps at this width —
+                      but FieldBlock renders its "Read the full section" toggle off a flat
+                      `text.length > 180` test, so reuse_note (190 chars) got a toggle that
+                      changed to "Show less" and revealed nothing. Verified in the browser
+                      2026-09-13, which is the only way that shows up: it type-checks and
+                      builds either way. An affordance that promises hidden content and has
+                      none is exactly UI-DENSITY-PATTERNS.md's fake-level failure, so these
+                      are plain clamped Text — which still gets Text's own automatic
+                      hover tooltip if a future entry does overflow at the ceiling. */}
+                  <Stack gap={1}>
+                    <Text type="label" color="secondary" size="xsm">
+                      Why they&apos;re alike
+                    </Text>
+                    <Text type="body" size="sm" maxLines={3}>
+                      {stripFileCitations(closestAnalog.similarity)}
+                    </Text>
+                  </Stack>
+                  <Stack gap={1}>
+                    <Text type="label" color="secondary" size="xsm">
+                      What can be reused
+                    </Text>
+                    <Text type="body" size="sm" maxLines={3}>
+                      {stripFileCitations(closestAnalog.reuse_note)}
+                    </Text>
+                  </Stack>
+                  {analogSources.length ? <SourceList sources={analogSources} label="Source" /> : null}
+                  {closestAnalog.source ? (
+                    <Stack gap={1}>
+                      <Text type="label" color="secondary" size="xsm">
+                        Source
+                      </Text>
+                      <Text type="supporting" size="sm" maxLines={2}>
+                        {stripFileCitations(closestAnalog.source)}
+                      </Text>
+                    </Stack>
+                  ) : null}
+                </Stack>
+              </Card>
+            ) : null}
           </Stack>
         </Section>
       ) : null}
+
+      {/* ---------- Buyer profile ----------
+          The discipline persona, absorbed from /domains/[slug]/persona (2026-09-13 nav
+          consolidation, 7 tabs -> 5). `id="buyer-profile"` is a real redirect target:
+          next.config.ts sends both the retired tab URL and the older
+          /personas/discipline/:slug bookmark here, and /roles/[slug]'s chips link to it
+          by name. It renders for EVERY routed domain, including the one with no persona
+          file (Counseling), so that anchor never lands on nothing — the empty state the
+          tab showed is the empty state this section shows. */}
+      <Section padding={6} dividers={["bottom"]}>
+        <div id="buyer-profile">
+          <Stack gap={4}>
+            <Text type="label" color="secondary" size="sm">
+              Buyer profile
+            </Text>
+            {persona ? (
+              <>
+                {personaVignette ? (
+                  <Text type="body" size="lg" weight="semibold" style={{ fontStyle: "italic" }}>
+                    &ldquo;{personaVignette}&rdquo;
+                  </Text>
+                ) : null}
+                <MetadataList columns={4}>
+                  <MetadataListItem label="Pressure points">
+                    {persona.accreditation_pressure?.length ?? 0}
+                  </MetadataListItem>
+                  <MetadataListItem label="Current tools">{persona.current_tools?.length ?? 0}</MetadataListItem>
+                  <MetadataListItem label="Jobs to be done">{persona.jtbd?.length ?? 0}</MetadataListItem>
+                  <MetadataListItem label="Sources cited">{persona.sources?.length ?? 0}</MetadataListItem>
+                </MetadataList>
+                {/* Was a full-length, unclamped paragraph when this owned a whole tab
+                    (its DENSITY-OK comment said so in as many words). It is one section
+                    of a long Overview now, so it gets the ordinary FieldBlock treatment
+                    — clamped, with its own expand — rather than a wall of text between
+                    the domain context and the accreditor structure. */}
+                <FieldBlock
+                  text={stripFileCitations(persona.archetype_summary)}
+                  maxLines={3}
+                  triggerLabel="Read the full archetype"
+                />
+                {personaMapHref ? (
+                  <Link href={personaMapHref} color="accent" hasUnderline size="sm">
+                    Where this buyer sits on the Dissection map &rarr;
+                  </Link>
+                ) : null}
+                <Divider />
+                {/* Nothing open by default, on purpose: the MetadataList above is this
+                    section's summary count, so a reader who opens none of these still
+                    leaves with the shape of the persona. See UI-DENSITY-PATTERNS.md's
+                    "nothing open and a summary count instead" default. */}
+                <CollapsibleGroup type="multiple" hasDividers density="compact">
+                  {persona.accreditation_pressure?.length ? (
+                    <Collapsible
+                      value="pressure"
+                      trigger={`Accreditation pressure (${persona.accreditation_pressure.length})`}
+                    >
+                      <PersonaSpecList
+                        items={persona.accreditation_pressure.map((p) => ({
+                          label: stripFileCitations(p.point) ?? p.point,
+                          text: stripFileCitations(p.detail) ?? p.detail,
+                        }))}
+                        fallbackIcon="clock"
+                      />
+                    </Collapsible>
+                  ) : null}
+                  {persona.current_tools?.length ? (
+                    <Collapsible value="tools" trigger={`Current tools (${persona.current_tools.length})`}>
+                      {/* current_tools is the densest citation field in the persona corpus —
+                          discipline-crna.yaml's entries name nine competitor files by bare
+                          filename (medhub.yaml, e-value.yaml, elentra.yaml, one45.yaml,
+                          core-elms.yaml, emedley.yaml, leo-davinci.yaml, …) because the research
+                          is literally "we checked all nine teardowns". Correct in the YAML,
+                          a raw path list on screen without this. */}
+                      <PersonaSpecList
+                        items={persona.current_tools.map((p) => ({
+                          label: stripFileCitations(p.point) ?? p.point,
+                          text: stripFileCitations(p.detail) ?? p.detail,
+                        }))}
+                        fallbackIcon="wrench"
+                      />
+                    </Collapsible>
+                  ) : null}
+                  {jtbdItems.length ? (
+                    <Collapsible value="jtbd" trigger={`Jobs to be done (${jtbdItems.length})`}>
+                      <ProseItemList items={jtbdItems} />
+                    </Collapsible>
+                  ) : null}
+                  {persona.switching_trigger ? (
+                    <Collapsible value="trigger" trigger="What triggers switching">
+                      {/* Leaked raw paths on /domains/crna/persona once: this field cites
+                          ../accreditation/coa.yaml twice and coca.yaml once in first-paint
+                          text. Kept wrapped through the move. */}
+                      <FieldBlock
+                        text={stripFileCitations(persona.switching_trigger)}
+                        maxLines={4}
+                        triggerLabel="Read the full section"
+                      />
+                    </Collapsible>
+                  ) : null}
+                  {persona.sources?.length ? (
+                    <Collapsible value="persona-sources" trigger={`Sources (${persona.sources.length})`}>
+                      <SentenceList
+                        items={persona.sources.map((s) => stripFileCitations(s) ?? s)}
+                        maxLines={2}
+                        fallbackIcon="copy"
+                      />
+                    </Collapsible>
+                  ) : null}
+                </CollapsibleGroup>
+              </>
+            ) : (
+              <EmptyState
+                title="No discipline persona yet"
+                description="Populates as research completes for this domain."
+              />
+            )}
+          </Stack>
+        </div>
+      </Section>
 
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={3}>

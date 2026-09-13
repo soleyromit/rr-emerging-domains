@@ -11,13 +11,16 @@ import { DisciplineProfileCards } from "@/components/discipline-profile-cards";
 import { WishlistModes } from "@/components/wishlist-modes";
 import { CourseModelSplit } from "@/components/course-model-split";
 
-export default function PrismVocabularyPage() {
+// The "Vocabulary" tab of /product. Its sibling tab, Capability map, is
+// ../page.tsx; the tab list lives in ../layout.tsx.
+export default function ProductVocabularyPage() {
   return (
     <Stack gap={0}>
       <Section padding={6} dividers={["bottom"]}>
         <Stack gap={5}>
+          {/* No eyebrow — the breadcrumb in app/product/layout.tsx states the trail
+              above the tabs for every tab, this one included. */}
           <PageHeader
-            eyebrow="Product"
             title="Placement, Slot, Wishlist — one system, twelve shapes"
             description={
               <>
@@ -26,10 +29,10 @@ export default function PrismVocabularyPage() {
                 clinical site. DO, Pharmacy, Dentistry, and Medicine — the four target domains — each get their own
                 card below; the rest are Exxat&rsquo;s existing served disciplines, for comparison. For accreditor
                 terms — COM, EPA, USMLE, and the rest — see{" "}
-                <Link href="/synthesis/vocabulary" hasUnderline>
-                  Vocabulary glossary
+                <Link href="/standards/glossary" hasUnderline>
+                  the Glossary tab
                 </Link>{" "}
-                under Strategy.
+                under Standards &amp; glossary.
               </>
             }
           />

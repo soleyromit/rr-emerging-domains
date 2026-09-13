@@ -3,7 +3,21 @@
 import * as Plot from "@observablehq/plot";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { PlotFigure } from "./plot-figure";
-import type { AccreditationDoc } from "@/lib/content";
+
+/**
+ * The structural minimum this chart reads — deliberately NOT `AccreditationDoc`.
+ * Its two callers reach the same `content/accreditation/*.yaml` standards by two
+ * different routes: `/domains/[slug]/standards` passes the `AccreditationDoc`
+ * itself, and `/go-to-market`'s "what is missing" step passes
+ * `getStandardsCrosswalkForDomain()`'s rows (which ARE that doc's `standards[]`,
+ * carrying the same `prism_fit`). Typing the minimum lets both feed one chart
+ * without either side casting or the crosswalk faking a `slug` it has no use for.
+ */
+interface FitDistributionSeries {
+  accreditor: string;
+  domain: string;
+  standards?: { prism_fit?: string }[];
+}
 
 const FIT_ORDER = ["Transfer", "Configure", "Build", "Gap", "unknown"];
 const FIT_COLOR: Record<string, string> = {
@@ -19,7 +33,7 @@ function normalizeFit(f?: string) {
   return FIT_ORDER.find((k) => f.toLowerCase().includes(k.toLowerCase())) ?? "unknown";
 }
 
-export function FitDistributionChart({ docs }: { docs: AccreditationDoc[] }) {
+export function FitDistributionChart({ docs }: { docs: FitDistributionSeries[] }) {
   const rows = docs.flatMap((doc) =>
     (doc.standards ?? []).map((s) => ({
       accreditor: `${doc.accreditor.split("(")[0].trim()} · ${doc.domain}`,

@@ -2,6 +2,9 @@ competitor: "New Innovations"
 slug: "new-innovations"
 domains_served: ["DO", "MD"]
 category: "Residency/GME + UME management software (Graduate & Undergraduate Medical Education)"
+# Vendor's own published mark, fetched 2026-09-09 from its official site (or its current
+# parent brand's) and committed under apps/ecosystem/public/logos/ — see _TEMPLATE.yaml.
+logo_asset: "new-innovations.png"
 company:
   founded: "1995 (per Crunchbase; not independently confirmed on new-innov.com)"
   hq: "Uniontown, Ohio (per Crunchbase; not independently confirmed on new-innov.com)"

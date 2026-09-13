@@ -12,6 +12,9 @@ competitor: "CastleBranch (now DISA Healthcare Technology)"
 slug: "castlebranch"
 domains_served: ["Nursing", "Allied Health"]   # Allied Health evidenced specifically for Physician Assistant (UNC-Chapel Hill) and Occupational Therapy Assistant (Minnesota West) programs via CastleBranch institutional portals; broader allied-health marketing language is generic and does not name every discipline
 category: "Compliance and background-screening point solution for healthcare education — not a clinical/experiential education platform"
+# Vendor's own published mark, fetched 2026-09-09 from its official site (or its current
+# parent brand's) and committed under apps/ecosystem/public/logos/ — see _TEMPLATE.yaml.
+logo_asset: "castlebranch.png"
 company:
   founded: >
     1997, by Brett Martin, originally in Chapel Hill, NC, relocating to Wilmington, NC in

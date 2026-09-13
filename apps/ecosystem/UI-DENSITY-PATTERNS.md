@@ -37,10 +37,12 @@ divider:
 </CollapsibleGroup>
 ```
 
-Reference implementations, in the order they were built well: `/prism`
-(`app/prism/page.tsx`), `/synthesis/gap-analysis`, `/synthesis/vocabulary`,
-`/repo-comparison`, `/synthesis/positioning`. If you're building a new page and it has
-more than ~3 sections' worth of content, copy one of these, don't start from scratch.
+Reference implementations, in the order they were built well: `/product`
+(`app/product/page.tsx`), `/standards/glossary`, `/repo-comparison`, and
+`/go-to-market` (`app/go-to-market/page.tsx`, which applies the shape three times over
+— once per anchored step; the gap-analysis and positioning pages it absorbed were two
+of the originals). If you're building a new page and it has more than ~3 sections'
+worth of content, copy one of these, don't start from scratch.
 
 **Default-open state matters as much as the divider.** A `CollapsibleGroup` with every
 item open by default is the two-zone pattern in name only — see `journeys/[slug]`
@@ -78,19 +80,19 @@ leaving every item's own `defaultIsOpen` to fend for itself.
 
 ## The hierarchical index → detail → cross-link pattern
 
-`/personas` is the reference implementation: an index page with a `TabList`
-(discipline / role / lens) showing `ClickableCard` grids (`app/personas/page.tsx`),
-each card linking to a typed `[slug]` detail page with its own `Breadcrumbs` back to
-the index (`app/personas/discipline/[slug]/page.tsx`, `app/personas/role/[slug]/page.tsx`,
-`app/personas/lens/[slug]/page.tsx`), each statically generated via
-`generateStaticParams`. `/flows/[slug]` (`app/flows/[slug]/page.tsx`) extends this same
-shape one level deeper — a detail page reachable from a journey stage rather than its
-own tabbed index, breadcrumbed `Journeys > <journey name> > <stage name>`.
+`/roles` is the reference implementation: an index page showing a `ClickableCard` grid
+(`app/roles/page.tsx`), each card linking to a `[slug]` detail page with its own
+`Breadcrumbs` back to the index (`app/roles/[slug]/page.tsx`), statically generated via
+`generateStaticParams`. `/competitors/[slug]` (`app/competitors/[slug]/page.tsx`) is the
+same shape off the `/competitive-landscape` index. `/flows/[slug]`
+(`app/flows/[slug]/page.tsx`) extends it one level deeper — a detail page reachable from
+a journey stage rather than its own index, breadcrumbed
+`Journeys > <journey name> > <stage name>`.
 
 **Lateral cross-links** (a link sideways to a different subpage *type*, not strictly up
-to an index or down to a child) follow the `app/personas/lens/[slug]/page.tsx` pattern:
+to an index or down to a child) follow the `app/competitors/[slug]/page.tsx` pattern:
 build the `ComparisonCardGrid` item's `label` as a conditionally-`Link`-wrapped node —
-wrap in `<Link href="/personas/role/{slug}">` only when the cross-reference actually
+wrap in `<Link href="/roles/{slug}">` only when the cross-reference actually
 resolves (via a lookup like `findRoleSlug`/`roleNameMatches`), otherwise fall back to
 plain `<Text>`. Never assume a cross-reference resolves; a broken or stale content
 reference should degrade to plain text, not a link to a 404.
@@ -104,7 +106,7 @@ touch) previews the competitor's vs. Prism's actual solve for the cited element 
 `IconFactCard`/`ProseItemList`, `ComparisonCardGrid`, and `SentenceList` as an optional
 trailing prop — absent or empty `relatedFlows`/`items` renders nothing, so every
 existing caller with no `related_flows` content is unaffected. See
-`app/personas/discipline/[slug]/page.tsx`'s `jtbdItems` mapping for the
+`app/domains/[slug]/page.tsx`'s `jtbdItems` mapping for the
 resolve-then-pass-down shape.
 
 **Zoomed-out-first diagrams**: `components/charts/journey-stepper.tsx`'s
@@ -132,15 +134,15 @@ time rather than rewriting the underlying content field.
 1. **`<Markdown>` has no clamp prop.** The only way to control its exposure is nesting
    it inside a closed-by-default `<Collapsible>`, or explicitly marking it as an
    intentional always-visible on-ramp with a `{/* SCAN-LAYER: reason */}` comment
-   directly above it (see `/synthesis/vocabulary`'s Rosetta Stone table for the one
-   real example of that exception).
+   directly above it (see `/standards/glossary`'s Rosetta Stone table,
+   `app/standards/glossary/page.tsx`, for the one real example of that exception).
 2. **`<Text>` rendering a field whose name signals long-form content** (description,
    summary, note, rationale, detail, body, comparison, pressure, tools, governs,
    opportunity, relevance, intro, variance, pain_or_gap, archetype_summary, ...) needs
    `maxLines={N}` on the tag, to sit inside a `<Collapsible>`, or a
    `{/* DENSITY-OK: reason */}` comment for a genuine false-positive (e.g. a `.body`
    property that's actually a short name, not prose — see
-   `app/accreditation/[domain]/page.tsx` for a worked example of that comment).
+   `app/domains/[slug]/standards/page.tsx` for a worked example of that comment).
 3. **A `<Collapsible>`'s `trigger` gets a bare string, not a `<Text>` wrapper.** The
    trigger renders its plain string child inside a span carrying its own fixed
    ~17px/semibold styling. A `<Text>` sets its own font-size, which silently overrides
@@ -223,9 +225,10 @@ wrapped `Text` gets its normal clamp + hover tooltip:
 />
 ```
 
-See `app/personas/page.tsx` (jtbd, top_pains, how_they_implicitly_serve_roles),
-`app/prism/page.tsx` (feature `detail`, intelligence-layer capabilities, open
-questions), and `app/competitors/page.tsx` (strengths/weaknesses `claim`) for the
+See `app/domains/[slug]/page.tsx` (jtbd) and `app/roles/[slug]/page.tsx` (top_pains),
+`app/product/page.tsx` (feature `detail`, intelligence-layer capabilities, open
+questions), and `app/competitors/[slug]/page.tsx` (strengths/weaknesses `claim`,
+how_they_implicitly_serve_roles) for the
 fixed pattern — all were plain-string `label`/`description` bound to fields that
 run past 1,000 characters in real content before the 2026-08-25 fix.
 

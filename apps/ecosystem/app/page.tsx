@@ -1,8 +1,6 @@
 import { Section } from "@astryxdesign/core/Section";
 import { Stack } from "@astryxdesign/core/Stack";
-import { Grid } from "@astryxdesign/core/Grid";
 import { Card } from "@astryxdesign/core/Card";
-import { ClickableCard } from "@astryxdesign/core/ClickableCard";
 import { Heading } from "@astryxdesign/core/Heading";
 import { Text } from "@astryxdesign/core/Text";
 import { Badge } from "@astryxdesign/core/Badge";
@@ -14,12 +12,17 @@ import { MetadataList, MetadataListItem } from "@astryxdesign/core/MetadataList"
 import { Link } from "@astryxdesign/core/Link";
 import { PageHeader } from "@/components/page-header";
 import { Takeaway } from "@/components/takeaway";
+import { CitationMark } from "@/components/citation-mark";
+import { numberCitations } from "@/lib/page-citations";
 import {
   getCapabilityMap,
   listDomains,
   listCompetitors,
   getScorecard,
   computeWeightedTotals,
+  getAccreditationForDomain,
+  accreditorShortName,
+  fitCounts,
 } from "@/lib/content";
 
 // "H1/H2/H3" was internal shorthand leaking straight onto the page as a badge
@@ -47,6 +50,15 @@ const HORIZONS = [
 ];
 
 // 2-month window from kickoff (2026-08-24) to the leadership readout (~2026-10-24).
+// The one claim on this page that rests on a checkable external document rather
+// than on this repo's own analysis. Deliberately a list of one: the horizons, the
+// timeline, the scorecard leader and the pillar-fit split are all derived from
+// content/ this research produced (and the roadmap pillars below carry
+// `source_id: null` in the capability map — honestly unsourced, per its own
+// note), so none of them gets a mark. A citation mark on an internal conclusion
+// would imply an outside authority that does not exist.
+const ACPE_PHARMS_SOURCE = "doc-acpe-dear-dean-standards-2025-2024";
+
 const TIMELINE = [
   {
     phase: "Week 1 — Foundation",
@@ -88,6 +100,18 @@ export default function OverviewPage() {
   const totals = scorecard ? computeWeightedTotals(scorecard) : null;
   const leader = totals ? Object.entries(totals).sort((a, b) => b[1] - a[1])[0] : null;
 
+  // The Takeaway below quotes Pharmacy's pillar-fit split. It used to hard-type
+  // "4 Transfer / 12 Configure / 4 Gap" — figures that had gone stale against
+  // content/accreditation/acpe.yaml (really 4 / 13 / 3) and survived three
+  // rounds of number fixes only because the wrong pair still summed to 20.
+  // Derived now, off the same `prism_fit` field and the same exported
+  // fitCounts() helper /domains/[slug] and /go-to-market#whats-missing read,
+  // so it cannot drift again. Null-guarded: if the ACPE doc ever goes missing
+  // the sentence drops the parenthetical rather than printing a stale one.
+  const acpeDoc = getAccreditationForDomain("Pharmacy")[0] ?? null;
+  const acpeFit = acpeDoc ? fitCounts(acpeDoc) : null;
+  const cites = numberCitations([ACPE_PHARMS_SOURCE]);
+
   return (
     <Stack gap={0}>
       <Section padding={6} dividers={["bottom"]}>
@@ -101,13 +125,24 @@ export default function OverviewPage() {
           <Takeaway status="info" title="Pharmacy is the confirmed GTM target — per stakeholder direction, 2026-09-10">
             The where-to-play scorecard's own math still names DO the analytical leader (4.40 / 5, on growth and
             incumbent disruption) with Pharmacy a close second (4.05 / 5) — that scoring is real and unedited, see the{" "}
-            <Link href="/scorecard" hasUnderline>scorecard</Link>. Pharmacy is the domain actually being targeted
+            <Link href="/go-to-market#which-domain" hasUnderline>scorecard</Link>. Pharmacy is the domain actually being targeted
             first, for reasons outside that weighted model. The two conclusions aren&apos;t in conflict: Pharmacy
-            also has the highest pillar-fit ratio of any domain researched (4 Transfer / 12 Configure / 4 Gap on
-            ACPE), the smallest accreditation build, and a live switching-cost window as ACPE retires AAMS for its
-            own PHARMS platform — see the{" "}
+            also has the highest pillar-fit ratio of any domain researched
+            {acpeFit && acpeDoc ? (
+              <>
+                {" "}({acpeFit.Transfer} Transfer / {acpeFit.Configure} Configure / {acpeFit.Gap} Gap on{" "}
+                {accreditorShortName(acpeDoc)})
+              </>
+            ) : null}
+            , the smallest accreditation build, and a live switching-cost window as ACPE retires AAMS for its
+            own PHARMS platform
+            <CitationMark
+              citation={cites[ACPE_PHARMS_SOURCE]}
+              claim="ACPE retires AAMS for its own PHARMS platform"
+            />{" "}
+            — see the{" "}
             <Link href="/domains/pharmacy" hasUnderline>Pharmacy domain hub</Link>,{" "}
-            <Link href="/synthesis/gap-analysis" hasUnderline>gap analysis</Link>, or{" "}
+            <Link href="/go-to-market#whats-missing" hasUnderline>gap analysis</Link>, or{" "}
             <Link href="/domains/pharmacy/win" hasUnderline>how we win Pharmacy</Link> for the full
             evidence.
           </Takeaway>
@@ -136,8 +171,23 @@ export default function OverviewPage() {
             <MetadataListItem label="Confirmed GTM target">Pharmacy</MetadataListItem>
             <MetadataListItem label="Domains in scope">Pharmacy · DO · Dentistry · Medicine</MetadataListItem>
             <MetadataListItem label="Domain profiles researched">{domains.length} / 4</MetadataListItem>
+            {/* This figure is computed here by an independent
+                getScorecard()+computeWeightedTotals() call — the same pair
+                /go-to-market's step 1 and every domain's Win tab each call for
+                themselves. The link is the trace-back: it lands on the weighted
+                table the number falls out of, so a reader never has to take it
+                on trust. */}
             <MetadataListItem label="Scorecard's analytical leader">
-              {leader ? `${leader[0]} — ${leader[1].toFixed(2)} / 5` : "Not yet scored"}
+              {leader ? (
+                <>
+                  {`${leader[0]} — ${leader[1].toFixed(2)} / 5`}{" "}
+                  <Link href="/go-to-market#which-domain" hasUnderline>
+                    see the scoring
+                  </Link>
+                </>
+              ) : (
+                "Not yet scored"
+              )}
             </MetadataListItem>
           </MetadataList>
         </Stack>
@@ -175,8 +225,11 @@ export default function OverviewPage() {
         </Stack>
       </Section>
 
+      {/* Last section on the page since the "Explore the research" card grid was removed
+          (2026-09-13 nav consolidation) — so no bottom divider, which would otherwise
+          dangle under the final block. */}
       {capMap ? (
-        <Section padding={6} dividers={["bottom"]} variant="muted">
+        <Section padding={6} variant="muted">
           <Stack gap={2}>
             <Heading level={2}>Where this stands on Prism&apos;s own roadmap</Heading>
             <Text type="supporting">
@@ -197,34 +250,6 @@ export default function OverviewPage() {
           </Stack>
         </Section>
       ) : null}
-
-      <Section padding={6}>
-        <Stack gap={4}>
-          <Heading level={2}>Explore the research</Heading>
-          <Grid columns={{ minWidth: 260 }} gap={4}>
-            <NavCard href="/prism" title="PRISM capability map" desc="What Prism is today, and what's on its own roadmap." />
-            <NavCard href="/feature-map" title="Feature map" desc="Every pillar × domain — who leads, and the whitespace nobody's built yet." />
-            <NavCard href="/competitors" title="Competitor matrix" desc="Incumbents per domain, feature-level teardown vs. Prism." />
-            <NavCard href="/domains" title="Domains" desc="One hub per discipline — accreditor structure, standards, competitors, and persona." />
-            <NavCard href="/roles" title="Roles" desc="Cross-cutting roles — top tasks, pains, and how each competitor implicitly serves them." />
-            <NavCard href="/journeys" title="Journeys" desc="Current-state vs. gap-state, across the 4 domains." />
-            <NavCard href="/scorecard" title="Where-to-play scorecard" desc="Which domain to enter first, and why." />
-          </Grid>
-        </Stack>
-      </Section>
     </Stack>
-  );
-}
-
-function NavCard({ href, title, desc }: { href: string; title: string; desc: string }) {
-  return (
-    <ClickableCard href={href} label={title}>
-      <Stack gap={1.5}>
-        <Text type="body" weight="semibold">
-          {title}
-        </Text>
-        <Text type="supporting">{desc}</Text>
-      </Stack>
-    </ClickableCard>
   );
 }

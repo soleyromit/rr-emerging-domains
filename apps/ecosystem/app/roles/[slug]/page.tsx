@@ -62,16 +62,33 @@ export default async function RolePersonaPage({ params }: { params: Promise<{ sl
                 Applies across domains (as authored — identical across all 5 role files, likely
                 stale since the 12-discipline expansion — not a per-role signal yet)
               </Text>
-              <Stack direction="horizontal" gap={1.5} wrap="wrap">
+              {/* The chip used to BE the link, unlabelled, pointing at
+                  /domains/{slug}/persona — which read as "this role, inside that
+                  domain" and was never that: it landed on the domain's own composite
+                  discipline persona, a different entity entirely. Two fixes, same
+                  cause. The destination is now that persona's real home since the
+                  2026-09-13 tab consolidation (the Buyer profile section of the domain
+                  Overview), and the link says so in words instead of leaving a bare
+                  domain code to imply something it does not do. The chip stays as the
+                  domain's visual mark and is no longer the clickable target. */}
+              <Stack direction="horizontal" gap={3} wrap="wrap">
                 {role.applies_across_domains.map((d) => {
                   const routeSlug = matchDisciplineMeta(d)?.slug;
-                  const chip = <DisciplineChip subject={d} />;
-                  return routeSlug ? (
-                    <Link key={d} href={`/domains/${routeSlug}/persona`}>
-                      {chip}
-                    </Link>
-                  ) : (
-                    <span key={d}>{chip}</span>
+                  return (
+                    <Stack key={d} direction="horizontal" gap={1} vAlign="center">
+                      <DisciplineChip subject={d} />
+                      {routeSlug ? (
+                        <Link
+                          href={`/domains/${routeSlug}#buyer-profile`}
+                          type="supporting"
+                          size="sm"
+                          color="accent"
+                          hasUnderline
+                        >
+                          {d}&apos;s buyer profile &rarr;
+                        </Link>
+                      ) : null}
+                    </Stack>
                   );
                 })}
               </Stack>
