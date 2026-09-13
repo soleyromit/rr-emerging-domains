@@ -124,12 +124,12 @@ interface ComparisonMatrixBaseProps<RowId extends string, ColId extends string, 
    * The pinned row-label column paints an OPAQUE background so scrolled data
    * cells can't show through it — but every non-pinned cell is transparent,
    * so it inherits whatever the page's own container actually is. The design
-   * system's plugin default (`--color-background-card`) only matches a plain
-   * `Section` (`--color-background-surface`, same hex today) — it does NOT
-   * match a `Section variant="muted"` container (`--color-background-muted`),
-   * which is exactly where this component's Dissection-tab callers render.
-   * Pass the real ambient background token here; there is no correct default
-   * that works for every caller, so this has none.
+   * system's plugin default (`--color-background-card`) coincidentally
+   * matches one of `--color-background-surface` / `--color-background-muted`
+   * depending on color scheme (theme-neutral: card matches surface in light
+   * mode, muted in dark mode) — never both, and never reliably. Pass the real
+   * ambient background token here; there is no correct default that works
+   * for every caller in every color scheme, so this has none.
    */
   stickyRowBackground?: string;
 }
