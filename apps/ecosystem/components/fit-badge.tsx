@@ -227,12 +227,27 @@ export function TrendCoverageBadge({ severity }: { severity?: string }) {
   );
 }
 
+// `gap`, `workaround` and `inverted` were all `error` — one red for three different
+// answers, so the pill told a reader nothing the label hadn't already said. They are
+// now three treatments:
+//   - `gap` stays `error`: nothing exists. The worst case, and the one red belongs to it.
+//   - `workaround` drops to `warning`: a real but partial mitigation exists, which is
+//     the same severity `configure` carries (and deliberately shares its amber — both
+//     mean "reachable, but not natively"). The distinction they lose to each other is
+//     smaller than the one they both gain against `gap`.
+//   - `inverted` takes `purple`: not a point on the worse/better scale at all — the
+//     mechanic runs backwards (the student proposes the site rather than the admin
+//     offering capacity), which is a *different shape*, not a worse one. Checked the
+//     way PrismFeatureBadge below checked before claiming `teal`: `purple` is used in
+//     this app only as an IDENTITY color (lib/discipline-meta.ts, lib/competitor-meta.ts,
+//     components/source-list.tsx, components/dissect/topology-graph.tsx) and by no
+//     severity scale, so it cannot be misread as a fit/gap rating.
 const DIVERGENCE_VARIANT: Record<string, BadgeVariant> = {
   "native fit": "success",
   configure: "warning",
   gap: "error",
-  workaround: "error",
-  inverted: "error",
+  workaround: "warning",
+  inverted: "purple",
   unconfirmed: "neutral",
 };
 
