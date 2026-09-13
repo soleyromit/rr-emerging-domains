@@ -14,6 +14,10 @@ const nextConfig: NextConfig = {
       { source: "/personas/discipline/:slug", destination: "/domains/:slug/persona", permanent: true },
       { source: "/personas/role/:slug", destination: "/roles/:slug", permanent: true },
       { source: "/personas/lens/:slug", destination: "/competitors/:slug", permanent: true },
+      // 2026-09-13 nav consolidation: /prism and /prism/vocabulary became the two
+      // tabs of /product. Same reason as above — old bookmarks keep working.
+      { source: "/prism", destination: "/product", permanent: true },
+      { source: "/prism/vocabulary", destination: "/product/vocabulary", permanent: true },
     ];
   },
 };
